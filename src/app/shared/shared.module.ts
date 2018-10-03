@@ -9,6 +9,7 @@ import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 
 import { PipesModule } from '../pipes/pipes.module';
 import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
+import { EstadoEmpresaComponent } from '../components/estado-empresa/estado-empresa.component';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import { ModalUploadComponent } from '../components/modal-upload/modal-upload.co
         SidebarComponent,
         BreadcrumbsComponent,
         NopagefoundComponent,
-        ModalUploadComponent
+        ModalUploadComponent,
+        EstadoEmpresaComponent
     ],
     exports: [
         HeaderComponent,

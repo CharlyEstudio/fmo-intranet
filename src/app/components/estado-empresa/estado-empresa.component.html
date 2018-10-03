@@ -1,0 +1,39 @@
+<div class="d-flex align-items-center flex-row">
+
+  <div class="p-2 animated fadeIn text-success" *ngIf="heart === 3">
+
+      <div class="animated pulse2">
+
+        <i class="mdi mdi-heart-pulse"></i> <span>Estable</span>
+
+      </div>
+
+  </div>
+
+  <div class="p-2 animated fadeIn text-warning" *ngIf="heart === 2">
+
+      <div class="animated pulse2">
+
+        <i class="mdi mdi-heart-pulse"></i> <span>Inestable</span>
+
+      </div>
+
+  </div>
+
+  <div class="p-2 animated fadeIn text-danger" *ngIf="heart === 1">
+
+    <div class="animated pulse2">
+
+      <i class="mdi mdi-heart-pulse"></i> <span>Crítico</span>
+
+    </div>
+
+  </div>
+
+  <div class="p-2 animated fadeIn right-side-toggle" *ngIf="heart === 0">
+
+    <i class="ti-reload"></i> <span style="padding-left: 70px;">Obteniendo...</span>
+
+  </div>
+
+</div>

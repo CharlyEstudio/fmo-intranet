@@ -164,6 +164,13 @@
     animation-name: pulse
 }
 
+.pulse2 {
+    -webkit-animation-name: pulse;
+    animation-name: pulse;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
 @-webkit-keyframes rubberBand {
     from {
         -webkit-transform: scale3d(1, 1, 1);

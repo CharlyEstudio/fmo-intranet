@@ -11,9 +11,9 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { ProfileComponent } from './profile/profile.component';
 
 import { UsuariosComponent } from './usuarios/usuarios.component';
-import { HospitalesComponent } from './hospitales/hospitales.component';
-import { MedicoComponent } from './medicos/medico.component';
-import { MedicosComponent } from './medicos/medicos.component';
+// import { HospitalesComponent } from './hospitales/hospitales.component';
+// import { MedicoComponent } from './medicos/medico.component';
+// import { MedicosComponent } from './medicos/medicos.component';
 import { BusquedaComponent } from './busqueda/busqueda.component';
 
 // Guards
@@ -117,7 +117,7 @@ const pageRoutes: Routes = [
                     titulo: 'Mantenimiento de Usuarios',
                     name: 'description'
                 }
-    },
+    }/*,
     {
         path: 'hospitales',
         canActivate: [ AdminGuard, VerificaTokenGuard ],
@@ -147,37 +147,27 @@ const pageRoutes: Routes = [
                     titulo: 'Actualizar Médico',
                     name: 'description'
                 }
-    }
+    }*/
 ];
 
 var usuario = JSON.parse(localStorage.getItem('usuario'));
 
-if (localStorage.getItem('usuario') != undefined) {
+if (usuario.rol === 'ADMIN_ROLE' || usuario.rol === 'DIR_ROLE') {
 
-    if (usuario.rol === 'ADMIN_ROLE' || usuario.rol === 'DIR_ROLE') {
-
-        pageRoutes.push(
-            {
-                path: '', redirectTo: '/dashboardDir', pathMatch: 'full'
-            }
-        );
-
-    } else {
-
-        pageRoutes.push(
-            {
-                path: '', redirectTo: '/dashboard', pathMatch: 'full'
-            }
-        );
-
-    }
+    pageRoutes.push(
+        {
+            path: '', redirectTo: '/dashboardDir', pathMatch: 'full'
+        }
+    );
 
 } else {
+
     pageRoutes.push(
         {
             path: '', redirectTo: '/dashboard', pathMatch: 'full'
         }
     );
+
 }
 
 export const PAGES_ROUTES = RouterModule.forChild( pageRoutes );

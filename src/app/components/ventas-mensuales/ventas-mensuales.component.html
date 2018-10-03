@@ -1,0 +1,73 @@
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Venta General</h4>
+        <div class="d-flex align-items-center flex-row m-t-30">
+            <div class="p-2 display-5 text-info">
+              <div class="p-2 display-5 animated fadeIn text-center text-success" *ngIf="heart === 3">
+      
+                  <div class="animated pulse2">
+            
+                    <i class="mdi mdi-heart-pulse"></i>
+            
+                  </div>
+            
+              </div>
+            
+              <div class="p-2 display-5 animated fadeIn text-center text-warning" *ngIf="heart === 2">
+            
+                  <div class="animated pulse2">
+            
+                    <i class="mdi mdi-heart-pulse"></i>
+            
+                  </div>
+            
+              </div>
+            
+              <div class="p-2 display-5 animated fadeIn text-center text-danger" *ngIf="heart === 1">
+            
+                <div class="animated pulse2">
+            
+                  <i class="mdi mdi-heart-pulse"></i>
+            
+                </div>
+            
+              </div>
+            
+              <div class="p-2 display-5 animated fadeIn right-side-toggle" style="padding-left: 56px!important;" *ngIf="heart === 0">
+            
+                <i class="ti-reload"></i>
+
+                <br>
+    
+              </div>
+            </div>
+              <!-- <i class="wi wi-day-showers"></i></div> -->
+            <div class="p-2">
+                <h3 class="m-b-0">{{ fecha | date: 'EEEE' }}</h3><small>Querétaro, Qro.</small></div>
+        </div>
+        <table class="table no-border">
+            <tbody>
+                <tr>
+                    <td>Actual</td>
+                    <td class="font-medium">{{ act | currency }}</td>
+                </tr>
+                <tr>
+                    <td>Anterior</td>
+                    <td class="font-medium">{{ ant | currency }}</td>
+                </tr>
+                <tr>
+                    <td>Zona 1</td>
+                    <td class="font-medium">{{ zon1 | currency }}</td>
+                </tr>
+                <tr>
+                    <td>Zona 2</td>
+                    <td class="font-medium">{{ zon2 | currency }}</td>
+                </tr>
+                <tr>
+                    <td>Especial</td>
+                    <td class="font-medium">{{ espe | currency }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

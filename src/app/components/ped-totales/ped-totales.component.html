@@ -1,12 +1,14 @@
-<h3 class="text-muted text-center">Pedidos del Día</h3>
+<!-- <h3 class="text-muted text-center">Pedidos del Día</h3> -->
         
 <div class="card totales">
 
-    <div class="row">
+    <div class="card-body">
 
-        <div class="col-lg-6 col-md-12">
+        <h4 class="card-title">Pedidos del Día</h4>
 
-            <div class="card-body">
+        <div class="row">
+
+            <div class="col-lg-6 col-md-12">
 
                 <div class="m-t-30 m-b-40 p-t-20 p-b-20 text-center">
 
@@ -20,44 +22,40 @@
 
             </div>
 
-        </div>
+            <div class="col-lg-6 col-md-12 p-l-0">
 
-        <div class="col-lg-6 col-md-12 b-l p-l-0">
+                    <div class="row">
 
-            <div class="card-body">
+                        <!-- Column -->
+                        <div class="col-12 p-r-0" style="padding-bottom: 15px;">
 
-                <div class="row">
+                            <h6 class="text-muted">Subotal</h6>
+                            
+                            <h1 class="font-light">{{ sub | currency }}</h1>
 
-                    <!-- Column -->
-                    <div class="col-12 p-r-0" style="padding-bottom: 15px;">
+                        </div>
 
-                        <h6 class="text-muted">Subotal</h6>
-                        
-                        <h1 class="font-light">{{ sub | currency }}</h1>
+                        <!-- Column -->
+                        <div class="col-12 p-r-0" style="padding-bottom: 15px;">
 
-                    </div>
+                            <h6 class="text-muted">Impuesto</h6>
+                            
+                            <h1 class="font-light">{{ impuesto | currency }}</h1>
 
-                    <!-- Column -->
-                    <div class="col-12 p-r-0" style="padding-bottom: 15px;">
+                        </div>
 
-                        <h6 class="text-muted">Impuesto</h6>
-                        
-                        <h1 class="font-light">{{ impuesto | currency }}</h1>
+                        <!-- Column -->
+                        <div class="col-12 p-r-0">
 
-                    </div>
+                            <h6 class="text-muted">Total</h6>
+                            
+                            <h1 class="font-light">{{ tot | currency }}</h1>
 
-                    <!-- Column -->
-                    <div class="col-12 p-r-0" style="padding-bottom: 15px;">
-
-                        <h6 class="text-muted">Total</h6>
-                        
-                        <h1 class="font-light">{{ tot | currency }}</h1>
+                        </div>
 
                     </div>
 
                 </div>
-
-            </div>
 
         </div>
 

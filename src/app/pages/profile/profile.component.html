@@ -34,6 +34,7 @@
                         <div class="input-group">
 
                             <div class="input-group-addon"><i class="ti-email"></i></div>
+                            
                             <input [ngModel]="usuario.email" [disabled]="usuario.google" name="email" type="email" class="form-control" placeholder="Correo del Usuario" required>
 
                         </div>
@@ -41,9 +42,11 @@
                     </div>
 
                     <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">
-            <i class="fa fa-save"></i>
-            Guardar
-          </button>
+
+                        <i class="fa fa-save"></i>
+                        Guardar
+
+                    </button>
 
                 </form>
 

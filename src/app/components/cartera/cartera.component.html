@@ -1,0 +1,89 @@
+<div class="card">
+
+    <div class="card-body">
+  
+      <h4 class="card-title">Cartera Total</h4>
+  
+      <div class="d-flex align-items-center flex-row">
+  
+        <div class="p-2 display-5 animated fadeIn text-success" *ngIf="heart === 3">
+      
+            <div class="animated pulse2">
+      
+              <i class="mdi mdi-heart-pulse"></i> <span>Estable</span>
+      
+            </div>
+      
+        </div>
+      
+        <div class="p-2 display-5 animated fadeIn text-warning" *ngIf="heart === 2">
+      
+            <div class="animated pulse2">
+      
+              <i class="mdi mdi-heart-pulse"></i> <span>Inestable</span>
+      
+            </div>
+      
+        </div>
+      
+        <div class="p-2 display-5 animated fadeIn text-danger" *ngIf="heart === 1">
+      
+          <div class="animated pulse2">
+      
+            <i class="mdi mdi-heart-pulse"></i> <span>Crítico</span>
+      
+          </div>
+      
+        </div>
+      
+        <div class="p-2 display-5 animated fadeIn right-side-toggle" *ngIf="heart === 0">
+      
+          <i class="ti-reload"></i> <span style="padding-left: 70px;">Obteniendo...</span>
+      
+        </div>
+      
+      </div>
+  
+      <table class="table no-border">
+  
+        <tbody>
+  
+          <tr>
+  
+              <td>Mes Actual</td>
+  
+              <td class="font-medium">{{ '1000' | currency }}</td>
+  
+              <td>Mes Anterior</td>
+  
+              <td class="font-medium">{{ '1000' | currency }}</td>
+  
+          </tr>
+  
+          <tr>
+  
+              <td>Zona 1</td>
+  
+              <td class="font-medium">$ 10,617,494.91</td>
+  
+              <td>Zona 2</td>
+  
+              <td class="font-medium">$ 10,617,494.91</td>
+  
+          </tr>
+  
+          <tr>
+  
+              <td colspan="2" class="text-right">Especiales</td>
+  
+              <td colspan="2" class="font-medium">$ 10,617,494.91</td>
+  
+          </tr>
+  
+        </tbody>
+  
+      </table>
+  
+    </div>
+  
+  </div>

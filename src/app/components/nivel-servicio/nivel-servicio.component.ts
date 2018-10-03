@@ -14,6 +14,15 @@ import 'rxjs/add/operator/filter';
 })
 export class NivelServicioComponent implements OnInit, OnDestroy {
 
+  graficos: any = {
+    'general': {
+      'labels': ['General'],
+      'data':  [0],
+      'type': 'doughnut',
+      'leyenda': 'General'
+    }
+  };
+
   // Nivel de Servicio General
   nivelServicio: Subscription;
   dataGenCot: number = 0;
@@ -22,6 +31,7 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
   ns: number = 0;
   nsImpo: number = 0;
   intNs: any;
+  // grafGeneral: any;
 
   // Nivel de Servicio Truper
   nivelTruper: Subscription;
@@ -31,6 +41,7 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
   nsT: number = 0;
   nsTImpo: number = 0;
   intNsT: any;
+  grafTruper: any;
 
   // Nivel de Servicio FMO
   nivelFMO: Subscription;
@@ -40,6 +51,7 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
   nsFmo: number = 0;
   nsFmoImpo: number = 0;
   intNsFmo: any;
+  grafFmo: any;
 
   constructor(
     private _phpService: PhpService
@@ -52,6 +64,16 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
         this.dataGenFac = numero.facturacion;
 
         this.porcentGen = (this.dataGenFac / this.dataGenCot);
+
+        this.graficos = {
+          'general': {
+            'labels': ['Recibido', '100%'],
+            'data':  [(this.porcentGen * 100), (100 - (this.porcentGen * 100))],
+            'type': 'doughnut',
+            'leyenda': 'General'
+          }
+        };
+
       },
       error => console.error('Error en el obs', error),
       () => console.log('El observador termino!')
@@ -98,7 +120,16 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
           this.dataGenFac = 0;
 
           this.porcentGen = 0;
-        }
+        }        
+        
+        this.graficos = {
+          'general': {
+            'labels': ['Recibido', '100%'],
+            'data':  [(this.porcentGen * 100), (100 - (this.porcentGen * 100))],
+            'type': 'doughnut',
+            'leyenda': 'otro'
+          }
+        };
 
       });
 

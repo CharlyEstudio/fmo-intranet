@@ -59,4 +59,35 @@ export class PhpService {
 
     return this.http.get( this.url );
   }
+
+  ventaActual() {
+    this.url = 'http://192.168.1.250/api/ventas.php?opcion=1';
+
+    return this.http.get( this.url );
+  }
+
+  ventaAnterior() {
+    this.url = 'http://192.168.1.250/api/ventas.php?opcion=2';
+
+    return this.http.get( this.url );
+  }
+
+  zona1() {
+    this.url = 'http://192.168.1.250/api/ventas.php?opcion=3&zona=1';
+
+    return this.http.get( this.url );
+  }
+
+  zona2() {
+    this.url = 'http://192.168.1.250/api/ventas.php?opcion=3&zona=2';
+
+    return this.http.get( this.url );
+  }
+
+  especial() {
+    this.url = 'http://192.168.1.250/api/ventas.php?opcion=4';
+
+    return this.http.get( this.url );
+  }
+
 }

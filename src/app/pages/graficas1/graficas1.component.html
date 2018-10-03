@@ -1,0 +1,69 @@
+<div class="row">
+
+    <div class="col-6">
+
+        <div class="card">
+
+            <div class="card-body">
+
+                <h4 class="card-title">{{ graficos.grafico1.leyenda }}</h4>
+
+                <app-grafico-dona [ChartType]="graficos.grafico1.type" [leyenda]="graficos.grafico1.leyenda" [ChartData]="graficos.grafico1.data" [ChartLabels]="graficos.grafico1.labels">
+                </app-grafico-dona>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-6">
+
+        <div class="card">
+
+            <div class="card-body">
+
+                <h4 class="card-title">{{ graficos.grafico2.leyenda }}</h4>
+
+                <app-grafico-dona [ChartType]="graficos.grafico2.type" [leyenda]="graficos.grafico2.leyenda" [ChartData]="graficos.grafico2.data" [ChartLabels]="graficos.grafico2.labels">
+                </app-grafico-dona>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-6">
+
+        <div class="card">
+
+            <div class="card-body">
+
+                <h4 class="card-title">{{ graficos.grafico3.leyenda }}</h4>
+
+                <app-grafico-dona [ChartType]="graficos.grafico3.type" [leyenda]="graficos.grafico3.leyenda" [ChartData]="graficos.grafico3.data" [ChartLabels]="graficos.grafico3.labels"></app-grafico-dona>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-6">
+
+        <div class="card">
+
+            <div class="card-body">
+
+                <h4 class="card-title">{{ graficos.grafico4.leyenda }}</h4>
+
+                <app-grafico-dona [ChartType]="graficos.grafico4.type" [leyenda]="graficos.grafico4.leyenda" [ChartData]="graficos.grafico4.data" [ChartLabels]="graficos.grafico4.labels"></app-grafico-dona>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

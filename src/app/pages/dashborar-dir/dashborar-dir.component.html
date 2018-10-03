@@ -1,0 +1,67 @@
+<div class="row">
+
+    <div class="col-12" style="padding-bottom: 10px;">
+
+        <h3>Línea de Tiempo</h3>
+
+        <h6 class="card-subtitle">{{ fecha | date: 'fullDate' }}</h6>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="card">
+
+            <app-por-bajar></app-por-bajar>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="card">
+
+            <app-por-surtir></app-por-surtir>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="card">
+
+            <app-ped-facturados></app-ped-facturados>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="card">
+
+            <app-ped-cancelados></app-ped-cancelados>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-lg-6 col-md-12">
+
+        <app-ped-totales></app-ped-totales>
+
+    </div>
+
+    <div class="col-lg-6 col-md-12">
+
+        <app-nivel-servicio></app-nivel-servicio>
+
+    </div>
+
+</div>

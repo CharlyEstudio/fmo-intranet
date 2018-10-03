@@ -1,0 +1,146 @@
+/* You can add global styles to this file, and also import other style files */
+
+.navbar-header .navbar-brand span strong {
+    font-weight: 700;
+}
+
+#themecolors a {
+    cursor: pointer;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.w150 {
+    width: 150px;
+}
+
+.w70 {
+    width: 70px;
+}
+
+.img .card-body,
+.modal .modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-50 {
+    width: 50px;
+}
+
+.oculto {
+    display: none;
+}
+
+.fondo-negro {
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+
+.totales .p-r-0 h1{
+    text-align: right;
+}
+
+/**
+ *
+ * ESCRITORIO GRANDE
+ *
+ */
+
+ @media(min-width: 1200px){
+	
+}
+
+/**
+ *
+ * ESCRITORIO MEDIANO O TABLET HORIZONTAL
+ *
+ */
+
+@media(max-width: 1199px) and (min-width: 992px){
+
+    .servicio{
+        height: 300px!important;
+    }
+
+    .soc-header{
+        font-size: 18px!important;
+    }
+
+    .soc-content h3, .soc-content h5{
+        font-size: 14px!important;
+    }
+
+    .p-r-0{
+        padding-left: 0px!important;
+    }
+
+    .p-r-0 h1.font-light{
+        font-size: 28px!important;
+    }
+
+    .p-b-20 font.display-3{
+        font-size: 2rem!important;
+    }
+
+    .p-r-0 h6, .p-r-0 h5{
+        font-size: 12px!important;
+    }
+
+    .p-r-0 h5{
+        font-weight: 700!important;
+    }
+	
+}
+
+/**
+ *
+ * ESCRITORIO PEQUEÑO O TABLET VERTICAL
+ *
+ */
+
+@media(max-width: 991px) and (min-width: 768px){
+
+	.totales{
+        height: 820px!important;
+        text-align: center!important;
+    }
+
+    .totales .b-l{
+        border: none;
+    }
+
+    .totales .p-r-0 h1{
+        text-align: center!important;
+    }
+
+}
+
+/**
+ *
+ * DISPOSITIVOS MOVILES
+ *
+ */
+
+@media(max-width: 767px){
+	.totales{
+        text-align: center!important;
+    }
+
+    .totales .p-r-0 h1{
+        text-align: center!important;
+    }
+
+    .p-b-20 font.display-3{
+        font-size: 3.5rem!important;
+    }
+}

@@ -1,0 +1,66 @@
+<h3 class="text-muted text-center">Pedidos del Día</h3>
+        
+<div class="card totales">
+
+    <div class="row">
+
+        <div class="col-lg-6 col-md-12">
+
+            <div class="card-body">
+
+                <div class="m-t-30 m-b-40 p-t-20 p-b-20 text-center">
+
+                    <font class="display-3">{{ cantTot }}</font>
+
+                    <h6 class="text-muted">CANTIDAD</h6>
+
+                    <button type="button" class="btn btn-success">Ver Detalles</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-6 col-md-12 b-l p-l-0">
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <!-- Column -->
+                    <div class="col-12 p-r-0" style="padding-bottom: 15px;">
+
+                        <h6 class="text-muted">Subotal</h6>
+                        
+                        <h1 class="font-light">{{ sub | currency }}</h1>
+
+                    </div>
+
+                    <!-- Column -->
+                    <div class="col-12 p-r-0" style="padding-bottom: 15px;">
+
+                        <h6 class="text-muted">Impuesto</h6>
+                        
+                        <h1 class="font-light">{{ impuesto | currency }}</h1>
+
+                    </div>
+
+                    <!-- Column -->
+                    <div class="col-12 p-r-0" style="padding-bottom: 15px;">
+
+                        <h6 class="text-muted">Total</h6>
+                        
+                        <h1 class="font-light">{{ tot | currency }}</h1>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

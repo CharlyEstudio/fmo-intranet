@@ -1,0 +1,141 @@
+<h3 class="text-muted text-center">Nivel de Servicio</h3>
+        
+<div class="card servicio">
+
+    <div class="row">
+
+        <div class="col-lg-6 col-md-12 b-l text-center">
+
+            <div class="card-body">
+
+                <div class="m-t-30 m-b-40 p-t-20 p-b-20 text-center">
+
+                    <h6 class="text-muted">General</h6>
+                    
+                    <font class="display-3">{{ porcentGen | percent: '2.1' }}</font>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-6 col-md-12 text-center">
+
+                        <!-- Column -->
+                        <div class="col-12 p-r-0">
+
+                            <h6 class="text-muted">Cotizado</h6>
+                            
+                            <h5 class="font-light">{{ dataGenCot | currency }}</h5>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-6 col-md-12 text-center">
+
+                        <!-- Column -->
+                        <div class="col-12 p-r-0">
+
+                            <h6 class="text-muted">Facturado</h6>
+                            
+                            <h5 class="font-light">{{ dataGenFac | currency }}</h5>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        
+        </div>
+
+        <div class="col-lg-6 col-md-12 b-l p-l-0">
+
+            <div class="card-body text-center">
+
+                <!-- Column -->
+                <div class="col-12 p-r-0" style="padding-bottom: 5px;">
+
+                    <h6 class="text-muted">Truper</h6>
+                    
+                    <h1 class="font-light">{{ porcentTru | percent: '2.1' }}</h1>
+
+                    <div class="row">
+                    
+                        <div class="col-lg-6 col-md-12 text-center">
+
+                            <!-- Column -->
+                            <div class="col-12 p-r-0">
+
+                                <h6 class="text-muted">Cotizado</h6>
+                                
+                                <h5 class="font-light">{{ dataTruCot | currency }}</h5>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-6 col-md-12 text-center">
+
+                            <!-- Column -->
+                            <div class="col-12 p-r-0">
+
+                                <h6 class="text-muted">Facturado</h6>
+                                
+                                <h5 class="font-light">{{ dataTruFac | currency }}</h5>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Column -->
+                <div class="col-12 p-r-0">
+
+                    <h6 class="text-muted">Ferremayoristas</h6>
+                    
+                    <h1 class="font-light">{{ porcentFMO | percent: '2.1' }}</h1>
+
+                    <div class="row">
+                    
+                        <div class="col-lg-6 col-md-12 text-center">
+
+                            <!-- Column -->
+                            <div class="col-12 p-r-0">
+
+                                <h6 class="text-muted">Cotizado</h6>
+                                
+                                <h5 class="font-light">{{ dataFMOCot | currency }}</h5>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-6 col-md-12 text-center">
+
+                            <!-- Column -->
+                            <div class="col-12 p-r-0">
+
+                                <h6 class="text-muted">Facturado</h6>
+                                
+                                <h5 class="font-light">{{ dataFMOFac | currency }}</h5>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        
+        </div>
+
+    </div>
+
+</div>

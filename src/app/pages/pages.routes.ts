@@ -152,22 +152,32 @@ const pageRoutes: Routes = [
 
 var usuario = JSON.parse(localStorage.getItem('usuario'));
 
-if (usuario.rol === 'ADMIN_ROLE' || usuario.rol === 'DIR_ROLE') {
+if (localStorage.getItem('usuario') != undefined) {
 
-    pageRoutes.push(
-        {
-            path: '', redirectTo: '/dashboardDir', pathMatch: 'full'
-        }
-    );
+    if (usuario.rol === 'ADMIN_ROLE' || usuario.rol === 'DIR_ROLE') {
+
+        pageRoutes.push(
+            {
+                path: '', redirectTo: '/dashboardDir', pathMatch: 'full'
+            }
+        );
+
+    } else {
+
+        pageRoutes.push(
+            {
+                path: '', redirectTo: '/dashboard', pathMatch: 'full'
+            }
+        );
+
+    }
 
 } else {
-
     pageRoutes.push(
         {
             path: '', redirectTo: '/dashboard', pathMatch: 'full'
         }
     );
-
 }
 
 export const PAGES_ROUTES = RouterModule.forChild( pageRoutes );

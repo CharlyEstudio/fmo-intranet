@@ -15,7 +15,8 @@ import {
   VerificaTokenGuard,
   AdminGuard,
   SubirArchivoService,
-  PhpService
+  PhpService,
+  DiariosService
 } from "./services.index";
 
 @NgModule({
@@ -35,7 +36,8 @@ import {
     AdminGuard,
     SubirArchivoService,
     ModalUploadService,
-    PhpService
+    PhpService,
+    DiariosService
   ],
   declarations: []
 })

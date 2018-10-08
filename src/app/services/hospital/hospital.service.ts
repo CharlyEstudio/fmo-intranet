@@ -8,7 +8,9 @@ import { UsuarioService } from '../usuario/usuario.service';
 
 import { URL_SERVICIOS } from '../../config/config';
 
-import swal from 'sweetalert';
+// import swal from 'sweetalert';
+
+import { SweetAlert } from 'sweetalert/typings/core';
 
 declare function init_plugins();
 

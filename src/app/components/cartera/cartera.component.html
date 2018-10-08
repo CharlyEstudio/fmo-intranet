@@ -1,89 +1,176 @@
-<div class="card">
+<!-- <div class="card">
+  <div class="card-body">
+      <div class="d-flex flex-row">
+          <div class="">
+              <div class="p-2 display-5 animated fadeIn text-center text-success" *ngIf="heart === 3">
+  
+                  <div class="animated pulse2">
+              
+                      <i class="mdi mdi-heart-pulse"></i>
+              
+                  </div>
+              
+              </div>
+              
+              <div class="p-2 display-5 animated fadeIn text-center text-warning" *ngIf="heart === 2">
+              
+                  <div class="animated pulse2">
+              
+                      <i class="mdi mdi-heart-pulse"></i>
+              
+                  </div>
+              
+              </div>
+              
+              <div class="p-2 display-5 animated fadeIn text-center text-danger" *ngIf="heart === 1">
+              
+                  <div class="animated pulse2">
+              
+                  <i class="mdi mdi-heart-pulse"></i>
+              
+                  </div>
+              
+              </div>
+              
+              <div class="p-2 display-5 animated fadeIn right-side-toggle" style="padding-left: 56px!important;" *ngIf="heart === 0">
+              
+                  <i class="ti-reload"></i>
+  
+                  <br>
+      
+              </div>
+          </div>
+          <div class="p-l-20">
+              <h3 class="font-medium">
+                  Estado Financiero
+              </h3>
+              <h6>{{ fecha | date }}</h6>
+          </div>
+          <div class="col b-r text-center">
+              <h2 class="font-light">{{ tot | currency }}</h2>
+              <h6>Financiado</h6>
+          </div>
+          <div class="col b-r text-center">
+              <h2 class="font-light">{{ sal | currency }}</h2>
+              <h6>Saldo</h6>
+          </div>
+          <div class="col text-center">
+              <h2 class="font-light">{{ ven | currency }}</h2>
+              <h6>Morosidad</h6>
+          </div>
+      </div>
+  </div>
+</div> -->
+  
+<div class="card totales">
 
     <div class="card-body">
-  
-      <h4 class="card-title">Cartera Total</h4>
-  
-      <div class="d-flex align-items-center flex-row">
-  
-        <div class="p-2 display-5 animated fadeIn text-success" *ngIf="heart === 3">
-      
-            <div class="animated pulse2">
-      
-              <i class="mdi mdi-heart-pulse"></i> <span>Estable</span>
-      
-            </div>
-      
-        </div>
-      
-        <div class="p-2 display-5 animated fadeIn text-warning" *ngIf="heart === 2">
-      
-            <div class="animated pulse2">
-      
-              <i class="mdi mdi-heart-pulse"></i> <span>Inestable</span>
-      
-            </div>
-      
-        </div>
-      
-        <div class="p-2 display-5 animated fadeIn text-danger" *ngIf="heart === 1">
-      
-          <div class="animated pulse2">
-      
-            <i class="mdi mdi-heart-pulse"></i> <span>Crítico</span>
-      
+
+        <div class="d-flex flex-row">
+
+          <div class="p-l-20">
+
+              <h3 class="font-medium">
+
+                  Estado Financiero
+
+              </h3>
+
+              <h6>{{ fecha | date }}</h6>
+
           </div>
-      
+
         </div>
-      
-        <div class="p-2 display-5 animated fadeIn right-side-toggle" *ngIf="heart === 0">
-      
-          <i class="ti-reload"></i> <span style="padding-left: 70px;">Obteniendo...</span>
-      
+
+        <div class="row">
+
+            <div class="col-lg-12 col-md-12">
+
+                <div class="m-t-30 m-b-40 p-t-20 p-b-20 text-center">
+
+                    <div class="">
+
+                        <div class="p-2 display-1 animated fadeIn text-center text-success" *ngIf="heart === 3">
+          
+                            <div class="animated pulse2">
+                        
+                                <i class="mdi mdi-heart-pulse"></i>
+                        
+                            </div>
+                        
+                        </div>
+                        
+                        <div class="p-2 display-1 animated fadeIn text-center text-warning" *ngIf="heart === 2">
+                        
+                            <div class="animated pulse2">
+                        
+                                <i class="mdi mdi-heart-pulse"></i>
+                        
+                            </div>
+                        
+                        </div>
+                        
+                        <div class="p-2 display-1 animated fadeIn text-center text-danger" *ngIf="heart === 1">
+                        
+                            <div class="animated pulse2">
+                        
+                            <i class="mdi mdi-heart-pulse"></i>
+                        
+                            </div>
+                        
+                        </div>
+                        
+                        <div class="p-2 display-1 animated fadeIn right-side-toggle" style="padding-left: 56px!important;" *ngIf="heart === 0">
+                        
+                            <i class="ti-reload"></i>
+          
+                            <br>
+                
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-12 col-md-12 text-center">
+
+                <div class="row">
+
+                    <!-- Column -->
+                    <div class="col-4" style="padding-bottom: 15px;">
+
+                        <h6 class="text-muted">Cartera Total</h6>
+                        
+                        <h4 class="font-light">{{ tot | currency }}</h4>
+
+                    </div>
+
+                    <!-- Column -->
+                    <div class="col-4" style="padding-bottom: 15px;">
+
+                        <h6 class="text-muted">Cartera Sana</h6>
+                        
+                        <h4 class="font-light text-success">{{ sal | currency }}</h4>
+
+                    </div>
+
+                    <!-- Column -->
+                    <div class="col-4">
+
+                        <h6 class="text-muted">Cartera Vencida</h6>
+                        
+                        <h4 class="font-light text-danger">{{ ven | currency }}</h4>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
-      
-      </div>
-  
-      <table class="table no-border">
-  
-        <tbody>
-  
-          <tr>
-  
-              <td>Mes Actual</td>
-  
-              <td class="font-medium">{{ '1000' | currency }}</td>
-  
-              <td>Mes Anterior</td>
-  
-              <td class="font-medium">{{ '1000' | currency }}</td>
-  
-          </tr>
-  
-          <tr>
-  
-              <td>Zona 1</td>
-  
-              <td class="font-medium">$ 10,617,494.91</td>
-  
-              <td>Zona 2</td>
-  
-              <td class="font-medium">$ 10,617,494.91</td>
-  
-          </tr>
-  
-          <tr>
-  
-              <td colspan="2" class="text-right">Especiales</td>
-  
-              <td colspan="2" class="font-medium">$ 10,617,494.91</td>
-  
-          </tr>
-  
-        </tbody>
-  
-      </table>
-  
+
     </div>
-  
-  </div>
+
+</div>

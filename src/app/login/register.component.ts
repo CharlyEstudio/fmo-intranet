@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UsuarioService } from '../services/services.index';
 
 import * as _swal from 'sweetalert';
-import { SweetAlert } from 'sweetalert/typings/core';
+import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
 import { Usuario } from '../models/usuario.model';
 import { Router } from '@angular/router';
 const swal: SweetAlert = _swal as any;

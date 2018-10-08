@@ -23,6 +23,20 @@ import { PedTotalesComponent } from '../components/ped-totales/ped-totales.compo
 import { NivelServicioComponent } from '../components/nivel-servicio/nivel-servicio.component';
 import { VentasMensualesComponent } from '../components/ventas-mensuales/ventas-mensuales.component';
 import { CarteraComponent } from '../components/cartera/cartera.component';
+import { Vencido015Component } from '../components/cartera/vencido015/vencido015.component';
+import { Vencido1530Component } from '../components/cartera/vencido1530/vencido1530.component';
+import { Vencido3060Component } from '../components/cartera/vencido3060/vencido3060.component';
+import { Vencido6090Component } from '../components/cartera/vencido6090/vencido6090.component';
+import { VentaComponent } from './diarios/venta/venta.component';
+import { CompraComponent } from './diarios/compra/compra.component';
+import { UtilidadesComponent } from './diarios/utilidades/utilidades.component';
+import { NotasComponent } from './diarios/notas/notas.component';
+import { InventarioComponent } from './diarios/inventario/inventario.component';
+import { BackorderComponent } from './diarios/backorder/backorder.component';
+import { EntSalComponent } from './diarios/ent-sal/ent-sal.component';
+import { RepoLunesComponent } from './diarios/repo-lunes/repo-lunes.component';
+import { CarteraProveedoresComponent } from './diarios/cartera-proveedores/cartera-proveedores.component';
+import { CarteraClientesComponent } from './diarios/cartera-clientes/cartera-clientes.component';
 // import { ProgressComponent } from './progress/progress.component';
 // import { Graficas1Component } from './graficas1/graficas1.component';
 // import { PagesComponent } from './pages.component';
@@ -65,6 +79,20 @@ import { PipesModule } from '../pipes/pipes.module';
         NivelServicioComponent,
         VentasMensualesComponent,
         CarteraComponent,
+        Vencido015Component,
+        Vencido1530Component,
+        Vencido3060Component,
+        Vencido6090Component,
+        VentaComponent,
+        CompraComponent,
+        UtilidadesComponent,
+        NotasComponent,
+        InventarioComponent,
+        BackorderComponent,
+        EntSalComponent,
+        RepoLunesComponent,
+        CarteraProveedoresComponent,
+        CarteraClientesComponent,
         // PagesComponent,
         // PromesasComponent, // Desactivado por no usarlo
         // ProgressComponent, // Desactivado por no usarlo

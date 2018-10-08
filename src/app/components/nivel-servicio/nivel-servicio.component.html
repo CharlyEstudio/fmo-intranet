@@ -8,10 +8,8 @@
 
             <div class="col-lg-6 col-md-12 text-center">
 
-                    <div class="m-b-40 text-center">
+                    <div class="text-center">
 
-                        <!-- <h6 class="text-muted">General</h6> -->
-                        
                         <span>{{ porcentGen | percent: '2.2' }}</span>
 
                         <app-grafico-dona [ChartType]="graficos.general.type" [leyenda]="graficos.general.leyenda" [ChartData]="graficos.general.data" [ChartLabels]="graficos.general.labels" ></app-grafico-dona>

@@ -19,44 +19,16 @@ import { BusquedaComponent } from './busqueda/busqueda.component';
 // Guards
 import { AdminGuard, VerificaTokenGuard } from '../services/services.index';
 
-
-//     {
-//         path: 'progress',
-//         component: ProgressComponent,
-//         data:
-//                 {
-//                     titulo: 'Progress',
-//                     name: 'description'
-//                 }
-//     },
-//     {
-//         path: 'graficas1',
-//         component: Graficas1Component,
-//         data:
-//                 {
-//                     titulo: 'Gráficas',
-//                     name: 'description'
-//                 }
-//     },
-//     {
-//         path: 'promesas',
-//         component: PromesasComponent,
-//         data:
-//                 {
-//                     titulo: 'Promesas',
-//                     name: 'description'
-//                 }
-//     },
-//     {
-//         path: 'rxjs',
-//         component: RxjsComponent,
-//         data:
-//                 {
-//                     titulo: 'RXJS',
-//                     name: 'description'
-//                 }
-//     },
-
+import { VentaComponent } from './diarios/venta/venta.component';
+import { CompraComponent } from './diarios/compra/compra.component';
+import { UtilidadesComponent } from './diarios/utilidades/utilidades.component';
+import { NotasComponent } from './diarios/notas/notas.component';
+import { InventarioComponent } from './diarios/inventario/inventario.component';
+import { BackorderComponent } from './diarios/backorder/backorder.component';
+import { EntSalComponent } from './diarios/ent-sal/ent-sal.component';
+import { RepoLunesComponent } from './diarios/repo-lunes/repo-lunes.component';
+import { CarteraProveedoresComponent } from './diarios/cartera-proveedores/cartera-proveedores.component';
+import { CarteraClientesComponent } from './diarios/cartera-clientes/cartera-clientes.component';
 
 const pageRoutes: Routes = [
     {
@@ -117,57 +89,121 @@ const pageRoutes: Routes = [
                     titulo: 'Mantenimiento de Usuarios',
                     name: 'description'
                 }
-    }/*,
+    },
+    // Diarios
     {
-        path: 'hospitales',
+        path: 'dVentas',
+        component: VentaComponent,
         canActivate: [ AdminGuard, VerificaTokenGuard ],
-        component: HospitalesComponent,
         data:
                 {
-                    titulo: 'Mantenimiento de Asesores',
+                    titulo: 'Diario de Ventas',
                     name: 'description'
                 }
     },
     {
-        path: 'medicos',
+        path: 'dCompras',
+        component: CompraComponent,
         canActivate: [ AdminGuard, VerificaTokenGuard ],
-        component: MedicosComponent,
         data:
                 {
-                    titulo: 'Mantenimiento de Clientes',
+                    titulo: 'Diario de Ventas',
                     name: 'description'
                 }
     },
     {
-        path: 'medico/:id',
+        path: 'utilidades',
+        component: UtilidadesComponent,
         canActivate: [ AdminGuard, VerificaTokenGuard ],
-        component: MedicoComponent,
         data:
                 {
-                    titulo: 'Actualizar Médico',
+                    titulo: 'Diario de Ventas',
                     name: 'description'
                 }
-    }*/
+    },
+    {
+        path: 'notCred',
+        component: NotasComponent,
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Diario de Ventas',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'dInventario',
+        component: InventarioComponent,
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Diario de Ventas',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'backorder',
+        component: BackorderComponent,
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Diario de Ventas',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'ent-sal',
+        component: EntSalComponent,
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Diario de Ventas',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'dias-lunes',
+        component: RepoLunesComponent,
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Diario de Ventas',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'cProveedores',
+        component: CarteraProveedoresComponent,
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Diario de Ventas',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'cClientes',
+        component: CarteraClientesComponent,
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Diario de Ventas',
+                    name: 'description'
+                }
+    },
+    // Redirección
+    {
+        path: '',
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        redirectTo: '/dashboardDir',
+        pathMatch: 'full'
+    },
+    {
+        path: '',
+        redirectTo: '/dashboard',
+        pathMatch: 'full'
+    }
+
 ];
-
-var usuario = JSON.parse(localStorage.getItem('usuario'));
-
-if (usuario.rol === 'ADMIN_ROLE' || usuario.rol === 'DIR_ROLE') {
-
-    pageRoutes.push(
-        {
-            path: '', redirectTo: '/dashboardDir', pathMatch: 'full'
-        }
-    );
-
-} else {
-
-    pageRoutes.push(
-        {
-            path: '', redirectTo: '/dashboard', pathMatch: 'full'
-        }
-    );
-
-}
 
 export const PAGES_ROUTES = RouterModule.forChild( pageRoutes );

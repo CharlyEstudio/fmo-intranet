@@ -13,6 +13,8 @@ import { URL_SERVICIOS } from '../../config/config';
 
 // import swal from 'sweetalert';
 
+import { SweetAlert } from 'sweetalert/typings/core';
+
 import { SubirArchivoService } from '../subirArchivo/subir-archivo.service';
 
 @Injectable()
@@ -42,8 +44,8 @@ export class UsuarioService {
       })
       .catch( err => {
         this.router.navigate(['/login']);
-        // swal('No se pudo renovar token', 'No fue posible renovar token', 'error');
-        alert('No se pudo renovar token - No fue posible renovar token');
+        swal('No se pudo renovar token', 'No fue posible renovar token', 'error');
+        // alert('No se pudo renovar token - No fue posible renovar token');
         return Observable.throw( err );
       });
   }
@@ -119,8 +121,8 @@ export class UsuarioService {
         return true;
       })
       .catch( err => {
-        // swal('Error en el login', err.error.errors.message, 'error');
-        alert('Error en el login ' + err.error.errors.message);
+        swal('Error en el login', err.error.errors.message, 'error');
+        // alert('Error en el login ' + err.error.errors.message);
         return Observable.throw( err );
       });
   }
@@ -130,13 +132,13 @@ export class UsuarioService {
 
     return this.http.post( url, usuario )
       .map( (resp: any) => {
-        // swal ('Usuario creado', usuario.email, 'success');
-        alert('Usuario creado ' + usuario.email);
+        swal ('Usuario creado', usuario.email + '. El administrador activará su cuenta.', 'success');
+        // alert('Usuario creado ' + usuario.email);
         return resp.usuario;
       })
       .catch( err => {
-        // swal(err.error.mensaje , err.error.errors.message, 'error');
-        alert(err.error.mensaje + err.error.errors.message);
+        swal(err.error.mensaje , err.error.errors.message, 'error');
+        // alert(err.error.mensaje + err.error.errors.message);
         return Observable.throw( err );
       });
   }
@@ -153,14 +155,14 @@ export class UsuarioService {
           this.guardarStorage( usuarioDB._id, this.token, usuarioDB, this.menu );
         }
 
-        // swal('Usuario Actualizado!', usuario.nombre, 'success');
-        alert('Usuario Actualizado! ' + usuario.nombre);
+        swal('Usuario Actualizado!', usuario.nombre, 'success');
+        // alert('Usuario Actualizado! ' + usuario.nombre);
 
         return true;
       })
       .catch( err => {
-        // swal(err.error.mensaje , err.error.errors.message, 'error');
-        alert(err.error.mensaje + err.error.errors.message);
+        swal(err.error.mensaje , err.error.errors.message, 'error');
+        // alert(err.error.mensaje + err.error.errors.message);
         return Observable.throw( err );
       });
   }
@@ -170,8 +172,8 @@ export class UsuarioService {
       .then( ( resp: any ) => {
         this.usuario.img = resp.usuario.img;
 
-        // swal('Imagen Actualizada', this.usuario.nombre, 'success');
-        alert('Imagen Actualizada ' + this.usuario.nombre);
+        swal('Imagen Actualizada', this.usuario.nombre, 'success');
+        // alert('Imagen Actualizada ' + this.usuario.nombre);
 
         this.guardarStorage( id, this.token, this.usuario, this.menu );
       })
@@ -199,8 +201,8 @@ export class UsuarioService {
 
     return this.http.delete( url )
       .map( resp => {
-        // swal('¡Usuario Borrado!', 'El usuario ha sido eliminado correctamente', 'success');
-        alert('¡Usuario Borrado!' + 'El usuario ha sido eliminado correctamente');
+        swal('¡Usuario Borrado!', 'El usuario ha sido eliminado correctamente', 'success');
+        // alert('¡Usuario Borrado!' + 'El usuario ha sido eliminado correctamente');
         return true;
       });
   }

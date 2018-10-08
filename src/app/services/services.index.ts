@@ -13,6 +13,7 @@ export { MedicoService } from "./medico/medico.service";
 export { SettingsService } from "./settings/settings.service";
 export { SharedService } from "./shared/shared.service";
 export { SidebarService } from "./shared/sidebar.service";
+export { DiariosService } from "./php/diarios.service";
 
 // Servicio PHP
 export { PhpService } from "./php/php.service";

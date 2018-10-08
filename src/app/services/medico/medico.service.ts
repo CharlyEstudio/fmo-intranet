@@ -7,7 +7,9 @@ import { Medico } from '../../models/medico.model';
 
 import { UsuarioService } from '../usuario/usuario.service';
 
-import swal from 'sweetalert';
+// import swal from 'sweetalert';
+
+import { SweetAlert } from 'sweetalert/typings/core';
 
 @Injectable()
 export class MedicoService {

@@ -20,6 +20,14 @@ export class PedFacturadosComponent implements OnInit, OnDestroy {
   factuImpo: number = 0;
   intFactu: any;
 
+  // Por Zona o Lugar
+  zona1: number = 0;
+  zona1Impo: number = 0;
+  zona2: number = 0;
+  zona2Impo: number = 0;
+  especiales: number = 0;
+  especialesImpo: number = 0;
+
   constructor(
     private _phpService: PhpService
   ) {
@@ -48,6 +56,27 @@ export class PedFacturadosComponent implements OnInit, OnDestroy {
         }
       });
 
+    // Facturado Zona 1
+    this._phpService.facturadoZona('2')
+      .subscribe( ( data ) => {
+        this.zona1 = data[0].cantidad;
+        this.zona1Impo = data[0].importe;
+      });
+
+    // Facturado Zona 2
+    this._phpService.facturadoZona('1')
+      .subscribe( ( data ) => {
+        this.zona2 = data[0].cantidad;
+        this.zona2Impo = data[0].importe;
+      });
+
+    // Facturado Especiales
+    this._phpService.facturadoEspecial()
+      .subscribe( ( data ) => {
+        this.especiales = data[0].cantidad;
+        this.especialesImpo = data[0].importe;
+      });
+
   }
 
   ngOnDestroy() {
@@ -61,6 +90,7 @@ export class PedFacturadosComponent implements OnInit, OnDestroy {
     return new Observable((observer: Subscriber<any>) => {
       this.intFactu = setInterval( () => {
         
+        // Facturados Total
         this._phpService.facturados()
           .subscribe( ( data ) => {
 
@@ -80,6 +110,27 @@ export class PedFacturadosComponent implements OnInit, OnDestroy {
               observer.next(facturados);
             }
 
+          });
+
+        // Facturado Zona 1
+        this._phpService.facturadoZona('2')
+        .subscribe( ( data ) => {
+          this.zona1 = data[0].cantidad;
+          this.zona1Impo = data[0].importe;
+        });
+
+        // Facturado Zona 2
+        this._phpService.facturadoZona('1')
+          .subscribe( ( data ) => {
+            this.zona2 = data[0].cantidad;
+            this.zona2Impo = data[0].importe;
+          });
+
+        // Facturado Especiales
+        this._phpService.facturadoEspecial()
+          .subscribe( ( data ) => {
+            this.especiales = data[0].cantidad;
+            this.especialesImpo = data[0].importe;
           });
 
       }, 3000);

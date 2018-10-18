@@ -8,13 +8,13 @@ import 'rxjs/add/operator/retry';
 import 'rxjs/add/operator/filter';
 
 @Component({
-  selector: 'app-vencido3060',
-  templateUrl: './vencido3060.component.html',
+  selector: 'app-vencido1730',
+  templateUrl: './vencido1730.component.html',
   styles: []
 })
-export class Vencido3060Component implements OnInit, OnDestroy {
+export class Vencido1730Component implements OnInit, OnDestroy {
 
-  // Morisidad de 30 a 60 días
+  // Morisidad de 17 a 30 días
   morosidad: Subscription;
   mor: number = 0;
   intMor: any;
@@ -37,7 +37,7 @@ export class Vencido3060Component implements OnInit, OnDestroy {
   ngOnInit() {
 
     // Morosidad
-    this._phpService.mor3060()
+    this._phpService.mor1730()
       .subscribe((data) => {
         if ( data[0].importe != 0 ) {
           this.mor = data[0].importe;
@@ -56,14 +56,14 @@ export class Vencido3060Component implements OnInit, OnDestroy {
 
   }
 
-  // Observable de MOrosidad
+  // Observable de Morosidad
   regresaMorosidad(): Observable<any> {
 
     return new Observable((observer: Subscriber<any>) => {
 
       this.intMor = setInterval( () => {
         
-        this._phpService.mor3060()
+        this._phpService.mor1730()
           .subscribe( ( data ) => {
 
             if (data[0].importe != 0) {

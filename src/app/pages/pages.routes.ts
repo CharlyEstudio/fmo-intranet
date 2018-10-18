@@ -107,7 +107,7 @@ const pageRoutes: Routes = [
         canActivate: [ AdminGuard, VerificaTokenGuard ],
         data:
                 {
-                    titulo: 'Diario de Ventas',
+                    titulo: 'Diario de Compras',
                     name: 'description'
                 }
     },
@@ -117,7 +117,7 @@ const pageRoutes: Routes = [
         canActivate: [ AdminGuard, VerificaTokenGuard ],
         data:
                 {
-                    titulo: 'Diario de Ventas',
+                    titulo: 'Utilidades',
                     name: 'description'
                 }
     },
@@ -127,7 +127,7 @@ const pageRoutes: Routes = [
         canActivate: [ AdminGuard, VerificaTokenGuard ],
         data:
                 {
-                    titulo: 'Diario de Ventas',
+                    titulo: 'Notas de Crédito',
                     name: 'description'
                 }
     },
@@ -137,7 +137,7 @@ const pageRoutes: Routes = [
         canActivate: [ AdminGuard, VerificaTokenGuard ],
         data:
                 {
-                    titulo: 'Diario de Ventas',
+                    titulo: 'Diario de Inventario',
                     name: 'description'
                 }
     },
@@ -147,7 +147,7 @@ const pageRoutes: Routes = [
         canActivate: [ AdminGuard, VerificaTokenGuard ],
         data:
                 {
-                    titulo: 'Diario de Ventas',
+                    titulo: 'Back Order',
                     name: 'description'
                 }
     },
@@ -157,7 +157,7 @@ const pageRoutes: Routes = [
         canActivate: [ AdminGuard, VerificaTokenGuard ],
         data:
                 {
-                    titulo: 'Diario de Ventas',
+                    titulo: 'Entradas & Salidas',
                     name: 'description'
                 }
     },
@@ -167,7 +167,7 @@ const pageRoutes: Routes = [
         canActivate: [ AdminGuard, VerificaTokenGuard ],
         data:
                 {
-                    titulo: 'Diario de Ventas',
+                    titulo: 'Días Lunes',
                     name: 'description'
                 }
     },
@@ -177,7 +177,7 @@ const pageRoutes: Routes = [
         canActivate: [ AdminGuard, VerificaTokenGuard ],
         data:
                 {
-                    titulo: 'Diario de Ventas',
+                    titulo: 'Cartera de Proveedores',
                     name: 'description'
                 }
     },
@@ -187,7 +187,7 @@ const pageRoutes: Routes = [
         canActivate: [ AdminGuard, VerificaTokenGuard ],
         data:
                 {
-                    titulo: 'Diario de Ventas',
+                    titulo: 'Cartera de Clientes',
                     name: 'description'
                 }
     },

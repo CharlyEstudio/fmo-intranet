@@ -1,33 +1,62 @@
-<div class="card">
-        
-    <div class="row">
+<!--<div class="card" style="background: #4875b4!important;">-->
+<div class="card bg-success">
 
-        <div class="col-12">
+    <div class="card-body">
 
-            <div class="social-widget">
+        <h3 class="card-title text-white">
+            <i class="mdi mdi-barcode-scan display-5 text-white"></i> Facturados Total
+        </h3>
 
-                <div class="soc-header box-linkedin">FACTURADOS</div>
+        <hr style="border-color: white;">
 
-                <div class="soc-content">
+        <div class="row">
 
-                    <div class="col-6 b-r">
+            <div class="col-lg-12 col-md-12 text-center">
 
-                        <h3 class="font-medium">{{ factu }}</h3>
+                <span class="text-white">QRO </span>
 
-                        <h5 class="text-muted">Cantidad</h5></div>
-
-                    <div class="col-6">
-
-                        <h3 class="font-medium">{{ factuImpo | currency }}</h3>
-
-                        <h5 class="text-muted">Importe</h5></div>
-
-                </div>
+                <span class="text-white"> {{ zona1 }} - {{ zona1Impo | currency }}</span>
 
             </div>
 
+            <div class="col-lg-12 col-md-12 text-center">
+
+                <span class="text-white">TX </span>
+
+                <span class="text-white"> {{ zona2 }} - {{ zona2Impo | currency }}</span>
+
+            </div>
+
+            <div class="col-lg-12 col-md-12 text-center">
+
+                <span class="text-white">Esp </span>
+
+                <span class="text-white"> {{ especiales }} - {{ especialesImpo | currency }}</span>
+
+            </div>
+
+            <div class="clearfix"></div>
+
+            
+            <div class="col-lg-12 col-md-12 text-center">
+
+                <hr style="border-color: white;">
+
+                <h3 class="text-white font-light">
+
+                    <div>
+
+                        <span class="font-bold">{{ factu }} - {{ factuImpo | currency }}</span>
+                        
+                    </div>
+
+                </h3>
+
+            </div>
+        
         </div>
-    
+        
     </div>
 
 </div>
+    

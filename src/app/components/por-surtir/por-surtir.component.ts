@@ -20,6 +20,14 @@ export class PorSurtirComponent implements OnInit, OnDestroy {
   porSurtirImpo: number = 0;
   intSurtir: any;
 
+  // Por Zona o Lugar
+  zona1: number = 0;
+  zona1Impo: number = 0;
+  zona2: number = 0;
+  zona2Impo: number = 0;
+  especiales: number = 0;
+  especialesImpo: number = 0;
+
   constructor(
     private _phpService: PhpService
   ) {
@@ -48,6 +56,27 @@ export class PorSurtirComponent implements OnInit, OnDestroy {
         }
       });
 
+    // Por Surtir Zona 1
+    this._phpService.porSurtirZona('2')
+      .subscribe( ( data ) => {
+        this.zona1 = data[0].cantidad;
+        this.zona1Impo = data[0].importe;
+      });
+
+    // Por Surtir Zona 2
+    this._phpService.porSurtirZona('1')
+      .subscribe( ( data ) => {
+        this.zona2 = data[0].cantidad;
+        this.zona2Impo = data[0].importe;
+      });
+
+    // Por Surtir Especiales
+    this._phpService.porSurtirEspecial()
+      .subscribe( ( data ) => {
+        this.especiales = data[0].cantidad;
+        this.especialesImpo = data[0].importe;
+      });
+
   }
 
   ngOnDestroy() {
@@ -63,6 +92,7 @@ export class PorSurtirComponent implements OnInit, OnDestroy {
     return new Observable((observer: Subscriber<any>) => {
       this.intSurtir = setInterval( () => {
         
+        // Por Surtir Total
         this._phpService.porSurtir()
           .subscribe( ( data ) => {
 
@@ -82,6 +112,27 @@ export class PorSurtirComponent implements OnInit, OnDestroy {
               observer.next(surtir);
             }
 
+          });
+
+        // Por Surtir Zona 1
+        this._phpService.porSurtirZona('2')
+        .subscribe( ( data ) => {
+          this.zona1 = data[0].cantidad;
+          this.zona1Impo = data[0].importe;
+        });
+
+        // Por Surtir Zona 2
+        this._phpService.porSurtirZona('1')
+          .subscribe( ( data ) => {
+            this.zona2 = data[0].cantidad;
+            this.zona2Impo = data[0].importe;
+          });
+
+        // Por Surtir Especiales
+        this._phpService.porSurtirEspecial()
+          .subscribe( ( data ) => {
+            this.especiales = data[0].cantidad;
+            this.especialesImpo = data[0].importe;
           });
 
       }, 3000);

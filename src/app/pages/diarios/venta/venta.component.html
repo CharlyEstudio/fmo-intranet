@@ -67,15 +67,15 @@
       <div class="row">
         <div class="col-lg-4 col-xlg-3 col-md-5">
           <div class="card">
-            <img class="card-img" src="../assets/images/cuadros/cuadro2.jpg" alt="Card image">
+            <img class="card-img" src="{{url}}/intranet/assets/images/cuadros/cuadro3.jpg" alt="Card image">
             <div class="card-img-overlay card-inverse social-profile d-flex ">
               <div class="align-self-center">
-                <img src="../assets/images/users/1.jpg" class="img-circle" width="100">
+                <img src="{{url}}/intranet/assets/images/users/fmo.png" width="100">
                 <h4 class="card-title">{{ nombre }}</h4>
                 <h6 class="card-subtitle">@Zona {{ zona }}</h6>
-                <h6 class="text-white">{{ nombre }}@ferremayoristas.com.mx</h6>
+                <h6 class="text-white">{{ 'nombre' }}@ferremayoristas.com.mx</h6>
                 <small class="p-t-30 db text-white">Cel.</small>
-                <h6  class="text-white">+52 999 9999</h6>
+                <h6  class="text-white">+52 000 0000</h6>
               </div>
             </div>
           </div>
@@ -92,15 +92,15 @@
                   <div class="profiletimeline">
                     <div class="sl-item" *ngFor="let pedido of pedidosAse">
                       <div class="sl-left">
-                        <img src="../assets/images/users/1.jpg" alt="user" class="img-circle">
+                        <img src="{{url}}/intranet/assets/images/users/fmo.png" alt="user">
                       </div>
                       <div class="sl-right">
                         <div>
-                          <a href="#" class="link">{{ pedido.NOMBRE }}</a>
-                          <p>venta asignada con dato de registro <a href="#"> {{ pedido.FECHA | date }} | {{ pedido.HORA }}</a></p>
+                          <a href="#" class="link">{{ pedido.nombre }}</a>
+                          <p>venta asignada con dato de registro <a href="#"> {{ pedido.fecha | date }} | {{ pedido.hora }}</a></p>
                           <div class="like-comm">
-                            <a class="link m-r-10">Factura: {{ pedido.FOLIO }}</a>
-                            <a class="link m-r-10">Importe: {{ pedido.TOTAL | currency }}</a>
+                            <a class="link m-r-10">Factura: {{ pedido.factura }}</a>
+                            <a class="link m-r-10">Importe: {{ pedido.importe | currency }}</a>
                           </div>
                         </div>
                       </div>
@@ -134,7 +134,7 @@
                     </div>
                   </div>
                   <hr>
-                  <p class="m-t-30">Anotaciones.</p>
+                  <p class="m-t-30">Pedidos Realizados: {{ totPedidosAse }}.</p>
                 </div>
               </div>
             </div>

@@ -23,10 +23,12 @@ import { PedTotalesComponent } from '../components/ped-totales/ped-totales.compo
 import { NivelServicioComponent } from '../components/nivel-servicio/nivel-servicio.component';
 import { VentasMensualesComponent } from '../components/ventas-mensuales/ventas-mensuales.component';
 import { CarteraComponent } from '../components/cartera/cartera.component';
-import { Vencido015Component } from '../components/cartera/vencido015/vencido015.component';
-import { Vencido1530Component } from '../components/cartera/vencido1530/vencido1530.component';
-import { Vencido3060Component } from '../components/cartera/vencido3060/vencido3060.component';
-import { Vencido6090Component } from '../components/cartera/vencido6090/vencido6090.component';
+import { Vencido18Component } from '../components/cartera/vencido18/vencido18.component';
+import { Vencido916Component } from '../components/cartera/vencido916/vencido916.component';
+import { Vencido1730Component } from '../components/cartera/vencido1730/vencido1730.component';
+import { Vencido3160Component } from '../components/cartera/vencido3160/vencido3160.component';
+import { Vencido6190Component } from '../components/cartera/vencido6190/vencido6190.component';
+import { Vencido91Component } from '../components/cartera/vencido91/vencido91.component';
 import { VentaComponent } from './diarios/venta/venta.component';
 import { CompraComponent } from './diarios/compra/compra.component';
 import { UtilidadesComponent } from './diarios/utilidades/utilidades.component';
@@ -79,10 +81,12 @@ import { PipesModule } from '../pipes/pipes.module';
         NivelServicioComponent,
         VentasMensualesComponent,
         CarteraComponent,
-        Vencido015Component,
-        Vencido1530Component,
-        Vencido3060Component,
-        Vencido6090Component,
+        Vencido18Component,
+        Vencido916Component,
+        Vencido1730Component,
+        Vencido3160Component,
+        Vencido6190Component,
+        Vencido91Component,
         VentaComponent,
         CompraComponent,
         UtilidadesComponent,

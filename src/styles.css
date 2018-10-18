@@ -50,13 +50,18 @@
     text-align: right;
 }
 
+.tablas-modales {
+    max-width: 70%!important;
+}
+
 /**
  *
  * ESCRITORIO GRANDE
  *
  */
 
- @media(min-width: 1200px){
+/* @media(min-width: 1200px){ */
+@media(max-width: 1366px) and (min-width: 1200px){
 
 	.soc-header{
         font-size: 34px!important;
@@ -64,6 +69,10 @@
 
     .soc-content h3.font-medium{
         font-size: 20px!important;
+    }
+
+    .tablas-modales {
+        max-width: 90%!important;
     }
 
 }
@@ -107,6 +116,11 @@
     .p-r-0 h5{
         font-weight: 700!important;
     }
+
+    .tablas-modales {
+        max-width: 90%!important;
+        font-size: 10px;
+    }
 	
 }
 
@@ -131,6 +145,11 @@
         text-align: center!important;
     }
 
+    .tablas-modales {
+        max-width: 90%!important;
+        font-size: 7px;
+    }
+
 }
 
 /**
@@ -150,5 +169,132 @@
 
     .p-b-20 font.display-3{
         font-size: 3.5rem!important;
+    }
+
+    .tablas-modales {
+        max-width: 95%!important;
+    }
+
+    .tablas-modales h3.display-5 {
+        font-size: 2.3rem;
+    }
+}
+
+/**
+ * ESCRITORIO GRANDE
+ */
+
+/* @media(min-width: 1200px){ */
+@media(max-width: 1366px) and (min-width: 1200px){
+	h2.font-light, h3.font-light{
+        font-size: 1em;
+    }
+
+    h3.card-title{
+        font-size: .7em;
+    }
+
+    .totales h3.font-light {
+        font-size: .8em;
+    }
+
+    .totales h6.text-muted {
+        font-size: .7em;
+    }
+
+    .totales h4.font-light {
+        font-size: .6em;
+    }
+
+    span.text-black, span.text-white {
+        font-size: .8em;
+    }
+
+    .p-l-20 h3.text-black {
+        font-size: 1em;
+    }
+}
+
+/**
+ * ESCRITORIO MEDIANO O TABLET HORIZONTAL
+ */
+
+@media(max-width: 1199px) and (min-width: 992px){
+	h2.font-light, h3.font-light{
+        font-size: 1em;
+    }
+
+    h3.card-title{
+        font-size: .7em;
+    }
+
+    .card.servicio {
+        height: 93%!important;
+    }
+
+    .card.p-l-20 {
+        height: 94.5%!important;
+    }
+
+    .totales h3.font-light {
+        /* font-size: .6em; */
+    }
+
+    .totales h6.text-muted {
+        font-size: .7em;
+    }
+
+    .totales h4.font-light {
+        font-size: .9em;
+    }
+
+    span.text-black, span.text-white {
+        /* font-size: .35em; */
+    }
+
+    .p-l-20 h3.text-black {
+        font-size: 1em;
+    }
+}
+
+/**
+ * ESCRITORIO PEQUEÑO O TABLET VERTICAL
+ */
+
+@media(max-width: 991px) and (min-width: 768px){
+
+    .d-flex .b-r {
+        border-right: none;
+    }
+
+    h4.font-light, .totales h3.font-light{
+        font-size: 3em;
+        padding: 30px 0;
+    }
+
+    .p-l-20 h3.text-black {
+        font-size: 2em;
+        text-align: center;
+    }
+
+    i.mdi.lead, i.wi.lead {
+        justify-content: center;
+        display: flex;
+        font-size: 3em;
+    }
+
+    .p-2.display-5 i.mdi {
+        font-size: 7rem;
+    }
+	
+}
+
+/**
+ * DISPOSITIVOS MOVILES
+ */
+
+@media(max-width: 767px){
+	.d-flex .b-r {
+        border-right: none;
     }
 }

@@ -1,67 +1,3 @@
-<!-- <div class="card">
-  <div class="card-body">
-      <div class="d-flex flex-row">
-          <div class="">
-              <div class="p-2 display-5 animated fadeIn text-center text-success" *ngIf="heart === 3">
-  
-                  <div class="animated pulse2">
-              
-                      <i class="mdi mdi-heart-pulse"></i>
-              
-                  </div>
-              
-              </div>
-              
-              <div class="p-2 display-5 animated fadeIn text-center text-warning" *ngIf="heart === 2">
-              
-                  <div class="animated pulse2">
-              
-                      <i class="mdi mdi-heart-pulse"></i>
-              
-                  </div>
-              
-              </div>
-              
-              <div class="p-2 display-5 animated fadeIn text-center text-danger" *ngIf="heart === 1">
-              
-                  <div class="animated pulse2">
-              
-                  <i class="mdi mdi-heart-pulse"></i>
-              
-                  </div>
-              
-              </div>
-              
-              <div class="p-2 display-5 animated fadeIn right-side-toggle" style="padding-left: 56px!important;" *ngIf="heart === 0">
-              
-                  <i class="ti-reload"></i>
-  
-                  <br>
-      
-              </div>
-          </div>
-          <div class="p-l-20">
-              <h3 class="font-medium">
-                  Estado Financiero
-              </h3>
-              <h6>{{ fecha | date }}</h6>
-          </div>
-          <div class="col b-r text-center">
-              <h2 class="font-light">{{ tot | currency }}</h2>
-              <h6>Financiado</h6>
-          </div>
-          <div class="col b-r text-center">
-              <h2 class="font-light">{{ sal | currency }}</h2>
-              <h6>Saldo</h6>
-          </div>
-          <div class="col text-center">
-              <h2 class="font-light">{{ ven | currency }}</h2>
-              <h6>Morosidad</h6>
-          </div>
-      </div>
-  </div>
-</div> -->
-  
 <div class="card totales">
 
     <div class="card-body">
@@ -139,27 +75,27 @@
                 <div class="row">
 
                     <!-- Column -->
-                    <div class="col-4" style="padding-bottom: 15px;">
+                    <div class="col-xl-4 col-lg-6 col-md-12" style="padding-bottom: 15px;">
 
-                        <h6 class="text-muted">Cartera Total</h6>
+                        <h6 class="text-muted">Cartera<br>Total</h6>
                         
                         <h4 class="font-light">{{ tot | currency }}</h4>
 
                     </div>
 
                     <!-- Column -->
-                    <div class="col-4" style="padding-bottom: 15px;">
+                    <div class="col-xl-4 col-lg-6 col-md-12" style="padding-bottom: 15px;">
 
-                        <h6 class="text-muted">Cartera Sana</h6>
+                        <h6 class="text-muted">Cartera<br>Sana</h6>
                         
                         <h4 class="font-light text-success">{{ sal | currency }}</h4>
 
                     </div>
 
                     <!-- Column -->
-                    <div class="col-4">
+                    <div class="col-xl-4 col-lg-12 col-md-12">
 
-                        <h6 class="text-muted">Cartera Vencida</h6>
+                        <h6 class="text-muted">Cartera<br>Vencida</h6>
                         
                         <h4 class="font-light text-danger">{{ ven | currency }}</h4>
 

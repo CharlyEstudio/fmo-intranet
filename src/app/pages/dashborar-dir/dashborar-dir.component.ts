@@ -9,7 +9,7 @@ export class DashborarDirComponent implements OnInit {
 
   fecha: number = Date.now();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
   }

@@ -1,37 +1,61 @@
-<div class="card">
-    
-    <div class="row">
+<!--<div class="card" style="background: #3b5998!important;">-->
+<div class="card bg-theme-dark">
 
-        <div class="col-12">
+    <div class="card-body">
 
-            <div class="social-widget">
+        <h3 class="card-title text-black">
+            <i class="mdi mdi-arrow-down-bold display-5 text-black"></i> Por Bajar Total
+        </h3>
 
-                <div class="soc-header box-facebook">POR BAJAR</div>
+        <hr>
 
-                <div class="soc-content">
+        <div class="row">
 
-                    <div class="col-6 b-r">
+            <div class="col-lg-12 col-md-12 text-center">
 
-                        <h3 class="font-medium">{{ porBajar }}</h3>
+                <span class="text-black">QRO </span> 
 
-                        <h5 class="text-muted">Cantidad</h5>
-                    
-                    </div>
-
-                    <div class="col-6">
-
-                        <h3 class="font-medium">{{ porBajarImpo | currency }}</h3>
-
-                        <h5 class="text-muted">Importe</h5>
-                    
-                    </div>
-
-                </div>
+                <span class="text-black"> {{ zona1 }} - {{ zona1Impo | currency }}</span>
 
             </div>
 
-        </div>
+            <div class="col-lg-12 col-md-12 text-center">
 
+                <span class="text-black">TX </span>
+
+                <span class="text-black"> {{ zona2 }} - {{ zona2Impo | currency }}</span>
+
+            </div>
+
+            <div class="col-lg-12 col-md-12 text-center">
+
+                <span class="text-black">Esp </span>
+
+                <span class="text-black"> {{ especiales }} - {{ especialesImpo | currency }}</span>
+
+            </div>
+
+            <div class="clearfix"></div>
+
+            
+            <div class="col-lg-12 col-md-12 text-center">
+
+                <hr>
+
+                <h3 class="text-black font-light">
+
+                    <div>
+
+                        <span class="font-bold">{{ porBajar }} - {{ porBajarImpo | currency }}</span>
+                        
+                    </div>
+
+                </h3>
+
+            </div>
+        
+        </div>
+        
     </div>
 
 </div>

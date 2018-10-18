@@ -95,8 +95,6 @@ export class UsuarioService {
     return this.http.post( url, {token} )
       .map( (resp: any) => {
 
-        console.log( resp );
-
         this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu);
 
         return true;
@@ -177,9 +175,7 @@ export class UsuarioService {
 
         this.guardarStorage( id, this.token, this.usuario, this.menu );
       })
-      .catch( resp => {
-        console.log(resp);
-      });
+      .catch( resp => {});
   }
 
   cargarUsuarios( desde: number = 0 ) {

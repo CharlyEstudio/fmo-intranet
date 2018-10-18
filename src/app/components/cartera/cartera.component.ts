@@ -17,7 +17,7 @@ export class CarteraComponent implements OnInit, OnDestroy {
   fecha: number = Date.now();
 
   // Estado Financiero
-  heart: number = 1;
+  heart: number = 0;
 
   /* ----- Estatus Financiero ----- */
   // General
@@ -84,6 +84,8 @@ export class CarteraComponent implements OnInit, OnDestroy {
             this.ven = 0;
           }
         });
+
+        this.obtener(this.tot, this.sal, this.ven);
       }, 10000);
     })
   }
@@ -131,46 +133,17 @@ export class CarteraComponent implements OnInit, OnDestroy {
   }
 
   // Calcular Heart
-  // obtenerAnterior(data) {
+  obtener(saldo, sana, vencido){
+    let regla1 = (sana / saldo) * 100;
+    let regla2 = (vencido / saldo) * 100;
 
-  //   this.antData = data;
-
-  // }
-
-  // obtenerActual(data) {
-
-  //   this.actData = data;
-
-  //   this.calcularEstado();
-
-  // }
-
-  // calcularEstado() {
-
-  //   let day = new Date().getDay();
-
-  //   let promAct = this.actData / day;
-
-  //   let promAnt = this.antData / 20;
-
-  //   if ( (this.actData / this.antData) === Infinity ) {
-
-  //     this.heart = 0;
-
-  //   } else if ( promAct < promAnt ) {
-
-  //     this.heart = 1;
-
-  //   } else if ( promAct === promAnt ) {
-
-  //     this.heart = 2;
-
-  //   } else if ( promAct > promAnt ) {
-
-  //     this.heart = 3;
-
-  //   }
-
-  // }
+    if ( regla1 >= 70 && regla2 <= 30 ) {
+      this.heart = 3;
+    } else if ( regla1 >= 60 && regla2 <= 35 ) {
+      this.heart = 2;
+    } else if ( regla1 < 60 && regla2 > 35) {
+      this.heart = 1;
+    }
+  }
 
 }

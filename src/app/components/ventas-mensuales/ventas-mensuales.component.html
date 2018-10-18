@@ -46,14 +46,15 @@
                 </h3>
                 <h6>{{ fecha | date }}</h6>
             </div>
-
-            <div class="col b-r text-center">
-                <h2 class="font-light">{{ ant | currency }}</h2>
-                <h6>Anterior</h6>
-            </div>
             <div class="col b-r text-center">
                 <h2 class="font-light">{{ act | currency }}</h2>
                 <h6>Actual</h6>
+                <h6>{{ fecha | date: 'MMM' }}</h6>
+            </div>
+            <div class="col b-r text-center">
+                <h2 class="font-light">{{ ant | currency }}</h2>
+                <h6>Anterior</h6>
+                <h6>{{ anterior | date: 'MMM' }}</h6>
             </div>
             <div class="col b-r text-center">
                 <h2 class="font-light">{{ zon1 | currency }}</h2>

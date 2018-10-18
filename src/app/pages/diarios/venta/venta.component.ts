@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DiariosService } from '../../../services/services.index';
 import { SweetAlert } from 'sweetalert/typings/core';
+import { URL_SERVICE } from '../../../config/config';
 
 @Component({
   selector: 'app-venta',
@@ -9,6 +10,8 @@ import { SweetAlert } from 'sweetalert/typings/core';
   styles: []
 })
 export class VentaComponent implements OnInit {
+
+  url: string;
 
   hoy:  number = Date.now();
 
@@ -34,6 +37,7 @@ export class VentaComponent implements OnInit {
   total: number = 0;
   pedidosGen: any;
   pedidosAse: any;
+  totPedidosAse : number = 0;
 
   // Totales
   totalGeneral: number = 0;
@@ -42,7 +46,10 @@ export class VentaComponent implements OnInit {
 
   constructor(
     private _diariosService: DiariosService
-  ) { }
+  ) {
+    this.url = URL_SERVICE;
+    console.log(this.url);
+  }
 
   ngOnInit() {
     
@@ -75,7 +82,6 @@ export class VentaComponent implements OnInit {
         .subscribe( ( resp ) => {
 
           if (resp != ''){
-            console.log('Hola');
             this.nombre= resp[0].NOMBRE;
             this.id = resp[0].PERID;
             this.catalogo = resp[0].CATALOGO;
@@ -86,8 +92,9 @@ export class VentaComponent implements OnInit {
             this.total = resp[0].TOTAL;
 
             this._diariosService.ventasAsesor(this.inicio, this.final, this.asesor)
-              .subscribe( ( resp ) => {
+              .subscribe( ( resp: any ) => {
                 this.pedidosAse = resp;
+                this.totPedidosAse = resp.length;
               });
 
             this.respuesta = false;

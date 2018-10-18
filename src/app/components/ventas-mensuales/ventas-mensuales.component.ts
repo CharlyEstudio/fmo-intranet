@@ -15,6 +15,12 @@ import 'rxjs/add/operator/filter';
 export class VentasMensualesComponent implements OnInit, OnDestroy {
 
   fecha: number = Date.now();
+  date = new Date(this.fecha);
+  dia = this.date.getDay();
+  mes = this.date.getMonth() - 1;
+  anio = this.date.getFullYear();
+
+  anterior = Date.UTC(this.anio, this.mes, this.dia);
   // dia: number = new Date().getDay();
   
   // Estado de la Empresa
@@ -45,7 +51,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
   constructor(
     private _phpService: PhpService
   ) {
-
+    
     // Subscripción Total
     this.general = this.regresar()
       .subscribe(
@@ -96,7 +102,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
         // Venta Especiales
         this._phpService.especial()
           .subscribe((data) => {
-            if (data[0].especial != 0) {
+            if (data[0].especial != '') {
               this.espe = data[0].especial;
             } else {
               this.espe = 0;

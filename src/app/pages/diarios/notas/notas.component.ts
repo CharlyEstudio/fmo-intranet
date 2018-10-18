@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
+import { NgForm } from '@angular/forms';
+import { DiariosService } from '../../../services/services.index';
+import { SweetAlert } from 'sweetalert/typings/core';
+import { URL_SERVICE } from '../../../config/config';
+
 @Component({
   selector: 'app-notas',
   templateUrl: './notas.component.html',
@@ -7,9 +12,67 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotasComponent implements OnInit {
 
-  constructor() { }
+  url: string;
+
+  respuesta: boolean = true;
+  respuestaGeneral: boolean = false;
+  ventas: boolean = false;
+
+  inicio: any;
+  final: any;
+
+  notas: any;
+  subtotal: number = 0;
+  iva: number = 0;
+  total: number = 0;
+
+  constructor(
+    private _diariosService: DiariosService
+  ) {
+    this.url = URL_SERVICE;
+  }
 
   ngOnInit() {
+  }
+
+  solicitar(forma: NgForm) {
+    if ( forma.value.inicio === undefined ) {
+      swal('Debe ingresar las fechas', 'No ha selecionado un rango de fechas.', 'error');
+      return;
+    }
+
+    if ( forma.value.final === undefined ) {
+      swal('Debe ingresar las fechas', 'No ha selecionado un rango de fechas.', 'error');
+      return;
+    }
+
+    this.inicio = forma.value.inicio;
+    this.final = forma.value.final;
+
+    this.subtotal = 0;
+    this.iva = 0;
+    this.total = 0;
+
+    this._diariosService.notasCredito(this.inicio, this.final)
+      .subscribe( ( resp: any ) => {
+        if (resp != '') {
+          this.notas = resp;
+
+          for(let i=0; i < this.notas.length; i++){
+            this.subtotal += this.notas[i].subtotal;
+            this.iva += this.notas[i].iva;
+            this.total += this.notas[i].total;
+          }
+
+          this.respuesta = false;
+          this.respuestaGeneral = true;
+          this.ventas = false;
+        } else {
+          this.ventas = true;
+          this.respuesta = false;
+          this.respuestaGeneral = false;
+        }
+      });
   }
 
 }

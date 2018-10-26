@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { DiariosService } from '../../../services/services.index';
+import { DiariosService, AsesoresService } from '../../../services/services.index';
 import { SweetAlert } from 'sweetalert/typings/core';
 import { URL_SERVICE } from '../../../config/config';
 
@@ -16,6 +16,7 @@ export class VentaComponent implements OnInit {
   hoy:  number = Date.now();
 
   usuarios: any[] = [];
+  vendedor: any[] = [];
 
   inicio: any;
   final: any;
@@ -25,6 +26,7 @@ export class VentaComponent implements OnInit {
   respuestaIndividual: boolean = false;
   respuestaGeneral: boolean = false;
   ventas: boolean = false;
+  esperar: boolean = false;
 
   // Datos Asesor
   nombre: string;
@@ -45,10 +47,10 @@ export class VentaComponent implements OnInit {
   totalSubtotal: number = 0;
 
   constructor(
-    private _diariosService: DiariosService
+    private _diariosService: DiariosService,
+    private _asesorService: AsesoresService
   ) {
     this.url = URL_SERVICE;
-    console.log(this.url);
   }
 
   ngOnInit() {
@@ -62,6 +64,10 @@ export class VentaComponent implements OnInit {
   }
 
   solicitar(forma: NgForm) {
+
+    this.esperar = true;
+    this.respuesta = false;
+
     if ( forma.value.inicio === undefined ) {
       swal('Debe ingresar las fechas', 'No ha selecionado un rango de fechas.', 'error');
       return;
@@ -81,6 +87,11 @@ export class VentaComponent implements OnInit {
       this._diariosService.ventas(this.inicio, this.final, this.asesor)
         .subscribe( ( resp ) => {
 
+          this._asesorService.asesor(this.asesor)
+            .subscribe( ( resp: any ) => {
+              this.vendedor = resp.usuarios[0];
+            });
+
           if (resp != ''){
             this.nombre= resp[0].NOMBRE;
             this.id = resp[0].PERID;
@@ -98,12 +109,14 @@ export class VentaComponent implements OnInit {
               });
 
             this.respuesta = false;
+            this.esperar = false;
             this.respuestaIndividual = true;
             this.respuestaGeneral = false;
             this.ventas = false;
 
           } else {
             this.ventas = true;
+            this.esperar = false;
             this.respuesta = false;
             this.respuestaIndividual = false;
             this.respuestaGeneral = false;
@@ -130,10 +143,12 @@ export class VentaComponent implements OnInit {
             }
 
             this.respuesta = false;
+            this.esperar = false;
             this.respuestaIndividual = false;
             this.respuestaGeneral = true;
           } else {
             this.ventas = true;
+            this.esperar = false;
             this.respuesta = false;
             this.respuestaIndividual = false;
             this.respuestaGeneral = false;

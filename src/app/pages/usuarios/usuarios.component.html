@@ -8,6 +8,8 @@
 
                 <input #input (keyup)="buscarUsuario( input.value )" type="text" class="form-control" placeholder="Buscar usuario...">
 
+                <h6 class="text-muted">Para buscar roles Dirección: DIR_ | Gerencia: GER_ | Asesor: ASE_ | Supervisor: SUP_ </h6>
+
             </div>
 
         </div>
@@ -48,102 +50,116 @@
 
                 <h3 class="card-title">Usuarios Registrados (<small>{{ totalResgitro }}</small>)</h3>
 
-                <table class="table table-hover">
+                <div class="table-responsive">
 
-                    <thead>
+                    <table class="table table-hover">
 
-                        <tr>
+                        <thead>
 
-                            <th>Imagen</th>
+                            <tr>
 
-                            <th>Correo</th>
+                                <th>Imagen</th>
 
-                            <th>Nombre</th>
+                                <th>Correo</th>
 
-                            <th>Role</th>
+                                <th>Nombre</th>
 
-                            <th>Auth</th>
+                                <th>IdFerrum</th>
+                                
+                                <th>Role</th>
 
-                            <th></th>
+                                <th>Auth</th>
 
-                        </tr>
+                                <th></th>
 
-                    </thead>
+                            </tr>
 
-                    <tbody>
+                        </thead>
 
-                        <tr *ngFor="let usuario of usuarios">
+                        <tbody>
 
-                            <td class=w70>
+                            <tr *ngFor="let usuario of usuarios">
 
-                                <img (click)="mostraModal( usuario._id )" [src]="usuario.img | imagen" class="img-50 img-circle pointer">
-                            
-                            </td>
+                                <td class=w70>
 
-                            <td>{{ usuario.email }}</td>
+                                    <img (click)="mostraModal( usuario._id )" [src]="usuario.img | imagen" class="img-50 img-circle pointer">
+                                
+                                </td>
 
-                            <td>{{ usuario.nombre }}</td>
+                                <td>{{ usuario.email }}</td>
 
-                            <td>
-                                <select [(ngModel)]="usuario.rol" name="rol" class="form-control">
+                                <td>{{ usuario.nombre }}</td>
 
-                                    <option value="ADMIN_ROLE">Administrador</option>
+                                <td class="text-center">
 
-                                    <option value="DIR_ROLE">Dirección</option>
+                                    <!--<span *ngIf="usuario.idFerrum != 0">{{ usuario.idFerrum }}</span>-->
 
-                                    <option value="GER_ROLE">Gerencia</option>
+                                    <input type="text" name="idFerrum" [(ngModel)]="usuario.idFerrum" class="form-control">
 
-                                    <option value="SUP_ROLE">Supervisor</option>
+                                </td>
 
-                                    <option value="ASE_ROLE">Asesor</option>
+                                <td>
+                                    <select [(ngModel)]="usuario.rol" name="rol" class="form-control">
 
-                                    <option value="USER_ROLE">Usuario</option>
+                                        <option value="ADMIN_ROLE">Administrador</option>
 
-                                </select>
+                                        <option value="DIR_ROLE">Dirección</option>
 
-                            </td>
+                                        <option value="GER_ROLE">Gerencia</option>
 
-                            <td>
+                                        <option value="SUP_ROLE">Supervisor</option>
 
-                                <select [(ngModel)]="usuario.activo" name="activo" class="form-control">
+                                        <option value="ASE_ROLE">Asesor</option>
 
-                                    <option value="YES">Si</option>
+                                        <option value="USER_ROLE">Usuario</option>
 
-                                    <option value="NOT">No</option>
+                                    </select>
 
-                                </select>
+                                </td>
 
-                            </td>
+                                <td>
 
-                            <td>
+                                    <select [(ngModel)]="usuario.activo" name="activo" class="form-control">
 
-                                <label *ngIf="usuario.google" class="label label-danger">Google</label>
+                                        <option value="YES">Si</option>
 
-                                <label *ngIf="!usuario.google" class="label label-info">Normal</label>
+                                        <option value="NOT">No</option>
 
-                            </td>
+                                    </select>
 
-                            <td>
+                                </td>
 
-                                <button (click)="guardarUsuario( usuario )" class="btn btn-primary">
+                                <td>
 
-                                    <i class="fa fa-save"></i>
+                                    <label *ngIf="usuario.google" class="label label-danger">Google</label>
 
-                                </button>
+                                    <label *ngIf="!usuario.google" class="label label-info">Normal</label>
 
-                                <button (click)="borrarUsuario( usuario )" class="btn btn-danger">
+                                </td>
 
-                                    <i class="fa fa-trash-o"></i>
+                                <td>
 
-                                </button>
+                                    <button (click)="guardarUsuario( usuario )" class="btn btn-primary">
 
-                            </td>
+                                        <i class="fa fa-save"></i>
 
-                        </tr>
+                                    </button>
 
-                    </tbody>
+                                    <button (click)="borrarUsuario( usuario )" class="btn btn-danger">
 
-                </table>
+                                        <i class="fa fa-trash-o"></i>
+
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
 
                 <button (click)="cambiarDesde(-5)" class="btn btn-secondary">
 

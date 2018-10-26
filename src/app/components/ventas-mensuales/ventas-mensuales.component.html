@@ -1,7 +1,11 @@
 <div class="card">
+
     <div class="card-body">
+
         <div class="d-flex flex-row">
+
             <div class="">
+
                 <div class="p-2 display-5 animated fadeIn text-center text-success" *ngIf="heart === 3">
     
                     <div class="animated pulse2">
@@ -39,35 +43,65 @@
                     <br>
         
                 </div>
+
             </div>
+
             <div class="p-l-20">
+
                 <h3 class="font-medium">
+
                     Estado
+
                 </h3>
+
                 <h6>{{ fecha | date }}</h6>
+
             </div>
+
             <div class="col b-r text-center">
+
                 <h2 class="font-light">{{ act | currency }}</h2>
+
                 <h6>Actual</h6>
+
                 <h6>{{ fecha | date: 'MMM' }}</h6>
+
             </div>
+
             <div class="col b-r text-center">
+
                 <h2 class="font-light">{{ ant | currency }}</h2>
+
                 <h6>Anterior</h6>
-                <h6>{{ anterior | date: 'MMM' }}</h6>
+
             </div>
+
             <div class="col b-r text-center">
+
                 <h2 class="font-light">{{ zon1 | currency }}</h2>
+
                 <h6>Zona 1</h6>
+
             </div>
+
             <div class="col b-r text-center">
+
                 <h2 class="font-light">{{ zon2 | currency }}</h2>
+
                 <h6>Zona 2</h6>
+                
             </div>
+
             <div class="col text-center">
+
                 <h2 class="font-light">{{ espe | currency }}</h2>
+
                 <h6>Especiales</h6>
+
             </div>
+
         </div>
+
     </div>
+    
 </div>

@@ -1,0 +1,29 @@
+<div class="card-body">
+
+  <h2 class="card-title">{{ asesor }}</h2>
+
+  <div class="row">
+
+    <div class="col-lg-4 col-md-12" *ngFor="let pedido of pedidos">
+
+      <div class="alert alert-success">
+
+        <h3 class="text-success">
+
+          <i class="fa fa-check-circle"></i> # {{ pedido.numero }} - {{ pedido.nombre }}
+
+        </h3>
+
+        {{ pedido.hora }}
+
+        <br>
+
+        # {{ pedido.folio }} <span class="impoPedidosDia">{{ pedido.total | currency }}</span>
+
+      </div>
+
+    </div>
+
+  </div>
+  
+</div>

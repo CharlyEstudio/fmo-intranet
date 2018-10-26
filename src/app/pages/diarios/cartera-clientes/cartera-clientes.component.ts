@@ -14,6 +14,7 @@ export class CarteraClientesComponent implements OnInit {
   url: string;
 
   respuesta: boolean = true;
+  esperar: boolean = false;
   respuestaGeneral: boolean = false;
   ventas: boolean = false;
 
@@ -32,6 +33,9 @@ export class CarteraClientesComponent implements OnInit {
 
   solicitar() {
 
+    this.esperar = true;
+    this.respuesta = false;
+
     this.saldo = 0;
 
     this._diariosService.carteraClientes()
@@ -44,10 +48,12 @@ export class CarteraClientesComponent implements OnInit {
           }
 
           this.respuesta = false;
+          this.esperar = false;
           this.respuestaGeneral = true;
           this.ventas = false;
         } else {
           this.ventas = true;
+          this.esperar = false;
           this.respuesta = false;
           this.respuestaGeneral = false;
         }

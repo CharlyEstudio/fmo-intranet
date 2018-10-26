@@ -35,104 +35,215 @@
   </div>
 
   <div class="col-lg-10 col-md-12">
+
+    <div class="alert alert-warning" *ngIf="esperar">
+
+      Obteniendo registros
+
+    </div>
+
     <span *ngIf="respuesta">No ha solicitado nada.</span>
+
     <span *ngIf="ventas">No hay detalles de venta.</span>
+
     <div class="container-fluid" *ngIf="respuestaGeneral">
-      <table class="display nowrap table table-hover table-striped table-bordered dataTable" cellspacing="0" width="100%" role="grid" aria-describedby="example23_info" style="width: 100%;">
-        <thead>
-          <tr role="row">
-            <th class="text-center">Proveedor</th>
-            <th class="text-center">Subtotal</th>
-            <th class="text-center">Iva</th>
-            <th class="text-center">Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr role="row" class="odd" *ngFor="let pedido of pedidosGen">
-            <td class="sorting_1">{{ pedido.numero }} - {{ pedido.nombre }}</td>
-            <td class="text-center">{{ pedido.subtotal | currency }}</td>
-            <td class="text-center">{{ pedido.iva | currency }}</td>
-            <td class="text-center">{{ pedido.total | currency }}</td>
-          </tr>
-          <tr>
-            <th>TOTAL</th>
-            <th class="text-center">{{ totalSubtotal | currency }}</th>
-            <th class="text-center">{{ totalIva | currency }}</th>
-            <th class="text-center">{{ totalGeneral | currency }}</th>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="container-fluid" *ngIf="respuestaIndividual">
-      <div class="row">
-        <div class="col-lg-4 col-xlg-3 col-md-5">
-          <div class="card">
-            <img class="card-img" src="{{url}}/intranet/assets/images/cuadros/cuadro3.jpg" alt="Card image">
-            <div class="card-img-overlay card-inverse social-profile d-flex ">
-              <div class="align-self-center">
-                <img src="{{url}}/intranet/assets/images/users/fmo.png" width="100">
-                <h4 class="card-title p-t-10">{{ nombre }}</h4>
-                <h6 class="card-subtitle">@Proveedor {{ numero }}</h6>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-8 col-xlg-9 col-md-7">
-          <div class="card">
-            <ul class="nav nav-tabs profile-tab" role="tablist">
-              <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#profile" role="tab">Venta</a> </li>
-              <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#home" role="tab">Timeline</a> </li>
-            </ul>
-            <div class="tab-content">
-              <div class="tab-pane" id="home" role="tabpanel">
-                <div class="card-body">
-                  <div class="profiletimeline">
-                    <div class="sl-item" *ngFor="let pedido of pedidosProv">
-                      <div class="sl-left">
-                        <img src="{{url}}/intranet/assets/images/users/fmo.png" alt="user">
-                      </div>
-                      <div class="sl-right">
-                        <div>
-                          <a href="#" class="link">{{ pedido.nombre }}</a>
-                          <p>Compra con registro <a href="#">{{ pedido.fecha | date }}</a></p>
-                          <div class="like-comm">
-                            <a class="link m-r-10">Entrada a Almacén: {{ pedido.numero }}</a>
-                            <a class="link m-r-10">Importe: {{ pedido.importe | currency }}</a>
-                          </div>
-                        </div>
-                      </div>
-                      <hr>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="tab-pane active" id="profile" role="tabpanel">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-3 col-xs-6 b-r">
-                      <strong>SUBTOTAL</strong>
-                      <br>
-                      <p class="text-muted">{{ subtotal | currency }}</p>
-                    </div>
-                    <div class="col-md-3 col-xs-6 b-r">
-                      <strong>I.V.A.</strong>
-                      <br>
-                      <p class="text-muted">{{ iva | currency }}</p>
-                    </div>
-                    <div class="col-md-3 col-xs-6">
-                      <strong>TOTAL</strong>
-                      <br>
-                      <p class="text-muted">{{ total | currency }}</p>
-                    </div>
-                  </div>
-                  <hr>
-                  <p class="m-t-30">Pedidos Realizados: {{ totPedidosProv }}.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
+      <div class="table-responsive">
+
+        <table class="display nowrap table table-hover table-striped table-bordered dataTable" cellspacing="0" width="100%" role="grid" aria-describedby="example23_info" style="width: 100%;">
+          
+          <thead>
+
+            <tr role="row">
+
+              <th class="text-center">Proveedor</th>
+
+              <th class="text-center">Subtotal</th>
+
+              <th class="text-center">Iva</th>
+
+              <th class="text-center">Total</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <tr role="row" class="odd" *ngFor="let pedido of pedidosGen">
+
+              <td class="sorting_1">{{ pedido.numero }} - {{ pedido.nombre }}</td>
+
+              <td class="text-center">{{ pedido.subtotal | currency }}</td>
+
+              <td class="text-center">{{ pedido.iva | currency }}</td>
+
+              <td class="text-center">{{ pedido.total | currency }}</td>
+
+            </tr>
+
+            <tr>
+
+              <th>TOTAL</th>
+
+              <th class="text-center">{{ totalSubtotal | currency }}</th>
+
+              <th class="text-center">{{ totalIva | currency }}</th>
+
+              <th class="text-center">{{ totalGeneral | currency }}</th>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
       </div>
+
     </div>
+
+    <div class="container-fluid" *ngIf="respuestaIndividual">
+
+      <div class="row">
+
+        <div class="col-lg-4 col-xlg-3 col-md-5">
+
+          <div class="card">
+
+            <img class="card-img" src="{{url}}/intranet/assets/images/cuadros/cuadro3.jpg" alt="Card image">
+
+            <div class="card-img-overlay card-inverse social-profile d-flex ">
+
+              <div class="align-self-center">
+
+                <img src="{{url}}/intranet/assets/images/users/fmo.png" width="100">
+
+                <h4 class="card-title p-t-10">{{ nombre }}</h4>
+
+                <h6 class="card-subtitle">@Proveedor {{ numero }}</h6>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-lg-8 col-xlg-9 col-md-7">
+
+          <div class="card">
+
+            <ul class="nav nav-tabs profile-tab" role="tablist">
+
+              <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#profile" role="tab">Venta</a> </li>
+              
+              <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#home" role="tab">Timeline</a> </li>
+            
+            </ul>
+
+            <div class="tab-content">
+
+              <div class="tab-pane" id="home" role="tabpanel">
+
+                <div class="card-body">
+
+                  <div class="profiletimeline">
+
+                    <div class="sl-item" *ngFor="let pedido of pedidosProv">
+
+                      <div class="sl-left">
+
+                        <img src="{{url}}/intranet/assets/images/users/fmo.png" alt="user">
+
+                      </div>
+
+                      <div class="sl-right">
+
+                        <div>
+
+                          <a href="#" class="link">{{ pedido.nombre }}</a>
+
+                          <p>Compra con registro <a href="#">{{ pedido.fecha | date }}</a></p>
+
+                          <div class="like-comm">
+
+                            <a class="link m-r-10">Entrada a Almacén: {{ pedido.numero }}</a>
+
+                            <a class="link m-r-10">Importe: {{ pedido.importe | currency }}</a>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                      <hr>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="tab-pane active" id="profile" role="tabpanel">
+
+                <div class="card-body">
+
+                  <div class="row">
+
+                    <div class="col-md-3 col-xs-6 b-r">
+
+                      <strong>SUBTOTAL</strong>
+
+                      <br>
+
+                      <p class="text-muted">{{ subtotal | currency }}</p>
+
+                    </div>
+
+                    <div class="col-md-3 col-xs-6 b-r">
+
+                      <strong>I.V.A.</strong>
+
+                      <br>
+
+                      <p class="text-muted">{{ iva | currency }}</p>
+
+                    </div>
+
+                    <div class="col-md-3 col-xs-6">
+
+                      <strong>TOTAL</strong>
+
+                      <br>
+
+                      <p class="text-muted">{{ total | currency }}</p>
+
+                    </div>
+
+                  </div>
+
+                  <hr>
+
+                  <p class="m-t-30">Pedidos Realizados: {{ totPedidosProv }}.</p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
   </div>
+
 </div>

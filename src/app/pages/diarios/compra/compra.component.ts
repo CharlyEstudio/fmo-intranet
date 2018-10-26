@@ -26,6 +26,7 @@ export class CompraComponent implements OnInit {
   respuestaIndividual: boolean = false;
   respuestaGeneral: boolean = false;
   ventas: boolean = false;
+  esperar: boolean = false;
 
   // Datos Proveedor
   nombre: string;
@@ -60,6 +61,10 @@ export class CompraComponent implements OnInit {
   }
 
   solicitar(forma: NgForm) {
+
+    this.esperar = true;
+    this.respuesta = false;
+
     if ( forma.value.inicio === undefined ) {
       swal('Debe ingresar las fechas', 'No ha selecionado un rango de fechas.', 'error');
       return;
@@ -93,11 +98,13 @@ export class CompraComponent implements OnInit {
               });
 
             this.respuesta = false;
+            this.esperar = false;
             this.respuestaIndividual = true;
             this.respuestaGeneral = false;
             this.ventas = false;
           } else {
             this.ventas = true;
+            this.esperar = false;
             this.respuesta = false;
             this.respuestaIndividual = false;
             this.respuestaGeneral = false;
@@ -123,10 +130,12 @@ export class CompraComponent implements OnInit {
             }
 
             this.respuesta = false;
+            this.esperar = false;
             this.respuestaIndividual = false;
             this.respuestaGeneral = true;
           } else {
             this.ventas = true;
+            this.esperar = false;
             this.respuesta = false;
             this.respuestaIndividual = false;
             this.respuestaGeneral = false;

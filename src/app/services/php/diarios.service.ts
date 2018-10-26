@@ -95,4 +95,40 @@ export class DiariosService {
     return this.http.get( this.url );
   }
 
+  carteraProveedores() {
+    this.url = URL_SERVICE + '/api/diarios.php?opcion=16';
+
+    return this.http.get( this.url );
+  }
+
+  saldoProveedores( id: any ) {
+    this.url = URL_SERVICE + '/api/diarios.php?opcion=17&id=' + id;
+
+    return this.http.get( this.url );
+  }
+
+  diasLunes() {
+    this.url = URL_SERVICE + '/api/diarios.php?opcion=18';
+
+    return this.http.get( this.url );
+  }
+
+  pedidosDiaLunes( id: any ) {
+    this.url = URL_SERVICE + '/api/diarios.php?opcion=19&id=' + id;
+
+    return this.http.get( this.url );
+  }
+
+  backOrder( fechaIn: any, fechaOut: any ) {
+    this.url = URL_SERVICE + '/api/diarios.php?opcion=20&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
+
+    return this.http.get( this.url );
+  }
+
+  obtenerBackOrder( tipo: any, fechaIn: any, fechaOut: any, orden: any ) {
+    this.url = URL_SERVICE + '/api/diarios.php?opcion=21&tipo=' + tipo + '&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&orden=' + orden;
+
+    return this.http.get( this.url );
+  }
+
 }

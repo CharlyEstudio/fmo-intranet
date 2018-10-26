@@ -11,9 +11,7 @@ export class ModalUploadService {
 
   public notificacion = new EventEmitter<any>();
 
-  constructor() {
-    // console.log('Modal UpLoad Services Listo');
-  }
+  constructor() { }
 
   ocultarModal() {
     this.oculto = 'oculto';

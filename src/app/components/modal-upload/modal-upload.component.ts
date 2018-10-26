@@ -19,9 +19,7 @@ export class ModalUploadComponent implements OnInit {
     public _subirArchivoService: SubirArchivoService,
     public _modalUpLoadService: ModalUploadService) {}
 
-  ngOnInit() {
-    //
-  }
+  ngOnInit() { }
 
   seleccionImagen( archivo: File ) {
     if ( !archivo ) {

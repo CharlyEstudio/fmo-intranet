@@ -1,3 +1,213 @@
-<p>
-  backorder works!
-</p>
+<div class="row">
+
+  <div class="col-lg-2 col-md-12">
+
+    <form #f="ngForm">
+
+      <div class="form-group">
+
+          <label for="inicio" class="col-2 col-form-label">Inicio</label>
+
+          <input [ngModel]='inicio' class="form-control" name="inicio" type="date" value="0000/00/00" id="inicio">
+
+      </div>
+
+      <div class="form-group">
+
+          <label for="final" class="col-2 col-form-label">Fin</label>
+
+          <input [ngModel]='final' class="form-control" name="final" type="date" value="0000/00/00" id="final">
+
+      </div>
+      
+      <div class="form-group">
+
+          <label for="orden" class="col-2 col-form-label">Ordenar</label>
+
+          <select class="form-control" [ngModel]='orden' name="orden" id="orden">
+
+            <option value="0">Seleccione una opción</option>
+
+            <option value="veces">Por veces solicitado</option>
+
+            <option value="venta">Por importe</option>
+
+          </select>
+
+      </div>
+
+      <button type="button" class="btn btn-success btn-block waves-effect waves-light m-r-10" (click)="solicitar( f )">Solicitar</button>
+
+    </form>
+
+  </div>
+
+  <div class="col-lg-10 col-md-12">
+
+    <span *ngIf="respuesta">No ha solicitado nada.</span>
+
+    <span *ngIf="ventas">No hay detalles.</span>
+
+    <div class="alert alert-warning" *ngIf="esperar">
+
+      Obteniendo registros
+
+    </div>
+
+    <div class="container-fluid" *ngIf="respuestaGeneral">
+
+      <div class="table-responsive">
+
+        <table class="display nowrap table table-hover table-striped table-bordered dataTable" cellspacing="0" width="100%" role="grid" aria-describedby="example23_info" style="width: 100%;">
+          
+          <thead>
+
+            <tr role="row">
+
+              <th class="text-center">Marca</th>
+
+              <th class="text-center">Cantidad</th>
+
+              <th class="text-center">Costo</th>
+
+              <th class="text-center">Venta</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <tr role="row" class="odd" *ngFor="let back of backorder">
+
+              <td class="sorting_1">
+
+                <a id="{{back.marca}}" href="#modalBackOrder" (click)="obtenerBackOrder($event)" data-dismiss="modal" data-toggle="modal">
+                  
+                  {{ back.marca }}
+
+                </a>
+
+              </td>
+
+              <td class="text-center">{{ back.cantidad | number }}</td>
+
+              <td class="text-center">{{ back.costo | currency }}</td>
+
+              <td class="text-center">{{ back.venta | currency }}</td>
+
+            </tr>
+
+            <tr>
+
+              <th>TOTAL</th>
+
+              <th class="text-center">{{ cantidad | number }}</th>
+
+              <th class="text-center">{{ costo | currency }}</th>
+
+              <th class="text-center">{{ venta | currency }}</th>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div id="modalBackOrder" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalBackOrder" aria-hidden="true">
+  
+  <div class="modal-dialog modal-lg tablas-modales">
+
+    <div class="modal-content p-t-20 p-b-20 p-l-20 p-r-20">
+
+      <div class="modal-header">
+
+        <h3 class="display-5 p-b-10 p-t-10">Back Order de {{ nombre }}</h3>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+          <span aria-hidden="true">&times;</span>
+
+        </button>
+      
+      </div>
+
+      <div class="modal-body">
+
+        <div class="table-responsive">
+
+          <table class="display nowrap table table-hover table-striped table-bordered dataTable" cellspacing="0" width="100%" role="grid" aria-describedby="example23_info" style="width: 100%;">
+            
+            <thead>
+
+              <tr role="row">
+
+                <th class="text-center">Código</th>
+
+                <th class="text-center">Descripción</th>
+
+                <th class="text-center">BackOrder</th>
+
+                <th class="text-center">Existencia</th>
+
+                <th class="text-center">Ubicación</th>
+
+                <th class="text-center">Costo</th>
+
+                <th class="text-center">Venta</th>
+
+                <th class="text-center">Solicitado</th>
+
+                <th class="text-center">Ultima Compra</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <tr role="row" class="odd" *ngFor="let back of backs">
+
+                <td class="text-center">{{ back.codigo }}</td>
+
+                <td class="text-center">{{ back.descr }}</td>
+
+                <td class="text-center">{{ back.faltante | number }}</td>
+
+                <td class="text-center">{{ back.existencia | number }}</td>
+
+                <td class="text-center">{{ back.ubicacion }}</td>
+
+                <td class="text-center">{{ back.costo | currency }}</td>
+
+                <td class="text-center">{{ back.venta | currency }}</td>
+
+                <td class="text-center" *ngIf="back.veces < 2">{{ back.veces | number }} vez</td>
+
+                <td class="text-center" *ngIf="back.veces > 1">{{ back.veces | number }} veces</td>
+
+                <td class="text-center">{{ back.ult_comp | date: 'dd-MM-yyyy' }}</td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+  
+</div>

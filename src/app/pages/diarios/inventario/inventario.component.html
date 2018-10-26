@@ -1,30 +1,74 @@
 <div class="row">
+
   <div class="col-lg-12 col-md-12">
-    <span *ngIf="respuesta">No ha solicitado nada.</span>
-    <span *ngIf="ventas">No hay detalles.</span>
-    <div class="container-fluid" *ngIf="respuestaGeneral">
-      <div class="alert alert-primary" role="alert" *ngIf="esperar">
-        Obteniendo datos...
-      </div>
-      <table class="display nowrap table table-hover table-striped table-bordered dataTable" cellspacing="0" width="100%" role="grid" aria-describedby="example23_info" style="width: 100%;">
-        <thead>
-          <tr role="row">
-            <th class="text-center">Tipo</th>
-            <th class="text-center">Importe</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr role="row" class="odd" *ngFor="let inv of inventario">
-            <td class="sorting_1">{{ inv.tipo }}</td>
-            <td class="text-center">{{ inv.subtotal | currency }}</td>
-          </tr>
-          <tr>
-            <th>TOTAL</th>
-            <th class="text-center">{{ subtotal | currency }}</th>
-          </tr>
-        </tbody>
-      </table>
+
+    <div class="alert alert-warning" *ngIf="esperar">
+
+      Obteniendo registros
+
     </div>
+
+    <span *ngIf="respuesta">No ha solicitado nada.</span>
+
+    <span *ngIf="ventas">No hay detalles.</span>
+
+    <div class="container-fluid" *ngIf="respuestaGeneral">
+
+      <div class="table-responsive">
+
+        <table class="display nowrap table table-hover table-striped table-bordered dataTable" cellspacing="0" width="100%" role="grid" aria-describedby="example23_info" style="width: 100%;">
+          
+          <thead>
+
+            <tr role="row">
+
+              <th class="text-center">Tipo</th>
+
+              <th class="text-center">Subtotal</th>
+
+              <th class="text-center">I.V.A.</th>
+
+              <th class="text-center">Total</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <tr role="row" class="odd" *ngFor="let inv of inventario">
+
+              <td class="sorting_1">{{ inv.tipo }}</td>
+
+              <td class="text-center">{{ inv.subtotal | currency }}</td>
+
+              <td class="text-center">{{ inv.iva | currency }}</td>
+
+              <td class="text-center">{{ inv.total | currency }}</td>
+
+            </tr>
+
+            <tr>
+
+              <th>TOTAL</th>
+
+              <th class="text-center">{{ subtotal | currency }}</th>
+
+              <th class="text-center">{{ iva | currency }}</th>
+
+              <th class="text-center">{{ total | currency }}</th>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
   </div>
+  
 </div>
   

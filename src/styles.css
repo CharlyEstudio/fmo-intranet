@@ -51,7 +51,15 @@
 }
 
 .tablas-modales {
-    max-width: 70%!important;
+    max-width: 80%!important;
+}
+
+.impoPedidosDia {
+    padding-left: 200px;
+    top: -20px;
+    position: relative;
+    font-size: 1.5em;
+    font-weight: 700;
 }
 
 /**
@@ -73,6 +81,34 @@
 
     .tablas-modales {
         max-width: 90%!important;
+    }
+
+    h2.font-light, h3.font-light{
+        font-size: 1em;
+    }
+
+    h3.card-title{
+        font-size: .7em;
+    }
+
+    .totales h3.font-light {
+        font-size: .8em;
+    }
+
+    .totales h6.text-muted {
+        font-size: .7em;
+    }
+
+    .totales h4.font-light {
+        font-size: .6em;
+    }
+
+    span.text-black, span.text-white {
+        font-size: .8em;
+    }
+
+    .p-l-20 h3.text-black {
+        font-size: 1em;
     }
 
 }
@@ -121,6 +157,34 @@
         max-width: 90%!important;
         font-size: 10px;
     }
+
+    h2.font-light, h3.font-light{
+        font-size: 1em;
+    }
+
+    h3.card-title{
+        font-size: .7em;
+    }
+
+    .card.servicio {
+        height: 93%!important;
+    }
+
+    .card.p-l-20 {
+        height: 94.5%!important;
+    }
+
+    .totales h6.text-muted {
+        font-size: .7em;
+    }
+
+    .totales h4.font-light {
+        font-size: .9em;
+    }
+
+    .p-l-20 h3.text-black {
+        font-size: 1em;
+    }
 	
 }
 
@@ -148,6 +212,30 @@
     .tablas-modales {
         max-width: 90%!important;
         font-size: 7px;
+    }
+
+    .d-flex .b-r {
+        border-right: none;
+    }
+
+    h4.font-light, .totales h3.font-light{
+        font-size: 3em;
+        padding: 30px 0;
+    }
+
+    .p-l-20 h3.text-black {
+        font-size: 2em;
+        text-align: center;
+    }
+
+    i.mdi.lead, i.wi.lead {
+        justify-content: center;
+        display: flex;
+        font-size: 3em;
+    }
+
+    .p-2.display-5 i.mdi {
+        font-size: 7rem;
     }
 
 }
@@ -178,123 +266,17 @@
     .tablas-modales h3.display-5 {
         font-size: 2.3rem;
     }
-}
-
-/**
- * ESCRITORIO GRANDE
- */
-
-/* @media(min-width: 1200px){ */
-@media(max-width: 1366px) and (min-width: 1200px){
-	h2.font-light, h3.font-light{
-        font-size: 1em;
-    }
-
-    h3.card-title{
-        font-size: .7em;
-    }
-
-    .totales h3.font-light {
-        font-size: .8em;
-    }
-
-    .totales h6.text-muted {
-        font-size: .7em;
-    }
-
-    .totales h4.font-light {
-        font-size: .6em;
-    }
-
-    span.text-black, span.text-white {
-        font-size: .8em;
-    }
-
-    .p-l-20 h3.text-black {
-        font-size: 1em;
-    }
-}
-
-/**
- * ESCRITORIO MEDIANO O TABLET HORIZONTAL
- */
-
-@media(max-width: 1199px) and (min-width: 992px){
-	h2.font-light, h3.font-light{
-        font-size: 1em;
-    }
-
-    h3.card-title{
-        font-size: .7em;
-    }
-
-    .card.servicio {
-        height: 93%!important;
-    }
-
-    .card.p-l-20 {
-        height: 94.5%!important;
-    }
-
-    .totales h3.font-light {
-        /* font-size: .6em; */
-    }
-
-    .totales h6.text-muted {
-        font-size: .7em;
-    }
-
-    .totales h4.font-light {
-        font-size: .9em;
-    }
-
-    span.text-black, span.text-white {
-        /* font-size: .35em; */
-    }
-
-    .p-l-20 h3.text-black {
-        font-size: 1em;
-    }
-}
-
-/**
- * ESCRITORIO PEQUEÑO O TABLET VERTICAL
- */
-
-@media(max-width: 991px) and (min-width: 768px){
 
     .d-flex .b-r {
         border-right: none;
     }
 
-    h4.font-light, .totales h3.font-light{
-        font-size: 3em;
-        padding: 30px 0;
+    .impoPedidosDia {
+        padding-left: 40px!important;
     }
 
-    .p-l-20 h3.text-black {
-        font-size: 2em;
-        text-align: center;
-    }
-
-    i.mdi.lead, i.wi.lead {
-        justify-content: center;
-        display: flex;
-        font-size: 3em;
-    }
-
-    .p-2.display-5 i.mdi {
-        font-size: 7rem;
-    }
-	
-}
-
-/**
- * DISPOSITIVOS MOVILES
- */
-
-@media(max-width: 767px){
-	.d-flex .b-r {
-        border-right: none;
+    .login-sidebar .login-box {
+        width: 100%!important;
+        right: unset!important;
     }
 }

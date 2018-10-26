@@ -17,6 +17,7 @@ export class NotasComponent implements OnInit {
   respuesta: boolean = true;
   respuestaGeneral: boolean = false;
   ventas: boolean = false;
+  esperar: boolean = false;
 
   inicio: any;
   final: any;
@@ -36,6 +37,10 @@ export class NotasComponent implements OnInit {
   }
 
   solicitar(forma: NgForm) {
+
+    this.esperar = true;
+    this.respuesta = false;
+
     if ( forma.value.inicio === undefined ) {
       swal('Debe ingresar las fechas', 'No ha selecionado un rango de fechas.', 'error');
       return;
@@ -65,10 +70,12 @@ export class NotasComponent implements OnInit {
           }
 
           this.respuesta = false;
+          this.esperar = false;
           this.respuestaGeneral = true;
           this.ventas = false;
         } else {
           this.ventas = true;
+          this.esperar = false;
           this.respuesta = false;
           this.respuestaGeneral = false;
         }

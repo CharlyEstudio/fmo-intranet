@@ -22,6 +22,7 @@ export class UtilidadesComponent implements OnInit {
   respuesta: boolean = true;
   respuestaGeneral: boolean = false;
   ventas: boolean = false;
+  esperar: boolean = false;
   
   // Totales
   utilidades: any;
@@ -39,6 +40,10 @@ export class UtilidadesComponent implements OnInit {
   }
 
   solicitar(forma: NgForm) {
+    
+    this.esperar = true;
+    this.respuesta = false;
+
     if ( forma.value.inicio === undefined ) {
       swal('Debe ingresar las fechas', 'No ha selecionado un rango de fechas.', 'error');
       return;
@@ -69,10 +74,12 @@ export class UtilidadesComponent implements OnInit {
 
           this.respuesta = false;
           this.respuestaGeneral = true;
+          this.esperar = false;
           this.ventas = false;
         } else {
           this.ventas = true;
           this.respuesta = false;
+          this.esperar = false;
           this.respuestaGeneral = false;
         }
       });

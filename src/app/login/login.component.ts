@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 
 import { UsuarioService } from '../services/services.index';
 import { Usuario } from '../models/usuario.model';
+// import { URL_SERVICIOS2 } from '../config/config';
 
 declare function init_plugins();
 
@@ -20,7 +21,9 @@ export class LoginComponent implements OnInit {
 
   auth2: any;
 
-  constructor(public router: Router, public _usuarioService: UsuarioService) { }
+  constructor(public router: Router, public _usuarioService: UsuarioService) {
+    // console.log(URL_SERVICIOS2);
+  }
 
   ngOnInit() {
     init_plugins();
@@ -47,6 +50,8 @@ export class LoginComponent implements OnInit {
             || this._usuarioService.usuario.rol === "DIR_ROLE"
             || this._usuarioService.usuario.rol === "GER_ROLE"){
           this.router.navigate(['/dashboardDir']);
+        } else if (this._usuarioService.usuario.rol === "ASE_ROLE") {
+          this.router.navigate(['/dashboardAse']);
         } else {
           this.router.navigate(['/dashboard']);
         }

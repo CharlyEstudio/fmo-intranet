@@ -15,6 +15,8 @@ export class UsuariosComponent implements OnInit {
 
   usuarios: Usuario[] = [];
 
+  idFerrum: number = 0;
+
   desde: number = 0;
 
   totalResgitro: number = 0;

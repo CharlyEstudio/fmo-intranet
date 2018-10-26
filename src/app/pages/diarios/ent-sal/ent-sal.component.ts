@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { DiariosService } from '../../../services/services.index';
 import { NgForm } from '@angular/forms';
 import { SweetAlert } from 'sweetalert/typings/core';
-import { URL_SERVICE } from '../../../config/config';
 
 @Component({
   selector: 'app-ent-sal',
@@ -21,6 +20,7 @@ export class EntSalComponent implements OnInit {
   respuestaIndividual: boolean = false;
   respuestaGeneral: boolean = false;
   ventas: boolean = false;
+  esperar: boolean = false;
 
   entSal: any;
   entrada: number = 0;
@@ -31,14 +31,15 @@ export class EntSalComponent implements OnInit {
 
   constructor(
     private _diariosService: DiariosService
-  ) {
-    this.url = URL_SERVICE;
-  }
+  ) {}
 
   ngOnInit() {
   }
 
   solicitar(forma: NgForm) {
+
+    this.esperar = true;
+    this.respuesta = false;
 
     if ( forma.value.inicio === undefined ) {
       swal('Debe ingresar las fechas', 'No ha selecionado un rango de fechas.', 'error');
@@ -69,10 +70,12 @@ export class EntSalComponent implements OnInit {
           }
 
           this.respuesta = false;
+          this.esperar = false;
           this.respuestaGeneral = true;
           this.ventas = false;
         } else {
           this.ventas = true;
+          this.esperar = false;
           this.respuesta = false;
           this.respuestaGeneral = false;
         }

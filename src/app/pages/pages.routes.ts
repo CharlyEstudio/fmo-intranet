@@ -1,20 +1,21 @@
 import { Routes, RouterModule } from '@angular/router';
 
-// import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashborarDirComponent } from './dashborar-dir/dashborar-dir.component';
+import { DasboardAseComponent } from './dasboard-ase/dasboard-ase.component';
+import { AccountSettingsComponent } from './account-settings/account-settings.component';
+import { ProfileComponent } from './profile/profile.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { BusquedaComponent } from './busqueda/busqueda.component';
+// import { PagesComponent } from './pages.component';
 // import { ProgressComponent } from './progress/progress.component';
 // import { Graficas1Component } from './graficas1/graficas1.component';
-import { AccountSettingsComponent } from './account-settings/account-settings.component';
 // import { PromesasComponent } from './promesas/promesas.component';
 // import { RxjsComponent } from './rxjs/rxjs.component';
-import { ProfileComponent } from './profile/profile.component';
 
-import { UsuariosComponent } from './usuarios/usuarios.component';
 // import { HospitalesComponent } from './hospitales/hospitales.component';
 // import { MedicoComponent } from './medicos/medico.component';
 // import { MedicosComponent } from './medicos/medicos.component';
-import { BusquedaComponent } from './busqueda/busqueda.component';
 
 // Guards
 import { AdminGuard, VerificaTokenGuard } from '../services/services.index';
@@ -29,6 +30,10 @@ import { EntSalComponent } from './diarios/ent-sal/ent-sal.component';
 import { RepoLunesComponent } from './diarios/repo-lunes/repo-lunes.component';
 import { CarteraProveedoresComponent } from './diarios/cartera-proveedores/cartera-proveedores.component';
 import { CarteraClientesComponent } from './diarios/cartera-clientes/cartera-clientes.component';
+import { CobranzaComponent } from './cobranza/cobranza.component';
+import { PedidosDiaComponent } from './pedidos-dia/pedidos-dia.component';
+import { ListaMorosidadComponent } from './lista-morosidad/lista-morosidad.component';
+import { PreComisionComponent } from './pre-comision/pre-comision.component';
 
 const pageRoutes: Routes = [
     {
@@ -37,6 +42,15 @@ const pageRoutes: Routes = [
         component: DashborarDirComponent,
         data:   {
                     titulo: 'Dashboard Dirección',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'dashboardAse',
+        canActivate: [ VerificaTokenGuard ],
+        component: DasboardAseComponent,
+        data:   {
+                    titulo: 'Dashboard Asesor',
                     name: 'description'
                 }
     },
@@ -87,6 +101,43 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Mantenimiento de Usuarios',
+                    name: 'description'
+                }
+    },
+    // Asesores
+    {
+        path: 'cobranza',
+        component: CobranzaComponent,
+        data:
+                {
+                    titulo: 'Cobranza del Día',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'pedidosDia',
+        component: PedidosDiaComponent,
+        data:
+                {
+                    titulo: 'Pedidos del Día del Asesor',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'lista-morosidad/:id/:inicio/:fin',
+        component: ListaMorosidadComponent,
+        data:
+                {
+                    titulo: 'Relación de Clientes Morosos',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'pre-comision',
+        component: PreComisionComponent,
+        data:
+                {
+                    titulo: 'Previsualización de la Comisión del Mes',
                     name: 'description'
                 }
     },
@@ -196,6 +247,12 @@ const pageRoutes: Routes = [
         path: '',
         canActivate: [ AdminGuard, VerificaTokenGuard ],
         redirectTo: '/dashboardDir',
+        pathMatch: 'full'
+    },
+    {
+        path: '',
+        canActivate: [ VerificaTokenGuard ],
+        redirectTo: '/dashboardAse',
         pathMatch: 'full'
     },
     {

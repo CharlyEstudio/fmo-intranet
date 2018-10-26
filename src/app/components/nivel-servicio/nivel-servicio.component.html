@@ -8,16 +8,57 @@
 
             <div class="col-lg-6 col-md-12 text-center p-t-10">
 
-                    <div class="text-center">
+                <div class="text-center">
 
-                        <span>{{ porcentGen | percent: '2.2' }}</span>
+                    <span>{{ porcentGen | percent: '2.2' }}</span>
 
-                        <app-grafico-dona [ChartType]="graficos.general.type" [leyenda]="graficos.general.leyenda" [ChartData]="graficos.general.data" [ChartLabels]="graficos.general.labels" ></app-grafico-dona>
+                    <app-grafico-dona [ChartType]="graficos.general.type" [leyenda]="graficos.general.leyenda" [ChartData]="graficos.general.data" [ChartLabels]="graficos.general.labels" ></app-grafico-dona>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-6 col-md-6 col-sl-12 text-center">
+
+                        <!-- Column -->
+                        <div class="col-12 p-r-0">
+
+                            <h6 class="text-muted">Cotizado</h6>
+                            
+                            <h5 class="font-light">{{ dataGenCot | currency }}</h5>
+
+                        </div>
 
                     </div>
 
-                    <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sl-12 text-center">
 
+                        <!-- Column -->
+                        <div class="col-12 p-r-0">
+
+                            <h6 class="text-muted">Facturado</h6>
+                            
+                            <h5 class="font-light">{{ dataGenFac | currency }}</h5>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-6 col-md-12 p-l-0 text-center">
+
+                <!-- Column -->
+                <div class="col-12 p-r-0" style="padding-bottom: 5px;">
+
+                    <h6 class="text-muted">Truper</h6>
+                    
+                    <h1 class="font-light">{{ porcentTru | percent: '2.1' }}</h1>
+
+                    <div class="row">
+                    
                         <div class="col-lg-6 col-md-6 col-sl-12 text-center">
 
                             <!-- Column -->
@@ -25,7 +66,7 @@
 
                                 <h6 class="text-muted">Cotizado</h6>
                                 
-                                <h5 class="font-light">{{ dataGenCot | currency }}</h5>
+                                <h5 class="font-light">{{ dataTruCot | currency }}</h5>
 
                             </div>
 
@@ -38,7 +79,7 @@
 
                                 <h6 class="text-muted">Facturado</h6>
                                 
-                                <h5 class="font-light">{{ dataGenFac | currency }}</h5>
+                                <h5 class="font-light">{{ dataTruFac | currency }}</h5>
 
                             </div>
 
@@ -46,42 +87,38 @@
 
                     </div>
 
-            </div>
+                </div>
 
-            <div class="col-lg-6 col-md-12 p-l-0 text-center">
+                <!-- Column -->
+                <div class="col-12 p-r-0">
 
-                    <!-- Column -->
-                    <div class="col-12 p-r-0" style="padding-bottom: 5px;">
+                    <h6 class="text-muted">Ferremayoristas</h6>
+                    
+                    <h1 class="font-light">{{ porcentFMO | percent: '2.1' }}</h1>
 
-                        <h6 class="text-muted">Truper</h6>
-                        
-                        <h1 class="font-light">{{ porcentTru | percent: '2.1' }}</h1>
+                    <div class="row">
+                    
+                        <div class="col-lg-6 col-md-6 col-sl-12 text-center">
 
-                        <div class="row">
-                        
-                            <div class="col-lg-6 col-md-6 col-sl-12 text-center">
+                            <!-- Column -->
+                            <div class="col-12 p-r-0">
 
-                                <!-- Column -->
-                                <div class="col-12 p-r-0">
-
-                                    <h6 class="text-muted">Cotizado</h6>
-                                    
-                                    <h5 class="font-light">{{ dataTruCot | currency }}</h5>
-
-                                </div>
+                                <h6 class="text-muted">Cotizado</h6>
+                                
+                                <h5 class="font-light">{{ dataFMOCot | currency }}</h5>
 
                             </div>
 
-                            <div class="col-lg-6 col-md-6 col-sl-12 text-center">
+                        </div>
 
-                                <!-- Column -->
-                                <div class="col-12 p-r-0">
+                        <div class="col-lg-6 col-md-6 col-sl-12 text-center">
 
-                                    <h6 class="text-muted">Facturado</h6>
-                                    
-                                    <h5 class="font-light">{{ dataTruFac | currency }}</h5>
+                            <!-- Column -->
+                            <div class="col-12 p-r-0">
 
-                                </div>
+                                <h6 class="text-muted">Facturado</h6>
+                                
+                                <h5 class="font-light">{{ dataFMOFac | currency }}</h5>
 
                             </div>
 
@@ -89,44 +126,7 @@
 
                     </div>
 
-                    <!-- Column -->
-                    <div class="col-12 p-r-0">
-
-                        <h6 class="text-muted">Ferremayoristas</h6>
-                        
-                        <h1 class="font-light">{{ porcentFMO | percent: '2.1' }}</h1>
-
-                        <div class="row">
-                        
-                            <div class="col-lg-6 col-md-6 col-sl-12 text-center">
-
-                                <!-- Column -->
-                                <div class="col-12 p-r-0">
-
-                                    <h6 class="text-muted">Cotizado</h6>
-                                    
-                                    <h5 class="font-light">{{ dataFMOCot | currency }}</h5>
-
-                                </div>
-
-                            </div>
-
-                            <div class="col-lg-6 col-md-6 col-sl-12 text-center">
-
-                                <!-- Column -->
-                                <div class="col-12 p-r-0">
-
-                                    <h6 class="text-muted">Facturado</h6>
-                                    
-                                    <h5 class="font-light">{{ dataFMOFac | currency }}</h5>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
+                </div>
 
             </div>
 

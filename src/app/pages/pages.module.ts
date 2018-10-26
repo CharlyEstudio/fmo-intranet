@@ -39,6 +39,10 @@ import { EntSalComponent } from './diarios/ent-sal/ent-sal.component';
 import { RepoLunesComponent } from './diarios/repo-lunes/repo-lunes.component';
 import { CarteraProveedoresComponent } from './diarios/cartera-proveedores/cartera-proveedores.component';
 import { CarteraClientesComponent } from './diarios/cartera-clientes/cartera-clientes.component';
+import { CobranzaComponent } from './cobranza/cobranza.component';
+import { DasboardAseComponent } from './dasboard-ase/dasboard-ase.component';
+import { PedidosDiaComponent } from './pedidos-dia/pedidos-dia.component';
+import { ListaMorosidadComponent } from './lista-morosidad/lista-morosidad.component';
 // import { ProgressComponent } from './progress/progress.component';
 // import { Graficas1Component } from './graficas1/graficas1.component';
 // import { PagesComponent } from './pages.component';
@@ -62,6 +66,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 
 // Pipes
 import { PipesModule } from '../pipes/pipes.module';
+import { PreComisionComponent } from './pre-comision/pre-comision.component';
 
 @NgModule({
     declarations: [
@@ -97,6 +102,11 @@ import { PipesModule } from '../pipes/pipes.module';
         RepoLunesComponent,
         CarteraProveedoresComponent,
         CarteraClientesComponent,
+        DasboardAseComponent,
+        CobranzaComponent,
+        PedidosDiaComponent,
+        ListaMorosidadComponent,
+        PreComisionComponent
         // PagesComponent,
         // PromesasComponent, // Desactivado por no usarlo
         // ProgressComponent, // Desactivado por no usarlo

@@ -1,0 +1,450 @@
+<p>
+  Comisión Mensual
+</p>
+Venta Bruta: {{ ventaMensual | currency }}
+<br>
+Devoluciones: {{ devoluciones | currency }}
+<br>
+Venta Neta: {{ (ventaMensual - devoluciones) | currency }}
+<br>
+Notas de Crédito: {{ notasCredito | currency }}
+<br>
+Bonificaciones: {{ bonificaciones | currency }}
+<br>
+Venta Final: {{ (ventaMensual - devoluciones - notasCredito - bonificaciones) | currency }}
+<br>
+Porcentaje Comisión: {{ porVentafInal | percent: '0.2' }}
+<br>
+Comisión: {{ ((ventaMensual - devoluciones - notasCredito - bonificaciones) * porVentafInal) | currency }}
+<br>
+<br>
+Truper
+<br>
+0 - 2 {{ de0a2Truper | currency }} => {{ por0a2Truper | percent: '0.1' }} => {{ (de0a2Truper * por0a2Truper) | currency }}
+<br>
+3 - 7 {{ de3a7Truper | currency }} => {{ por3a7Truper | percent: '0.1' }} => {{ (de3a7Truper * por3a7Truper) | currency }}
+<br>
+8 - 14 {{ de8a14Truper | currency }} => {{ por8a14Truper | percent: '0.1' }} => {{ (de8a14Truper * por8a14Truper) | currency }}
+<br>
+15 - 21 {{ de15a21Truper | currency }} => {{ por15a21Truper | percent: '0.1' }} => {{ (de15a21Truper * por15a21Truper) | currency }}
+<br>
+22 - 31 {{ de22a31Truper | currency }} => {{ por22a31Truper | percent: '0.1' }} => {{ (de22a31Truper * por22a31Truper) | currency }}
+<br>
+32 o más {{ de32Truper | currency }} => {{ por32Truper | percent: '0.1' }} => {{ (de32Truper * por32Truper) | currency }}
+<br>
+Total: {{ totalRangoTruper | currency }} => {{ ((de0a2Truper * por0a2Truper) + (de3a7Truper * por3a7Truper) + (de8a14Truper * por8a14Truper) + (de15a21Truper * por15a21Truper) + (de22a31Truper * por22a31Truper) + (de32Truper * por32Truper) + (de32Truper * por32Truper)) | currency }}
+<br>
+<br>
+Fmo
+<br>
+0 - 2 {{ de0a2Fmo | currency }} => {{ por0a2Fmo | percent: '0.1' }} => {{ (de0a2Fmo * por0a2Fmo) | currency }}
+<br>
+3 - 7 {{ de3a7Fmo | currency }} => {{ por3a7Fmo | percent: '0.1' }} => {{ (de3a7Fmo * por3a7Fmo) | currency }}
+<br>
+8 - 14 {{ de8a14Fmo | currency }} => {{ por8a14Fmo | percent: '0.1' }} => {{ (de8a14Fmo * por8a14Fmo) | currency }}
+<br>
+15 - 21 {{ de15a21Fmo | currency }} => {{ por15a21Fmo | percent: '0.1' }} => {{ (de15a21Fmo * por15a21Fmo) | currency }}
+<br>
+22 - 31 {{ de22a31Fmo | currency }} => {{ por22a31Fmo | percent: '0.1' }} => {{ (de22a31Fmo * por22a31Fmo) | currency }}
+<br>
+32 o más {{ de32Fmo | currency }} => {{ por32Fmo | percent: '0.1' }} => {{ (de32Fmo * por32Fmo) | currency }}
+<br>
+Total: {{ totalRangoFmo | currency }} => {{ ((de0a2Fmo * por0a2Fmo) + (de3a7Fmo * por3a7Fmo) + (de8a14Fmo * por8a14Fmo) + (de15a21Fmo * por15a21Fmo) + (de22a31Fmo * por22a31Fmo) + (de32Fmo * por32Fmo) + (de32Fmo * por32Fmo)) | currency }}
+<br>
+<br>
+Cartera Total: {{ carteraTotal | currency }} Por Vencer: {{ porVencer | currency }} Cartera Vencida: {{ vencida | currency }}
+<br>
+1 - 8 => {{ de1a8 | currency }} => {{ por1a8 | percent: '0.3' }} => {{ ((de1a8 * por1a8) * 100) | currency }}
+<br>
+9 - 16 => {{ de9a16 | currency }} => {{ por9a16 | percent: '0.3' }} => {{ ((de9a16 * por9a16) * 100) | currency }}
+<br>
+17 ó más => {{ de17 | currency }} => {{ por17 | percent: '0.3' }} => {{ ((de17 * por17) * 100) | currency }}
+<br>
+Penalización: {{ (((de1a8 * por1a8) * 100) + ((de9a16 * por9a16) * 100) + ((de17 * por17) * 100)) | currency }}
+<br>
+<br>
+Total de Clientes: {{ totaClientes | number }} - Cobertura: {{ coberturaCantidad | number }}
+<br>
+1 Venta: {{ cant1 | number }} => Costo de Penalización: {{ neg1 | currency }} => Penalización: {{ (cant1 * neg1) | currency }}
+<br>
+2 ó más Ventas: {{ cant2 | number }} => Costo de Bono por Ventas: {{ pos2 | currency }} => Bono: {{ (cant2 * pos2) | currency }}
+<br>
+Sin Venta: {{ (totaClientes - coberturaCantidad) | number }} => Penalización por Falta de Cobertura: {{ negSinVenta | currency }} => Penalización: {{ ((totaClientes - coberturaCantidad) * negSinVenta) | currency }}
+<br>
+Comisión Cobertura: {{ ((cant2 * pos2) - (cant1 * neg1) - ((totaClientes - coberturaCantidad) * negSinVenta)) | currency }}
+<br>
+<br>
+Renglonaje: {{ renglonaje | number }}
+<br>
+0 - 1000 => {{ ren1000 }} => Tasa: {{ tasa1000 | percent: '0.1' }} => Importe: {{ ((ren1000 * tasa1000) * 100) | number }}
+<br>
+1001 - 2000 => {{ ren2000 }} => Tasa: {{ tasa2000 | percent: '0.1' }} => Importe: {{ ((ren2000 * tasa2000) * 100) | number }}
+<br>
+2001 - 4000 => {{ ren4000 }} => Tasa: {{ tasa4000 | percent: '0.1' }} => Importe: {{ ((ren4000 * tasa4000) * 100) | number }}
+<br>
+4001 - 6000 => {{ ren6000 }} => Tasa: {{ tasa6000 | percent: '0.1' }} => Importe: {{ ((ren6000 * tasa6000) * 100) | number }}
+<br>
+6001 ó más => {{ ren6001 }} => Tasa: {{ tasa6001 | percent: '0.1' }} => Importe: {{ ((ren6001 * tasa6001) * 100) | number }}
+<br>
+Comisión Renglonaje: {{ (((ren1000 * tasa1000) * 100) + ((ren2000 * tasa2000) * 100) + ((ren4000 * tasa4000) * 100) + ((ren6000 * tasa6000) * 100) + ((ren6001 * tasa6001) * 100)) | currency }}
+<br>
+<br>
+Resumen
+<br>
+Comisión: {{
+  (
+    (
+      (ventaMensual - devoluciones - notasCredito - bonificaciones) * porVentafInal
+    ) +
+    (
+      (de0a2Truper * por0a2Truper) +
+      (de3a7Truper * por3a7Truper) +
+      (de8a14Truper * por8a14Truper) +
+      (de15a21Truper * por15a21Truper) +
+      (de22a31Truper * por22a31Truper) +
+      (de32Truper * por32Truper) +
+      (de32Truper * por32Truper)
+    ) +
+    (
+      (de0a2Fmo * por0a2Fmo) +
+      (de3a7Fmo * por3a7Fmo) +
+      (de8a14Fmo * por8a14Fmo) +
+      (de15a21Fmo * por15a21Fmo) +
+      (de22a31Fmo * por22a31Fmo) +
+      (de32Fmo * por32Fmo) +
+      (de32Fmo * por32Fmo)
+    ) +
+    (
+      (cant2 * pos2) -
+      (cant1 * neg1) -
+      (
+        (totaClientes - coberturaCantidad) * negSinVenta
+      )
+    ) +
+    (
+      (
+        (ren1000 * tasa1000) * 100
+      ) +
+      (
+        (ren2000 * tasa2000) * 100
+      ) +
+      (
+        (ren4000 * tasa4000) * 100
+      ) +
+      (
+        (ren6000 * tasa6000) * 100
+      ) +
+      (
+        (ren6001 * tasa6001) * 100
+      )
+    )
+  )
+  | currency
+}}
+<br>
+Penalización: {{
+  (
+    (
+      (de1a8 * por1a8) * 100
+    ) +
+    (
+      (de9a16 * por9a16) * 100
+    ) +
+    (
+      (de17 * por17) * 100
+    )
+  )
+  | currency
+}}
+<br>
+Devoluciones: {{ (devoluciones + notasCredito) | currency }} => {{ (((devoluciones + notasCredito) * porDevoluciones) * 100) | currency }}
+<br>
+Penalización por Pedidos: Semana 1: {{ semana1 | currency }} | Semana 2: {{ semana2 | currency }} | Semana 3: {{ semana3 | currency }} | Semana 4: {{ semana4 | currency }} | Semana 5: {{ semana5 | currency }} => {{ (semana1 + semana2 + semana3 + semana4 + semana5) | currency }}
+<br>
+Teléfono: {{ telefono | currency }}
+<br>
+Pre-Total: {{
+  (
+    (
+      (
+        (ventaMensual - bonificaciones) * porVentafInal
+      ) +
+      (
+        (de0a2Truper * por0a2Truper) +
+        (de3a7Truper * por3a7Truper) +
+        (de8a14Truper * por8a14Truper) +
+        (de15a21Truper * por15a21Truper) +
+        (de22a31Truper * por22a31Truper) +
+        (de32Truper * por32Truper) +
+        (de32Truper * por32Truper)
+      ) +
+      (
+        (de0a2Fmo * por0a2Fmo) +
+        (de3a7Fmo * por3a7Fmo) +
+        (de8a14Fmo * por8a14Fmo) +
+        (de15a21Fmo * por15a21Fmo) +
+        (de22a31Fmo * por22a31Fmo) +
+        (de32Fmo * por32Fmo) +
+        (de32Fmo * por32Fmo)
+      ) +
+      (
+        (cant2 * pos2) -
+        (cant1 * neg1) -
+        (
+          (totaClientes - coberturaCantidad) * negSinVenta
+        )
+      ) +
+      (
+        (
+          (ren1000 * tasa1000) * 100
+        ) +
+        (
+          (ren2000 * tasa2000) * 100
+        ) +
+        (
+          (ren4000 * tasa4000) * 100
+        ) +
+        (
+          (ren6000 * tasa6000) * 100
+        ) +
+        (
+          (ren6001 * tasa6001) * 100
+        )
+      )
+    ) -
+    (
+      (
+        (de1a8 * por1a8) * 100
+      ) +
+      (
+        (de9a16 * por9a16) * 100
+      ) +
+      (
+        (de17 * por17) * 100
+      )
+    ) -
+    (((devoluciones + notasCredito) * porDevoluciones) * 100) -
+    (semana1 + semana2 + semana3 + semana4) -
+    telefono
+  )
+  | currency
+}}
+<br>
+Menos Gasolina: {{ gasolina | currency }}
+<br>
+Total a Pagar: {{
+  (
+    (
+      (
+        (
+          (ventaMensual - bonificaciones) * porVentafInal
+        ) +
+        (
+          (de0a2Truper * por0a2Truper) +
+          (de3a7Truper * por3a7Truper) +
+          (de8a14Truper * por8a14Truper) +
+          (de15a21Truper * por15a21Truper) +
+          (de22a31Truper * por22a31Truper) +
+          (de32Truper * por32Truper) +
+          (de32Truper * por32Truper)
+        ) +
+        (
+          (de0a2Fmo * por0a2Fmo) +
+          (de3a7Fmo * por3a7Fmo) +
+          (de8a14Fmo * por8a14Fmo) +
+          (de15a21Fmo * por15a21Fmo) +
+          (de22a31Fmo * por22a31Fmo) +
+          (de32Fmo * por32Fmo) +
+          (de32Fmo * por32Fmo)
+        ) +
+        (
+          (cant2 * pos2) -
+          (cant1 * neg1) -
+          (
+            (totaClientes - coberturaCantidad) * negSinVenta
+          )
+        ) +
+        (
+          (
+            (ren1000 * tasa1000) * 100
+          ) +
+          (
+            (ren2000 * tasa2000) * 100
+          ) +
+          (
+            (ren4000 * tasa4000) * 100
+          ) +
+          (
+            (ren6000 * tasa6000) * 100
+          ) +
+          (
+            (ren6001 * tasa6001) * 100
+          )
+        )
+      ) -
+      (
+        (
+          (de1a8 * por1a8) * 100
+        ) +
+        (
+          (de9a16 * por9a16) * 100
+        ) +
+        (
+          (de17 * por17) * 100
+        )
+      ) -
+      (((devoluciones + notasCredito) * porDevoluciones) * 100) -
+      (semana1 + semana2 + semana3 + semana4) -
+      telefono
+    ) - 
+    gasolina
+  )
+  | currency
+}}
+<br>
+Pago Quincenal próximo mes: {{
+  (
+    (
+      (
+        (
+          (
+            (ventaMensual - bonificaciones) * porVentafInal
+          ) +
+          (
+            (de0a2Truper * por0a2Truper) +
+            (de3a7Truper * por3a7Truper) +
+            (de8a14Truper * por8a14Truper) +
+            (de15a21Truper * por15a21Truper) +
+            (de22a31Truper * por22a31Truper) +
+            (de32Truper * por32Truper) +
+            (de32Truper * por32Truper)
+          ) +
+          (
+            (de0a2Fmo * por0a2Fmo) +
+            (de3a7Fmo * por3a7Fmo) +
+            (de8a14Fmo * por8a14Fmo) +
+            (de15a21Fmo * por15a21Fmo) +
+            (de22a31Fmo * por22a31Fmo) +
+            (de32Fmo * por32Fmo) +
+            (de32Fmo * por32Fmo)
+          ) +
+          (
+            (cant2 * pos2) -
+            (cant1 * neg1) -
+            (
+              (totaClientes - coberturaCantidad) * negSinVenta
+            )
+          ) +
+          (
+            (
+              (ren1000 * tasa1000) * 100
+            ) +
+            (
+              (ren2000 * tasa2000) * 100
+            ) +
+            (
+              (ren4000 * tasa4000) * 100
+            ) +
+            (
+              (ren6000 * tasa6000) * 100
+            ) +
+            (
+              (ren6001 * tasa6001) * 100
+            )
+          )
+        ) -
+        (
+          (
+            (de1a8 * por1a8) * 100
+          ) +
+          (
+            (de9a16 * por9a16) * 100
+          ) +
+          (
+            (de17 * por17) * 100
+          )
+        ) -
+        (((devoluciones + notasCredito) * porDevoluciones) * 100) -
+        (semana1 + semana2 + semana3 + semana4) -
+        telefono
+      ) - 
+      gasolina
+    )
+    / 2
+  ) | currency
+}}
+<br>
+Sueldo Garantía: {{ sueldoGarantia | currency }} => {{
+  (
+    (
+      (
+        (
+          (
+            (
+              (ventaMensual - bonificaciones) * porVentafInal
+            ) +
+            (
+              (de0a2Truper * por0a2Truper) +
+              (de3a7Truper * por3a7Truper) +
+              (de8a14Truper * por8a14Truper) +
+              (de15a21Truper * por15a21Truper) +
+              (de22a31Truper * por22a31Truper) +
+              (de32Truper * por32Truper) +
+              (de32Truper * por32Truper)
+            ) +
+            (
+              (de0a2Fmo * por0a2Fmo) +
+              (de3a7Fmo * por3a7Fmo) +
+              (de8a14Fmo * por8a14Fmo) +
+              (de15a21Fmo * por15a21Fmo) +
+              (de22a31Fmo * por22a31Fmo) +
+              (de32Fmo * por32Fmo) +
+              (de32Fmo * por32Fmo)
+            ) +
+            (
+              (cant2 * pos2) -
+              (cant1 * neg1) -
+              (
+                (totaClientes - coberturaCantidad) * negSinVenta
+              )
+            ) +
+            (
+              (
+                (ren1000 * tasa1000) * 100
+              ) +
+              (
+                (ren2000 * tasa2000) * 100
+              ) +
+              (
+                (ren4000 * tasa4000) * 100
+              ) +
+              (
+                (ren6000 * tasa6000) * 100
+              ) +
+              (
+                (ren6001 * tasa6001) * 100
+              )
+            )
+          ) -
+          (
+            (
+              (de1a8 * por1a8) * 100
+            ) +
+            (
+              (de9a16 * por9a16) * 100
+            ) +
+            (
+              (de17 * por17) * 100
+            )
+          ) -
+          (((devoluciones + notasCredito) * porDevoluciones) * 100) -
+          (semana1 + semana2 + semana3 + semana4) -
+          telefono
+        ) - 
+        gasolina
+      )
+      / 2
+    ) + sueldoGarantia
+  )
+  | currency
+}}

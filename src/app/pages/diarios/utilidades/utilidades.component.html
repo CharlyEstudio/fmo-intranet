@@ -27,36 +27,79 @@
   </div>
 
   <div class="col-lg-10 col-md-12">
-    <span *ngIf="respuesta">No ha solicitado nada.</span>
-    <span *ngIf="ventas">No hay detalles.</span>
-    <div class="container-fluid" *ngIf="respuestaGeneral">
-      <div class="alert alert-primary" role="alert" *ngIf="esperar">
-        Obteniendo datos...
-      </div>
-      <table class="display nowrap table table-hover table-striped table-bordered dataTable" cellspacing="0" width="100%" role="grid" aria-describedby="example23_info" style="width: 100%;">
-        <thead>
-          <tr role="row">
-            <th class="text-center">Proveedor</th>
-            <th class="text-center">Venta</th>
-            <th class="text-center">Costo</th>
-            <th class="text-center">Utilidad</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr role="row" class="odd" *ngFor="let utilidad of utilidades">
-            <td class="sorting_1">{{ utilidad.proveedor }}</td>
-            <td class="text-center">{{ utilidad.venta | currency }}</td>
-            <td class="text-center">{{ utilidad.costo | currency }}</td>
-            <td class="text-center">{{ utilidad.utilidad | currency }}</td>
-          </tr>
-          <tr>
-            <th>TOTAL</th>
-            <th class="text-center">{{ venta | currency }}</th>
-            <th class="text-center">{{ costo | currency }}</th>
-            <th class="text-center">{{ utilidad | currency }}</th>
-          </tr>
-        </tbody>
-      </table>
+
+    <div class="alert alert-warning" *ngIf="esperar">
+
+      Obteniendo registros
+
     </div>
+
+    <span *ngIf="respuesta">No ha solicitado nada.</span>
+
+    <span *ngIf="ventas">No hay detalles.</span>
+
+    <div class="container-fluid" *ngIf="respuestaGeneral">
+
+      <div class="table-responsive">
+
+        <table class="display nowrap table table-hover table-striped table-bordered dataTable" cellspacing="0" width="100%" role="grid" aria-describedby="example23_info" style="width: 100%;">
+          
+          <thead>
+
+            <tr role="row">
+
+              <th class="text-center">Proveedor</th>
+
+              <th class="text-center">Venta</th>
+
+              <th class="text-center">Costo</th>
+
+              <th class="text-center">Utilidad</th>
+
+              <th class="text-center">% Util</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <tr role="row" class="odd" *ngFor="let utilidad of utilidades">
+
+              <td class="sorting_1">{{ utilidad.proveedor }}</td>
+
+              <td class="text-center">{{ utilidad.venta | currency }}</td>
+
+              <td class="text-center">{{ utilidad.costo | currency }}</td>
+
+              <td class="text-center">{{ utilidad.utilidad | currency }}</td>
+
+              <td class="text-center">{{ ( ((utilidad.venta * 1) / utilidad.costo) - 1 ) | percent: '0.2' }}</td>
+
+            </tr>
+
+            <tr>
+
+              <th>TOTAL</th>
+
+              <th class="text-center">{{ venta | currency }}</th>
+
+              <th class="text-center">{{ costo | currency }}</th>
+
+              <th class="text-center">{{ utilidad | currency }}</th>
+
+              <th class="text-center">{{ ( ((venta * 1) / costo) - 1 ) | percent: '0.2' }}</th>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
   </div>
+  
 </div>

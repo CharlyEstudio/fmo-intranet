@@ -2,6 +2,7 @@
   <div class="col-12">
     <div class="card">
       <div class="card-body">
+        <h2 class="card-title text-uppercase">{{ nombre }}</h2>
         <h3 class="card-title text-uppercase" *ngIf="inicio != '-91'">Morosidad Total de {{ (inicio * -1) }} a {{ (fin * -1) }} días <span class="text-danger font-weight-bold">{{ total | currency }}</span></h3>
         <h3 class="card-title text-uppercase" *ngIf="inicio == '-91'">Morosidad Total mayor de 90 días {{ total | currency }}</h3>
         <div class="row">

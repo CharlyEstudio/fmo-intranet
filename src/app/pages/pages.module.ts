@@ -67,6 +67,11 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 // Pipes
 import { PipesModule } from '../pipes/pipes.module';
 import { PreComisionComponent } from './pre-comision/pre-comision.component';
+import { DashBoardSupComponent } from './dash-board-sup/dash-board-sup.component';
+import { AsesorVistaComponent } from './asesor-vista/asesor-vista.component';
+import { CobroVistaComponent } from './cobro-vista/cobro-vista.component';
+import { PedidoVistaComponent } from './pedido-vista/pedido-vista.component';
+import { PrecomVistaComponent } from './precom-vista/precom-vista.component';
 
 @NgModule({
     declarations: [
@@ -106,7 +111,12 @@ import { PreComisionComponent } from './pre-comision/pre-comision.component';
         CobranzaComponent,
         PedidosDiaComponent,
         ListaMorosidadComponent,
-        PreComisionComponent
+        PreComisionComponent,
+        DashBoardSupComponent,
+        AsesorVistaComponent,
+        CobroVistaComponent,
+        PedidoVistaComponent,
+        PrecomVistaComponent,
         // PagesComponent,
         // PromesasComponent, // Desactivado por no usarlo
         // ProgressComponent, // Desactivado por no usarlo

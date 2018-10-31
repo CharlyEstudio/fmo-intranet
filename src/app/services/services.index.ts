@@ -15,6 +15,7 @@ export { SharedService } from "./shared/shared.service";
 export { SidebarService } from "./shared/sidebar.service";
 export { DiariosService } from "./php/diarios.service";
 export { AsesoresService } from "./php/asesores.service";
+export { SupervisoresService } from "./php/supervisores.service";
 
 // Servicio PHP
 export { PhpService } from "./php/php.service";

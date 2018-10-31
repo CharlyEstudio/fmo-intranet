@@ -1,19 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { AsesoresService, UsuarioService } from '../../services/services.index';
+import { AsesoresService } from '../../services/services.index';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-pre-comision',
-  templateUrl: './pre-comision.component.html',
+  selector: 'app-precom-vista',
+  templateUrl: './precom-vista.component.html',
   styles: []
 })
-export class PreComisionComponent implements OnInit {
+export class PrecomVistaComponent implements OnInit {
 
-  // Día
-  fecha: number = Date.now();
-
-  usuario: any;
   idFerrum: any;
   nombre: any;
+  img: any;
+
   asesor: any[] = [];
   zona: any;
   gasolina: number = 0;
@@ -148,25 +147,20 @@ export class PreComisionComponent implements OnInit {
   dia31: any[] = [];
 
   constructor(
-    private _asesorService: AsesoresService,
-    public _usuarioService: UsuarioService,
+    private router: ActivatedRoute,
+    private _asesorService: AsesoresService
   ) { }
 
   ngOnInit() {
-
-    this.usuario = this._usuarioService.usuario;
-
-    this.asesor = JSON.parse(localStorage.getItem('usuario'));
-
-    this.nombre = this.asesor["nombre"];
-    this.idFerrum = this.asesor["idFerrum"];
+    this.idFerrum = this.router.snapshot.paramMap.get('id');
+    this.nombre = this.router.snapshot.paramMap.get('nombre');
+    this.img = this.router.snapshot.paramMap.get('img');
 
     // Zona Asesor
     this._asesorService.zonaAsesor(this.idFerrum)
       .subscribe( ( resp: any ) => {
         this.zona = resp[0].zona;
       });
-    
   }
 
   obtener() {

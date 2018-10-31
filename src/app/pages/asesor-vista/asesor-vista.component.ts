@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AsesoresService } from '../../services/services.index';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-dasboard-ase',
-  templateUrl: './dasboard-ase.component.html',
+  selector: 'app-asesor-vista',
+  templateUrl: './asesor-vista.component.html',
   styles: []
 })
-export class DasboardAseComponent implements OnInit {
+export class AsesorVistaComponent implements OnInit {
+  
+  idFerrum: any;
+  nombre: any;
 
   // Día
   fecha: number = Date.now();
@@ -16,8 +18,6 @@ export class DasboardAseComponent implements OnInit {
   datos: any[] = [];
   asesor: string;
   email: string;
-  id: any;
-  idFerrum: any;
   zona: any;
 
   // Pedidos
@@ -53,16 +53,20 @@ export class DasboardAseComponent implements OnInit {
   mor91: number = 0;
 
   constructor(
-    private router: Router,
+    private router: ActivatedRoute,
+    private _router: Router,
     private _asesoresServices: AsesoresService
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.datos = JSON.parse(localStorage.getItem('usuario'));
+    this.idFerrum = this.router.snapshot.paramMap.get('id');
+    this.nombre = this.router.snapshot.paramMap.get('nombre');
 
-    this.asesor = this.datos["nombre"];
-    this.id = this.datos["_id"];
-    this.idFerrum = this.datos["idFerrum"];
+    // Datos Asesor
+    this._asesoresServices.asesor(this.idFerrum)
+      .subscribe( ( resp: any ) => {
+        this.asesor = resp.usuarios[0].nombre;
+      });
 
     // Zona Asesor
     this._asesoresServices.zonaAsesor(this.idFerrum)
@@ -186,7 +190,7 @@ export class DasboardAseComponent implements OnInit {
   }
 
   solicitarLista( inicio: any, fin: any = '' ) {
-    this.router.navigate(['/lista-morosidad/', this.idFerrum, this.asesor, inicio, fin]);
+    this._router.navigate(['/lista-morosidad/', this.idFerrum, this.nombre, inicio, fin]);
   }
 
 }

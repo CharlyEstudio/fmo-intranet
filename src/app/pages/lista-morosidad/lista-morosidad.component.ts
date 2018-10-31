@@ -10,6 +10,7 @@ import { PhpService } from '../../services/services.index';
 export class ListaMorosidadComponent implements OnInit {
 
   id: any;
+  nombre: any;
   inicio: any;
   fin: any;
 
@@ -25,6 +26,8 @@ export class ListaMorosidadComponent implements OnInit {
   ngOnInit() {
 
     this.id = this.router.snapshot.paramMap.get('id');
+
+    this.nombre = this.router.snapshot.paramMap.get('nombre');
 
     this.inicio = this.router.snapshot.paramMap.get('inicio');
 

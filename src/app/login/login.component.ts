@@ -52,7 +52,9 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/dashboardDir']);
         } else if (this._usuarioService.usuario.rol === "ASE_ROLE") {
           this.router.navigate(['/dashboardAse']);
-        } else {
+        } else if (this._usuarioService.usuario.rol === "SUP_ROLE"){
+          this.router.navigate(['/dashBoardSup']);
+        }else {
           this.router.navigate(['/dashboard']);
         }
 

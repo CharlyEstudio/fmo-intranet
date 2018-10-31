@@ -34,6 +34,11 @@ import { CobranzaComponent } from './cobranza/cobranza.component';
 import { PedidosDiaComponent } from './pedidos-dia/pedidos-dia.component';
 import { ListaMorosidadComponent } from './lista-morosidad/lista-morosidad.component';
 import { PreComisionComponent } from './pre-comision/pre-comision.component';
+import { DashBoardSupComponent } from './dash-board-sup/dash-board-sup.component';
+import { AsesorVistaComponent } from './asesor-vista/asesor-vista.component';
+import { CobroVistaComponent } from './cobro-vista/cobro-vista.component';
+import { PedidoVistaComponent } from './pedido-vista/pedido-vista.component';
+import { PrecomVistaComponent } from './precom-vista/precom-vista.component';
 
 const pageRoutes: Routes = [
     {
@@ -124,7 +129,7 @@ const pageRoutes: Routes = [
                 }
     },
     {
-        path: 'lista-morosidad/:id/:inicio/:fin',
+        path: 'lista-morosidad/:id/:nombre/:inicio/:fin',
         component: ListaMorosidadComponent,
         data:
                 {
@@ -132,12 +137,58 @@ const pageRoutes: Routes = [
                     name: 'description'
                 }
     },
+    // {
+    //     path: 'pre-comision',
+    //     component: PreComisionComponent,
+    //     data:
+    //             {
+    //                 titulo: 'Previsualización de la Comisión del Mes',
+    //                 name: 'description'
+    //             }
+    // },
+    // Supervisores
     {
-        path: 'pre-comision',
-        component: PreComisionComponent,
+        path: 'dashBoardSup',
+        component: DashBoardSupComponent,
         data:
                 {
-                    titulo: 'Previsualización de la Comisión del Mes',
+                    titulo: 'Dashboard de Supervisión',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'asesor-vista/:id/:nombre',
+        component: AsesorVistaComponent,
+        data:
+                {
+                    titulo: 'Vista del Asesor',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'cobro-vista/:id/:nombre',
+        component: CobroVistaComponent,
+        data:
+                {
+                    titulo: 'Vista del Cobro del Asesor',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'pedido-vista/:id/:nombre',
+        component: PedidoVistaComponent,
+        data:
+                {
+                    titulo: 'Vista de los Pedidos del Asesor',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'precom-vista/:id/:nombre/:img',
+        component: PrecomVistaComponent,
+        data:
+                {
+                    titulo: 'Vista de la Pre-Comisión del Asesor',
                     name: 'description'
                 }
     },

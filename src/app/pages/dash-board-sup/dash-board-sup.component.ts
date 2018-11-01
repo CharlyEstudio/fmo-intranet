@@ -58,7 +58,7 @@ export class DashBoardSupComponent implements OnInit {
     this.router.navigate(['/pedido-vista/', idFerrum, nombre]);
   }
 
-  precomision( idFerrum: any, nombre: any, img: any ) {
+  precomision( idFerrum: any, nombre: any, img: any = '' ) {
     this.router.navigate(['/precom-vista/', idFerrum, nombre, img]);
   }
 

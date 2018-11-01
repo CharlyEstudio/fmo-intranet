@@ -9,6 +9,8 @@ import { Observable } from 'rxjs/Observable';
 
 import { Usuario } from '../../models/usuario.model';
 
+import { Comision } from '../../models/comision.model';
+
 import { URL_SERVICIOS } from '../../config/config';
 
 // import swal from 'sweetalert';
@@ -200,6 +202,51 @@ export class UsuarioService {
         swal('¡Usuario Borrado!', 'El usuario ha sido eliminado correctamente', 'success');
         // alert('¡Usuario Borrado!' + 'El usuario ha sido eliminado correctamente');
         return true;
+      });
+  }
+
+  buscarAsesorComision( id: any ) {
+    let url = URL_SERVICIOS + '/busqueda/especifico/comision/' + id;
+
+    return this.http.get( url )
+      .map( (resp: any) => {
+        return resp;
+      })
+      .catch( err => {
+        swal(err.error.mensaje , err.error.errors.message, 'error');
+        return Observable.throw( err );
+      });
+  }
+
+  guardarComision(comision: Comision) {
+    
+    let url = URL_SERVICIOS + '/comisiones';
+    url += '?token=' + this.token;
+
+    return this.http.post( url, comision )
+      .map( (resp: any) => {
+        swal ('¡Guardado Correcto!', 'Reporte de comisión guardada.', 'success');
+        return resp.usuario;
+      })
+      .catch( err => {
+        swal(err.error.mensaje , err.error.errors.message, 'error');
+        return Observable.throw( err );
+      });
+
+  }
+
+  actualizarComisionUsusario( comision: Comision, id: any ) {
+    let url = URL_SERVICIOS + '/comisiones/' + id;
+    url += '?token=' + this.token;
+
+    return this.http.put( url, comision )
+      .map( (resp: any) => {
+        swal('Comision Actualizado!', 'Realizado correctamente', 'success');
+        return true;
+      })
+      .catch( err => {
+        swal(err.error.mensaje , err.error.errors.message, 'error');
+        return Observable.throw( err );
       });
   }
 

@@ -137,15 +137,15 @@ const pageRoutes: Routes = [
                     name: 'description'
                 }
     },
-    // {
-    //     path: 'pre-comision',
-    //     component: PreComisionComponent,
-    //     data:
-    //             {
-    //                 titulo: 'Previsualización de la Comisión del Mes',
-    //                 name: 'description'
-    //             }
-    // },
+    {
+        path: 'pre-comision',
+        component: PreComisionComponent,
+        data:
+                {
+                    titulo: 'Previsualización de la Comisión del Mes',
+                    name: 'description'
+                }
+    },
     // Supervisores
     {
         path: 'dashBoardSup',

@@ -12,7 +12,8 @@ export class AdminGuard implements CanActivate {
   canActivate() {
     if ( this._usuarioService.usuario.rol === 'ADMIN_ROLE'
           || this._usuarioService.usuario.rol === 'DIR_ROLE'
-          || this._usuarioService.usuario.rol === 'GER_ROLE' ) {
+          || this._usuarioService.usuario.rol === 'GER_ROLE'
+          || this._usuarioService.usuario.rol === 'AUD_ROLE' ) {
       return true;
     } else {
       console.log('Bolqueado por el ADMIN GUARD');

@@ -39,6 +39,7 @@ import { AsesorVistaComponent } from './asesor-vista/asesor-vista.component';
 import { CobroVistaComponent } from './cobro-vista/cobro-vista.component';
 import { PedidoVistaComponent } from './pedido-vista/pedido-vista.component';
 import { PrecomVistaComponent } from './precom-vista/precom-vista.component';
+import { DashBoardAuditoriaComponent } from './dash-board-auditoria/dash-board-auditoria.component';
 
 const pageRoutes: Routes = [
     {
@@ -143,6 +144,16 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Previsualización de la Comisión del Mes',
+                    name: 'description'
+                }
+    },
+    // Auditoria & Cobranza
+    {
+        path: 'dashBoardAuditoria',
+        component: DashBoardAuditoriaComponent,
+        data:
+                {
+                    titulo: 'Dashboard de Auditoria & Cobranza',
                     name: 'description'
                 }
     },

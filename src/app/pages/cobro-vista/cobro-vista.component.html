@@ -122,7 +122,7 @@
 
                 <td class="text-center">{{ cobro.nombre }}</td>
 
-                <td class="text-center">pagado</td>
+                <td class="text-center">{{ cobro.pagado | currency }}</td>
 
                 <td class="text-center" *ngIf="cobro.formapago == 'C'">
 

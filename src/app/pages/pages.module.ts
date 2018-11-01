@@ -43,6 +43,13 @@ import { CobranzaComponent } from './cobranza/cobranza.component';
 import { DasboardAseComponent } from './dasboard-ase/dasboard-ase.component';
 import { PedidosDiaComponent } from './pedidos-dia/pedidos-dia.component';
 import { ListaMorosidadComponent } from './lista-morosidad/lista-morosidad.component';
+import { PreComisionComponent } from './pre-comision/pre-comision.component';
+import { DashBoardSupComponent } from './dash-board-sup/dash-board-sup.component';
+import { AsesorVistaComponent } from './asesor-vista/asesor-vista.component';
+import { CobroVistaComponent } from './cobro-vista/cobro-vista.component';
+import { PedidoVistaComponent } from './pedido-vista/pedido-vista.component';
+import { PrecomVistaComponent } from './precom-vista/precom-vista.component';
+import { DashBoardAuditoriaComponent } from './dash-board-auditoria/dash-board-auditoria.component';
 // import { ProgressComponent } from './progress/progress.component';
 // import { Graficas1Component } from './graficas1/graficas1.component';
 // import { PagesComponent } from './pages.component';
@@ -66,12 +73,6 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 
 // Pipes
 import { PipesModule } from '../pipes/pipes.module';
-import { PreComisionComponent } from './pre-comision/pre-comision.component';
-import { DashBoardSupComponent } from './dash-board-sup/dash-board-sup.component';
-import { AsesorVistaComponent } from './asesor-vista/asesor-vista.component';
-import { CobroVistaComponent } from './cobro-vista/cobro-vista.component';
-import { PedidoVistaComponent } from './pedido-vista/pedido-vista.component';
-import { PrecomVistaComponent } from './precom-vista/precom-vista.component';
 
 @NgModule({
     declarations: [
@@ -117,6 +118,7 @@ import { PrecomVistaComponent } from './precom-vista/precom-vista.component';
         CobroVistaComponent,
         PedidoVistaComponent,
         PrecomVistaComponent,
+        DashBoardAuditoriaComponent,
         // PagesComponent,
         // PromesasComponent, // Desactivado por no usarlo
         // ProgressComponent, // Desactivado por no usarlo

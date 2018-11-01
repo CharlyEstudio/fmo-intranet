@@ -177,9 +177,7 @@ User card page
     height: 100%; }
 
 /**
- *
  * ESCRITORIO GRANDE
- *
  */
 
 /* @media(min-width: 1200px){ */
@@ -225,12 +223,14 @@ User card page
         font-size: 1em;
     }
 
+    .impoPedidosDia {
+        padding-left: 50px!important;
+    }
+
 }
 
 /**
- *
  * ESCRITORIO MEDIANO O TABLET HORIZONTAL
- *
  */
 
 @media(max-width: 1199px) and (min-width: 992px){
@@ -299,13 +299,15 @@ User card page
     .p-l-20 h3.text-black {
         font-size: 1em;
     }
+
+    .impoPedidosDia {
+        padding-left: 50px!important;
+    }
 	
 }
 
 /**
- *
  * ESCRITORIO PEQUEÑO O TABLET VERTICAL
- *
  */
 
 @media(max-width: 991px) and (min-width: 768px){
@@ -355,9 +357,7 @@ User card page
 }
 
 /**
- *
  * DISPOSITIVOS MOVILES
- *
  */
 
 @media(max-width: 767px){

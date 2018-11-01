@@ -149,7 +149,7 @@ export class AsesoresService {
     return this.http.get( this.url );
   }
 
-  cobranza( id: any ) {
+  cobranza( id: any = '' ) {
     this.url = URL_SERVICE + '/api/asesores.php?opcion=20&perid=' + id;
 
     return this.http.get( this.url );

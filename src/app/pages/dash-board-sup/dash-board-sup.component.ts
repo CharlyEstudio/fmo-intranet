@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
 })
 export class DashBoardSupComponent implements OnInit {
 
+  datos: any[] = [];
+  rol: any;
+
   asesores: any[] = [];
 
   constructor(
@@ -19,6 +22,11 @@ export class DashBoardSupComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.datos = JSON.parse(localStorage.getItem('usuario'));
+
+    this.rol = this.datos["rol"];
+
     this._usuarioService.buscarUsuarios('ASE_ROLE')
       .subscribe( ( resp: any ) => {
         for(let i = 0; i < resp.length; i++) {

@@ -73,6 +73,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 
 // Pipes
 import { PipesModule } from '../pipes/pipes.module';
+import { CobranzaGeneralComponent } from './cobranza-general/cobranza-general.component';
 
 @NgModule({
     declarations: [
@@ -119,6 +120,7 @@ import { PipesModule } from '../pipes/pipes.module';
         PedidoVistaComponent,
         PrecomVistaComponent,
         DashBoardAuditoriaComponent,
+        CobranzaGeneralComponent,
         // PagesComponent,
         // PromesasComponent, // Desactivado por no usarlo
         // ProgressComponent, // Desactivado por no usarlo

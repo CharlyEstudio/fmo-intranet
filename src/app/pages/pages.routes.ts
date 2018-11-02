@@ -1,5 +1,9 @@
 import { Routes, RouterModule } from '@angular/router';
 
+// Guards
+import { AdminGuard, VerificaTokenGuard } from '../services/services.index';
+
+// Components
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashborarDirComponent } from './dashborar-dir/dashborar-dir.component';
 import { DasboardAseComponent } from './dasboard-ase/dasboard-ase.component';
@@ -12,14 +16,9 @@ import { BusquedaComponent } from './busqueda/busqueda.component';
 // import { Graficas1Component } from './graficas1/graficas1.component';
 // import { PromesasComponent } from './promesas/promesas.component';
 // import { RxjsComponent } from './rxjs/rxjs.component';
-
 // import { HospitalesComponent } from './hospitales/hospitales.component';
 // import { MedicoComponent } from './medicos/medico.component';
 // import { MedicosComponent } from './medicos/medicos.component';
-
-// Guards
-import { AdminGuard, VerificaTokenGuard } from '../services/services.index';
-
 import { VentaComponent } from './diarios/venta/venta.component';
 import { CompraComponent } from './diarios/compra/compra.component';
 import { UtilidadesComponent } from './diarios/utilidades/utilidades.component';
@@ -40,6 +39,11 @@ import { CobroVistaComponent } from './cobro-vista/cobro-vista.component';
 import { PedidoVistaComponent } from './pedido-vista/pedido-vista.component';
 import { PrecomVistaComponent } from './precom-vista/precom-vista.component';
 import { DashBoardAuditoriaComponent } from './dash-board-auditoria/dash-board-auditoria.component';
+import { ComisionesComponent } from './comisiones/comisiones.component';
+import { TotalComisionesComponent } from './total-comisiones/total-comisiones.component';
+import { Zona1AuditoriaComponent } from './zona1-auditoria/zona1-auditoria.component';
+import { Zona2AuditoriaComponent } from './zona2-auditoria/zona2-auditoria.component';
+import { ZonaEspecialComponent } from './zona-especial/zona-especial.component';
 
 const pageRoutes: Routes = [
     {
@@ -114,6 +118,7 @@ const pageRoutes: Routes = [
     {
         path: 'cobranza',
         component: CobranzaComponent,
+        canActivate: [ VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Cobranza del Día',
@@ -123,6 +128,7 @@ const pageRoutes: Routes = [
     {
         path: 'pedidosDia',
         component: PedidosDiaComponent,
+        canActivate: [ VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Pedidos del Día del Asesor',
@@ -132,6 +138,7 @@ const pageRoutes: Routes = [
     {
         path: 'lista-morosidad/:id/:nombre/:inicio/:fin',
         component: ListaMorosidadComponent,
+        canActivate: [ VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Relación de Clientes Morosos',
@@ -141,6 +148,7 @@ const pageRoutes: Routes = [
     {
         path: 'pre-comision',
         component: PreComisionComponent,
+        canActivate: [ VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Previsualización de la Comisión del Mes',
@@ -151,9 +159,40 @@ const pageRoutes: Routes = [
     {
         path: 'dashBoardAuditoria',
         component: DashBoardAuditoriaComponent,
+        canActivate: [ VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Dashboard de Auditoria & Cobranza',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'zona1Auditoria',
+        component: Zona1AuditoriaComponent,
+        canActivate: [ VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Información Detallada de Zona 1',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'zona2Auditoria',
+        component: Zona2AuditoriaComponent,
+        canActivate: [ VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Información Detallada de Zona 2',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'zonaEspecial',
+        component: ZonaEspecialComponent,
+        canActivate: [ VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Información Detallada de Zona Especial',
                     name: 'description'
                 }
     },
@@ -161,6 +200,7 @@ const pageRoutes: Routes = [
     {
         path: 'dashBoardSup',
         component: DashBoardSupComponent,
+        canActivate: [ VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Dashboard de Supervisión',
@@ -170,6 +210,7 @@ const pageRoutes: Routes = [
     {
         path: 'asesor-vista/:id/:nombre',
         component: AsesorVistaComponent,
+        canActivate: [ VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Vista del Asesor',
@@ -179,6 +220,7 @@ const pageRoutes: Routes = [
     {
         path: 'cobro-vista/:id/:nombre',
         component: CobroVistaComponent,
+        canActivate: [ VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Vista del Cobro del Asesor',
@@ -188,6 +230,7 @@ const pageRoutes: Routes = [
     {
         path: 'pedido-vista/:id/:nombre',
         component: PedidoVistaComponent,
+        canActivate: [ VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Vista de los Pedidos del Asesor',
@@ -197,9 +240,31 @@ const pageRoutes: Routes = [
     {
         path: 'precom-vista/:id/:nombre/:img',
         component: PrecomVistaComponent,
+        canActivate: [ VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Vista de la Pre-Comisión del Asesor',
+                    name: 'description'
+                }
+    },
+    // Comisiones
+    {
+        path: 'comisiones',
+        component: ComisionesComponent,
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Listado de Comisiones Realizadas',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'totalComisiones',
+        component: TotalComisionesComponent,
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Totales de Comisiones Realizadas',
                     name: 'description'
                 }
     },
@@ -319,6 +384,7 @@ const pageRoutes: Routes = [
     },
     {
         path: '',
+        canActivate: [ VerificaTokenGuard ],
         redirectTo: '/dashboard',
         pathMatch: 'full'
     }

@@ -74,6 +74,11 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 // Pipes
 import { PipesModule } from '../pipes/pipes.module';
 import { CobranzaGeneralComponent } from './cobranza-general/cobranza-general.component';
+import { ComisionesComponent } from './comisiones/comisiones.component';
+import { TotalComisionesComponent } from './total-comisiones/total-comisiones.component';
+import { Zona1AuditoriaComponent } from './zona1-auditoria/zona1-auditoria.component';
+import { Zona2AuditoriaComponent } from './zona2-auditoria/zona2-auditoria.component';
+import { ZonaEspecialComponent } from './zona-especial/zona-especial.component';
 
 @NgModule({
     declarations: [
@@ -121,6 +126,11 @@ import { CobranzaGeneralComponent } from './cobranza-general/cobranza-general.co
         PrecomVistaComponent,
         DashBoardAuditoriaComponent,
         CobranzaGeneralComponent,
+        ComisionesComponent,
+        TotalComisionesComponent,
+        Zona1AuditoriaComponent,
+        Zona2AuditoriaComponent,
+        ZonaEspecialComponent,
         // PagesComponent,
         // PromesasComponent, // Desactivado por no usarlo
         // ProgressComponent, // Desactivado por no usarlo

@@ -1,61 +1,121 @@
 <div class="row el-element-overlay">
+
   <div class="col-lg-4 col-md-6" *ngFor="let asesor of asesores">
+
     <div class="card">
+
       <div class="el-card-item">
+
         <div class="el-card-avatar el-overlay-1"> <img [src]="asesor.img | imagen" alt="user">
+
           <div class="el-overlay">
+
             <ul class="el-info">
+
               <li>
+
                 <a class="btn default btn-outline image-popup-vertical-fit" (click)="revisar(asesor.idFerrum, asesor.nombre)">
+                  
                   <i class="icon-link"></i>
+
                 </a>
+
               </li>
+
               <li>
+
                 <a class="btn default btn-outline image-popup-vertical-fit" (click)="cobrado(asesor.idFerrum, asesor.nombre)">
+                  
                   <i class="icon-wallet"></i>
+
                 </a>
+
               </li>
+
               <li>
+
                 <a class="btn default btn-outline" (click)="pedidos(asesor.idFerrum, asesor.nombre)">
+                  
                   <i class="icon-social-dropbox"></i>
+
                 </a>
+
               </li>
+
               <li *ngIf="rol == 'ADMIN_ROLE' || rol == 'DIR_ROLE' || rol == 'GER_ROLE'">
+                
                 <a class="btn default btn-outline" (click)="precomision(asesor.idFerrum, asesor.nombre, asesor.img)">
+                  
                   <i class="icon-rocket"></i>
+
                 </a>
+
               </li>
+
             </ul>
+
           </div>
+
         </div>
+
         <div class="el-card-content">
+
           <h3 class="box-title">{{ asesor.nombre }}</h3>
+
           <small>{{ asesor.email }}</small>
+
           <div class="row">
+
             <div class="col-6">
+
               <h6>{{ asesor.porBajarCantidad | number }}</h6>
+
               <h6>{{ asesor.porBajarImporte | currency }}</h6>
+
               <h6>Por Bajar</h6>
+
             </div>
+
             <div class="col-6">
+
               <h6>{{ asesor.porSurtirCantidad | number }}</h6>
+
               <h6>{{ asesor.porSurtirImporte | currency }}</h6>
+
               <h6>Por Surtir</h6>
+
             </div>
+
             <div class="col-6">
+
               <h6>{{ asesor.facturadoCantidad | number }}</h6>
+
               <h6>{{ asesor.facturadoImporte | currency }}</h6>
+
               <h6>Facturados</h6>
+
             </div>
+
             <div class="col-6">
+
               <h6>{{ asesor.canceladoCantidad | number }}</h6>
+
               <h6>{{ asesor.canceladoImporte | currency }}</h6>
+
               <h6>Cacenaldos</h6>
+
             </div>
+
           </div>
+
           <br>
+
         </div>
+
       </div>
+
     </div>
+
   </div>
+  
 </div>

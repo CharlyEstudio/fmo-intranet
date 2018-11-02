@@ -1,3 +1,574 @@
-<p>
-  comisiones works!
-</p>
+<div class="row">
+
+  <div class="col-lg-12">
+
+    <form #f="ngForm">
+
+        <div class="form-group">
+
+          <select [ngModel]='mes' class="form-control" name="mes" id="mes">
+
+            <option value="0">Seleccione un mes...</option>
+
+            <option value="1">Enero</option>
+
+            <option value="2">Feberero</option>
+
+            <option value="3">Marzo</option>
+
+            <option value="4">Abril</option>
+
+            <option value="5">Mayo</option>
+
+            <option value="6">Junio</option>
+
+            <option value="7">Julio</option>
+
+            <option value="8">Agosto</option>
+
+            <option value="9">Septiembre</option>
+
+            <option value="10">Octubre</option>
+
+            <option value="11">Noviembre</option>
+
+            <option value="12">Diciembre</option>
+
+          </select>
+
+        </div>
+
+        <button type="button" class="btn btn-success btn-block waves-effect waves-light m-r-10" (click)="solicitar( f )">Solicitar</button>
+
+      </form>
+
+      <div class="row animated fadeIn" *ngIf="cargando">
+
+        <div class="col-sm-12">
+    
+          <div class="alert alert-warning text-center">
+  
+            <strong>Cargando</strong>
+
+            <br>
+
+            <i class="fa fa-refresh fa-spin fa-2x"></i>
+
+            <br>
+
+            <span>Espere por favor</span>
+  
+          </div>
+    
+        </div>
+      
+      </div>
+  </div>
+
+  <div class="col-lg-12 col-md-12" *ngFor="let dato of datos">
+
+    <div class="card-body">
+
+      <div class="d-flex flex-row">
+
+        <div class="">
+
+          <img [src]="dato.img | imagen" alt="user" class="img-circle" width="100">
+
+        </div>
+
+        <div class="p-l-20">
+
+          <h3 class="font-medium">{{ dato.nombre }}</h3>
+
+          <h6>{{ dato.email }}</h6>
+
+          <button class="btn btn-success" (click)="revisar(dato.comision.idFerrum, dato.nombre)">Escritorio</button>
+
+        </div>
+
+      </div>
+
+      <div class="row m-t-40">
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.ventaMensual | currency }}</h5>
+
+          <h6>Venta Bruta</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.devoluciones | currency }}</h5>
+
+          <h6>Devoluciones</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ (dato.comision.ventaMensual - dato.comision.devoluciones) | currency }}</h5>
+
+          <h6>Venta Neta</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.notasCredito | currency }}</h5>
+
+          <h6>Notas de Crédito</h6>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.bonificaciones | currency }}</h5>
+
+          <h6>Bonificaciones</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ (dato.comision.ventaMensual - dato.comision.devoluciones - dato.comision.notasCredito - dato.comision.bonificaciones) | currency }}</h5>
+          
+          <h6>Venta Final</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.porVentaFinal | percent: '0.2' }}</h5>
+
+          <h6>% Comisión</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.comisionVenta | currency }}</h5>
+
+          <h6>Comisión Venta Final</h6>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">Truper Cobrado</h5>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.de0a2Truper | currency }}</h5>
+
+          <h6>0 a 2 días</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.de3a7Truper | currency }}</h5>
+
+          <h6>3 a 7 días</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.de8a14Truper | currency }}</h5>
+
+          <h6>8 a 14 días</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.de15a21Truper | currency }}</h5>
+
+          <h6>15 a 21 días</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.de22a31Truper | currency }}</h5>
+
+          <h6>22 a 31 días</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.de32Truper | currency }}</h5>
+
+          <h6>32 días a más</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.comisionTruperCobrado | currency }}</h5>
+
+          <h6>Comisión Truper Cobrado</h6>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">Fmo Cobrado</h5>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.de0a2Fmo | currency }}</h5>
+
+          <h6>0 a 2 días</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.de3a7Fmo | currency }}</h5>
+
+          <h6>3 a 7 días</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.de8a14Fmo | currency }}</h5>
+
+          <h6>8 a 14 días</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.de15a21Fmo | currency }}</h5>
+
+          <h6>15 a 21 días</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.de22a31Fmo | currency }}</h5>
+
+          <h6>22 a 31 días</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.de32Fmo | currency }}</h5>
+
+          <h6>32 días a más</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.comisionFmoCobrado | currency }}</h5>
+
+          <h6>Comisión Fmo Cobrado</h6>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">Cartera General</h5>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.de1a8 | currency }}</h5>
+
+          <h6>1 a 8 días</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.de9a16 | currency }}</h5>
+
+          <h6>9 a 16 días</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.de17 | currency }}</h5>
+
+          <h6>17 días a más</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.carteraGeneral | currency }}</h5>
+
+          <h6>Comisión Cartera</h6>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">Cobertura</h5>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.totalClientes | currency }}</h5>
+
+          <h6>Total de Clientes</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.coberturaCantidad | currency }}</h5>
+
+          <h6>Cobertura</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ (dato.comision.cant1 * dato.comision.neg1) | currency }}</h5>
+
+          <h6>1 Venta</h6>
+
+          <h5 class="font-weight-bold">{{ dato.comision.cant1 | number }}</h5>
+
+          <h6>{{ dato.comision.neg1 | currency }}</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ (dato.comision.cant2 * dato.comision.pos2) | currency }}</h5>
+
+          <h6>2 o Más Ventas</h6>
+
+          <h5 class="font-weight-bold">{{ dato.comision.cant2 | number }}</h5>
+
+          <h6>{{ dato.comision.pos2 | currency }}</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ ((dato.comision.totalClientes - dato.comision.coberturaCantidad) * dato.comision.negSinVenta) | currency }}</h5>
+          
+          <h6>Sin Venta</h6>
+
+          <h5 class="font-weight-bold">{{ (dato.comision.totalClientes - dato.comision.coberturaCantidad) | number }}</h5>
+
+          <h6>{{ dato.comision.negSinVenta | currency }}</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.comisionCobertura | currency }}</h5>
+
+          <h6>Comisión Cobertura</h6>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">Renglonaje</h5>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ (dato.comision.ren1000 + dato.comision.ren2000 + dato.comision.ren4000 + dato.comision.ren6000 + dato.comision.ren6001) | number }}</h5>
+          
+          <h6>Total Renglonaje</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ ((dato.comision.ren1000 * dato.comision.tasa1000) * 100) | number }}</h5>
+
+          <h6>0 - 1000</h6>
+
+          <h6>Tasa: {{ dato.comision.tasa1000 | percent: '0.2' }}</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ ((dato.comision.ren2000 * dato.comision.tasa2000) * 100) | number }}</h5>
+
+          <h6>1001 - 2000</h6>
+
+          <h6>Tasa: {{ dato.comision.tasa2000 | percent: '0.2' }}</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ ((dato.comision.ren4000 * dato.comision.tasa4000) * 100) | number }}</h5>
+
+          <h6>2001 - 4000</h6>
+
+          <h6>Tasa:  {{ dato.comision.tasa4000 | percent: '0.2' }}</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ ((dato.comision.ren6000 * dato.comision.tasa6000) * 100) | number }}</h5>
+
+          <h6>4001 - 6000</h6>
+
+          <h6>Tasa:  {{ dato.comision.tasa6000 | percent: '0.2' }}</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ ((dato.comision.ren6001 * dato.comision.tasa6001) * 100) | number }}</h5>
+
+          <h6>6001 o más</h6>
+
+          <h6>Tasa:  {{ dato.comision.tasa6001 | percent: '0.2' }}</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.comisionRenglonaje | currency }}</h5>
+
+          <h6>Comisión Renglonaje</h6>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">Resumen</h5>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.comisionGeneral | currency }}</h5>
+
+          <h6>Comisión General</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.carteraGeneral | currency }}</h5>
+
+          <h6>Cartera General</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.devolucionesGeneral | currency }}</h5>
+
+          <h6>Devoluciones</h6>
+
+          <h6>Tasa: {{ dato.comision.porDevoluciones | percent: '0.2' }}</h6>
+
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.penalizacionPedidos | currency }}</h5>
+
+          <h6>Penalización por Pedidos</h6>
+          
+        </div>
+
+        <div class="col text-center">
+
+          <h5 class="font-weight-bold">{{ dato.comision.gasolina | currency }}</h5>
+
+          <h6>Gasolina</h6>
+
+          <h6>Sin registro</h6>
+
+        </div>
+
+        <div class="col card text-center bg-inverse">
+
+          <h5 class="font-weight-bold text-white">{{ dato.comision.totalComisionPagar | currency }}</h5>
+
+          <h6 class="font-weight-bold text-white">Total Comisión Pagar</h6>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+  
+</div>

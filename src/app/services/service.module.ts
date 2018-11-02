@@ -18,7 +18,8 @@ import {
   PhpService,
   DiariosService,
   AsesoresService,
-  SupervisoresService
+  SupervisoresService,
+  ComisionesService
 } from "./services.index";
 
 @NgModule({
@@ -27,21 +28,24 @@ import {
     HttpClientModule
   ],
   providers: [
+    // Guardas
+    LoginGuardGuard,
+    VerificaTokenGuard,
+    AdminGuard,
+    // Servicios
     SettingsService,
     SidebarService,
     SharedService,
     UsuarioService,
     HospitalService,
     MedicoService,
-    LoginGuardGuard,
-    VerificaTokenGuard,
-    AdminGuard,
     SubirArchivoService,
     ModalUploadService,
     PhpService,
     DiariosService,
     AsesoresService,
-    SupervisoresService
+    SupervisoresService,
+    ComisionesService
   ],
   declarations: []
 })

@@ -1,3 +1,137 @@
-<p>
-  total-comisiones works!
-</p>
+<div class="row">
+
+  <div class="col">
+
+    <div class="card">
+
+      <div class="card-body">
+
+        <h4 class="card-title">Lista de Totales de Comisiones Hechas</h4>
+
+        <form #f="ngForm">
+
+          <div class="form-group">
+
+            <select [ngModel]='mes' class="form-control" name="mes" id="mes">
+
+              <option value="0">Seleccione un mes...</option>
+
+              <option value="1">Enero</option>
+
+              <option value="2">Feberero</option>
+
+              <option value="3">Marzo</option>
+
+              <option value="4">Abril</option>
+
+              <option value="5">Mayo</option>
+
+              <option value="6">Junio</option>
+
+              <option value="7">Julio</option>
+
+              <option value="8">Agosto</option>
+
+              <option value="9">Septiembre</option>
+
+              <option value="10">Octubre</option>
+
+              <option value="11">Noviembre</option>
+
+              <option value="12">Diciembre</option>
+
+            </select>
+
+          </div>
+
+          <button type="button" class="btn btn-success btn-block waves-effect waves-light m-r-10" (click)="solicitar( f )">Solicitar</button>
+
+        </form>
+
+        <div class="row animated fadeIn" *ngIf="cargando">
+
+            <div class="col-sm-12">
+        
+                <div class="alert alert-warning text-center">
+        
+                    <strong>Cargando</strong>
+        
+                    <br>
+        
+                    <i class="fa fa-refresh fa-spin fa-2x"></i>
+        
+                    <br>
+        
+                    <span>Espere por favor</span>
+        
+                </div>
+        
+            </div>
+        
+        </div>
+
+        <div class="table-responsive">
+
+          <table class="table">
+
+            <thead>
+
+              <tr>
+
+                <th>Asesor</th>
+
+                <th>Fecha</th>
+
+                <th>Hora</th>
+
+                <th>Comisión General</th>
+
+                <th>Cartera General</th>
+
+                <th>Devoluciones</th>
+
+                <th>Penalización Pedidos</th>
+
+                <th>Total Comisión</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let dato of datos">
+
+                <td>
+
+                  <img [src]="dato.img | imagen" class="img-circle" width="100" /> {{ dato.nombre }}</td>
+
+                <td>{{ dato.comision.fecha | date }}</td>
+
+                <td>{{ dato.comision.hora }}</td>
+
+                <td>{{ dato.comision.comisionGeneral | currency }}</td>
+
+                <td>{{ dato.comision.carteraGeneral | currency }}</td>
+
+                <td>{{ dato.comision.devolucionesGeneral | currency }}</td>
+
+                <td>{{ dato.comision.penalizacionPedidos | currency }}</td>
+
+                <td><span class="label label-danger">{{ dato.comision.totalComisionPagar | currency }}</span> </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+  
+</div>

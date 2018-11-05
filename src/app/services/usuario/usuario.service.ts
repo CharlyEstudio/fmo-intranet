@@ -11,7 +11,7 @@ import { Usuario } from '../../models/usuario.model';
 
 import { Comision } from '../../models/comision.model';
 
-import { URL_SERVICIOS } from '../../config/config';
+import { URL_SERVICIO_GENERAL } from '../../config/config';
 
 // import swal from 'sweetalert';
 
@@ -33,7 +33,14 @@ export class UsuarioService {
   }
 
   renuevaToken() {
-    let url = URL_SERVICIOS + '/login/renuevatoken';
+    let url;
+
+    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
+      url = 'http://192.168.1.250:3001/login/renuevatoken';
+    } else {
+      url = URL_SERVICIO_GENERAL + ':3001/login/renuevatoken';
+    }
+    
     url += '?token=' + this.token;
 
     return this.http.get( url )
@@ -92,15 +99,17 @@ export class UsuarioService {
   }
 
   loginGoogle( token: string ) {
-    let url = URL_SERVICIOS + '/login/google';
+    // let url = URL_SERVICIO_GENERAL + ':3001/login/google';
 
-    return this.http.post( url, {token} )
-      .map( (resp: any) => {
+    // return this.http.post( url, {token} )
+    //   .map( (resp: any) => {
 
-        this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu);
+    //     this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu);
 
-        return true;
-      });
+    //     return true;
+    //   });
+    
+    console.log(token);
   }
 
   login( usuario: Usuario, recordar: boolean = false ) {
@@ -111,7 +120,13 @@ export class UsuarioService {
       localStorage.removeItem( 'email' );
     }
 
-    let url = URL_SERVICIOS + '/login';
+    let url;
+
+    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
+      url = 'http://192.168.1.250:3001/login';
+    } else {
+      url = URL_SERVICIO_GENERAL + ':3001/login';
+    }
 
     return this.http.post( url, usuario )
       .map( ( resp: any ) => {
@@ -128,7 +143,13 @@ export class UsuarioService {
   }
 
   crearUsuario(usuario: Usuario) {
-    let url = URL_SERVICIOS + '/usuario';
+    let url;
+
+    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
+      url = 'http://192.168.1.250:3001/usuario';
+    } else {
+      url = URL_SERVICIO_GENERAL + ':3001/usuario';
+    }
 
     return this.http.post( url, usuario )
       .map( (resp: any) => {
@@ -144,7 +165,13 @@ export class UsuarioService {
   }
 
   actualizarUsusario( usuario: Usuario ) {
-    let url = URL_SERVICIOS + '/usuario/' + usuario._id;
+    let url;
+
+    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
+      url = 'http://192.168.1.250:3001/usuario/' + usuario._id;
+    } else {
+      url = URL_SERVICIO_GENERAL + ':3001/usuario/' + usuario._id;
+    }
 
     url += '?token=' + this.token;
 
@@ -181,20 +208,39 @@ export class UsuarioService {
   }
 
   cargarUsuarios( desde: number = 0 ) {
-    let url = URL_SERVICIOS + '/usuario?desde=' + desde;
+    let url;
+
+    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
+      url = 'http://192.168.1.250:3001/usuario?desde=' + desde;
+    } else {
+      url = URL_SERVICIO_GENERAL + ':3001/usuario?desde=' + desde;
+    }
 
     return this.http.get( url );
   }
 
   buscarUsuarios( termino: string ) {
-    let url = URL_SERVICIOS + '/busqueda/coleccion/usuarios/' + termino;
+    let url;
+
+    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
+      url = 'http://192.168.1.250:3001/busqueda/coleccion/usuarios/' + termino;
+    } else {
+      url = URL_SERVICIO_GENERAL + ':3001/busqueda/coleccion/usuarios/' + termino;
+    }
 
     return this.http.get( url )
       .map( ( resp: any ) => resp.usuarios );
   }
 
   borrarUsuario ( id: string ) {
-    let url = URL_SERVICIOS + '/usuario/' + id;
+    let url;
+
+    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
+      url = 'http://192.168.1.250:3001/usuario/' + id;
+    } else {
+      url = URL_SERVICIO_GENERAL + ':3001/usuario/' + id;
+    }
+
     url += '?token=' + this.token;
 
     return this.http.delete( url )
@@ -206,7 +252,13 @@ export class UsuarioService {
   }
 
   buscarAsesorComision( id: any ) {
-    let url = URL_SERVICIOS + '/busqueda/especifico/comision/' + id;
+    let url;
+
+    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
+      url = 'http://192.168.1.250:3001/busqueda/especifico/comision/' + id;
+    } else {
+      url = URL_SERVICIO_GENERAL + ':3001/busqueda/especifico/comision/' + id;
+    }
 
     return this.http.get( url )
       .map( (resp: any) => {
@@ -219,8 +271,15 @@ export class UsuarioService {
   }
 
   guardarComision(comision: Comision) {
+
+    let url;
+
+    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
+      url = 'http://192.168.1.250:3001/comisiones';
+    } else {
+      url = URL_SERVICIO_GENERAL + ':3001/comisiones';
+    }
     
-    let url = URL_SERVICIOS + '/comisiones';
     url += '?token=' + this.token;
 
     return this.http.post( url, comision )
@@ -236,7 +295,15 @@ export class UsuarioService {
   }
 
   actualizarComisionUsusario( comision: Comision, id: any ) {
-    let url = URL_SERVICIOS + '/comisiones/' + id;
+
+    let url;
+
+    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
+      url = 'http://192.168.1.250:3001/comisiones/' + id;
+    } else {
+      url = URL_SERVICIO_GENERAL + ':3001/comisiones/' + id;
+    }
+
     url += '?token=' + this.token;
 
     return this.http.put( url, comision )

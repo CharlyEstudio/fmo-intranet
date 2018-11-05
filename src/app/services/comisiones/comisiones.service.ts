@@ -12,7 +12,7 @@ import { Usuario } from '../../models/usuario.model';
 
 import { Comision } from '../../models/comision.model';
 
-import { URL_SERVICIOS } from '../../config/config';
+import { URL_SERVICIO_GENERAL } from '../../config/config';
 
 import { SweetAlert } from 'sweetalert/typings/core';
 
@@ -30,7 +30,14 @@ export class ComisionesService {
   }
 
   cargarComisiones() {
-    let url = URL_SERVICIOS + '/comisiones/';
+    let url;
+
+    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
+      url = 'http://192.168.1.250:3001/comisiones/';
+    } else {
+      url = URL_SERVICIO_GENERAL + ':3001/comisiones/';
+    }
+
     url += '?token=' + this.token;
 
     return this.http.get( url )
@@ -44,7 +51,13 @@ export class ComisionesService {
   }
 
   buscarAsesorComision( id: any ) {
-    let url = URL_SERVICIOS + '/busqueda/especifico/comision/' + id;
+    let url;
+
+    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
+      url = 'http://192.168.1.250:3001/busqueda/especifico/comision/' + id;
+    } else {
+      url = URL_SERVICIO_GENERAL + ':3001/busqueda/especifico/comision/' + id;
+    }
 
     return this.http.get( url )
       .map( (resp: any) => {
@@ -57,7 +70,13 @@ export class ComisionesService {
   }
 
   buscarMesComision( mes: any ) {
-    let url = URL_SERVICIOS + '/busqueda/especifico/comision/mes/' + mes;
+    let url;
+
+    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
+      url = 'http://192.168.1.250:3001/busqueda/especifico/comision/mes/' + mes;
+    } else {
+      url = URL_SERVICIO_GENERAL + ':3001/busqueda/especifico/comision/mes/' + mes;
+    }
 
     return this.http.get( url )
       .map( (resp: any) => {
@@ -70,8 +89,15 @@ export class ComisionesService {
   }
 
   guardarComision(comision: Comision) {
+
+    let url;
+
+    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
+      url = 'http://192.168.1.250:3001/comisiones';
+    } else {
+      url = URL_SERVICIO_GENERAL + ':3001/comisiones';
+    }
     
-    let url = URL_SERVICIOS + '/comisiones';
     url += '?token=' + this.token;
 
     return this.http.post( url, comision )
@@ -87,7 +113,14 @@ export class ComisionesService {
   }
 
   actualizarComisionUsusario( comision: Comision, id: any ) {
-    let url = URL_SERVICIOS + '/comisiones/' + id;
+    let url;
+
+    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
+      url = 'http://192.168.1.250:3001/comisiones/' + id;
+    } else {
+      url = URL_SERVICIO_GENERAL + ':3001/comisiones/' + id;
+    }
+
     url += '?token=' + this.token;
 
     return this.http.put( url, comision )

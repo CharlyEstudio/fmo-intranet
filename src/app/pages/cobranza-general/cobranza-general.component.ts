@@ -83,7 +83,6 @@ export class CobranzaGeneralComponent implements OnInit, OnDestroy {
     // Otebtener Pagos
     this._asesorService.cobranza()
       .subscribe( ( resp: any ) => {
-        console.log(resp);
         this.cobranza = resp;
 
         for(let i=0; i < this.cobranza.length; i++){

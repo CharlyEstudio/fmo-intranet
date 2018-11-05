@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { URL_SERVICIOS } from '../config/config';
+import { URL_SERVICIO_GENERAL } from '../config/config';
 
 @Pipe({
   name: 'imagen'
@@ -7,7 +7,14 @@ import { URL_SERVICIOS } from '../config/config';
 export class ImagenPipe implements PipeTransform {
 
   transform(img: string, tipo: string = 'usuario'): any {
-    let url = URL_SERVICIOS + '/img';
+
+    let url;
+
+    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
+      url = 'http://192.168.1.250:3001/img';
+    } else {
+      url = URL_SERVICIO_GENERAL + ':3001/img';
+    }
 
     if ( !img ) {
       return url + '/usuarios/xxx';

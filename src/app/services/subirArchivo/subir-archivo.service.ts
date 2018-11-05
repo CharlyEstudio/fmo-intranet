@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { URL_SERVICIOS } from '../../config/config';
+import { URL_SERVICIO_GENERAL } from '../../config/config';
 
 @Injectable()
 export class SubirArchivoService {
@@ -26,7 +26,13 @@ export class SubirArchivoService {
         }
       };
 
-      let url = URL_SERVICIOS + '/upload/' + tipo + '/' + id;
+      let url;
+
+      if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
+        url = 'http://192.168.1.250:3001/upload/' + tipo + '/' + id;
+      } else {
+        url = URL_SERVICIO_GENERAL + ':3001/upload/' + tipo + '/' + id;
+      }
 
       xhr.open('PUT' , url, true);
 

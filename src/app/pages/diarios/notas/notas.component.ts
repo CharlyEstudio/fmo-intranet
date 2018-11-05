@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DiariosService } from '../../../services/services.index';
 import { SweetAlert } from 'sweetalert/typings/core';
-import { URL_SERVICE } from '../../../config/config';
 
 @Component({
   selector: 'app-notas',
@@ -29,9 +28,7 @@ export class NotasComponent implements OnInit {
 
   constructor(
     private _diariosService: DiariosService
-  ) {
-    this.url = URL_SERVICE;
-  }
+  ) {}
 
   ngOnInit() {
   }

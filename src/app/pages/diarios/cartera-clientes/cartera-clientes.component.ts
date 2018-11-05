@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { DiariosService } from '../../../services/services.index';
 import { SweetAlert } from 'sweetalert/typings/core';
-import { URL_SERVICE } from '../../../config/config';
 
 @Component({
   selector: 'app-cartera-clientes',
@@ -23,9 +22,7 @@ export class CarteraClientesComponent implements OnInit {
 
   constructor(
     private _diariosService: DiariosService
-  ) {
-    this.url = URL_SERVICE;
-  }
+  ) {}
 
   ngOnInit() {
     this.solicitar();

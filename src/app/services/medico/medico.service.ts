@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { URL_SERVICIOS } from '../../config/config';
+import { URL_SERVICIO_GENERAL } from '../../config/config';
 
 import { Medico } from '../../models/medico.model';
 
@@ -20,20 +20,20 @@ export class MedicoService {
   ) { }
 
   cargarMedicos( desde: number = 0 ) {
-    let url = URL_SERVICIOS + '/medico?desde=' + desde;
+    let url = URL_SERVICIO_GENERAL + ':3001/medico?desde=' + desde;
 
     return this.http.get( url );
   }
 
   buscarMedico( termino: string ) {
-    let url = URL_SERVICIOS + '/busqueda/coleccion/medicos/' + termino;
+    let url = URL_SERVICIO_GENERAL + ':3001/busqueda/coleccion/medicos/' + termino;
 
     return this.http.get( url )
       .map( ( resp: any ) => resp.medicos );
   }
 
   borrarMedico( id: string ) {
-    let url = URL_SERVICIOS + '/medico/' + id;
+    let url = URL_SERVICIO_GENERAL + ':3001/medico/' + id;
     url += '?token=' + this._usuarioService.token;
 
     return this.http.delete( url )
@@ -41,7 +41,7 @@ export class MedicoService {
   }
 
   guardarMedico( medico: Medico ) {
-    let url = URL_SERVICIOS + '/medico';
+    let url = URL_SERVICIO_GENERAL + ':3001/medico';
 
     if ( medico._id ) {
       url += '/' + medico._id;
@@ -64,7 +64,7 @@ export class MedicoService {
   }
 
   cargarMedico( id: string ) {
-    let url = URL_SERVICIOS + '/medico/' + id;
+    let url = URL_SERVICIO_GENERAL + ':3001/medico/' + id;
 
     return this.http.get( url )
       .map( ( resp: any ) => resp.medico );

@@ -6,7 +6,7 @@ import { Hospital } from '../../models/hospital.model';
 import { SubirArchivoService } from '../subirArchivo/subir-archivo.service';
 import { UsuarioService } from '../usuario/usuario.service';
 
-import { URL_SERVICIOS } from '../../config/config';
+import { URL_SERVICIO_GENERAL } from '../../config/config';
 
 // import swal from 'sweetalert';
 
@@ -27,27 +27,27 @@ export class HospitalService {
   ) {}
 
   cargarHospitales( desde: number = 0 ) {
-    let url = URL_SERVICIOS + '/hospital?desde=' + desde;
+    let url = URL_SERVICIO_GENERAL + ':3001/hospital?desde=' + desde;
 
     return this.http.get( url );
   }
 
   cargarHospitalesAll() {
-    let url = URL_SERVICIOS + '/hospital';
+    let url = URL_SERVICIO_GENERAL + ':3001/hospital';
 
     return this.http.get( url )
       .map( (resp: any) => resp.hospitales );
   }
 
   obtenerHospital( id: string ) {
-    let url = URL_SERVICIOS + '/hospital/' + id;
+    let url = URL_SERVICIO_GENERAL + ':3001/hospital/' + id;
 
     return this.http.get( url )
       .map( ( resp: any ) => resp.hospital );
   }
 
   crearHospital( nombre: string ) {
-    let url = URL_SERVICIOS + '/hospital';
+    let url = URL_SERVICIO_GENERAL + ':3001/hospital';
 
     url += '?token=' + this._usuarioService.token;
 
@@ -56,7 +56,7 @@ export class HospitalService {
   }
 
   borrarHospital ( id: string ) {
-    let url = URL_SERVICIOS + '/hospital/' + id;
+    let url = URL_SERVICIO_GENERAL + ':3001/hospital/' + id;
     url += '?token=' + this._usuarioService.token;
 
     return this.http.delete( url )
@@ -64,14 +64,14 @@ export class HospitalService {
   }
 
   buscarHospitales( termino: string ) {
-    let url = URL_SERVICIOS + '/busqueda/coleccion/hospitales/' + termino;
+    let url = URL_SERVICIO_GENERAL + ':3001/busqueda/coleccion/hospitales/' + termino;
 
     return this.http.get( url )
       .map( ( resp: any ) => resp.hospitales );
   }
 
   actualizarHospital( hospital: Hospital ) {
-    let url = URL_SERVICIOS + '/hospital/' + hospital._id;
+    let url = URL_SERVICIO_GENERAL + ':3001/hospital/' + hospital._id;
 
     url += '?token=' + this._usuarioService.token;
 

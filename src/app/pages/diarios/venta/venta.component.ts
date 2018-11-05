@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DiariosService, AsesoresService } from '../../../services/services.index';
 import { SweetAlert } from 'sweetalert/typings/core';
-import { URL_SERVICE } from '../../../config/config';
 
 @Component({
   selector: 'app-venta',
@@ -49,9 +48,7 @@ export class VentaComponent implements OnInit {
   constructor(
     private _diariosService: DiariosService,
     private _asesorService: AsesoresService
-  ) {
-    this.url = URL_SERVICE;
-  }
+  ) {}
 
   ngOnInit() {
     

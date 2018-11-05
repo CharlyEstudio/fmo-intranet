@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../services/services.index';
 import { Usuario } from '../../models/usuario.model';
 import { Router } from '@angular/router';
-import { URL_SERVICE } from '../../config/config';
+import { URL_SERVICIO_GENERAL } from '../../config/config';
 
 @Component({
   selector: 'app-header',
@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
     public _usuarioService: UsuarioService,
     public router: Router
   ) {
-    this.url = URL_SERVICE;
+    this.url = URL_SERVICIO_GENERAL;
   }
 
   ngOnInit() {

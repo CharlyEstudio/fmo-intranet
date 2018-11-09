@@ -1546,7 +1546,8 @@ export class PrecomVistaComponent implements OnInit {
         this.idFerrum,
         fecha,
         mes,
-        hora
+        hora,
+        anio
       );
 
       this._usuarioService.buscarAsesorComision(this.idFerrum)

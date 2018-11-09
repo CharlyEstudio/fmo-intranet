@@ -17,6 +17,10 @@ export class UsuariosComponent implements OnInit {
 
   idFerrum: number = 0;
 
+  serie: number = 0;
+
+  cat_cli: number = 0;
+
   desde: number = 0;
 
   totalResgitro: number = 0;

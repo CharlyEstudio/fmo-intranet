@@ -17,6 +17,7 @@ export class ComisionesComponent implements OnInit {
   datos: any[] = [];
 
   mes: number = 0;
+  anio: number = new Date().getFullYear();
 
   cargando: boolean = false;
 
@@ -34,17 +35,22 @@ export class ComisionesComponent implements OnInit {
       return;
     }
 
+    if ( forma.value.anio === 0 ) {
+      swal('Debe ingresar el año', 'No ha selecionado un año para la busqueda.', 'error');
+      return;
+    }
+
     this._comisionesService.buscarMesComision(forma.value.mes)
       .subscribe( ( resp: any ) => {
         if(resp.comisiones.length > 0) {
-          this.procesar();
+          this.procesar(forma.value.anio);
         } else {
           swal('Sin registro de comisiones', 'No se ha encontrado registro de comisiones en este mes.', 'error');
         }
       });
   }
 
-  procesar() {
+  procesar( anio: any ) {
     this.cargando = true;
 
     this._usuariosService.buscarUsuarios('ASE_ROLE')
@@ -54,17 +60,19 @@ export class ComisionesComponent implements OnInit {
         this._comisionesService.cargarComisiones()
           .subscribe( ( resp: any ) => {
             this.comisiones = resp;
-            this.mostrar();
+            this.mostrar( anio );
           });
 
       });
   }
 
-  mostrar() {
+  mostrar( anio: any ) {
     for(let i = 0; i < this.comisiones.length; i++){
-      for(let j = 0; j < this.asesores.length; j++) {
-        if(this.comisiones[i].idFerrum == this.asesores[j].idFerrum){
-          this.datos.push({'comision': this.comisiones[i], 'img': this.asesores[j].img, 'nombre': this.asesores[j].nombre, 'email': this.asesores[j].email});
+      if(this.comisiones[i].anio === anio) {
+        for(let j = 0; j < this.asesores.length; j++) {
+          if(this.comisiones[i].idFerrum == this.asesores[j].idFerrum){
+            this.datos.push({'comision': this.comisiones[i], 'img': this.asesores[j].img, 'nombre': this.asesores[j].nombre, 'email': this.asesores[j].email});
+          }
         }
       }
     }

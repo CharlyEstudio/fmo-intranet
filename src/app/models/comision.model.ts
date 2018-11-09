@@ -72,6 +72,7 @@ export class Comision {
         public fecha: string,
         public mes: number,
         public hora: string,
+        public anio: number,
         public _id?: string
     ) { }
 }

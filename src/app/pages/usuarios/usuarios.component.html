@@ -65,6 +65,10 @@
                                 <th>Nombre</th>
 
                                 <th>IdFerrum</th>
+
+                                <th>Serie Cot</th>
+
+                                <th>Catalogo Cli</th>
                                 
                                 <th>Role</th>
 
@@ -90,7 +94,7 @@
 
                                 <td>{{ usuario.nombre }}</td>
 
-                                <td class="text-center">
+                                <td class="text-center" width="10%">
 
                                     <!--<span *ngIf="usuario.idFerrum != 0">{{ usuario.idFerrum }}</span>-->
 
@@ -98,7 +102,19 @@
 
                                 </td>
 
-                                <td>
+                                <td class="text-center" width="10%">
+
+                                    <input type="text" name="serie" [(ngModel)]="usuario.serie" class="form-control">
+
+                                </td>
+
+                                <td class="text-center" width="10%">
+
+                                    <input type="text" name="cat_cli" [(ngModel)]="usuario.cat_cli" class="form-control">
+
+                                </td>
+
+                                <td width="10%">
                                     <select [(ngModel)]="usuario.rol" name="rol" class="form-control">
 
                                         <option value="ADMIN_ROLE">Administrador</option>

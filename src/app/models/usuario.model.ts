@@ -3,6 +3,7 @@ export class Usuario {
         public nombre: string,
         public email: string,
         public password: string,
+        public idFerrum?: string,
         public serie?: string,
         public cat_cli?: string,
         public img?: string,

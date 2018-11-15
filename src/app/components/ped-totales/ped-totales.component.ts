@@ -6,6 +6,7 @@ import { Subscriber } from 'rxjs/Subscriber';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/retry';
 import 'rxjs/add/operator/filter';
+import { URL_SERVICIO_GENERAL } from '../../config/config';
 
 @Component({
   selector: 'app-ped-totales',
@@ -21,10 +22,13 @@ export class PedTotalesComponent implements OnInit, OnDestroy {
   tot: number = 0;
   cantTot: number = 0;
   intTotales: any;
+  panel: any;
 
   constructor(
     private _phpService: PhpService
   ) {
+
+    console.log(URL_SERVICIO_GENERAL);
 
     // Subscrión a Pedidos Totales
     this.totales =  this.regresaTotales().subscribe(
@@ -41,6 +45,12 @@ export class PedTotalesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
+    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
+      this.panel = 'http://192.168.1.250/panel/#/';
+    } else {
+      this.panel = 'http://177.244.55.122:8080/panel/#/';
+    }
 
     // Total de Pedidos
     this._phpService.totalPedidos()

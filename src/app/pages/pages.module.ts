@@ -79,6 +79,7 @@ import { TotalComisionesComponent } from './total-comisiones/total-comisiones.co
 import { Zona1AuditoriaComponent } from './zona1-auditoria/zona1-auditoria.component';
 import { Zona2AuditoriaComponent } from './zona2-auditoria/zona2-auditoria.component';
 import { ZonaEspecialComponent } from './zona-especial/zona-especial.component';
+import { EdoCtaComponent } from './edo-cta/edo-cta.component';
 
 @NgModule({
     declarations: [
@@ -131,6 +132,7 @@ import { ZonaEspecialComponent } from './zona-especial/zona-especial.component';
         Zona1AuditoriaComponent,
         Zona2AuditoriaComponent,
         ZonaEspecialComponent,
+        EdoCtaComponent,
         // PagesComponent,
         // PromesasComponent, // Desactivado por no usarlo
         // ProgressComponent, // Desactivado por no usarlo

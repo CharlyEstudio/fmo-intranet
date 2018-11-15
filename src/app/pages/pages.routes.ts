@@ -44,6 +44,7 @@ import { TotalComisionesComponent } from './total-comisiones/total-comisiones.co
 import { Zona1AuditoriaComponent } from './zona1-auditoria/zona1-auditoria.component';
 import { Zona2AuditoriaComponent } from './zona2-auditoria/zona2-auditoria.component';
 import { ZonaEspecialComponent } from './zona-especial/zona-especial.component';
+import { EdoCtaComponent } from './edo-cta/edo-cta.component';
 
 const pageRoutes: Routes = [
     {
@@ -152,6 +153,16 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Previsualización de la Comisión del Mes',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'edo-cta',
+        component: EdoCtaComponent,
+        canActivate: [ VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Estado de Cuenta del Cliente',
                     name: 'description'
                 }
     },

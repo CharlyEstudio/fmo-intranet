@@ -88,6 +88,8 @@
 
                 <th class="text-center">Abonos</th>
 
+                <th class="text-center">Saldo</th>
+
                 <th class="text-center">Recibo</th>
 
                 <th class="text-center">Tipo Pago</th>
@@ -108,13 +110,11 @@
 
                 <td class="text-center" style="color: #06d79c; font-weight: 700;">{{ dato.ABONO | currency }}</td>
 
+                <td class="text-center" style="color: #f62d51; font-weight: 700;" *ngIf="dato.SALDO > 0">{{ dato.SALDO | currency }}</td>
+
+                <td class="text-center" style="color: #398bf7; font-weight: 700;" *ngIf="dato.SALDO === 0">{{ dato.SALDO | currency }}</td>
+
                 <td class="text-center">{{ dato.RECIBO }}</td>
-
-                <td class="text-center" *ngIf="dato.TIPO == 'C'">
-
-                  <span class="label label-info">{{ dato.TIPO }}</span>
-
-                </td>
 
                 <td class="text-center" *ngIf="dato.FP == 'C'">
 
@@ -154,9 +154,11 @@
 
                 <th colspan="2" class="text-right">Totales</th>
 
-                <th class="text-center">{{ clienteFerrum.SALDO | currency }}</th>
+                <th class="text-center">{{ cargos | currency }}</th>
 
                 <th class="text-center">{{ abonos | currency }}</th>
+
+                <th class="text-center">{{ (cargos - abonos) | currency }}</th>
 
                 <th colspan="2" class="text-center"></th>
                 
@@ -167,6 +169,8 @@
           </table>
 
         </div>
+
+        <button type="button" class="btn btn-danger btn-block waves-effect waves-light m-r-10" (click)="enviarEmail(datos, clienteFerrum)">Enviar Email</button>
 
       </div>
 

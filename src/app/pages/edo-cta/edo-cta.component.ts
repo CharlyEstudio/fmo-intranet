@@ -11,15 +11,24 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 })
 export class EdoCtaComponent implements OnInit {
 
-  usuario: Usuario;
+  // Datos del Usuario
   asesor: number = 0;
+  usuario: Usuario;
+
+  // Datos del Cliente
   clienteFerrum: any[] = [];
-  clienteMongo: any; // Aquí va el modelo de Cliente de Mongo, cambiar "any" por "Cliente"
+  clienteMongo: any[] = []; // Aquí va el modelo de Cliente de Mongo, cambiar "any" por "Cliente"
+
+  // Importes
   numero: any = '';
   abonos: number = 0;
+  cargos: number = 0;
+  preSaldo: number = 0;
 
+  // Dato General
   datos: any[] = [];
 
+  // Booleanos
   localizado: boolean = false;
   cargando: boolean = false;
 
@@ -29,6 +38,12 @@ export class EdoCtaComponent implements OnInit {
   ) {
     this.usuario = this._usuariosService.usuario;
     this.asesor = Number(this.usuario.idFerrum);
+
+    this.clienteMongo = [
+      {
+        "email": "contacto@ferremayoristas.com.mx"
+      }
+    ];
   }
 
   ngOnInit() {
@@ -40,8 +55,6 @@ export class EdoCtaComponent implements OnInit {
 
     this.datos = [];
     this.abonos = 0;
-
-    console.log(forma.value);
 
     if ( forma.value.numero === 0 ) {
       swal('Debe ingresar el número de cliente', 'No ha ingresado el número de cliente para la busqueda.', 'error');
@@ -66,6 +79,9 @@ export class EdoCtaComponent implements OnInit {
             .subscribe( ( edocta: any ) => {
 
               for(let i = 0; i < edocta.length; i++) {
+
+                this.cargos += edocta[i].CARGO;
+
                 this._clientesService.obtenerMovimiento(edocta[i].DOCID)
                   .subscribe( ( resp: any ) => {
 
@@ -75,6 +91,12 @@ export class EdoCtaComponent implements OnInit {
 
                         for(let k = 0; k < resp.length; k++) {
 
+                          if(this.preSaldo === 0) {
+                            this.preSaldo = edocta[i].CARGO - resp[k].PAGADO;
+                          } else {
+                            this.preSaldo = this.preSaldo - resp[k].PAGADO;
+                          }
+
                           var nuevo = [
                             {
                               "DOCID": edocta[i].DOCID,
@@ -82,6 +104,7 @@ export class EdoCtaComponent implements OnInit {
                               "FOLIO": edocta[i].FOLIO,
                               "CARGO": '',
                               "ABONO": resp[k].PAGADO,
+                              "SALDO" : this.preSaldo,
                               "RECIBO": resp[k].RECIBO,
                               "TIPO": resp[k].FORMAPAGO,
                               "FP": resp[k].FP
@@ -99,6 +122,8 @@ export class EdoCtaComponent implements OnInit {
                           this.datos.push(nuevo[0]);
 
                         }
+
+                        this.preSaldo = 0;
 
                       }
 
@@ -131,6 +156,25 @@ export class EdoCtaComponent implements OnInit {
         }
 
       });
+  }
+
+  enviarEmail( datos: any, cliente: any ) {
+
+    this._clientesService.enviarEdoCtaEmail(this.clienteMongo[0].email, datos, cliente)
+      .subscribe( ( email: any ) => {
+
+        if(email[0].status === 'ok') {
+
+          swal('Envío Exitoso', 'El email del Estado de Cuenta del cliente:' + cliente.NOMBRE + ' se envío de manera correcta.', 'success');
+
+        } else {
+
+          swal('Error de Envío', 'El email del Estado de Cuenta del cliente:' + cliente.NOMBRE + ' no se envío de manera correcta.', 'error');
+
+        }
+
+      });
+
   }
 
 }

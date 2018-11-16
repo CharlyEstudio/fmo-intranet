@@ -41,4 +41,17 @@ export class ClientesService {
     return this.http.get( this.url );
   }
 
+  enviarEdoCtaEmail( email: any, info: any, cliente: any ) {
+    let data = JSON.stringify(info);
+    let cli = JSON.stringify(cliente);
+
+    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
+      this.url = 'http://192.168.1.250/api/clientes.php?opcion=4&&asesor=&email=' + email + '&info=' + data + '&cliente=' + cli;
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':8080/api/clientes.php?opcion=4&&asesor=&email=' + email + '&info=' + data + '&cliente=' + cli;
+    }
+
+    return this.http.get( this.url );
+  }
+
 }

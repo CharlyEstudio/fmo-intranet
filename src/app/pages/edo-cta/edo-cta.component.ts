@@ -91,23 +91,42 @@ export class EdoCtaComponent implements OnInit {
 
                         for(let k = 0; k < resp.length; k++) {
 
-                          if(this.preSaldo === 0) {
-                            this.preSaldo = edocta[i].CARGO - resp[k].PAGADO;
-                          } else {
-                            this.preSaldo = this.preSaldo - resp[k].PAGADO;
+                          if(edocta[i].SALDOFINAL > 0) {
+
+                            if(this.preSaldo === 0) {
+                              this.preSaldo = edocta[i].SALDO - resp[k].PAGADO;
+                            } else {
+                              this.preSaldo = this.preSaldo - resp[k].PAGADO;
+                            }
+
                           }
+
+                          // if(edocta[i].SALDOFINAL > 0 && edocta[i].TOTALPAGADO == 0){
+                          //   this.preSaldo = edocta[i].SALDO;
+                          // } else if(edocta[i].SALDOFINAL == 0 && edocta[i].TOTALPAGADO > 0) {
+                          //   this.preSaldo = 0;
+                          // } else {
+                          //   if(this.preSaldo === 0) {
+                          //     this.preSaldo = edocta[i].SALDO - resp[k].PAGADO;
+                          //   } else {
+                          //     this.preSaldo = this.preSaldo - resp[k].PAGADO;
+                          //   }
+                          // }
 
                           var nuevo = [
                             {
                               "DOCID": edocta[i].DOCID,
                               "FECHA": resp[k].FECHAAPLICADA,
                               "FOLIO": edocta[i].FOLIO,
+                              "SALDOFINAL": edocta[i].SALDOFINAL,
                               "CARGO": '',
                               "ABONO": resp[k].PAGADO,
                               "SALDO" : this.preSaldo,
                               "RECIBO": resp[k].RECIBO,
                               "TIPO": resp[k].FORMAPAGO,
-                              "FP": resp[k].FP
+                              "FP": resp[k].FP,
+                              "NOTA": resp[k].NOTA,
+                              "TOTALPAGADO": edocta[i].TOTALPAGADO
                             }
                           ];
 
@@ -160,20 +179,28 @@ export class EdoCtaComponent implements OnInit {
 
   enviarEmail( datos: any, cliente: any ) {
 
-    this._clientesService.enviarEdoCtaEmail(this.clienteMongo[0].email, datos, cliente)
-      .subscribe( ( email: any ) => {
+    if(cliente.CORREO === 'cnmfmo@gmail.com'){
 
-        if(email[0].status === 'ok') {
+      swal('Cliente Sin Email', 'El cliente:' + cliente.NOMBRE + ' no tiene un email registrado, favor de comunicarse con Gerencia.', 'warning');
 
-          swal('Envío Exitoso', 'El email del Estado de Cuenta del cliente:' + cliente.NOMBRE + ' se envío de manera correcta.', 'success');
+    } else {
 
-        } else {
+      this._clientesService.enviarEdoCtaEmail(cliente.CORREO, datos, cliente)
+        .subscribe( ( email: any ) => {
 
-          swal('Error de Envío', 'El email del Estado de Cuenta del cliente:' + cliente.NOMBRE + ' no se envío de manera correcta.', 'error');
+          if(email[0].status === 'ok') {
 
-        }
+            swal('Envío Exitoso', 'El email del Estado de Cuenta del cliente: ' + cliente.NOMBRE + ' se envío de manera correcta.', 'success');
 
-      });
+          } else {
+
+            swal('Error de Envío', 'El email del Estado de Cuenta del cliente: ' + cliente.NOMBRE + ' no se envío de manera correcta.', 'error');
+
+          }
+
+        });
+
+    }
 
   }
 

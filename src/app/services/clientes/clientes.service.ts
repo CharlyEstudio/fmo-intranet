@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIO_GENERAL } from '../../config/config';
+import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_SERVER } from '../../config/config';
 
 @Injectable()
 export class ClientesService {
@@ -12,30 +12,36 @@ export class ClientesService {
   ) { }
 
   infoCliente( cliente: any, perid: any = '' ) {
-    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
-      this.url = 'http://192.168.1.250/api/clientes.php?opcion=1&perid=' + perid + '&numero=' + cliente;
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=1&perid=' + perid + '&numero=' + cliente;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=1&perid=' + perid + '&numero=' + cliente;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':8080/api/clientes.php?opcion=1&perid=' + perid + '&numero=' + cliente;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=1&perid=' + perid + '&numero=' + cliente;
     }
 
     return this.http.get( this.url );
   }
 
   obtenerFacturas( cliente: any, inicio: any ) {
-    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
-      this.url = 'http://192.168.1.250/api/clientes.php?opcion=2&clienteid=' + cliente + '&inicio=' + inicio;
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=2&clienteid=' + cliente + '&inicio=' + inicio;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=2&clienteid=' + cliente + '&inicio=' + inicio;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':8080/api/clientes.php?opcion=2&clienteid=' + cliente + '&inicio=' + inicio;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=2&clienteid=' + cliente + '&inicio=' + inicio;
     }
 
     return this.http.get( this.url );
   }
 
   obtenerMovimiento( docid: any ) {
-    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
-      this.url = 'http://192.168.1.250/api/clientes.php?opcion=3&docid=' + docid;
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=3&docid=' + docid;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=3&docid=' + docid;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':8080/api/clientes.php?opcion=3&docid=' + docid;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=3&docid=' + docid;
     }
 
     return this.http.get( this.url );
@@ -45,10 +51,13 @@ export class ClientesService {
     let data = JSON.stringify(info);
     let cli = JSON.stringify(cliente);
 
-    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
-      this.url = 'http://192.168.1.250/api/clientes.php?opcion=4&&asesor=&email=' + email + '&info=' + data + '&cliente=' + cli;
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=4&&asesor=&email=' + email + '&info=' + data + '&cliente=' + cli;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=4&&asesor=&email=' + email + '&info=' + data + '&cliente=' + cli;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':8080/api/clientes.php?opcion=4&&asesor=&email=' + email + '&info=' + data + '&cliente=' + cli;
+      // tslint:disable-next-line:max-line-length
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=4&&asesor=&email=' + email + '&info=' + data + '&cliente=' + cli;
     }
 
     return this.http.get( this.url );

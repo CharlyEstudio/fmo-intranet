@@ -28,8 +28,6 @@ export class PedTotalesComponent implements OnInit, OnDestroy {
     private _phpService: PhpService
   ) {
 
-    console.log(URL_SERVICIO_GENERAL);
-
     // Subscrión a Pedidos Totales
     this.totales =  this.regresaTotales().subscribe(
       numero => {

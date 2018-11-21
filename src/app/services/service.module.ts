@@ -7,10 +7,7 @@ import { ModalUploadService } from '../components/modal-upload/modal-upload.serv
 import {
   SettingsService,
   SidebarService,
-  SharedService,
   UsuarioService,
-  HospitalService,
-  MedicoService,
   LoginGuardGuard,
   VerificaTokenGuard,
   AdminGuard,
@@ -36,10 +33,7 @@ import {
     // Servicios
     SettingsService,
     SidebarService,
-    SharedService,
     UsuarioService,
-    HospitalService,
-    MedicoService,
     SubirArchivoService,
     ModalUploadService,
     PhpService,

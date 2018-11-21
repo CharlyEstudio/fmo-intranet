@@ -12,7 +12,7 @@ import { Usuario } from '../../models/usuario.model';
 
 import { Comision } from '../../models/comision.model';
 
-import { URL_SERVICIO_GENERAL } from '../../config/config';
+import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_INTERNO } from '../../config/config';
 
 import { SweetAlert } from 'sweetalert/typings/core';
 
@@ -32,10 +32,12 @@ export class ComisionesService {
   cargarComisiones() {
     let url;
 
-    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
-      url = 'http://192.168.1.250:3001/comisiones/';
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/comisiones/';
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/comisiones/';
     } else {
-      url = URL_SERVICIO_GENERAL + ':3001/comisiones/';
+      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones/';
     }
 
     url += '?token=' + this.token;
@@ -53,10 +55,12 @@ export class ComisionesService {
   buscarAsesorComision( id: any ) {
     let url;
 
-    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
-      url = 'http://192.168.1.250:3001/busqueda/especifico/comision/' + id;
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id;
     } else {
-      url = URL_SERVICIO_GENERAL + ':3001/busqueda/especifico/comision/' + id;
+      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id;
     }
 
     return this.http.get( url )
@@ -72,10 +76,12 @@ export class ComisionesService {
   buscarMesComision( mes: any ) {
     let url;
 
-    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
-      url = 'http://192.168.1.250:3001/busqueda/especifico/comision/mes/' + mes;
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/mes/' + mes;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/mes/' + mes;
     } else {
-      url = URL_SERVICIO_GENERAL + ':3001/busqueda/especifico/comision/mes/' + mes;
+      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/mes/' + mes;
     }
 
     return this.http.get( url )
@@ -92,12 +98,14 @@ export class ComisionesService {
 
     let url;
 
-    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
-      url = 'http://192.168.1.250:3001/comisiones';
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/comisiones';
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/comisiones';
     } else {
-      url = URL_SERVICIO_GENERAL + ':3001/comisiones';
+      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones';
     }
-    
+
     url += '?token=' + this.token;
 
     return this.http.post( url, comision )
@@ -115,10 +123,12 @@ export class ComisionesService {
   actualizarComisionUsusario( comision: Comision, id: any ) {
     let url;
 
-    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
-      url = 'http://192.168.1.250:3001/comisiones/' + id;
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/comisiones/' + id;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/comisiones/' + id;
     } else {
-      url = URL_SERVICIO_GENERAL + ':3001/comisiones/' + id;
+      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones/' + id;
     }
 
     url += '?token=' + this.token;

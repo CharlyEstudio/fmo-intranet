@@ -47,7 +47,7 @@ export class PorSurtirComponent implements OnInit, OnDestroy {
     // Pedidos por Surtir
     this._phpService.porSurtir()
       .subscribe((data) => {
-        if ( data[0].importe != 0 ) {
+        if ( data[0].importe !== 0 ) {
           this.porSurtir = data[0].cantidad;
           this.porSurtirImpo = data[0].importe;
         } else {
@@ -91,12 +91,12 @@ export class PorSurtirComponent implements OnInit, OnDestroy {
   regresaSurtir(): Observable<any> {
     return new Observable((observer: Subscriber<any>) => {
       this.intSurtir = setInterval( () => {
-        
+
         // Por Surtir Total
         this._phpService.porSurtir()
           .subscribe( ( data ) => {
 
-            if (data[0].importe != 0) {
+            if (data[0].importe !== 0) {
               const surtir = {
                 cantidad: data[0].cantidad,
                 importe: data[0].importe

@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 /* ------ Componentes ----- */
-//Escritorios
+// Escritorios
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashborarDirComponent } from './dashborar-dir/dashborar-dir.component';
 
@@ -58,6 +58,14 @@ import { DashBoardAuditoriaComponent } from './dash-board-auditoria/dash-board-a
 // import { MedicosComponent } from './medicos/medicos.component';
 // import { MedicoComponent } from './medicos/medico.component';
 // import { IncrementadorComponent } from '../components/incrementador/incrementador.component';
+import { CobranzaGeneralComponent } from './cobranza-general/cobranza-general.component';
+import { ComisionesComponent } from './comisiones/comisiones.component';
+import { TotalComisionesComponent } from './total-comisiones/total-comisiones.component';
+import { Zona1AuditoriaComponent } from './zona1-auditoria/zona1-auditoria.component';
+import { Zona2AuditoriaComponent } from './zona2-auditoria/zona2-auditoria.component';
+import { ZonaEspecialComponent } from './zona-especial/zona-especial.component';
+import { EdoCtaComponent } from './edo-cta/edo-cta.component';
+import { RepoSurtidoComponent } from './repo-surtido/repo-surtido.component';
 
 // Shared
 import { SharedModule } from '../shared/shared.module';
@@ -73,13 +81,6 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 
 // Pipes
 import { PipesModule } from '../pipes/pipes.module';
-import { CobranzaGeneralComponent } from './cobranza-general/cobranza-general.component';
-import { ComisionesComponent } from './comisiones/comisiones.component';
-import { TotalComisionesComponent } from './total-comisiones/total-comisiones.component';
-import { Zona1AuditoriaComponent } from './zona1-auditoria/zona1-auditoria.component';
-import { Zona2AuditoriaComponent } from './zona2-auditoria/zona2-auditoria.component';
-import { ZonaEspecialComponent } from './zona-especial/zona-especial.component';
-import { EdoCtaComponent } from './edo-cta/edo-cta.component';
 
 @NgModule({
     declarations: [
@@ -133,6 +134,7 @@ import { EdoCtaComponent } from './edo-cta/edo-cta.component';
         Zona2AuditoriaComponent,
         ZonaEspecialComponent,
         EdoCtaComponent,
+        RepoSurtidoComponent,
         // PagesComponent,
         // PromesasComponent, // Desactivado por no usarlo
         // ProgressComponent, // Desactivado por no usarlo

@@ -17,7 +17,9 @@ import {
   AsesoresService,
   SupervisoresService,
   ComisionesService,
-  ClientesService
+  ClientesService,
+  WebsocketService,
+  AlmacenService
 } from "./services.index";
 
 @NgModule({
@@ -41,7 +43,9 @@ import {
     AsesoresService,
     SupervisoresService,
     ComisionesService,
-    ClientesService
+    ClientesService,
+    WebsocketService,
+    AlmacenService
   ],
   declarations: []
 })

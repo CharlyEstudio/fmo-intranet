@@ -4,6 +4,13 @@ import { NgModule } from '@angular/core';
 // Servicios
 import { ServiceModule } from './services/service.module';
 
+// Enviroment
+import { environment } from '../environments/environment';
+
+// Sockets
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
+
 // Modulos
 // import { PagesModule } from './pages/pages.module';
 
@@ -19,13 +26,15 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './login/register.component';
 import { PagesComponent } from './pages/pages.component';
 import { SharedModule } from './shared/shared.module';
+import { StatusComponent } from './components/status/status.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    PagesComponent
+    PagesComponent,
+    StatusComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +42,8 @@ import { SharedModule } from './shared/shared.module';
     FormsModule,
     ReactiveFormsModule,
     ServiceModule,
-    SharedModule
+    SharedModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [],
   bootstrap: [AppComponent]

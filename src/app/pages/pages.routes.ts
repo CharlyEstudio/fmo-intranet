@@ -11,14 +11,6 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { ProfileComponent } from './profile/profile.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { BusquedaComponent } from './busqueda/busqueda.component';
-// import { PagesComponent } from './pages.component';
-// import { ProgressComponent } from './progress/progress.component';
-// import { Graficas1Component } from './graficas1/graficas1.component';
-// import { PromesasComponent } from './promesas/promesas.component';
-// import { RxjsComponent } from './rxjs/rxjs.component';
-// import { HospitalesComponent } from './hospitales/hospitales.component';
-// import { MedicoComponent } from './medicos/medico.component';
-// import { MedicosComponent } from './medicos/medicos.component';
 import { VentaComponent } from './diarios/venta/venta.component';
 import { CompraComponent } from './diarios/compra/compra.component';
 import { UtilidadesComponent } from './diarios/utilidades/utilidades.component';
@@ -45,6 +37,7 @@ import { Zona1AuditoriaComponent } from './zona1-auditoria/zona1-auditoria.compo
 import { Zona2AuditoriaComponent } from './zona2-auditoria/zona2-auditoria.component';
 import { ZonaEspecialComponent } from './zona-especial/zona-especial.component';
 import { EdoCtaComponent } from './edo-cta/edo-cta.component';
+import { RepoSurtidoComponent } from './repo-surtido/repo-surtido.component';
 
 const pageRoutes: Routes = [
     {
@@ -163,6 +156,17 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Estado de Cuenta del Cliente',
+                    name: 'description'
+                }
+    },
+    // Almacen
+    {
+        path: 'repoSurtido',
+        component: RepoSurtidoComponent,
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Reporte de Almacén',
                     name: 'description'
                 }
     },

@@ -48,7 +48,7 @@ export class PorBajarComponent implements OnInit, OnDestroy {
     // Pedidos por Bajar
     this._phpService.porBajar()
       .subscribe((data) => {
-        if ( data[0].importe != 0 ) {
+        if ( data[0].importe !== 0 ) {
           this.porBajar = data[0].cantidad;
           this.porBajarImpo = data[0].importe;
         } else {
@@ -99,7 +99,7 @@ export class PorBajarComponent implements OnInit, OnDestroy {
         this._phpService.porBajar()
           .subscribe( ( data ) => {
 
-            if(data[0].importe != 0) {
+            if (data[0].importe !== 0) {
               const bajar = {
                 cantidad: data[0].cantidad,
                 importe: data[0].importe

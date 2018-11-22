@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioService } from '../../services/services.index';
+import { UsuarioService, WebsocketService } from '../../services/services.index';
 import { Usuario } from '../../models/usuario.model';
 import { Router } from '@angular/router';
 import { URL_SERVICIO_GENERAL } from '../../config/config';
@@ -15,19 +15,37 @@ export class HeaderComponent implements OnInit {
 
   usuario: Usuario;
 
+  userConnected: boolean = false;
+
+  usuariosConectados: any[] = [];
+
   constructor(
     public _usuarioService: UsuarioService,
-    public router: Router
+    public router: Router,
   ) {
     this.url = URL_SERVICIO_GENERAL;
   }
 
   ngOnInit() {
     this.usuario = this._usuarioService.usuario;
+
+    this._usuarioService.getLoginUsuarioSocket().subscribe( ( login: any ) => {
+      if (login.activo === 'YES') {
+        this.userConnected = true;
+        this.showSuccess(login);
+        setTimeout(() => {
+          this.userConnected = false;
+        }, 3000);
+      }
+    });
   }
 
   buscar( termino: string ) {
     this.router.navigate(['/busqueda', termino]);
+  }
+
+  showSuccess( data: any ) {
+    // console.log(data.nombre, data.email);
   }
 
 }

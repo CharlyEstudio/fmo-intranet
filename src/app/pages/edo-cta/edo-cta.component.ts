@@ -71,29 +71,29 @@ export class EdoCtaComponent implements OnInit {
     this._clientesService.infoCliente(this.numero, this.asesor)
       .subscribe( ( data: any ) => {
 
-        if(data.length > 0){
+        if (data.length > 0) {
 
           this.clienteFerrum = data[0];
 
           this._clientesService.obtenerFacturas(data[0].CLIENTEID, forma.value.inicio)
             .subscribe( ( edocta: any ) => {
 
-              for(let i = 0; i < edocta.length; i++) {
+              for (let i = 0; i < edocta.length; i++) {
 
                 this.cargos += edocta[i].CARGO;
 
                 this._clientesService.obtenerMovimiento(edocta[i].DOCID)
                   .subscribe( ( resp: any ) => {
 
-                    if(resp.length > 0){
+                    if (resp.length > 0) {
 
-                      if(edocta[i].DOCID === resp[0].DOCID){
+                      if (edocta[i].DOCID === resp[0].DOCID) {
 
-                        for(let k = 0; k < resp.length; k++) {
+                        for (let k = 0; k < resp.length; k++) {
 
-                          if(edocta[i].SALDOFINAL > 0) {
+                          if (edocta[i].SALDOFINAL > 0) {
 
-                            if(this.preSaldo === 0) {
+                            if (this.preSaldo === 0) {
                               this.preSaldo = edocta[i].SALDO - resp[k].PAGADO;
                             } else {
                               this.preSaldo = this.preSaldo - resp[k].PAGADO;
@@ -113,7 +113,7 @@ export class EdoCtaComponent implements OnInit {
                           //   }
                           // }
 
-                          var nuevo = [
+                          let nuevo = [
                             {
                               "DOCID": edocta[i].DOCID,
                               "FECHA": resp[k].FECHAAPLICADA,
@@ -132,8 +132,8 @@ export class EdoCtaComponent implements OnInit {
 
                           this.abonos += resp[k].PAGADO;
 
-                          if(k === 0){
-                            
+                          if (k === 0) {
+
                             this.datos.push(edocta[i]);
 
                           }
@@ -179,8 +179,9 @@ export class EdoCtaComponent implements OnInit {
 
   enviarEmail( datos: any, cliente: any ) {
 
-    if(cliente.CORREO === 'cnmfmo@gmail.com'){
+    if (cliente.CORREO === 'cnmfmo@gmail.com') {
 
+      // tslint:disable-next-line:max-line-length
       swal('Cliente Sin Email', 'El cliente:' + cliente.NOMBRE + ' no tiene un email registrado, favor de comunicarse con Gerencia.', 'warning');
 
     } else {
@@ -188,12 +189,14 @@ export class EdoCtaComponent implements OnInit {
       this._clientesService.enviarEdoCtaEmail(cliente.CORREO, datos, cliente)
         .subscribe( ( email: any ) => {
 
-          if(email[0].status === 'ok') {
+          if (email[0].status === 'ok') {
 
+            // tslint:disable-next-line:max-line-length
             swal('Envío Exitoso', 'El email del Estado de Cuenta del cliente: ' + cliente.NOMBRE + ' se envío de manera correcta.', 'success');
 
           } else {
 
+            // tslint:disable-next-line:max-line-length
             swal('Error de Envío', 'El email del Estado de Cuenta del cliente: ' + cliente.NOMBRE + ' no se envío de manera correcta.', 'error');
 
           }

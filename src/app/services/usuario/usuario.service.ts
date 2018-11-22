@@ -16,6 +16,7 @@ import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_INTERNO } from '..
 import { SweetAlert } from 'sweetalert/typings/core';
 
 import { SubirArchivoService } from '../subirArchivo/subir-archivo.service';
+import { WebsocketService } from '../sockets/websocket.service';
 
 @Injectable()
 export class UsuarioService {
@@ -26,7 +27,9 @@ export class UsuarioService {
 
   constructor(
     public http: HttpClient, public router: Router,
-    public _subirArchivoService: SubirArchivoService) {
+    public _subirArchivoService: SubirArchivoService,
+    public wsService: WebsocketService
+  ) {
     this.cargarStorage();
   }
 
@@ -319,6 +322,10 @@ export class UsuarioService {
         swal(err.error.mensaje , err.error.errors.message, 'error');
         return Observable.throw( err );
       });
+  }
+
+  getLoginUsuarioSocket () {
+    return this.wsService.escuchar('login-usuario');
   }
 
 }

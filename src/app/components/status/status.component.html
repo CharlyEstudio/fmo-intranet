@@ -1,0 +1,5 @@
+<p class="p-2 m-t-10 bg-dark text-white text-center">
+  Servidor:
+  <span class="text-success" *ngIf="_wsService.socketStatus">OnLine</span>
+  <span class="text-danger" *ngIf="!_wsService.socketStatus">OffLine</span>
+</p>

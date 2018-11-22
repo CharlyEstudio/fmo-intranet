@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
-import { UsuarioService } from '../services/services.index';
+import { UsuarioService, WebsocketService } from '../services/services.index';
 import { Usuario } from '../models/usuario.model';
 // import { URL_SERVICIOS2 } from '../config/config';
 
@@ -21,7 +21,11 @@ export class LoginComponent implements OnInit {
 
   auth2: any;
 
-  constructor(public router: Router, public _usuarioService: UsuarioService) {
+  constructor(
+    public router: Router,
+    public _usuarioService: UsuarioService,
+    public wsService: WebsocketService
+  ) {
     // console.log(URL_SERVICIOS2);
   }
 
@@ -45,6 +49,8 @@ export class LoginComponent implements OnInit {
 
     this._usuarioService.login( usuario, forma.value.recuerdame)
       .subscribe( correcto => {
+
+        this.wsService.acciones('login-usuario', this._usuarioService.usuario);
 
         if (this._usuarioService.usuario.rol === "ADMIN_ROLE"
             || this._usuarioService.usuario.rol === "DIR_ROLE"

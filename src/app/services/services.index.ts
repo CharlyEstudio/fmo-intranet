@@ -1,3 +1,4 @@
+
 // Guards
 export { LoginGuardGuard } from "./guards/login-guard.guard";
 export { AdminGuard } from './guards/admin.guard';
@@ -23,3 +24,5 @@ export { PhpService } from "./php/php.service";
 // Sockets
 export { WebsocketService } from './sockets/websocket.service';
 
+// Excel
+export { ExcelService } from "./excel/excel.service";

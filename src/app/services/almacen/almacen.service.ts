@@ -14,8 +14,9 @@ export class AlmacenService {
     return this.http.get( url );
   }
 
-  obtenerReporte( id_almacenista: any, inicio: string, fin: string ) {
-    let url = 'http://192.168.1.250/api/almacen.php?opcion=2&idAlmacenista=' + id_almacenista + '&inicio=' + inicio + '&fin=' + fin;
+  obtenerReporte( area: any, inicio: string, fin: string ) {
+    // tslint:disable-next-line:max-line-length
+    let url = 'http://192.168.1.250/api/almacen.php?opcion=1' + '&area=' + area + '&inicio=' + inicio + '&fin=' + fin;
 
     return this.http.get( url );
   }

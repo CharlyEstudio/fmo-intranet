@@ -19,7 +19,8 @@ import {
   ComisionesService,
   ClientesService,
   WebsocketService,
-  AlmacenService
+  AlmacenService,
+  ExcelService
 } from "./services.index";
 
 @NgModule({
@@ -45,7 +46,8 @@ import {
     ComisionesService,
     ClientesService,
     WebsocketService,
-    AlmacenService
+    AlmacenService,
+    ExcelService
   ],
   declarations: []
 })

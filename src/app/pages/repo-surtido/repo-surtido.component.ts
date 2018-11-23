@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlmacenService } from '../../services/services.index';
+import { AlmacenService, ExcelService } from '../../services/services.index';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -28,7 +28,8 @@ export class RepoSurtidoComponent implements OnInit {
   area: any;
 
   constructor(
-    private _almacenService: AlmacenService
+    private _almacenService: AlmacenService,
+    public _excel: ExcelService
   ) { }
 
   ngOnInit() {
@@ -63,7 +64,7 @@ export class RepoSurtidoComponent implements OnInit {
       this.area = forma.value.filtro;
     }
 
-    this._almacenService.personal( this.area ).subscribe( ( personal: any ) => {
+    this._almacenService.obtenerReporte( this.area, forma.value.inicio, forma.value.fin ).subscribe( ( personal: any ) => {
       this.personal = personal;
 
       this.mostrar = true;
@@ -77,6 +78,11 @@ export class RepoSurtidoComponent implements OnInit {
     });
 
     this.personal = [];
+
+  }
+
+  descargar( data: any ) {
+    this._excel.exportAsExcelFile(data, this.area);
   }
 
 }

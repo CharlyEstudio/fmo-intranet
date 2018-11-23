@@ -58,13 +58,17 @@
 
   </div>
 
-  <div class="col-9">
+  <div class="col-9" *ngIf="esperar">
 
-    <div class="alert alert-warning" *ngIf="esperar">
+    <div class="alert alert-warning">
 
       Obteniendo registros
     
     </div>
+
+  </div>
+
+  <div class="col-9" *ngIf="mostrar">
 
     <div class="table-responsive">
 
@@ -115,6 +119,8 @@
         </tbody>
 
       </table>
+
+      <button class="btn btn-success btn-block" type="button" (click)="descargar(personal)"><i class="mdi mdi-file-excel"></i>Descargar</button>
 
     </div>
 

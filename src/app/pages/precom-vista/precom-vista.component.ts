@@ -61,9 +61,9 @@ export class PrecomVistaComponent implements OnInit {
   cobroFmo: any[] = [];
   totalRangoTruper: number = 0;
   totalRangoFmo: number = 0;
-  carteraTotal:number = 0;
-  porVencer:number = 0;
-  vencida:number = 0;
+  carteraTotal: number = 0;
+  porVencer: number = 0;
+  vencida: number = 0;
   totaClientes: number = 0;
   coberturaCantidad: number = 0;
   cobertura: any[] = [];
@@ -364,74 +364,74 @@ export class PrecomVistaComponent implements OnInit {
 
   promover( datos: any ) {
 
-    if(datos.ventaMensual != undefined){
+    if (datos.ventaMensual !== undefined) {
       this.ventaMensual = datos.ventaMensual;
     }
 
-    if(datos.devoluciones != undefined){
+    if (datos.devoluciones !== undefined) {
       this.devoluciones = datos.devoluciones;
     }
 
-    if(datos.bonificaciones != undefined){
+    if (datos.bonificaciones !== undefined) {
       this.bonificaciones = datos.bonificaciones;
     }
 
-    if(datos.notasCredito != undefined){
+    if (datos.notasCredito !== undefined) {
       this.notasCredito = datos.notasCredito;
     }
 
-    if(datos.carteraTotal != undefined){
+    if (datos.carteraTotal !== undefined) {
       this.carteraTotal = datos.carteraTotal;
     }
 
-    if(datos.totaClientes != undefined){
+    if (datos.totaClientes !== undefined) {
       this.totaClientes = datos.totaClientes;
     }
 
-    if(datos.de1a8 != undefined){
+    if (datos.de1a8 !== undefined) {
       this.de1a8 = datos.de1a8;
     }
 
-    if(datos.de9a16 != undefined){
+    if (datos.de9a16 !== undefined) {
       this.de9a16 = datos.de9a16;
     }
 
-    if(datos.de17 != undefined){
+    if (datos.de17 !== undefined) {
       this.de17 = datos.de17;
     }
 
-    if(datos.vencida != undefined){
+    if (datos.vencida !== undefined) {
       this.vencida = datos.vencida;
     }
 
-    if(datos.porVencer != undefined){
+    if (datos.porVencer !== undefined) {
       this.porVencer = datos.porVencer;
     }
 
-    if(datos.cobroTruper != undefined){
+    if (datos.cobroTruper !== undefined) {
       this.cobroTruper = datos.cobroTruper;
-      for(let i = 0; i < this.cobroTruper.length; i++){
-        if(this.cobroTruper[i].dias_para_pagar >= 0 && this.cobroTruper[i].dias_para_pagar <= 2){
+      for (let i = 0; i < this.cobroTruper.length; i++) {
+        if (this.cobroTruper[i].dias_para_pagar >= 0 && this.cobroTruper[i].dias_para_pagar <= 2) {
           this.de0a2Truper += this.cobroTruper[i].totalTRUPER;
         }
 
-        if(this.cobroTruper[i].dias_para_pagar >= 3 && this.cobroTruper[i].dias_para_pagar <= 7){
+        if (this.cobroTruper[i].dias_para_pagar >= 3 && this.cobroTruper[i].dias_para_pagar <= 7) {
           this.de3a7Truper += this.cobroTruper[i].totalTRUPER;
         }
 
-        if(this.cobroTruper[i].dias_para_pagar >= 8 && this.cobroTruper[i].dias_para_pagar <= 14){
+        if (this.cobroTruper[i].dias_para_pagar >= 8 && this.cobroTruper[i].dias_para_pagar <= 14) {
           this.de8a14Truper += this.cobroTruper[i].totalTRUPER;
         }
 
-        if(this.cobroTruper[i].dias_para_pagar >= 15 && this.cobroTruper[i].dias_para_pagar <= 21){
+        if (this.cobroTruper[i].dias_para_pagar >= 15 && this.cobroTruper[i].dias_para_pagar <= 21) {
           this.de15a21Truper += this.cobroTruper[i].totalTRUPER;
         }
 
-        if(this.cobroTruper[i].dias_para_pagar >= 22 && this.cobroTruper[i].dias_para_pagar <= 31){
+        if (this.cobroTruper[i].dias_para_pagar >= 22 && this.cobroTruper[i].dias_para_pagar <= 31) {
           this.de22a31Truper += this.cobroTruper[i].totalTRUPER;
         }
 
-        if(this.cobroTruper[i].dias_para_pagar >= 32){
+        if (this.cobroTruper[i].dias_para_pagar >= 32) {
           this.de32Truper += this.cobroTruper[i].totalTRUPER;
         }
 
@@ -439,30 +439,30 @@ export class PrecomVistaComponent implements OnInit {
       }
     }
 
-    if(datos.cobroFmo != undefined){
+    if (datos.cobroFmo !== undefined) {
       this.cobroFmo = datos.cobroFmo;
-      for(let i = 0; i < this.cobroFmo.length; i++){
-        if(this.cobroFmo[i].dias_para_pagar >= 0 && this.cobroFmo[i].dias_para_pagar <= 2){
+      for (let i = 0; i < this.cobroFmo.length; i++) {
+        if (this.cobroFmo[i].dias_para_pagar >= 0 && this.cobroFmo[i].dias_para_pagar <= 2) {
           this.de0a2Fmo += this.cobroFmo[i].totalFMO;
         }
 
-        if(this.cobroFmo[i].dias_para_pagar >= 3 && this.cobroFmo[i].dias_para_pagar <= 7){
+        if (this.cobroFmo[i].dias_para_pagar >= 3 && this.cobroFmo[i].dias_para_pagar <= 7) {
           this.de3a7Fmo += this.cobroFmo[i].totalFMO;
         }
 
-        if(this.cobroFmo[i].dias_para_pagar >= 8 && this.cobroFmo[i].dias_para_pagar <= 14){
+        if (this.cobroFmo[i].dias_para_pagar >= 8 && this.cobroFmo[i].dias_para_pagar <= 14) {
           this.de8a14Fmo += this.cobroFmo[i].totalFMO;
         }
 
-        if(this.cobroFmo[i].dias_para_pagar >= 15 && this.cobroFmo[i].dias_para_pagar <= 21){
+        if (this.cobroFmo[i].dias_para_pagar >= 15 && this.cobroFmo[i].dias_para_pagar <= 21) {
           this.de15a21Fmo += this.cobroFmo[i].totalFMO;
         }
 
-        if(this.cobroFmo[i].dias_para_pagar >= 22 && this.cobroFmo[i].dias_para_pagar <= 31){
+        if (this.cobroFmo[i].dias_para_pagar >= 22 && this.cobroFmo[i].dias_para_pagar <= 31) {
           this.de22a31Fmo += this.cobroFmo[i].totalFMO;
         }
 
-        if(this.cobroFmo[i].dias_para_pagar >= 32){
+        if (this.cobroFmo[i].dias_para_pagar >= 32) {
           this.de32Fmo += this.cobroFmo[i].totalFMO;
         }
 
@@ -470,10 +470,10 @@ export class PrecomVistaComponent implements OnInit {
       }
     }
 
-    if(datos.cobertura != undefined){
+    if (datos.cobertura !== undefined) {
       this.coberturaCantidad = datos.cobertura.length;
       this.cobertura = datos.cobertura;
-      for(let i = 0; i < this.coberturaCantidad; i++){
+      for (let i = 0; i < this.coberturaCantidad; i++) {
         if (this.cobertura[i].ventas === 1) {
           this.cant1 ++;
         } else {
@@ -482,32 +482,32 @@ export class PrecomVistaComponent implements OnInit {
       }
     }
 
-    if(datos.renglonaje != undefined){
+    if (datos.renglonaje !== undefined) {
       this.renglonaje = datos.renglonaje.length;
-      for(let i = 0; i < datos.renglonaje.length; i ++){
-        if(i < 1000){
+      for (let i = 0; i < datos.renglonaje.length; i ++) {
+        if (i < 1000) {
           this.ren1000 ++;
         }
 
-        if(i >= 1000 && i < 2000){
+        if (i >= 1000 && i < 2000) {
           this.ren2000 ++;
         }
 
-        if(i >= 2000 && i < 4000){
+        if (i >= 2000 && i < 4000) {
           this.ren4000 ++;
         }
 
-        if(i >= 4000 && i < 6000){
+        if (i >= 4000 && i < 6000) {
           this.ren6000 ++;
         }
 
-        if(i >= 6000){
+        if (i >= 6000) {
           this.ren6001 ++;
         }
       }
     }
 
-    if(datos.penalizacionPedidos != undefined){
+    if (datos.penalizacionPedidos !== undefined) {
       let resp = datos.penalizacionPedidos;
       let numero = 0;
       let numero2 = 0;
@@ -541,9 +541,9 @@ export class PrecomVistaComponent implements OnInit {
       let numero30 = 0;
       let numero31 = 0;
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 1){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 1) {
+          if (resp[i].dia !== 'Sabado') {
             numero += resp[i].correcto;
             this.dia1 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero) }
@@ -556,15 +556,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia1.length == 0){
+      if (this.dia1.length === 0) {
         this.dia1 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 2){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 2) {
+          if (resp[i].dia !== 'Sabado') {
             numero2 += resp[i].correcto;
             this.dia2 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero2) }
@@ -577,15 +577,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia2.length == 0){
+      if (this.dia2.length === 0) {
         this.dia2 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 3){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 3) {
+          if (resp[i].dia !== 'Sabado') {
             numero3 += resp[i].correcto;
             this.dia3 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero3) }
@@ -598,16 +598,16 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia3.length == 0){
+      if (this.dia3.length === 0) {
         this.dia3 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
+      for (let i = 0; i < resp.length; i++) {
         numero4 = (i + 1) - numero - numero2 - numero3;
-        if(resp[i].digito == 4){
-          if(resp[i].dia != 'Sabado'){
+        if (resp[i].digito === 4) {
+          if (resp[i].dia !== 'Sabado') {
             numero4 += resp[i].correcto;
             this.dia4 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero4) }
@@ -619,16 +619,16 @@ export class PrecomVistaComponent implements OnInit {
           }
         }
 
-        if(this.dia4.length == 0){
+        if (this.dia4.length === 0) {
           this.dia4 = [
             { fecha: '', dia: '', total: 1000 }
           ];
         }
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 5){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 5) {
+          if (resp[i].dia !== 'Sabado') {
             numero5 += resp[i].correcto;
             this.dia5 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero5) }
@@ -640,16 +640,16 @@ export class PrecomVistaComponent implements OnInit {
           }
         }
       }
-      
-      if(this.dia5.length == 0){
+
+      if (this.dia5.length === 0) {
         this.dia5 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 6){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 6) {
+          if (resp[i].dia !== 'Sabado') {
             numero6 += resp[i].correcto;
             this.dia6 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero6) }
@@ -662,15 +662,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia6.length == 0){
+      if (this.dia6.length === 0) {
         this.dia6 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 7){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 7) {
+          if (resp[i].dia !== 'Sabado') {
             numero7 += resp[i].correcto;
             this.dia7 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero7) }
@@ -683,15 +683,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia7.length == 0){
+      if (this.dia7.length === 0) {
         this.dia7 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 8){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 8) {
+          if (resp[i].dia !== 'Sabado') {
             numero8 += resp[i].correcto;
             this.dia8 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero8) }
@@ -704,15 +704,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia8.length == 0){
+      if (this.dia8.length === 0) {
         this.dia8 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 9){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 9) {
+          if (resp[i].dia !== 'Sabado') {
             numero9 += resp[i].correcto;
             this.dia9 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero9) }
@@ -725,15 +725,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia9.length == 0){
+      if (this.dia9.length === 0) {
         this.dia9 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 10){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 10) {
+          if (resp[i].dia !== 'Sabado') {
             numero10 += resp[i].correcto;
             this.dia10 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero10) }
@@ -746,15 +746,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia10.length == 0){
+      if (this.dia10.length === 0) {
         this.dia10 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 11){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 11) {
+          if (resp[i].dia !== 'Sabado') {
             numero11 += resp[i].correcto;
             this.dia11 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero11) }
@@ -767,15 +767,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia11.length == 0){
+      if (this.dia11.length === 0) {
         this.dia11 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 12){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 12) {
+          if (resp[i].dia !== 'Sabado') {
             numero12 += resp[i].correcto;
             this.dia12 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero12) }
@@ -788,15 +788,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia12.length == 0){
+      if (this.dia12.length === 0) {
         this.dia12 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 13){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 13) {
+          if (resp[i].dia !== 'Sabado') {
             numero13 += resp[i].correcto;
             this.dia13 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero13) }
@@ -809,15 +809,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia13.length == 0){
+      if (this.dia13.length === 0) {
         this.dia13 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 14){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 14) {
+          if (resp[i].dia !== 'Sabado') {
             numero14 += resp[i].correcto;
             this.dia14 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero14) }
@@ -830,15 +830,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia14.length == 0){
+      if (this.dia14.length === 0) {
         this.dia14 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 15){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 15) {
+          if (resp[i].dia !== 'Sabado') {
             numero15 += resp[i].correcto;
             this.dia15 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero15) }
@@ -851,15 +851,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia15.length == 0){
+      if (this.dia15.length === 0) {
         this.dia15 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 16){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 16) {
+          if (resp[i].dia !== 'Sabado') {
             numero16 += resp[i].correcto;
             this.dia16 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero16) }
@@ -872,15 +872,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia16.length == 0){
+      if (this.dia16.length === 0) {
         this.dia16 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 17){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 17) {
+          if (resp[i].dia !== 'Sabado') {
             numero17 += resp[i].correcto;
             this.dia17 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero17) }
@@ -893,15 +893,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia17.length == 0){
+      if (this.dia17.length === 0) {
         this.dia17 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 18){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 18) {
+          if (resp[i].dia !== 'Sabado') {
             numero18 += resp[i].correcto;
             this.dia18 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero18) }
@@ -914,15 +914,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia18.length == 0){
+      if (this.dia18.length === 0) {
         this.dia18 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 19){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 19) {
+          if (resp[i].dia !== 'Sabado') {
             numero19 += resp[i].correcto;
             this.dia19 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero19) }
@@ -935,15 +935,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia19.length == 0){
+      if (this.dia19.length === 0) {
         this.dia19 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 20){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 20) {
+          if (resp[i].dia !== 'Sabado') {
             numero20 += resp[i].correcto;
             this.dia20 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero20) }
@@ -956,15 +956,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia20.length == 0){
+      if (this.dia20.length === 0) {
         this.dia20 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 21){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 21) {
+          if (resp[i].dia !== 'Sabado') {
             numero21 += resp[i].correcto;
             this.dia21 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero21) }
@@ -977,15 +977,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia21.length == 0){
+      if (this.dia21.length === 0) {
         this.dia21 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 22){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 22) {
+          if (resp[i].dia !== 'Sabado') {
             numero22 += resp[i].correcto;
             this.dia22 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero22) }
@@ -998,15 +998,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia22.length == 0){
+      if (this.dia22.length === 0) {
         this.dia22 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 23){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 23) {
+          if (resp[i].dia !== 'Sabado') {
             numero23 += resp[i].correcto;
             this.dia23 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero23) }
@@ -1019,15 +1019,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia23.length == 0){
+      if (this.dia23.length === 0) {
         this.dia23 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 24){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 24) {
+          if (resp[i].dia !== 'Sabado') {
             numero24 += resp[i].correcto;
             this.dia24 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero24) }
@@ -1040,15 +1040,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia24.length == 0){
+      if (this.dia24.length === 0) {
         this.dia24 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 25){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 25) {
+          if (resp[i].dia !== 'Sabado') {
             numero25 += resp[i].correcto;
             this.dia25 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero25) }
@@ -1061,15 +1061,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia25.length == 0){
+      if (this.dia25.length === 0) {
         this.dia25 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 26){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 26) {
+          if (resp[i].dia !== 'Sabado') {
             numero26 += resp[i].correcto;
             this.dia26 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero26) }
@@ -1082,15 +1082,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia26.length == 0){
+      if (this.dia26.length === 0) {
         this.dia26 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 27){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 27) {
+          if (resp[i].dia !== 'Sabado') {
             numero27 += resp[i].correcto;
             this.dia27 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero27) }
@@ -1103,15 +1103,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia27.length == 0){
+      if (this.dia27.length === 0) {
         this.dia27 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 28){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 28) {
+          if (resp[i].dia !== 'Sabado') {
             numero28 += resp[i].correcto;
             this.dia28 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero28) }
@@ -1124,15 +1124,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia28.length == 0){
+      if (this.dia28.length === 0) {
         this.dia28 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 29){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 29) {
+          if (resp[i].dia !== 'Sabado') {
             numero29 += resp[i].correcto;
             this.dia29 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero29) }
@@ -1145,15 +1145,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia29.length == 0){
+      if (this.dia29.length === 0) {
         this.dia29 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 30){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 30) {
+          if (resp[i].dia !== 'Sabado') {
             numero30 += resp[i].correcto;
             this.dia30 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero30) }
@@ -1166,15 +1166,15 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia30.length == 0){
+      if (this.dia30.length === 0) {
         this.dia30 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
-      for(let i = 0; i < resp.length; i++){
-        if(resp[i].digito == 31){
-          if(resp[i].dia != 'Sabado'){
+      for (let i = 0; i < resp.length; i++) {
+        if (resp[i].digito === 31) {
+          if (resp[i].dia !== 'Sabado') {
             numero31 += resp[i].correcto;
             this.dia31 = [
               { fecha: resp[i].fecha, dia: resp[i].dia, total: (numero31) }
@@ -1187,14 +1187,14 @@ export class PrecomVistaComponent implements OnInit {
         }
       }
 
-      if(this.dia31.length == 0){
+      if (this.dia31.length === 0) {
         this.dia31 = [
           { fecha: '', dia: '', total: 1000 }
         ];
       }
 
       // Hacemos la solicitud semana 1
-      if(
+      if (
         this.dia1[0].total < 8 ||
         this.dia2[0].total < 8 ||
         this.dia3[0].total < 8 ||
@@ -1217,7 +1217,7 @@ export class PrecomVistaComponent implements OnInit {
         }
 
       // Hacemos la solicitud semana 2
-      if(
+      if (
         this.dia8[0].total < 8 ||
         this.dia9[0].total < 8 ||
         this.dia10[0].total < 8 ||
@@ -1240,7 +1240,7 @@ export class PrecomVistaComponent implements OnInit {
         }
 
       // Hacemos la solicitud semana 3
-      if(
+      if (
         this.dia15[0].total < 8 ||
         this.dia16[0].total < 8 ||
         this.dia17[0].total < 8 ||
@@ -1263,7 +1263,7 @@ export class PrecomVistaComponent implements OnInit {
         }
 
       // Hacemos la solicitud semana 4
-      if(
+      if (
         this.dia22[0].total < 8 ||
         this.dia23[0].total < 8 ||
         this.dia24[0].total < 8 ||
@@ -1296,16 +1296,22 @@ export class PrecomVistaComponent implements OnInit {
     // Totales, estas variables siervirán para guardar en tabla
     this.comisionVenta = ((this.ventaMensual - this.devoluciones - this.notasCredito - this.bonificaciones) * this.porVentafInal);
 
+    // tslint:disable-next-line:max-line-length
     this.comisionTruperCobrado = ((this.de0a2Truper * this.por0a2Truper) + (this.de3a7Truper * this.por3a7Truper) + (this.de8a14Truper * this.por8a14Truper) + (this.de15a21Truper * this.por15a21Truper) + (this.de22a31Truper * this.por22a31Truper) + (this.de32Truper * this.por32Truper));
 
+    // tslint:disable-next-line:max-line-length
     this.comisionFmoCobrado = ((this.de0a2Fmo * this.por0a2Fmo) + (this.de3a7Fmo * this.por3a7Fmo) + (this.de8a14Fmo * this.por8a14Fmo) + (this.de15a21Fmo * this.por15a21Fmo) + (this.de22a31Fmo * this.por22a31Fmo) + (this.de32Fmo * this.por32Fmo));
 
+    // tslint:disable-next-line:max-line-length
     this.penalizacionCartera = (((this.de1a8 * this.por1a8) * 100) + ((this.de9a16 * this.por9a16) * 100) + ((this.de17 * this.por17) * 100));
 
+    // tslint:disable-next-line:max-line-length
     this.comisionCobertura = ((this.cant2 * this.pos2) + (this.cant1 * this.neg1) + ((this.totaClientes - this.coberturaCantidad) * this.negSinVenta));
 
+    // tslint:disable-next-line:max-line-length
     this.comisionRenglonaje = (((this.ren1000 * this.tasa1000) * 100) + ((this.ren2000 * this.tasa2000) * 100) + ((this.ren4000 * this.tasa4000) * 100) + ((this.ren6000 * this.tasa6000) * 100) + ((this.ren6001 * this.tasa6001) * 100));
 
+    // tslint:disable-next-line:max-line-length
     this.comisionGeneral = this.comisionVenta + this.comisionTruperCobrado + this.comisionFmoCobrado + this.comisionCobertura + this.comisionRenglonaje;
 
     this.carteraGeneral = this.penalizacionCartera;
@@ -1314,6 +1320,7 @@ export class PrecomVistaComponent implements OnInit {
 
     this.penalizacionPedidos = (this.semana1 + this.semana2 + this.semana3 + this.semana4);
 
+    // tslint:disable-next-line:max-line-length
     this.totalComisionPagar = (((((this.ventaMensual - this.bonificaciones) * this.porVentafInal) + this.comisionTruperCobrado + this.comisionFmoCobrado + this.comisionCobertura + this.comisionRenglonaje) - this.penalizacionCartera - this.devolucionesGeneral - this.penalizacionPedidos));
 
     this.guardar(
@@ -1461,7 +1468,8 @@ export class PrecomVistaComponent implements OnInit {
     penalizacionPedidos,
     totalComisionPagar) {
 
-    if(comisionVenta > 0 && comisionTruperCobrado > 0 && comisionFmoCobrado > 0 && penalizacionCartera > 0 && comisionCobertura > 0 && comisionRenglonaje > 0 && comisionGeneral > 0 && carteraGeneral > 0 && devolucionesGeneral > 0 && penalizacionPedidos > 0 && totalComisionPagar > 0){
+    // tslint:disable-next-line:max-line-length
+    if (comisionVenta > 0 && comisionTruperCobrado > 0 && comisionFmoCobrado > 0 && penalizacionCartera > 0 && comisionCobertura > 0 && comisionRenglonaje > 0 && comisionGeneral > 0 && carteraGeneral > 0 && devolucionesGeneral > 0 && penalizacionPedidos > 0 && totalComisionPagar > 0) {
       let fec = new Date;
       let dia = fec.getDate();
       let mes = fec.getMonth() + 1;
@@ -1553,7 +1561,7 @@ export class PrecomVistaComponent implements OnInit {
       this._usuarioService.buscarAsesorComision(this.idFerrum)
         .subscribe( ( resp: any ) => {
           if (resp.comisiones.length > 0) {
-            if (resp.comisiones[0].mes != mes) {
+            if (resp.comisiones[0].mes !== mes) {
               swal({
                 title: "Guardar Comisión?",
                 text: "Está acción confirma que guardará los datos de comisión de este vendeor, está seguro?",

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
 
-import { ComisionesService, UsuarioService } from '../../services/services.index';
+import { ComisionesService, UsuarioService, ExcelService } from '../../services/services.index';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -12,19 +12,20 @@ import { NgForm } from '@angular/forms';
 })
 export class TotalComisionesComponent implements OnInit {
 
-  comisiones: any[] = [];
-  asesores: any[] = [];
   datos: any[] = [];
 
+  // Para que el valor del select muestre los datos iniciales
   mes: number = 0;
   anio: number = new Date().getFullYear();
 
   cargando: boolean = false;
+  presentar: boolean = false;
 
   constructor(
     private router: Router,
     private _comisionesService: ComisionesService,
-    private _usuariosService: UsuarioService
+    private _usuariosService: UsuarioService,
+    public _excel: ExcelService
   ) { }
 
   ngOnInit() {
@@ -43,45 +44,82 @@ export class TotalComisionesComponent implements OnInit {
 
     this._comisionesService.buscarMesComision(forma.value.mes)
       .subscribe( ( resp: any ) => {
-        if(resp.comisiones.length > 0) {
-          this.procesar(forma.value.anio);
+
+        if (resp.comisiones.length > 0) {
+
+          this.procesar(forma.value.anio, resp.comisiones);
+
         } else {
+
           swal('Sin registro de comisiones', 'No se ha encontrado registro de comisiones en este mes.', 'error');
+
         }
       });
   }
 
-  procesar( anio: any ) {
+  procesar( anio: any, comisiones: any ) {
     this.cargando = true;
+    this.presentar = false;
 
     this._usuariosService.buscarUsuarios('ASE_ROLE')
-      .subscribe( ( resp: any ) => {
-        this.asesores = resp;
+      .subscribe( ( asesores: any ) => {
 
-        this._comisionesService.cargarComisiones()
-          .subscribe( ( resp: any ) => {
-            this.comisiones = resp;
-            this.mostrar(anio);
-          });
+            this.mostrar(anio, comisiones, asesores);
 
       });
   }
 
-  mostrar( anio: any ) {
-    for(let i = 0; i < this.comisiones.length; i++){
-      if(this.comisiones[i].anio === anio) {
-        for(let j = 0; j < this.asesores.length; j++) {
-          if(this.comisiones[i].idFerrum == this.asesores[j].idFerrum){
-            this.datos.push({'comision': this.comisiones[i], 'img': this.asesores[j].img, 'nombre': this.asesores[j].nombre, 'email': this.asesores[j].email});
+  mostrar( anio: any, comisiones: any, asesores: any ) {
+
+    if (comisiones.length > 0) {
+
+      for (let i = 0; i < comisiones.length; i++) {
+
+        if (comisiones[i].anio === anio) {
+
+          for (let j = 0; j < asesores.length; j++) {
+
+            if (comisiones[i].idFerrum == asesores[j].idFerrum) {
+
+              this.datos.push(
+                {
+                  'comision': comisiones[i],
+                  'img': asesores[j].img,
+                  'nombre': asesores[j].nombre,
+                  'email': asesores[j].email
+                }
+              );
+
+            }
+
           }
+
         }
+
       }
+
+      this.cargando = false;
+
+      this.presentar = true;
+
+    } else {
+
+      this.cargando = false;
+
+      this.presentar = false;
+
     }
-    this.cargando = false;
+
   }
 
   revisar( idFerrum: any, nombre: any ) {
     this.router.navigate(['/asesor-vista/', idFerrum, nombre]);
   }
+
+  // descargar( data: any, forma: NgForm ) {
+  //   console.log(data);
+  //   let filename = 'comisiones_asesores_' + forma.value.mes + '_' + forma.value.anio;
+  //   this._excel.exportAsExcelFile(data, filename);
+  // }
 
 }

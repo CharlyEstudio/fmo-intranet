@@ -42,41 +42,62 @@ export class ComisionesComponent implements OnInit {
 
     this._comisionesService.buscarMesComision(forma.value.mes)
       .subscribe( ( resp: any ) => {
-        if(resp.comisiones.length > 0) {
-          this.procesar(forma.value.anio);
+
+        let comisiones = resp.comisiones;
+
+        if (resp.comisiones.length > 0) {
+
+          this.procesar(forma.value.anio, comisiones);
+
         } else {
+
           swal('Sin registro de comisiones', 'No se ha encontrado registro de comisiones en este mes.', 'error');
+
         }
+
       });
   }
 
-  procesar( anio: any ) {
+  procesar( anio: any, comisiones: any ) {
     this.cargando = true;
 
     this._usuariosService.buscarUsuarios('ASE_ROLE')
-      .subscribe( ( resp: any ) => {
-        this.asesores = resp;
+      .subscribe( ( asesores: any ) => {
 
-        this._comisionesService.cargarComisiones()
-          .subscribe( ( resp: any ) => {
-            this.comisiones = resp;
-            this.mostrar( anio );
-          });
+        this.mostrar( anio, comisiones, asesores );
 
       });
   }
 
-  mostrar( anio: any ) {
-    for(let i = 0; i < this.comisiones.length; i++){
-      if(this.comisiones[i].anio === anio) {
-        for(let j = 0; j < this.asesores.length; j++) {
-          if(this.comisiones[i].idFerrum == this.asesores[j].idFerrum){
-            this.datos.push({'comision': this.comisiones[i], 'img': this.asesores[j].img, 'nombre': this.asesores[j].nombre, 'email': this.asesores[j].email});
+  mostrar( anio: any, comisiones: any, asesores: any ) {
+
+    for (let i = 0; i < comisiones.length; i++) {
+
+      if (comisiones[i].anio === anio) {
+
+        for (let j = 0; j < asesores.length; j++) {
+
+          if (comisiones[i].idFerrum == asesores[j].idFerrum) {
+
+            this.datos.push(
+              {
+                'comision': comisiones[i],
+                'img': asesores[j].img,
+                'nombre': asesores[j].nombre,
+                'email': asesores[j].email
+              }
+            );
+
           }
+
         }
+
       }
+
     }
+
     this.cargando = false;
+
   }
 
   revisar( idFerrum: any, nombre: any ) {

@@ -13,7 +13,7 @@ export class ImagenPipe implements PipeTransform {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       url = URL_LOCAL + ':' + PUERTO_INTERNO + '/img';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = 'http://localhost:' + PUERTO_INTERNO + '/img';
+      url = 'http://192.168.1.250:' + PUERTO_INTERNO + '/img';
     } else {
       url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/img';
     }

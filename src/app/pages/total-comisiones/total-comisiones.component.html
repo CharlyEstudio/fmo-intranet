@@ -76,7 +76,7 @@
         
         </div>
 
-        <div class="table-responsive">
+        <div class="table-responsive" *ngIf="presentar">
 
           <table class="table">
 
@@ -131,6 +131,8 @@
             </tbody>
 
           </table>
+
+          <!--<button class="btn btn-success btn-block" type="button" (click)="descargar(datos, f)"><i class="mdi mdi-file-excel"></i>Descargar</button>-->
 
         </div>
 

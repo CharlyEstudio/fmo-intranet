@@ -31,7 +31,7 @@ export class SubirArchivoService {
       if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
         /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/upload/' + tipo + '/' + id;
       } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-        url = 'http://localhost:' + PUERTO_INTERNO + '/upload/' + tipo + '/' + id;
+        url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/upload/' + tipo + '/' + id;
       } else {
         url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/upload/' + tipo + '/' + id;
       }

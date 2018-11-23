@@ -11,7 +11,7 @@ import { Usuario } from '../../models/usuario.model';
 
 import { Comision } from '../../models/comision.model';
 
-import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_INTERNO } from '../../config/config';
+import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_INTERNO, PUERTO_SERVER } from '../../config/config';
 
 import { SweetAlert } from 'sweetalert/typings/core';
 
@@ -39,7 +39,7 @@ export class UsuarioService {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/login/renuevatoken';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = 'http://localhost:' + PUERTO_INTERNO + '/login/renuevatoken';
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/login/renuevatoken';
     } else {
       url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/login/renuevatoken';
     }
@@ -114,7 +114,7 @@ export class UsuarioService {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/login';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = 'http://localhost:' + PUERTO_INTERNO + '/login';
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/login';
     } else {
       url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/login';
     }
@@ -139,7 +139,7 @@ export class UsuarioService {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/usuario';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = 'http://localhost:' + PUERTO_INTERNO + '/usuario';
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/usuario';
     } else {
       url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/usuario';
     }
@@ -163,7 +163,7 @@ export class UsuarioService {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/usuario/' + usuario._id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = 'http://localhost:' + PUERTO_INTERNO + '/usuario/' + usuario._id;
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/usuario/' + usuario._id;
     } else {
       url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/usuario/' + usuario._id;
     }
@@ -208,7 +208,7 @@ export class UsuarioService {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/usuario?desde=' + desde;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = 'http://localhost:' + PUERTO_INTERNO + '/usuario?desde=' + desde;
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/usuario?desde=' + desde;
     } else {
       url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/usuario?desde=' + desde;
     }
@@ -222,7 +222,7 @@ export class UsuarioService {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/coleccion/usuarios/' + termino;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = 'http://localhost:' + PUERTO_INTERNO + '/busqueda/coleccion/usuarios/' + termino;
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/coleccion/usuarios/' + termino;
     } else {
       url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/coleccion/usuarios/' + termino;
     }
@@ -237,7 +237,7 @@ export class UsuarioService {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/usuario/' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = 'http://localhost:' + PUERTO_INTERNO + '/usuario/' + id;
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/usuario/' + id;
     } else {
       url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/usuario/' + id;
     }
@@ -258,7 +258,7 @@ export class UsuarioService {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = 'http://localhost:' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id;
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id;
     } else {
       url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id;
     }
@@ -280,7 +280,7 @@ export class UsuarioService {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/comisiones';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = 'http://localhost:' + PUERTO_INTERNO + '/comisiones';
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/comisiones';
     } else {
       url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones';
     }
@@ -306,7 +306,7 @@ export class UsuarioService {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/comisiones/' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = 'http://localhost:' + PUERTO_INTERNO + '/comisiones/' + id;
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/comisiones/' + id;
     } else {
       url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones/' + id;
     }
@@ -326,6 +326,35 @@ export class UsuarioService {
 
   getLoginUsuarioSocket () {
     return this.wsService.escuchar('login-usuario');
+  }
+
+  enviarPassword( usuario: Usuario ) {
+    let url;
+    let user = JSON.stringify(usuario);
+
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_SERVER + '/usuarios.php?opcion=1&usuario' + user;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      url = URL_PRUEBAS + ':' + PUERTO_SERVER + '/usuarios.php?opcion=1&usuario' + user;
+    } else {
+      url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/usuarios.php?opcion=1&usuario' + user;
+    }
+
+    return this.http.get( url );
+  }
+
+  recuperar( id: any ) {
+    let url;
+
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/recuperar/usuario/' + id;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/recuperar/usuario/' + id;
+    } else {
+      url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/busqueda/recuperar/usuario/' + id;
+    }
+
+    return this.http.get( url );
   }
 
 }

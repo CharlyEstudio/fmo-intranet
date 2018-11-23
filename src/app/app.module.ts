@@ -9,6 +9,7 @@ import { environment } from '../environments/environment';
 
 // Sockets
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
 const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
 
 // Modulos
@@ -27,6 +28,7 @@ import { RegisterComponent } from './login/register.component';
 import { PagesComponent } from './pages/pages.component';
 import { SharedModule } from './shared/shared.module';
 import { StatusComponent } from './components/status/status.component';
+import { RecuperarComponent } from './login/recuperar.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { StatusComponent } from './components/status/status.component';
     LoginComponent,
     RegisterComponent,
     PagesComponent,
-    StatusComponent
+    StatusComponent,
+    RecuperarComponent
   ],
   imports: [
     BrowserModule,

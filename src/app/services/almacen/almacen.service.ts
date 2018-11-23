@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS } from '../../config/config';
 
 @Injectable()
 export class AlmacenService {
@@ -8,15 +9,16 @@ export class AlmacenService {
     private http: HttpClient
   ) { }
 
-  personal( area: any ) {
-    let url = 'http://192.168.1.250/api/almacen.php?opcion=1&area=' + area;
-
-    return this.http.get( url );
-  }
-
   obtenerReporte( area: any, inicio: string, fin: string ) {
-    // tslint:disable-next-line:max-line-length
-    let url = 'http://192.168.1.250/api/almacen.php?opcion=1' + '&area=' + area + '&inicio=' + inicio + '&fin=' + fin;
+    let url;
+
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/url = URL_LOCAL + '/api/almacen.php?opcion=1' + '&area=' + area + '&inicio=' + inicio + '&fin=' + fin;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      url = URL_PRUEBAS + '/api/almacen.php?opcion=1' + '&area=' + area + '&inicio=' + inicio + '&fin=' + fin;
+    } else {
+      url = URL_SERVICIO_GENERAL + '/api/almacen.php?opcion=1' + '&area=' + area + '&inicio=' + inicio + '&fin=' + fin;
+    }
 
     return this.http.get( url );
   }

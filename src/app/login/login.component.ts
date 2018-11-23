@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
     this._usuarioService.login( usuario, forma.value.recuerdame)
       .subscribe( correcto => {
 
-        this.wsService.acciones('login-usuario', this._usuarioService.usuario);
+        // this.wsService.socketStatus;
 
         if (this._usuarioService.usuario.rol === "ADMIN_ROLE"
             || this._usuarioService.usuario.rol === "DIR_ROLE"

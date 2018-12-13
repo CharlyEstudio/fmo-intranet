@@ -38,6 +38,10 @@ import { Zona2AuditoriaComponent } from './zona2-auditoria/zona2-auditoria.compo
 import { ZonaEspecialComponent } from './zona-especial/zona-especial.component';
 import { EdoCtaComponent } from './edo-cta/edo-cta.component';
 import { RepoSurtidoComponent } from './repo-surtido/repo-surtido.component';
+import { MovimientosFolioComponent } from './movimientos-folio/movimientos-folio.component';
+import { BitacoraComponent } from './bitacora/bitacora/bitacora.component';
+import { MostrarInfoBitacoraComponent } from './mostrar-info-bitacora/mostrar-info-bitacora.component';
+import { MostrarFacturasMorosidadComponent } from './mostrar-facturas-morosidad/mostrar-facturas-morosidad.component';
 
 const pageRoutes: Routes = [
     {
@@ -159,6 +163,16 @@ const pageRoutes: Routes = [
                     name: 'description'
                 }
     },
+    {
+        path: 'mov-fol',
+        component: MovimientosFolioComponent,
+        canActivate: [ VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Movimiento Detallado de Folios',
+                    name: 'description'
+                }
+    },
     // Almacen
     {
         path: 'repoSurtido',
@@ -208,6 +222,36 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Información Detallada de Zona Especial',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'direccionCuentas',
+        component: BitacoraComponent,
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Dirección de Cuentas',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'infoBitacora/:data',
+        component: MostrarInfoBitacoraComponent,
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Información de Clientes Morosos',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'infoFacturas/:clienteid/:nombre/:numero/:tipo',
+        component: MostrarFacturasMorosidadComponent,
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Información a Detalle',
                     name: 'description'
                 }
     },

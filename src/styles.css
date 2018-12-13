@@ -46,7 +46,7 @@
     z-index: 9999;
 }
 
-.totales .p-r-0 h1{
+.totales .p-r-0 h1 {
     text-align: right;
 }
 
@@ -62,49 +62,95 @@
     font-weight: 700;
 }
 
+.card-warning {
+    background: #ffb22b;
+    color: #fff;
+}
+
+.card-danger {
+    background: #ef5350;
+    color: #fff;
+}
+
+.card-success {
+    background: #06d79c;
+    color: #fff;
+}
+
+
 /*
 Template Name: Admin pro Admin
 Author: Wrappixel
 Email: niravjoshi87@gmail.com
 File: scss
 */
+
+
 /*
 Template Name: Admin Pro Admin
 Author: Wrappixel
 Email: niravjoshi87@gmail.com
 File: scss
 */
+
+
 /*Theme Colors*/
+
+
 /*bootstrap Color*/
+
+
 /*Light colors*/
+
+
 /*Normal Color*/
+
+
 /*Extra Variable*/
+
+
 /*******************
 User card page
 ******************/
+
 .el-element-overlay .white-box {
-    padding: 0px; }
-  
+    padding: 0px;
+}
+
 .el-element-overlay .el-card-item {
     position: relative;
-    padding-bottom: 25px; }
+    padding-bottom: 25px;
+}
+
 .el-element-overlay .el-card-item .el-card-avatar {
-    margin-bottom: 15px; }
+    margin-bottom: 15px;
+}
+
 .el-element-overlay .el-card-item .el-card-content {
-    text-align: center; }
+    text-align: center;
+}
+
 .el-element-overlay .el-card-item .el-card-content h3 {
-    margin: 0px; }
+    margin: 0px;
+}
+
 .el-element-overlay .el-card-item .el-card-content a {
-    color: #67757c; }
+    color: #67757c;
+}
+
 .el-element-overlay .el-card-item .el-card-content a:hover {
-    color: #398bf7; }
+    color: #398bf7;
+}
+
 .el-element-overlay .el-card-item .el-overlay-1 {
     width: 100%;
     height: 100%;
     overflow: hidden;
     position: relative;
     text-align: center;
-    cursor: default; }
+    cursor: default;
+}
+
 .el-element-overlay .el-card-item .el-overlay-1 img {
     display: block;
     position: relative;
@@ -112,11 +158,15 @@ User card page
     -o-transition: all .4s linear;
     transition: all .4s linear;
     width: 100%;
-    height: auto; }
+    height: auto;
+}
+
 .el-element-overlay .el-card-item .el-overlay-1:hover img {
     -ms-transform: scale(1.2) translateZ(0);
     -webkit-transform: scale(1.2) translateZ(0);
-    /* transform: scale(1.2) translateZ(0); */ }
+    /* transform: scale(1.2) translateZ(0); */
+}
+
 .el-element-overlay .el-card-item .el-overlay-1 .el-info {
     text-decoration: none;
     display: inline-block;
@@ -135,18 +185,26 @@ User card page
     right: 0;
     transform: translateY(-50%) translateZ(0);
     -webkit-transform: translateY(-50%) translateZ(0);
-    -ms-transform: translateY(-50%) translateZ(0); }
-.el-element-overlay .el-card-item .el-overlay-1 .el-info > li {
+    -ms-transform: translateY(-50%) translateZ(0);
+}
+
+.el-element-overlay .el-card-item .el-overlay-1 .el-info>li {
     list-style: none;
     display: inline-block;
-    margin: 0 3px; }
-.el-element-overlay .el-card-item .el-overlay-1 .el-info > li a {
+    margin: 0 3px;
+}
+
+.el-element-overlay .el-card-item .el-overlay-1 .el-info>li a {
     border-color: #ffffff;
     color: #ffffff;
-    padding: 12px 15px 10px; }
-.el-element-overlay .el-card-item .el-overlay-1 .el-info > li a:hover {
+    padding: 12px 15px 10px;
+}
+
+.el-element-overlay .el-card-item .el-overlay-1 .el-info>li a:hover {
     background: #398bf7;
-    border-color: #398bf7; }
+    border-color: #398bf7;
+}
+
 .el-element-overlay .el-card-item .el-overlay {
     width: 100%;
     height: 100%;
@@ -158,237 +216,214 @@ User card page
     background-color: rgba(0, 0, 0, 0.7);
     -webkit-transition: all .4s ease-in-out;
     -o-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out; }
+    transition: all .4s ease-in-out;
+}
+
 .el-element-overlay .el-card-item .el-overlay-1:hover .el-overlay {
     opacity: 1;
     filter: alpha(opacity=100);
     -webkit-transform: translateZ(0);
     -ms-transform: translateZ(0);
-    transform: translateZ(0); }
+    transform: translateZ(0);
+}
+
 .el-element-overlay .el-card-item .el-overlay-1 .scrl-dwn {
-    top: -100%; }
+    top: -100%;
+}
+
 .el-element-overlay .el-card-item .el-overlay-1 .scrl-up {
     top: 100%;
-    height: 0px; }
+    height: 0px;
+}
+
 .el-element-overlay .el-card-item .el-overlay-1:hover .scrl-dwn {
-    top: 0px; }
+    top: 0px;
+}
+
 .el-element-overlay .el-card-item .el-overlay-1:hover .scrl-up {
     top: 0px;
-    height: 100%; }
+    height: 100%;
+}
+
 
 /**
  * ESCRITORIO GRANDE
  */
 
-/* @media(min-width: 1200px){ */
-@media(max-width: 1366px) and (min-width: 1200px){
 
-	.soc-header{
+/* @media(min-width: 1200px){ */
+
+@media(max-width: 1366px) and (min-width: 1200px) {
+    .soc-header {
         font-size: 34px!important;
     }
-
-    .soc-content h3.font-medium{
+    .soc-content h3.font-medium {
         font-size: 20px!important;
     }
-
     .tablas-modales {
         max-width: 90%!important;
     }
-
-    h2.font-light, h3.font-light{
+    h2.font-light,
+    h3.font-light {
         font-size: 1em;
     }
-
-    h3.card-title{
+    h3.card-title {
         font-size: .7em;
     }
-
     .totales h3.font-light {
         font-size: .8em;
     }
-
     .totales h6.text-muted {
         font-size: .7em;
     }
-
     .totales h4.font-light {
         font-size: .6em;
     }
-
-    span.text-black, span.text-white {
+    span.text-black,
+    span.text-white {
         font-size: .8em;
     }
-
     .p-l-20 h3.text-black {
         font-size: 1em;
     }
-
     .impoPedidosDia {
         padding-left: 50px!important;
     }
-
 }
+
 
 /**
  * ESCRITORIO MEDIANO O TABLET HORIZONTAL
  */
 
-@media(max-width: 1199px) and (min-width: 992px){
-
-    .servicio{
+@media(max-width: 1199px) and (min-width: 992px) {
+    .servicio {
         height: 300px!important;
     }
-
-    .soc-header{
+    .soc-header {
         font-size: 18px!important;
     }
-
-    .soc-content h3, .soc-content h5{
+    .soc-content h3,
+    .soc-content h5 {
         font-size: 14px!important;
     }
-
-    .p-r-0{
+    .p-r-0 {
         padding-left: 0px!important;
     }
-
-    .p-r-0 h1.font-light{
+    .p-r-0 h1.font-light {
         font-size: 28px!important;
     }
-
-    .p-b-20 font.display-3{
+    .p-b-20 font.display-3 {
         font-size: 2rem!important;
     }
-
-    .p-r-0 h6, .p-r-0 h5{
+    .p-r-0 h6,
+    .p-r-0 h5 {
         font-size: 12px!important;
     }
-
-    .p-r-0 h5{
+    .p-r-0 h5 {
         font-weight: 700!important;
     }
-
     .tablas-modales {
         max-width: 90%!important;
         font-size: 10px;
     }
-
-    h2.font-light, h3.font-light{
+    h2.font-light,
+    h3.font-light {
         font-size: 1em;
     }
-
-    h3.card-title{
+    h3.card-title {
         font-size: .7em;
     }
-
     .card.servicio {
         height: 93%!important;
     }
-
     .card.p-l-20 {
         height: 94.5%!important;
     }
-
     .totales h6.text-muted {
         font-size: .7em;
     }
-
     .totales h4.font-light {
         font-size: .9em;
     }
-
     .p-l-20 h3.text-black {
         font-size: 1em;
     }
-
     .impoPedidosDia {
         padding-left: 50px!important;
     }
-	
 }
+
 
 /**
  * ESCRITORIO PEQUEÑO O TABLET VERTICAL
  */
 
-@media(max-width: 991px) and (min-width: 768px){
-
-	.totales{
+@media(max-width: 991px) and (min-width: 768px) {
+    .totales {
         height: 820px!important;
         text-align: center!important;
     }
-
-    .totales .b-l{
+    .totales .b-l {
         border: none;
     }
-
-    .totales .p-r-0 h1{
+    .totales .p-r-0 h1 {
         text-align: center!important;
     }
-
     .tablas-modales {
         max-width: 90%!important;
         font-size: 7px;
     }
-
     .d-flex .b-r {
         border-right: none;
     }
-
-    h4.font-light, .totales h3.font-light{
+    h4.font-light,
+    .totales h3.font-light {
         font-size: 3em;
         padding: 30px 0;
     }
-
     .p-l-20 h3.text-black {
         font-size: 2em;
         text-align: center;
     }
-
-    i.mdi.lead, i.wi.lead {
+    i.mdi.lead,
+    i.wi.lead {
         justify-content: center;
         display: flex;
         font-size: 3em;
     }
-
     .p-2.display-5 i.mdi {
         font-size: 7rem;
     }
-
 }
+
 
 /**
  * DISPOSITIVOS MOVILES
  */
 
-@media(max-width: 767px){
-	.totales{
+@media(max-width: 767px) {
+    .totales {
         text-align: center!important;
     }
-
-    .totales .p-r-0 h1{
+    .totales .p-r-0 h1 {
         text-align: center!important;
     }
-
-    .p-b-20 font.display-3{
+    .p-b-20 font.display-3 {
         font-size: 3.5rem!important;
     }
-
     .tablas-modales {
         max-width: 95%!important;
     }
-
     .tablas-modales h3.display-5 {
         font-size: 2.3rem;
     }
-
     .d-flex .b-r {
         border-right: none;
     }
-
     .impoPedidosDia {
         padding-left: 40px!important;
     }
-
     .login-sidebar .login-box {
         width: 100%!important;
         right: unset!important;

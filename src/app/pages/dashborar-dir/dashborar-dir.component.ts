@@ -40,7 +40,7 @@ export class DashborarDirComponent implements OnInit, OnDestroy {
       this.intervalo = setInterval(() => {
         this._phpService.diferencias()
           .subscribe( ( resp: any ) => {
-            if ( resp != '' ) {
+            if ( resp !== '' ) {
               this.diferencia = true;
             } else {
               this.diferencia = false;
@@ -60,7 +60,7 @@ export class DashborarDirComponent implements OnInit, OnDestroy {
     // Diferencias
     this._phpService.diferencias()
       .subscribe( ( resp: any ) => {
-        if ( resp != '' ) {
+        if ( resp !== '' ) {
           this.diferencia = true;
           this.datos = resp;
         } else {

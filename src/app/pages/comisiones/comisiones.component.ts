@@ -77,7 +77,7 @@ export class ComisionesComponent implements OnInit {
 
         for (let j = 0; j < asesores.length; j++) {
 
-          if (comisiones[i].idFerrum == asesores[j].idFerrum) {
+          if (comisiones[i].idFerrum === asesores[j].idFerrum) {
 
             this.datos.push(
               {

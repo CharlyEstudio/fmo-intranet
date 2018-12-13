@@ -16,7 +16,7 @@ export class EstadoEmpresaComponent implements OnInit, OnDestroy {
 
   // Estado de la Empresa
   heart: number = 0;
-  
+
   /* ----- Ventas Mensuales ----- */
   // Ventas Actuales
   actual: Subscription;
@@ -49,7 +49,7 @@ export class EstadoEmpresaComponent implements OnInit, OnDestroy {
     // Venta Anterior
     this._phpService.ventaAnterior()
       .subscribe((data) => {
-        if ( data[0].anterior != 0 ) {
+        if ( data[0].anterior !== 0 ) {
           this.ant = data[0].anterior;
         } else {
           this.ant = 0;
@@ -61,7 +61,7 @@ export class EstadoEmpresaComponent implements OnInit, OnDestroy {
     // Venta Actual
     this._phpService.ventaActual()
       .subscribe((data) => {
-        if ( data[0].actual != 0 ) {
+        if ( data[0].actual !== 0 ) {
           this.act = data[0].actual;
         } else {
           this.act = 0;
@@ -129,7 +129,7 @@ export class EstadoEmpresaComponent implements OnInit, OnDestroy {
     // } else {
 
     //   this.heart = 3;
-      
+
     // }
 
   }
@@ -148,11 +148,11 @@ export class EstadoEmpresaComponent implements OnInit, OnDestroy {
     return new Observable((observer: Subscriber<any>) => {
 
       this.intActual = setInterval( () => {
-        
+
         this._phpService.ventaActual()
           .subscribe( ( data ) => {
 
-            if (data[0].actual != 0) {
+            if (data[0].actual !== 0) {
 
               const actual = {
                 actual: data[0].actual

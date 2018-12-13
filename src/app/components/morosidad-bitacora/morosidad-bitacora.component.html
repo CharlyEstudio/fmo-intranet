@@ -1,0 +1,75 @@
+<div class="card">
+
+    <div class="card-body">
+
+        <div class="alert alert-warning" *ngIf="esperar">
+
+            Obteniendo Cuentas
+
+        </div>
+
+        <div class="d-flex flex-row" *ngIf="respuestaGeneral">
+
+            <div class="p-l-20">
+
+                <h3 class="font-medium">
+
+                    Dirección de Cuentas
+
+                </h3>
+
+                <h6>{{ fecha | date }}</h6>
+
+            </div>
+
+        </div>
+
+        <div class="row" *ngIf="respuestaGeneral">
+
+            <div class="col-lg-4 col-md-12 text-center">
+
+                <i class="mdi mdi-alert-circle-outline lead text-warning"></i>
+
+                <h3 class="text-black">De <span class="font-bold">1 a 28</span> días. <br>
+
+                    <span class="text-black" style="font-weight: bold;">{{ mor1a28 | currency}}</span>
+
+                </h3>
+
+                <button class="btn btn-danger" (click)="enviarDatos('mor1a28')">Obtener</button>
+
+            </div>
+
+            <div class="col-lg-4 col-md-12 text-center">
+
+                <i class="mdi mdi-alert-outline lead text-danger"></i>
+
+                <h3 class="text-black">De <span class="font-bold">29 a 45</span> días. <br>
+
+                    <span class="text-warning" style="font-weight: bold;">{{ mor29a48 | currency}}</span>
+
+                </h3>
+
+                <button class="btn btn-danger" (click)="enviarDatos('mor29a45')">Obtener</button>
+
+            </div>
+
+            <div class="col-lg-4 col-md-12 text-center">
+
+                <i class="wi wi-moonrise lead text-danger"></i>
+
+                <h3 class="text-black">Más de <span class="font-bold">45</span> días. <br>
+
+                    <span class="text-danger" style="font-weight: bold;">{{ mor46 | currency}}</span>
+
+                </h3>
+
+                <button class="btn btn-danger" (click)="enviarDatos('mor46')">Obtener</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

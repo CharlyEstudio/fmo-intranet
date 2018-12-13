@@ -39,7 +39,7 @@ export class Vencido18Component implements OnInit, OnDestroy {
     // Morosidad
     this._phpService.mor18()
       .subscribe((data) => {
-        if ( data[0].importe != 0 ) {
+        if ( data[0].importe !== 0 ) {
           this.mor = data[0].importe;
         } else {
           this.mor = 0;
@@ -62,11 +62,11 @@ export class Vencido18Component implements OnInit, OnDestroy {
     return new Observable((observer: Subscriber<any>) => {
 
       this.intMor = setInterval( () => {
-        
+
         this._phpService.mor18()
           .subscribe( ( data ) => {
 
-            if (data[0].importe != 0) {
+            if (data[0].importe !== 0) {
 
               const morosidad = {
                 importe: data[0].importe

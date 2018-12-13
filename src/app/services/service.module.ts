@@ -20,7 +20,8 @@ import {
   ClientesService,
   WebsocketService,
   AlmacenService,
-  ExcelService
+  ExcelService,
+  CreditoService
 } from "./services.index";
 
 @NgModule({
@@ -47,7 +48,8 @@ import {
     ClientesService,
     WebsocketService,
     AlmacenService,
-    ExcelService
+    ExcelService,
+    CreditoService
   ],
   declarations: []
 })

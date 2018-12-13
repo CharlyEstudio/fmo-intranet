@@ -17,6 +17,7 @@ export { SupervisoresService } from "./php/supervisores.service";
 export { ComisionesService } from "./comisiones/comisiones.service";
 export { ClientesService } from "./clientes/clientes.service";
 export { AlmacenService } from './almacen/almacen.service';
+export { CreditoService } from "./credito/credito.service";
 
 // Servicio PHP
 export { PhpService } from "./php/php.service";

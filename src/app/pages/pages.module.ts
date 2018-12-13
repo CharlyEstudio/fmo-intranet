@@ -81,6 +81,11 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 
 // Pipes
 import { PipesModule } from '../pipes/pipes.module';
+import { MovimientosFolioComponent } from './movimientos-folio/movimientos-folio.component';
+import { BitacoraComponent } from './bitacora/bitacora/bitacora.component';
+import { MorosidadBitacoraComponent } from '../components/morosidad-bitacora/morosidad-bitacora.component';
+import { MostrarInfoBitacoraComponent } from './mostrar-info-bitacora/mostrar-info-bitacora.component';
+import { MostrarFacturasMorosidadComponent } from './mostrar-facturas-morosidad/mostrar-facturas-morosidad.component';
 
 @NgModule({
     declarations: [
@@ -135,6 +140,11 @@ import { PipesModule } from '../pipes/pipes.module';
         ZonaEspecialComponent,
         EdoCtaComponent,
         RepoSurtidoComponent,
+        MovimientosFolioComponent,
+        BitacoraComponent,
+        MorosidadBitacoraComponent,
+        MostrarInfoBitacoraComponent,
+        MostrarFacturasMorosidadComponent,
         // PagesComponent,
         // PromesasComponent, // Desactivado por no usarlo
         // ProgressComponent, // Desactivado por no usarlo

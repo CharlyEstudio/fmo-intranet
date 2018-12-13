@@ -60,10 +60,10 @@ export class EntSalComponent implements OnInit {
 
     this._diariosService.entradaSalida(this.inicio, this.final)
       .subscribe( ( resp: any ) => {
-        if (resp != '') {
+        if (resp !== '') {
           this.entSal = resp;
 
-          for(let i=0; i < this.entSal.length; i++){
+          for (let i = 0; i < this.entSal.length; i++) {
             this.entrada += Number(this.entSal[i].entrada);
             this.salida += Number(this.entSal[i].salida);
             this.general += Number(this.entSal[i].entrada) + Number(this.entSal[i].salida);

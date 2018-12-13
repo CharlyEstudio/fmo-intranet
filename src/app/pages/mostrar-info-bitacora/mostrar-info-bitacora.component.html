@@ -1,0 +1,63 @@
+<div class="row">
+
+    <div class="col text-right">
+
+        <button type="button" class="btn btn-success" (click)="regresar()">
+
+            <i class="mdi mdi-backburger"></i>
+
+            Regresar
+            
+        </button>
+
+    </div>
+
+</div>
+
+<div class="table-responsive">
+
+    <table class="table table-hover">
+
+        <thead>
+
+            <tr>
+
+                <th class="text-center">Número</th>
+
+                <th class="text-center">Nombre</th>
+
+                <th class="text-center">Saldo</th>
+
+                <th class="text-center">Ver</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="let mor of morosidad; let i = index">
+
+                <td class="text-center">{{ mor.numero }}</td>
+
+                <td class="text-left">{{ mor.nombre }}</td>
+
+                <td class="text-right" style="color: #f62d51;">{{ mor.saldo | currency }}</td>
+
+                <td class="text-center">
+
+                    <button type="button" href="#modalFolio" class="btn btn-danger" (click)="irInfo(mor)" *ngIf="mor.numero !== 80 && mor.numero !== 1739">
+
+                        <i class="mdi mdi-account-search"></i>
+
+                    </button>
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>

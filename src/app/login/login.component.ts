@@ -52,21 +52,38 @@ export class LoginComponent implements OnInit {
 
         // this.wsService.socketStatus;
 
-        if (this._usuarioService.usuario.rol === "ADMIN_ROLE"
-            || this._usuarioService.usuario.rol === "DIR_ROLE"
-            || this._usuarioService.usuario.rol === "GER_ROLE") {
-          this.router.navigate(['/dashboardDir']);
-        } else if (this._usuarioService.usuario.rol === "ASE_ROLE") {
-          this.router.navigate(['/dashboardAse']);
-        } else if (this._usuarioService.usuario.rol === "SUP_ROLE") {
-          this.router.navigate(['/dashBoardSup']);
-        }  else if (this._usuarioService.usuario.rol === "AUD_ROLE") {
-          this.router.navigate(['/dashBoardAuditoria']);
-        } else {
-          this.router.navigate(['/dashboard']);
+        if ( correcto ) {
+
+          if (this._usuarioService.usuario.rol === "ADMIN_ROLE"
+              || this._usuarioService.usuario.rol === "DIR_ROLE"
+              || this._usuarioService.usuario.rol === "GER_ROLE") {
+
+            this.router.navigate(['/dashboardDir']);
+
+          } else if (this._usuarioService.usuario.rol === "ASE_ROLE") {
+
+            this.router.navigate(['/dashboardAse']);
+
+          } else if (this._usuarioService.usuario.rol === "SUP_ROLE") {
+
+            this.router.navigate(['/dashBoardSup']);
+
+          }  else if (this._usuarioService.usuario.rol === "AUD_ROLE") {
+
+            this.router.navigate(['/dashBoardAuditoria']);
+
+          } else {
+
+            this.router.navigate(['/dashboard']);
+
+          }
+
+          this.wsService.login( 'web', forma.value.email, null, this._usuarioService.usuario.rol );
         }
 
+
       });
+
   }
 
 }

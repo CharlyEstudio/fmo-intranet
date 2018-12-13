@@ -42,7 +42,7 @@ export class ListaMorosidadComponent implements OnInit {
       .subscribe( ( resp: any ) => {
         this.datos = resp;
 
-        for( let i = 0; i < resp.length; i++){
+        for ( let i = 0; i < resp.length; i++) {
           this.total += resp[i].total;
         }
       });

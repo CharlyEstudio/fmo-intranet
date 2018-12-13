@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { DiariosService } from '../../../services/services.index';
+import { DiariosService, ExcelService } from '../../../services/services.index';
 
 @Component({
   selector: 'app-repo-lunes',
@@ -19,7 +19,8 @@ export class RepoLunesComponent implements OnInit {
   nombre: string;
 
   constructor(
-    private _diariosService: DiariosService
+    private _diariosService: DiariosService,
+    private _excel: ExcelService
   ) { }
 
   ngOnInit() {
@@ -34,10 +35,10 @@ export class RepoLunesComponent implements OnInit {
 
     this._diariosService.diasLunes()
       .subscribe( ( resp: any ) => {
-        if (resp != '') {
+        if (resp !== '') {
           this.diasLunes = resp;
 
-          for(let i=0; i < this.diasLunes.length; i++){
+          for (let i = 0; i < this.diasLunes.length; i++) {
             this.saldo += this.diasLunes[i].saldo;
           }
 
@@ -56,10 +57,14 @@ export class RepoLunesComponent implements OnInit {
   obtenerPedidos(e) {
     this._diariosService.pedidosDiaLunes(e.target.id)
       .subscribe( ( resp: any ) => {
-        console.log(resp);
         this.nombre = resp[0].asesor;
         this.actual = resp;
       });
+  }
+
+  descargar( data: any ) {
+    let filename = 'reporte_' + data[0].asesor;
+    this._excel.exportAsExcelFile(data, filename);
   }
 
 }

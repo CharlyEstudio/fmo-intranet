@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { UsuarioService, ClientesService } from '../../services/services.index';
 import { Usuario } from '../../models/usuario.model';
 import { NgForm } from '@angular/forms';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-edo-cta',
@@ -13,6 +12,7 @@ export class EdoCtaComponent implements OnInit {
 
   // Datos del Usuario
   asesor: number = 0;
+  rol: any;
   usuario: Usuario;
 
   // Datos del Cliente
@@ -38,6 +38,7 @@ export class EdoCtaComponent implements OnInit {
   ) {
     this.usuario = this._usuariosService.usuario;
     this.asesor = Number(this.usuario.idFerrum);
+    this.rol = this.usuario.rol;
 
     this.clienteMongo = [
       {
@@ -56,19 +57,21 @@ export class EdoCtaComponent implements OnInit {
     this.datos = [];
     this.abonos = 0;
 
-    if ( forma.value.numero === 0 ) {
+    if ( forma.value.numero === "" ) {
       swal('Debe ingresar el número de cliente', 'No ha ingresado el número de cliente para la busqueda.', 'error');
+      this.cargando = false;
       return;
     }
 
     if ( forma.value.inicio === undefined ) {
       swal('Debe ingresar la fecha inicial', 'No ha ingresado la fecha inicial para la busqueda.', 'error');
+      this.cargando = false;
       return;
     }
 
     this.numero = forma.value.numero;
 
-    this._clientesService.infoCliente(this.numero, this.asesor)
+    this._clientesService.infoCliente(this.numero, this.asesor, this.rol)
       .subscribe( ( data: any ) => {
 
         if (data.length > 0) {
@@ -77,6 +80,8 @@ export class EdoCtaComponent implements OnInit {
 
           this._clientesService.obtenerFacturas(data[0].CLIENTEID, forma.value.inicio)
             .subscribe( ( edocta: any ) => {
+
+              console.log(edocta);
 
               for (let i = 0; i < edocta.length; i++) {
 

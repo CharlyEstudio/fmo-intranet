@@ -146,7 +146,7 @@ export class DasboardAseComponent implements OnInit {
       .subscribe( ( resp: any ) => {
         this.clientesPedidosDia = resp.length;
       });
-    
+
     this._asesoresServices.ventaMesAnterior(this.idFerrum)
       .subscribe( ( resp: any ) => {
         this.ventaMnesualAnterior = resp[0].importe;

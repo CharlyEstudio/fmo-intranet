@@ -37,7 +37,7 @@ import { RecuperarComponent } from './login/recuperar.component';
     RegisterComponent,
     PagesComponent,
     StatusComponent,
-    RecuperarComponent
+    RecuperarComponent,
   ],
   imports: [
     BrowserModule,

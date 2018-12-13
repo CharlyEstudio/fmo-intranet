@@ -97,6 +97,8 @@ export class UsuarioService {
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
     localStorage.removeItem('menu');
+    localStorage.removeItem('id');
+    localStorage.removeItem('socketUsuario');
 
     this.router.navigate(['/login']);
   }
@@ -126,10 +128,11 @@ export class UsuarioService {
 
         return true;
       })
-      .catch( err => {
+      .catch( ( err ) => {
         swal('Error en el login', err.error.errors.message, 'error');
         // alert('Error en el login ' + err.error.errors.message);
-        return Observable.throw( err );
+        // return Observable.throw( err );
+        return Observable.throw( err.error.ok );
       });
   }
 

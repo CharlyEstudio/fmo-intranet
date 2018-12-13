@@ -1,743 +1,744 @@
 <div class="card">
 
-  <div class="card-body">
+    <div class="card-body">
 
-    <div class="d-flex flex-row">
+        <div class="d-flex flex-row">
 
-      <div class=""><img [src]="img | imagen" alt="user" class="img-circle" width="100"></div>
+            <div class=""><img [src]="img | imagen" alt="user" class="img-circle" width="100"></div>
 
-      <div class="p-l-20">
+            <div class="p-l-20">
 
-        <h3 class="font-medium">{{ nombre }}</h3>
+                <h3 class="font-medium">{{ nombre }}</h3>
 
-        <h6 class="text-muted">@Zona {{ zona }}</h6>
+                <h6 class="text-muted">@Zona {{ zona }}</h6>
 
-        <button class="btn btn-success" (click)="obtener()"><i class="mdi mdi-arrow-down-box"></i> Obtener</button>
+                <button class="btn btn-success" (click)="obtener()"><i class="mdi mdi-arrow-down-box"></i> Obtener</button>
 
-      </div>
-
-    </div>
-
-    <p class="text-muted text-justify">Al obtener los datos se realizará el cálculo general de la Comisión del mes actual, recuerda que solo es un estimado y puede cambiar en cualquier momento. Todos los importes reflejados serían hasta la fecha de hoy {{ fecha | date }}. Lo recomendable es realizar esta operación con datos WiFi.</p>
-
-    <div class="row animated fadeIn" *ngIf="esperar">
-
-
-        <div class="col-sm-12">
-
-    
-            <div class="alert alert-warning text-center">
-
-    
-                <strong>Cargando</strong>
-
-    
-                <br>
-
-    
-                <i class="fa fa-refresh fa-spin fa-2x"></i>
-
-    
-                <br>
-
-    
-                <span>Espere por favor</span>
-
-    
             </div>
 
-    
         </div>
 
-    
+        <p class="text-muted text-justify">Al obtener los datos se realizará el cálculo general de la Comisión del mes actual, recuerda que solo es un estimado y puede cambiar en cualquier momento. Todos los importes reflejados serían hasta la fecha de hoy {{ fecha | date }}. Lo recomendable
+            es realizar esta operación con datos WiFi.</p>
+
+        <div class="row animated fadeIn" *ngIf="esperar">
+
+
+            <div class="col-sm-12">
+
+
+                <div class="alert alert-warning text-center">
+
+
+                    <strong>Cargando</strong>
+
+
+                    <br>
+
+
+                    <i class="fa fa-refresh fa-spin fa-2x"></i>
+
+
+                    <br>
+
+
+                    <span>Espere por favor</span>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+        <div class="row m-t-40" *ngIf="aparece">
+
+            <div class="col-lg-4 col-md-12 text-center">
+
+                <h2 class="font-light">{{ ventaMensual | currency }}</h2>
+
+                <h6>Venta Bruta</h6>
+
+            </div>
+
+            <div class="col-lg-4 col-md-12 text-center">
+
+                <h2 class="font-light text-danger">{{ devoluciones | currency }}</h2>
+
+                <h6>Devoluciones</h6>
+
+            </div>
+
+            <div class="col-lg-4 col-md-12 text-center">
+
+                <h2 class="font-light">{{ (ventaMensual - devoluciones) | currency }}</h2>
+
+                <h6>Venta Neta</h6>
+
+            </div>
+
+        </div>
+
+        <div class="row m-t-40" *ngIf="aparece">
+
+            <div class="col-lg-4 col-md-12 text-center">
+
+                <h2 class="font-light">{{ notasCredito | currency }}</h2>
+
+                <h6>Notas de Crédito</h6>
+
+            </div>
+
+            <div class="col-lg-4 col-md-12 text-center">
+
+                <h2 class="font-light">{{ bonificaciones | currency }}</h2>
+
+                <h6>Bonificaciones</h6>
+
+            </div>
+
+            <div class="col-lg-4 col-md-12 text-center">
+
+                <h2 class="font-light">{{ (ventaMensual - devoluciones - notasCredito - bonificaciones) | currency }}</h2>
+
+                <h6>Venta Final</h6>
+
+            </div>
+
+        </div>
+
+        <div class="row m-t-40" *ngIf="aparece">
+
+            <div class="col-lg-6 col-md-12 text-center">
+
+                <h2 class="font-light">{{ porVentafInal | percent: '0.2' }}</h2>
+
+                <h6>Porcentaje</h6>
+
+            </div>
+
+            <div class="col-lg-6 col-md-12 text-center">
+
+                <h2 class="font-light">{{ comisionVenta | currency }}</h2>
+
+                <h6>Comisión</h6>
+
+            </div>
+
+        </div>
+
+        <div *ngIf="aparece">
+
+            <hr>
+
+        </div>
+
+        <div class="row m-t-40" *ngIf="aparece">
+
+            <div class="col-12 text-center">
+
+                <h1 class="card-title">Truper Cobrado</h1>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6 text-center">
+
+                <h2 class="font-light">{{ de0a2Truper | currency }} => {{ (de0a2Truper * por0a2Truper) | currency }}</h2>
+
+                <h6>0 - 2 => {{ por0a2Truper | percent: '0.1' }}</h6>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6 text-center">
+
+                <h2 class="font-light">{{ de3a7Truper | currency }} => {{ (de3a7Truper * por3a7Truper) | currency }}</h2>
+
+                <h6>3 - 7 => {{ por3a7Truper | percent: '0.1' }}</h6>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6 text-center">
+
+                <h2 class="font-light">{{ de8a14Truper | currency }} => {{ (de8a14Truper * por8a14Truper) | currency }}</h2>
+
+                <h6>8 - 14 => {{ por8a14Truper | percent: '0.1' }}</h6>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6 text-center">
+
+                <h2 class="font-light">{{ de15a21Truper | currency }} => {{ (de15a21Truper * por15a21Truper) | currency }}</h2>
+
+                <h6>15 - 21 => {{ por15a21Truper | percent: '0.1' }}</h6>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6 text-center">
+
+                <h2 class="font-light">{{ de22a31Truper | currency }} => {{ (de22a31Truper * por22a31Truper) | currency }}</h2>
+
+                <h6>22 - 31 => {{ por22a31Truper | percent: '0.1' }}</h6>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6 text-center">
+
+                <h2 class="font-light">{{ de32Truper | currency }} => {{ (de32Truper * por32Truper) | currency }}</h2>
+
+                <h6>32 o más => {{ por32Truper | percent: '0.1' }}</h6>
+
+            </div>
+
+            <div class="col-lg-6 col-md-6 text-center p-t-20">
+
+                <h2 class="font-light">{{ totalRangoTruper | currency }}</h2>
+
+                <h6>Total Importe</h6>
+
+            </div>
+
+            <div class="col-lg-6 col-md-6 text-center p-t-20">
+
+                <h2 class="font-light">{{ comisionTruperCobrado | currency }}</h2>
+
+                <h6>Comisión</h6>
+
+            </div>
+
+        </div>
+
+        <div *ngIf="aparece">
+
+            <hr>
+
+        </div>
+
+        <div class="row m-t-40" *ngIf="aparece">
+
+            <div class="col-12 text-center">
+
+                <h1 class="card-title">Fmo Cobrado</h1>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6 text-center">
+
+                <h2 class="font-light">{{ de0a2Fmo | currency }} => {{ (de0a2Fmo * por0a2Fmo) | currency }}</h2>
+
+                <h6>0 - 2 => {{ por0a2Fmo | percent: '0.1' }}</h6>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6 text-center">
+
+                <h2 class="font-light">{{ de3a7Fmo | currency }} => {{ (de3a7Fmo * por3a7Fmo) | currency }}</h2>
+
+                <h6>3 - 7 => {{ por3a7Fmo | percent: '0.1' }}</h6>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6 text-center">
+
+                <h2 class="font-light">{{ de8a14Fmo | currency }} => {{ (de8a14Fmo * por8a14Fmo) | currency }}</h2>
+
+                <h6>8 - 14 => {{ por8a14Fmo | percent: '0.1' }}</h6>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6 text-center">
+
+                <h2 class="font-light">{{ de15a21Fmo | currency }} => {{ (de15a21Fmo * por15a21Fmo) | currency }}</h2>
+
+                <h6>15 - 21 => {{ por15a21Fmo | percent: '0.1' }}</h6>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6 text-center">
+
+                <h2 class="font-light">{{ de22a31Fmo | currency }} => {{ (de22a31Fmo * por22a31Fmo) | currency }}</h2>
+
+                <h6>22 - 31 => {{ por22a31Fmo | percent: '0.1' }}</h6>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6 text-center">
+
+                <h2 class="font-light">{{ de32Fmo | currency }} => {{ (de32Fmo * por32Fmo) | currency }}</h2>
+
+                <h6>32 o más => {{ por32Fmo | percent: '0.1' }}</h6>
+
+            </div>
+
+            <div class="col-lg-6 col-md-6 text-center p-t-20">
+
+                <h2 class="font-light">{{ totalRangoFmo | currency }}</h2>
+
+                <h6>Total Importe</h6>
+
+            </div>
+
+            <div class="col-lg-6 col-md-6 text-center p-t-20">
+
+                <h2 class="font-light">{{ comisionFmoCobrado | currency }}</h2>
+
+                <h6>Comisión</h6>
+
+            </div>
+
+        </div>
+
+        <div *ngIf="aparece">
+
+            <hr>
+
+        </div>
+
+        <div class="row m-t-40" *ngIf="aparece">
+
+            <div class="col text-center">
+
+                <h1 class="card-title">Cartera</h1>
+
+            </div>
+
+            <div class="col text-center">
+
+                <h2 class="font-light">{{ carteraTotal | currency }}</h2>
+
+                <h6>Total</h6>
+
+            </div>
+
+            <div class="col text-center">
+
+                <h2 class="font-light">{{ porVencer | currency }}</h2>
+
+                <h6>Por Vencer</h6>
+
+            </div>
+
+            <div class="col text-center">
+
+                <h2 class="font-light">{{ vencida | currency }}</h2>
+
+                <h6>Vencida</h6>
+
+            </div>
+
+        </div>
+
+        <div class="row m-t-40" *ngIf="aparece">
+
+            <div class="col text-center">
+
+                <h2 class="font-light">{{ ((de1a8 * por1a8) * 100) | currency }}</h2>
+
+                <h6>De 1 - 8 días</h6>
+
+                <h6>Saldo: {{ de1a8 | currency }}</h6>
+
+                <h6>{{ por1a8 | percent: '0.3' }}</h6>
+
+            </div>
+
+            <div class="col text-center">
+
+                <h2 class="font-light">{{ ((de9a16 * por9a16) * 100) | currency }}</h2>
+
+                <h6>De 9 - 16 días</h6>
+
+                <h6>Saldo: {{ de9a16 | currency }}</h6>
+
+                <h6>{{ por9a16 | percent: '0.3' }}</h6>
+
+            </div>
+
+            <div class="col text-center">
+
+                <h2 class="font-light">{{ ((de17 * por17) * 100) | currency }}</h2>
+
+                <h6>De 17 días o Más</h6>
+
+                <h6>Saldo: {{ de17 | currency }}</h6>
+
+                <h6>{{ por17 | percent: '0.3' }}</h6>
+
+            </div>
+
+        </div>
+
+        <div class="row m-t-40" *ngIf="aparece">
+
+            <div class="col text-center">
+
+                <h2 class="font-light text-danger">{{ penalizacionCartera | currency }}</h2>
+
+                <h6>Total Cartera</h6>
+
+            </div>
+
+        </div>
+
+        <div *ngIf="aparece">
+
+            <hr>
+
+        </div>
+
+        <div class="row m-t-40" *ngIf="aparece">
+
+            <div class="col text-center">
+
+                <h1 class="card-title">Cobertura</h1>
+
+            </div>
+
+            <div class="col text-center">
+
+                <h2 class="font-light">{{ totaClientes | number }}</h2>
+
+                <h6>Total de Clientes</h6>
+
+            </div>
+
+            <div class="col text-center">
+
+                <h2 class="font-light">{{ coberturaCantidad | number }}</h2>
+
+                <h6>Cobertura</h6>
+
+            </div>
+
+        </div>
+
+        <div class="row m-t-40" *ngIf="aparece">
+
+            <div class="col text-center">
+
+                <h2 class="font-light">{{ (cant1 * neg1) | currency }}</h2>
+
+                <h6>1 Venta</h6>
+
+                <h6>{{ cant1 | number }}</h6>
+
+                <h6>{{ neg1 | currency }}</h6>
+
+            </div>
+
+            <div class="col text-center">
+
+                <h2 class="font-light">{{ (cant2 * pos2) | currency }}</h2>
+
+                <h6>2 o Más Ventas</h6>
+
+                <h6>{{ cant2 | number }}</h6>
+
+                <h6>{{ pos2 | currency }}</h6>
+
+            </div>
+
+            <div class="col text-center">
+
+                <h2 class="font-light">{{ ((totaClientes - coberturaCantidad) * negSinVenta) | currency }}</h2>
+
+                <h6>Sin Venta</h6>
+
+                <h6>{{ (totaClientes - coberturaCantidad) | number }}</h6>
+
+                <h6>{{ negSinVenta | currency }}</h6>
+
+            </div>
+
+        </div>
+
+        <div class="row m-t-40" *ngIf="aparece">
+
+            <div class="col text-center">
+
+                <h2 class="font-light">{{ comisionCobertura | currency }}</h2>
+
+                <h6>Comisión Cobertura</h6>
+
+            </div>
+
+        </div>
+
+        <div *ngIf="aparece">
+
+            <hr>
+
+        </div>
+
+        <div class="row m-t-40" *ngIf="aparece">
+
+            <div class="col text-center">
+
+                <h1 class="card-title">Renglonaje</h1>
+
+            </div>
+
+            <div class="col text-center">
+
+                <h2 class="font-light">{{ renglonaje | number }}</h2>
+
+                <h6>Total de Renglonaje</h6>
+
+            </div>
+
+            <div class="col text-center">
+
+                <h2 class="font-light">{{ ((ren1000 * tasa1000) * 100) | currency }}</h2>
+
+                <h6>0 - 1000</h6>
+
+                <h6>Tasa: {{ tasa1000 | percent: '0.1' }}</h6>
+
+            </div>
+
+        </div>
+
+        <div class="row m-t-40" *ngIf="aparece">
+
+            <div class="col text-center">
+
+                <h2 class="font-light">{{ ((ren2000 * tasa2000) * 100) | currency }}</h2>
+
+                <h6>1001 - 2000</h6>
+
+                <h6>Tasa: {{ tasa2000 | percent: '0.1' }}</h6>
+
+            </div>
+
+            <div class="col text-center">
+
+                <h2 class="font-light">{{ ((ren4000 * tasa4000) * 100) | currency }}</h2>
+
+                <h6>2001 - 4000</h6>
+
+                <h6>Tasa: {{ tasa4000 | percent: '0.1' }}</h6>
+
+            </div>
+
+            <div class="col text-center">
+
+                <h2 class="font-light">{{ ((ren6000 * tasa6000) * 100) | currency }}</h2>
+
+                <h6>4001 - 6000</h6>
+
+                <h6>Tasa: {{ tasa6000 | percent: '0.1' }}</h6>
+
+            </div>
+
+            <div class="col text-center">
+
+                <h2 class="font-light">{{ ((ren6001 * tasa6001) * 100) | currency }}</h2>
+
+                <h6>6001 o más</h6>
+
+                <h6>Tasa: {{ tasa6001 | percent: '0.1' }}</h6>
+
+            </div>
+
+        </div>
+
+        <div class="row m-t-40" *ngIf="aparece">
+
+            <div class="col text-center">
+
+                <h2 class="font-light">{{ comisionRenglonaje | currency }}</h2>
+
+                <h6>Comisión Renglonaje</h6>
+
+            </div>
+
+        </div>
+
+        <div *ngIf="aparece">
+
+            <hr>
+
+        </div>
+
+        <div class="row m-t-40" *ngIf="aparece">
+
+            <div class="col text-center">
+
+                <h1 class="card-title">Resumen</h1>
+
+            </div>
+
+            <div class="col text-center">
+
+                <h2 class="font-light">
+
+                    {{ comisionGeneral | currency }}
+
+                </h2>
+
+                <h6>Comsión General</h6>
+
+            </div>
+
+            <div class="col text-center">
+
+                <h2 class="font-light text-danger">
+
+                    {{ carteraGeneral | currency }}
+
+                </h2>
+
+                <h6>Cartera General</h6>
+
+            </div>
+
+            <div class="col text-center">
+
+                <h2 class="font-light text-danger">
+
+                    {{ devolucionesGeneral | currency }}
+
+                </h2>
+
+                <h6>{{ (devoluciones + notasCredito) | currency }}</h6>
+
+                <h6>Devoluciones</h6>
+
+            </div>
+
+            <div class="col text-center">
+
+                <h2 class="font-light text-danger">
+
+                    {{ penalizacionPedidos | currency }}
+
+                </h2>
+
+                <h6>Penalización por Pedidos</h6>
+
+            </div>
+
+            <div class="col text-center">
+
+                <h2 class="font-light text-danger">
+
+                    {{ gasolina | currency }}
+
+                </h2>
+
+                <h6>Gasolina</h6>
+
+                <h6>Sin dato de registro</h6>
+
+            </div>
+
+        </div>
+
     </div>
 
     <div class="row m-t-40" *ngIf="aparece">
 
-      <div class="col-lg-4 col-md-12 text-center">
+        <div class="col text-center">
 
-        <h2 class="font-light">{{ ventaMensual | currency }}</h2>
+            <h2 class="font-light">
 
-        <h6>Venta Bruta</h6>
+                {{ totalComisionPagar | currency }}
 
-      </div>
+            </h2>
 
-      <div class="col-lg-4 col-md-12 text-center">
+            <h6 class="card-title">Total Comisión Pagar</h6>
 
-        <h2 class="font-light text-danger">{{ devoluciones | currency }}</h2>
+        </div>
 
-        <h6>Devoluciones</h6>
+        <div class="col text-center" *ngIf="totalComisionPagar > 8000">
 
-      </div>
+            <h2 class="font-light">
 
-      <div class="col-lg-4 col-md-12 text-center">
+                {{ (totalComisionPagar - 7000 - gasolina ) | currency }}
 
-        <h2 class="font-light">{{ (ventaMensual - devoluciones) | currency }}</h2>
+            </h2>
 
-        <h6>Venta Neta</h6>
+            <h6>Día 7</h6>
 
-      </div>
+        </div>
 
-    </div>
+        <div class="col text-center" *ngIf="totalComisionPagar > 8000">
 
-    <div class="row m-t-40" *ngIf="aparece">
+            <h2 class="font-light">
 
-      <div class="col-lg-4 col-md-12 text-center">
+                {{ '3500' | currency }}
 
-        <h2 class="font-light">{{ notasCredito | currency }}</h2>
+            </h2>
 
-        <h6>Notas de Crédito</h6>
+            <h6>Día 15</h6>
 
-      </div>
+        </div>
 
-      <div class="col-lg-4 col-md-12 text-center">
+        <div class="col text-center" *ngIf="totalComisionPagar > 8000">
 
-        <h2 class="font-light">{{ bonificaciones | currency }}</h2>
+            <h2 class="font-light">
 
-        <h6>Bonificaciones</h6>
+                {{ '3500' | currency }}
 
-      </div>
+            </h2>
 
-      <div class="col-lg-4 col-md-12 text-center">
+            <h6>Día 30</h6>
 
-        <h2 class="font-light">{{ (ventaMensual - devoluciones - notasCredito - bonificaciones) | currency }}</h2>
+        </div>
 
-        <h6>Venta Final</h6>
+        <div class="col text-center" *ngIf="totalComisionPagar < 8000">
 
-      </div>
+            <h2 class="font-light" *ngIf="totalComisionPagar >= 7000">
 
-    </div>
+                {{ (totalComisionPagar - (gasolina / 2 ) - 3500) | currency }}
 
-    <div class="row m-t-40" *ngIf="aparece">
+            </h2>
 
-      <div class="col-lg-6 col-md-12 text-center">
+            <h2 class="font-light" *ngIf="totalComisionPagar < 7000">
 
-        <h2 class="font-light">{{ porVentafInal | percent: '0.2' }}</h2>
+                {{ (totalComisionPagar / 2) | currency }}
 
-        <h6>Porcentaje</h6>
+            </h2>
 
-      </div>
+            <h6>Día 15</h6>
 
-      <div class="col-lg-6 col-md-12 text-center">
+        </div>
 
-        <h2 class="font-light">{{ comisionVenta | currency }}</h2>
+        <div class="col text-center" *ngIf="totalComisionPagar < 8000">
 
-        <h6>Comisión</h6>
+            <h2 class="font-light" *ngIf="totalComisionPagar >= 7000">
 
-      </div>
+                {{ (totalComisionPagar - (gasolina / 2 ) - 3500) | currency }}
+
+            </h2>
+
+            <h2 class="font-light" *ngIf="totalComisionPagar < 7000">
+
+                {{ (totalComisionPagar / 2 ) | currency }}
+
+            </h2>
+
+            <h6>Día 30</h6>
+
+        </div>
 
     </div>
 
     <div *ngIf="aparece">
 
-      <hr>
+        <hr>
 
     </div>
 
-    <div class="row m-t-40" *ngIf="aparece">
+    <div class="card-body" *ngIf="aparece">
 
-      <div class="col-12 text-center">
+        <p class="text-center aboutscroll">
 
-        <h1 class="card-title">Truper Cobrado</h1>
+            La información arrojada es de caracter informativo y puede cambiar en cualquier momento.
 
-      </div>
-
-      <div class="col-lg-4 col-md-6 text-center">
-
-        <h2 class="font-light">{{ de0a2Truper | currency }} => {{ (de0a2Truper * por0a2Truper) | currency }}</h2>
-
-        <h6>0 - 2 => {{ por0a2Truper | percent: '0.1' }}</h6>
-
-      </div>
-
-      <div class="col-lg-4 col-md-6 text-center">
-
-        <h2 class="font-light">{{ de3a7Truper | currency }} => {{ (de3a7Truper * por3a7Truper) | currency }}</h2>
-
-        <h6>3 - 7 => {{ por3a7Truper | percent: '0.1' }}</h6>
-
-      </div>
-
-      <div class="col-lg-4 col-md-6 text-center">
-
-        <h2 class="font-light">{{ de8a14Truper | currency }} => {{ (de8a14Truper * por8a14Truper) | currency }}</h2>
-
-        <h6>8 - 14 => {{ por8a14Truper | percent: '0.1' }}</h6>
-
-      </div>
-
-      <div class="col-lg-4 col-md-6 text-center">
-
-        <h2 class="font-light">{{ de15a21Truper | currency }} => {{ (de15a21Truper * por15a21Truper) | currency }}</h2>
-
-        <h6>15 - 21 => {{ por15a21Truper | percent: '0.1' }}</h6>
-
-      </div>
-
-      <div class="col-lg-4 col-md-6 text-center">
-
-        <h2 class="font-light">{{ de22a31Truper | currency }} => {{ (de22a31Truper * por22a31Truper) | currency }}</h2>
-
-        <h6>22 - 31 => {{ por22a31Truper | percent: '0.1' }}</h6>
-
-      </div>
-
-      <div class="col-lg-4 col-md-6 text-center">
-
-        <h2 class="font-light">{{ de32Truper | currency }} => {{ (de32Truper * por32Truper) | currency }}</h2>
-
-        <h6>32 o más => {{ por32Truper | percent: '0.1' }}</h6>
-
-      </div>
-
-      <div class="col-lg-6 col-md-6 text-center p-t-20">
-
-        <h2 class="font-light">{{ totalRangoTruper | currency }}</h2>
-
-        <h6>Total Importe</h6>
-
-      </div>
-
-      <div class="col-lg-6 col-md-6 text-center p-t-20">
-
-        <h2 class="font-light">{{ comisionTruperCobrado | currency }}</h2>
-
-        <h6>Comisión</h6>
-
-      </div>
+        </p>
 
     </div>
-
-    <div *ngIf="aparece">
-
-      <hr>
-
-    </div>
-
-    <div class="row m-t-40" *ngIf="aparece">
-
-      <div class="col-12 text-center">
-
-        <h1 class="card-title">Fmo Cobrado</h1>
-
-      </div>
-
-      <div class="col-lg-4 col-md-6 text-center">
-
-        <h2 class="font-light">{{ de0a2Fmo | currency }} => {{ (de0a2Fmo * por0a2Fmo) | currency }}</h2>
-
-        <h6>0 - 2 => {{ por0a2Fmo | percent: '0.1' }}</h6>
-
-      </div>
-
-      <div class="col-lg-4 col-md-6 text-center">
-
-        <h2 class="font-light">{{ de3a7Fmo | currency }} => {{ (de3a7Fmo * por3a7Fmo) | currency }}</h2>
-
-        <h6>3 - 7 => {{ por3a7Fmo | percent: '0.1' }}</h6>
-
-      </div>
-
-      <div class="col-lg-4 col-md-6 text-center">
-
-        <h2 class="font-light">{{ de8a14Fmo | currency }} => {{ (de8a14Fmo * por8a14Fmo) | currency }}</h2>
-
-        <h6>8 - 14 => {{ por8a14Fmo | percent: '0.1' }}</h6>
-
-      </div>
-
-      <div class="col-lg-4 col-md-6 text-center">
-
-        <h2 class="font-light">{{ de15a21Fmo | currency }} => {{ (de15a21Fmo * por15a21Fmo) | currency }}</h2>
-
-        <h6>15 - 21 => {{ por15a21Fmo | percent: '0.1' }}</h6>
-
-      </div>
-
-      <div class="col-lg-4 col-md-6 text-center">
-
-        <h2 class="font-light">{{ de22a31Fmo | currency }} => {{ (de22a31Fmo * por22a31Fmo) | currency }}</h2>
-
-        <h6>22 - 31 => {{ por22a31Fmo | percent: '0.1' }}</h6>
-
-      </div>
-
-      <div class="col-lg-4 col-md-6 text-center">
-
-        <h2 class="font-light">{{ de32Fmo | currency }} => {{ (de32Fmo * por32Fmo) | currency }}</h2>
-
-        <h6>32 o más => {{ por32Fmo | percent: '0.1' }}</h6>
-
-      </div>
-
-      <div class="col-lg-6 col-md-6 text-center p-t-20">
-
-        <h2 class="font-light">{{ totalRangoFmo | currency }}</h2>
-
-        <h6>Total Importe</h6>
-
-      </div>
-
-      <div class="col-lg-6 col-md-6 text-center p-t-20">
-
-        <h2 class="font-light">{{ comisionFmoCobrado | currency }}</h2>
-
-        <h6>Comisión</h6>
-
-      </div>
-
-    </div>
-
-    <div *ngIf="aparece">
-
-      <hr>
-
-    </div>
-
-    <div class="row m-t-40" *ngIf="aparece">
-
-      <div class="col text-center">
-
-        <h1 class="card-title">Cartera</h1>
-
-      </div>
-
-      <div class="col text-center">
-
-        <h2 class="font-light">{{ carteraTotal | currency }}</h2>
-
-        <h6>Total</h6>
-
-      </div>
-
-      <div class="col text-center">
-
-        <h2 class="font-light">{{ porVencer | currency }}</h2>
-
-        <h6>Por Vencer</h6>
-
-      </div>
-
-      <div class="col text-center">
-
-        <h2 class="font-light">{{ vencida | currency }}</h2>
-
-        <h6>Vencida</h6>
-
-      </div>
-
-    </div>
-
-    <div class="row m-t-40" *ngIf="aparece">
-
-      <div class="col text-center">
-
-        <h2 class="font-light">{{ ((de1a8 * por1a8) * 100) | currency }}</h2>
-
-        <h6>De 1 - 8 días</h6>
-
-        <h6>Saldo: {{ de1a8 | currency }}</h6>
-
-        <h6>{{ por1a8 | percent: '0.3' }}</h6>
-
-      </div>
-
-      <div class="col text-center">
-
-        <h2 class="font-light">{{ ((de9a16 * por9a16) * 100) | currency }}</h2>
-
-        <h6>De 9 - 16 días</h6>
-
-        <h6>Saldo: {{ de9a16 | currency }}</h6>
-
-        <h6>{{ por9a16 | percent: '0.3' }}</h6>
-
-      </div>
-
-      <div class="col text-center">
-
-        <h2 class="font-light">{{ ((de17 * por17) * 100) | currency }}</h2>
-
-        <h6>De 17 días o Más</h6>
-
-        <h6>Saldo: {{ de17 | currency }}</h6>
-
-        <h6>{{ por17 | percent: '0.3' }}</h6>
-
-      </div>
-
-    </div>
-
-    <div class="row m-t-40" *ngIf="aparece">
-
-      <div class="col text-center">
-
-        <h2 class="font-light text-danger">{{ penalizacionCartera | currency }}</h2>
-
-        <h6>Total Cartera</h6>
-
-      </div>
-
-    </div>
-
-    <div *ngIf="aparece">
-
-      <hr>
-
-    </div>
-
-    <div class="row m-t-40" *ngIf="aparece">
-
-      <div class="col text-center">
-
-        <h1 class="card-title">Cobertura</h1>
-
-      </div>
-
-      <div class="col text-center">
-
-        <h2 class="font-light">{{ totaClientes | number }}</h2>
-
-        <h6>Total de Clientes</h6>
-
-      </div>
-
-      <div class="col text-center">
-
-        <h2 class="font-light">{{ coberturaCantidad | number }}</h2>
-
-        <h6>Cobertura</h6>
-
-      </div>
-
-    </div>
-
-    <div class="row m-t-40" *ngIf="aparece">
-
-      <div class="col text-center">
-
-        <h2 class="font-light">{{ (cant1 * neg1) | currency }}</h2>
-
-        <h6>1 Venta</h6>
-
-        <h6>{{ cant1 | number }}</h6>
-
-        <h6>{{ neg1 | currency }}</h6>
-
-      </div>
-
-      <div class="col text-center">
-
-        <h2 class="font-light">{{ (cant2 * pos2) | currency }}</h2>
-
-        <h6>2 o Más Ventas</h6>
-
-        <h6>{{ cant2 | number }}</h6>
-
-        <h6>{{ pos2 | currency }}</h6>
-
-      </div>
-
-      <div class="col text-center">
-
-        <h2 class="font-light">{{ ((totaClientes - coberturaCantidad) * negSinVenta) | currency }}</h2>
-
-        <h6>Sin Venta</h6>
-
-        <h6>{{ (totaClientes - coberturaCantidad) | number }}</h6>
-
-        <h6>{{ negSinVenta | currency }}</h6>
-
-      </div>
-
-    </div>
-
-    <div class="row m-t-40" *ngIf="aparece">
-
-      <div class="col text-center">
-
-        <h2 class="font-light">{{ comisionCobertura | currency }}</h2>
-
-        <h6>Comisión Cobertura</h6>
-
-      </div>
-
-    </div>
-
-    <div *ngIf="aparece">
-
-      <hr>
-
-    </div>
-
-    <div class="row m-t-40" *ngIf="aparece">
-
-      <div class="col text-center">
-
-        <h1 class="card-title">Renglonaje</h1>
-
-      </div>
-
-      <div class="col text-center">
-
-        <h2 class="font-light">{{ renglonaje | number }}</h2>
-
-        <h6>Total de Renglonaje</h6>
-
-      </div>
-
-      <div class="col text-center">
-
-        <h2 class="font-light">{{ ((ren1000 * tasa1000) * 100) | currency }}</h2>
-
-        <h6>0 - 1000</h6>
-
-        <h6>Tasa: {{ tasa1000 | percent: '0.1' }}</h6>
-
-      </div>
-
-    </div>
-
-    <div class="row m-t-40" *ngIf="aparece">
-
-      <div class="col text-center">
-
-        <h2 class="font-light">{{ ((ren2000 * tasa2000) * 100) | currency }}</h2>
-
-        <h6>1001 - 2000</h6>
-
-        <h6>Tasa: {{ tasa2000 | percent: '0.1' }}</h6>
-
-      </div>
-
-      <div class="col text-center">
-
-        <h2 class="font-light">{{ ((ren4000 * tasa4000) * 100) | currency }}</h2>
-
-        <h6>2001 - 4000</h6>
-
-        <h6>Tasa: {{ tasa4000 | percent: '0.1' }}</h6>
-
-      </div>
-
-      <div class="col text-center">
-
-        <h2 class="font-light">{{ ((ren6000 * tasa6000) * 100) | currency }}</h2>
-
-        <h6>4001 - 6000</h6>
-
-        <h6>Tasa: {{ tasa6000 | percent: '0.1' }}</h6>
-
-      </div>
-
-      <div class="col text-center">
-
-        <h2 class="font-light">{{ ((ren6001 * tasa6001) * 100) | currency }}</h2>
-
-        <h6>6001 o más</h6>
-
-        <h6>Tasa: {{ tasa6001 | percent: '0.1' }}</h6>
-
-      </div>
-
-    </div>
-
-    <div class="row m-t-40" *ngIf="aparece">
-
-      <div class="col text-center">
-
-        <h2 class="font-light">{{ comisionRenglonaje | currency }}</h2>
-
-        <h6>Comisión Renglonaje</h6>
-
-      </div>
-
-    </div>
-
-    <div *ngIf="aparece">
-
-      <hr>
-
-    </div>
-
-    <div class="row m-t-40" *ngIf="aparece">
-
-      <div class="col text-center">
-
-        <h1 class="card-title">Resumen</h1>
-
-      </div>
-
-      <div class="col text-center">
-
-        <h2 class="font-light">
-
-          {{ comisionGeneral | currency }}
-
-        </h2>
-
-        <h6>Comsión General</h6>
-
-      </div>
-
-      <div class="col text-center">
-
-        <h2 class="font-light text-danger">
-
-          {{ carteraGeneral | currency }}
-
-        </h2>
-
-        <h6>Cartera General</h6>
-
-      </div>
-
-      <div class="col text-center">
-
-        <h2 class="font-light text-danger">
-
-          {{ devolucionesGeneral | currency }}
-
-        </h2>
-
-        <h6>{{ (devoluciones + notasCredito) | currency }}</h6>
-
-        <h6>Devoluciones</h6>
-
-      </div>
-
-      <div class="col text-center">
-
-        <h2 class="font-light text-danger">
-
-          {{ penalizacionPedidos | currency }}
-
-        </h2>
-
-        <h6>Penalización por Pedidos</h6>
-
-      </div>
-
-      <div class="col text-center">
-
-        <h2 class="font-light text-danger">
-
-          {{ gasolina | currency }}
-
-        </h2>
-
-        <h6>Gasolina</h6>
-
-        <h6>Sin dato de registro</h6>
-
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="row m-t-40" *ngIf="aparece">
-
-    <div class="col text-center">
-
-      <h2 class="font-light">
-
-        {{ totalComisionPagar | currency }}
-
-      </h2>
-
-      <h6 class="card-title">Total Comisión Pagar</h6>
-
-    </div>
-
-    <div class="col text-center" *ngIf="totalComisionPagar > 8000">
-
-      <h2 class="font-light">
-
-          {{ (totalComisionPagar - 7000 - gasolina ) | currency }}
-
-      </h2>
-
-      <h6>Día 7</h6>
-
-    </div>
-
-    <div class="col text-center" *ngIf="totalComisionPagar > 8000">
-
-      <h2 class="font-light">
-
-          {{ '3500' | currency }}
-
-      </h2>
-
-      <h6>Día 15</h6>
-
-    </div>
-
-    <div class="col text-center" *ngIf="totalComisionPagar > 8000">
-
-      <h2 class="font-light">
-
-          {{ '3500' | currency }}
-
-      </h2>
-
-      <h6>Día 30</h6>
-
-    </div>
-
-    <div class="col text-center" *ngIf="totalComisionPagar < 8000">
-
-      <h2 class="font-light" *ngIf="totalComisionPagar >= 7000">
-
-        {{ (totalComisionPagar - (gasolina / 2 ) - 3500) | currency }}
-
-      </h2>
-
-      <h2 class="font-light" *ngIf="totalComisionPagar < 7000">
-
-        {{ (totalComisionPagar / 2) | currency }}
-
-      </h2>
-
-      <h6>Día 15</h6>
-
-    </div>
-
-    <div class="col text-center" *ngIf="totalComisionPagar < 8000">
-
-      <h2 class="font-light" *ngIf="totalComisionPagar >= 7000">
-
-        {{ (totalComisionPagar - (gasolina / 2 ) - 3500) | currency }}
-
-      </h2>
-
-      <h2 class="font-light" *ngIf="totalComisionPagar < 7000">
-
-        {{ (totalComisionPagar / 2 ) | currency }}
-
-      </h2>
-
-      <h6>Día 30</h6>
-
-    </div>
-
-  </div>
-
-  <div *ngIf="aparece">
-
-    <hr>
-
-  </div>
-
-  <div class="card-body" *ngIf="aparece">
-
-    <p class="text-center aboutscroll">
-
-      La información arrojada es de caracter informativo y puede cambiar en cualquier momento.
-      
-    </p>
-
-  </div>
 
 </div>

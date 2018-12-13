@@ -11,13 +11,14 @@ export class ClientesService {
     private http: HttpClient
   ) { }
 
-  infoCliente( cliente: any, perid: any = '' ) {
+  infoCliente( cliente: any, perid: any = '', rol: any ) {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=1&perid=' + perid + '&numero=' + cliente;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=1&perid=' + perid + '&numero=' + cliente + '&rol=' + rol;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=1&perid=' + perid + '&numero=' + cliente;
+      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=1&perid=' + perid + '&numero=' + cliente + '&rol=' + rol;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=1&perid=' + perid + '&numero=' + cliente;
+      // tslint:disable-next-line:max-line-length
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=1&perid=' + perid + '&numero=' + cliente + '&rol=' + rol;
     }
 
     return this.http.get( this.url );
@@ -30,6 +31,18 @@ export class ClientesService {
       this.url = URL_PRUEBAS + '/api/clientes.php?opcion=2&clienteid=' + cliente + '&inicio=' + inicio;
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=2&clienteid=' + cliente + '&inicio=' + inicio;
+    }
+
+    return this.http.get( this.url );
+  }
+
+  obtenerFolio( folio: any ) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=5&folio=' + folio;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=5&folio=' + folio;
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=5&folio=' + folio;
     }
 
     return this.http.get( this.url );

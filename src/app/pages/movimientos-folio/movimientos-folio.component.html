@@ -1,0 +1,148 @@
+<div class="row">
+
+  <div class="col">
+
+    <div class="card">
+
+      <div class="card-body">
+
+        <h4 class="card-title">Buscar Folio</h4>
+
+        <form #f="ngForm">
+
+          <div class="form-group">
+
+              <input type="number" [(ngModel)]="numero" class="form-control" name="numero" id="numero" placeholder="Ingrese el número de folio">
+
+          </div>
+
+          <button type="button" class="btn btn-success btn-block waves-effect waves-light m-r-10" (click)="obtenerFolio( f )">Solicitar</button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="row animated fadeIn" *ngIf="cargando">
+
+  <div class="col-sm-12">
+
+      <div class="alert alert-warning text-center">
+
+          <strong>Cargando</strong>
+
+          <br>
+
+          <i class="fa fa-refresh fa-spin fa-2x"></i>
+
+          <br>
+
+          <span>Espere por favor</span>
+
+      </div>
+
+  </div>
+
+</div>
+
+<div class="row" *ngIf="localizado">
+
+  <div class="col">
+
+    <div class="card">
+
+      <div class="card-body">
+
+        <h4 class="card-title">
+
+          Movimientos
+
+        </h4>
+
+
+        <div class="table-responsive">
+
+          <table class="table table-hover">
+
+            <thead>
+
+              <tr>
+
+                <th class="text-center">Fecha</th>
+
+                <th class="text-center">Importe</th>
+
+                <th class="text-center">Recibo</th>
+
+                <th class="text-center">Tipo Pago</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let fol of folios">
+
+                <td class="text-center">{{ fol.FECHA | date: 'dd-MM-yyyy' }}</td>
+
+                <td class="text-center" *ngIf="fol.PAGADO > 0" style="color: #06d79c; font-weight: 700;">{{ fol.PAGADO | currency }}</td>
+
+                <td class="text-center" *ngIf="fol.PAGADO < 0" style="color: #f62d51; font-weight: 700;">{{ fol.PAGADO | currency }}</td>
+
+                <td class="text-center" *ngIf="fol.RECIBO != 0">{{ fol.RECIBO }}</td>
+
+                <td class="text-center" *ngIf="fol.RECIBO == 0">{{ fol.PAGREF }}</td>
+
+                <td class="text-center" *ngIf="fol.FP == 'C'">
+
+                  <span class="label label-info">{{ fol.TIPO }}</span>
+
+                </td>
+
+                <td class="text-center" *ngIf="fol.FP == 'R'">
+
+                  <span class="label label-primary">{{ fol.TIPO }}</span>
+
+                </td>
+
+                <td class="text-center" *ngIf="fol.FP == 'E'">
+
+                  <span class="label label-danger">{{ fol.TIPO }}</span>
+
+                </td>
+
+                <td class="text-center" *ngIf="fol.FP == 'T'">
+
+                  <span class="label label-dark">{{ fol.TIPO }}</span>
+
+                </td>
+
+                <td class="text-center" *ngIf="fol.FP == 'S'">
+
+                  <span class="label label-dark" style="background: orange!important">{{ fol.TIPO }}</span>
+
+                </td>
+
+                <td *ngIf="fol.FP == ''"></td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -36,7 +36,7 @@ export class CompraComponent implements OnInit {
   total: number = 0;
   pedidosGen: any;
   pedidosProv: any;
-  totPedidosProv : number = 0;
+  totPedidosProv: number = 0;
 
   // Totales
   totalGeneral: number = 0;
@@ -76,12 +76,12 @@ export class CompraComponent implements OnInit {
     this.final = forma.value.final;
     this.proveedor = forma.value.proveedor;
 
-    if ( forma.value.proveedor != 0 ) {
+    if ( forma.value.proveedor !== 0 ) {
       this._diariosService.compras(this.inicio, this.final, this.proveedor)
         .subscribe( ( resp: any ) => {
 
-          if (resp != ''){
-            this.nombre= resp[0].nombre;
+          if (resp !== '') {
+            this.nombre = resp[0].nombre;
             this.id = resp[0].cid;
             this.numero = resp[0].numero;
             this.subtotal = resp[0].subtotal;
@@ -109,7 +109,7 @@ export class CompraComponent implements OnInit {
 
         });
     } else {
-      
+
       this.totalGeneral = 0;
       this.totalIva = 0;
       this.totalSubtotal = 0;
@@ -117,10 +117,10 @@ export class CompraComponent implements OnInit {
       this._diariosService.compras(this.inicio, this.final)
         .subscribe( ( resp: any ) => {
 
-          if (resp != '') {
+          if (resp !== '') {
             this.pedidosGen = resp;
-  
-            for(let i=0; i < this.pedidosGen.length; i++){
+
+            for (let i = 0; i < this.pedidosGen.length; i++) {
               this.totalGeneral += this.pedidosGen[i].total;
               this.totalIva += this.pedidosGen[i].iva;
               this.totalSubtotal += this.pedidosGen[i].subtotal;

@@ -53,13 +53,25 @@ export class CreditoService {
     return this.http.get( this.url );
   }
 
-  mor46() {
+  mor46a60() {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=15';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=15';
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=15';
+    }
+
+    return this.http.get( this.url );
+  }
+
+  mor60() {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=18';
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=18';
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=18';
     }
 
     return this.http.get( this.url );
@@ -89,6 +101,18 @@ export class CreditoService {
     return this.http.get( this.url );
   }
 
+  clienteMorosoTotal( clienteid: any ) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=19&clienteid=' + clienteid;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=19&clienteid=' + clienteid;
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=19&clienteid=' + clienteid;
+    }
+
+    return this.http.get( this.url );
+  }
+
   guardarComentario( comentario: VencidoHistorial ) {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/vencido/historial';
@@ -100,21 +124,55 @@ export class CreditoService {
 
     this.url += '?token=' + this.token;
 
-    console.log(comentario);
-
     return this.http.post( this.url, comentario )
       .map((resp: any) => {
         return resp;
       });
   }
 
-  obtenerComentarios( folio: any, clienteId: any ) {
+  obtenerComentarios( clienteId: any ) {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/' + folio + '/' + clienteId;
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/' + clienteId;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/' + folio + '/' + clienteId;
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/' + clienteId;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/' + folio + '/' + clienteId;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/' + clienteId;
+    }
+
+    return this.http.get( this.url );
+  }
+
+  obtenerComentariosDia( fecha: any ) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/fecha/' + fecha;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/fecha/' + fecha;
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/fecha/' + fecha;
+    }
+
+    return this.http.get( this.url );
+  }
+
+  ultimosPagos( clienteid: any ) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=20&clienteid=' + clienteid;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=20&clienteid=' + clienteid;
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=20&clienteid=' + clienteid;
+    }
+
+    return this.http.get( this.url );
+  }
+
+  pagosMes( clienteid: any ) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=21&clienteid=' + clienteid;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=21&clienteid=' + clienteid;
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=21&clienteid=' + clienteid;
     }
 
     return this.http.get( this.url );

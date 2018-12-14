@@ -40,7 +40,7 @@ export class CobranzaGeneralComponent implements OnInit, OnDestroy {
         this.tarjeta = 0;
         this.total = 0;
         this.cobranza = numero;
-        for(let i=0; i < this.cobranza.length; i++){
+        for (let i = 0; i < this.cobranza.length; i++) {
 
           if (this.cobranza[i].formapago === 'C') {
             this.cheques += this.cobranza[i].pagado;
@@ -85,7 +85,7 @@ export class CobranzaGeneralComponent implements OnInit, OnDestroy {
       .subscribe( ( resp: any ) => {
         this.cobranza = resp;
 
-        for(let i=0; i < this.cobranza.length; i++){
+        for (let i = 0; i < this.cobranza.length; i++) {
 
           if (this.cobranza[i].formapago === 'C') {
             this.cheques += this.cobranza[i].pagado;

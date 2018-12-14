@@ -10,7 +10,7 @@
 
         <div class="alert alert-warning" *ngIf="esperar">
 
-            Obteniendo Pagos no aplicados
+            Obteniendo Comentarios del día
 
         </div>
 
@@ -22,7 +22,7 @@
 
         <div class="table-responsive" *ngIf="respuestaGeneral">
 
-            <h2 class="text-center">Cuentas Vencidas Actualmente</h2>
+            <h2 class="text-center">Comentarios Actuales</h2>
 
             <table class="display nowrap table table-hover table-striped table-bordered dataTable" cellspacing="0" width="100%" role="grid" aria-describedby="example23_info" style="width: 100%;">
 
@@ -30,21 +30,17 @@
 
                     <tr role="row">
 
+                        <th class="text-center">Hora</th>
+
+                        <th class="text-center"></th>
+
+                        <th class="text-left">Responsable</th>
+
                         <th class="text-center">Número</th>
 
-                        <th class="text-center">Nombre</th>
+                        <th class="text-left">Nombre</th>
 
-                        <th class="text-center">Factura</th>
-
-                        <th class="text-center">Vence</th>
-
-                        <th class="text-center">Días</th>
-
-                        <th class="text-center">Vencido</th>
-
-                        <th class="text-center">Saldo</th>
-
-                        <th class="text-center">Asesor</th>
+                        <th class="text-left">Comentario</th>
 
                     </tr>
 
@@ -52,29 +48,41 @@
 
                 <tbody>
 
-                    <tr role="row" class="odd" *ngFor="let ven of vencidoActual">
+                    <tr role="row" class="odd" *ngFor="let com of comentarios">
 
                         <td class="text-center">
 
-                            {{ ven.NUMERO }}
+                            {{ com.hora }}
 
                         </td>
 
-                        <td class="text-left">{{ ven.NOMBRE }}</td>
+                        <td class="text-center">
 
-                        <td class="text-center">{{ ven.FOLIO | number }}</td>
+                            <img [src]="com.usuario.img | imagen" width="40" class="img-fluid rounded-circle" />
 
-                        <td class="text-center">{{ ven.VENCE | date }}</td>
-
-                        <td class="text-center">{{ ven.DIACREDITO | number }}</td>
-
-                        <td class="text-center">{{ ven.VENCIDO | number }}</td>
-
-                        <td class="text-right">{{ ven.SALDO | currency }}</td>
+                        </td>
 
                         <td class="text-left">
 
-                            {{ ven.ASESOR }}
+                            {{ com.usuario.nombre }}
+
+                        </td>
+
+                        <td class="text-center">
+
+                            {{ com.numero }}
+
+                        </td>
+
+                        <td class="text-left">
+
+                            {{ com.nombre }}
+
+                        </td>
+
+                        <td class="text-left">
+
+                            {{ com.comentario }}
 
                         </td>
 

@@ -1,206 +1,215 @@
 <div class="row">
 
-  <!-- Column -->
-  <div class="col-md-6 col-lg-6 col-xlg-4">
+    <!-- Column -->
+    <div class="col-md-6 col-lg-6 col-xlg-4">
 
-    <div class="card">
+        <div class="card">
 
-      <div class="box bg-info text-center">
+            <div class="box bg-info text-center">
 
-        <h1 class="font-light text-white">{{ cheques | currency }}</h1>
+                <h1 class="font-light text-white">{{ cheques | currency }}</h1>
 
-        <h6 class="text-white">Cheques</h6>
+                <h6 class="text-white">Cheques</h6>
 
-      </div>
+            </div>
 
-    </div>
-
-  </div>
-
-  <!-- Column -->
-  <div class="col-md-6 col-lg-6 col-xlg-4">
-
-    <div class="card">
-
-      <div class="box bg-primary text-center">
-
-        <h1 class="font-light text-white">{{ transferencia | currency }}</h1>
-
-        <h6 class="text-white">Transferencia</h6>
-
-      </div>
+        </div>
 
     </div>
 
-  </div>
+    <!-- Column -->
+    <div class="col-md-6 col-lg-6 col-xlg-4">
 
-  <!-- Column -->
-  <div class="col-md-6 col-lg-6 col-xlg-4">
+        <div class="card">
 
-    <div class="card">
+            <div class="box bg-primary text-center">
 
-      <div class="box bg-danger text-center">
+                <h1 class="font-light text-white">{{ transferencia | currency }}</h1>
 
-        <h1 class="font-light text-white">{{ efectivo | currency }}</h1>
+                <h6 class="text-white">Transferencia</h6>
 
-        <h6 class="text-white">Efectivo</h6>
+            </div>
 
-      </div>
-
-    </div>
-
-  </div>
-
-  <!-- Column -->
-  <div class="col-md-6 col-lg-6 col-xlg-4">
-
-    <div class="card">
-
-      <div class="box bg-dark text-center">
-
-        <h1 class="font-light text-white">{{ tarjeta | currency }}</h1>
-
-        <h6 class="text-white">Tarjeta</h6>
-
-      </div>
+        </div>
 
     </div>
 
-  </div>
+    <!-- Column -->
+    <div class="col-md-6 col-lg-6 col-xlg-4">
 
-  <!-- Column -->
-  <div class="col-md-6 col-lg-6 col-xlg-4">
+        <div class="card">
 
-    <div class="card">
+            <div class="box bg-danger text-center">
 
-      <div class="box bg-danger text-center" style="background: orange!important">
+                <h1 class="font-light text-white">{{ efectivo | currency }}</h1>
 
-        <h1 class="font-light text-white">{{ notas | currency }}</h1>
+                <h6 class="text-white">Efectivo</h6>
 
-        <h6 class="text-white">Notas de Crédito</h6>
+            </div>
 
-      </div>
-
-    </div>
-
-  </div>
-
-  <!-- Column -->
-  <div class="col-md-6 col-lg-6 col-xlg-4">
-
-    <div class="card">
-
-      <div class="box bg-success text-center">
-
-        <h1 class="font-light text-white">{{ total | currency }}</h1>
-
-        <h6 class="text-white">Total</h6>
-
-      </div>
+        </div>
 
     </div>
 
-  </div>
+    <!-- Column -->
+    <div class="col-md-6 col-lg-6 col-xlg-4">
+
+        <div class="card">
+
+            <div class="box bg-dark text-center">
+
+                <h1 class="font-light text-white">{{ tarjeta | currency }}</h1>
+
+                <h6 class="text-white">Tarjeta</h6>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Column -->
+    <div class="col-md-6 col-lg-6 col-xlg-4">
+
+        <div class="card">
+
+            <div class="box bg-danger text-center" style="background: orange!important">
+
+                <h1 class="font-light text-white">{{ notas | currency }}</h1>
+
+                <h6 class="text-white">Notas de Crédito</h6>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Column -->
+    <div class="col-md-6 col-lg-6 col-xlg-4">
+
+        <div class="card">
+
+            <div class="box bg-success text-center">
+
+                <h1 class="font-light text-white">{{ total | currency }}</h1>
+
+                <h6 class="text-white">Total</h6>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
 <div class="row">
 
-  <div class="col-lg-12">
+    <div class="col-lg-12">
 
-    <div class="card">
+        <div class="card">
 
-      <div class="card-body">
+            <div class="card-body">
 
-        <div class="table-responsive">
+                <div class="table-responsive">
 
-          <table class="table">
+                    <table class="table">
 
-            <thead>
+                        <thead>
 
-              <tr>
+                            <tr>
 
-                <th class="text-center">Fecha</th>
+                                <th class="text-center">Fecha</th>
 
-                <th class="text-center">Asesor</th>
+                                <th class="text-center">Asesor</th>
 
-                <th class="text-center">Factura</th>
+                                <th class="text-center">Factura</th>
 
-                <th class="text-center">Cliente</th>
+                                <th class="text-center">Cliente</th>
 
-                <th class="text-center">Nombre</th>
+                                <th class="text-center">Nombre</th>
 
-                <th class="text-center">Abono</th>
+                                <th class="text-center">Abono</th>
 
-                <th class="text-center">Forma de Pago</th>
+                                <th class="text-center">Forma de Pago</th>
 
-                <th class="text-center">Recibo</th>
+                                <th class="text-center">Recibo</th>
 
-              </tr>
+                            </tr>
 
-            </thead>
+                        </thead>
 
-            <tbody>
+                        <tbody>
 
-              <tr *ngFor="let cobro of cobranza">
+                            <tr *ngFor="let cobro of cobranza">
 
-                <td class="text-center">{{ cobro.fecha }}</td>
+                                <td class="text-center">{{ cobro.fecha }}</td>
 
-                <td class="text-center">{{ cobro.asesor }}</td>
+                                <td class="text-center">{{ cobro.asesor }}</td>
 
-                <td class="text-center">{{ cobro.folio }}</td>
+                                <td class="text-center">{{ cobro.folio }}</td>
 
-                <td class="text-center">{{ cobro.numero }}</td>
+                                <td class="text-center">{{ cobro.numero }}</td>
 
-                <td class="text-center">{{ cobro.nombre }}</td>
+                                <td class="text-center">{{ cobro.nombre }}</td>
 
-                <td class="text-center">{{ cobro.pagado | currency }}</td>
+                                <td class="text-center">{{ cobro.pagado | currency }}</td>
 
-                <td class="text-center" *ngIf="cobro.formapago == 'C'">
+                                <td class="text-center" *ngIf="cobro.formapago == 'C'">
 
-                  <span class="label label-info">{{ cobro.forma }}</span>
+                                    <span class="label label-info">{{ cobro.forma }}</span>
 
-                </td>
+                                </td>
 
-                <td class="text-center" *ngIf="cobro.formapago == 'R'">
+                                <td class="text-center" *ngIf="cobro.formapago == 'R'">
 
-                  <span class="label label-primary">{{ cobro.forma }}</span>
+                                    <span class="label label-primary">{{ cobro.forma }}</span>
 
-                </td>
+                                </td>
 
-                <td class="text-center" *ngIf="cobro.formapago == 'T'">
+                                <td class="text-center" *ngIf="cobro.formapago == 'T'">
 
-                  <span class="label label-primary" style="background: black!important;">{{ cobro.forma }}</span>
+                                    <span class="label label-primary" style="background: black!important;">{{ cobro.forma }}</span>
 
-                </td>
+                                </td>
 
-                <td class="text-center" *ngIf="cobro.formapago == 'E'">
+                                <td class="text-center" *ngIf="cobro.formapago == 'E'">
 
-                  <span class="label label-danger">{{ cobro.forma }}</span>
+                                    <span class="label label-danger">{{ cobro.forma }}</span>
 
-                </td>
+                                </td>
 
-                <td class="text-center" *ngIf="cobro.formapago == 'S'">
+                                <td class="text-center" *ngIf="cobro.formapago == 'S'">
 
-                  <span class="label label-danger" style="background: orange!important;">{{ cobro.forma }}</span>
+                                    <span class="label label-danger" style="background: orange!important;">{{ cobro.forma }}</span>
 
-                </td>
+                                </td>
 
-                <td class="text-center">{{ cobro.recibo }}</td>
+                                <td class="text-center" *ngIf="cobro.recibo !== 0">
 
-              </tr>
+                                    <span class="label label-light-inverse">{{ cobro.recibo }}</span>
 
-            </tbody>
+                                </td>
 
-          </table>
+                                <td class="text-center" *ngIf="cobro.recibo === 0">
+
+                                    <span class="label label-danger">{{ cobro.categoria }}</span>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
 
         </div>
 
-      </div>
-
     </div>
 
-  </div>
-  
 </div>
-  

@@ -1,7 +1,8 @@
 export class VencidoHistorial {
     constructor(
         public clienteId: number,
-        public folio: number,
+        public numero: number,
+        public nombre: string,
         public comentario: string,
         public fecha: string,
         public hora: string,

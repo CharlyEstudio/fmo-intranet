@@ -77,6 +77,11 @@
     color: #fff;
 }
 
+.info-bitacora td,
+.mostrar-folio td {
+    padding: 0.1rem .75rem!important;
+}
+
 
 /*
 Template Name: Admin pro Admin

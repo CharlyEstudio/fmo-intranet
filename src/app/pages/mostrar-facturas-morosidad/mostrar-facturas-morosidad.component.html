@@ -8,6 +8,8 @@
 
         </h3>
 
+        <p class="text-danger font-weight-bold">Saldo Vencido Total {{ total | currency }}</p>
+
     </div>
 
     <div class="col text-right">
@@ -48,7 +50,7 @@
 
     <h3>Morosidad de 1 a 28 Días</h3>
 
-    <table class="table table-hover">
+    <table class="table table-hover mostrar-folio">
 
         <thead>
 
@@ -61,10 +63,6 @@
                 <th class="text-center">Días Vencidos</th>
 
                 <th class="text-center">Saldo</th>
-
-                <th class="text-center">Comentario</th>
-
-                <th class="text-center">Agregar</th>
 
             </tr>
 
@@ -81,18 +79,6 @@
                 <td class="text-center" style="color: #f62d51;">{{ mor.dias_vencidos | number }}</td>
 
                 <td class="text-right" style="color: #f62d51;">{{ mor.saldo | currency }}</td>
-
-                <td class="text-center"></td>
-
-                <td class="text-center">
-
-                    <a href="#modalFolio" class="btn btn-danger" data-dismiss="modal" data-toggle="modal" (click)="openModal(mor)">
-
-                        <i class="mdi mdi-comment-plus-outline"></i>
-
-                    </a>
-
-                </td>
 
             </tr>
 
@@ -126,7 +112,7 @@
 
     <h3>Morosidad de 29 a 45 Días</h3>
 
-    <table class="table table-hover">
+    <table class="table table-hover mostrar-folio">
 
         <thead>
 
@@ -139,10 +125,6 @@
                 <th class="text-center">Días Vencidos</th>
 
                 <th class="text-center">Saldo</th>
-
-                <th class="text-center">Comentario</th>
-
-                <th class="text-center">Agregar</th>
 
             </tr>
 
@@ -160,18 +142,6 @@
 
                 <td class="text-right" style="color: #f62d51;">{{ mor.saldo | currency }}</td>
 
-                <td class="text-center"></td>
-
-                <td class="text-center">
-
-                    <a href="#modalFolio" class="btn btn-danger" data-dismiss="modal" data-toggle="modal" (click)="openModal(mor)">
-
-                        <i class="mdi mdi-comment-plus-outline"></i>
-
-                    </a>
-
-                </td>
-
             </tr>
 
         </tbody>
@@ -180,7 +150,7 @@
 
 </div>
 
-<div class="row" *ngIf="!mor46Bol">
+<div class="row" *ngIf="!mor46a60Bol">
 
     <div class="col-lg-12">
 
@@ -188,7 +158,7 @@
 
             <div class="card-body">
 
-                <p class="font-weight-bold">Morosidad más de 45 Días</p>
+                <p class="font-weight-bold">Morosidad de 45 a 60 Días</p>
 
                 <p>No se encontró facturas vencidas en esta etapa.</p>
 
@@ -200,11 +170,11 @@
 
 </div>
 
-<div class="table-responsive" *ngIf="mor46Bol">
+<div class="table-responsive" *ngIf="mor46a60Bol">
 
     <h3>Morosidad más de 45 Días</h3>
 
-    <table class="table table-hover">
+    <table class="table table-hover mostrar-folio">
 
         <thead>
 
@@ -218,17 +188,13 @@
 
                 <th class="text-center">Saldo</th>
 
-                <th class="text-center">Comentario</th>
-
-                <th class="text-center">Agregar</th>
-
             </tr>
 
         </thead>
 
         <tbody>
 
-            <tr *ngFor="let mor of mor46; let i = index">
+            <tr *ngFor="let mor of mor46a60; let i = index">
 
                 <td class="text-center" style="font-weight: 700;">{{ mor.folio }}</td>
 
@@ -238,18 +204,6 @@
 
                 <td class="text-right" style="color: #f62d51;">{{ mor.saldo | currency }}</td>
 
-                <td class="text-center"></td>
-
-                <td class="text-center">
-
-                    <a href="#modalFolio" class="btn btn-danger" data-dismiss="modal" data-toggle="modal" (click)="openModal(mor)">
-
-                        <i class="mdi mdi-comment-plus-outline"></i>
-
-                    </a>
-
-                </td>
-
             </tr>
 
         </tbody>
@@ -258,112 +212,64 @@
 
 </div>
 
-<div id="modalFolio" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalDiaLunes" aria-hidden="true">
+<div class="row" *ngIf="!mor60Bol">
 
-    <div class="modal-dialog modal-lg">
+    <div class="col-lg-12">
 
-        <div class="modal-content p-t-20 p-b-20 p-l-20 p-r-20">
+        <div class="card card-success">
 
-            <div class="modal-header">
+            <div class="card-body">
 
-                <h5 class="p-b-10 p-t-10">Historial del Folio <b>{{ folio }}</b></h5>
+                <p class="font-weight-bold">Morosidad más de 60 Días</p>
 
-                <h5 class="p-b-10 p-t-10">Cliente <b>{{ nombre }}</b></h5>
-
-                <h5 class="p-b-10 p-t-10">Saldo <b>{{ saldo | currency }}</b></h5>
-
-                <h5 class="p-b-10 p-t-10">Días Vencidos <b>{{ diasVen }}</b></h5>
-
-                <!--<button class="btn btn-success" type="button" (click)="descargar(actual)"><i class="mdi mdi-file-excel"></i>Descargar</button>-->
-
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    
-                    <span aria-hidden="true">&times;</span>
-        
-                </button>
-
-            </div>
-
-            <div class="modal-body">
-
-                <div class="card" style="width: 100%;">
-
-                    <div class="card-body">
-
-                        <h4 class="card-title">Comentarios Recientes</h4>
-
-                        <div class="chat-box">
-
-                            <!--chat Row -->
-                            <ul class="chat-list">
-
-                                <!--chat Row -->
-                                <li *ngFor="let c of charla; let i = index">
-
-                                    <div class="chat-img" *ngIf="id !== c.usuario._id"><img [src]="c.usuario.img | imagen"></div>
-
-                                    <div class="chat-content" *ngIf="id !== c.usuario._id">
-
-                                        <h5>{{ c.usuario.nombre }}</h5>
-
-                                        <div class="box bg-light-info">{{ c.comentario }}</div>
-
-                                    </div>
-
-                                    <div class="chat-time" *ngIf="id !== c.usuario._id">{{ c.hora }} <br> {{ c.fecha | date }}</div>
-
-                                </li>
-
-                                <!--chat Row -->
-                                <li class="reverse" *ngFor="let c of charla; let i = index">
-
-                                    <div class="chat-content" *ngIf="id === c.usuario._id">
-
-                                        <div class="box bg-light-inverse">{{ c.comentario }}</div>
-
-                                        <br>
-
-                                    </div>
-
-                                    <div class="chat-time" *ngIf="id === c.usuario._id">{{ c.hora }} <br> {{ c.fecha | date }}</div>
-
-                                </li>
-
-                            </ul>
-
-                        </div>
-
-                    </div>
-
-                    <div class="card-body b-t">
-
-                        <form #f="ngForm">
-
-                            <div class="row">
-
-                                <div class="col-8">
-
-                                    <textarea [(ngModel)]='comentario' name="comentario" [value]="comentario" placeholder="Coloca un mensaje a este folio" class="form-control b-0"></textarea>
-
-                                </div>
-
-                                <div class="col-4 text-right">
-
-                                    <button type="button" class="btn btn-info btn-circle btn-lg" (click)="enviarComentario(f)"><i class="fa fa-paper-plane-o"></i> </button>
-
-                                </div>
-
-                            </div>
-
-                        </form>
-
-                    </div>
-
-                </div>
+                <p>No se encontró facturas vencidas en esta etapa.</p>
 
             </div>
 
         </div>
 
     </div>
+
+</div>
+
+<div class="table-responsive" *ngIf="mor60Bol">
+
+    <h3>Morosidad más de 60 Días</h3>
+
+    <table class="table table-hover mostrar-folio">
+
+        <thead>
+
+            <tr>
+
+                <th class="text-center">Folio</th>
+
+                <th class="text-center">Vence</th>
+
+                <th class="text-center">Días Vencidos</th>
+
+                <th class="text-center">Saldo</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="let mor of mor60; let i = index">
+
+                <td class="text-center" style="font-weight: 700;">{{ mor.folio }}</td>
+
+                <td class="text-center">{{ mor.vence | date: 'dd-MM-yyyy' }}</td>
+
+                <td class="text-center" style="color: #f62d51;">{{ mor.dias_vencidos | number }}</td>
+
+                <td class="text-right" style="color: #f62d51;">{{ mor.saldo | currency }}</td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
 </div>

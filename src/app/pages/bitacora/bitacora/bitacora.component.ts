@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CreditoService } from '../../../services/services.index';
+import { CreditoService, WebsocketService } from '../../../services/services.index';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
@@ -17,39 +17,17 @@ export class BitacoraComponent implements OnInit, OnDestroy {
   esperar: boolean = true;
 
   vencidoActual: any[] = [];
+  comentarios: any[] = [];
 
   observar: Subscription;
-  intervalo: any;
 
   constructor(
-    private _creditoService: CreditoService
+    private _creditoService: CreditoService,
+    private _webSocket: WebsocketService
   ) {
-    this.observar = this.regresar().subscribe(
-      vencido => {
-        console.log(vencido);
-        if (vencido.length > 0) {
-          this.vencidoActual = vencido;
-          this.esperar = false;
-          this.ventas = false;
-          this.respuestaGeneral = true;
-        } else {
-          this.esperar = false;
-          this.ventas = true;
-          this.respuestaGeneral = false;
-        }
-      },
-      error => console.error(error),
-      () => console.log('Fin del Observador Vencido')
-    );
-  }
-
-  ngOnInit() {
-    /*this._creditoService.obtenerCarteraVencida().subscribe( ( vencido: any ) => {
-      this.vencidoActual = vencido;
-
-      console.log(vencido);
-
-      if (this.vencidoActual.length > 0) {
+    this._creditoService.obtenerComentariosDia('2018-12-13').subscribe( ( comentarios: any ) => {
+      if (comentarios.charla.length) {
+        this.comentarios = comentarios.charla.reverse();
         this.esperar = false;
         this.ventas = false;
         this.respuestaGeneral = true;
@@ -58,22 +36,32 @@ export class BitacoraComponent implements OnInit, OnDestroy {
         this.ventas = true;
         this.respuestaGeneral = false;
       }
+    });
 
-    });*/
+    this.observar = this.regresar().subscribe(
+      comentarios => {
+        if (comentarios.clienteId !== 0) {
+          this._creditoService.obtenerComentariosDia('2018-12-13').subscribe( ( nuevoComentario: any ) => {
+            this.comentarios = nuevoComentario.charla.reverse();
+          });
+        }
+      },
+      error => console.error(error),
+      () => console.log('Fin del Observador Comentarios')
+    );
   }
+
+  ngOnInit() { }
 
   ngOnDestroy() {
     this.observar.unsubscribe();
-    clearInterval(this.intervalo);
   }
 
   regresar(): Observable<any> {
     return new Observable( ( observer: Subscriber<any> ) => {
-      this.intervalo = setInterval( () => {
-        this._creditoService.obtenerCarteraVencida().subscribe( ( vencido: any ) => {
-          observer.next(vencido);
-        });
-      }, 1000);
+      this._webSocket.escuchar('mensaje-folio').subscribe( ( escuchando ) => {
+        observer.next(escuchando);
+      });
     });
   }
 

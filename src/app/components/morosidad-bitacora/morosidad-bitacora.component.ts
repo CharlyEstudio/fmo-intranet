@@ -16,7 +16,8 @@ export class MorosidadBitacoraComponent implements OnInit {
 
   mor1a28: number = 0;
   mor29a48: number = 0;
-  mor46: number = 0;
+  mor46a60: number = 0;
+  mor60: number = 0;
 
   constructor(
     private router: Router,
@@ -32,8 +33,12 @@ export class MorosidadBitacoraComponent implements OnInit {
       this.mor29a48 = resp[0].importe;
     });
 
-    this._creditoService.mor46().subscribe( ( resp: any ) => {
-      this.mor46 = resp[0].importe;
+    this._creditoService.mor46a60().subscribe( ( resp: any ) => {
+      this.mor46a60 = resp[0].importe;
+    });
+
+    this._creditoService.mor60().subscribe( ( resp: any ) => {
+      this.mor60 = resp[0].importe;
     });
 
     this.esperar = false;

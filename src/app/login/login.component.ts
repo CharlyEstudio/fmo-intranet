@@ -5,7 +5,6 @@ import { NgForm } from '@angular/forms';
 
 import { UsuarioService, WebsocketService } from '../services/services.index';
 import { Usuario } from '../models/usuario.model';
-// import { URL_SERVICIOS2 } from '../config/config';
 
 declare function init_plugins();
 
@@ -25,9 +24,7 @@ export class LoginComponent implements OnInit {
     public router: Router,
     public _usuarioService: UsuarioService,
     public wsService: WebsocketService
-  ) {
-    // console.log(URL_SERVICIOS2);
-  }
+  ) {}
 
   ngOnInit() {
     init_plugins();

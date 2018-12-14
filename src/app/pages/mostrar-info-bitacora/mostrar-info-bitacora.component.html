@@ -16,11 +16,13 @@
 
 <div class="table-responsive">
 
-    <table class="table table-hover">
+    <table class="table table-hover info-bitacora">
 
         <thead>
 
             <tr>
+
+                <th class="text-center">#</th>
 
                 <th class="text-center">Número</th>
 
@@ -28,7 +30,11 @@
 
                 <th class="text-center">Saldo</th>
 
+                <th class="text-center">Últimos Pagos</th>
+
                 <th class="text-center">Ver</th>
+
+                <th class="text-center">Comentarios</th>
 
             </tr>
 
@@ -38,6 +44,8 @@
 
             <tr *ngFor="let mor of morosidad; let i = index">
 
+                <td class="text-center">{{ i }}</td>
+
                 <td class="text-center">{{ mor.numero }}</td>
 
                 <td class="text-left">{{ mor.nombre }}</td>
@@ -46,11 +54,31 @@
 
                 <td class="text-center">
 
-                    <button type="button" href="#modalFolio" class="btn btn-danger" (click)="irInfo(mor)" *ngIf="mor.numero !== 80 && mor.numero !== 1739">
+                    <a href="#modalPagos" class="btn" [ngClass]="{'btn-success': mor.pagosMes > 0, 'btn-danger':  mor.pagosMes === 0}" data-dismiss="modal" data-toggle="modal" (click)="openModalPagos(mor)" *ngIf="mor.numero !== 80 && mor.numero !== 1739">
 
-                        <i class="mdi mdi-account-search"></i>
+                        <i class="mdi" [ngClass]="{'mdi-currency-usd': mor.pagosMes > 0, 'mdi-bell-ring-outline': mor.pagosMes === 0}"></i>
+
+                    </a>
+
+                </td>
+
+                <td class="text-center">
+
+                    <button type="button" href="#modalFolio" class="btn btn-facebook" (click)="irInfo(mor)" *ngIf="mor.numero !== 80 && mor.numero !== 1739">
+
+                        <i class="mdi mdi-barcode-scan"></i>
 
                     </button>
+
+                </td>
+
+                <td class="text-center">
+
+                    <a href="#modalFolio" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" (click)="openModal(mor)" *ngIf="mor.numero !== 80 && mor.numero !== 1739">
+
+                        <i class="mdi mdi-comment-text-outline"></i>
+
+                    </a>
 
                 </td>
 
@@ -59,5 +87,215 @@
         </tbody>
 
     </table>
+
+</div>
+
+<div id="modalPagos" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalPagos" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg tablas-modales">
+
+        <div class="modal-content p-t-20 p-b-20 p-l-20 p-r-20">
+
+            <div class="modal-header">
+
+                Modal de Pagos
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        
+                    <span aria-hidden="true">&times;</span>
+        
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover">
+
+                        <thead>
+
+                            <tr>
+
+                                <th class="text-center">Numero</th>
+
+                                <th class="text-center">Nombre</th>
+
+                                <th class="text-center">Folio</th>
+
+                                <th class="text-center">Fecha</th>
+
+                                <th class="text-center">Importe</th>
+
+                                <th class="text-center">Forma de Pago</th>
+
+                                <th class="text-center">Referencia</th>
+
+                                <th class="text-center">Recibo</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr *ngFor="let pag of pagos; let i = index">
+
+                                <td class="text-center">{{ pag.numero }}</td>
+
+                                <td class="text-left">{{ pag.nombre }}</td>
+
+                                <td class="text-center">{{ pag.folio }}</td>
+
+                                <td class="text-center">{{ pag.fechapago }}</td>
+
+                                <td class="text-right">{{ pag.pagado | currency }}</td>
+
+                                <td class="text-center" *ngIf="pag.formapago == 'C'">
+
+                                    <span class="label label-info">{{ pag.forma }}</span>
+
+                                </td>
+
+                                <td class="text-center" *ngIf="pag.formapago == 'R'">
+
+                                    <span class="label label-primary">{{ pag.forma }}</span>
+
+                                </td>
+
+                                <td class="text-center" *ngIf="pag.formapago == 'T'">
+
+                                    <span class="label label-primary" style="background: black!important;">{{ pag.forma }}</span>
+
+                                </td>
+
+                                <td class="text-center" *ngIf="pag.formapago == 'E'">
+
+                                    <span class="label label-danger">{{ pag.forma }}</span>
+
+                                </td>
+
+                                <td class="text-left">{{ pag.pagref }}</td>
+
+                                <td class="text-center" *ngIf="pag.recibo !== 0">
+
+                                    <span class="label label-light-inverse">{{ pag.recibo }}</span>
+
+                                </td>
+
+                                <td class="text-center" *ngIf="pag.recibo === 0">
+
+                                    <span class="label label-danger">{{ pag.categoria }}</span>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div id="modalFolio" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalFolio" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg">
+
+        <div class="modal-content p-t-20 p-b-20 p-l-20 p-r-20">
+
+            <div class="modal-header">
+
+                <h5 class="p-b-10 p-t-10">Historial del Cliente <b># {{ numero }} {{ nombre }}</b></h5>
+
+                <h5 class="p-b-10 p-t-10 text-danger font-weight-bold">Saldo <b>{{ saldo | currency }}</b></h5>
+
+                <!--<button class="btn btn-success" type="button" (click)="descargar(actual)"><i class="mdi mdi-file-excel"></i>Descargar</button>-->
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        
+                    <span aria-hidden="true">&times;</span>
+        
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="card" style="width: 100%;">
+
+                    <div class="card-body">
+
+                        <h4 class="card-title" *ngIf="charlaBol">Comentarios Recientes</h4>
+
+                        <h4 class="card-title" *ngIf="!charlaBol">No hay Comentarios</h4>
+
+                        <div class="chat-box" *ngIf="charlaBol">
+
+                            <!--chat Row -->
+                            <ul class="chat-list" style="overflow-y: scroll; height: 400px;">
+
+                                <!--chat Row -->
+                                <li *ngFor="let c of charla; let i = index" [ngClass]="{'reverse': id === c.usuario._id, '': id !== c.usuario._id}">
+
+                                    <div class="chat-img" *ngIf="id !== c.usuario._id"><img [src]="c.usuario.img | imagen"></div>
+
+                                    <div class="chat-content">
+
+                                        <h5>{{ c.usuario.nombre }}</h5>
+
+                                        <div class="box" [ngClass]="{'bg-light-inverse': id === c.usuario._id, 'bg-light-info': id !== c.usuario._id}">{{ c.comentario }}</div>
+
+                                    </div>
+
+                                    <div class="chat-time">{{ c.hora }} <br> {{ c.fecha | date }}</div>
+
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body b-t">
+
+                        <form #f="ngForm">
+
+                            <div class="row">
+
+                                <div class="col-8">
+
+                                    <textarea [(ngModel)]='comentario' name="comentario" [value]="comentario" placeholder="Coloca un mensaje a este folio" class="form-control b-0"></textarea>
+
+                                </div>
+
+                                <div class="col-4 text-right">
+
+                                    <button type="button" class="btn btn-info btn-circle btn-lg" (click)="enviarComentario(f)"><i class="fa fa-paper-plane-o"></i> </button>
+
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>

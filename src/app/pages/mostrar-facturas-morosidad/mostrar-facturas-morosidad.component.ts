@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CreditoService, UsuarioService, WebsocketService } from '../../services/services.index';
-
-import { NgForm } from '@angular/forms';
-import { VencidoHistorial } from '../../models/vencidoHistorial.model';
+import { CreditoService, UsuarioService } from '../../services/services.index';
 
 @Component({
   selector: 'app-mostrar-facturas-morosidad',
@@ -27,17 +24,21 @@ export class MostrarFacturasMorosidadComponent implements OnInit {
 
   mor1a28: any[] = [];
   mor29a45: any[] = [];
-  mor46: any[] = [];
+  mor46a60: any[] = [];
+  mor60: any[] = [];
 
   mor128Bol: boolean = false;
   mor2945Bol: boolean = false;
-  mor46Bol: boolean = false;
+  mor46a60Bol: boolean = false;
+  mor60Bol: boolean = false;
+  charlaBol: boolean = false;
+
+  total: number = 0;
 
   constructor(
     private router: Router,
     private get: ActivatedRoute,
     private _creditoService: CreditoService,
-    private _sockets: WebsocketService,
     private _usuariosServices: UsuarioService
   ) {
     this.id = this._usuariosServices.usuario._id;
@@ -47,27 +48,13 @@ export class MostrarFacturasMorosidadComponent implements OnInit {
 
     this.obtenerMor1a28(this.get.snapshot.paramMap.get("clienteid"), 'mor1a28');
     this.obtenerMor29a48(this.get.snapshot.paramMap.get("clienteid"), 'mor29a48');
-    this.obtenerMor46(this.get.snapshot.paramMap.get("clienteid"), 'mor46');
+    this.obtenerMor46a60(this.get.snapshot.paramMap.get("clienteid"), 'mor46a60');
+    this.obtenerMor60(this.get.snapshot.paramMap.get("clienteid"), 'mor60');
+    this.obtenerTotal(this.get.snapshot.paramMap.get("clienteid"));
+
   }
 
-  ngOnInit() {
-    this._sockets.escuchar('mensaje-folio').subscribe( ( ( escuchando: any ) => {
-      console.log(escuchando);
-      if (escuchando.comentario !== '') {
-        swal(
-          'Nuevo Mensaje',
-          'Se ha registrado un nuevo comentario en el Folio ' +
-            escuchando.folio +
-            '. Y el comentario fue: ' +
-            escuchando.comentario,
-          'success'
-        );
-        this._creditoService.obtenerComentarios(escuchando.folio, escuchando.clienteId).subscribe( ( resp: any ) => {
-          this.charla = resp.charla;
-        });
-      }
-    }));
-  }
+  ngOnInit() {}
 
   obtenerMor1a28( clienteid: any, tipo: any ) {
 
@@ -97,107 +84,43 @@ export class MostrarFacturasMorosidadComponent implements OnInit {
 
   }
 
-  obtenerMor46( clienteid: any, tipo: any ) {
+  obtenerMor46a60( clienteid: any, tipo: any ) {
 
     this._creditoService.clienteMoroso(clienteid, tipo).subscribe( ( relacion: any ) => {
-      this.mor46 = relacion;
-      if (this.mor46.length === 0) {
-        this.mor46Bol = false;
+      this.mor46a60 = relacion;
+      if (this.mor46a60.length === 0) {
+        this.mor46a60Bol = false;
       } else {
-        this.mor46Bol = true;
+        this.mor46a60Bol = true;
       }
     });
 
 
   }
 
-  openModal( data: any ) {
-    this.clienteId = data.clienteid;
-    this.folio = data.folio;
-    this.saldo = data.saldo;
-    this.diasVen = data.dias_vencidos;
+  obtenerMor60( clienteid: any, tipo: any ) {
 
-    this._creditoService.obtenerComentarios(this.folio, this.clienteId).subscribe( ( resp: any ) => {
-      this.charla = resp.charla;
+    this._creditoService.clienteMoroso(clienteid, tipo).subscribe( ( relacion: any ) => {
+      this.mor60 = relacion;
+      if (this.mor60.length === 0) {
+        this.mor60Bol = false;
+      } else {
+        this.mor60Bol = true;
+      }
     });
+
+  }
+
+  obtenerTotal( clienteid: any ) {
+
+    this._creditoService.clienteMorosoTotal(clienteid).subscribe( ( total: any ) => {
+      this.total = total[0].importe;
+    });
+
   }
 
   regresar() {
     this.router.navigate(['/infoBitacora/', this.get.snapshot.paramMap.get("tipo")]);
-  }
-
-  enviarComentario( forma: NgForm ) {
-    if (forma.value.comentario === '') {
-      swal('Debe ingresar un comentario', 'No ha ingresado un comentario a este folio.', 'error');
-      return;
-    }
-
-    let h = new Date();
-
-    let hor;
-
-    if (h.getHours() < 10) {
-      hor = '0' + h.getHours();
-    } else {
-      hor = h.getHours();
-    }
-
-    let min;
-
-    if (h.getMinutes() < 10) {
-      min = '0' + h.getMinutes();
-    } else {
-      min = h.getMinutes();
-    }
-
-    let sec;
-
-    if (h.getSeconds() < 10) {
-      sec = '0' + h.getSeconds();
-    } else {
-      sec = h.getSeconds();
-    }
-
-    let dia;
-
-    if (h.getDate() < 10) {
-      dia = '0' + h.getDate();
-    } else {
-      dia = h.getDate();
-    }
-
-    let mes;
-
-    if (h.getMonth() < 10) {
-      mes = '0' + (h.getMonth() + 1);
-    } else {
-      mes = (h.getMonth() + 1);
-    }
-
-    let anio = h.getFullYear();
-
-    let hora = hor + ':' + min + ':' + sec;
-
-    let fecha = anio + '-' + mes + '-' + dia;
-
-    let venHist = new VencidoHistorial(
-      this.clienteId,
-      this.folio,
-      forma.value.comentario,
-      fecha,
-      hora
-    );
-
-    this._creditoService.guardarComentario(venHist).subscribe( ( resp: any ) => {
-      if (resp.ok) {
-        this._sockets.acciones('mensaje-folio', venHist, respuesta => {
-          console.log(respuesta)
-        });
-
-        this.comentario = '';
-        forma.value.comentario = '';
-      }
-    });
   }
 
 }

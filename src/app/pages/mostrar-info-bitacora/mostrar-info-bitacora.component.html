@@ -1,5 +1,11 @@
 <div class="row">
 
+    <div class="col text-left">
+
+        <h3 class="font-weight-bold text-danger">Saldo Virtual {{ total | currency }}</h3>
+
+    </div>
+
     <div class="col text-right">
 
         <button type="button" class="btn btn-success" (click)="regresar()">
@@ -54,7 +60,7 @@
 
                 <td class="text-center">
 
-                    <a href="#modalPagos" class="btn" [ngClass]="{'btn-success': mor.pagosMes > 0, 'btn-danger':  mor.pagosMes === 0}" data-dismiss="modal" data-toggle="modal" (click)="openModalPagos(mor)" *ngIf="mor.numero !== 80 && mor.numero !== 1739">
+                    <a href="#modalPagos" class="btn" [ngClass]="{'btn-success': mor.pagosMes > 0, 'btn-danger':  mor.pagosMes === 0}" data-dismiss="modal" data-toggle="modal" (click)="openModalPagos(mor)" *ngIf="mor.numero !== 1 && mor.numero !== 80 && mor.numero !== 1046 && mor.numero !== 1739 && mor.numero !== 1789 && mor.numero !== 2980 && mor.numero !== 3611 && mor.numero !== 4043 && mor.numero !== 4287 && mor.numero !== 4365 && mor.numero !== 4429 && mor.numero !== 4585 && mor.numero !== 4636">
 
                         <i class="mdi" [ngClass]="{'mdi-currency-usd': mor.pagosMes > 0, 'mdi-bell-ring-outline': mor.pagosMes === 0}"></i>
 
@@ -64,7 +70,7 @@
 
                 <td class="text-center">
 
-                    <button type="button" href="#modalFolio" class="btn btn-facebook" (click)="irInfo(mor)" *ngIf="mor.numero !== 80 && mor.numero !== 1739">
+                    <button type="button" href="#modalFolio" class="btn btn-facebook" (click)="irInfo(mor)" *ngIf="mor.numero !== 1 && mor.numero !== 80 && mor.numero !== 1046 && mor.numero !== 1739 && mor.numero !== 1789 && mor.numero !== 2980 && mor.numero !== 3611 && mor.numero !== 4043 && mor.numero !== 4287 && mor.numero !== 4365 && mor.numero !== 4429 && mor.numero !== 4585 && mor.numero !== 4636">
 
                         <i class="mdi mdi-barcode-scan"></i>
 
@@ -74,7 +80,7 @@
 
                 <td class="text-center">
 
-                    <a href="#modalFolio" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" (click)="openModal(mor)" *ngIf="mor.numero !== 80 && mor.numero !== 1739">
+                    <a href="#modalFolio" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" (click)="openModal(mor)" *ngIf="mor.numero !== 1 && mor.numero !== 80 && mor.numero !== 1046 && mor.numero !== 1739 && mor.numero !== 1789 && mor.numero !== 2980 && mor.numero !== 3611 && mor.numero !== 4043 && mor.numero !== 4287 && mor.numero !== 4365 && mor.numero !== 4429 && mor.numero !== 4585 && mor.numero !== 4636">
 
                         <i class="mdi mdi-comment-text-outline"></i>
 
@@ -128,6 +134,8 @@
 
                                 <th class="text-center">Importe</th>
 
+                                <th class="text-center">Días Pasados</th>
+
                                 <th class="text-center">Forma de Pago</th>
 
                                 <th class="text-center">Referencia</th>
@@ -152,25 +160,33 @@
 
                                 <td class="text-right">{{ pag.pagado | currency }}</td>
 
-                                <td class="text-center" *ngIf="pag.formapago == 'C'">
+                                <td class="text-center">{{ pag.dias | number }}</td>
+
+                                <td class="text-center" *ngIf="pag.formapago === 'S'">
+
+                                    - -
+
+                                </td>
+
+                                <td class="text-center" *ngIf="pag.formapago === 'C'">
 
                                     <span class="label label-info">{{ pag.forma }}</span>
 
                                 </td>
 
-                                <td class="text-center" *ngIf="pag.formapago == 'R'">
+                                <td class="text-center" *ngIf="pag.formapago === 'R'">
 
                                     <span class="label label-primary">{{ pag.forma }}</span>
 
                                 </td>
 
-                                <td class="text-center" *ngIf="pag.formapago == 'T'">
+                                <td class="text-center" *ngIf="pag.formapago === 'T'">
 
                                     <span class="label label-primary" style="background: black!important;">{{ pag.forma }}</span>
 
                                 </td>
 
-                                <td class="text-center" *ngIf="pag.formapago == 'E'">
+                                <td class="text-center" *ngIf="pag.formapago === 'E'">
 
                                     <span class="label label-danger">{{ pag.forma }}</span>
 
@@ -186,7 +202,9 @@
 
                                 <td class="text-center" *ngIf="pag.recibo === 0">
 
-                                    <span class="label label-danger">{{ pag.categoria }}</span>
+                                    <span class="label label-danger" *ngIf="pag.categoria !== ''">{{ pag.categoria }}</span>
+
+                                    <span class="label label-danger" *ngIf="pag.categoria === ''">- -</span>
 
                                 </td>
 

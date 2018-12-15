@@ -89,6 +89,18 @@ export class CreditoService {
     return this.http.get( this.url );
   }
 
+  morosidadRelacionVirtual( tipo: string ) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=22&tipo=' + tipo;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=22&tipo=' + tipo;
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=22&tipo=' + tipo;
+    }
+
+    return this.http.get( this.url );
+  }
+
   clienteMoroso( clienteid: any, tipo: any ) {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=17&tipo=' + tipo + '&clienteid=' + clienteid;

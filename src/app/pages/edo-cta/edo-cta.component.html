@@ -66,11 +66,11 @@
 
                 <h4 class="card-title">
 
-                    # {{ clienteFerrum.NUMERO }} {{ clienteFerrum.NOMBRE }}
+                    # {{ number }} {{ nombre }}
 
-                    <span class="label label-danger" *ngIf="clienteFerrum.FORCRE !== 'C'">Cliente Bloqueado</span>
+                    <span class="label label-danger" *ngIf="forcre !== 'C'">Cliente Bloqueado</span>
 
-                    <span class="label label-success" *ngIf="clienteFerrum.FORCRE === 'C'">Cliente Activo</span>
+                    <span class="label label-success" *ngIf="forcre === 'C'">Cliente Activo</span>
 
                 </h4>
 

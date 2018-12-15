@@ -4,15 +4,7 @@ import { CreditoService, UsuarioService, WebsocketService } from '../../services
 
 import { NgForm } from '@angular/forms';
 
-// import { upNotification } from '../../../assets/js/push';
-// declare var require: any;
-// const upNotification = require('assets/js/push');
-// declare function upNotification(numero, nombre, comentario, remitente);
-// declare var upNotification = require('assets/js/push');
-// import * as upNotification from '../../../assets/js/push';
-// declare var upNotification: any;
-
-
+// import { PushNotificationOptions, PushNotificationService } from 'ngx-push-notifications';
 
 @Component({
   selector: 'app-mostrar-info-bitacora',
@@ -43,25 +35,28 @@ export class MostrarInfoBitacoraComponent implements OnInit {
     private get: ActivatedRoute,
     private _creditoService: CreditoService,
     private _sockets: WebsocketService,
-    private _usuariosServices: UsuarioService
+    private _usuariosServices: UsuarioService,
+    // private _pushNotificationService: PushNotificationService,
   ) {
+    // this._pushNotificationService.requestPermission();
     this.id = this._usuariosServices.usuario._id;
     this.tipo = this.get.snapshot.paramMap.get("data");
     this.obtener(this.tipo);
   }
 
   ngOnInit() {
+    // this._pushNotificationService.requestPermission();
     this._sockets.escuchar('mensaje-folio').subscribe( ( ( escuchando: any ) => {
       if (escuchando.comentario !== '') {
-        /*swal(
-          'Nuevo Mensaje',
-          'Se ha registrado un nuevo comentario en el Folio ' +
-            escuchando.folio +
-            '. Y el comentario fue: ' +
+        swal(
+          'Mensaje de ' + escuchando.remitente,
+          'Cliente ' +
+            escuchando.numero + escuchando.nombre +
+            '. Comentario: ' +
             escuchando.comentario,
           'success'
-        );*/
-        // upNotification(escuchando.numero, escuchando.nombre, escuchando.comentario, escuchando.remitente);
+        );
+        // this.pushNot(escuchando.numero, escuchando.nombre, escuchando.comentario, escuchando.remitente);
         this._creditoService.obtenerComentarios(escuchando.clienteId).subscribe( ( resp: any ) => {
           this.charla = resp.charla.reverse();
           this.charlaBol = true;
@@ -73,7 +68,6 @@ export class MostrarInfoBitacoraComponent implements OnInit {
   obtener( morosidad: any ) {
 
     this._creditoService.morosidadRelacion(morosidad).subscribe( ( relacion: any ) => {
-      // this.morosidad = relacion;
       for (let i = 0; i < relacion.length; i++) {
         this._creditoService.pagosMes( relacion[i].clienteid ).subscribe( ( pagosMes: any ) => {
           let mor = {
@@ -195,5 +189,33 @@ export class MostrarInfoBitacoraComponent implements OnInit {
       }
     });
   }
+
+  /*pushNot( numero: any, nombre: any, comentario: any, remitente: any ) {
+    const title = 'Mensaje de ' + remitente;
+    const options = new PushNotificationOptions();
+    options.body = numero + ' ' + nombre +
+    ', comentario: ' +
+    comentario;
+    options.icon = 'assets/images/users/fmo.png';
+
+    this._pushNotificationService.create(title, options).subscribe((notif) => {
+      if (notif.event.type === 'show') {
+        console.log('onshow');
+        setTimeout(() => {
+          notif.notification.close();
+        }, 10000);
+      }
+      if (notif.event.type === 'click') {
+        console.log('click');
+        notif.notification.close();
+      }
+      if (notif.event.type === 'close') {
+        console.log('close');
+      }
+    },
+    (err) => {
+         console.log(err);
+    });
+  }*/
 
 }

@@ -5,6 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
 import { Subscription } from 'rxjs/Subscription';
 
+// import { PushNotificationOptions, PushNotificationService } from 'ngx-push-notifications';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,19 +16,27 @@ export class AppComponent implements OnInit {
   observar: Subscription;
   mostrar: boolean = false;
 
-  private scripts: any = {};
-
   constructor(
     public _ajustes: SettingsService,
     private _wsService: WebsocketService,
-    private _usuariosService: UsuarioService
+    private _usuariosService: UsuarioService,
+    // private _pushNotificationService: PushNotificationService
   ) {
     if (_usuariosService.usuario !== null) {
 
       if (_usuariosService.usuario.rol !== 'ASE_ROLE' && _usuariosService.usuario.rol !== 'USER_ROLE') {
+        // this._pushNotificationService.requestPermission();
         this.observar = this.regresar().subscribe(
           escuchando => {
-            // upNotification(escuchando.numero, escuchando.nombre, escuchando.comentario, escuchando.remitente);
+            swal(
+              'Mensaje de ' + escuchando.remitente,
+              'Cliente ' +
+                '# ' + escuchando.numero + ' - ' + escuchando.nombre +
+                '. Comentario: ' +
+                escuchando.comentario,
+              'success'
+            );
+            // this.pushNot(escuchando.numero, escuchando.nombre, escuchando.comentario, escuchando.remitente);
             this.mostrar = true;
           },
           error => console.error(error),
@@ -46,5 +56,34 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    // this._pushNotificationService.requestPermission();
   }
+
+  /*pushNot( numero: any, nombre: any, comentario: any, remitente: any ) {
+    const title = 'Mensaje de ' + remitente;
+    const options = new PushNotificationOptions();
+    options.body = numero + ' ' + nombre +
+    ', comentario: ' +
+    comentario;
+    options.icon = 'assets/images/users/fmo.png';
+
+    this._pushNotificationService.create(title, options).subscribe((notif) => {
+      if (notif.event.type === 'show') {
+        console.log('onshow');
+        setTimeout(() => {
+          notif.notification.close();
+        }, 10000);
+      }
+      if (notif.event.type === 'click') {
+        console.log('click');
+        notif.notification.close();
+      }
+      if (notif.event.type === 'close') {
+        console.log('close');
+      }
+    },
+    (err) => {
+         console.log(err);
+    });
+  }*/
 }

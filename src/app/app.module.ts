@@ -12,6 +12,10 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
 
+// Push Notification
+// npm i ngx-push-notifications
+// import { PushNotificationService } from 'ngx-push-notifications';
+
 // Modulos
 // import { PagesModule } from './pages/pages.module';
 
@@ -48,6 +52,7 @@ import { RecuperarComponent } from './login/recuperar.component';
     SharedModule,
     SocketIoModule.forRoot(config)
   ],
+  // providers: [PushNotificationService],
   providers: [],
   bootstrap: [AppComponent]
 })

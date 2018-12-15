@@ -21,9 +21,15 @@ export class EdoCtaComponent implements OnInit {
 
   // Importes
   numero: any = '';
+  inicio: any = '';
   abonos: number = 0;
   cargos: number = 0;
   preSaldo: number = 0;
+
+  // Datos del Cliente
+  nombre: any;
+  number: any;
+  forcre: any;
 
   // Dato General
   datos: any[] = [];
@@ -77,11 +83,12 @@ export class EdoCtaComponent implements OnInit {
         if (data.length > 0) {
 
           this.clienteFerrum = data[0];
+          this.nombre = data[0].NOMBRE;
+          this.number = data[0].NUMERO;
+          this.forcre = data[0].FORCRE;
 
           this._clientesService.obtenerFacturas(data[0].CLIENTEID, forma.value.inicio)
             .subscribe( ( edocta: any ) => {
-
-              console.log(edocta);
 
               for (let i = 0; i < edocta.length; i++) {
 

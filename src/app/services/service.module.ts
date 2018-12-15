@@ -21,7 +21,8 @@ import {
   WebsocketService,
   AlmacenService,
   ExcelService,
-  CreditoService
+  CreditoService,
+  // NotificationService
 } from "./services.index";
 
 @NgModule({
@@ -49,7 +50,8 @@ import {
     WebsocketService,
     AlmacenService,
     ExcelService,
-    CreditoService
+    CreditoService,
+    // NotificationService
   ],
   declarations: []
 })

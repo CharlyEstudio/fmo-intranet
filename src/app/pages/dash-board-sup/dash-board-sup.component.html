@@ -14,7 +14,7 @@
 
                             <li>
 
-                                <a class="btn default btn-outline image-popup-vertical-fit" (click)="revisar(asesor.idFerrum, asesor.nombre)">
+                                <a class="btn default btn-outline image-popup-vertical-fit" data-toggle="tooltip" title="Actividad" (click)="revisar(asesor.idFerrum, asesor.nombre)">
 
                                     <i class="mdi mdi-link-variant"></i>
 
@@ -24,7 +24,7 @@
 
                             <li>
 
-                                <a class="btn default btn-outline image-popup-vertical-fit" (click)="cobrado(asesor.idFerrum, asesor.nombre)">
+                                <a class="btn default btn-outline image-popup-vertical-fit" data-toggle="tooltip" title="Cobranza" (click)="cobrado(asesor.idFerrum, asesor.nombre)">
 
                                     <i class="mdi mdi-wallet"></i>
 
@@ -34,7 +34,7 @@
 
                             <li>
 
-                                <a class="btn default btn-outline" (click)="pedidos(asesor.idFerrum, asesor.nombre)">
+                                <a class="btn default btn-outline" data-toggle="tooltip" title="Pedidos" (click)="pedidos(asesor.idFerrum, asesor.nombre)">
 
                                     <i class="mdi mdi-dropbox"></i>
 
@@ -44,9 +44,9 @@
 
                             <li *ngIf="rol == 'ADMIN_ROLE' || rol == 'DIR_ROLE' || rol == 'GER_ROLE'">
 
-                                <a class="btn default btn-outline" (click)="precomision(asesor.idFerrum, asesor.nombre, asesor.img)">
+                                <a class="btn default btn-outline" data-toggle="tooltip" title="Pre-Comisión" (click)="precomision(asesor.idFerrum, asesor.nombre, asesor.img)">
 
-                                    <i class="mdi mdi-rocket"></i>
+                                    <i class="mdi mdi-chart-gantt"></i>
 
                                 </a>
 

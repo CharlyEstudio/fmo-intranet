@@ -82,6 +82,18 @@
     padding: 0.1rem .75rem!important;
 }
 
+.enlace {
+    cursor: pointer;
+}
+
+.enlace:hover {
+    color: white;
+    font-weight: 700;
+    background: #ef5350;
+    border-radius: 100%;
+    padding: 3px 6px;
+}
+
 
 /*
 Template Name: Admin pro Admin

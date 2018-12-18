@@ -6,6 +6,7 @@ export class VencidoHistorial {
         public comentario: string,
         public fecha: string,
         public hora: string,
+        public rango: string,
         public _id?: string
     ) { }
 }

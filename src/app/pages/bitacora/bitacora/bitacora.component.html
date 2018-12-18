@@ -2,107 +2,155 @@
 
     <div class="container-fluid">
 
-        <div>
+        <div class="row">
 
-            <app-morosidad-bitacora></app-morosidad-bitacora>
+            <div class="col-12">
 
-        </div>
+                <app-morosidad-bitacora></app-morosidad-bitacora>
 
-        <div class="alert alert-warning" *ngIf="esperar">
+            </div>
 
-            Obteniendo Comentarios del día
+            <div class="col-12">
 
-        </div>
+                <div class="alert alert-warning" *ngIf="esperar">
 
-        <div class="alert alert-success" *ngIf="ventas">
+                    Obteniendo Comentarios del día
 
-            No hay registros de comentarios y/o notas.
+                </div>
 
-        </div>
+            </div>
 
-        <div class="table-responsive" *ngIf="respuestaGeneral">
+            <div class="col-12 col-lg-3 col-md-3">
 
-            <h2 class="text-center">Comentarios del Día {{ fecha | date }}</h2>
+                <div class="card pl-2 pt-2 pr-2 pb-2">
 
-            <table class="table table-hover table-striped table-bordered" cellspacing="0" role="grid" aria-describedby="comentarios" style="width: 100%;">
+                    <div class="card-title">
 
-                <thead>
+                        <h3>Ver Comentarios</h3>
 
-                    <tr role="row">
+                    </div>
 
-                        <th class="text-center">Hora</th>
+                    <div class="card-body">
 
-                        <th class="text-center"></th>
+                        <div class="row">
 
-                        <th class="text-left">Responsable</th>
+                            <div class="col-lg-2 text-center p-1" *ngFor="let dia of dias">
 
-                        <th class="text-center">Número</th>
+                                <span class="enlace" (click)="cambiarComentarios(dia)">{{ dia }}</span>
 
-                        <th class="text-left">Nombre</th>
+                            </div>
 
-                        <th class="text-left">Comentario</th>
+                        </div>
 
-                        <th class="text-left">Ver</th>
+                    </div>
 
-                    </tr>
+                </div>
 
-                </thead>
+            </div>
 
-                <tbody>
+            <div class="col-12 col-lg-9 col-md-9">
 
-                    <tr role="row" class="odd" *ngFor="let com of comentarios">
+                <div class="alert alert-success" *ngIf="busquedaComentarios">
 
-                        <td class="text-center centrar">
+                    No hay registros de comentarios y/o notas.
 
-                            {{ com.hora }}
+                </div>
 
-                        </td>
+                <div class="table-responsive" *ngIf="respuestaGeneral">
 
-                        <td class="text-center centrar">
+                    <h2 class="text-center">Comentarios del Día {{ fecha | date }}</h2>
 
-                            <img [src]="com.usuario.img | imagen" width="50" class="rounded-circle" />
+                    <table class="table table-hover table-striped table-bordered" cellspacing="0" role="grid" aria-describedby="comentarios" style="width: 100%;">
 
-                        </td>
+                        <thead>
 
-                        <td class="text-left centrar">
+                            <tr role="row">
 
-                            {{ com.usuario.nombre }}
+                                <th class="text-center">Hora</th>
 
-                        </td>
+                                <th class="text-center"></th>
 
-                        <td class="text-center centrar">
+                                <th class="text-left">Responsable</th>
 
-                            {{ com.numero }}
+                                <th class="text-left">Rango</th>
 
-                        </td>
+                                <th class="text-center">Número</th>
 
-                        <td class="text-left centrar">
+                                <th class="text-left">Nombre</th>
 
-                            {{ com.nombre }}
+                                <th class="text-left">Comentario</th>
 
-                        </td>
+                                <th class="text-left">Ver</th>
 
-                        <td class="text-left centrar">
+                            </tr>
 
-                            {{ com.comentario }}
+                        </thead>
 
-                        </td>
+                        <tbody>
 
-                        <td class="text-center centrar">
+                            <tr role="row" class="odd" *ngFor="let com of comentarios">
 
-                            <a href="#modalFolio" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" (click)="openModal(com)">
+                                <td class="text-center centrar">
 
-                                <i class="mdi mdi-comment-text-outline"></i>
+                                    {{ com.hora }}
 
-                            </a>
+                                </td>
 
-                        </td>
+                                <td class="text-center centrar">
 
-                    </tr>
+                                    <img [src]="com.usuario.img | imagen" width="50" class="rounded-circle" />
 
-                </tbody>
+                                </td>
 
-            </table>
+                                <td class="text-left centrar">
+
+                                    {{ com.usuario.nombre }}
+
+                                </td>
+
+                                <td class="text-center centrar">
+
+                                    {{ com.rango }}
+
+                                </td>
+
+                                <td class="text-center centrar">
+
+                                    {{ com.numero }}
+
+                                </td>
+
+                                <td class="text-left centrar">
+
+                                    {{ com.nombre }}
+
+                                </td>
+
+                                <td class="text-left centrar">
+
+                                    {{ com.comentario }}
+
+                                </td>
+
+                                <td class="text-center centrar">
+
+                                    <a href="#modalFolio" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" (click)="openModal(com)">
+
+                                        <i class="mdi mdi-comment-text-outline"></i>
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
 
         </div>
 

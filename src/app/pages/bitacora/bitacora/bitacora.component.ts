@@ -13,6 +13,8 @@ import { NgForm } from '@angular/forms';
 })
 export class BitacoraComponent implements OnInit, OnDestroy {
 
+  dias: number[] = [];
+
   fecha: any;
 
   id: any;
@@ -23,10 +25,11 @@ export class BitacoraComponent implements OnInit, OnDestroy {
   numero: any;
   clienteId: any;
   saldo: any;
+  rango: any;
 
   respuestaGeneral: boolean = false;
-  ventas: boolean = false;
   esperar: boolean = true;
+  busquedaComentarios: boolean = false;
 
   vencidoActual: any[] = [];
   comentarios: any[] = [];
@@ -43,6 +46,10 @@ export class BitacoraComponent implements OnInit, OnDestroy {
   ) {
     this.id = this._usuariosServices.usuario._id;
     let h = new Date();
+
+    for (let i = 1; i <= new Date().getDate(); i++) {
+      this.dias.push(i);
+    }
 
     let dia;
 
@@ -68,11 +75,9 @@ export class BitacoraComponent implements OnInit, OnDestroy {
       if (comentarios.charla.length) {
         this.comentarios = comentarios.charla.reverse();
         this.esperar = false;
-        this.ventas = false;
         this.respuestaGeneral = true;
       } else {
         this.esperar = false;
-        this.ventas = true;
         this.respuestaGeneral = false;
       }
     });
@@ -94,6 +99,41 @@ export class BitacoraComponent implements OnInit, OnDestroy {
     );
   }
 
+  cambiarComentarios( dia: number ) {
+    let h = new Date();
+
+    let day;
+
+    if (dia < 10) {
+      day = '0' + dia;
+    } else {
+      day = dia;
+    }
+
+    let mes;
+
+    if (h.getMonth() < 10) {
+      mes = '0' + (h.getMonth() + 1);
+    } else {
+      mes = (h.getMonth() + 1);
+    }
+
+    let anio = h.getFullYear();
+
+    this.fecha = anio + '-' + mes + '-' + day;
+
+    this._creditoService.obtenerComentariosDia(this.fecha).subscribe( ( nuevoComentario: any ) => {
+      if (nuevoComentario.charla.length !== 0) {
+        this.busquedaComentarios = false;
+        this.respuestaGeneral = true;
+        this.comentarios = nuevoComentario.charla.reverse();
+      } else {
+        this.busquedaComentarios = true;
+        this.respuestaGeneral = false;
+      }
+    });
+  }
+
   ngOnInit() { }
 
   ngOnDestroy() {
@@ -113,6 +153,7 @@ export class BitacoraComponent implements OnInit, OnDestroy {
     this.nombre = data.nombre;
     this.numero = data.numero;
     this.clienteId = data.clienteId;
+    this.rango = data.rango;
 
     this._creditoService.clienteMorosoTotal(data.clienteId).subscribe( ( total: any ) => {
       this.saldo = total[0].importe;
@@ -185,6 +226,7 @@ export class BitacoraComponent implements OnInit, OnDestroy {
       comentario: forma.value.comentario,
       fecha: fecha,
       hora: hora,
+      rango: this.rango,
       remitente: this._usuariosServices.usuario.nombre
     };
 

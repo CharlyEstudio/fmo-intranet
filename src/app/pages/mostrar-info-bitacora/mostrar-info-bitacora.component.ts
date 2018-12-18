@@ -72,15 +72,19 @@ export class MostrarInfoBitacoraComponent implements OnInit {
     this._creditoService.morosidadRelacion(morosidad).subscribe( ( relacion: any ) => {
       for (let i = 0; i < relacion.length; i++) {
         this._creditoService.pagosMes( relacion[i].clienteid ).subscribe( ( pagosMes: any ) => {
-          let mor = {
-            clienteid: relacion[i].clienteid,
-            nombre: relacion[i].nombre,
-            numero: relacion[i].numero,
-            saldo: relacion[i].saldo,
-            pagosMes: pagosMes[0].cantidad
-          };
+          this._creditoService.obtenerComentarios(relacion[i].clienteid).subscribe( ( comentarios: any ) => {
+            let mor = {
+              clienteid: relacion[i].clienteid,
+              nombre: relacion[i].nombre,
+              numero: relacion[i].numero,
+              saldo: relacion[i].saldo,
+              pagosMes: pagosMes[0].cantidad,
+              mensajes: comentarios.charla.length
+            };
 
-          this.morosidad.push(mor);
+            this.morosidad.push(mor);
+
+          });
         });
       }
     });
@@ -182,6 +186,7 @@ export class MostrarInfoBitacoraComponent implements OnInit {
       comentario: forma.value.comentario,
       fecha: fecha,
       hora: hora,
+      rango: this.tipo,
       remitente: this._usuariosServices.usuario.nombre
     };
 

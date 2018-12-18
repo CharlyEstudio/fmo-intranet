@@ -1,7 +1,15 @@
 import { Routes, RouterModule } from '@angular/router';
 
 // Guards
-import { AdminGuard, VerificaTokenGuard, SuperGuard } from '../services/services.index';
+import {
+    AdminGuard,
+    VerificaTokenGuard,
+    SuperGuard,
+    AsesoresGuard,
+    ClienteGuard,
+    DireccionGuard,
+    AuditoriaGuard
+} from '../services/services.index';
 
 // Components
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -46,7 +54,7 @@ import { MostrarFacturasMorosidadComponent } from './mostrar-facturas-morosidad/
 const pageRoutes: Routes = [
     {
         path: 'dashboardDir',
-        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
         component: DashborarDirComponent,
         data:   {
                     titulo: 'Dashboard Dirección',
@@ -55,7 +63,7 @@ const pageRoutes: Routes = [
     },
     {
         path: 'dashboardAse',
-        canActivate: [ VerificaTokenGuard ],
+        canActivate: [ AsesoresGuard, VerificaTokenGuard ],
         component: DasboardAseComponent,
         data:   {
                     titulo: 'Dashboard Asesor',
@@ -64,7 +72,7 @@ const pageRoutes: Routes = [
     },
     {
         path: 'dashboard',
-        canActivate: [ VerificaTokenGuard ],
+        canActivate: [ ClienteGuard, VerificaTokenGuard ],
         component: DashboardComponent,
         data:   {
                     titulo: 'Dashboard',
@@ -93,7 +101,7 @@ const pageRoutes: Routes = [
     },
     {
         path: 'busqueda/:termino',
-        canActivate: [ VerificaTokenGuard ],
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
         component: BusquedaComponent,
         data:
                 {
@@ -116,7 +124,7 @@ const pageRoutes: Routes = [
     {
         path: 'cobranza',
         component: CobranzaComponent,
-        canActivate: [ VerificaTokenGuard ],
+        canActivate: [ AsesoresGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Cobranza del Día',
@@ -126,7 +134,7 @@ const pageRoutes: Routes = [
     {
         path: 'pedidosDia',
         component: PedidosDiaComponent,
-        canActivate: [ VerificaTokenGuard ],
+        canActivate: [ AsesoresGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Pedidos del Día del Asesor',
@@ -136,7 +144,7 @@ const pageRoutes: Routes = [
     {
         path: 'lista-morosidad/:id/:nombre/:inicio/:fin',
         component: ListaMorosidadComponent,
-        canActivate: [ VerificaTokenGuard ],
+        canActivate: [ AsesoresGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Relación de Clientes Morosos',
@@ -146,7 +154,7 @@ const pageRoutes: Routes = [
     {
         path: 'pre-comision',
         component: PreComisionComponent,
-        canActivate: [ VerificaTokenGuard ],
+        canActivate: [ AsesoresGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Previsualización de la Comisión del Mes',
@@ -156,7 +164,7 @@ const pageRoutes: Routes = [
     {
         path: 'edo-cta',
         component: EdoCtaComponent,
-        canActivate: [ VerificaTokenGuard ],
+        canActivate: [ AsesoresGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Estado de Cuenta del Cliente',
@@ -166,7 +174,7 @@ const pageRoutes: Routes = [
     {
         path: 'mov-fol',
         component: MovimientosFolioComponent,
-        canActivate: [ VerificaTokenGuard ],
+        canActivate: [ AuditoriaGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Movimiento Detallado de Folios',
@@ -177,7 +185,7 @@ const pageRoutes: Routes = [
     {
         path: 'repoSurtido',
         component: RepoSurtidoComponent,
-        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Reporte de Almacén',
@@ -188,17 +196,18 @@ const pageRoutes: Routes = [
     {
         path: 'dashBoardAuditoria',
         component: DashBoardAuditoriaComponent,
-        canActivate: [ VerificaTokenGuard ],
+        canActivate: [ AuditoriaGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Dashboard de Auditoria & Cobranza',
                     name: 'description'
                 }
     },
+    // Esto quitarlo
     {
         path: 'zona1Auditoria',
         component: Zona1AuditoriaComponent,
-        canActivate: [ VerificaTokenGuard ],
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Información Detallada de Zona 1',
@@ -208,7 +217,7 @@ const pageRoutes: Routes = [
     {
         path: 'zona2Auditoria',
         component: Zona2AuditoriaComponent,
-        canActivate: [ VerificaTokenGuard ],
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Información Detallada de Zona 2',
@@ -218,13 +227,14 @@ const pageRoutes: Routes = [
     {
         path: 'zonaEspecial',
         component: ZonaEspecialComponent,
-        canActivate: [ VerificaTokenGuard ],
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Información Detallada de Zona Especial',
                     name: 'description'
                 }
     },
+    // Hasta aquí quitar
     {
         path: 'direccionCuentas',
         component: BitacoraComponent,
@@ -259,7 +269,7 @@ const pageRoutes: Routes = [
     {
         path: 'dashBoardSup',
         component: DashBoardSupComponent,
-        canActivate: [ VerificaTokenGuard ],
+        canActivate: [ SuperGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Dashboard de Supervisión',
@@ -269,7 +279,7 @@ const pageRoutes: Routes = [
     {
         path: 'asesor-vista/:id/:nombre',
         component: AsesorVistaComponent,
-        canActivate: [ VerificaTokenGuard ],
+        canActivate: [ SuperGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Vista del Asesor',
@@ -279,7 +289,7 @@ const pageRoutes: Routes = [
     {
         path: 'cobro-vista/:id/:nombre',
         component: CobroVistaComponent,
-        canActivate: [ VerificaTokenGuard ],
+        canActivate: [ SuperGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Vista del Cobro del Asesor',
@@ -289,7 +299,7 @@ const pageRoutes: Routes = [
     {
         path: 'pedido-vista/:id/:nombre',
         component: PedidoVistaComponent,
-        canActivate: [ VerificaTokenGuard ],
+        canActivate: [ SuperGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Vista de los Pedidos del Asesor',
@@ -299,7 +309,7 @@ const pageRoutes: Routes = [
     {
         path: 'precom-vista/:id/:nombre/:img',
         component: PrecomVistaComponent,
-        canActivate: [ VerificaTokenGuard ],
+        canActivate: [ SuperGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Vista de la Pre-Comisión del Asesor',
@@ -310,7 +320,7 @@ const pageRoutes: Routes = [
     {
         path: 'comisiones',
         component: ComisionesComponent,
-        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Listado de Comisiones Realizadas',
@@ -320,7 +330,7 @@ const pageRoutes: Routes = [
     {
         path: 'totalComisiones',
         component: TotalComisionesComponent,
-        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Totales de Comisiones Realizadas',
@@ -331,7 +341,7 @@ const pageRoutes: Routes = [
     {
         path: 'dVentas',
         component: VentaComponent,
-        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Diario de Ventas',
@@ -341,7 +351,7 @@ const pageRoutes: Routes = [
     {
         path: 'dCompras',
         component: CompraComponent,
-        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Diario de Compras',
@@ -351,7 +361,7 @@ const pageRoutes: Routes = [
     {
         path: 'utilidades',
         component: UtilidadesComponent,
-        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Utilidades',
@@ -361,7 +371,7 @@ const pageRoutes: Routes = [
     {
         path: 'notCred',
         component: NotasComponent,
-        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Notas de Crédito',
@@ -371,7 +381,7 @@ const pageRoutes: Routes = [
     {
         path: 'dInventario',
         component: InventarioComponent,
-        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Diario de Inventario',
@@ -381,7 +391,7 @@ const pageRoutes: Routes = [
     {
         path: 'backorder',
         component: BackorderComponent,
-        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Back Order',
@@ -391,7 +401,7 @@ const pageRoutes: Routes = [
     {
         path: 'ent-sal',
         component: EntSalComponent,
-        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Entradas & Salidas',
@@ -401,7 +411,7 @@ const pageRoutes: Routes = [
     {
         path: 'dias-lunes',
         component: RepoLunesComponent,
-        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        canActivate: [ AuditoriaGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Días Lunes',
@@ -411,7 +421,7 @@ const pageRoutes: Routes = [
     {
         path: 'cProveedores',
         component: CarteraProveedoresComponent,
-        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Cartera de Proveedores',
@@ -421,7 +431,7 @@ const pageRoutes: Routes = [
     {
         path: 'cClientes',
         component: CarteraClientesComponent,
-        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Cartera de Clientes',
@@ -431,19 +441,19 @@ const pageRoutes: Routes = [
     // Redirección
     {
         path: '',
-        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
         redirectTo: '/dashboardDir',
         pathMatch: 'full'
     },
     {
         path: '',
-        canActivate: [ VerificaTokenGuard ],
+        canActivate: [ AsesoresGuard, VerificaTokenGuard ],
         redirectTo: '/dashboardAse',
         pathMatch: 'full'
     },
     {
         path: '',
-        canActivate: [ VerificaTokenGuard ],
+        canActivate: [ ClienteGuard, VerificaTokenGuard ],
         redirectTo: '/dashboard',
         pathMatch: 'full'
     }

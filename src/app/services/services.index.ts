@@ -1,8 +1,13 @@
+
 // Guards
 export { LoginGuardGuard } from "./guards/login-guard.guard";
 export { AdminGuard } from './guards/admin.guard';
 export { VerificaTokenGuard } from "./guards/verifica-token.guard";
 export { SuperGuard } from "./guards/super.guard";
+export { AsesoresGuard } from "./guards/asesores.guard";
+export { ClienteGuard } from "./guards/cliente.guard";
+export { DireccionGuard } from "./guards/direccion.guard";
+export { AuditoriaGuard } from "./guards/auditoria.guard";
 
 // Subir Archivo o Imagen
 export { SubirArchivoService } from "./subirArchivo/subir-archivo.service";

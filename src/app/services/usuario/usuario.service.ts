@@ -127,8 +127,6 @@ export class UsuarioService {
     return this.http.post( url, usuario )
       .map( ( resp: any ) => {
 
-        console.log(resp);
-
         this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu, resp.usuario.rol);
 
         return true;

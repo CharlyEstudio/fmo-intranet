@@ -62,9 +62,11 @@ export class CobranzaGeneralComponent implements OnInit, OnDestroy {
             this.tarjeta += this.cobranza[i].pagado;
           }
 
-          this.total += this.cobranza[i].pagado;
+          // this.total += this.cobranza[i].pagado;
 
         }
+
+        this.total = this.cheques + this.efectivo + this.transferencia + this.tarjeta;
       },
       error => console.error('Error en el obs', error),
       () => console.log('El observador termino!')
@@ -99,9 +101,17 @@ export class CobranzaGeneralComponent implements OnInit, OnDestroy {
             this.transferencia += this.cobranza[i].pagado;
           }
 
-          this.total += this.cobranza[i].pagado;
+          if (this.cobranza[i].formapago === 'S') {
+            this.notas += this.cobranza[i].pagado;
+          }
+
+          if (this.cobranza[i].formapago === 'T') {
+            this.tarjeta += this.cobranza[i].pagado;
+          }
 
         }
+
+        this.total = this.cheques + this.efectivo + this.transferencia + this.tarjeta;
 
       });
 

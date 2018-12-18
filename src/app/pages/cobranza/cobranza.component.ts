@@ -41,7 +41,7 @@ export class CobranzaComponent implements OnInit {
       .subscribe( ( resp: any ) => {
         this.cobranza = resp;
 
-        for(let i=0; i < this.cobranza.length; i++){
+        for (let i = 0; i < this.cobranza.length; i++) {
 
           if (this.cobranza[i].formapago === 'C') {
             this.cheques += this.cobranza[i].pagado;
@@ -58,28 +58,6 @@ export class CobranzaComponent implements OnInit {
           this.total += this.cobranza[i].pagado;
 
         }
-
-        // for(let j=0; j < this.cobranza.length; j++){
-
-        //   if (this.cobranza[j].formapago === 'E') {
-        //     this.efectivo += this.cobranza[j].pagado;
-        //   }
-
-        // }
-
-        // for(let k=0; k < this.cobranza.length; k++){
-
-        //   if (this.cobranza[k].formapago === 'R') {
-        //     this.transferencia += this.cobranza[k].pagado;
-        //   }
-
-        // }
-
-        // for(let l=0; l < this.cobranza.length; l++){
-
-        //   this.total += this.cobranza[l].pagado;
-
-        // }
 
       });
 

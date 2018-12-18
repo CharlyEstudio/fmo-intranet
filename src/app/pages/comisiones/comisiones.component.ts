@@ -40,8 +40,10 @@ export class ComisionesComponent implements OnInit {
       return;
     }
 
-    this._comisionesService.buscarMesComision(forma.value.mes)
+    this._comisionesService.buscarMesComision(forma.value.mes, forma.value.anio)
       .subscribe( ( resp: any ) => {
+
+        console.log(resp.comisiones);
 
         let comisiones = resp.comisiones;
 
@@ -77,7 +79,7 @@ export class ComisionesComponent implements OnInit {
 
         for (let j = 0; j < asesores.length; j++) {
 
-          if (comisiones[i].idFerrum === asesores[j].idFerrum) {
+          if (comisiones[i].idFerrum == asesores[j].idFerrum) {
 
             this.datos.push(
               {

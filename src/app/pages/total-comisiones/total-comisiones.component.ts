@@ -42,7 +42,7 @@ export class TotalComisionesComponent implements OnInit {
       return;
     }
 
-    this._comisionesService.buscarMesComision(forma.value.mes)
+    this._comisionesService.buscarMesComision(forma.value.mes, forma.value.anio)
       .subscribe( ( resp: any ) => {
 
         if (resp.comisiones.length > 0) {

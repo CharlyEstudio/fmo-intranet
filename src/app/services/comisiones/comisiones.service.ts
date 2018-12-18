@@ -73,15 +73,15 @@ export class ComisionesService {
       });
   }
 
-  buscarMesComision( mes: any ) {
+  buscarMesComision( mes: any, anio: any ) {
     let url;
 
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/mes/' + mes;
+      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/mes/' + mes + "/" + anio;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/mes/' + mes;
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/mes/' + mes + "/" + anio;
     } else {
-      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/mes/' + mes;
+      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/mes/' + mes + "/" + anio;
     }
 
     return this.http.get( url )

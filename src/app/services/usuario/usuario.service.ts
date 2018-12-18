@@ -24,6 +24,7 @@ export class UsuarioService {
   usuario: Usuario;
   token: string;
   menu: any[] = [];
+  rol: any;
 
   constructor(
     public http: HttpClient, public router: Router,
@@ -78,11 +79,12 @@ export class UsuarioService {
     }
   }
 
-  guardarStorage(id: string, token: string, usuario: Usuario, menu: any) {
+  guardarStorage(id: string, token: string, usuario: Usuario, menu: any, rol: any) {
     localStorage.setItem( 'id', id );
     localStorage.setItem( 'token', token );
     localStorage.setItem( 'usuario', JSON.stringify( usuario ));
     localStorage.setItem( 'menu', JSON.stringify( menu ));
+    localStorage.setItem( 'rol', rol);
 
     this.usuario = usuario;
     this.token = token;
@@ -93,6 +95,7 @@ export class UsuarioService {
     this.usuario = null;
     this.token = '';
     this.menu = [];
+
 
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
@@ -124,7 +127,9 @@ export class UsuarioService {
     return this.http.post( url, usuario )
       .map( ( resp: any ) => {
 
-        this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu);
+        console.log(resp);
+
+        this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu, resp.usuario.rol);
 
         return true;
       })
@@ -177,7 +182,7 @@ export class UsuarioService {
       .map( (resp: any) => {
         if ( usuario._id === this.usuario._id ) {
           let usuarioDB: Usuario = resp.usuario;
-          this.guardarStorage( usuarioDB._id, this.token, usuarioDB, this.menu );
+          this.guardarStorage( usuarioDB._id, this.token, usuarioDB, this.menu, usuarioDB.rol );
         }
 
         swal('Usuario Actualizado!', usuario.nombre, 'success');
@@ -200,7 +205,7 @@ export class UsuarioService {
         swal('Imagen Actualizada', this.usuario.nombre, 'success');
         // alert('Imagen Actualizada ' + this.usuario.nombre);
 
-        this.guardarStorage( id, this.token, this.usuario, this.menu );
+        this.guardarStorage( id, this.token, this.usuario, this.menu, resp.usuario.rol );
       })
       .catch( resp => {});
   }
@@ -296,7 +301,7 @@ export class UsuarioService {
         return resp.usuario;
       })
       .catch( err => {
-        swal(err.error.mensaje , err.error.errors.message, 'error');
+        swal('Erro' , err.error.error, 'error');
         return Observable.throw( err );
       });
 

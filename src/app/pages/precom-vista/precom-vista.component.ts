@@ -1538,7 +1538,7 @@ export class PrecomVistaComponent implements OnInit {
               .then(confirm => {
                 if (confirm) {
                   this._usuarioService.guardarComision( comisionEnviar )
-                .subscribe();
+                    .subscribe();
                 }
               });
             } else {

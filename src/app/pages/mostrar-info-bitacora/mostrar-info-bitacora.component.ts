@@ -22,6 +22,8 @@ export class MostrarInfoBitacoraComponent implements OnInit {
   comentario: any = '';
   tipo: any;
 
+  total: number = 0;
+
   nombre: any;
   numero: any;
 
@@ -83,6 +85,10 @@ export class MostrarInfoBitacoraComponent implements OnInit {
       }
     });
 
+    this._creditoService.morosidadRelacionVirtual(morosidad).subscribe( ( totalMor: any ) => {
+      this.total = totalMor[0].saldo;
+    });
+
   }
 
   irInfo( data: any ) {
@@ -100,6 +106,8 @@ export class MostrarInfoBitacoraComponent implements OnInit {
   }
 
   openModal( data: any ) {
+    this.charla = [];
+    this.charlaBol = false;
     this.clienteId = data.clienteid;
     this.nombre = data.nombre;
     this.numero = data.numero;

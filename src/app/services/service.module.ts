@@ -11,6 +11,7 @@ import {
   LoginGuardGuard,
   VerificaTokenGuard,
   AdminGuard,
+  SuperGuard,
   SubirArchivoService,
   PhpService,
   DiariosService,
@@ -35,6 +36,7 @@ import {
     LoginGuardGuard,
     VerificaTokenGuard,
     AdminGuard,
+    SuperGuard,
     // Servicios
     SettingsService,
     SidebarService,

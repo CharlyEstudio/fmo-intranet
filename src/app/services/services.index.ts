@@ -2,6 +2,7 @@
 export { LoginGuardGuard } from "./guards/login-guard.guard";
 export { AdminGuard } from './guards/admin.guard';
 export { VerificaTokenGuard } from "./guards/verifica-token.guard";
+export { SuperGuard } from "./guards/super.guard";
 
 // Subir Archivo o Imagen
 export { SubirArchivoService } from "./subirArchivo/subir-archivo.service";

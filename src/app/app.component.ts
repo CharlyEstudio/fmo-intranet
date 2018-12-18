@@ -14,7 +14,6 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class AppComponent implements OnInit {
   observar: Subscription;
-  mostrar: boolean = false;
 
   constructor(
     public _ajustes: SettingsService,
@@ -22,29 +21,26 @@ export class AppComponent implements OnInit {
     private _usuariosService: UsuarioService,
     // private _pushNotificationService: PushNotificationService
   ) {
-    if (_usuariosService.usuario !== null) {
 
-      if (_usuariosService.usuario.rol !== 'ASE_ROLE' && _usuariosService.usuario.rol !== 'USER_ROLE') {
-        // this._pushNotificationService.requestPermission();
-        this.observar = this.regresar().subscribe(
-          escuchando => {
-            swal(
-              'Mensaje de ' + escuchando.remitente,
-              'Cliente ' +
-                '# ' + escuchando.numero + ' - ' + escuchando.nombre +
-                '. Comentario: ' +
-                escuchando.comentario,
-              'success'
-            );
-            // this.pushNot(escuchando.numero, escuchando.nombre, escuchando.comentario, escuchando.remitente);
-            this.mostrar = true;
-          },
-          error => console.error(error),
-          () => console.log('Fin del Observador Comentarios')
-        );
-      }
+    // this._pushNotificationService.requestPermission();
+    this.observar = this.regresar().subscribe(
+      escuchando => {
+        if (localStorage.getItem('rol') !== 'ASE_ROLE' && localStorage.getItem('rol') !== 'USER_ROLE') {
+          swal(
+            'Mensaje de ' + escuchando.remitente,
+            'Cliente ' +
+              '# ' + escuchando.numero + ' - ' + escuchando.nombre +
+              '. Comentario: ' +
+              escuchando.comentario,
+            'success'
+          );
+          // this.pushNot(escuchando.numero, escuchando.nombre, escuchando.comentario, escuchando.remitente);
+        }
+      },
+      error => console.error(error),
+      () => console.log('Fin del Observador Comentarios')
+    );
 
-    }
   }
 
   regresar(): Observable<any> {

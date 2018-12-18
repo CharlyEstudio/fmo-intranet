@@ -1,7 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 
 // Guards
-import { AdminGuard, VerificaTokenGuard } from '../services/services.index';
+import { AdminGuard, VerificaTokenGuard, SuperGuard } from '../services/services.index';
 
 // Components
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -228,7 +228,7 @@ const pageRoutes: Routes = [
     {
         path: 'direccionCuentas',
         component: BitacoraComponent,
-        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        canActivate: [ SuperGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Dirección de Cuentas',
@@ -238,7 +238,7 @@ const pageRoutes: Routes = [
     {
         path: 'infoBitacora/:data',
         component: MostrarInfoBitacoraComponent,
-        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        canActivate: [ SuperGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Información de Clientes Morosos',
@@ -248,7 +248,7 @@ const pageRoutes: Routes = [
     {
         path: 'infoFacturas/:clienteid/:nombre/:numero/:tipo',
         component: MostrarFacturasMorosidadComponent,
-        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        canActivate: [ SuperGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Información a Detalle',

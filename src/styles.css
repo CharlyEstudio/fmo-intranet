@@ -297,9 +297,6 @@ User card page
     h3.font-light {
         font-size: 1em;
     }
-    h3.card-title {
-        font-size: .7em;
-    }
     .totales h3.font-light {
         font-size: .8em;
     }
@@ -360,9 +357,6 @@ User card page
     h2.font-light,
     h3.font-light {
         font-size: 1em;
-    }
-    h3.card-title {
-        font-size: .7em;
     }
     .card.servicio {
         height: 93%!important;

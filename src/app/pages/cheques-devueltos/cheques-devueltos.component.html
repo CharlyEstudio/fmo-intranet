@@ -1,0 +1,61 @@
+<div *ngIf="esperar">
+
+    <div class="alert alert-warning">
+
+        Obteniendo Comentarios del día
+
+    </div>
+
+</div>
+
+<div *ngIf="sinResultado">
+
+    <div class="alert alert-success">
+
+        No se obtuvieron cheques devuletos
+
+    </div>
+
+</div>
+
+<div class="row" *ngIf="!sinResultado">
+
+    <div class="col-12 pb-5 text-right">
+
+        <button type="button" class="btn btn-outline-success" (click)="regresar()">Regresar</button>
+
+    </div>
+
+    <div class="col-md-6 col-lg-4 col-xlg-2" *ngFor="let cheque of cheques">
+
+        <div class="card">
+
+            <div class="box bg-dark text-center">
+
+                <h1 class="font-light text-white">{{ cheque.importe | currency }}</h1>
+
+                <h6 class="text-white">
+
+                    Saldo: <span class="label label-danger">{{ cheque.saldo | currency }}</span>
+
+                </h6>
+
+                <h6 class="text-white">
+
+                    Folio: {{ cheque.folio }}
+
+                </h6>
+
+                <h6 class="text-white"># {{ cheque.numero}} {{ cheque.nombre }}</h6>
+
+                <h6 class="text-white">{{ cheque.asesor }}</h6>
+
+                <h6 class="text-white">{{ cheque.fecha | date }}</h6>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -190,4 +190,16 @@ export class CreditoService {
     return this.http.get( this.url );
   }
 
+  chequesDevueltos() {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=23';
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=23';
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=23';
+    }
+
+    return this.http.get( this.url );
+  }
+
 }

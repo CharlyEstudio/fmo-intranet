@@ -49,4 +49,8 @@ export class MorosidadBitacoraComponent implements OnInit {
     this.router.navigate(['/infoBitacora/', data]);
   }
 
+  cheques() {
+    this.router.navigate(['/chequesDevueltos/']);
+  }
+
 }

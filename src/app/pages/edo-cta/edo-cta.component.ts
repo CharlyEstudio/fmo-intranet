@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioService, ClientesService } from '../../services/services.index';
+import { UsuarioService, ClientesService, ExcelService } from '../../services/services.index';
 import { Usuario } from '../../models/usuario.model';
 import { NgForm } from '@angular/forms';
 
@@ -40,7 +40,8 @@ export class EdoCtaComponent implements OnInit {
 
   constructor(
     private _usuariosService: UsuarioService,
-    private _clientesService: ClientesService
+    private _clientesService: ClientesService,
+    public _excelService: ExcelService
   ) {
     this.usuario = this._usuariosService.usuario;
     this.asesor = Number(this.usuario.idFerrum);
@@ -217,6 +218,11 @@ export class EdoCtaComponent implements OnInit {
 
     }
 
+  }
+
+  exportarExcel(dato: any, clienteFerrum: any) {
+    let filename = 'reporte_' + clienteFerrum.numero;
+    this._excelService.exportAsExcelFile(dato, filename);
   }
 
 }

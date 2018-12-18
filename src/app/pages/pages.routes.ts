@@ -50,6 +50,7 @@ import { MovimientosFolioComponent } from './movimientos-folio/movimientos-folio
 import { BitacoraComponent } from './bitacora/bitacora/bitacora.component';
 import { MostrarInfoBitacoraComponent } from './mostrar-info-bitacora/mostrar-info-bitacora.component';
 import { MostrarFacturasMorosidadComponent } from './mostrar-facturas-morosidad/mostrar-facturas-morosidad.component';
+import { ChequesDevueltosComponent } from './cheques-devueltos/cheques-devueltos.component';
 
 const pageRoutes: Routes = [
     {
@@ -252,6 +253,16 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Información de Clientes Morosos',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'chequesDevueltos',
+        component: ChequesDevueltosComponent,
+        canActivate: [ SuperGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Cheques Devueltos',
                     name: 'description'
                 }
     },

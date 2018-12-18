@@ -71,6 +71,7 @@ export class MostrarInfoBitacoraComponent implements OnInit {
 
     this._creditoService.morosidadRelacion(morosidad).subscribe( ( relacion: any ) => {
       for (let i = 0; i < relacion.length; i++) {
+        // console.log(relacion[i].saldo);
         this._creditoService.pagosMes( relacion[i].clienteid ).subscribe( ( pagosMes: any ) => {
           this._creditoService.obtenerComentarios(relacion[i].clienteid).subscribe( ( comentarios: any ) => {
             let mor = {
@@ -84,9 +85,23 @@ export class MostrarInfoBitacoraComponent implements OnInit {
 
             this.morosidad.push(mor);
 
+            console.log(this.morosidad);
+            this.morosidad.sort((a, b) => {
+              if (a.saldo < b.saldo) {
+                return 1;
+              }
+
+              if (a.saldo > b.saldo) {
+                return -1;
+              }
+
+              return 0;
+            });
+
           });
         });
       }
+
     });
 
     this._creditoService.morosidadRelacionVirtual(morosidad).subscribe( ( totalMor: any ) => {

@@ -11,6 +11,19 @@ import { DashborarDirComponent } from './dashborar-dir/dashborar-dir.component';
 import { GraficoBarraComponent } from '../components/grafico-barra/grafico-barra.component';
 import { GraficoDonaComponent } from '../components/grafico-dona/grafico-dona.component';
 
+// Shared
+import { SharedModule } from '../shared/shared.module';
+
+// Rutas
+import { PAGES_ROUTES } from './pages.routes';
+
+// Graficas ng2-charts
+import { ChartsModule } from 'ng2-charts';
+import { AccountSettingsComponent } from './account-settings/account-settings.component';
+
+// Pipes
+import { PipesModule } from '../pipes/pipes.module';
+
 // General
 import { ProfileComponent } from './profile/profile.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
@@ -50,14 +63,6 @@ import { CobroVistaComponent } from './cobro-vista/cobro-vista.component';
 import { PedidoVistaComponent } from './pedido-vista/pedido-vista.component';
 import { PrecomVistaComponent } from './precom-vista/precom-vista.component';
 import { DashBoardAuditoriaComponent } from './dash-board-auditoria/dash-board-auditoria.component';
-// import { ProgressComponent } from './progress/progress.component';
-// import { Graficas1Component } from './graficas1/graficas1.component';
-// import { PagesComponent } from './pages.component';
-// import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
-// import { HospitalesComponent } from './hospitales/hospitales.component';
-// import { MedicosComponent } from './medicos/medicos.component';
-// import { MedicoComponent } from './medicos/medico.component';
-// import { IncrementadorComponent } from '../components/incrementador/incrementador.component';
 import { CobranzaGeneralComponent } from './cobranza-general/cobranza-general.component';
 import { ComisionesComponent } from './comisiones/comisiones.component';
 import { TotalComisionesComponent } from './total-comisiones/total-comisiones.component';
@@ -66,26 +71,12 @@ import { Zona2AuditoriaComponent } from './zona2-auditoria/zona2-auditoria.compo
 import { ZonaEspecialComponent } from './zona-especial/zona-especial.component';
 import { EdoCtaComponent } from './edo-cta/edo-cta.component';
 import { RepoSurtidoComponent } from './repo-surtido/repo-surtido.component';
-
-// Shared
-import { SharedModule } from '../shared/shared.module';
-
-// Rutas
-import { PAGES_ROUTES } from './pages.routes';
-
-// Graficas ng2-charts
-import { ChartsModule } from 'ng2-charts';
-import { AccountSettingsComponent } from './account-settings/account-settings.component';
-// import { PromesasComponent } from './promesas/promesas.component';
-// import { RxjsComponent } from './rxjs/rxjs.component';
-
-// Pipes
-import { PipesModule } from '../pipes/pipes.module';
 import { MovimientosFolioComponent } from './movimientos-folio/movimientos-folio.component';
 import { BitacoraComponent } from './bitacora/bitacora/bitacora.component';
 import { MorosidadBitacoraComponent } from '../components/morosidad-bitacora/morosidad-bitacora.component';
 import { MostrarInfoBitacoraComponent } from './mostrar-info-bitacora/mostrar-info-bitacora.component';
 import { MostrarFacturasMorosidadComponent } from './mostrar-facturas-morosidad/mostrar-facturas-morosidad.component';
+import { ChequesDevueltosComponent } from './cheques-devueltos/cheques-devueltos.component';
 
 @NgModule({
     declarations: [
@@ -145,23 +136,12 @@ import { MostrarFacturasMorosidadComponent } from './mostrar-facturas-morosidad/
         MorosidadBitacoraComponent,
         MostrarInfoBitacoraComponent,
         MostrarFacturasMorosidadComponent,
-        // PagesComponent,
-        // PromesasComponent, // Desactivado por no usarlo
-        // ProgressComponent, // Desactivado por no usarlo
-        // Graficas1Component, // Desactivado por no usarlo
-        // IncrementadorComponent, // Desactivado por no usarlo
-        // RxjsComponent, // Desactivado por no usarlo
-        // ModalUploadComponent,
-        // HospitalesComponent, // Desactivado por no usarlo
-        // MedicosComponent, // Desactivado por no usarlo
-        // MedicoComponent, // Desactivado por no usarlo
+        ChequesDevueltosComponent,
+        ChequesDevueltosComponent
     ],
     exports: [
         DashborarDirComponent,
-        DashboardComponent,
-        // PagesComponent,
-        // ProgressComponent, // Desactivado por no usarlo
-        // Graficas1Component // Desactivado por no usarlo
+        DashboardComponent
     ],
     imports: [
         CommonModule,

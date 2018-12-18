@@ -65,12 +65,12 @@ export class ClientesService {
     let cli = JSON.stringify(cliente);
 
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=4&&asesor=&email=' + email + '&info=' + data + '&cliente=' + cli;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=4&email=' + email + '&info=' + data + '&cliente=' + cli;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=4&&asesor=&email=' + email + '&info=' + data + '&cliente=' + cli;
+      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=4&email=' + email + '&info=' + data + '&cliente=' + cli;
     } else {
       // tslint:disable-next-line:max-line-length
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=4&&asesor=&email=' + email + '&info=' + data + '&cliente=' + cli;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=4&email=' + email + '&info=' + data + '&cliente=' + cli;
     }
 
     return this.http.get( this.url );

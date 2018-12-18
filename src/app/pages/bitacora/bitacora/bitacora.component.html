@@ -2,41 +2,87 @@
 
     <div class="container-fluid">
 
-        <div class="row">
+        <div>
 
-            <div class="col-12">
+            <app-morosidad-bitacora></app-morosidad-bitacora>
 
-                <app-morosidad-bitacora></app-morosidad-bitacora>
+        </div>
 
-            </div>
+        <div>
 
-            <div class="col-12">
+            <div class="alert alert-warning" *ngIf="esperar">
 
-                <div class="alert alert-warning" *ngIf="esperar">
-
-                    Obteniendo Comentarios del día
-
-                </div>
+                Obteniendo Comentarios del día
 
             </div>
 
-            <div class="col-12 col-lg-3 col-md-3">
+        </div>
 
-                <div class="card pl-2 pt-2 pr-2 pb-2">
+        <div class="table-responsive">
 
-                    <div class="card-title">
+            <div class="card">
 
-                        <h3>Ver Comentarios</h3>
+                <ul class="nav nav-tabs profile-tab" role="tablist">
 
-                    </div>
+                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" id="principal" href="#home" role="tab">Timeline</a> </li>
 
-                    <div class="card-body">
+                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#cambiar" role="tab">Cambiar fecha</a> </li>
 
-                        <div class="row">
+                    <li class="nav-item"> <a class="nav-comentario">Comentarios del Día {{ fecha | date }}</a> </li>
 
-                            <div class="col-lg-2 text-center p-1" *ngFor="let dia of dias">
+                </ul>
 
-                                <span class="enlace" (click)="cambiarComentarios(dia)">{{ dia }}</span>
+                <div class="tab-content">
+
+                    <div class="tab-pane active" id="home" role="tabpanel">
+
+                        <div class="card-body" *ngIf="busquedaComentarios">
+
+                            <div class="alert alert-danger">
+
+                                No hay registros de comentarios y/o notas.
+
+                            </div>
+
+                        </div>
+
+                        <div class="card-body" *ngIf="respuestaGeneral">
+
+                            <div class="profiletimeline">
+
+                                <div class="sl-item" *ngFor="let com of comentarios">
+
+                                    <div class="sl-left"> <img [src]="com.usuario.img | imagen" alt="user" class="img-circle"> </div>
+
+                                    <div class="sl-right">
+
+                                        <div>
+
+                                            <a href="#" class="link">{{ com.usuario.nombre }}</a> <span class="sl-date">{{ com.hora }}</span>
+
+                                            <p class="sl-date">{{ com.rango }}</p>
+
+                                            <p class="sl-date"># {{ com.numero }} {{ com.nombre }}</p>
+
+                                            <p>{{ com.comentario }}</p>
+
+                                            <div class="like-comm">
+
+                                                <a href="#modalFolio" class="btn btn-outline-primary" data-dismiss="modal" data-toggle="modal" (click)="openModal(com)">
+
+                                                    <i class="mdi mdi-comment-text-outline"></i> Ver Mensajes
+
+                                                </a>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <hr>
+
+                                </div>
 
                             </div>
 
@@ -44,109 +90,37 @@
 
                     </div>
 
-                </div>
+                    <div class="tab-pane" id="cambiar" role="tabpanel">
 
-            </div>
+                        <div class="card-body">
 
-            <div class="col-12 col-lg-9 col-md-9">
+                            <div class="row">
 
-                <div class="alert alert-success" *ngIf="busquedaComentarios">
+                                <div class="col-md-12 col-xs-12 b-r"> <strong>Ver Comentarios</strong>
 
-                    No hay registros de comentarios y/o notas.
+                                    <br>
 
-                </div>
+                                    <p class="text-muted">Seleccione la fecha que desea ver los comentarios de ese momento.</p>
 
-                <div class="table-responsive" *ngIf="respuestaGeneral">
+                                </div>
 
-                    <h2 class="text-center">Comentarios del Día {{ fecha | date }}</h2>
+                            </div>
 
-                    <table class="table table-hover table-striped table-bordered" cellspacing="0" role="grid" aria-describedby="comentarios" style="width: 100%;">
+                            <div class="row">
 
-                        <thead>
+                                <div class="col-lg-2 text-center p-1" *ngFor="let dia of dias">
 
-                            <tr role="row">
+                                    <span class="enlace" (click)="cambiarComentarios(dia)">{{ dia }}</span>
 
-                                <th class="text-center">Hora</th>
+                                </div>
 
-                                <th class="text-center"></th>
+                            </div>
 
-                                <th class="text-left">Responsable</th>
+                            <hr>
 
-                                <th class="text-left">Rango</th>
+                        </div>
 
-                                <th class="text-center">Número</th>
-
-                                <th class="text-left">Nombre</th>
-
-                                <th class="text-left">Comentario</th>
-
-                                <th class="text-left">Ver</th>
-
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-
-                            <tr role="row" class="odd" *ngFor="let com of comentarios">
-
-                                <td class="text-center centrar">
-
-                                    {{ com.hora }}
-
-                                </td>
-
-                                <td class="text-center centrar">
-
-                                    <img [src]="com.usuario.img | imagen" width="50" class="rounded-circle" />
-
-                                </td>
-
-                                <td class="text-left centrar">
-
-                                    {{ com.usuario.nombre }}
-
-                                </td>
-
-                                <td class="text-center centrar">
-
-                                    {{ com.rango }}
-
-                                </td>
-
-                                <td class="text-center centrar">
-
-                                    {{ com.numero }}
-
-                                </td>
-
-                                <td class="text-left centrar">
-
-                                    {{ com.nombre }}
-
-                                </td>
-
-                                <td class="text-left centrar">
-
-                                    {{ com.comentario }}
-
-                                </td>
-
-                                <td class="text-center centrar">
-
-                                    <a href="#modalFolio" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" (click)="openModal(com)">
-
-                                        <i class="mdi mdi-comment-text-outline"></i>
-
-                                    </a>
-
-                                </td>
-
-                            </tr>
-
-                        </tbody>
-
-                    </table>
+                    </div>
 
                 </div>
 

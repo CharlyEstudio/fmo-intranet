@@ -132,6 +132,8 @@ export class BitacoraComponent implements OnInit, OnDestroy {
         this.respuestaGeneral = false;
       }
     });
+
+    document.getElementById("principal").click();
   }
 
   ngOnInit() { }

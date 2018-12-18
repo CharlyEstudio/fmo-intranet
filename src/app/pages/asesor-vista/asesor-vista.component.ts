@@ -8,7 +8,7 @@ import { AsesoresService } from '../../services/services.index';
   styles: []
 })
 export class AsesorVistaComponent implements OnInit {
-  
+
   idFerrum: any;
   nombre: any;
 
@@ -150,7 +150,7 @@ export class AsesorVistaComponent implements OnInit {
       .subscribe( ( resp: any ) => {
         this.clientesPedidosDia = resp.length;
       });
-    
+
     this._asesoresServices.ventaMesAnterior(this.idFerrum)
       .subscribe( ( resp: any ) => {
         this.ventaMnesualAnterior = resp[0].importe;

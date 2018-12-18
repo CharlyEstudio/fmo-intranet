@@ -37,7 +37,7 @@ export class CobroVistaComponent implements OnInit {
       .subscribe( ( resp: any ) => {
         this.cobranza = resp;
 
-        for(let i=0; i < this.cobranza.length; i++){
+        for (let i = 0; i < this.cobranza.length; i++) {
 
           if (this.cobranza[i].formapago === 'C') {
             this.cheques += this.cobranza[i].pagado;

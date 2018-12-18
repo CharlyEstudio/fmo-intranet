@@ -47,7 +47,7 @@ export class MostrarFacturasMorosidadComponent implements OnInit {
     this.numero = this.get.snapshot.paramMap.get("numero");
 
     this.obtenerMor1a28(this.get.snapshot.paramMap.get("clienteid"), 'mor1a28');
-    this.obtenerMor29a48(this.get.snapshot.paramMap.get("clienteid"), 'mor29a48');
+    this.obtenerMor29a45(this.get.snapshot.paramMap.get("clienteid"), 'mor29a45');
     this.obtenerMor46a60(this.get.snapshot.paramMap.get("clienteid"), 'mor46a60');
     this.obtenerMor60(this.get.snapshot.paramMap.get("clienteid"), 'mor60');
     this.obtenerTotal(this.get.snapshot.paramMap.get("clienteid"));
@@ -70,7 +70,7 @@ export class MostrarFacturasMorosidadComponent implements OnInit {
 
   }
 
-  obtenerMor29a48( clienteid: any, tipo: any ) {
+  obtenerMor29a45( clienteid: any, tipo: any ) {
 
     this._creditoService.clienteMoroso(clienteid, tipo).subscribe( ( relacion: any ) => {
       this.mor29a45 = relacion;

@@ -65,12 +65,12 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
   regresaNSGeneral(): Observable<any> {
     return new Observable((observer: Subscriber<any>) => {
       this.intNs = setInterval( () => {
-        
+
         // General
         this._phpService.nivelServicio()
           .subscribe( ( data ) => {
 
-            if (data[0].importe != 0) {
+            if (data[0].importe !== 0) {
               this.dataGenCot = data[0].cotizacion;
               this.dataGenFac = data[0].facturacion;
               this.porcentGen = (this.dataGenFac / this.dataGenCot);
@@ -95,7 +95,7 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
         this._phpService.nsTruper()
           .subscribe((data) => {
 
-            if ( data[0].importe != 0 ) {
+            if ( data[0].importe !== 0 ) {
               this.dataTruCot = data[0].cotizacion;
               this.dataTruFac = data[0].facturacion;
 
@@ -113,7 +113,7 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
         this._phpService.nsFMO()
           .subscribe((data) => {
 
-            if ( data[0].importe != 0 ) {
+            if ( data[0].importe !== 0 ) {
               this.dataFMOCot = data[0].cotizacion;
               this.dataFMOFac = data[0].facturacion;
 
@@ -142,7 +142,7 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
     this._phpService.nivelServicio()
       .subscribe((data) => {
 
-        if ( data[0].importe != 0 ) {
+        if ( data[0].importe !== 0 ) {
           this.dataGenCot = data[0].cotizacion;
           this.dataGenFac = data[0].facturacion;
 
@@ -152,8 +152,8 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
           this.dataGenFac = 0;
 
           this.porcentGen = 0;
-        }        
-        
+        }
+
         this.graficos = {
           'general': {
             'labels': ['Recibido', '100%'],
@@ -165,11 +165,11 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
 
       });
 
-    //Nivel de Servicio Truper
+    // Nivel de Servicio Truper
     this._phpService.nsTruper()
       .subscribe((data) => {
 
-        if ( data[0].importe != 0 ) {
+        if ( data[0].importe !== 0 ) {
           this.dataTruCot = data[0].cotizacion;
           this.dataTruFac = data[0].facturacion;
 
@@ -187,7 +187,7 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
     this._phpService.nsFMO()
       .subscribe((data) => {
 
-        if ( data[0].importe != 0 ) {
+        if ( data[0].importe !== 0 ) {
           this.dataFMOCot = data[0].cotizacion;
           this.dataFMOFac = data[0].facturacion;
 

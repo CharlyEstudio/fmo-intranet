@@ -85,7 +85,6 @@ export class MostrarInfoBitacoraComponent implements OnInit {
 
             this.morosidad.push(mor);
 
-            console.log(this.morosidad);
             this.morosidad.sort((a, b) => {
               if (a.saldo < b.saldo) {
                 return 1;

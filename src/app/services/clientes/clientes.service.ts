@@ -60,6 +60,18 @@ export class ClientesService {
     return this.http.get( this.url );
   }
 
+  obtenerMovimientoNumero( numero: any ) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=6&numero=' + numero;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=6&numero=' + numero;
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=6&numero=' + numero;
+    }
+
+    return this.http.get( this.url );
+  }
+
   enviarEdoCtaEmail( email: any, info: any, cliente: any ) {
     let data = JSON.stringify(info);
     let cli = JSON.stringify(cliente);

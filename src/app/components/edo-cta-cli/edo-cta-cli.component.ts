@@ -1,28 +1,26 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UsuarioService, ClientesService, ExcelService } from '../../services/services.index';
 import { Usuario } from '../../models/usuario.model';
 import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-edo-cta',
-  templateUrl: './edo-cta.component.html',
+  selector: 'app-edo-cta-cli',
+  templateUrl: './edo-cta-cli.component.html',
   styles: []
 })
-export class EdoCtaComponent implements OnInit {
-
-  @ViewChild('edoCta') edoCta: ElementRef;
+export class EdoCtaCliComponent implements OnInit {
 
   // Datos del Usuario
   asesor: number = 0;
   rol: any;
   usuario: Usuario;
 
+  @Input() numero: any;
+
   // Datos del Cliente
   clienteFerrum: any[] = [];
-  // clienteMongo: any[] = []; // Aquí va el modelo de Cliente de Mongo, cambiar "any" por "Cliente"
 
   // Importes
-  numero: any = '';
   inicio: any = '';
   abonos: number = 0;
   cargos: number = 0;
@@ -48,29 +46,17 @@ export class EdoCtaComponent implements OnInit {
     this.usuario = this._usuariosService.usuario;
     this.asesor = Number(this.usuario.idFerrum);
     this.rol = this.usuario.rol;
-
-    // this.clienteMongo = [
-    //   {
-    //     "email": "contacto@ferremayoristas.com.mx"
-    //   }
-    // ];
   }
 
   ngOnInit() {
   }
 
-  obtenerCliente( forma: NgForm ) {
+  obtenerCliente( forma: NgForm, clienteId: any ) {
 
     this.cargando = true;
 
     this.datos = [];
     this.abonos = 0;
-
-    if ( forma.value.numero === "" ) {
-      swal('Debe ingresar el número de cliente', 'No ha ingresado el número de cliente para la busqueda.', 'error');
-      this.cargando = false;
-      return;
-    }
 
     if ( forma.value.inicio === undefined ) {
       swal('Debe ingresar la fecha inicial', 'No ha ingresado la fecha inicial para la busqueda.', 'error');
@@ -78,9 +64,7 @@ export class EdoCtaComponent implements OnInit {
       return;
     }
 
-    this.numero = forma.value.numero;
-
-    this._clientesService.infoCliente(this.numero, this.asesor, this.rol)
+    this._clientesService.infoCliente(clienteId, this.asesor, this.rol)
       .subscribe( ( data: any ) => {
 
         if (data.length > 0) {
@@ -115,18 +99,6 @@ export class EdoCtaComponent implements OnInit {
                             }
 
                           }
-
-                          // if(edocta[i].SALDOFINAL > 0 && edocta[i].TOTALPAGADO == 0){
-                          //   this.preSaldo = edocta[i].SALDO;
-                          // } else if(edocta[i].SALDOFINAL == 0 && edocta[i].TOTALPAGADO > 0) {
-                          //   this.preSaldo = 0;
-                          // } else {
-                          //   if(this.preSaldo === 0) {
-                          //     this.preSaldo = edocta[i].SALDO - resp[k].PAGADO;
-                          //   } else {
-                          //     this.preSaldo = this.preSaldo - resp[k].PAGADO;
-                          //   }
-                          // }
 
                           let nuevo = [
                             {
@@ -192,44 +164,14 @@ export class EdoCtaComponent implements OnInit {
       });
   }
 
-  enviarEmail( datos: any, cliente: any ) {
-
-    if (cliente.CORREO === 'cnmfmo@gmail.com') {
-
-      // tslint:disable-next-line:max-line-length
-      swal('Cliente Sin Email', 'El cliente:' + cliente.NOMBRE + ' no tiene un email registrado, favor de comunicarse con Gerencia.', 'warning');
-
-    } else {
-
-      this._clientesService.enviarEdoCtaEmail(cliente.CORREO, datos, cliente)
-        .subscribe( ( email: any ) => {
-
-          if (email[0].status === 'ok') {
-
-            // tslint:disable-next-line:max-line-length
-            swal('Envío Exitoso', 'El email del Estado de Cuenta del cliente: ' + cliente.NOMBRE + ' se envío de manera correcta.', 'success');
-
-          } else {
-
-            // tslint:disable-next-line:max-line-length
-            swal('Error de Envío', 'El email del Estado de Cuenta del cliente: ' + cliente.NOMBRE + ' no se envío de manera correcta.', 'error');
-
-          }
-
-        });
-
-    }
-
-  }
-
-  exportarExcel(dato: any, clienteFerrum: any) {
-    let filename = 'reporte_' + clienteFerrum.numero;
+  exportarExcel(dato: any, numero: any) {
+    let filename = 'reporte_' + numero;
     this._excelService.exportAsExcelFile(dato, filename);
   }
 
   public exportarPDF(numero: any, nombre: any) {
     let filename = numero + '-' + nombre;
-    return xepOnline.Formatter.Format('edoCta', {render: 'download', filename: filename});
+    return xepOnline.Formatter.Format('edo-cta', {render: 'download', filename: filename});
   }
 
 }

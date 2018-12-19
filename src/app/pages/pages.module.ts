@@ -25,9 +25,6 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PipesModule } from '../pipes/pipes.module';
 
 // General
-import { ProfileComponent } from './profile/profile.component';
-import { UsuariosComponent } from './usuarios/usuarios.component';
-import { BusquedaComponent } from './busqueda/busqueda.component';
 import { PorBajarComponent } from '../components/por-bajar/por-bajar.component';
 import { PorSurtirComponent } from '../components/por-surtir/por-surtir.component';
 import { PedFacturadosComponent } from '../components/ped-facturados/ped-facturados.component';
@@ -42,6 +39,12 @@ import { Vencido1730Component } from '../components/cartera/vencido1730/vencido1
 import { Vencido3160Component } from '../components/cartera/vencido3160/vencido3160.component';
 import { Vencido6190Component } from '../components/cartera/vencido6190/vencido6190.component';
 import { Vencido91Component } from '../components/cartera/vencido91/vencido91.component';
+import { MorosidadBitacoraComponent } from '../components/morosidad-bitacora/morosidad-bitacora.component';
+import { MovFolComponent } from '../components/mov-fol/mov-fol.component';
+import { EdoCtaCliComponent } from '../components/edo-cta-cli/edo-cta-cli.component';
+import { ProfileComponent } from './profile/profile.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { BusquedaComponent } from './busqueda/busqueda.component';
 import { VentaComponent } from './diarios/venta/venta.component';
 import { CompraComponent } from './diarios/compra/compra.component';
 import { UtilidadesComponent } from './diarios/utilidades/utilidades.component';
@@ -73,7 +76,6 @@ import { EdoCtaComponent } from './edo-cta/edo-cta.component';
 import { RepoSurtidoComponent } from './repo-surtido/repo-surtido.component';
 import { MovimientosFolioComponent } from './movimientos-folio/movimientos-folio.component';
 import { BitacoraComponent } from './bitacora/bitacora/bitacora.component';
-import { MorosidadBitacoraComponent } from '../components/morosidad-bitacora/morosidad-bitacora.component';
 import { MostrarInfoBitacoraComponent } from './mostrar-info-bitacora/mostrar-info-bitacora.component';
 import { MostrarFacturasMorosidadComponent } from './mostrar-facturas-morosidad/mostrar-facturas-morosidad.component';
 import { ChequesDevueltosComponent } from './cheques-devueltos/cheques-devueltos.component';
@@ -137,7 +139,9 @@ import { ChequesDevueltosComponent } from './cheques-devueltos/cheques-devueltos
         MostrarInfoBitacoraComponent,
         MostrarFacturasMorosidadComponent,
         ChequesDevueltosComponent,
-        ChequesDevueltosComponent
+        ChequesDevueltosComponent,
+        MovFolComponent,
+        EdoCtaCliComponent
     ],
     exports: [
         DashborarDirComponent,

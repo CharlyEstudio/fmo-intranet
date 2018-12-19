@@ -17,10 +17,14 @@ export class MostrarFacturasMorosidadComponent implements OnInit {
   nombre: any;
   numero: any;
 
+  numEnv: any;
+
   clienteId: any;
   folio: any;
   saldo: any;
   diasVen: any;
+  fecha: any;
+  cliID: any;
 
   mor1a28: any[] = [];
   mor29a45: any[] = [];
@@ -32,6 +36,7 @@ export class MostrarFacturasMorosidadComponent implements OnInit {
   mor46a60Bol: boolean = false;
   mor60Bol: boolean = false;
   charlaBol: boolean = false;
+  local: boolean = false;
 
   total: number = 0;
 
@@ -121,6 +126,15 @@ export class MostrarFacturasMorosidadComponent implements OnInit {
 
   regresar() {
     this.router.navigate(['/infoBitacora/', this.get.snapshot.paramMap.get("tipo")]);
+  }
+
+  modalEdoCta(numero: any) {
+    this.numEnv = numero;
+  }
+
+  modalMovimietos(folio: any, saldo: any) {
+    this.folio = folio;
+    this.saldo = saldo;
   }
 
 }

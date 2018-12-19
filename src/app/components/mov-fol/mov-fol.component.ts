@@ -1,17 +1,15 @@
-import { Component, OnInit, ɵConsole } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
-import { NgForm } from '@angular/forms';
-import { UsuarioService, ClientesService } from '../../services/services.index';
+import { ClientesService } from '../../services/services.index';
 
 @Component({
-  selector: 'app-movimientos-folio',
-  templateUrl: './movimientos-folio.component.html',
+  selector: 'app-mov-fol',
+  templateUrl: './mov-fol.component.html',
   styles: []
 })
-export class MovimientosFolioComponent implements OnInit {
+export class MovFolComponent implements OnInit {
 
-  // Importes
-  numero: any = '';
+  @Input() folio: any;
 
   // Booleanos
   localizado: boolean = false;
@@ -19,31 +17,24 @@ export class MovimientosFolioComponent implements OnInit {
 
   // Data
   folios: any[] = [];
+  fol: any;
   nombre: any;
   num: any;
 
   constructor(
-    private _usuariosService: UsuarioService,
     private _clientesService: ClientesService
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
-  obtenerFolio( forma: NgForm ) {
+  obtenerFolio( folio: any ) {
 
     this.cargando = true;
     this.localizado = false;
 
-    if ( forma.value.numero === '' ) {
-      swal('Debe ingresar el número de folio', 'No ha ingresado el número de folio para la busqueda.', 'error');
-      this.cargando = false;
-      return;
-    }
+    this.fol = folio;
 
-    this.numero = forma.value.numero;
-
-    this._clientesService.obtenerMovimientoNumero(this.numero).subscribe( ( mov: any ) => {
+    this._clientesService.obtenerMovimientoNumero(this.fol).subscribe( ( mov: any ) => {
       if (mov.length > 0) {
 
         this._clientesService.obtenerMovimiento(mov[0].DOCID).subscribe( ( pagos: any ) => {

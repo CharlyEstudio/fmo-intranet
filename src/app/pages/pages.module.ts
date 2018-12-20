@@ -79,6 +79,7 @@ import { BitacoraComponent } from './bitacora/bitacora/bitacora.component';
 import { MostrarInfoBitacoraComponent } from './mostrar-info-bitacora/mostrar-info-bitacora.component';
 import { MostrarFacturasMorosidadComponent } from './mostrar-facturas-morosidad/mostrar-facturas-morosidad.component';
 import { ChequesDevueltosComponent } from './cheques-devueltos/cheques-devueltos.component';
+import { SpeedComponent } from '../components/speed/speed.component';
 
 @NgModule({
     declarations: [
@@ -141,7 +142,8 @@ import { ChequesDevueltosComponent } from './cheques-devueltos/cheques-devueltos
         ChequesDevueltosComponent,
         ChequesDevueltosComponent,
         MovFolComponent,
-        EdoCtaCliComponent
+        EdoCtaCliComponent,
+        SpeedComponent
     ],
     exports: [
         DashborarDirComponent,

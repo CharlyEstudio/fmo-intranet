@@ -25,7 +25,10 @@ export class AppComponent implements OnInit {
     // this._pushNotificationService.requestPermission();
     this.observar = this.regresar().subscribe(
       escuchando => {
-        if (localStorage.getItem('rol') !== 'ASE_ROLE' && localStorage.getItem('rol') !== 'USER_ROLE') {
+        if (
+          localStorage.getItem('rol') !== 'ASE_ROLE'
+          && localStorage.getItem('rol') !== 'USER_ROLE'
+          && localStorage.getItem('rol') !== 'CLI_ROLE') {
           swal(
             'Mensaje de ' + escuchando.remitente,
             'Cliente ' +

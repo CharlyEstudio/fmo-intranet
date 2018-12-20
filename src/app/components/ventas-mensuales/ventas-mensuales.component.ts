@@ -22,14 +22,14 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
 
   anterior = Date.UTC(this.anio, this.mes, this.dia);
   // dia: number = new Date().getDay();
-  
+
   // Estado de la Empresa
   heart: number = 0;
 
   // General
   general: Subscription;
   intervalo: any;
-  
+
   /* ----- Ventas Mensuales ----- */
   // Ventas Actuales
   act: number = 0;
@@ -51,7 +51,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
   constructor(
     private _phpService: PhpService
   ) {
-    
+
     // Subscripción Total
     this.general = this.regresar()
       .subscribe(
@@ -66,11 +66,11 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
     return new Observable((observer: Subscriber<any>) => {
 
       this.intervalo = setInterval( () => {
-        
+
         // Venta Actual
         this._phpService.ventaActual()
           .subscribe( ( data ) => {
-            if (data[0].actual != 0) {
+            if (data[0].actual !== 0) {
               this.act = data[0].actual;
               this.obtenerActual(data[0].actual);
             } else {
@@ -82,7 +82,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
         // Venta Zona 1
         this._phpService.zona1()
           .subscribe((data) => {
-            if (data[0].zona1 != 0) {
+            if (data[0].zona1 !== 0) {
               this.zon1 = data[0].zona1;
             } else {
               this.zon1 = 0;
@@ -92,7 +92,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
         // Venta Zona 2
         this._phpService.zona2()
           .subscribe((data) => {
-            if (data[0].zona2 != 0) {
+            if (data[0].zona2 !== 0) {
               this.zon2 = data[0].zona2;
             } else {
               this.zon2 = 0;
@@ -102,7 +102,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
         // Venta Especiales
         this._phpService.especial()
           .subscribe((data) => {
-            if (data[0].especial != '') {
+            if (data[0].especial !== '') {
               this.espe = data[0].especial;
             } else {
               this.espe = 0;
@@ -124,7 +124,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
     // Venta Anterior
     this._phpService.ventaAnterior()
       .subscribe((data) => {
-        if ( data[0].anterior != 0 ) {
+        if ( data[0].anterior !== 0 ) {
           this.ant = data[0].anterior;
         } else {
           this.ant = 0;
@@ -136,7 +136,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
     // Venta Actual
     this._phpService.ventaActual()
       .subscribe((data) => {
-        if ( data[0].actual != 0 ) {
+        if ( data[0].actual !== 0 ) {
           this.act = data[0].actual;
         } else {
           this.act = 0;
@@ -148,7 +148,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
     // Venta Zona 1
     this._phpService.zona1()
     .subscribe((data) => {
-      if ( data[0].zona1 != 0 ) {
+      if ( data[0].zona1 !== 0 ) {
         this.zon1 = data[0].zona1;
       } else {
         this.zon1 = 0;
@@ -158,7 +158,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
     // Venta Zona 2
     this._phpService.zona2()
     .subscribe((data) => {
-      if ( data[0].zona2 != 0 ) {
+      if ( data[0].zona2 !== 0 ) {
         this.zon2 = data[0].zona2;
       } else {
         this.zon2 = 0;
@@ -168,7 +168,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
     // Venta Especial
     this._phpService.especial()
     .subscribe((data) => {
-      if ( data[0].especial != 0 ) {
+      if ( data[0].especial !== 0 ) {
         this.espe = data[0].especial;
       } else {
         this.espe = 0;

@@ -7,41 +7,41 @@
             <div class="">
 
                 <div class="p-2 display-5 animated fadeIn text-center text-success" *ngIf="heart === 3">
-    
+
                     <div class="animated pulse2">
-                
+
                         <i class="mdi mdi-heart-pulse"></i>
-                
+
                     </div>
-                
+
                 </div>
-                
+
                 <div class="p-2 display-5 animated fadeIn text-center text-warning" *ngIf="heart === 2">
-                
+
                     <div class="animated pulse2">
-                
+
                         <i class="mdi mdi-heart-pulse"></i>
-                
+
                     </div>
-                
+
                 </div>
-                
+
                 <div class="p-2 display-5 animated fadeIn text-center text-danger" *ngIf="heart === 1">
-                
+
                     <div class="animated pulse2">
-                
-                    <i class="mdi mdi-heart-pulse"></i>
-                
+
+                        <i class="mdi mdi-heart-pulse"></i>
+
                     </div>
-                
+
                 </div>
-                
+
                 <div class="p-2 display-5 animated fadeIn right-side-toggle" style="padding-left: 56px!important;" *ngIf="heart === 0">
-                
+
                     <i class="ti-reload"></i>
-    
+
                     <br>
-        
+
                 </div>
 
             </div>
@@ -55,6 +55,8 @@
                 </h3>
 
                 <h6>{{ fecha | date }}</h6>
+
+                <app-speed></app-speed>
 
             </div>
 
@@ -89,7 +91,7 @@
                 <h2 class="font-light">{{ zon2 | currency }}</h2>
 
                 <h6>Zona 2</h6>
-                
+
             </div>
 
             <div class="col text-center">
@@ -103,5 +105,5 @@
         </div>
 
     </div>
-    
+
 </div>

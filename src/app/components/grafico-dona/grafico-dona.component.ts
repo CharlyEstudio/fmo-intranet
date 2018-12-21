@@ -22,7 +22,7 @@ export class GraficoDonaComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.porcentaje = this.ChartData[0] / 100;
-    this.titulo = 'Vendido';
+    this.titulo = 'Facturado';
   }
 
   // events
@@ -32,7 +32,7 @@ export class GraficoDonaComponent implements OnInit, OnChanges {
       this.porcentaje = this.ChartData[index] / 100;
 
       if (index === 0) {
-        this.titulo = 'Vendido';
+        this.titulo = 'Facturado';
       } else {
         this.titulo = 'BackOrder';
       }

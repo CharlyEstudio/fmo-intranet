@@ -43,8 +43,6 @@ export class ComisionesComponent implements OnInit {
     this._comisionesService.buscarMesComision(forma.value.mes, forma.value.anio)
       .subscribe( ( resp: any ) => {
 
-        console.log(resp.comisiones);
-
         let comisiones = resp.comisiones;
 
         if (resp.comisiones.length > 0) {

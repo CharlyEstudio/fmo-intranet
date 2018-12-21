@@ -24,6 +24,7 @@ export class RepoSurtidoComponent implements OnInit {
 
   totalPar: number = 0;
   totalPed: number = 0;
+  total: number = 0;
 
   area: any;
 
@@ -42,6 +43,7 @@ export class RepoSurtidoComponent implements OnInit {
 
     this.totalPar = 0;
     this.totalPed = 0;
+    this.total = 0;
 
     if ( forma.value.inicio === undefined ) {
       swal('Debe ingresar la fecha incial', 'No ha selecionado una fecha inicial.', 'error');
@@ -67,12 +69,25 @@ export class RepoSurtidoComponent implements OnInit {
     this._almacenService.obtenerReporte( this.area, forma.value.inicio, forma.value.fin ).subscribe( ( personal: any ) => {
       this.personal = personal;
 
+      this.personal.sort((a, b) => {
+        if (a.partidas < b.partidas) {
+          return 1;
+        }
+
+        if (a.partidas > b.partidas) {
+          return -1;
+        }
+
+        return 0;
+      });
+
       this.mostrar = true;
       this.esperar = false;
 
       for (let i = 0; i < personal.length; i++) {
         this.totalPar += personal[i].partidas;
         this.totalPed += personal[i].pedidos;
+        this.total += (this.totalPar * personal[i].comision);
       }
 
     });

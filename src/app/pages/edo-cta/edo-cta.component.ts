@@ -201,22 +201,67 @@ export class EdoCtaComponent implements OnInit {
 
     } else {
 
-      this._clientesService.enviarEdoCtaEmail(cliente.CORREO, datos, cliente)
-        .subscribe( ( email: any ) => {
+      let mensaje = 'Escribe "cliente", "cxc-qro", "cxc-tx", "gerencia"' +
+      ', "contacto" o "auditoria" si quieres dirigir a uno específico, o bien escribe tu email';
 
-          if (email[0].status === 'ok') {
+      swal({
+        title: "Enviar Email",
+        text: mensaje,
+        icon: "warning",
+        buttons: {
+          cancel: true,
+          confirm: true
+        },
+        content: {
+          element: "input",
+          attributes: {
+              placeholder: "Email",
+              type: "text",
+          },
+        },
+      })
+      .then(( name ) => {
+        if (!name) { return null };
+        let email;
+        switch (name) {
+          case 'cliente':
+            email = cliente.CORREO;
+          break;
 
-            // tslint:disable-next-line:max-line-length
-            swal('Envío Exitoso', 'El email del Estado de Cuenta del cliente: ' + cliente.NOMBRE + ' se envío de manera correcta.', 'success');
+          case 'cxc-qro':
+            email = 'cxc-qro@ferremayoristas.com.mx';
+          break;
 
+          case 'cxc-tx':
+            email = 'cxc-tx@ferremayoristas.com.mx';
+          break;
+
+          case 'gerencia':
+            email = 'vleal@ferremayoristas.com.mx';
+          break;
+
+          case 'auditoria':
+            email = 'mmontes@ferremayoristas.com.mx';
+          break;
+
+          case 'contacto':
+            email = 'contacto@ferremayoristas.com.mx';
+          break;
+
+          default:
+            email = name;
+        }
+
+        this._clientesService.enviarEdoCtaEmail(email, datos, cliente).subscribe( ( resp: any ) => {
+          if (resp[0].status === 'ok') {
+            swal('Enviado', 'Correo enviado', 'success');
           } else {
-
-            // tslint:disable-next-line:max-line-length
-            swal('Error de Envío', 'El email del Estado de Cuenta del cliente: ' + cliente.NOMBRE + ' no se envío de manera correcta.', 'error');
-
+            swal('Error', 'Correo no enviado', 'error');
           }
-
         });
+
+        swal.stopLoading();
+      });
 
     }
 

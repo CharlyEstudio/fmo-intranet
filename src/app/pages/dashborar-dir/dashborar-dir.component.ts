@@ -60,7 +60,7 @@ export class DashborarDirComponent implements OnInit, OnDestroy {
     // Diferencias
     this._phpService.diferencias()
       .subscribe( ( resp: any ) => {
-        if ( resp !== '' ) {
+        if ( resp.length !== 0 ) {
           this.diferencia = true;
           this.datos = resp;
         } else {

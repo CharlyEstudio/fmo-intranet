@@ -1,6 +1,8 @@
 <div style="display: block">
 
-    <canvas baseChart [data]="ChartData" [labels]="ChartLabels" [chartType]="ChartType">
+    <span>{{ porcentaje | percent: '0.2' }} <br> {{ titulo }}</span>
+
+    <canvas baseChart (chartClick)="chartClicked($event)" [data]="ChartData" [labels]="ChartLabels" [chartType]="ChartType">
     </canvas>
 
 </div>

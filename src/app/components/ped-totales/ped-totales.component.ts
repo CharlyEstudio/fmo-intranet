@@ -44,7 +44,7 @@ export class PedTotalesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    if(URL_SERVICIO_GENERAL == 'http://192.168.1.250' || URL_SERVICIO_GENERAL == 'http://localhost') {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250' || URL_SERVICIO_GENERAL === 'http://localhost') {
       this.panel = 'http://192.168.1.250/panel/#/';
     } else {
       this.panel = 'http://177.244.55.122:8080/panel/#/';
@@ -53,11 +53,11 @@ export class PedTotalesComponent implements OnInit, OnDestroy {
     // Total de Pedidos
     this._phpService.totalPedidos()
       .subscribe((data) => {
-        if ( data[0].importe != 0 ) {
-          this.cantTot = data[0].cantidad,
-          this.sub = data[0].subtotal;
-          this.impuesto = data[0].impuesto;
-          this.tot = data[0].total;
+        if ( data[0].importe !== 0 ) {
+          this.cantTot = data[0].cantidad + data[1].cantidad,
+          this.sub = data[0].subtotal + data[1].subtotal;
+          this.impuesto = data[0].impuesto + data[1].impuesto;
+          this.tot = data[0].total + data[1].total;
         } else {
           this.cantTot = 0,
           this.sub = 0;
@@ -80,16 +80,16 @@ export class PedTotalesComponent implements OnInit, OnDestroy {
   regresaTotales(): Observable<any> {
     return new Observable((observer: Subscriber<any>) => {
       this.intTotales = setInterval( () => {
-        
+
         this._phpService.totalPedidos()
           .subscribe( ( data ) => {
 
-            if (data[0].importe != 0) {
+            if (data[0].importe !== 0) {
               const totales = {
-                cantidad: data[0].cantidad,
-                subtotal: data[0].subtotal,
-                impuesto: data[0].impuesto,
-                total: data[0].total
+                cantidad: data[0].cantidad + data[1].cantidad,
+                subtotal: data[0].subtotal + data[1].subtotal,
+                impuesto: data[0].impuesto + data[1].impuesto,
+                total: data[0].total + data[1].total
               };
 
               observer.next(totales);

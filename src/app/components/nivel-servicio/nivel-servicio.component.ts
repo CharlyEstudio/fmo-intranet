@@ -16,8 +16,8 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
 
   graficos: any = {
     'general': {
-      'labels': ['General'],
-      'data':  [0],
+      'labels': ['Vendido', 'BackOrder'],
+      'data':  [0, 0],
       'type': 'doughnut',
       'leyenda': 'General'
     }
@@ -82,7 +82,7 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
 
             this.graficos = {
               'general': {
-                'labels': ['Recibido', '100%'],
+                'labels': ['Vendido', 'BackOrder'],
                 'data':  [(this.porcentGen * 100), (100 - (this.porcentGen * 100))],
                 'type': 'doughnut',
                 'leyenda': 'General'
@@ -163,6 +163,8 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
           }
         };
 
+        this.mostrar((this.porcentGen * 100));
+
       });
 
     // Nivel de Servicio Truper
@@ -210,5 +212,7 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
     clearInterval(this.intNs);
 
   }
+
+  public mostrar( leyenda: any ): void {}
 
 }

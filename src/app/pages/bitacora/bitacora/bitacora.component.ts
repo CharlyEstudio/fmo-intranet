@@ -72,7 +72,7 @@ export class BitacoraComponent implements OnInit, OnDestroy {
     this.fecha = anio + '-' + mes + '-' + dia;
 
     this._creditoService.obtenerComentariosDia(this.fecha).subscribe( ( comentarios: any ) => {
-      if (comentarios.charla.length) {
+      if (comentarios.charla.length !== 0) {
         this.comentarios = comentarios.charla.reverse();
         this.esperar = false;
         this.respuestaGeneral = true;

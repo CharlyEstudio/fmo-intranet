@@ -80,6 +80,9 @@ import { MostrarInfoBitacoraComponent } from './mostrar-info-bitacora/mostrar-in
 import { MostrarFacturasMorosidadComponent } from './mostrar-facturas-morosidad/mostrar-facturas-morosidad.component';
 import { ChequesDevueltosComponent } from './cheques-devueltos/cheques-devueltos.component';
 import { SpeedComponent } from '../components/speed/speed.component';
+import { GpsVentasComponent } from './gps-ventas/gps-ventas.component';
+import { GpsLogisticaComponent } from './gps-logistica/gps-logistica.component';
+import { MapsGpsComponent } from '../components/maps-gps/maps-gps.component';
 
 @NgModule({
     declarations: [
@@ -143,7 +146,10 @@ import { SpeedComponent } from '../components/speed/speed.component';
         ChequesDevueltosComponent,
         MovFolComponent,
         EdoCtaCliComponent,
-        SpeedComponent
+        SpeedComponent,
+        GpsVentasComponent,
+        GpsLogisticaComponent,
+        MapsGpsComponent
     ],
     exports: [
         DashborarDirComponent,

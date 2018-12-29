@@ -51,8 +51,7 @@ import { BitacoraComponent } from './bitacora/bitacora/bitacora.component';
 import { MostrarInfoBitacoraComponent } from './mostrar-info-bitacora/mostrar-info-bitacora.component';
 import { MostrarFacturasMorosidadComponent } from './mostrar-facturas-morosidad/mostrar-facturas-morosidad.component';
 import { ChequesDevueltosComponent } from './cheques-devueltos/cheques-devueltos.component';
-import { GpsVentasComponent } from './gps-ventas/gps-ventas.component';
-import { GpsLogisticaComponent } from './gps-logistica/gps-logistica.component';
+import { DashboardLogisticaComponent } from './dashboard-logistica/dashboard-logistica.component';
 
 const pageRoutes: Routes = [
     {
@@ -451,24 +450,14 @@ const pageRoutes: Routes = [
                     name: 'description'
                 }
     },
-    // GPS Geolocalizacion
+    // Logística
     {
-        path: 'gpsVentas',
-        component: GpsVentasComponent,
+        path: 'dashboardGuias',
+        component: DashboardLogisticaComponent,
         canActivate: [ DireccionGuard, VerificaTokenGuard ],
         data:
                 {
-                    titulo: 'GPS Equipo de Ventas',
-                    name: 'description'
-                }
-    },
-    {
-        path: 'gpsLogistica',
-        component: GpsLogisticaComponent,
-        canActivate: [ DireccionGuard, VerificaTokenGuard ],
-        data:
-                {
-                    titulo: 'GPS Equipo de Logística',
+                    titulo: 'Generación de Guías',
                     name: 'description'
                 }
     },

@@ -10,4 +10,4 @@ export const URL_LOCAL = 'http://192.168.1.250';
 // export const URL_PRUEBAS = 'http://localhost';
 export const URL_PRUEBAS = 'http://192.168.1.250';
 export const PUERTO_INTERNO = 3001;
-export const PUERTO_SERVER = 8080;
+export const PUERTO_SERVER = 80;

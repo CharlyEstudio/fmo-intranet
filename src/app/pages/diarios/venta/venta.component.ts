@@ -38,7 +38,7 @@ export class VentaComponent implements OnInit {
   total: number = 0;
   pedidosGen: any;
   pedidosAse: any;
-  totPedidosAse : number = 0;
+  totPedidosAse: number = 0;
 
   // Totales
   totalGeneral: number = 0;
@@ -51,7 +51,7 @@ export class VentaComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    
+
     // Obtenemos los Asesores
     this._diariosService.asesores()
       .subscribe( ( resp: any ) => {
@@ -79,18 +79,18 @@ export class VentaComponent implements OnInit {
     this.final = forma.value.final;
     this.asesor = forma.value.asesor;
 
-    if ( forma.value.asesor != 0 ) {
+    if ( forma.value.asesor !== 0 ) {
 
       this._diariosService.ventas(this.inicio, this.final, this.asesor)
         .subscribe( ( resp ) => {
 
           this._asesorService.asesor(this.asesor)
-            .subscribe( ( resp: any ) => {
-              this.vendedor = resp.usuarios[0];
+            .subscribe( ( ase: any ) => {
+              this.vendedor = ase.usuarios[0];
             });
 
-          if (resp != ''){
-            this.nombre= resp[0].NOMBRE;
+          if (resp !== '') {
+            this.nombre = resp[0].NOMBRE;
             this.id = resp[0].PERID;
             this.catalogo = resp[0].CATALOGO;
             this.serie = resp[0].SERIE;
@@ -100,9 +100,9 @@ export class VentaComponent implements OnInit {
             this.total = resp[0].TOTAL;
 
             this._diariosService.ventasAsesor(this.inicio, this.final, this.asesor)
-              .subscribe( ( resp: any ) => {
-                this.pedidosAse = resp;
-                this.totPedidosAse = resp.length;
+              .subscribe( ( ventAse: any ) => {
+                this.pedidosAse = ventAse;
+                this.totPedidosAse = ventAse.length;
               });
 
             this.respuesta = false;
@@ -130,10 +130,10 @@ export class VentaComponent implements OnInit {
       this._diariosService.ventas(this.inicio, this.final)
         .subscribe( ( resp ) => {
 
-          if (resp != '') {
+          if (resp !== '') {
             this.pedidosGen = resp;
-  
-            for(let i=0; i < this.pedidosGen.length; i++){
+
+            for (let i = 0; i < this.pedidosGen.length; i++) {
               this.totalGeneral += this.pedidosGen[i].TOTAL;
               this.totalIva += this.pedidosGen[i].IVA;
               this.totalSubtotal += this.pedidosGen[i].SUBTOTAL;

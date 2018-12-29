@@ -19,6 +19,9 @@ const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
 // Modulos
 // import { PagesModule } from './pages/pages.module';
 
+// PDF View
+// import { PdfViewerModule } from 'ng2-pdf-viewer';
+
 // Formularios
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 

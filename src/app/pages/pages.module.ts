@@ -24,6 +24,9 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 // Pipes
 import { PipesModule } from '../pipes/pipes.module';
 
+// PDF View
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+
 // General
 import { PorBajarComponent } from '../components/por-bajar/por-bajar.component';
 import { PorSurtirComponent } from '../components/por-surtir/por-surtir.component';
@@ -80,9 +83,7 @@ import { MostrarInfoBitacoraComponent } from './mostrar-info-bitacora/mostrar-in
 import { MostrarFacturasMorosidadComponent } from './mostrar-facturas-morosidad/mostrar-facturas-morosidad.component';
 import { ChequesDevueltosComponent } from './cheques-devueltos/cheques-devueltos.component';
 import { SpeedComponent } from '../components/speed/speed.component';
-import { GpsVentasComponent } from './gps-ventas/gps-ventas.component';
-import { GpsLogisticaComponent } from './gps-logistica/gps-logistica.component';
-import { MapsGpsComponent } from '../components/maps-gps/maps-gps.component';
+import { DashboardLogisticaComponent } from './dashboard-logistica/dashboard-logistica.component';
 
 @NgModule({
     declarations: [
@@ -147,13 +148,12 @@ import { MapsGpsComponent } from '../components/maps-gps/maps-gps.component';
         MovFolComponent,
         EdoCtaCliComponent,
         SpeedComponent,
-        GpsVentasComponent,
-        GpsLogisticaComponent,
-        MapsGpsComponent
+        DashboardLogisticaComponent
     ],
     exports: [
         DashborarDirComponent,
-        DashboardComponent
+        DashboardComponent,
+        PdfViewerModule
     ],
     imports: [
         CommonModule,
@@ -161,7 +161,8 @@ import { MapsGpsComponent } from '../components/maps-gps/maps-gps.component';
         PAGES_ROUTES,
         FormsModule,
         ChartsModule,
-        PipesModule
+        PipesModule,
+        PdfViewerModule
     ]
 })
 

@@ -49,6 +49,21 @@ export class GuiasService {
       });
   }
 
+  obtenerGuiasDia(fecha: any) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/dia/' + fecha;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/guias/dia/' + fecha;
+    } else {
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/dia/' + fecha;
+    }
+
+    return this.http.get( this.url )
+      .map( (resp: any) => {
+        return resp;
+      });
+  }
+
   buscarFolioGuia(folio: any) {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/buscar/' + folio;
@@ -95,6 +110,23 @@ export class GuiasService {
     this.url += '?token=' + this.token;
 
     return this.http.post( this.url, guia )
+      .map( (resp: any) => {
+        return resp;
+      });
+  }
+
+  buscarPartidasFolio(folio: any) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/buscar/partidas/' + folio;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/guias/buscar/partidas/' + folio;
+    } else {
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/partidas/' + folio;
+    }
+
+    this.url += '?token=' + this.token;
+
+    return this.http.get( this.url )
       .map( (resp: any) => {
         return resp;
       });

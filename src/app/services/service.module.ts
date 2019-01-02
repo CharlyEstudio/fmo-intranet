@@ -16,6 +16,7 @@ import {
   ClienteGuard,
   DireccionGuard,
   AuditoriaGuard,
+  MesaGuard,
   SubirArchivoService,
   PhpService,
   DiariosService,
@@ -46,6 +47,7 @@ import {
     ClienteGuard,
     DireccionGuard,
     AuditoriaGuard,
+    MesaGuard,
     // Servicios
     SettingsService,
     SidebarService,

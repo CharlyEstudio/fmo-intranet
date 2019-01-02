@@ -7,6 +7,7 @@ export { AsesoresGuard } from "./guards/asesores.guard";
 export { ClienteGuard } from "./guards/cliente.guard";
 export { DireccionGuard } from "./guards/direccion.guard";
 export { AuditoriaGuard } from "./guards/auditoria.guard";
+export { MesaGuard } from "./guards/mesa.guard";
 
 // Subir Archivo o Imagen
 export { SubirArchivoService } from "./subirArchivo/subir-archivo.service";

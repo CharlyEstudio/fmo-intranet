@@ -31,6 +31,7 @@ export class DashboardLogisticaComponent implements OnInit {
   guiaGuardar: Guia;
   ultimasGuias: any[] = [];
   guiasRecientes: any[] = [];
+  especialesDia: any[] = [];
   especiales: any[] = [];
 
   generar: boolean = false;
@@ -54,6 +55,7 @@ export class DashboardLogisticaComponent implements OnInit {
 
   /* Modal VER */
   facturas: any[] = [];
+  totalModal: number = 0;
 
   constructor(
     private _guiasServices: GuiasService,
@@ -72,7 +74,29 @@ export class DashboardLogisticaComponent implements OnInit {
         this.obtener = true;
       }
     } else {
-      this._guiasServices.obtenerGuias().subscribe( ( resp: any ) => {
+      let h = new Date();
+
+      let dia;
+
+      if (h.getDate() < 10) {
+        dia = '0' + h.getDate();
+      } else {
+        dia = h.getDate();
+      }
+
+      let mes;
+
+      if (h.getMonth() < 10) {
+        mes = '0' + (h.getMonth() + 1);
+      } else {
+        mes = (h.getMonth() + 1);
+      }
+
+      let anio = h.getFullYear();
+
+      let fecha = anio + '-' + mes + '-' + dia;
+
+      this._guiasServices.obtenerGuiasDia(fecha).subscribe( ( resp: any ) => {
         this.guiasRecientes = resp.guias;
       });
       this.verGuias();
@@ -105,7 +129,30 @@ export class DashboardLogisticaComponent implements OnInit {
   verGuias() {
     this.ultimasGuias = [];
     this.total = 0;
-    this._guiasServices.obtenerGuias().subscribe( ( guias: any ) => {
+
+    let h = new Date();
+
+    let dia;
+
+    if (h.getDate() < 10) {
+      dia = '0' + h.getDate();
+    } else {
+      dia = h.getDate();
+    }
+
+    let mes;
+
+    if (h.getMonth() < 10) {
+      mes = '0' + (h.getMonth() + 1);
+    } else {
+      mes = (h.getMonth() + 1);
+    }
+
+    let anio = h.getFullYear();
+
+    let fecha = anio + '-' + mes + '-' + dia;
+
+    this._guiasServices.obtenerGuiasDia(fecha).subscribe( ( guias: any ) => {
       if (guias.guias.length > 0) {
         this.guiasEnc = guias.guias;
         this.generar = false;
@@ -119,16 +166,42 @@ export class DashboardLogisticaComponent implements OnInit {
         this.obtener = false;
       }
 
+      guias.guias.reverse();
+
       for (let i = 0; i < guias.guias.length; i++) {
-        this.total += guias.guias[i].importe;
+        this.total += guias.guias[i].cantidad;
         if (i < 3) {
           this.ultimasGuias.push(guias.guias[i]);
         }
+
+        // Aquí para obtener los especiales
+        this._guiasServices.buscarPartidasFolio(guias.guias[i].folio).subscribe( ( partidas: any ) => {
+          if (partidas.facturas.length > 0) {
+            for (let j = 0; j < partidas.facturas.length; j++) {
+              this._guiasServices.buscarEspeciales(partidas.facturas[j].factura).subscribe( ( especiales: any ) => {
+                if (especiales.length > 0) {
+                  for (let k = 0; k < especiales.length; k++) {
+                    let esEspecial = (pedido) => {
+                      return pedido.clvprov === especiales[k].clvprov;
+                    }
+
+                    if (this.especialesDia.find(esEspecial)) {
+                      this.especialesDia.find(esEspecial).desentregado += especiales[k].desentregado;
+                    } else {
+                      this.especialesDia.push(especiales[k]);
+                    }
+
+                  }
+                }
+              });
+            }
+          }
+        });
       }
     });
   }
 
-  checarLista() {
+  checarLista(especiales: any) {
     this.generar = false;
     this.guias = false;
     this.tuberias = true;
@@ -189,6 +262,17 @@ export class DashboardLogisticaComponent implements OnInit {
       }
     });
 
+  }
+
+  eliminarFolio(folio: any, index: any) {
+    console.log(folio, index);
+    console.log(this.folios);
+    this.folios.splice(index, 1);
+
+    if (this.folios.length === 0) {
+      this.cancelarGuia();
+      this.verGuias();
+    }
   }
 
   procesarGuia() {
@@ -403,6 +487,7 @@ export class DashboardLogisticaComponent implements OnInit {
                 this.folio = '';
                 this.folios = [];
                 this.especiales = [];
+                this.importe = 0;
                 this.generar = false;
                 this.guias = true;
                 this.tuberias = false;
@@ -425,7 +510,7 @@ export class DashboardLogisticaComponent implements OnInit {
     this.folios = [];
     this.especiales = [];
     this.generar = false;
-    this.guias = false;
+    this.guias = true;
     this.tuberias = false;
     this.obtener = false;
   }
@@ -444,6 +529,7 @@ export class DashboardLogisticaComponent implements OnInit {
   }
 
   modalVer(dato: any) {
+    this.totalModal = 0;
     this.chofer = dato.chofer;
     this.fol = dato.folio;
     this.hora = dato.hora;
@@ -455,6 +541,9 @@ export class DashboardLogisticaComponent implements OnInit {
 
     this._guiasServices.obtenerFacturasFolio(this.fol).subscribe( ( facturas: any ) => {
       this.facturas = facturas.facturas;
+      for (let i = 0; i < facturas.facturas.length; i++) {
+        this.totalModal += facturas.facturas[i].importe;
+      }
     });
   }
 

@@ -8,7 +8,8 @@ import {
     AsesoresGuard,
     ClienteGuard,
     DireccionGuard,
-    AuditoriaGuard
+    AuditoriaGuard,
+    MesaGuard
 } from '../services/services.index';
 
 // Components
@@ -212,7 +213,7 @@ const pageRoutes: Routes = [
         canActivate: [ AuditoriaGuard, VerificaTokenGuard ],
         data:
                 {
-                    titulo: 'Busqueda de pagos por rango de fecha',
+                    titulo: 'Búsqueda de pagos por rango de fecha',
                     name: 'description'
                 }
     },
@@ -465,7 +466,7 @@ const pageRoutes: Routes = [
     {
         path: 'dashboardGuias',
         component: DashboardLogisticaComponent,
-        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        canActivate: [ MesaGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Generación de Guías',

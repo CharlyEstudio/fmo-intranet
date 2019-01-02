@@ -52,6 +52,7 @@ import { MostrarInfoBitacoraComponent } from './mostrar-info-bitacora/mostrar-in
 import { MostrarFacturasMorosidadComponent } from './mostrar-facturas-morosidad/mostrar-facturas-morosidad.component';
 import { ChequesDevueltosComponent } from './cheques-devueltos/cheques-devueltos.component';
 import { DashboardLogisticaComponent } from './dashboard-logistica/dashboard-logistica.component';
+import { BuscarPagosComponent } from './buscar-pagos/buscar-pagos.component';
 
 const pageRoutes: Routes = [
     {
@@ -202,6 +203,16 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Dashboard de Auditoria & Cobranza',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'buscarPagos',
+        component: BuscarPagosComponent,
+        canActivate: [ AuditoriaGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Busqueda de pagos por rango de fecha',
                     name: 'description'
                 }
     },

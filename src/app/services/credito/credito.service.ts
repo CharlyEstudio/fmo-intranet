@@ -178,6 +178,18 @@ export class CreditoService {
     return this.http.get( this.url );
   }
 
+  pagosRango(inicio: any, final: any) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=24&inicio=' + inicio + '&final=' + final;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=24&inicio=' + inicio + '&final=' + final;
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=24&inicio=' + inicio + '&final=' + final;
+    }
+
+    return this.http.get( this.url );
+  }
+
   pagosMes( clienteid: any ) {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=21&clienteid=' + clienteid;

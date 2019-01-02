@@ -363,4 +363,18 @@ export class UsuarioService {
     return this.http.get( url );
   }
 
+  buscarUsuarioEsp (idFerrum: any) {
+    let url;
+
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/usuario/buscar/especifico/' + idFerrum;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/usuario/buscar/especifico/' + idFerrum;
+    } else {
+      url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/usuario/buscar/especifico/' + idFerrum;
+    }
+
+    return this.http.get( url );
+  }
+
 }

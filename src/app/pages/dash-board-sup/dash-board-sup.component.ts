@@ -29,7 +29,7 @@ export class DashBoardSupComponent implements OnInit {
 
     this._usuarioService.buscarUsuarios('ASE_ROLE')
       .subscribe( ( resp: any ) => {
-        for(let i = 0; i < resp.length; i++) {
+        for (let i = 0; i < resp.length; i++) {
           this._supervisoresServices.pedidosGeneral(resp[i].idFerrum)
             .subscribe( ( data: any ) => {
               this.asesores.push(
@@ -49,6 +49,18 @@ export class DashBoardSupComponent implements OnInit {
                   canceladoImporte: data[3].importe,
                 }
               );
+
+              this.asesores.sort((a, b) => {
+                if (a.idFerrum > b.idFerrum) {
+                  return 1;
+                }
+
+                if (a.idFerrum < b.idFerrum) {
+                  return -1;
+                }
+
+                return 0;
+              });
             });
         }
       });

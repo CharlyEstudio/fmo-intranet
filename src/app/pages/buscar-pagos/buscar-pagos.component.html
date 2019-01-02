@@ -1,0 +1,143 @@
+<div class="row">
+
+    <div class="col-lg-2 col-md-12">
+
+        <form #f="ngForm">
+
+            <div class="form-group">
+
+                <input type="date" [ngModel]="inicio" name="inicio" class="form-control">
+
+            </div>
+
+            <div class="form-group">
+
+                <input type="date" [ngModel]="final" name="final" class="form-control">
+
+            </div>
+
+            <button type="button" class="btn btn-success btn-block waves-effect waves-light m-r-10" (click)="solicitar( f )">Solicitar</button>
+
+        </form>
+
+    </div>
+
+    <div class="col-lg-10 col-md-12">
+
+        <div class="alert alert-warning" *ngIf="esperar">
+
+            Obteniendo registros
+
+        </div>
+
+        <span *ngIf="respuesta">Sin solicitud.</span>
+
+        <span *ngIf="ventas">No hay detalles.</span>
+
+        <div class="container-fluid" *ngIf="respuestaGeneral">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover">
+
+                    <thead>
+
+                        <tr>
+
+                            <th class="text-center">Numero</th>
+
+                            <th class="text-center">Nombre</th>
+
+                            <th class="text-center">Folio</th>
+
+                            <th class="text-center">Fecha</th>
+
+                            <th class="text-center">Importe</th>
+
+                            <th class="text-center">Días Pasados</th>
+
+                            <th class="text-center">Forma de Pago</th>
+
+                            <th class="text-center">Referencia</th>
+
+                            <th class="text-center">Recibo</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr *ngFor="let pag of pagos; let i = index">
+
+                            <td class="text-center">{{ pag.numero }}</td>
+
+                            <td class="text-left">{{ pag.nombre }}</td>
+
+                            <td class="text-center">{{ pag.folio }}</td>
+
+                            <td class="text-center">{{ pag.fechapago }}</td>
+
+                            <td class="text-right">{{ pag.pagado | currency }}</td>
+
+                            <td class="text-center">{{ pag.dias | number }}</td>
+
+                            <td class="text-center" *ngIf="pag.formapago === 'S'">
+
+                                - -
+
+                            </td>
+
+                            <td class="text-center" *ngIf="pag.formapago === 'C'">
+
+                                <span class="label label-info">{{ pag.forma }}</span>
+
+                            </td>
+
+                            <td class="text-center" *ngIf="pag.formapago === 'R'">
+
+                                <span class="label label-primary">{{ pag.forma }}</span>
+
+                            </td>
+
+                            <td class="text-center" *ngIf="pag.formapago === 'T'">
+
+                                <span class="label label-primary" style="background: black!important;">{{ pag.forma }}</span>
+
+                            </td>
+
+                            <td class="text-center" *ngIf="pag.formapago === 'E'">
+
+                                <span class="label label-danger">{{ pag.forma }}</span>
+
+                            </td>
+
+                            <td class="text-left">{{ pag.pagref }}</td>
+
+                            <td class="text-center" *ngIf="pag.recibo !== 0">
+
+                                <span class="label label-light-inverse">{{ pag.recibo }}</span>
+
+                            </td>
+
+                            <td class="text-center" *ngIf="pag.recibo === 0">
+
+                                <span class="label label-danger" *ngIf="pag.categoria !== ''">{{ pag.categoria }}</span>
+
+                                <span class="label label-danger" *ngIf="pag.categoria === ''">- -</span>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

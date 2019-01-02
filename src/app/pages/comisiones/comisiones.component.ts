@@ -30,6 +30,8 @@ export class ComisionesComponent implements OnInit {
   ngOnInit() {}
 
   solicitar(forma: NgForm) {
+    this.datos = [];
+
     if ( forma.value.mes === 0 ) {
       swal('Debe ingresar el mes', 'No ha selecionado un mes para la busqueda.', 'error');
       return;
@@ -43,11 +45,9 @@ export class ComisionesComponent implements OnInit {
     this._comisionesService.buscarMesComision(forma.value.mes, forma.value.anio)
       .subscribe( ( resp: any ) => {
 
-        let comisiones = resp.comisiones;
+        if (resp.encontrado.length > 0) {
 
-        if (resp.comisiones.length > 0) {
-
-          this.procesar(forma.value.anio, comisiones);
+          this.mostrar(resp.encontrado);
 
         } else {
 
@@ -58,41 +58,32 @@ export class ComisionesComponent implements OnInit {
       });
   }
 
-  procesar( anio: any, comisiones: any ) {
-    this.cargando = true;
-
-    this._usuariosService.buscarUsuarios('ASE_ROLE')
-      .subscribe( ( asesores: any ) => {
-
-        this.mostrar( anio, comisiones, asesores );
-
-      });
-  }
-
-  mostrar( anio: any, comisiones: any, asesores: any ) {
+  mostrar( comisiones: any ) {
 
     for (let i = 0; i < comisiones.length; i++) {
 
-      if (comisiones[i].anio === anio) {
+      this._usuariosService.buscarUsuarioEsp(comisiones[i].idFerrum).subscribe( (comUser: any) => {
+        this.datos.push(
+          {
+            'comision': comisiones[i],
+            'img': comUser.usuario[0].img,
+            'nombre': comUser.usuario[0].nombre,
+            'email': comUser.usuario[0].email
+          }
+        );
 
-        for (let j = 0; j < asesores.length; j++) {
-
-          if (comisiones[i].idFerrum == asesores[j].idFerrum) {
-
-            this.datos.push(
-              {
-                'comision': comisiones[i],
-                'img': asesores[j].img,
-                'nombre': asesores[j].nombre,
-                'email': asesores[j].email
-              }
-            );
-
+        this.datos.sort((a, b) => {
+          if (a.comision.totalComisionPagar < b.comision.totalComisionPagar) {
+            return 1;
           }
 
-        }
+          if (a.comision.totalComisionPagar > b.comision.totalComisionPagar) {
+            return -1;
+          }
 
-      }
+          return 0;
+        });
+      });
 
     }
 

@@ -84,6 +84,7 @@ import { MostrarFacturasMorosidadComponent } from './mostrar-facturas-morosidad/
 import { ChequesDevueltosComponent } from './cheques-devueltos/cheques-devueltos.component';
 import { SpeedComponent } from '../components/speed/speed.component';
 import { DashboardLogisticaComponent } from './dashboard-logistica/dashboard-logistica.component';
+import { BuscarPagosComponent } from './buscar-pagos/buscar-pagos.component';
 
 @NgModule({
     declarations: [
@@ -148,7 +149,8 @@ import { DashboardLogisticaComponent } from './dashboard-logistica/dashboard-log
         MovFolComponent,
         EdoCtaCliComponent,
         SpeedComponent,
-        DashboardLogisticaComponent
+        DashboardLogisticaComponent,
+        BuscarPagosComponent
     ],
     exports: [
         DashborarDirComponent,

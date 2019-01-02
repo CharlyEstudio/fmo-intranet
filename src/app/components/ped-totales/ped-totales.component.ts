@@ -47,7 +47,7 @@ export class PedTotalesComponent implements OnInit, OnDestroy {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250' || URL_SERVICIO_GENERAL === 'http://localhost') {
       this.panel = 'http://192.168.1.250/panel/#/';
     } else {
-      this.panel = 'http://177.244.55.122:8080/panel/#/';
+      this.panel = 'http://ferremayoristas.com.mx/panel/#/';
     }
 
     // Total de Pedidos

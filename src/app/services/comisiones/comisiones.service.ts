@@ -77,21 +77,14 @@ export class ComisionesService {
     let url;
 
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/mes/' + mes + "/" + anio;
+      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/comisiones/buscar/' + mes + "/" + anio;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/mes/' + mes + "/" + anio;
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/comisiones/buscar/' + mes + "/" + anio;
     } else {
-      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/mes/' + mes + "/" + anio;
+      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones/buscar/' + mes + "/" + anio;
     }
 
-    return this.http.get( url )
-      .map( (resp: any) => {
-        return resp;
-      })
-      .catch( err => {
-        swal(err.error.mensaje , err.error.errors.message, 'error');
-        return Observable.throw( err );
-      });
+    return this.http.get( url );
   }
 
   guardarComision(comision: Comision) {

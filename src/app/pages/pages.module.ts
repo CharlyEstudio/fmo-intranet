@@ -27,6 +27,9 @@ import { PipesModule } from '../pipes/pipes.module';
 // PDF View
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 
+// Mapa
+import { AgmCoreModule } from '@agm/core';
+
 // General
 import { PorBajarComponent } from '../components/por-bajar/por-bajar.component';
 import { PorSurtirComponent } from '../components/por-surtir/por-surtir.component';
@@ -85,6 +88,7 @@ import { ChequesDevueltosComponent } from './cheques-devueltos/cheques-devueltos
 import { SpeedComponent } from '../components/speed/speed.component';
 import { DashboardLogisticaComponent } from './dashboard-logistica/dashboard-logistica.component';
 import { BuscarPagosComponent } from './buscar-pagos/buscar-pagos.component';
+import { MapaComponent } from './mapa/mapa.component';
 
 @NgModule({
     declarations: [
@@ -150,7 +154,8 @@ import { BuscarPagosComponent } from './buscar-pagos/buscar-pagos.component';
         EdoCtaCliComponent,
         SpeedComponent,
         DashboardLogisticaComponent,
-        BuscarPagosComponent
+        BuscarPagosComponent,
+        MapaComponent
     ],
     exports: [
         DashborarDirComponent,
@@ -164,7 +169,10 @@ import { BuscarPagosComponent } from './buscar-pagos/buscar-pagos.component';
         FormsModule,
         ChartsModule,
         PipesModule,
-        PdfViewerModule
+        PdfViewerModule,
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyDLxUFj_KCshQNqoUG2i7WZFbkR0nigdhs'
+          })
     ]
 })
 

@@ -275,6 +275,11 @@ User card page
     vertical-align: inherit!important;
 }
 
+agm-map {
+    height: 400px;
+    max-height: 400px;
+}
+
 
 /**
  * ESCRITORIO GRANDE

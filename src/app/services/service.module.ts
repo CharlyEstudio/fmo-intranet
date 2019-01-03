@@ -28,7 +28,8 @@ import {
   AlmacenService,
   ExcelService,
   CreditoService,
-  GuiasService
+  GuiasService,
+  GpsService
   // NotificationService
 } from "./services.index";
 
@@ -64,7 +65,8 @@ import {
     AlmacenService,
     ExcelService,
     CreditoService,
-    GuiasService
+    GuiasService,
+    GpsService
     // NotificationService
   ],
   declarations: []

@@ -54,6 +54,7 @@ import { MostrarFacturasMorosidadComponent } from './mostrar-facturas-morosidad/
 import { ChequesDevueltosComponent } from './cheques-devueltos/cheques-devueltos.component';
 import { DashboardLogisticaComponent } from './dashboard-logistica/dashboard-logistica.component';
 import { BuscarPagosComponent } from './buscar-pagos/buscar-pagos.component';
+import { MapaComponent } from './mapa/mapa.component';
 
 const pageRoutes: Routes = [
     {
@@ -470,6 +471,16 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Generación de Guías',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'mapas',
+        component: MapaComponent,
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Geolocalización',
                     name: 'description'
                 }
     },

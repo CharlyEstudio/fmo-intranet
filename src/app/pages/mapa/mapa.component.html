@@ -1,0 +1,8 @@
+<h3>{{ title }}</h3>
+
+<agm-map [latitude]="lat" [longitude]="lng" [zoom]="10">
+
+    <agm-marker *ngFor="let u of usuarios; let i = index" [latitude]="u.lat" [longitude]="u.lng" (markerClick)="clicMarker(u.idFerrum, u.email, u.id)">
+    </agm-marker>
+
+</agm-map>

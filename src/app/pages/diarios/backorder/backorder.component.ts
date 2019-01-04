@@ -19,6 +19,7 @@ export class BackorderComponent implements OnInit {
   respuestaGeneral: boolean = false;
   ventas: boolean = false;
   esperar: boolean = false;
+  mostrar: boolean = false;
 
   backorder: any;
   cantidad: number = 0;
@@ -40,6 +41,7 @@ export class BackorderComponent implements OnInit {
 
     this.esperar = true;
     this.respuesta = false;
+    this.mostrar = false;
 
     if ( forma.value.inicio === undefined ) {
       swal('Debe ingresar las fechas', 'No ha selecionado un rango de fechas.', 'error');
@@ -66,10 +68,10 @@ export class BackorderComponent implements OnInit {
 
     this._diariosService.backOrder(this.inicio, this.final)
       .subscribe( ( resp: any ) => {
-        if (resp != '') {
+        if (resp !== '') {
           this.backorder = resp;
 
-          for(let i=0; i < this.backorder.length; i++){
+          for (let i = 0; i < this.backorder.length; i++) {
             this.cantidad += Number(this.backorder[i].cantidad);
             this.costo += Number(this.backorder[i].costo);
             this.venta += Number(this.backorder[i].venta);
@@ -93,6 +95,7 @@ export class BackorderComponent implements OnInit {
 
     this._diariosService.obtenerBackOrder(e.target.id, this.inicio, this.final, this.orden)
       .subscribe( ( resp: any ) => {
+        this.mostrar = true;
         this.backs = resp;
       });
   }

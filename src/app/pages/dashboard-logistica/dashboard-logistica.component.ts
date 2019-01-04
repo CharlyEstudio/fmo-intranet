@@ -63,7 +63,6 @@ export class DashboardLogisticaComponent implements OnInit {
     public sanitizer: DomSanitizer
   ) {
     this.idUsuario = this._usuarioService.usuario._id;
-    console.log(this.idUsuario);
 
     let guias = JSON.parse(localStorage.getItem('guia'));
     let especiales = JSON.parse(localStorage.getItem('especiales'));

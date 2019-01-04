@@ -477,7 +477,7 @@ const pageRoutes: Routes = [
     {
         path: 'mapas',
         component: MapaComponent,
-        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Geolocalización',

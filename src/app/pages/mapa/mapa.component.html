@@ -1,8 +1,137 @@
-<h3>{{ title }}</h3>
+<div class="row">
 
-<agm-map [latitude]="lat" [longitude]="lng" [zoom]="10">
+    <div class="col-lg-12 col-md-12" style="position: relative;">
 
-    <agm-marker *ngFor="let u of usuarios; let i = index" [latitude]="u.lat" [longitude]="u.lng" (markerClick)="clicMarker(u.idFerrum, u.email, u.id)">
-    </agm-marker>
+        <agm-map [latitude]="lat" [longitude]="lng" [zoom]="10">
 
-</agm-map>
+            <agm-marker *ngFor="let u of usuarios" [latitude]="u.LAT" [longitude]="u.LNG" (markerClick)="clicMarker(u)" [iconUrl]="markerIcon(u.PERID, u.DIAVIS)">
+
+                <agm-info-window>
+
+                    <p># {{ num }}</p>
+
+                    <p>Tel.: {{ tel }}</p>
+
+                    <p>Email: {{ email }}</p>
+
+                    <p>Asesor: {{ nomAse }} | {{ emailAse }}</p>
+
+                </agm-info-window>
+
+            </agm-marker>
+
+            <agm-marker *ngFor="let p of porDias" [latitude]="p.LAT" [longitude]="p.LNG" (markerClick)="clicMarker(p)" [iconUrl]="markerIconDias(p.DIAVIS, p.PERID)">
+
+                <agm-info-window>
+
+                    <p># {{ num }}</p>
+
+                    <p>Tel.: {{ tel }}</p>
+
+                    <p>Email: {{ email }}</p>
+
+                    <p>Asesor: {{ nomAse }} | {{ emailAse }}</p>
+
+                </agm-info-window>
+
+            </agm-marker>
+
+        </agm-map>
+
+    </div>
+
+    <div class="col-lg-12 col-md-12 p-t-10" style="position: absolute">
+
+        <!-- <h3>{{ title }}</h3> -->
+
+        <form #f="ngForm" (change)="mostrar(f)" class="form-inline p-l-10">
+
+            <div class="group-form mb-2">
+
+                <select class="form-control" style="width: 300px;" [ngModel]="tipo" name="tipo">
+
+                    <option value="0">General</option>
+
+                    <option value="1">Localización</option>
+
+                    <option value="2">Por Asesores</option>
+
+                    <option value="3">Por Días</option>
+
+                </select>
+
+            </div>
+
+            <div class="group-form mx-sm-3 mb-2" *ngIf="selectAsesores">
+
+                <select class="form-control" style="width: 300px;" [ngModel]="asesor" name="asesor">
+
+                    <option value="0">General</option>
+
+                    <option *ngFor="let asesor of asesores" [value]="asesor.idFerrum">{{ asesor.nombre }}</option>
+
+                </select>
+
+            </div>
+
+            <div class="group-form mx-sm-3 mb-2" *ngIf="asesorArray.length > 0">
+
+                <div *ngFor="let a of asesorArray" style="background: rgba(0, 0, 0, 0.7); padding-left: 5px; padding-right: 5px; border-radius: 5px;">
+
+                    <ul class="list-inline" style="margin-bottom: 0px!important">
+
+                        <li class="list-inline-item">
+
+                            <img [src]="a.img | imagen" class="img-fluid" width="37">
+
+                        </li>
+
+                        <li class="list-inline-item text-white">
+
+                            <h5 style="color: white!important">{{ a.nombre }} Clientes: {{ usuarios.length | number }}</h5>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <div class="group-form mx-sm-3 mb-2" *ngIf="selectDias">
+
+                <select class="form-control" style="width: 300px;" [ngModel]="day" name="day">
+
+                    <option value="0">Todos</option>
+
+                    <option value="1">Lunes</option>
+
+                    <option value="2">Martes</option>
+
+                    <option value="3">Miércoles</option>
+
+                    <option value="4">Jueves</option>
+
+                    <option value="5">Viernes</option>
+
+                    <option value="6">Sábado</option>
+
+                </select>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="col-lg-2 col-md-2 p-t-10" style="position: absolute; margin-top: 55px; margin-left: 30px; background: rgba(0, 0, 0, 0.6); border-radius: 5px;" *ngIf="presentar">
+
+        <h6 *ngFor="let c of colores" class="text-white" style="font-size: 10px;">
+
+            <img [src]="c.imagen" class="img-fluid" width="15"> {{ c.nombre }}
+
+        </h6>
+
+    </div>
+
+</div>

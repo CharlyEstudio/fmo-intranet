@@ -225,7 +225,8 @@ export class DiariosService {
 
   obtenerBackOrder( tipo: any, fechaIn: any, fechaOut: any, orden: any ) {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/// tslint:disable-next-line:max-line-length
+      /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=21&tipo=' +
+                          tipo + '&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&orden=' + orden;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       // tslint:disable-next-line:max-line-length
       this.url = URL_PRUEBAS + '/api/diarios.php?opcion=21&tipo=' + tipo + '&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&orden=' + orden;

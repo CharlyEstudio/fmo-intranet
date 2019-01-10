@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { NgForm } from '@angular/forms';
@@ -20,6 +20,9 @@ export class DashboardLogisticaComponent implements OnInit {
 
   fecha = Date.now();
 
+  inicial: any;
+  final: any;
+
   idUsuario: any;
   usuario: Usuario;
 
@@ -32,12 +35,14 @@ export class DashboardLogisticaComponent implements OnInit {
   ultimasGuias: any[] = [];
   guiasRecientes: any[] = [];
   especialesDia: any[] = [];
+  especialesDiaModal: any[] = [];
   especiales: any[] = [];
 
   generar: boolean = false;
   obtener: boolean = false;
   guias: boolean = true;
   tuberias: boolean = false;
+  sinDatos: boolean = false;
 
   importe: number = 0;
   total: number = 0;
@@ -201,14 +206,37 @@ export class DashboardLogisticaComponent implements OnInit {
     });
   }
 
-  checarLista(especiales: any) {
-    this.generar = false;
-    this.guias = false;
-    this.tuberias = true;
-    this.obtener = false;
+  // Este es el botón de buscar guia
+  checarLista(forma: NgForm) {
+
+    if (forma.value.inicial === undefined) {
+      swal('Sin Fecha Inicial', 'No se ingreso fecha inicial para la busqueda.', 'warning');
+      return;
+    }
+
+    if (forma.value.final === undefined) {
+      swal('Sin Fecha Inicial', 'No se ingreso fecha final para la busqueda.', 'warning');
+      return;
+    }
+
+    this.guiasEnc = [];
+
+    this._guiasServices.buscarGuiasRango(forma.value.inicial, forma.value.final).subscribe((encontrados: any) => {
+      if (encontrados.encontrados.length > 0) {
+        this.generar = false;
+        this.guias = false;
+        this.tuberias = true;
+        this.obtener = false;
+        this.guiasEnc = encontrados.encontrados;
+      } else {
+        swal('No se encontro registro', 'No se encontro registro de guias en estas fechas.', 'warning');
+        this.verGuias();
+      }
+    });
   }
 
   obtenerFolio(forma: NgForm) {
+    this.generar = true;
     if (forma.value.folio === 0) {
       swal('Sin Folio', 'No se ingreso folio para agregar a la guía', 'warning');
       return;
@@ -229,8 +257,6 @@ export class DashboardLogisticaComponent implements OnInit {
           return;
         }
 
-        this.obtener = true;
-
         this._guiasServices.buscarEspeciales(forma.value.folio).subscribe( ( especiales: any ) => {
           if (especiales.length > 0) {
             for (let i = 0; i < especiales.length; i++) {
@@ -250,13 +276,25 @@ export class DashboardLogisticaComponent implements OnInit {
         });
 
         this._guiasServices.obtenerFolio(forma.value.folio).subscribe( ( partidas: any ) => {
-          for (let i = 0; i < partidas.length; i++) {
-            this.folios.push(partidas[i]);
+          if (partidas.length > 0) {
+            for (let i = 0; i < partidas.length; i++) {
+              this.folios.push(partidas[i]);
+            }
+
+            localStorage.setItem('guia', JSON.stringify(this.folios));
+
+            this.obtener = true;
+            this.generar = false;
+            this.sinDatos = false;
+
+            this.folio = '';
+          } else {
+            this.obtener = false;
+            this.generar = false;
+            this.sinDatos = true;
+            this.guias = false;
+            swal('Ninguna Factura', 'Este folio ' + forma.value.folio + ' no tiene niguna factura relacionada.', 'error');
           }
-
-          localStorage.setItem('guia', JSON.stringify(this.folios));
-
-          this.folio = '';
 
         });
       }
@@ -492,6 +530,7 @@ export class DashboardLogisticaComponent implements OnInit {
                 this.guias = true;
                 this.tuberias = false;
                 this.obtener = false;
+                this.sinDatos = false;
                 setTimeout(() => this.verGuias(), 500);
 
                 swal.stopLoading();
@@ -513,6 +552,8 @@ export class DashboardLogisticaComponent implements OnInit {
     this.guias = true;
     this.tuberias = false;
     this.obtener = false;
+    this.sinDatos = false;
+    this.verGuias();
   }
 
   modalPDF(dato: any) {
@@ -525,9 +566,11 @@ export class DashboardLogisticaComponent implements OnInit {
     this.cajas = dato.cajas;
     this.fec = dato.fecha;
 
-    this.ruta = 'http://www.ferremayoristas.com.mx/api/pdf/' + 'JuanGarcia' + '-' + this.cantidad + '-' + this.fec + '.pdf';
+    this.ruta = 'http://www.ferremayoristas.com.mx/api/pdf/' + this.chofer + '-' + this.cantidad + '-' + this.fec + '.pdf';
   }
 
+
+  // TODO
   modalVer(dato: any) {
     this.totalModal = 0;
     this.chofer = dato.chofer;
@@ -543,8 +586,37 @@ export class DashboardLogisticaComponent implements OnInit {
       this.facturas = facturas.facturas;
       for (let i = 0; i < facturas.facturas.length; i++) {
         this.totalModal += facturas.facturas[i].importe;
+        this._guiasServices.buscarEspeciales(facturas.facturas[i].factura).subscribe( ( especiales: any ) => {
+          if (especiales.length > 0) {
+            for (let k = 0; k < especiales.length; k++) {
+              let esEspecial = (pedido) => {
+                return pedido.clvprov === especiales[k].clvprov;
+              }
+
+              if (this.especialesDiaModal.find(esEspecial)) {
+                this.especialesDiaModal.find(esEspecial).desentregado += especiales[k].desentregado;
+              } else {
+                this.especialesDiaModal.push(especiales[k]);
+              }
+
+            }
+          }
+        });
       }
     });
+  }
+
+  borarModalVer() {
+    this.especialesDiaModal = [];
+    this.totalModal = 0;
+    this.chofer = '';
+    this.fol = 0;
+    this.hora = '';
+    this.impo = 0;
+    this.veri = '';
+    this.cantidad = 0;
+    this.cajas = '';
+    this.fec = '';
   }
 
 }

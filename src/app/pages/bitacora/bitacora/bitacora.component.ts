@@ -76,9 +76,11 @@ export class BitacoraComponent implements OnInit, OnDestroy {
         this.comentarios = comentarios.charla.reverse();
         this.esperar = false;
         this.respuestaGeneral = true;
+        this.busquedaComentarios = false;
       } else {
         this.esperar = false;
         this.respuestaGeneral = false;
+        this.busquedaComentarios = true;
       }
     });
 

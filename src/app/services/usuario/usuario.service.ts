@@ -258,15 +258,15 @@ export class UsuarioService {
       });
   }
 
-  buscarAsesorComision( id: any ) {
+  buscarAsesorComision( id: any, mes: any, anio: any ) {
     let url;
 
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id;
+      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id + '/' + mes + '/' + anio;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id;
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id + '/' + mes + '/' + anio;
     } else {
-      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id;
+      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id + '/' + mes + '/' + anio;
     }
 
     return this.http.get( url )

@@ -1,30 +1,30 @@
 <div class="row">
 
-  <div class="col-lg-2 col-md-12">
+    <div class="col-lg-2 col-md-12">
 
-    <form #f="ngForm">
+        <form #f="ngForm">
 
-      <div class="form-group">
+            <div class="form-group">
 
-          <label for="inicio" class="col-2 col-form-label">Inicio</label>
+                <label for="inicio" class="col-2 col-form-label">Inicio</label>
 
-          <input [ngModel]='inicio' class="form-control" name="inicio" type="date" value="0000/00/00" id="inicio">
+                <input [ngModel]='inicio' class="form-control" name="inicio" type="date" value="0000/00/00" id="inicio">
 
-      </div>
+            </div>
 
-      <div class="form-group">
+            <div class="form-group">
 
-          <label for="final" class="col-2 col-form-label">Fin</label>
+                <label for="final" class="col-2 col-form-label">Fin</label>
 
-          <input [ngModel]='final' class="form-control" name="final" type="date" value="0000/00/00" id="final">
+                <input [ngModel]='final' class="form-control" name="final" type="date" value="0000/00/00" id="final">
 
-      </div>
+            </div>
 
-      <div class="form-group">
+            <div class="form-group">
 
-          <label>Asesores</label>
+                <label>Asesores</label>
 
-          <select class="form-control" [ngModel]="asesor" name="asesor">
+                <select class="form-control" [ngModel]="asesor" name="asesor">
 
               <option [value]='0'>Selecciona un asesor...</option>
 
@@ -32,242 +32,242 @@
 
           </select>
 
-      </div>
-
-      <button type="button" class="btn btn-success btn-block waves-effect waves-light m-r-10" (click)="solicitar( f )">Solicitar</button>
-
-    </form>
-
-  </div>
-
-  <div class="col-lg-10 col-md-12">
-
-    <div class="alert alert-warning" *ngIf="esperar">
-
-      Obteniendo registros
-
-    </div>
-
-    <span *ngIf="respuesta">No ha solicitado nada.</span>
-
-    <span *ngIf="ventas">No hay detalles de venta.</span>
-
-    <div class="container-fluid" *ngIf="respuestaGeneral">
-
-      <div class="table-responsive">
-
-        <table class="display nowrap table table-hover table-striped table-bordered dataTable" cellspacing="0" width="100%" role="grid" aria-describedby="example23_info" style="width: 100%;">
-          
-          <thead>
-
-            <tr role="row">
-
-              <th class="text-center">Asesor</th>
-
-              <th class="text-center">Subtotal</th>
-
-              <th class="text-center">Iva</th>
-
-              <th class="text-center">Total</th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            <tr role="row" class="odd" *ngFor="let pedido of pedidosGen">
-
-              <td class="sorting_1">{{ pedido.NOMBRE }}</td>
-
-              <td class="text-center">{{ pedido.SUBTOTAL | currency }}</td>
-
-              <td class="text-center">{{ pedido.IVA | currency }}</td>
-
-              <td class="text-center">{{ pedido.TOTAL | currency }}</td>
-
-            </tr>
-
-            <tr>
-
-              <th>TOTAL</th>
-
-              <th class="text-center">{{ totalSubtotal | currency }}</th>
-
-              <th class="text-center">{{ totalIva | currency }}</th>
-
-              <th class="text-center">{{ totalGeneral | currency }}</th>
-
-            </tr>
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-    </div>
-
-    <div class="container-fluid" *ngIf="respuestaIndividual">
-
-      <div class="row">
-
-        <div class="col-lg-4 col-xlg-3 col-md-5">
-
-          <div class="card">
-
-            <img class="card-img" src="{{url}}/intranet/assets/images/cuadros/cuadro3.jpg" alt="Card image">
-
-            <div class="card-img-overlay card-inverse social-profile d-flex ">
-
-              <div class="align-self-center">
-
-                <img [src]="vendedor.img | imagen" width="100" class="img-fluid rounded-bottom">
-
-                <h4 class="p-t-10 card-title">{{ nombre }}</h4>
-
-                <h6 class="card-subtitle">@Zona {{ zona }}</h6>
-
-                <h6 class="text-white">{{ vendedor.email }}</h6>
-
-                <small class="p-t-30 db text-white">Cel.</small>
-
-                <h6  class="text-white">+52 {{ vendedor.tel }}</h6>
-
-                <h6  class="card-subtitle">{{ vendedor.rol }}</h6>
-
-              </div>
-
             </div>
 
-          </div>
+            <button type="button" class="btn btn-success btn-block waves-effect waves-light m-r-10" (click)="solicitar( f )">Solicitar</button>
+
+        </form>
+
+    </div>
+
+    <div class="col-lg-10 col-md-12">
+
+        <div class="alert alert-warning" *ngIf="esperar">
+
+            Obteniendo registros
 
         </div>
 
-        <div class="col-lg-8 col-xlg-9 col-md-7">
+        <span *ngIf="respuesta">No ha solicitado nada.</span>
 
-          <div class="card">
+        <span *ngIf="ventas">No hay detalles de venta.</span>
 
-            <ul class="nav nav-tabs profile-tab" role="tablist">
+        <div class="container-fluid" *ngIf="respuestaGeneral">
 
-              <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#profile" role="tab">Venta</a> </li>
-              
-              <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#home" role="tab">Timeline</a> </li>
-            
-            </ul>
+            <div class="table-responsive">
 
-            <div class="tab-content">
+                <table class="display nowrap table table-hover table-striped table-bordered dataTable" cellspacing="0" width="100%" role="grid" aria-describedby="example23_info" style="width: 100%;">
 
-              <div class="tab-pane" id="home" role="tabpanel">
+                    <thead>
 
-                <div class="card-body">
+                        <tr role="row">
 
-                  <div class="profiletimeline">
+                            <th class="text-center">Asesor</th>
 
-                    <div class="sl-item" *ngFor="let pedido of pedidosAse">
+                            <th class="text-center">Subtotal</th>
 
-                      <div class="sl-left">
+                            <th class="text-center">Iva</th>
 
-                        <img [src]="vendedor.img | imagen" [alt]="vendedor.nombre" class="rounded-circle">
+                            <th class="text-center">Total</th>
 
-                      </div>
+                        </tr>
 
-                      <div class="sl-right">
+                    </thead>
 
-                        <div>
+                    <tbody>
 
-                          <a href="#" class="link">{{ pedido.nombre }}</a>
+                        <tr role="row" class="odd" *ngFor="let pedido of pedidosGen">
 
-                          <p>venta asignada con dato de registro <a href="#"> {{ pedido.fecha | date }} | {{ pedido.hora }}</a></p>
-                          
-                          <div class="like-comm">
-                            
-                            <a class="link m-r-10">Factura: {{ pedido.factura }}</a>
+                            <td class="sorting_1">{{ pedido.NOMBRE }}</td>
 
-                            <a class="link m-r-10">Importe: {{ pedido.importe | currency }}</a>
+                            <td class="text-center">{{ pedido.SUBTOTAL | currency }}</td>
 
-                          </div>
+                            <td class="text-center">{{ pedido.IVA | currency }}</td>
+
+                            <td class="text-center">{{ pedido.TOTAL | currency }}</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>TOTAL</th>
+
+                            <th class="text-center">{{ totalSubtotal | currency }}</th>
+
+                            <th class="text-center">{{ totalIva | currency }}</th>
+
+                            <th class="text-center">{{ totalGeneral | currency }}</th>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <div class="container-fluid" *ngIf="respuestaIndividual">
+
+            <div class="row">
+
+                <div class="col-lg-4 col-xlg-3 col-md-5">
+
+                    <div class="card">
+
+                        <img class="card-img" src="assets/images/cuadros/cuadro3.jpg" alt="Card image">
+
+                        <div class="card-img-overlay card-inverse social-profile d-flex ">
+
+                            <div class="align-self-center">
+
+                                <img [src]="vendedor.img | imagen" width="100" class="img-fluid rounded-bottom">
+
+                                <h4 class="p-t-10 card-title">{{ nombre }}</h4>
+
+                                <h6 class="card-subtitle">@Zona {{ zona }}</h6>
+
+                                <h6 class="text-white">{{ vendedor.email }}</h6>
+
+                                <small class="p-t-30 db text-white">Cel.</small>
+
+                                <h6 class="text-white">+52 {{ vendedor.tel }}</h6>
+
+                                <h6 class="card-subtitle">{{ vendedor.rol }}</h6>
+
+                            </div>
 
                         </div>
 
-                      </div>
-
-                      <hr>
-
                     </div>
-
-                  </div>
 
                 </div>
 
-              </div>
+                <div class="col-lg-8 col-xlg-9 col-md-7">
 
-              <div class="tab-pane active" id="profile" role="tabpanel">
+                    <div class="card">
 
-                <div class="card-body">
+                        <ul class="nav nav-tabs profile-tab" role="tablist">
 
-                  <div class="row">
+                            <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#profile" role="tab">Venta</a> </li>
 
-                    <div class="col-md-3 col-xs-6 b-r">
+                            <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#home" role="tab">Timeline</a> </li>
 
-                      <strong>Nombre</strong>
+                        </ul>
 
-                      <br>
+                        <div class="tab-content">
 
-                      <p class="text-muted">{{ nombre }}</p>
+                            <div class="tab-pane" id="home" role="tabpanel">
+
+                                <div class="card-body">
+
+                                    <div class="profiletimeline">
+
+                                        <div class="sl-item" *ngFor="let pedido of pedidosAse">
+
+                                            <div class="sl-left">
+
+                                                <img [src]="vendedor.img | imagen" [alt]="vendedor.nombre" class="rounded-circle">
+
+                                            </div>
+
+                                            <div class="sl-right">
+
+                                                <div>
+
+                                                    <a href="#" class="link">{{ pedido.nombre }}</a>
+
+                                                    <p>venta asignada con dato de registro <a href="#"> {{ pedido.fecha | date }} | {{ pedido.hora }}</a></p>
+
+                                                    <div class="like-comm">
+
+                                                        <a class="link m-r-10">Factura: {{ pedido.factura }}</a>
+
+                                                        <a class="link m-r-10">Importe: {{ pedido.importe | currency }}</a>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                            <hr>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane active" id="profile" role="tabpanel">
+
+                                <div class="card-body">
+
+                                    <div class="row">
+
+                                        <div class="col-md-3 col-xs-6 b-r">
+
+                                            <strong>Nombre</strong>
+
+                                            <br>
+
+                                            <p class="text-muted">{{ nombre }}</p>
+
+                                        </div>
+
+                                        <div class="col-md-3 col-xs-6 b-r">
+
+                                            <strong>SUBTOTAL</strong>
+
+                                            <br>
+
+                                            <p class="text-muted">{{ subtotal | currency }}</p>
+
+                                        </div>
+
+                                        <div class="col-md-3 col-xs-6 b-r">
+
+                                            <strong>TOTAL</strong>
+
+                                            <br>
+
+                                            <p class="text-muted">{{ total | currency }}</p>
+
+                                        </div>
+
+                                        <div class="col-md-3 col-xs-6">
+
+                                            <strong>Localidad/Zona</strong>
+
+                                            <br>
+
+                                            <p class="text-muted">{{ zona }}</p>
+
+                                        </div>
+
+                                    </div>
+
+                                    <hr>
+
+                                    <p class="m-t-30">Pedidos Realizados: {{ totPedidosAse }}.</p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
 
                     </div>
-
-                    <div class="col-md-3 col-xs-6 b-r">
-
-                      <strong>SUBTOTAL</strong>
-
-                      <br>
-
-                      <p class="text-muted">{{ subtotal | currency }}</p>
-
-                    </div>
-
-                    <div class="col-md-3 col-xs-6 b-r">
-
-                      <strong>TOTAL</strong>
-
-                      <br>
-
-                      <p class="text-muted">{{ total | currency }}</p>
-
-                    </div>
-
-                    <div class="col-md-3 col-xs-6">
-
-                      <strong>Localidad/Zona</strong>
-
-                      <br>
-
-                      <p class="text-muted">{{ zona }}</p>
-
-                    </div>
-
-                  </div>
-
-                  <hr>
-
-                  <p class="m-t-30">Pedidos Realizados: {{ totPedidosAse }}.</p>
 
                 </div>
-
-              </div>
 
             </div>
 
-          </div>
-
         </div>
-
-      </div>
 
     </div>
 
-  </div>
-  
 </div>

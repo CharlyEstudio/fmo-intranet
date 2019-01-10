@@ -34,6 +34,10 @@
 
                 <th class="text-center">Nombre</th>
 
+                <th class="text-center">Saldo Total</th>
+
+                <th class="text-center">Asesor</th>
+
                 <th class="text-center">Saldo</th>
 
                 <th class="text-center">Últimos Pagos</th>
@@ -56,7 +60,19 @@
 
                 <td class="text-left">{{ mor.nombre }}</td>
 
-                <td class="text-right" style="color: #f62d51;">{{ mor.saldo | currency }}</td>
+                <td class="text-right">
+
+                    <span class="label label-light-danger">{{ mor.td | currency }}</span>
+
+                </td>
+
+                <td class="text-left">{{ mor.asesor }}</td>
+
+                <td class="text-right">
+
+                    <span class="label label-danger">{{ mor.saldo | currency }}</span>
+
+                </td>
 
                 <td class="text-center">
 

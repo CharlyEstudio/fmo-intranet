@@ -82,17 +82,24 @@
                 <!-- subscribe Widget -->
                 <div class="card">
 
-                    <div class="card-body">
+                    <div class="card-body" style="padding: .8rem 1.25rem .6rem 1.25rem!important">
 
                         <div class="d-flex">
 
                             <div class="stats">
 
-                                <h1 class="">{{ especialesDia.length | number}} código(s)</h1>
+                                <form #g="ngForm">
 
-                                <h6 class="text-muted">Tuberías y Polvos del día</h6>
+                                    <div class="">
 
-                                <button class="btn btn-rounded btn-outline btn-secondary m-t-10 font-14" (click)="checarLista(especialesDia)">Checar Lista</button>
+                                        <input type="date" class="form-control" style="margin-bottom: .40rem;" [ngModel]="inicial" name="inicial">
+                                        <input type="date" class="form-control" [ngModel]="final" name="final">
+
+                                    </div>
+
+                                </form>
+
+                                <button class="btn btn-rounded btn-outline btn-secondary m-t-10 font-14" (click)="checarLista(g)">Buscar</button>
 
                             </div>
 
@@ -119,6 +126,16 @@
                 Esperando datos para mostrar.
 
                 <button class="btn btn-outline-dark btn-light m-t-10 font-14" (click)="cancelarGuia()">Cancelar</button>
+
+            </div>
+
+        </div>
+
+        <div class="col-12" *ngIf="sinDatos">
+
+            <div class="alert alert-danger" role="alert">
+
+                No hay facturas.
 
             </div>
 
@@ -228,8 +245,6 @@
 
                                 <th class="text-center">#</th>
 
-                                <th class="text-center">Ver</th>
-
                                 <th class="text-center">Fecha</th>
 
                                 <th class="text-center">Hora</th>
@@ -238,9 +253,11 @@
 
                                 <th class="text-center">Verifico</th>
 
-                                <th class="text-center">Cantidad</th>
+                                <th class="text-center">Facturas</th>
 
                                 <th class="text-center">Importe</th>
+
+                                <th class="text-center">Ver</th>
 
                                 <th class="text-center">PDF</th>
 
@@ -254,12 +271,6 @@
 
                                 <td class="text-center">{{ (i + 1) }}</td>
 
-                                <td class="text-center">
-
-                                    <a href="#modalVer" class="btn btn-outline-success" data-dismiss="modal" data-toggle="modal" (click)="modalVer(g)">Ver</a>
-
-                                </td>
-
                                 <td class="text-center">{{ g.fecha | date }}</td>
 
                                 <td class="text-center">{{ g.hora }}</td>
@@ -271,6 +282,12 @@
                                 <td class="text-center">{{ g.cantidad | number }}</td>
 
                                 <td class="text-center">{{ g.importe | currency }}</td>
+
+                                <td class="text-center">
+
+                                    <a href="#modalVer" class="btn btn-outline-success" data-dismiss="modal" data-toggle="modal" (click)="modalVer(g)">Ver</a>
+
+                                </td>
 
                                 <td class="text-center">
 
@@ -294,7 +311,7 @@
 
         </div>
 
-        <div class="col-12" *ngIf="!guias && !generar && !tuberias">
+        <div class="col-12" *ngIf="folios.length === 0 && !guias && !tuberias">
 
             <div class="alert alert-primary" role="alert">
 
@@ -308,16 +325,75 @@
 
             <div class="col-12">
 
-                <div class="msg-widget m-t-20">
+                <div class="table-responsive">
 
-                    <div class="activity-item" *ngFor="let esp of especialesDia; let i = index">
-                        <div class="m-t-10">
+                    <table class="table table-striped table-sm">
 
-                            <h5 class="m-b-0 font-medium">{{ esp.clvprov }} <span class="text-muted font-10 m-l-10">{{ esp.descripcio }} &nbsp; {{ esp.desentregado }} pza(s)</span></h5>
+                        <thead>
 
-                        </div>
+                            <tr>
 
-                    </div>
+                                <th class="text-center">#</th>
+
+                                <th class="text-center">Fecha</th>
+
+                                <th class="text-center">Hora</th>
+
+                                <th class="text-center">Chofer</th>
+
+                                <th class="text-center">Verifico</th>
+
+                                <th class="text-center">Facturas</th>
+
+                                <th class="text-center">Importe</th>
+
+                                <th class="text-center">Ver</th>
+
+                                <th class="text-center">PDF</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr *ngFor="let g of guiasEnc; let i = index">
+
+                                <td class="text-center">{{ (i + 1) }}</td>
+
+                                <td class="text-center">{{ g.fecha | date }}</td>
+
+                                <td class="text-center">{{ g.hora }}</td>
+
+                                <td class="text-left">{{ g.chofer }}</td>
+
+                                <td class="text-left">{{ g.verifico }}</td>
+
+                                <td class="text-center">{{ g.cantidad | number }}</td>
+
+                                <td class="text-center">{{ g.importe | currency }}</td>
+
+                                <td class="text-center">
+
+                                    <a href="#modalVer" class="btn btn-outline-success" data-dismiss="modal" data-toggle="modal" (click)="modalVer(g)">Ver</a>
+
+                                </td>
+
+                                <td class="text-center">
+
+                                    <a href="#modalPDF" data-dismiss="modal" data-toggle="modal" (click)="modalPDF(g)">
+
+                                        <img src="assets/images/icon/pdf.png" class="img-fluid" width="20">
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
 
                 </div>
 
@@ -501,15 +577,47 @@
 
                 <div class="row">
 
-                    <div class="col-12">
+                    <div class="col-6">
 
-                        <h3 class="font-bold">Chofer {{ chofer }} | {{ totalModal | currency }}</h3>
+                        <div class="row">
+
+                            <div class="col-12">
+
+                                <h3 class="font-bold">Chofer {{ chofer }}</h3>
+
+                            </div>
+
+                            <div class="col-12">
+
+                                <h5>Total {{ impo | currency }} / {{ cantidad | number }} Factura(s) | {{ fec | date }} {{ hora }} | Verificó {{ veri }}</h5>
+
+                            </div>
+
+                            <div class="col-12">
+
+                                <p>Cajas: {{ cajas }}</p>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
-                    <div class="col-12">
+                    <div class="col-6">
 
-                        <h3>Total {{ impo | currency }} / {{ cantidad | number }} Factura(s) | {{ fec | date }} {{ hora }} | Verificó {{ veri }}</h3>
+                        <div class="msg-widget m-t-20">
+
+                            <ul class="list-inline">
+
+                                <li class="list-inline-item" *ngFor="let esp of especialesDiaModal; let i = index">
+
+                                    <h5 class="m-b-0 font-medium">{{ esp.clvprov }} <span class="text-muted font-10 m-l-10">{{ esp.descripcio }} &nbsp; {{ esp.desentregado }} pza(s)</span></h5>
+
+                                </li>
+
+                            </ul>
+
+                        </div>
 
                     </div>
 
@@ -579,7 +687,7 @@
 
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" (click)="borarModalVer()" data-dismiss="modal">Close</button>
 
             </div>
 

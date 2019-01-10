@@ -79,7 +79,7 @@ export class VentaComponent implements OnInit {
     this.final = forma.value.final;
     this.asesor = forma.value.asesor;
 
-    if ( forma.value.asesor !== 0 ) {
+    if ( Number(forma.value.asesor) !== 0 ) {
 
       this._diariosService.ventas(this.inicio, this.final, this.asesor)
         .subscribe( ( resp ) => {
@@ -89,15 +89,15 @@ export class VentaComponent implements OnInit {
               this.vendedor = ase.usuarios[0];
             });
 
-          if (resp !== '') {
-            this.nombre = resp[0].NOMBRE;
-            this.id = resp[0].PERID;
-            this.catalogo = resp[0].CATALOGO;
-            this.serie = resp[0].SERIE;
-            this.caja = resp[0].CAJA;
-            this.zona = resp[0].ZONA;
-            this.subtotal = resp[0].SUBTOTAL;
-            this.total = resp[0].TOTAL;
+          if (resp.respuesta.lenth !== 0) {
+            this.nombre = resp.respuesta[0].NOMBRE;
+            this.id = resp.respuesta[0].PERID;
+            this.catalogo = resp.respuesta[0].CATALOGO;
+            this.serie = resp.respuesta[0].SERIE;
+            this.caja = resp.respuesta[0].CAJA;
+            this.zona = resp.respuesta[0].ZONA;
+            this.subtotal = resp.respuesta[0].SUBTOTAL;
+            this.total = resp.respuesta[0].TOTAL;
 
             this._diariosService.ventasAsesor(this.inicio, this.final, this.asesor)
               .subscribe( ( ventAse: any ) => {
@@ -130,8 +130,8 @@ export class VentaComponent implements OnInit {
       this._diariosService.ventas(this.inicio, this.final)
         .subscribe( ( resp ) => {
 
-          if (resp !== '') {
-            this.pedidosGen = resp;
+          if (resp.respuesta.length !== 0) {
+            this.pedidosGen = resp.respuesta;
 
             for (let i = 0; i < this.pedidosGen.length; i++) {
               this.totalGeneral += this.pedidosGen[i].TOTAL;

@@ -15,7 +15,7 @@ export class RepoLunesComponent implements OnInit {
 
   diasLunes: any;
   saldo: number = 0;
-  actual: number = 0;
+  actual: any[] = [];
   nombre: string;
 
   constructor(
@@ -33,7 +33,29 @@ export class RepoLunesComponent implements OnInit {
 
     this.saldo = 0;
 
-    this._diariosService.diasLunes()
+    let h = new Date();
+
+    let dia;
+
+    if (h.getDate() < 10) {
+      dia = '0' + h.getDate();
+    } else {
+      dia = h.getDate();
+    }
+
+    let mes;
+
+    if (h.getMonth() < 10) {
+      mes = '0' + (h.getMonth() + 1);
+    } else {
+      mes = (h.getMonth() + 1);
+    }
+
+    let anio = h.getFullYear();
+
+    let fecha = anio + '-' + mes + '-' + dia;
+
+    this._diariosService.diasLunes(fecha)
       .subscribe( ( resp: any ) => {
         if (resp !== '') {
           this.diasLunes = resp;
@@ -55,7 +77,30 @@ export class RepoLunesComponent implements OnInit {
   }
 
   obtenerPedidos(e) {
-    this._diariosService.pedidosDiaLunes(e.target.id)
+    this.actual = [];
+    let h = new Date();
+
+    let dia;
+
+    if (h.getDate() < 10) {
+      dia = '0' + h.getDate();
+    } else {
+      dia = h.getDate();
+    }
+
+    let mes;
+
+    if (h.getMonth() < 10) {
+      mes = '0' + (h.getMonth() + 1);
+    } else {
+      mes = (h.getMonth() + 1);
+    }
+
+    let anio = h.getFullYear();
+
+    let fecha = anio + '-' + mes + '-' + dia;
+
+    this._diariosService.pedidosDiaLunes(fecha, e.target.id)
       .subscribe( ( resp: any ) => {
         this.nombre = resp[0].asesor;
         this.actual = resp;

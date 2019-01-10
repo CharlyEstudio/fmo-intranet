@@ -39,11 +39,10 @@ export class InventarioComponent implements OnInit {
 
     this._diariosService.inventario()
       .subscribe( ( resp: any ) => {
-        if (resp != '') {
-          console.log(resp);
+        if (resp !== '') {
           this.inventario = resp;
 
-          for(let i=0; i < this.inventario.length; i++){
+          for (let i = 0; i < this.inventario.length; i++) {
             this.subtotal += this.inventario[i].subtotal;
             this.iva += this.inventario[i].iva;
             this.total += this.inventario[i].total;

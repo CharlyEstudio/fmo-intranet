@@ -1440,9 +1440,27 @@ export class PrecomVistaComponent implements OnInit {
       let anio = fec.getFullYear();
       let fecha = anio + '-' + mes + '-' + dia;
 
-      let hor = fec.getHours();
-      let min = fec.getMinutes();
-      let sec = fec.getSeconds();
+      let hor;
+      let min;
+      let sec;
+
+      if (fec.getHours() < 10) {
+        hor = '0' + fec.getHours();
+      } else {
+        hor = fec.getHours();
+      }
+
+      if (fec.getMinutes() < 10) {
+        min = '0' + fec.getMinutes();
+      } else {
+        min = fec.getMinutes();
+      }
+
+      if (fec.getSeconds() < 10) {
+        sec = '0' + fec.getSeconds();
+      } else {
+        sec = fec.getSeconds();
+      }
 
       let hora = hor + ':' + min + ':' + sec;
 
@@ -1522,7 +1540,7 @@ export class PrecomVistaComponent implements OnInit {
         anio
       );
 
-      this._usuarioService.buscarAsesorComision(this.idFerrum)
+      this._usuarioService.buscarAsesorComision(this.idFerrum, mes, anio)
         .subscribe( ( resp: any ) => {
           if (resp.comisiones.length > 0) {
             if (resp.comisiones[0].mes !== mes) {
@@ -1554,7 +1572,7 @@ export class PrecomVistaComponent implements OnInit {
               .then(confirm => {
                 if (confirm) {
                   this._usuarioService.actualizarComisionUsusario( comisionEnviar, resp.comisiones[0]._id )
-                .subscribe();
+                    .subscribe(() => {});
                 }
               });
             }
@@ -1571,7 +1589,7 @@ export class PrecomVistaComponent implements OnInit {
             .then(confirm => {
               if (confirm) {
                 this._usuarioService.guardarComision( comisionEnviar )
-              .subscribe();
+              .subscribe(() => {});
               }
             });
           }

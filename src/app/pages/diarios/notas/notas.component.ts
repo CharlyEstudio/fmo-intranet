@@ -57,10 +57,10 @@ export class NotasComponent implements OnInit {
 
     this._diariosService.notasCredito(this.inicio, this.final)
       .subscribe( ( resp: any ) => {
-        if (resp != '') {
+        if (resp !== '') {
           this.notas = resp;
 
-          for(let i=0; i < this.notas.length; i++){
+          for (let i = 0; i < this.notas.length; i++) {
             this.subtotal += this.notas[i].subtotal;
             this.iva += this.notas[i].iva;
             this.total += this.notas[i].total;

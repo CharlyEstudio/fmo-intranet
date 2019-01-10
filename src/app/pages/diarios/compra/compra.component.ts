@@ -74,13 +74,13 @@ export class CompraComponent implements OnInit {
 
     this.inicio = forma.value.inicio;
     this.final = forma.value.final;
-    this.proveedor = forma.value.proveedor;
+    this.proveedor = Number(forma.value.proveedor);
 
-    if ( forma.value.proveedor !== 0 ) {
+    if ( Number(forma.value.proveedor) !== 0 ) {
       this._diariosService.compras(this.inicio, this.final, this.proveedor)
         .subscribe( ( resp: any ) => {
 
-          if (resp !== '') {
+          if (resp.length !== 0) {
             this.nombre = resp[0].nombre;
             this.id = resp[0].cid;
             this.numero = resp[0].numero;
@@ -117,7 +117,7 @@ export class CompraComponent implements OnInit {
       this._diariosService.compras(this.inicio, this.final)
         .subscribe( ( resp: any ) => {
 
-          if (resp !== '') {
+          if (resp.length !== 0) {
             this.pedidosGen = resp;
 
             for (let i = 0; i < this.pedidosGen.length; i++) {

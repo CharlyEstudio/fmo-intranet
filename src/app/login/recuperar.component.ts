@@ -6,8 +6,8 @@ import { UsuarioService, AsesoresService } from '../services/services.index';
 
 import * as _swal from 'sweetalert';
 import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
-import { Router } from '@angular/router';
 const swal: SweetAlert = _swal as any;
+import { Router } from '@angular/router';
 
 declare function init_plugins();
 

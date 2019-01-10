@@ -172,7 +172,7 @@ import { MapaComponent } from './mapa/mapa.component';
         PdfViewerModule,
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyDLxUFj_KCshQNqoUG2i7WZFbkR0nigdhs'
-          })
+        })
     ]
 })
 

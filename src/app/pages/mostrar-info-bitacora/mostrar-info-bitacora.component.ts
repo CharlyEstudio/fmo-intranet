@@ -71,13 +71,14 @@ export class MostrarInfoBitacoraComponent implements OnInit {
 
     this._creditoService.morosidadRelacion(morosidad).subscribe( ( relacion: any ) => {
       for (let i = 0; i < relacion.length; i++) {
-        // console.log(relacion[i].saldo);
         this._creditoService.pagosMes( relacion[i].clienteid ).subscribe( ( pagosMes: any ) => {
           this._creditoService.obtenerComentarios(relacion[i].clienteid).subscribe( ( comentarios: any ) => {
             let mor = {
               clienteid: relacion[i].clienteid,
               nombre: relacion[i].nombre,
               numero: relacion[i].numero,
+              td: relacion[i].td,
+              asesor: relacion[i].asesor,
               saldo: relacion[i].saldo,
               pagosMes: pagosMes[0].cantidad,
               mensajes: comentarios.charla.length

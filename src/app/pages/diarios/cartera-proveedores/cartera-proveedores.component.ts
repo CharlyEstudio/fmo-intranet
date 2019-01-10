@@ -32,10 +32,10 @@ export class CarteraProveedoresComponent implements OnInit {
 
     this._diariosService.carteraProveedores()
       .subscribe( ( resp: any ) => {
-        if (resp != '') {
+        if (resp !== '') {
           this.cartera = resp;
 
-          for(let i=0; i < this.cartera.length; i++){
+          for (let i = 0; i < this.cartera.length; i++) {
             this.saldo += this.cartera[i].saldo;
           }
 
@@ -52,7 +52,28 @@ export class CarteraProveedoresComponent implements OnInit {
   }
 
   obtenerCartera(e) {
-    this._diariosService.saldoProveedores(e.target.id)
+    let h = new Date();
+
+    let dia;
+
+    if (h.getDate() < 10) {
+      dia = '0' + h.getDate();
+    } else {
+      dia = h.getDate();
+    }
+
+    let mes;
+
+    if (h.getMonth() < 10) {
+      mes = '0' + (h.getMonth() + 1);
+    } else {
+      mes = (h.getMonth() + 1);
+    }
+
+    let anio = h.getFullYear();
+
+    let fecha = anio + '-' + mes + '-' + dia;
+    this._diariosService.saldoProveedores(fecha, e.target.id)
       .subscribe( ( resp: any ) => {
         this.nombre = resp[0].nombre;
         this.actual = resp;

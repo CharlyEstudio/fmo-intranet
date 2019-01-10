@@ -84,7 +84,6 @@ export class EntSalComponent implements OnInit {
   }
 
   obtenerConsumo() {
-    console.log(this.inicio, this.final);
     this._diariosService.consumoInterno(this.inicio, this.final)
       .subscribe( ( resp: any ) => {
         this.consumo = resp;

@@ -87,7 +87,7 @@ export class VentaComponent implements OnInit {
     if ( Number(forma.value.asesor) !== 0 ) {
 
       this._diariosService.ventas(this.inicio, this.final, this.asesor)
-        .subscribe( ( resp ) => {
+        .subscribe( ( resp: any ) => {
 
           this._asesorService.asesor(this.asesor)
             .subscribe( ( ase: any ) => {
@@ -99,7 +99,7 @@ export class VentaComponent implements OnInit {
               this.rol = ase.usuarios[0].rol;
             });
 
-          if (resp.respuesta.lenth !== 0) {
+          if (resp.respuesta.length !== 0) {
             this.nombre = resp.respuesta[0].NOMBRE;
             this.id = resp.respuesta[0].PERID;
             this.catalogo = resp.respuesta[0].CATALOGO;
@@ -138,7 +138,7 @@ export class VentaComponent implements OnInit {
       this.totalSubtotal = 0;
 
       this._diariosService.ventas(this.inicio, this.final)
-        .subscribe( ( resp ) => {
+        .subscribe( ( resp: any ) => {
 
           if (resp.respuesta.length !== 0) {
             this.pedidosGen = resp.respuesta;

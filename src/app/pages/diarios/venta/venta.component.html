@@ -122,19 +122,19 @@
 
                             <div class="align-self-center">
 
-                                <img [src]="vendedor.img | imagen" width="100" class="img-fluid rounded-bottom">
+                                <img [src]="imagen | imagen" width="100" class="img-fluid rounded-bottom">
 
                                 <h4 class="p-t-10 card-title">{{ nombre }}</h4>
 
                                 <h6 class="card-subtitle">@Zona {{ zona }}</h6>
 
-                                <h6 class="text-white">{{ vendedor.email }}</h6>
+                                <h6 class="text-white">{{ email }}</h6>
 
                                 <small class="p-t-30 db text-white">Cel.</small>
 
-                                <h6 class="text-white">+52 {{ vendedor.tel }}</h6>
+                                <h6 class="text-white">+52 {{ tel }}</h6>
 
-                                <h6 class="card-subtitle">{{ vendedor.rol }}</h6>
+                                <h6 class="card-subtitle">{{ rol }}</h6>
 
                             </div>
 
@@ -168,7 +168,7 @@
 
                                             <div class="sl-left">
 
-                                                <img [src]="vendedor.img | imagen" [alt]="vendedor.nombre" class="rounded-circle">
+                                                <img [src]="imagen | imagen" [alt]="nombreAse" class="rounded-circle">
 
                                             </div>
 

@@ -15,7 +15,12 @@ export class VentaComponent implements OnInit {
   hoy:  number = Date.now();
 
   usuarios: any[] = [];
-  vendedor: any[] = [];
+  // vendedor: any[] = [];
+  nombreAse: any;
+  imagen: any;
+  email: any;
+  tel: any;
+  rol: any;
 
   inicio: any;
   final: any;
@@ -86,7 +91,12 @@ export class VentaComponent implements OnInit {
 
           this._asesorService.asesor(this.asesor)
             .subscribe( ( ase: any ) => {
-              this.vendedor = ase.usuarios[0];
+              // this.vendedor = ase.usuarios[0];
+              this.nombreAse = ase.usuarios[0].nombre;
+              this.imagen = ase.usuarios[0].img;
+              this.email = ase.usuarios[0].email;
+              this.tel = ase.usuarios[0].tel;
+              this.rol = ase.usuarios[0].rol;
             });
 
           if (resp.respuesta.lenth !== 0) {

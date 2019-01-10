@@ -29,8 +29,30 @@ export class DashBoardSupComponent implements OnInit {
 
     this._usuarioService.buscarUsuarios('ASE_ROLE')
       .subscribe( ( resp: any ) => {
+        let h = new Date();
+
+        let dia;
+
+        if (h.getDate() < 10) {
+          dia = '0' + h.getDate();
+        } else {
+          dia = h.getDate();
+        }
+
+        let mes;
+
+        if (h.getMonth() < 10) {
+          mes = '0' + (h.getMonth() + 1);
+        } else {
+          mes = (h.getMonth() + 1);
+        }
+
+        let anio = h.getFullYear();
+
+        let fecha = anio + '-' + mes + '-' + dia;
+
         for (let i = 0; i < resp.length; i++) {
-          this._supervisoresServices.pedidosGeneral(resp[i].idFerrum)
+          this._supervisoresServices.pedidosGeneral(fecha, resp[i].idFerrum)
             .subscribe( ( data: any ) => {
               this.asesores.push(
                 {

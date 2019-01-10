@@ -61,7 +61,7 @@ export class RepoSurtidoComponent implements OnInit {
     }
 
     if (forma.value.filtro === 'vacio') {
-      this.area = '';
+      this.area = '0';
     } else {
       this.area = forma.value.filtro;
     }

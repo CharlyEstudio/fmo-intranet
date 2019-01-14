@@ -77,8 +77,6 @@ export class MapaComponent implements OnInit, OnDestroy {
       });
     }
 
-    // console.log(this.usuarios);
-
   }
 
   regresa(): Observable<any> {

@@ -44,8 +44,30 @@ export class PorSurtirComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    let h = new Date();
+
+    let dia;
+
+    if (h.getDate() < 10) {
+      dia = '0' + h.getDate();
+    } else {
+      dia = h.getDate();
+    }
+
+    let mes;
+
+    if (h.getMonth() < 10) {
+      mes = '0' + (h.getMonth() + 1);
+    } else {
+      mes = (h.getMonth() + 1);
+    }
+
+    let anio = h.getFullYear();
+
+    let fecha = anio + '-' + mes + '-' + dia;
+
     // Pedidos por Surtir
-    this._phpService.porSurtir()
+    this._phpService.porSurtir(fecha)
       .subscribe((data) => {
         if ( data[0].importe !== 0 ) {
           this.porSurtir = data[0].cantidad;
@@ -57,21 +79,21 @@ export class PorSurtirComponent implements OnInit, OnDestroy {
       });
 
     // Por Surtir Zona 1
-    this._phpService.porSurtirZona('2')
+    this._phpService.porSurtirZona('2', fecha)
       .subscribe( ( data ) => {
         this.zona1 = data[0].cantidad;
         this.zona1Impo = data[0].importe;
       });
 
     // Por Surtir Zona 2
-    this._phpService.porSurtirZona('1')
+    this._phpService.porSurtirZona('1', fecha)
       .subscribe( ( data ) => {
         this.zona2 = data[0].cantidad;
         this.zona2Impo = data[0].importe;
       });
 
     // Por Surtir Especiales
-    this._phpService.porSurtirEspecial()
+    this._phpService.porSurtirEspecial(fecha)
       .subscribe( ( data ) => {
         this.especiales = data[0].cantidad;
         this.especialesImpo = data[0].importe;
@@ -92,8 +114,30 @@ export class PorSurtirComponent implements OnInit, OnDestroy {
     return new Observable((observer: Subscriber<any>) => {
       this.intSurtir = setInterval( () => {
 
+        let h = new Date();
+
+        let dia;
+
+        if (h.getDate() < 10) {
+          dia = '0' + h.getDate();
+        } else {
+          dia = h.getDate();
+        }
+
+        let mes;
+
+        if (h.getMonth() < 10) {
+          mes = '0' + (h.getMonth() + 1);
+        } else {
+          mes = (h.getMonth() + 1);
+        }
+
+        let anio = h.getFullYear();
+
+        let fecha = anio + '-' + mes + '-' + dia;
+
         // Por Surtir Total
-        this._phpService.porSurtir()
+        this._phpService.porSurtir(fecha)
           .subscribe( ( data ) => {
 
             if (data[0].importe !== 0) {
@@ -115,21 +159,21 @@ export class PorSurtirComponent implements OnInit, OnDestroy {
           });
 
         // Por Surtir Zona 1
-        this._phpService.porSurtirZona('2')
+        this._phpService.porSurtirZona('2', fecha)
         .subscribe( ( data ) => {
           this.zona1 = data[0].cantidad;
           this.zona1Impo = data[0].importe;
         });
 
         // Por Surtir Zona 2
-        this._phpService.porSurtirZona('1')
+        this._phpService.porSurtirZona('1', fecha)
           .subscribe( ( data ) => {
             this.zona2 = data[0].cantidad;
             this.zona2Impo = data[0].importe;
           });
 
         // Por Surtir Especiales
-        this._phpService.porSurtirEspecial()
+        this._phpService.porSurtirEspecial(fecha)
           .subscribe( ( data ) => {
             this.especiales = data[0].cantidad;
             this.especialesImpo = data[0].importe;

@@ -44,34 +44,56 @@ export class PedCanceladosComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    let h = new Date();
+
+    let dia;
+
+    if (h.getDate() < 10) {
+      dia = '0' + h.getDate();
+    } else {
+      dia = h.getDate();
+    }
+
+    let mes;
+
+    if (h.getMonth() < 10) {
+      mes = '0' + (h.getMonth() + 1);
+    } else {
+      mes = (h.getMonth() + 1);
+    }
+
+    let anio = h.getFullYear();
+
+    let fecha = anio + '-' + mes + '-' + dia;
+
     // Pedidos Cancelados
-    this._phpService.cancelados()
+    this._phpService.cancelados(fecha)
       .subscribe((data) => {
-        if ( data[0].importe != 0 ) {
+        if ( data[0].importe !== 0 ) {
           this.cance = data[0].cantidad;
           this.canceImpo = data[0].importe;
         } else {
-          this.cance =0;
+          this.cance = 0;
           this.canceImpo = 0;
         }
       });
 
     // Cancelados Zona 1
-    this._phpService.canceladoZona('2')
+    this._phpService.canceladoZona('2', fecha)
       .subscribe( ( data ) => {
         this.zona1 = data[0].cantidad;
         this.zona1Impo = data[0].importe;
       });
 
     // Cancelados Zona 2
-    this._phpService.canceladoZona('1')
+    this._phpService.canceladoZona('1', fecha)
       .subscribe( ( data ) => {
         this.zona2 = data[0].cantidad;
         this.zona2Impo = data[0].importe;
       });
 
     // Cancelados Especiales
-    this._phpService.canceladoEspecial()
+    this._phpService.canceladoEspecial(fecha)
       .subscribe( ( data ) => {
         this.especiales = data[0].cantidad;
         this.especialesImpo = data[0].importe;
@@ -88,12 +110,34 @@ export class PedCanceladosComponent implements OnInit, OnDestroy {
   regresaCancelados(): Observable<any> {
     return new Observable((observer: Subscriber<any>) => {
       this.intCance = setInterval( () => {
-        
+
+        let h = new Date();
+
+        let dia;
+
+        if (h.getDate() < 10) {
+          dia = '0' + h.getDate();
+        } else {
+          dia = h.getDate();
+        }
+
+        let mes;
+
+        if (h.getMonth() < 10) {
+          mes = '0' + (h.getMonth() + 1);
+        } else {
+          mes = (h.getMonth() + 1);
+        }
+
+        let anio = h.getFullYear();
+
+        let fecha = anio + '-' + mes + '-' + dia;
+
         // Cancelados Totales
-        this._phpService.cancelados()
+        this._phpService.cancelados(fecha)
           .subscribe( ( data ) => {
 
-            if (data[0].importe != 0) {
+            if (data[0].importe !== 0) {
               const cancelados = {
                 cantidad: data[0].cantidad,
                 importe: data[0].importe
@@ -112,21 +156,21 @@ export class PedCanceladosComponent implements OnInit, OnDestroy {
           });
 
         // Cancelados Zona 1
-        this._phpService.canceladoZona('2')
+        this._phpService.canceladoZona('2', fecha)
         .subscribe( ( data ) => {
           this.zona1 = data[0].cantidad;
           this.zona1Impo = data[0].importe;
         });
 
         // Cancelados Zona 2
-        this._phpService.canceladoZona('1')
+        this._phpService.canceladoZona('1', fecha)
           .subscribe( ( data ) => {
             this.zona2 = data[0].cantidad;
             this.zona2Impo = data[0].importe;
           });
 
         // Cancelados Especiales
-        this._phpService.canceladoEspecial()
+        this._phpService.canceladoEspecial(fecha)
           .subscribe( ( data ) => {
             this.especiales = data[0].cantidad;
             this.especialesImpo = data[0].importe;

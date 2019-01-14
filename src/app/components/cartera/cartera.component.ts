@@ -15,6 +15,7 @@ import 'rxjs/add/operator/filter';
 export class CarteraComponent implements OnInit, OnDestroy {
 
   fecha: number = Date.now();
+  dia: string;
 
   // Estado Financiero
   heart: number = 0;
@@ -41,6 +42,27 @@ export class CarteraComponent implements OnInit, OnDestroy {
   constructor(
     private _phpService: PhpService
   ) {
+    let h = new Date();
+
+    let dia;
+
+    if (h.getDate() < 10) {
+      dia = '0' + h.getDate();
+    } else {
+      dia = h.getDate();
+    }
+
+    let mes;
+
+    if (h.getMonth() < 10) {
+      mes = '0' + (h.getMonth() + 1);
+    } else {
+      mes = (h.getMonth() + 1);
+    }
+
+    let anio = h.getFullYear();
+
+    this.dia = anio + '-' + mes + '-' + dia;
 
     // Subscripción General
     this.general  = this.regresar()
@@ -58,7 +80,7 @@ export class CarteraComponent implements OnInit, OnDestroy {
         // Total Financiado
         this._phpService.financiado()
         .subscribe((data) => {
-          if ( data[0].importe != 0 ) {
+          if ( data[0].importe !== 0 ) {
             this.tot = data[0].importe;
           } else {
             this.tot = 0;
@@ -66,9 +88,9 @@ export class CarteraComponent implements OnInit, OnDestroy {
         });
 
         // Total Saldo al día
-        this._phpService.saldo()
+        this._phpService.saldo(this.dia)
         .subscribe((data) => {
-          if ( data[0].importe != 0 ) {
+          if ( data[0].importe !== 0 ) {
             this.sal = data[0].importe;
           } else {
             this.sal = 0;
@@ -76,9 +98,9 @@ export class CarteraComponent implements OnInit, OnDestroy {
         });
 
         // Total Saldo Vencido
-        this._phpService.vencido()
+        this._phpService.vencido(this.dia)
         .subscribe((data) => {
-          if ( data[0].importe != 0 ) {
+          if ( data[0].importe !== 0 ) {
             this.ven = data[0].importe;
           } else {
             this.ven = 0;
@@ -95,7 +117,7 @@ export class CarteraComponent implements OnInit, OnDestroy {
     // Total Financiado
     this._phpService.financiado()
       .subscribe((data) => {
-        if ( data[0].importe != 0 ) {
+        if ( data[0].importe !== 0 ) {
           this.tot = data[0].importe;
         } else {
           this.tot = 0;
@@ -103,9 +125,9 @@ export class CarteraComponent implements OnInit, OnDestroy {
       });
 
     // Total Saldo al día
-    this._phpService.saldo()
+    this._phpService.saldo(this.dia)
     .subscribe((data) => {
-      if ( data[0].importe != 0 ) {
+      if ( data[0].importe !== 0 ) {
         this.sal = data[0].importe;
       } else {
         this.sal = 0;
@@ -113,9 +135,9 @@ export class CarteraComponent implements OnInit, OnDestroy {
     });
 
     // Total Saldo Vencido
-    this._phpService.vencido()
+    this._phpService.vencido(this.dia)
     .subscribe((data) => {
-      if ( data[0].importe != 0 ) {
+      if ( data[0].importe !== 0 ) {
         this.ven = data[0].importe;
       } else {
         this.ven = 0;
@@ -133,7 +155,7 @@ export class CarteraComponent implements OnInit, OnDestroy {
   }
 
   // Calcular Heart
-  obtener(saldo, sana, vencido){
+  obtener(saldo: any, sana: any, vencido: any) {
     let regla1 = (sana / saldo) * 100;
     let regla2 = (vencido / saldo) * 100;
 

@@ -50,8 +50,30 @@ export class PedTotalesComponent implements OnInit, OnDestroy {
       this.panel = 'http://ferremayoristas.com.mx/panel/#/';
     }
 
+    let h = new Date();
+
+    let dia;
+
+    if (h.getDate() < 10) {
+      dia = '0' + h.getDate();
+    } else {
+      dia = h.getDate();
+    }
+
+    let mes;
+
+    if (h.getMonth() < 10) {
+      mes = '0' + (h.getMonth() + 1);
+    } else {
+      mes = (h.getMonth() + 1);
+    }
+
+    let anio = h.getFullYear();
+
+    let fecha = anio + '-' + mes + '-' + dia;
+
     // Total de Pedidos
-    this._phpService.totalPedidos()
+    this._phpService.totalPedidos(fecha)
       .subscribe((data) => {
         if ( data[0].importe !== 0 ) {
           this.cantTot = data[0].cantidad + data[1].cantidad,
@@ -81,7 +103,29 @@ export class PedTotalesComponent implements OnInit, OnDestroy {
     return new Observable((observer: Subscriber<any>) => {
       this.intTotales = setInterval( () => {
 
-        this._phpService.totalPedidos()
+        let h = new Date();
+
+        let dia;
+
+        if (h.getDate() < 10) {
+          dia = '0' + h.getDate();
+        } else {
+          dia = h.getDate();
+        }
+
+        let mes;
+
+        if (h.getMonth() < 10) {
+          mes = '0' + (h.getMonth() + 1);
+        } else {
+          mes = (h.getMonth() + 1);
+        }
+
+        let anio = h.getFullYear();
+
+        let fecha = anio + '-' + mes + '-' + dia;
+
+        this._phpService.totalPedidos(fecha)
           .subscribe( ( data ) => {
 
             if (data[0].importe !== 0) {

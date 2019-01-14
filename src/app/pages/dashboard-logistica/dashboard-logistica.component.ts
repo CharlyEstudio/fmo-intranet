@@ -258,16 +258,16 @@ export class DashboardLogisticaComponent implements OnInit {
         }
 
         this._guiasServices.buscarEspeciales(forma.value.folio).subscribe( ( especiales: any ) => {
-          if (especiales.length > 0) {
-            for (let i = 0; i < especiales.length; i++) {
+          if (especiales.respuesta.length > 0) {
+            for (let i = 0; i < especiales.respuesta.length; i++) {
               let esEspecial = (pedido) => {
-                return pedido.clvprov === especiales[i].clvprov;
+                return pedido.clvprov === especiales.respuesta[i].clvprov;
               }
 
               if (this.especiales.find(esEspecial)) {
-                this.especiales.find(esEspecial).desentregado += especiales[i].desentregado;
+                this.especiales.find(esEspecial).desentregado += especiales.respuesta[i].desentregado;
               } else {
-                this.especiales.push(especiales[i]);
+                this.especiales.push(especiales.respuesta[i]);
               }
 
             }
@@ -276,9 +276,9 @@ export class DashboardLogisticaComponent implements OnInit {
         });
 
         this._guiasServices.obtenerFolio(forma.value.folio).subscribe( ( partidas: any ) => {
-          if (partidas.length > 0) {
-            for (let i = 0; i < partidas.length; i++) {
-              this.folios.push(partidas[i]);
+          if (partidas.respuesta.length > 0) {
+            for (let i = 0; i < partidas.respuesta.length; i++) {
+              this.folios.push(partidas.respuesta[i]);
             }
 
             localStorage.setItem('guia', JSON.stringify(this.folios));
@@ -303,8 +303,6 @@ export class DashboardLogisticaComponent implements OnInit {
   }
 
   eliminarFolio(folio: any, index: any) {
-    console.log(folio, index);
-    console.log(this.folios);
     this.folios.splice(index, 1);
 
     if (this.folios.length === 0) {

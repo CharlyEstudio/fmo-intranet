@@ -45,8 +45,30 @@ export class PorBajarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    let h = new Date();
+
+    let dia;
+
+    if (h.getDate() < 10) {
+      dia = '0' + h.getDate();
+    } else {
+      dia = h.getDate();
+    }
+
+    let mes;
+
+    if (h.getMonth() < 10) {
+      mes = '0' + (h.getMonth() + 1);
+    } else {
+      mes = (h.getMonth() + 1);
+    }
+
+    let anio = h.getFullYear();
+
+    let fecha = anio + '-' + mes + '-' + dia;
+
     // Pedidos por Bajar
-    this._phpService.porBajar()
+    this._phpService.porBajar(fecha)
       .subscribe((data) => {
         if ( data[0].importe !== 0 ) {
           this.porBajar = data[0].cantidad;
@@ -58,21 +80,21 @@ export class PorBajarComponent implements OnInit, OnDestroy {
       });
 
     // Por Bajar Zona 1
-    this._phpService.porBajarZona('2')
+    this._phpService.porBajarZona('2', fecha)
       .subscribe( ( data ) => {
         this.zona1 = data[0].cantidad;
         this.zona1Impo = data[0].importe;
       });
 
     // Por Bajar Zona 2
-    this._phpService.porBajarZona('1')
+    this._phpService.porBajarZona('1', fecha)
       .subscribe( ( data ) => {
         this.zona2 = data[0].cantidad;
         this.zona2Impo = data[0].importe;
       });
 
     // Por Bajar Especiales
-    this._phpService.porBajarEspecial()
+    this._phpService.porBajarEspecial(fecha)
       .subscribe( ( data ) => {
         this.especiales = data[0].cantidad;
         this.especialesImpo = data[0].importe;
@@ -95,8 +117,30 @@ export class PorBajarComponent implements OnInit, OnDestroy {
 
       this.intBajar = setInterval( () => {
 
+        let h = new Date();
+
+        let dia;
+
+        if (h.getDate() < 10) {
+          dia = '0' + h.getDate();
+        } else {
+          dia = h.getDate();
+        }
+
+        let mes;
+
+        if (h.getMonth() < 10) {
+          mes = '0' + (h.getMonth() + 1);
+        } else {
+          mes = (h.getMonth() + 1);
+        }
+
+        let anio = h.getFullYear();
+
+        let fecha = anio + '-' + mes + '-' + dia;
+
         // Por Bajar Total
-        this._phpService.porBajar()
+        this._phpService.porBajar(fecha)
           .subscribe( ( data ) => {
 
             if (data[0].importe !== 0) {
@@ -118,21 +162,21 @@ export class PorBajarComponent implements OnInit, OnDestroy {
           });
 
         // Por Bajar Zona 1
-        this._phpService.porBajarZona('2')
+        this._phpService.porBajarZona('2', fecha)
         .subscribe( ( data ) => {
           this.zona1 = data[0].cantidad;
           this.zona1Impo = data[0].importe;
         });
 
         // Por Bajar Zona 2
-        this._phpService.porBajarZona('1')
+        this._phpService.porBajarZona('1', fecha)
           .subscribe( ( data ) => {
             this.zona2 = data[0].cantidad;
             this.zona2Impo = data[0].importe;
           });
 
         // Por Bajar Especiales
-        this._phpService.porBajarEspecial()
+        this._phpService.porBajarEspecial(fecha)
           .subscribe( ( data ) => {
             this.especiales = data[0].cantidad;
             this.especialesImpo = data[0].importe;

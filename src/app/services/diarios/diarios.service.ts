@@ -29,7 +29,11 @@ export class DiariosService {
     }
 
     return this.http.get( this.url ).map((asesores: any) => {
-      return asesores.respuesta;
+      if (asesores.status) {
+        return asesores.respuesta;
+      } else {
+        return 0;
+      }
     });
   }
 
@@ -51,7 +55,11 @@ export class DiariosService {
     }
 
     return this.http.get( this.url ).map((proveedores: any) => {
-      return proveedores.respuesta;
+      if (proveedores.status) {
+        return proveedores.respuesta;
+      } else {
+        return 0;
+      }
     });
   }
 
@@ -75,7 +83,13 @@ export class DiariosService {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/ventas/' + asesor + '/' + fechaIn + '/' + fechaOut;
     }
 
-    return this.http.get( this.url );
+    return this.http.get( this.url ).map((ventas: any) => {
+      if (ventas.status) {
+        return ventas.respuesta;
+      } else {
+        return 0;
+      }
+    });
   }
 
   ventasAsesor(fechaIn: any, fechaOut: any, asesor: any) {
@@ -99,7 +113,11 @@ export class DiariosService {
     }
 
     return this.http.get( this.url ).map((datos: any) => {
-      return datos.respuesta;
+      if (datos.status) {
+        return datos.respuesta;
+      } else {
+        return 0;
+      }
     });
   }
 
@@ -124,7 +142,11 @@ export class DiariosService {
     }
 
     return this.http.get( this.url ).map((compras: any) => {
-      return compras.respuesta;
+      if (compras.status) {
+        return compras.respuesta;
+      } else {
+        return 0;
+      }
     });
   }
 
@@ -149,7 +171,11 @@ export class DiariosService {
     }
 
     return this.http.get( this.url ).map((compras: any) => {
-      return compras.respuesta;
+      if (compras.status) {
+        return compras.respuesta;
+      } else {
+        return 0;
+      }
     });
   }
 
@@ -171,7 +197,11 @@ export class DiariosService {
     }
 
     return this.http.get( this.url ).map((utilidades: any) => {
-      return utilidades.respuesta;
+      if (utilidades.status) {
+        return utilidades.respuesta;
+      } else {
+        return 0;
+      }
     });
   }
 
@@ -196,7 +226,11 @@ export class DiariosService {
     }
 
     return this.http.get( this.url ).map((notas: any) => {
-      return notas.respuesta;
+      if (notas.status) {
+        return notas.respuesta;
+      } else {
+        return 0;
+      }
     });
   }
 
@@ -218,7 +252,11 @@ export class DiariosService {
     }
 
     return this.http.get( this.url ).map((inventario: any) => {
-      return inventario.respuesta;
+      if (inventario.status) {
+        return inventario.respuesta;
+      } else {
+        return 0;
+      }
     });
   }
 
@@ -240,7 +278,11 @@ export class DiariosService {
     }
 
     return this.http.get( this.url ).map((entsal: any) => {
-      return entsal.respuesta;
+      if (entsal.status) {
+        return entsal.respuesta;
+      } else {
+        return 0;
+      }
     });
   }
 
@@ -262,7 +304,11 @@ export class DiariosService {
     }
 
     return this.http.get( this.url ).map((consumo: any) => {
-      return consumo.respuesta;
+      if (consumo.status) {
+        return consumo.respuesta;
+      } else {
+        return 0;
+      }
     });
   }
 
@@ -283,7 +329,13 @@ export class DiariosService {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/cartera/clientes';
     }
 
-    return this.http.get( this.url );
+    return this.http.get( this.url ).map((carcli: any) => {
+      if (carcli.status) {
+        return carcli.respuesta;
+      } else {
+        return 0;
+      }
+    });
   }
 
   carteraProveedores() {
@@ -304,7 +356,11 @@ export class DiariosService {
     }
 
     return this.http.get( this.url ).map((proveedores: any) => {
-      return proveedores.respuesta;
+      if (proveedores.status) {
+        return proveedores.respuesta;
+      } else {
+        return 0;
+      }
     });
   }
 
@@ -326,7 +382,11 @@ export class DiariosService {
     }
 
     return this.http.get( this.url ).map((proveedoresSaldo: any) => {
-      return proveedoresSaldo.respuesta;
+      if (proveedoresSaldo.status) {
+        return proveedoresSaldo.respuesta;
+      } else {
+        return 0;
+      }
     });
   }
 
@@ -348,7 +408,11 @@ export class DiariosService {
     }
 
     return this.http.get( this.url ).map((lunes: any) => {
-      return lunes.respuesta;
+      if (lunes.status) {
+        return lunes.respuesta;
+      } else {
+        return 0;
+      }
     });
   }
 
@@ -370,7 +434,11 @@ export class DiariosService {
     }
 
     return this.http.get( this.url ).map((lunesId: any) => {
-      return lunesId.respuesta;
+      if (lunesId.status) {
+        return lunesId.respuesta;
+      } else {
+        return 0;
+      }
     });
   }
 
@@ -391,7 +459,13 @@ export class DiariosService {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/back/order/' + fechaIn + '/' + fechaOut;
     }
 
-    return this.http.get( this.url );
+    return this.http.get( this.url ).map((back: any) => {
+      if (back.status) {
+        return back.respuesta;
+      } else {
+        return 0;
+      }
+    });
   }
 
   obtenerBackOrder( tipo: any, fechaIn: any, fechaOut: any, orden: any ) {
@@ -418,7 +492,13 @@ export class DiariosService {
       ':' + PUERTO_INTERNO + '/diarios/back/order/seccion/' + tipo + '/' + fechaIn + '/' + fechaOut + '/' + orden;
     }
 
-    return this.http.get( this.url );
+    return this.http.get( this.url ).map((obtbc: any) => {
+      if (obtbc.status) {
+        return obtbc.respuesta;
+      } else {
+        return 0;
+      }
+    });
   }
 
 }

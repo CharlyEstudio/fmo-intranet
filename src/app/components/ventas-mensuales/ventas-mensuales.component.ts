@@ -67,8 +67,31 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
 
       this.intervalo = setInterval( () => {
 
+        let h = new Date();
+
+        let dia;
+
+        if (h.getDate() < 10) {
+          dia = '0' + h.getDate();
+        } else {
+          dia = h.getDate();
+        }
+
+        let mes;
+
+        if (h.getMonth() < 10) {
+          mes = '0' + (h.getMonth() + 1);
+        } else {
+          mes = (h.getMonth() + 1);
+        }
+
+        let anio = h.getFullYear();
+
+        let final = anio + '-' + mes + '-' + dia;
+        let inicio = anio + '-' + mes + '-' + '01';
+
         // Venta Actual
-        this._phpService.ventaActual()
+        this._phpService.ventaActual(inicio, final)
           .subscribe( ( data ) => {
             if (data[0].actual !== 0) {
               this.act = data[0].actual;
@@ -80,7 +103,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
           });
 
         // Venta Zona 1
-        this._phpService.zona1()
+        this._phpService.zona(inicio, final, '1')
           .subscribe((data) => {
             if (data[0].zona1 !== 0) {
               this.zon1 = data[0].zona1;
@@ -90,7 +113,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
           });
 
         // Venta Zona 2
-        this._phpService.zona2()
+        this._phpService.zona(inicio, final, '2')
           .subscribe((data) => {
             if (data[0].zona2 !== 0) {
               this.zon2 = data[0].zona2;
@@ -100,7 +123,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
           });
 
         // Venta Especiales
-        this._phpService.especial()
+        this._phpService.especial(inicio, final)
           .subscribe((data) => {
             if (data[0].especial !== '') {
               this.espe = data[0].especial;
@@ -111,15 +134,33 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
 
       }, 10000);
 
-    })
-    .retry()
-    .map((resp) => {
-        return resp;
     });
 
   }
 
   ngOnInit() {
+    let h = new Date();
+
+    let dia;
+
+    if (h.getDate() < 10) {
+      dia = '0' + h.getDate();
+    } else {
+      dia = h.getDate();
+    }
+
+    let mes;
+
+    if (h.getMonth() < 10) {
+      mes = '0' + (h.getMonth() + 1);
+    } else {
+      mes = (h.getMonth() + 1);
+    }
+
+    let anio = h.getFullYear();
+
+    let final = anio + '-' + mes + '-' + dia;
+    let inicio = anio + '-' + mes + '-' + '01';
 
     // Venta Anterior
     this._phpService.ventaAnterior()
@@ -134,7 +175,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
       });
 
     // Venta Actual
-    this._phpService.ventaActual()
+    this._phpService.ventaActual(inicio, final)
       .subscribe((data) => {
         if ( data[0].actual !== 0 ) {
           this.act = data[0].actual;
@@ -146,7 +187,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
       });
 
     // Venta Zona 1
-    this._phpService.zona1()
+    this._phpService.zona(inicio, final, '1')
     .subscribe((data) => {
       if ( data[0].zona1 !== 0 ) {
         this.zon1 = data[0].zona1;
@@ -156,7 +197,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
     });
 
     // Venta Zona 2
-    this._phpService.zona2()
+    this._phpService.zona(inicio, final, '2')
     .subscribe((data) => {
       if ( data[0].zona2 !== 0 ) {
         this.zon2 = data[0].zona2;
@@ -166,7 +207,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
     });
 
     // Venta Especial
-    this._phpService.especial()
+    this._phpService.especial(inicio, final)
     .subscribe((data) => {
       if ( data[0].especial !== 0 ) {
         this.espe = data[0].especial;

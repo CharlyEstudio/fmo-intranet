@@ -29,7 +29,11 @@ export class AlmacenService {
     }
 
     return this.http.get( url ).map((reporte: any) => {
-      return reporte.respuesta;
+      if (reporte.status) {
+        return reporte.respuesta;
+      } else {
+        return 0;
+      }
     });
   }
 

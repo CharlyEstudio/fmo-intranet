@@ -14,6 +14,8 @@ import 'rxjs/add/operator/filter';
 })
 export class Vencido18Component implements OnInit, OnDestroy {
 
+  dia: string;
+
   // Morisidad de 1 a 8 días
   morosidad: Subscription;
   mor: number = 0;
@@ -22,6 +24,37 @@ export class Vencido18Component implements OnInit, OnDestroy {
   constructor(
     private _phpService: PhpService
   ) {
+    let h = new Date();
+
+    let dia;
+
+    if (h.getDate() < 10) {
+      dia = '0' + h.getDate();
+    } else {
+      dia = h.getDate();
+    }
+
+    let mes;
+
+    if (h.getMonth() < 10) {
+      mes = '0' + (h.getMonth() + 1);
+    } else {
+      mes = (h.getMonth() + 1);
+    }
+
+    let anio = h.getFullYear();
+
+    this.dia = anio + '-' + mes + '-' + dia;
+
+    // Morosidad
+    this._phpService.mor(this.dia, '18')
+      .subscribe((data) => {
+        if ( data[0].importe !== 0 ) {
+          this.mor = data[0].importe;
+        } else {
+          this.mor = 0;
+        }
+      });
 
     // Subscrión a Morosidad
     this.morosidad =  this.regresaMorosidad().subscribe(
@@ -34,19 +67,7 @@ export class Vencido18Component implements OnInit, OnDestroy {
 
   }
 
-  ngOnInit() {
-
-    // Morosidad
-    this._phpService.mor18()
-      .subscribe((data) => {
-        if ( data[0].importe !== 0 ) {
-          this.mor = data[0].importe;
-        } else {
-          this.mor = 0;
-        }
-      });
-
-  }
+  ngOnInit() {}
 
   ngOnDestroy() {
 
@@ -63,7 +84,7 @@ export class Vencido18Component implements OnInit, OnDestroy {
 
       this.intMor = setInterval( () => {
 
-        this._phpService.mor18()
+        this._phpService.mor(this.dia, '18')
           .subscribe( ( data ) => {
 
             if (data[0].importe !== 0) {

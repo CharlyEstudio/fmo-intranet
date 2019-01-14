@@ -44,10 +44,32 @@ export class PedFacturadosComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    let h = new Date();
+
+    let dia;
+
+    if (h.getDate() < 10) {
+      dia = '0' + h.getDate();
+    } else {
+      dia = h.getDate();
+    }
+
+    let mes;
+
+    if (h.getMonth() < 10) {
+      mes = '0' + (h.getMonth() + 1);
+    } else {
+      mes = (h.getMonth() + 1);
+    }
+
+    let anio = h.getFullYear();
+
+    let fecha = anio + '-' + mes + '-' + dia;
+
     // Pedidos Facturados
-    this._phpService.facturados()
+    this._phpService.facturados(fecha)
       .subscribe((data) => {
-        if ( data[0].importe != 0 ) {
+        if ( data[0].importe !== 0 ) {
           this.factu = data[0].cantidad;
           this.factuImpo = data[0].importe;
         } else {
@@ -57,21 +79,21 @@ export class PedFacturadosComponent implements OnInit, OnDestroy {
       });
 
     // Facturado Zona 1
-    this._phpService.facturadoZona('2')
+    this._phpService.facturadoZona('2', fecha)
       .subscribe( ( data ) => {
         this.zona1 = data[0].cantidad;
         this.zona1Impo = data[0].importe;
       });
 
     // Facturado Zona 2
-    this._phpService.facturadoZona('1')
+    this._phpService.facturadoZona('1', fecha)
       .subscribe( ( data ) => {
         this.zona2 = data[0].cantidad;
         this.zona2Impo = data[0].importe;
       });
 
     // Facturado Especiales
-    this._phpService.facturadoEspecial()
+    this._phpService.facturadoEspecial(fecha)
       .subscribe( ( data ) => {
         this.especiales = data[0].cantidad;
         this.especialesImpo = data[0].importe;
@@ -89,12 +111,34 @@ export class PedFacturadosComponent implements OnInit, OnDestroy {
   regresaFacturados(): Observable<any> {
     return new Observable((observer: Subscriber<any>) => {
       this.intFactu = setInterval( () => {
-        
+
+        let h = new Date();
+
+        let dia;
+
+        if (h.getDate() < 10) {
+          dia = '0' + h.getDate();
+        } else {
+          dia = h.getDate();
+        }
+
+        let mes;
+
+        if (h.getMonth() < 10) {
+          mes = '0' + (h.getMonth() + 1);
+        } else {
+          mes = (h.getMonth() + 1);
+        }
+
+        let anio = h.getFullYear();
+
+        let fecha = anio + '-' + mes + '-' + dia;
+
         // Facturados Total
-        this._phpService.facturados()
+        this._phpService.facturados(fecha)
           .subscribe( ( data ) => {
 
-            if (data[0].importe != 0) {
+            if (data[0].importe !== 0) {
               const facturados = {
                 cantidad: data[0].cantidad,
                 importe: data[0].importe
@@ -113,21 +157,21 @@ export class PedFacturadosComponent implements OnInit, OnDestroy {
           });
 
         // Facturado Zona 1
-        this._phpService.facturadoZona('2')
+        this._phpService.facturadoZona('2', fecha)
         .subscribe( ( data ) => {
           this.zona1 = data[0].cantidad;
           this.zona1Impo = data[0].importe;
         });
 
         // Facturado Zona 2
-        this._phpService.facturadoZona('1')
+        this._phpService.facturadoZona('1', fecha)
           .subscribe( ( data ) => {
             this.zona2 = data[0].cantidad;
             this.zona2Impo = data[0].importe;
           });
 
         // Facturado Especiales
-        this._phpService.facturadoEspecial()
+        this._phpService.facturadoEspecial(fecha)
           .subscribe( ( data ) => {
             this.especiales = data[0].cantidad;
             this.especialesImpo = data[0].importe;

@@ -45,6 +45,28 @@ export class EstadoEmpresaComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    let h = new Date();
+
+    let dia;
+
+    if (h.getDate() < 10) {
+      dia = '0' + h.getDate();
+    } else {
+      dia = h.getDate();
+    }
+
+    let mes;
+
+    if (h.getMonth() < 10) {
+      mes = '0' + (h.getMonth() + 1);
+    } else {
+      mes = (h.getMonth() + 1);
+    }
+
+    let anio = h.getFullYear();
+
+    let final = anio + '-' + mes + '-' + dia;
+    let inicio = anio + '-' + mes + '-' + '01';
 
     // Venta Anterior
     this._phpService.ventaAnterior()
@@ -59,7 +81,7 @@ export class EstadoEmpresaComponent implements OnInit, OnDestroy {
       });
 
     // Venta Actual
-    this._phpService.ventaActual()
+    this._phpService.ventaActual(inicio, final)
       .subscribe((data) => {
         if ( data[0].actual !== 0 ) {
           this.act = data[0].actual;
@@ -149,7 +171,30 @@ export class EstadoEmpresaComponent implements OnInit, OnDestroy {
 
       this.intActual = setInterval( () => {
 
-        this._phpService.ventaActual()
+        let h = new Date();
+
+        let dia;
+
+        if (h.getDate() < 10) {
+          dia = '0' + h.getDate();
+        } else {
+          dia = h.getDate();
+        }
+
+        let mes;
+
+        if (h.getMonth() < 10) {
+          mes = '0' + (h.getMonth() + 1);
+        } else {
+          mes = (h.getMonth() + 1);
+        }
+
+        let anio = h.getFullYear();
+
+        let final = anio + '-' + mes + '-' + dia;
+        let inicio = anio + '-' + mes + '-' + '01';
+
+        this._phpService.ventaActual(inicio, final)
           .subscribe( ( data ) => {
 
             if (data[0].actual !== 0) {

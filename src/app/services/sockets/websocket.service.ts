@@ -31,7 +31,7 @@ export class WebsocketService {
       this.socketStatus = false;
       // localStorage.removeItem('socketUsuario');
       // this.router.navigateByUrl('/login');
-      swal('Servidor Desconectado', 'No actualice y/o guarde alguna información. Revise en login si ya está OnLine.', 'warning');
+      // swal('Servidor Desconectado', 'No actualice y/o guarde alguna información. Revise en login si ya está OnLine.', 'warning');
     });
   }
 

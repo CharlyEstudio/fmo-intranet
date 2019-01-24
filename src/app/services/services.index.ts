@@ -25,6 +25,7 @@ export { AlmacenService } from './almacen/almacen.service';
 export { CreditoService } from "./credito/credito.service";
 export { GuiasService } from "./guias/guias.service";
 export { GpsService } from "./gps/gps.service";
+export { ClienteService } from "./usuario-cliente/cliente.service";
 
 // Servicio PHP
 export { PhpService } from "./php/php.service";
@@ -37,4 +38,3 @@ export { ExcelService } from "./excel/excel.service";
 
 // Notificación
 // export { NotificationService } from "./notification/notification.service";
-

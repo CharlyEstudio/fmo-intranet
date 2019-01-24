@@ -89,6 +89,7 @@ import { SpeedComponent } from '../components/speed/speed.component';
 import { DashboardLogisticaComponent } from './dashboard-logistica/dashboard-logistica.component';
 import { BuscarPagosComponent } from './buscar-pagos/buscar-pagos.component';
 import { MapaComponent } from './mapa/mapa.component';
+import { UsuariosClientesComponent } from './usuarios-clientes/usuarios-clientes.component';
 
 @NgModule({
     declarations: [
@@ -155,7 +156,8 @@ import { MapaComponent } from './mapa/mapa.component';
         SpeedComponent,
         DashboardLogisticaComponent,
         BuscarPagosComponent,
-        MapaComponent
+        MapaComponent,
+        UsuariosClientesComponent
     ],
     exports: [
         DashborarDirComponent,

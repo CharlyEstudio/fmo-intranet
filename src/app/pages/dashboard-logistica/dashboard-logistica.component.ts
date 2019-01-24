@@ -258,6 +258,7 @@ export class DashboardLogisticaComponent implements OnInit {
         }
 
         this._guiasServices.buscarEspeciales(forma.value.folio).subscribe( ( especiales: any ) => {
+          console.log(especiales);
           if (especiales.respuesta.length > 0) {
             for (let i = 0; i < especiales.respuesta.length; i++) {
               let esEspecial = (pedido) => {

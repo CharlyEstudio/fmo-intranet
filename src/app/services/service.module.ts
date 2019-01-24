@@ -29,7 +29,8 @@ import {
   ExcelService,
   CreditoService,
   GuiasService,
-  GpsService
+  GpsService,
+  ClienteService
   // NotificationService
 } from "./services.index";
 
@@ -66,7 +67,8 @@ import {
     ExcelService,
     CreditoService,
     GuiasService,
-    GpsService
+    GpsService,
+    ClienteService
     // NotificationService
   ],
   declarations: []

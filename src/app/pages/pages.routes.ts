@@ -55,6 +55,7 @@ import { ChequesDevueltosComponent } from './cheques-devueltos/cheques-devueltos
 import { DashboardLogisticaComponent } from './dashboard-logistica/dashboard-logistica.component';
 import { BuscarPagosComponent } from './buscar-pagos/buscar-pagos.component';
 import { MapaComponent } from './mapa/mapa.component';
+import { UsuariosClientesComponent } from './usuarios-clientes/usuarios-clientes.component';
 
 const pageRoutes: Routes = [
     {
@@ -122,6 +123,16 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Mantenimiento de Usuarios',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'clientes',
+        component: UsuariosClientesComponent,
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Mantenimiento de Clientes',
                     name: 'description'
                 }
     },

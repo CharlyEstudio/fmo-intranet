@@ -28,6 +28,7 @@ export class DashboardLogisticaComponent implements OnInit {
 
   folio: any;
   folios: any[] = [];
+  clientes: number = 0;
   // pedidos: GuiasPartidas;
   pedidos: any[] = [];
   guiasEnc: any[] = [];
@@ -57,7 +58,7 @@ export class DashboardLogisticaComponent implements OnInit {
   fol: any;
   impo: number;
   veri: string;
-  ruta: string;
+  ruta: any;
 
   /* Modal VER */
   facturas: any[] = [];
@@ -207,8 +208,9 @@ export class DashboardLogisticaComponent implements OnInit {
     });
   }
 
-  // Este es el botón de buscar guia
+  // Este es el botón de buscar guia TODO
   checarLista(forma: NgForm) {
+    this.total = 0;
 
     if (forma.value.inicial === undefined) {
       swal('Sin Fecha Inicial', 'No se ingreso fecha inicial para la busqueda.', 'warning');
@@ -229,6 +231,9 @@ export class DashboardLogisticaComponent implements OnInit {
         this.tuberias = true;
         this.obtener = false;
         this.guiasEnc = encontrados.encontrados;
+        for (let i = 0; i < encontrados.encontrados.length; i++) {
+          this.total += encontrados.encontrados[i].cantidad;
+        }
       } else {
         swal('No se encontro registro', 'No se encontro registro de guias en estas fechas.', 'warning');
         this.verGuias();
@@ -279,6 +284,17 @@ export class DashboardLogisticaComponent implements OnInit {
         this._guiasServices.obtenerFolio(forma.value.folio).subscribe( ( partidas: any ) => {
           if (partidas.length > 0) {
             for (let i = 0; i < partidas.length; i++) {
+              let esCliente = (cliente) => {
+                return cliente.numero === partidas[i].numero;
+              }
+
+              if (!this.folios.find(esCliente)) {
+                if (this.clientes === 0) {
+                  this.clientes = 1;
+                } else {
+                  this.clientes += 1;
+                }
+              }
               this.folios.push(partidas[i]);
             }
 
@@ -512,15 +528,14 @@ export class DashboardLogisticaComponent implements OnInit {
                   importe: this.importe,
                   cajas: cajas,
                   fecha: fecha,
-                  hora: hora
+                  hora: hora,
+                  clientes: this.clientes
                 };
 
                 this._guiasServices.guardarGuia(this.guiaGuardar).subscribe( ( guardado: any ) => {});
                 this._guiasServices.enviarPDFguia(
                   this.pedidos, this.guiaGuardar, this.especiales
-                ).subscribe( (pdf: any) => {
-                  // console.log(pdf); // Out: pdf/Yair-0-2019-01-24.pdf
-                });
+                ).subscribe();
 
                 localStorage.removeItem('guia');
                 localStorage.removeItem('especiales');
@@ -536,7 +551,6 @@ export class DashboardLogisticaComponent implements OnInit {
                 this.obtener = false;
                 this.sinDatos = false;
                 setTimeout(() => this.verGuias(), 500);
-                // this.verGuias();
 
                 swal.stopLoading();
               });
@@ -571,7 +585,8 @@ export class DashboardLogisticaComponent implements OnInit {
     this.cajas = dato.cajas;
     this.fec = dato.fecha;
 
-    this.ruta = 'http://www.ferremayoristas.com.mx/api/pdf/' + this.chofer.toUpperCase() + '-' + this.cantidad + '-' + this.fec + '.pdf';
+    this.ruta = this.sanitizer.bypassSecurityTrustResourceUrl(
+      'http://www.ferremayoristas.com.mx/api/pdf/' + this.chofer.toUpperCase() + '-' + this.cantidad + '-' + this.fec + '.pdf');
   }
 
 
@@ -628,11 +643,11 @@ export class DashboardLogisticaComponent implements OnInit {
     fac.reasignar = true;
     this._guiasServices.reasignarFolio(fac).subscribe((reasignado: any) => {
       if (reasignado.ok) {
-        swal('Factura Reasignado', 'Esta factura se ha reasignado.', 'success');
+        swal('Factura Reasignado', 'Esta factura se ha liberado.', 'success');
         document.getElementById("linea" + fac._id).classList.add("bg-primary");
         document.getElementById("linea" + fac._id).classList.add("text-white");
       } else {
-        swal('Factura No Reasignada', 'Esta factura no se reasigno correctamente.', 'error');
+        swal('Factura No Reasignada', 'Esta factura no se liberó correctamente.', 'error');
       }
     });
   }
@@ -648,6 +663,18 @@ export class DashboardLogisticaComponent implements OnInit {
         swal('Factura No Reasignada', 'Esta factura no se reasigno correctamente.', 'error');
       }
     });
+  }
+
+  enviarEmail(dato: any) {
+
+    this._guiasServices.enviarEmail(dato).subscribe((email: any) => {
+      if (email.ok) {
+        swal('Factura Enviado', email.msg, 'success');
+      } else {
+        swal('Factura No Enviado', email.msg, 'error');
+      }
+    });
+
   }
 
 }

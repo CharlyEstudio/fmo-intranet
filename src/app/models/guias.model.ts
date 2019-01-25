@@ -10,7 +10,7 @@ export class GuiasPartidas {
         public importe: number,
         public fecha: string,
         public hora: string,
-        public reasignar: string,
+        public reasignar: boolean,
         public _id?: string
     ) { }
 }

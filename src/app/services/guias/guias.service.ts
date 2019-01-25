@@ -205,6 +205,20 @@ export class GuiasService {
     return this.http.put(this.url, folio);
   }
 
+  enviarEmail(folio: any) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL +
+                          '/api/email.php?folio=' + JSON.stringify(folio);
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/email.php?folio=' + JSON.stringify(folio);
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' +
+                  PUERTO_SERVER + '/api/email.php?folio=' + JSON.stringify(folio);
+    }
+
+    return this.http.get(this.url);
+  }
+
   obtenerFacturasFolio(folio: any) {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/buscar/partidas/' + folio;

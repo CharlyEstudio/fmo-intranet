@@ -43,6 +43,7 @@ export class DashboardLogisticaComponent implements OnInit {
   guias: boolean = true;
   tuberias: boolean = false;
   sinDatos: boolean = false;
+  reasignadoBol: boolean = false;
 
   importe: number = 0;
   total: number = 0;
@@ -258,17 +259,16 @@ export class DashboardLogisticaComponent implements OnInit {
         }
 
         this._guiasServices.buscarEspeciales(forma.value.folio).subscribe( ( especiales: any ) => {
-          console.log(especiales);
-          if (especiales.respuesta.length > 0) {
-            for (let i = 0; i < especiales.respuesta.length; i++) {
+          if (especiales.length > 0) {
+            for (let i = 0; i < especiales.length; i++) {
               let esEspecial = (pedido) => {
-                return pedido.clvprov === especiales.respuesta[i].clvprov;
+                return pedido.clvprov === especiales[i].clvprov;
               }
 
               if (this.especiales.find(esEspecial)) {
-                this.especiales.find(esEspecial).desentregado += especiales.respuesta[i].desentregado;
+                this.especiales.find(esEspecial).desentregado += especiales[i].desentregado;
               } else {
-                this.especiales.push(especiales.respuesta[i]);
+                this.especiales.push(especiales[i]);
               }
 
             }
@@ -277,15 +277,15 @@ export class DashboardLogisticaComponent implements OnInit {
         });
 
         this._guiasServices.obtenerFolio(forma.value.folio).subscribe( ( partidas: any ) => {
-          if (partidas.respuesta.length > 0) {
-            for (let i = 0; i < partidas.respuesta.length; i++) {
-              this.folios.push(partidas.respuesta[i]);
+          if (partidas.length > 0) {
+            for (let i = 0; i < partidas.length; i++) {
+              this.folios.push(partidas[i]);
             }
 
             localStorage.setItem('guia', JSON.stringify(this.folios));
 
             this.obtener = true;
-            this.generar = false;
+            this.generar = true;
             this.sinDatos = false;
 
             this.folio = '';
@@ -491,6 +491,7 @@ export class DashboardLogisticaComponent implements OnInit {
                     importe: this.folios[i].total,
                     fecha: fecha,
                     hora: hora,
+                    reasignar: false
                   };
 
                   this.pedidos.push(ped);
@@ -515,14 +516,18 @@ export class DashboardLogisticaComponent implements OnInit {
                 };
 
                 this._guiasServices.guardarGuia(this.guiaGuardar).subscribe( ( guardado: any ) => {});
-                this._guiasServices.enviarPDFguia(this.pedidos, this.guiaGuardar, this.especiales).subscribe( (pdf: any) => {
-                  console.log(pdf);
+                this._guiasServices.enviarPDFguia(
+                  this.pedidos, this.guiaGuardar, this.especiales
+                ).subscribe( (pdf: any) => {
+                  // console.log(pdf); // Out: pdf/Yair-0-2019-01-24.pdf
                 });
 
                 localStorage.removeItem('guia');
                 localStorage.removeItem('especiales');
                 this.folio = '';
                 this.folios = [];
+                this.pedidos = [];
+                this.guiaGuardar = null;
                 this.especiales = [];
                 this.importe = 0;
                 this.generar = false;
@@ -531,6 +536,7 @@ export class DashboardLogisticaComponent implements OnInit {
                 this.obtener = false;
                 this.sinDatos = false;
                 setTimeout(() => this.verGuias(), 500);
+                // this.verGuias();
 
                 swal.stopLoading();
               });
@@ -565,7 +571,7 @@ export class DashboardLogisticaComponent implements OnInit {
     this.cajas = dato.cajas;
     this.fec = dato.fecha;
 
-    this.ruta = 'http://www.ferremayoristas.com.mx/api/pdf/' + this.chofer + '-' + this.cantidad + '-' + this.fec + '.pdf';
+    this.ruta = 'http://www.ferremayoristas.com.mx/api/pdf/' + this.chofer.toUpperCase() + '-' + this.cantidad + '-' + this.fec + '.pdf';
   }
 
 
@@ -616,6 +622,32 @@ export class DashboardLogisticaComponent implements OnInit {
     this.cantidad = 0;
     this.cajas = '';
     this.fec = '';
+  }
+
+  reasignar(fac: GuiasPartidas) {
+    fac.reasignar = true;
+    this._guiasServices.reasignarFolio(fac).subscribe((reasignado: any) => {
+      if (reasignado.ok) {
+        swal('Factura Reasignado', 'Esta factura se ha reasignado.', 'success');
+        document.getElementById("linea" + fac._id).classList.add("bg-primary");
+        document.getElementById("linea" + fac._id).classList.add("text-white");
+      } else {
+        swal('Factura No Reasignada', 'Esta factura no se reasigno correctamente.', 'error');
+      }
+    });
+  }
+
+  asignar(fac: GuiasPartidas) {
+    fac.reasignar = false;
+    this._guiasServices.reasignarFolio(fac).subscribe((reasignado: any) => {
+      if (reasignado.ok) {
+        swal('Factura Asignado', 'Esta factura se ha asignado.', 'success');
+        document.getElementById("linea" + fac._id).classList.remove("bg-primary");
+        document.getElementById("linea" + fac._id).classList.remove("text-white");
+      } else {
+        swal('Factura No Reasignada', 'Esta factura no se reasigno correctamente.', 'error');
+      }
+    });
   }
 
 }

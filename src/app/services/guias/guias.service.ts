@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 // Rutas
 import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_SERVER, PUERTO_INTERNO } from '../../config/config';
@@ -21,29 +21,23 @@ export class GuiasService {
   }
 
   obtenerFolio( folio: any ) {
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/guias.php?opcion=1&folio=' + folio;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/guias.php?opcion=1&folio=' + folio;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/guias.php?opcion=1&folio=' + folio;
-    // }
-
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/folio/ferrum/' + folio;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/guias.php?opcion=1&folio=' + folio;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/guias/folio/ferrum/' + folio;
+      this.url = URL_PRUEBAS + '/api/guias.php?opcion=1&folio=' + folio;
     } else {
-      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/folio/ferrum/' + folio;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/guias.php?opcion=1&folio=' + folio;
     }
 
-    return this.http.get( this.url ).map((fol: any) => {
-      if (fol.status) {
-        return fol.respuesta;
-      } else {
-        return 0;
-      }
-    });
+    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/folio/ferrum/' + folio;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/guias/folio/ferrum/' + folio;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/folio/ferrum/' + folio;
+    // }
+
+    return this.http.get( this.url );
   }
 
   obtenerGuias() {
@@ -147,29 +141,23 @@ export class GuiasService {
   }
 
   buscarEspeciales(folio: any) {
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/guias.php?opcion=2&folio=' + folio;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/guias.php?opcion=2&folio=' + folio;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/guias.php?opcion=2&folio=' + folio;
-    // }
-
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/folio/ferrum/especiales/' + folio;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/guias.php?opcion=2&folio=' + folio;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/guias/folio/ferrum/especiales/' + folio;
+      this.url = URL_PRUEBAS + '/api/guias.php?opcion=2&folio=' + folio;
     } else {
-      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/folio/ferrum/especiales/' + folio;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/guias.php?opcion=2&folio=' + folio;
     }
 
-    return this.http.get( this.url ).map((especiales: any) => {
-      if (especiales.status) {
-        return especiales.respuesta;
-      } else {
-        return 0;
-      }
-    });
+    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/folio/ferrum/especiales/' + folio;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/guias/folio/ferrum/especiales/' + folio;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/folio/ferrum/especiales/' + folio;
+    // }
+
+    return this.http.get( this.url );
   }
 
   enviarPDFguia(guiaPar: any, guia: any, especiales: any) {
@@ -192,10 +180,29 @@ export class GuiasService {
                   '&especiales=' + JSON.stringify(especiales);
     }
 
-    return this.http.get( this.url)
-      .map((resp: any) => {
-        return resp;
-      });
+    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    //   /*LOCAL*/this.url = URL_LOCAL +
+    //                       '/api/guias.php?opcion=3';
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + '/api/guias.php?opcion=3';
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' +
+    //               PUERTO_SERVER + '/api/guias.php?opcion=3';
+    // }
+
+    return this.http.get(this.url);
+  }
+
+  reasignarFolio(folio: any) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/buscar/reasignar/' + folio._id;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/guias/buscar/reasignar/' + folio._id;
+    } else {
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/reasignar/' + folio._id;
+    }
+
+    return this.http.put(this.url, folio);
   }
 
   obtenerFacturasFolio(folio: any) {

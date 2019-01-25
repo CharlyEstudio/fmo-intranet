@@ -651,13 +651,17 @@
 
                                 <th class="text-center">Importe</th>
 
+                                <th class="text-center">Liberar</th>
+
+                                <th class="text-center">Asignar</th>
+
                             </tr>
 
                         </thead>
 
                         <tbody>
 
-                            <tr *ngFor="let fac of facturas; let i = index">
+                            <tr id="linea{{fac._id}}" *ngFor="let fac of facturas; let i = index" [ngClass]="{'bg-primary': fac.reasignar === 'true', 'text-white': fac.reasignar === 'true'}">
 
                                 <td class="text-center">{{ (i + 1) }}</td>
 
@@ -674,6 +678,18 @@
                                 <td class="text-left">{{ fac.vendedor }}</td>
 
                                 <td class="text-right">{{ fac.importe | currency }}</td>
+
+                                <td class="text-center">
+
+                                    <button class="btn btn-info btn-sm" (click)="reasignar(fac)">Liberar</button>
+
+                                </td>
+
+                                <td class="text-center">
+
+                                    <button class="btn btn-success btn-sm" (click)="asignar(fac)">Asignar</button>
+
+                                </td>
 
                             </tr>
 

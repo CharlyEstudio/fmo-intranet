@@ -70,7 +70,10 @@ export class Vencido3160Component implements OnInit, OnDestroy {
 
   ngOnInit() {}
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.morosidad.unsubscribe();
+    clearInterval(this.intMor);
+  }
 
   // Observable de Morosidad
   regresaMorosidad(): Observable<any> {

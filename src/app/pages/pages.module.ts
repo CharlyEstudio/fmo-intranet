@@ -10,6 +10,7 @@ import { DashborarDirComponent } from './dashborar-dir/dashborar-dir.component';
 // Graficos
 import { GraficoBarraComponent } from '../components/grafico-barra/grafico-barra.component';
 import { GraficoDonaComponent } from '../components/grafico-dona/grafico-dona.component';
+import { GraficoLinealComponent } from '../components/grafico-lineal/grafico-lineal.component';
 
 // Shared
 import { SharedModule } from '../shared/shared.module';
@@ -19,7 +20,6 @@ import { PAGES_ROUTES } from './pages.routes';
 
 // Graficas ng2-charts
 import { ChartsModule } from 'ng2-charts';
-import { AccountSettingsComponent } from './account-settings/account-settings.component';
 
 // Pipes
 import { PipesModule } from '../pipes/pipes.module';
@@ -31,6 +31,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { AgmCoreModule } from '@agm/core';
 
 // General
+import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { PorBajarComponent } from '../components/por-bajar/por-bajar.component';
 import { PorSurtirComponent } from '../components/por-surtir/por-surtir.component';
 import { PedFacturadosComponent } from '../components/ped-facturados/ped-facturados.component';
@@ -90,13 +91,17 @@ import { DashboardLogisticaComponent } from './dashboard-logistica/dashboard-log
 import { BuscarPagosComponent } from './buscar-pagos/buscar-pagos.component';
 import { MapaComponent } from './mapa/mapa.component';
 import { UsuariosClientesComponent } from './usuarios-clientes/usuarios-clientes.component';
+import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.component';
 
 @NgModule({
     declarations: [
-        DashborarDirComponent,
-        DashboardComponent,
+        // Graficas
         GraficoDonaComponent,
         GraficoBarraComponent,
+        GraficoLinealComponent,
+        // ------------------
+        DashborarDirComponent,
+        DashboardComponent,
         AccountSettingsComponent,
         ProfileComponent,
         UsuariosComponent,
@@ -157,7 +162,8 @@ import { UsuariosClientesComponent } from './usuarios-clientes/usuarios-clientes
         DashboardLogisticaComponent,
         BuscarPagosComponent,
         MapaComponent,
-        UsuariosClientesComponent
+        UsuariosClientesComponent,
+        DashboardAdminComponent
     ],
     exports: [
         DashborarDirComponent,

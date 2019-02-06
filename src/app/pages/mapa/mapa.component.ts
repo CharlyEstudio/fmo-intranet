@@ -128,15 +128,15 @@ export class MapaComponent implements OnInit, OnDestroy {
           if (coords.usuarios[i].lat > 0 || coords.usuarios[i].lng > 0) {
             let newUsuario = {
               CLIENTEID: coords.usuarios[i].id,
-              DIAVIS: '',
+              DIAVIS: 'Personal',
               EMAIL: coords.usuarios[i].email,
               IMAGEN: coords.usuarios[i].img,
               LAT: coords.usuarios[i].lat,
               LNG: coords.usuarios[i].lng,
-              NUMERO: '',
+              NUMERO: 'Personal',
               PERID: Number(coords.usuarios[i].idFerrum),
-              TEL: '',
-              ZONA: '',
+              TEL: '000 000 0000',
+              ZONA: 'Sin Zona',
               _id: coords.usuarios[i].id
             };
             users.push(newUsuario);
@@ -148,9 +148,11 @@ export class MapaComponent implements OnInit, OnDestroy {
       // Subscripción
       this.observar = this.regresa().subscribe(
         coords => {
-          let localizado = (usuario) => {
+          let localizado = (usuario: any) => {
             return usuario.PERID === coords.perid;
           }
+
+          console.log('Ubicado: ', this.usuarios.find(localizado));
 
           if (this.usuarios.find(localizado) !== undefined) {
             this.usuarios.find(localizado).LAT = coords.lat;

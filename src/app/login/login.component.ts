@@ -51,7 +51,11 @@ export class LoginComponent implements OnInit {
 
         if ( correcto ) {
 
-          if (this._usuarioService.usuario.rol === "ADMIN_ROLE"
+          if (this._usuarioService.usuario.rol === "ADMIN_ROLE") {
+
+            this.router.navigate(['/dashboardAdmin']);
+
+          } else if (this._usuarioService.usuario.rol === "ADMIN_ROLE"
               || this._usuarioService.usuario.rol === "DIR_ROLE"
               || this._usuarioService.usuario.rol === "GER_ROLE") {
 
@@ -69,7 +73,7 @@ export class LoginComponent implements OnInit {
 
             this.router.navigate(['/dashBoardAuditoria']);
 
-          }  else if (this._usuarioService.usuario.rol === "MESA_ROLE") {
+          } else if (this._usuarioService.usuario.rol === "MESA_ROLE") {
 
             this.router.navigate(['/dashboardGuias']);
 

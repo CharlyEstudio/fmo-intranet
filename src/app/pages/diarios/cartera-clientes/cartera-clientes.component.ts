@@ -37,8 +37,8 @@ export class CarteraClientesComponent implements OnInit {
 
     this._diariosService.carteraClientes()
       .subscribe( ( resp: any ) => {
-        if (resp.respuesta.length !== 0) {
-          this.cartera = resp.respuesta;
+        if (resp.length !== 0) {
+          this.cartera = resp;
 
           for (let i = 0; i < this.cartera.length; i++) {
             this.saldo += this.cartera[i].saldo;

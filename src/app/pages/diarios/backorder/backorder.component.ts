@@ -68,8 +68,8 @@ export class BackorderComponent implements OnInit {
 
     this._diariosService.backOrder(this.inicio, this.final)
       .subscribe( ( resp: any ) => {
-        if (resp.respuesta.length !== 0) {
-          this.backorder = resp.respuesta;
+        if (resp.length !== 0) {
+          this.backorder = resp;
 
           for (let i = 0; i < this.backorder.length; i++) {
             this.cantidad += Number(this.backorder[i].cantidad);
@@ -96,7 +96,7 @@ export class BackorderComponent implements OnInit {
     this._diariosService.obtenerBackOrder(e.target.id, this.inicio, this.final, this.orden)
       .subscribe( ( resp: any ) => {
         this.mostrar = true;
-        this.backs = resp.respuesta;
+        this.backs = resp;
       });
   }
 

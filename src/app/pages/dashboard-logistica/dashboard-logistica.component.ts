@@ -243,77 +243,96 @@ export class DashboardLogisticaComponent implements OnInit {
 
   obtenerFolio(forma: NgForm) {
     this.generar = true;
+    const folio = forma.value.folio;
     if (forma.value.folio === 0) {
       swal('Sin Folio', 'No se ingreso folio para agregar a la guía', 'warning');
       return;
     }
+
+    // this._guiasServices.buscarFolioGuia(folio).subscribe((db: any) => {
+    //   if (db.ok) {
+    //     swal('Folio Registrado', 'Este folio ' + forma.value.folio + ' ya esta registrado.', 'error');
+    //   } else {
+    //     let esFolio = (factura) => {
+    //       return factura.folio === folio;
+    //     };
+
+    //     if (this.folios.find(esFolio)) {
+    //       swal('Folio Repetido', 'Este folio ' + forma.value.folio + ' ya esta en la guía.', 'error');
+    //     } else {
+    //       this._guiasServices.obtenerFolio(folio).subscribe((factura: any) => {
+    //         console.log(factura);
+    //       });
+    //     }
+    //   }
+    // });
 
     this._guiasServices.buscarFolioGuia(forma.value.folio).subscribe( ( obtener: any ) => {
       if (obtener.ok) {
         swal('Folio Registrado', 'Este folio ' + forma.value.folio + ' ya esta registrado.', 'error');
         this.folio = '';
       } else {
-        let esFolio = (folio) => {
-          return folio.folio === forma.value.folio;
+        let esFolio = (fac: any) => {
+          return fac.folio === forma.value.folio;
         }
 
         if (this.folios.find(esFolio) !== undefined) {
           swal('Folio Repetido', 'Este folio ' + forma.value.folio + ' ya esta en la guía.', 'error');
           this.folio = '';
-          return;
-        }
+        } else {
 
-        this._guiasServices.buscarEspeciales(forma.value.folio).subscribe( ( especiales: any ) => {
-          if (especiales.length > 0) {
-            for (let i = 0; i < especiales.length; i++) {
-              let esEspecial = (pedido) => {
-                return pedido.clvprov === especiales[i].clvprov;
-              }
+          this._guiasServices.obtenerFolio(forma.value.folio).subscribe( ( partidas: any ) => {
+            if (partidas.status) {
+              this._guiasServices.buscarEspeciales(forma.value.folio).subscribe( ( especiales: any ) => {
+                if (especiales.status) {
+                  for (let i = 0; i < especiales.respuesta.length; i++) {
+                    let esEspecial = (pedido) => {
+                      return pedido.clvprov === especiales.respuesta[i].clvprov;
+                    }
 
-              if (this.especiales.find(esEspecial)) {
-                this.especiales.find(esEspecial).desentregado += especiales[i].desentregado;
-              } else {
-                this.especiales.push(especiales[i]);
-              }
+                    if (this.especiales.find(esEspecial)) {
+                      this.especiales.find(esEspecial).desentregado += especiales.respuesta[i].desentregado;
+                    } else {
+                      this.especiales.push(especiales.respuesta[i]);
+                    }
 
-            }
-            localStorage.setItem('especiales', JSON.stringify(this.especiales));
-          }
-        });
-
-        this._guiasServices.obtenerFolio(forma.value.folio).subscribe( ( partidas: any ) => {
-          if (partidas.length > 0) {
-            for (let i = 0; i < partidas.length; i++) {
-              let esCliente = (cliente) => {
-                return cliente.numero === partidas[i].numero;
-              }
-
-              if (!this.folios.find(esCliente)) {
-                if (this.clientes === 0) {
-                  this.clientes = 1;
-                } else {
-                  this.clientes += 1;
+                  }
+                  localStorage.setItem('especiales', JSON.stringify(this.especiales));
                 }
+              });
+
+              for (let i = 0; i < partidas.respuesta.length; i++) {
+                let esCliente = (cliente) => {
+                  return cliente.numero === partidas.respuesta[i].numero;
+                }
+
+                if (!this.folios.find(esCliente)) {
+                  if (this.clientes === 0) {
+                    this.clientes = 1;
+                  } else {
+                    this.clientes += 1;
+                  }
+                }
+                this.folios.push(partidas.respuesta[i]);
               }
-              this.folios.push(partidas[i]);
+
+              localStorage.setItem('guia', JSON.stringify(this.folios));
+
+              this.obtener = true;
+              this.generar = true;
+              this.sinDatos = false;
+
+              this.folio = '';
+            } else {
+              this.obtener = false;
+              this.generar = false;
+              this.sinDatos = true;
+              this.guias = false;
+              swal('Ninguna Factura', 'Este folio ' + forma.value.folio + ' no tiene niguna factura relacionada.', 'error');
             }
 
-            localStorage.setItem('guia', JSON.stringify(this.folios));
-
-            this.obtener = true;
-            this.generar = true;
-            this.sinDatos = false;
-
-            this.folio = '';
-          } else {
-            this.obtener = false;
-            this.generar = false;
-            this.sinDatos = true;
-            this.guias = false;
-            swal('Ninguna Factura', 'Este folio ' + forma.value.folio + ' no tiene niguna factura relacionada.', 'error');
-          }
-
-        });
+          });
+        }
       }
     });
 
@@ -545,6 +564,7 @@ export class DashboardLogisticaComponent implements OnInit {
                 this.guiaGuardar = null;
                 this.especiales = [];
                 this.importe = 0;
+                this.clientes = 0;
                 this.generar = false;
                 this.guias = true;
                 this.tuberias = false;
@@ -607,16 +627,16 @@ export class DashboardLogisticaComponent implements OnInit {
       for (let i = 0; i < facturas.facturas.length; i++) {
         this.totalModal += facturas.facturas[i].importe;
         this._guiasServices.buscarEspeciales(facturas.facturas[i].factura).subscribe( ( especiales: any ) => {
-          if (especiales.length > 0) {
-            for (let k = 0; k < especiales.length; k++) {
+          if (especiales.status) {
+            for (let k = 0; k < especiales.respuesta.length; k++) {
               let esEspecial = (pedido) => {
-                return pedido.clvprov === especiales[k].clvprov;
+                return pedido.clvprov === especiales.respuesta[k].clvprov;
               }
 
               if (this.especialesDiaModal.find(esEspecial)) {
-                this.especialesDiaModal.find(esEspecial).desentregado += especiales[k].desentregado;
+                this.especialesDiaModal.find(esEspecial).desentregado += especiales.respuesta[k].desentregado;
               } else {
-                this.especialesDiaModal.push(especiales[k]);
+                this.especialesDiaModal.push(especiales.respuesta[k]);
               }
 
             }

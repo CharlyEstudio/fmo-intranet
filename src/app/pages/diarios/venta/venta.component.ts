@@ -99,15 +99,15 @@ export class VentaComponent implements OnInit {
               this.rol = ase.usuarios[0].rol;
             });
 
-          if (resp.respuesta.length !== 0) {
-            this.nombre = resp.respuesta[0].NOMBRE;
-            this.id = resp.respuesta[0].PERID;
-            this.catalogo = resp.respuesta[0].CATALOGO;
-            this.serie = resp.respuesta[0].SERIE;
-            this.caja = resp.respuesta[0].CAJA;
-            this.zona = resp.respuesta[0].ZONA;
-            this.subtotal = resp.respuesta[0].SUBTOTAL;
-            this.total = resp.respuesta[0].TOTAL;
+          if (resp.length !== 0) {
+            this.nombre = resp[0].NOMBRE;
+            this.id = resp[0].PERID;
+            this.catalogo = resp[0].CATALOGO;
+            this.serie = resp[0].SERIE;
+            this.caja = resp[0].CAJA;
+            this.zona = resp[0].ZONA;
+            this.subtotal = resp[0].SUBTOTAL;
+            this.total = resp[0].TOTAL;
 
             this._diariosService.ventasAsesor(this.inicio, this.final, this.asesor)
               .subscribe( ( ventAse: any ) => {
@@ -140,8 +140,8 @@ export class VentaComponent implements OnInit {
       this._diariosService.ventas(this.inicio, this.final)
         .subscribe( ( resp: any ) => {
 
-          if (resp.respuesta.length !== 0) {
-            this.pedidosGen = resp.respuesta;
+          if (resp.length !== 0) {
+            this.pedidosGen = resp;
 
             for (let i = 0; i < this.pedidosGen.length; i++) {
               this.totalGeneral += this.pedidosGen[i].TOTAL;

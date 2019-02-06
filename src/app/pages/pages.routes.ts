@@ -56,8 +56,18 @@ import { DashboardLogisticaComponent } from './dashboard-logistica/dashboard-log
 import { BuscarPagosComponent } from './buscar-pagos/buscar-pagos.component';
 import { MapaComponent } from './mapa/mapa.component';
 import { UsuariosClientesComponent } from './usuarios-clientes/usuarios-clientes.component';
+import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.component';
 
 const pageRoutes: Routes = [
+    {
+        path: 'dashboardAdmin',
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        component: DashboardAdminComponent,
+        data:   {
+                    titulo: 'Dashboard Administración',
+                    name: 'description'
+                }
+    },
     {
         path: 'dashboardDir',
         canActivate: [ DireccionGuard, VerificaTokenGuard ],
@@ -496,6 +506,12 @@ const pageRoutes: Routes = [
                 }
     },
     // Redirección
+    {
+        path: '',
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        redirectTo: '/dashboardAdmin',
+        pathMatch: 'full'
+    },
     {
         path: '',
         canActivate: [ DireccionGuard, VerificaTokenGuard ],

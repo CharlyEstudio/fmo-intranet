@@ -95,7 +95,7 @@
 
                                 <th class="text-center">Recibo</th>
 
-                                <th class="text-center">Tipo Pago</th>
+                                <th class="text-center">Tipo</th>
 
                             </tr>
 
@@ -105,51 +105,29 @@
 
                             <tr *ngFor="let dato of datos">
 
-                                <td class="text-center">{{ dato.FECHA | date: 'dd-MM-yyyy' }}</td>
+                                <td class="text-center font-weight-bold" style="font-size: 12px;" *ngIf="dato.FECHAPAG != ''">{{ dato.FECHAPAG | date: 'dd-MM-yyyy' }}</td>
+
+                                <td class="text-center font-weight-bold" style="font-size: 12px;" *ngIf="dato.FECHAPAG === ''">{{ dato.FECHA | date: 'dd-MM-yyyy' }}</td>
 
                                 <td class="text-center" style="font-weight: 700;">{{ dato.FOLIO }}</td>
 
-                                <td class="text-center" style="color: #f62d51;" *ngIf="dato.SALDOFINAL === 0">{{ dato.CARGO | currency }}</td>
+                                <td class="text-center font-weight-bold" style="color: #f62d51;">{{ dato.CARGO | currency }}</td>
 
-                                <td class="text-center" style="color: #f62d51;" *ngIf="dato.SALDOFINAL > 0"></td>
+                                <td class="text-center" style="color: #06d79c; font-weight: 700;" *ngIf="dato.ABONO > 0 || dato.ABONO < 0">{{ dato.ABONO | currency }}</td>
 
-                                <td class="text-center" style="color: #06d79c; font-weight: 700;">{{ dato.ABONO | currency }}</td>
+                                <td class="text-center" style="color: #06d79c; font-weight: 700;" *ngIf="dato.ABONO === 0"></td>
 
-                                <td class="text-center" style="color: #f62d51; font-weight: 700;" *ngIf="dato.SALDOFINAL > 0">{{ dato.SALDO | currency }}</td>
+                                <td class="text-center" style="color: #f62d51; font-weight: 700;" *ngIf="dato.SALDOFINAL === 0">{{ dato.SALDO | currency }}</td>
 
-                                <td class="text-center" style="color: #398bf7; font-weight: 700;" *ngIf="dato.SALDOFINAL == 0"></td>
+                                <td class="text-center" style="color: #f62d51; font-weight: 700;" *ngIf="dato.SALDOFINAL > 0">{{ dato.SALDOFINAL | currency }}</td>
 
-                                <td class="text-center" *ngIf="dato.RECIBO != 0">{{ dato.RECIBO }}</td>
+                                <td class="text-center font-weight-bold" *ngIf="dato.RECIBO != 0">{{ dato.RECIBO }}</td>
 
-                                <td class="text-center" *ngIf="dato.RECIBO == 0">{{ dato.NOTA }}</td>
+                                <td class="text-center font-weight-bold" *ngIf="dato.RECIBO == 0">{{ dato.NOTA }}</td>
 
-                                <td class="text-center" *ngIf="dato.FP == 'C'">
+                                <td class="text-center">
 
-                                    <span class="label label-info">{{ dato.TIPO }}</span>
-
-                                </td>
-
-                                <td class="text-center" *ngIf="dato.FP == 'R'">
-
-                                    <span class="label label-primary">{{ dato.TIPO }}</span>
-
-                                </td>
-
-                                <td class="text-center" *ngIf="dato.FP == 'E'">
-
-                                    <span class="label label-danger">{{ dato.TIPO }}</span>
-
-                                </td>
-
-                                <td class="text-center" *ngIf="dato.FP == 'T'">
-
-                                    <span class="label label-inverse">{{ dato.TIPO }}</span>
-
-                                </td>
-
-                                <td class="text-center" *ngIf="dato.FP == 'S'">
-
-                                    <span class="label label-warning">{{ dato.TIPO }}</span>
+                                    <span class="label" [ngClass]="{'label-info': dato.TIPO == 'C', 'label-primary': dato.TIPO == 'R', 'label-danger': dato.TIPO == 'E', 'label-inverse': dato.TIPO == 'T', 'label-inverse': dato.TIPO == 'D', 'label-warning': dato.TIPO == 'S'}">{{ dato.FP }}</span>
 
                                 </td>
 
@@ -159,15 +137,15 @@
 
                             <tr style="background: #f4f6f9; font-weight: 700;">
 
-                                <th colspan="2" class="text-right">Totales</th>
+                                <th colspan="2" class="text-right font-weight-bold">Totales</th>
 
-                                <th class="text-center">{{ cargos | currency }}</th>
+                                <th class="text-center font-weight-bold">{{ cargos | currency }}</th>
 
-                                <th class="text-center">{{ abonos | currency }}</th>
+                                <th class="text-center font-weight-bold">{{ abonos | currency }}</th>
 
-                                <th class="text-center">{{ (cargos - abonos) | currency }}</th>
+                                <th class="text-center font-weight-bold">{{ saldos | currency }}</th>
 
-                                <th colspan="2" class="text-center"></th>
+                                <th colspan="3" class="text-center font-weight-bold"></th>
 
                             </tr>
 

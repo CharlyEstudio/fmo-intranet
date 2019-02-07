@@ -342,7 +342,7 @@ export class EdoCtaComponent implements OnInit {
 
   public exportarPDF(numero: any, nombre: any) {
     let filename = numero + '-' + nombre;
-    return xepOnline.Formatter.Format('edoCta', {render: 'download', filename: filename, pageWidth: '216mm', pageHeight: '297mm'});
+    return xepOnline.Formatter.Format('edoCta', {render: 'download', filename: filename, pageWidth: '297mm', pageHeight: '216mm'});
   }
 
 }

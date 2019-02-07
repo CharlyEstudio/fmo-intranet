@@ -58,9 +58,9 @@
 
 <div class="row" *ngIf="localizado">
 
-    <div class="col">
+    <div class="col" id="edoCta" #edoCta>
 
-        <div class="card" id="edoCta" #edoCta>
+        <div class="card">
 
             <div class="card-body">
 
@@ -77,7 +77,7 @@
 
                 <div class="table-responsive">
 
-                    <table class="table table-hover">
+                    <table class="table table-hover table-sm">
 
                         <thead>
 
@@ -88,6 +88,8 @@
                                 <th class="text-center">Factura</th>
 
                                 <th class="text-center">Cargo</th>
+
+                                <th class="text-center">Fecha</th>
 
                                 <th class="text-center">Abonos</th>
 
@@ -105,13 +107,13 @@
 
                             <tr *ngFor="let dato of datos">
 
-                                <td class="text-center font-weight-bold" style="font-size: 12px;" *ngIf="dato.FECHAPAG != ''">{{ dato.FECHAPAG | date: 'dd-MM-yyyy' }}</td>
-
-                                <td class="text-center font-weight-bold" style="font-size: 12px;" *ngIf="dato.FECHAPAG === ''">{{ dato.FECHA | date: 'dd-MM-yyyy' }}</td>
+                                <td class="text-center" style="font-weight: 500;">{{ dato.FECHA | date: 'dd-MM-yyyy' }}</td>
 
                                 <td class="text-center" style="font-weight: 700;">{{ dato.FOLIO }}</td>
 
                                 <td class="text-center font-weight-bold" style="color: #f62d51;">{{ dato.CARGO | currency }}</td>
+
+                                <td class="text-center" style="font-weight: 500;">{{ dato.FECHAPAG | date: 'dd-MM-yyyy' }}</td>
 
                                 <td class="text-center" style="color: #06d79c; font-weight: 700;" *ngIf="dato.ABONO > 0 || dato.ABONO < 0">{{ dato.ABONO | currency }}</td>
 
@@ -140,6 +142,8 @@
                                 <th colspan="2" class="text-right font-weight-bold">Totales</th>
 
                                 <th class="text-center font-weight-bold">{{ cargos | currency }}</th>
+
+                                <th></th>
 
                                 <th class="text-center font-weight-bold">{{ abonos | currency }}</th>
 

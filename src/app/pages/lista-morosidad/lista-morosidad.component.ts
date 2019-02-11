@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PhpService } from '../../services/services.index';
 
 @Component({
@@ -20,6 +20,7 @@ export class ListaMorosidadComponent implements OnInit {
 
   constructor(
     private router: ActivatedRoute,
+    private ruta: Router,
     private _phpService: PhpService
   ) { }
 
@@ -46,6 +47,14 @@ export class ListaMorosidadComponent implements OnInit {
           this.total += resp[i].total;
         }
       });
+  }
+
+  solicitarComentarios( datos: any ) {
+    this.ruta.navigate(['/comentarios/', datos.clienteid, datos.numero, datos.nombre, this.id, this.nombre, this.inicio, this.fin]);
+  }
+
+  regresar() {
+    this.ruta.navigate(['/dashboardAse']);
   }
 
 }

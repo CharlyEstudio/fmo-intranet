@@ -32,6 +32,7 @@ import { AgmCoreModule } from '@agm/core';
 
 // General
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
+// Componentes
 import { PorBajarComponent } from '../components/por-bajar/por-bajar.component';
 import { PorSurtirComponent } from '../components/por-surtir/por-surtir.component';
 import { PedFacturadosComponent } from '../components/ped-facturados/ped-facturados.component';
@@ -49,6 +50,8 @@ import { Vencido91Component } from '../components/cartera/vencido91/vencido91.co
 import { MorosidadBitacoraComponent } from '../components/morosidad-bitacora/morosidad-bitacora.component';
 import { MovFolComponent } from '../components/mov-fol/mov-fol.component';
 import { EdoCtaCliComponent } from '../components/edo-cta-cli/edo-cta-cli.component';
+import { ComentariosComponent } from '../components/comentarios/comentarios.component';
+// Páginas
 import { ProfileComponent } from './profile/profile.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { BusquedaComponent } from './busqueda/busqueda.component';
@@ -92,6 +95,7 @@ import { BuscarPagosComponent } from './buscar-pagos/buscar-pagos.component';
 import { MapaComponent } from './mapa/mapa.component';
 import { UsuariosClientesComponent } from './usuarios-clientes/usuarios-clientes.component';
 import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.component';
+import { BoardComentariosComponent } from './board-comentarios/board-comentarios.component';
 
 @NgModule({
     declarations: [
@@ -99,13 +103,7 @@ import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.compo
         GraficoDonaComponent,
         GraficoBarraComponent,
         GraficoLinealComponent,
-        // ------------------
-        DashborarDirComponent,
-        DashboardComponent,
-        AccountSettingsComponent,
-        ProfileComponent,
-        UsuariosComponent,
-        BusquedaComponent,
+        // Componentes
         PorBajarComponent,
         PorSurtirComponent,
         PedFacturadosComponent,
@@ -120,6 +118,17 @@ import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.compo
         Vencido3160Component,
         Vencido6190Component,
         Vencido91Component,
+        MorosidadBitacoraComponent,
+        MovFolComponent,
+        EdoCtaCliComponent,
+        ComentariosComponent,
+        // Páginas
+        DashborarDirComponent,
+        DashboardComponent,
+        AccountSettingsComponent,
+        ProfileComponent,
+        UsuariosComponent,
+        BusquedaComponent,
         VentaComponent,
         CompraComponent,
         UtilidadesComponent,
@@ -151,19 +160,17 @@ import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.compo
         RepoSurtidoComponent,
         MovimientosFolioComponent,
         BitacoraComponent,
-        MorosidadBitacoraComponent,
         MostrarInfoBitacoraComponent,
         MostrarFacturasMorosidadComponent,
         ChequesDevueltosComponent,
         ChequesDevueltosComponent,
-        MovFolComponent,
-        EdoCtaCliComponent,
         SpeedComponent,
         DashboardLogisticaComponent,
         BuscarPagosComponent,
         MapaComponent,
         UsuariosClientesComponent,
-        DashboardAdminComponent
+        DashboardAdminComponent,
+        BoardComentariosComponent
     ],
     exports: [
         DashborarDirComponent,

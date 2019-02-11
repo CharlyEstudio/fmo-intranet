@@ -57,6 +57,7 @@ import { BuscarPagosComponent } from './buscar-pagos/buscar-pagos.component';
 import { MapaComponent } from './mapa/mapa.component';
 import { UsuariosClientesComponent } from './usuarios-clientes/usuarios-clientes.component';
 import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.component';
+import { ComentariosComponent } from '../components/comentarios/comentarios.component';
 
 const pageRoutes: Routes = [
     {
@@ -271,6 +272,28 @@ const pageRoutes: Routes = [
                 }
     },
     // Hasta aquí quitar
+    // Comentarios
+    {
+        path: 'boardComentarios',
+        component: ZonaEspecialComponent,
+        canActivate: [ AsesoresGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Comentarios de Bitacora',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'comentarios/:clienteid/:numero/:nombre/:idFerrum/:asesor/:inicio/:fin',
+        component: ComentariosComponent,
+        canActivate: [ AsesoresGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Comentarios de Bitacora del cliente',
+                    name: 'description'
+                }
+    },
+    // Hasta aquí Comentarios
     {
         path: 'direccionCuentas',
         component: BitacoraComponent,

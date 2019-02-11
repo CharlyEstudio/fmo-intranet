@@ -1,339 +1,339 @@
 <div class="card">
 
-  <div class="card-body">
+    <div class="card-body">
 
-    <div class="d-flex flex-row">
+        <div class="d-flex flex-row">
 
-        <div class="p-l-20">
+            <div class="p-l-20">
 
-            <h1 class="font-medium">{{ asesor }}</h1>
+                <h1 class="font-medium">{{ asesor }}</h1>
 
-            <h6>@Zona {{ zona }} <br> {{ fecha | date }}</h6>
+                <h6>@Zona {{ zona }} <br> {{ fecha | date }}</h6>
+
+            </div>
+
+        </div>
+
+        <br>
+
+        <h3 class="card-title text-center">Pedidos</h3>
+
+        <div class="row m-t-40">
+
+            <div class="col-lg-3 col-md-6 b-r text-center">
+
+                <h2 class="font-light">{{ totalNumero | number }} - {{ total | currency }}</h2>
+
+                <h6>Total Pedidos</h6>
+
+            </div>
+
+            <div class="col-lg-3 col-md-6 b-r text-center">
+
+                <h2 class="font-light">{{ diaVisita | number }}</h2>
+
+                <h6>Clientes Día de Visita</h6>
+
+            </div>
+
+            <div class="col-lg-3 col-md-6 text-center">
+
+                <h2 class="font-light">{{ clientesPedidosDia | number }}</h2>
+
+                <h6>Clientes con Pedidos del Día</h6>
+
+            </div>
+
+            <div class="col-lg-3 col-md-6 b-r text-center">
+
+                <h2 class="font-light">{{ clientesPedidosDeferenteDia | number }}</h2>
+
+                <h6>Clientes con Pedidos de Diferente Día</h6>
+
+            </div>
 
         </div>
 
     </div>
 
-    <br>
-
-    <h3 class="card-title text-center">Pedidos</h3>
-
-    <div class="row m-t-40">
-
-      <div class="col-lg-3 col-md-6 b-r text-center">
-
-        <h2 class="font-light">{{ totalNumero | number }} - {{ total | currency }}</h2>
-
-        <h6>Total Pedidos</h6>
-
-      </div>
-
-      <div class="col-lg-3 col-md-6 b-r text-center">
-
-        <h2 class="font-light">{{ diaVisita | number }}</h2>
-
-        <h6>Clientes Día de Visita</h6>
-
-      </div>
-
-      <div class="col-lg-3 col-md-6 text-center">
-
-        <h2 class="font-light">{{ clientesPedidosDia | number }}</h2>
-
-        <h6>Clientes con Pedidos del Día</h6>
-
-      </div>
-
-      <div class="col-lg-3 col-md-6 b-r text-center">
-
-        <h2 class="font-light">{{ clientesPedidosDeferenteDia | number }}</h2>
-
-        <h6>Clientes con Pedidos de Diferente Día</h6>
-
-      </div>
-
-    </div>
-
-  </div>
-
 </div>
 
 <div class="row m-t-40 social-widget">
 
-  <div class="col-lg-3 col-md-6">
+    <div class="col-lg-3 col-md-6">
 
-    <div class="card bg-theme-dark">
+        <div class="card bg-theme-dark">
 
-      <div class="card-body">
-  
-        <h3 class="card-title text-black display-5">
+            <div class="card-body">
 
-          <i class="mdi mdi-arrow-down-bold text-black"></i> Por Bajar
-            
-        </h3>
-  
-        <h3 class="text-black font-light text-center">
+                <h2 class="card-title text-black">
 
-          <div>
+                    <i class="mdi mdi-arrow-down-bold text-black"></i> Por Bajar
 
-            <span class="font-bold">{{ porBajarNumero | number }} - {{ porBajar | currency }}</span>
-              
-          </div>
+                </h2>
 
-        </h3>
-  
-      </div>
-    
+                <h3 class="text-black font-light text-center">
+
+                    <div>
+
+                        <span class="font-bold">{{ porBajarNumero | number }} - {{ porBajar | currency }}</span>
+
+                    </div>
+
+                </h3>
+
+            </div>
+
+        </div>
+
     </div>
-  
-  </div>
 
-  <div class="col-lg-3 col-md-6">
+    <div class="col-lg-3 col-md-6">
 
-    <div class="card bg-inverse">
+        <div class="card bg-inverse">
 
-      <div class="card-body">
-  
-        <h3 class="card-title text-white display-5">
+            <div class="card-body">
 
-          <i class="mdi mdi-basket-fill text-white"></i> Por Surtir
-            
-        </h3>
-  
-        <h3 class="text-white font-light text-center">
+                <h2 class="card-title text-white">
 
-          <div>
+                    <i class="mdi mdi-basket-fill text-white"></i> Por Surtir
 
-            <span class="font-bold">{{ porSurtirNumero | number }} - {{ porSurtir | currency }}</span>
-              
-          </div>
+                </h2>
 
-        </h3>
-  
-      </div>
-    
+                <h3 class="text-white font-light text-center">
+
+                    <div>
+
+                        <span class="font-bold">{{ porSurtirNumero | number }} - {{ porSurtir | currency }}</span>
+
+                    </div>
+
+                </h3>
+
+            </div>
+
+        </div>
+
     </div>
-  
-  </div>
 
-  <div class="col-lg-3 col-md-6">
+    <div class="col-lg-3 col-md-6">
 
-    <div class="card bg-success">
+        <div class="card bg-success">
 
-      <div class="card-body">
-  
-        <h3 class="card-title text-white display-5">
+            <div class="card-body">
 
-          <i class="mdi mdi-barcode-scan text-white"></i> Facturado
-            
-        </h3>
-  
-        <h3 class="text-white font-light text-center">
+                <h2 class="card-title text-white">
 
-          <div>
+                    <i class="mdi mdi-barcode-scan text-white"></i> Facturado
 
-            <span class="font-bold">{{ facturadoNumero | number }} - {{ facturado | currency }}</span>
-              
-          </div>
+                </h2>
 
-        </h3>
-  
-      </div>
-    
+                <h3 class="text-white font-light text-center">
+
+                    <div>
+
+                        <span class="font-bold">{{ facturadoNumero | number }} - {{ facturado | currency }}</span>
+
+                    </div>
+
+                </h3>
+
+            </div>
+
+        </div>
+
     </div>
-  
-  </div>
 
-  <div class="col-lg-3 col-md-6">
+    <div class="col-lg-3 col-md-6">
 
-    <div class="card bg-danger">
+        <div class="card bg-danger">
 
-      <div class="card-body">
-  
-        <h3 class="card-title text-white display-5">
+            <div class="card-body">
 
-          <i class="mdi mdi-close-outline text-white"></i> Cancelados
-            
-        </h3>
-  
-        <h3 class="text-white font-light text-center">
+                <h2 class="card-title text-white">
 
-          <div>
+                    <i class="mdi mdi-close-outline text-white"></i> Cancelados
 
-            <span class="font-bold">{{ canceladosNumero | number }} - {{ cancelados | currency }}</span>
-              
-          </div>
+                </h2>
 
-        </h3>
-  
-      </div>
-    
+                <h3 class="text-white font-light text-center">
+
+                    <div>
+
+                        <span class="font-bold">{{ canceladosNumero | number }} - {{ cancelados | currency }}</span>
+
+                    </div>
+
+                </h3>
+
+            </div>
+
+        </div>
+
     </div>
-  
-  </div>
 
 </div>
 
 <div class="card">
 
-  <div class="card-body">
+    <div class="card-body">
 
-    <h3 class="card-title text-center">Ventas & Crédito</h3>
+        <h3 class="card-title text-center">Ventas & Crédito</h3>
 
-    <div class="row m-t-40">
+        <div class="row m-t-40">
 
-      <div class="col-lg-3 col-md-6 b-r text-center">
+            <div class="col-lg-3 col-md-6 b-r text-center">
 
-        <h2 class="font-light text-info">{{ carteraTotal | currency }}</h2>
+                <h2 class="font-light text-info">{{ carteraTotal | currency }}</h2>
 
-        <h6>Cartera Total</h6>
+                <h6>Cartera Total</h6>
 
-      </div>
+            </div>
 
-      <div class="col-lg-3 col-md-6 b-r text-center">
+            <div class="col-lg-3 col-md-6 b-r text-center">
 
-        <h2 class="font-light text-danger">{{ carteraVencida | currency }}</h2>
+                <h2 class="font-light text-danger">{{ carteraVencida | currency }}</h2>
 
-        <h6>Cartera Vencida</h6>
+                <h6>Cartera Vencida</h6>
 
-      </div>
+            </div>
 
-      <div class="col-lg-3 col-md-6 b-r text-center">
+            <div class="col-lg-3 col-md-6 b-r text-center">
 
-        <h2 class="font-light text-info">{{ carteraVencidaSana | currency }}</h2>
+                <h2 class="font-light text-info">{{ carteraVencidaSana | currency }}</h2>
 
-        <h6>Cartera del Día Sana</h6>
+                <h6>Cartera del Día Sana</h6>
 
-        <h2 class="font-light text-danger">{{ carteraDia | currency }}</h2>
+                <h2 class="font-light text-danger">{{ carteraDia | currency }}</h2>
 
-        <h6>Cartera del Día Vencida</h6>
+                <h6>Cartera del Día Vencida</h6>
 
-      </div>
+            </div>
 
-      <div class="col-lg-3 col-md-6 text-center">
+            <div class="col-lg-3 col-md-6 text-center">
 
-        <h2 class="font-light text-success">{{ cobroDia | currency }}</h2>
+                <h2 class="font-light text-success">{{ cobroDia | currency }}</h2>
 
-        <h6>Cobro del Día</h6>
+                <h6>Cobro del Día</h6>
 
-      </div>
+            </div>
 
-    </div>
-
-  </div>
-
-  <div>
-
-    <hr>
-
-  </div>
-
-  <div class="card-body">
-
-    <h3 class="card-title text-center">Actual <em>vs</em> Anterior {{ fecha | date: 'yyyy' }}</h3>
-
-    <div class="row">
-
-      <div class="col b-r text-center">
-
-        <h1 class="font-light">{{ ventaMensual | currency }}</h1>
-
-        <h6>Mes Actual</h6>
-
-      </div>
-
-      <div class="col text-center">
-
-        <h1 class="font-light">{{ ventaMnesualAnterior | currency }}</h1>
-
-        <h6>Mes Anterior</h6>
-
-      </div>
+        </div>
 
     </div>
 
-  </div>
+    <div>
 
-  <div class="card-body">
-
-    <h3 class="card-title text-center">Morosidad</h3>
-
-    <div class="row">
-
-      <div class="col-lg-4 col-md-6 text-center p-b-20">
-        
-        <i class="mdi mdi-alert-circle-outline lead text-warning"></i>
-
-        <h3 class="text-black">De <span class="font-bold">1 a 8</span> días. <br>
-            
-        <span class="text-black" style="font-weight: bold;">{{ mor18 | currency}}</span></h3>
-
-        <button *ngIf="mor18 > 0" (click)="solicitarLista('-1', '-8')" class="btn btn-success">Solicitar</button>
-
-      </div>
-
-      <div class="col-lg-4 col-md-6 text-center p-b-20">
-        
-        <i class="mdi mdi-alert-outline lead text-warning"></i>
-
-        <h3 class="text-black">De <span class="font-bold">9 a 16</span> días. <br>
-            
-        <span class="text-warning" style="font-weight: bold;">{{ mor916 | currency}}</span></h3>
-
-        <button *ngIf="mor916 > 0" (click)="solicitarLista('-9', '-16')" class="btn btn-success">Solicitar</button>
-        
-      </div>
-
-      <div class="col-lg-4 col-md-6 text-center p-b-20">
-
-        <i class="mdi mdi-alert-octagon lead text-danger"></i>
-
-        <h3 class="text-black">De <span class="font-bold">17 a 30</span> días. <br>
-
-        <span class="text-danger" style="font-weight: bold;">{{ mor1730 | currency}}</span></h3>
-
-        <button *ngIf="mor1730 > 0" (click)="solicitarLista('-17', '-30')" class="btn btn-success">Solicitar</button>
-
-      </div>
-
-      <div class="col-lg-4 col-md-6 text-center p-b-20">
-
-        <i class="mdi mdi-alert-octagram lead text-danger"></i>
-
-        <h3 class="text-black">De <span class="font-bold">31 a 60</span> días. <br>
-
-        <span class="text-danger" style="font-weight: bold;">{{ mor3160 | currency}}</span></h3>
-
-        <button *ngIf="mor3160 > 0" (click)="solicitarLista('-31', '-60')" class="btn btn-success">Solicitar</button>
-
-      </div>
-
-      <div class="col-lg-4 col-md-6 text-center p-b-20">
-
-        <i class="wi wi-moonrise lead text-danger"></i>
-
-        <h3 class="text-black">De <span class="font-bold">61 a 90</span> días. <br>
-          
-        <span class="text-danger" style="font-weight: bold;">{{ mor6190 | currency}}</span></h3>
-
-        <button *ngIf="mor6190 > 0" (click)="solicitarLista('-61', '-90')" class="btn btn-success">Solicitar</button>
-
-      </div>
-
-      <div class="col-lg-4 col-md-6 text-center p-b-20">
-
-        <i class="wi wi-fire lead text-danger"></i>
-
-        <h3 class="text-black">Mayor de <span class="font-bold">90</span> días. <br>
-
-        <span class="text-danger" style="font-weight: bold;">{{ mor91 | currency}}</span></h3>
-
-        <button *ngIf="mor91 > 0" (click)="solicitarLista('-91')" class="btn btn-success">Solicitar</button>
-
-      </div>
+        <hr>
 
     </div>
 
-  </div>
-  
+    <div class="card-body">
+
+        <h3 class="card-title text-center">Actual <em>vs</em> Anterior {{ fecha | date: 'yyyy' }}</h3>
+
+        <div class="row">
+
+            <div class="col b-r text-center">
+
+                <h1 class="font-light">{{ ventaMensual | currency }}</h1>
+
+                <h6>Mes Actual</h6>
+
+            </div>
+
+            <div class="col text-center">
+
+                <h1 class="font-light">{{ ventaMnesualAnterior | currency }}</h1>
+
+                <h6>Mes Anterior</h6>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <h3 class="card-title text-center">Morosidad</h3>
+
+        <div class="row">
+
+            <div class="col-lg-4 col-md-6 text-center p-b-20">
+
+                <i class="mdi mdi-alert-circle-outline lead text-warning"></i>
+
+                <h3 class="text-black">De <span class="font-bold">1 a 8</span> días. <br>
+
+                    <span class="text-black" style="font-weight: bold;">{{ mor18 | currency}}</span></h3>
+
+                <button *ngIf="mor18 > 0" (click)="solicitarLista('-1', '-8')" class="btn btn-success">Solicitar</button>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6 text-center p-b-20">
+
+                <i class="mdi mdi-alert-outline lead text-warning"></i>
+
+                <h3 class="text-black">De <span class="font-bold">9 a 16</span> días. <br>
+
+                    <span class="text-warning" style="font-weight: bold;">{{ mor916 | currency}}</span></h3>
+
+                <button *ngIf="mor916 > 0" (click)="solicitarLista('-9', '-16')" class="btn btn-success">Solicitar</button>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6 text-center p-b-20">
+
+                <i class="mdi mdi-alert-octagon lead text-danger"></i>
+
+                <h3 class="text-black">De <span class="font-bold">17 a 30</span> días. <br>
+
+                    <span class="text-danger" style="font-weight: bold;">{{ mor1730 | currency}}</span></h3>
+
+                <button *ngIf="mor1730 > 0" (click)="solicitarLista('-17', '-30')" class="btn btn-success">Solicitar</button>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6 text-center p-b-20">
+
+                <i class="mdi mdi-alert-octagram lead text-danger"></i>
+
+                <h3 class="text-black">De <span class="font-bold">31 a 60</span> días. <br>
+
+                    <span class="text-danger" style="font-weight: bold;">{{ mor3160 | currency}}</span></h3>
+
+                <button *ngIf="mor3160 > 0" (click)="solicitarLista('-31', '-60')" class="btn btn-success">Solicitar</button>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6 text-center p-b-20">
+
+                <i class="wi wi-moonrise lead text-danger"></i>
+
+                <h3 class="text-black">De <span class="font-bold">61 a 90</span> días. <br>
+
+                    <span class="text-danger" style="font-weight: bold;">{{ mor6190 | currency}}</span></h3>
+
+                <button *ngIf="mor6190 > 0" (click)="solicitarLista('-61', '-90')" class="btn btn-success">Solicitar</button>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6 text-center p-b-20">
+
+                <i class="wi wi-fire lead text-danger"></i>
+
+                <h3 class="text-black">Mayor de <span class="font-bold">90</span> días. <br>
+
+                    <span class="text-danger" style="font-weight: bold;">{{ mor91 | currency}}</span></h3>
+
+                <button *ngIf="mor91 > 0" (click)="solicitarLista('-91')" class="btn btn-success">Solicitar</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>

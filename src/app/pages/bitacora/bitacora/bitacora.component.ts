@@ -34,10 +34,13 @@ export class BitacoraComponent implements OnInit, OnDestroy {
   vencidoActual: any[] = [];
   comentarios: any[] = [];
   charla: any[] = [];
+  busqueda: any[] = [];
 
   observar: Subscription;
 
   charlaBol: boolean = false;
+  sinsaldo: boolean = false;
+  buscarBol: boolean = false;
 
   constructor(
     private _creditoService: CreditoService,
@@ -152,20 +155,30 @@ export class BitacoraComponent implements OnInit, OnDestroy {
     });
   }
 
-  openModal( data: any ) {
+  openModal( data: any, tipo: any = '' ) {
+    console.log(data);
     this.comentario = '';
+    this.charlaBol = false;
     this.nombre = data.nombre;
     this.numero = data.numero;
     this.clienteId = data.clienteId;
     this.rango = data.rango;
 
-    this._creditoService.clienteMorosoTotal(data.clienteId).subscribe( ( total: any ) => {
-      this.saldo = total[0].importe;
-    });
+    if (tipo !== '') {
+
+      this._creditoService.clienteMorosoTotal(data.clienteId).subscribe( ( total: any ) => {
+        this.saldo = total[0].importe;
+      });
+
+    } else {
+      this.saldo = data.saldo;
+    }
 
     this._creditoService.obtenerComentarios(data.clienteId).subscribe( ( resp: any ) => {
-      this.charla = resp.charla.reverse();
-      this.charlaBol = true;
+      if (resp.charla > 0) {
+        this.charla = resp.charla.reverse();
+        this.charlaBol = true;
+      }
     });
   }
 
@@ -244,6 +257,23 @@ export class BitacoraComponent implements OnInit, OnDestroy {
         this.comentario = '';
         forma.value.comentario = '';
       }
+    });
+  }
+
+  buscar(termino: any) {
+    this.sinsaldo = false;
+    this.buscarBol = true;
+    this.busqueda = [];
+    this._creditoService.morosidadRelacionCliente(termino).subscribe((cuentas: any) => {
+      if (cuentas.length > 0) {
+        this.busqueda = cuentas;
+        this.buscarBol = false;
+      } else {
+        this.buscarBol = false;
+        this.sinsaldo = true;
+      }
+    }, err => {
+      console.log(err);
     });
   }
 

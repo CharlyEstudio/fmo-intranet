@@ -55,7 +55,7 @@ export class ComentariosComponent implements OnInit {
   }
 
   regresar() {
-    this.ruta.navigate(['/lista-morosidad/', this.idFerrum, this.asesor, this.inicio, this.fin]);
+    this.ruta.navigate(['/boardComentarios/']);
   }
 
 }

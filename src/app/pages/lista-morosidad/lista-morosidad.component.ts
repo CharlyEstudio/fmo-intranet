@@ -49,10 +49,6 @@ export class ListaMorosidadComponent implements OnInit {
       });
   }
 
-  solicitarComentarios( datos: any ) {
-    this.ruta.navigate(['/comentarios/', datos.clienteid, datos.numero, datos.nombre, this.id, this.nombre, this.inicio, this.fin]);
-  }
-
   regresar() {
     this.ruta.navigate(['/dashboardAse']);
   }

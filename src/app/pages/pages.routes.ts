@@ -58,6 +58,7 @@ import { MapaComponent } from './mapa/mapa.component';
 import { UsuariosClientesComponent } from './usuarios-clientes/usuarios-clientes.component';
 import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.component';
 import { ComentariosComponent } from '../components/comentarios/comentarios.component';
+import { BoardComentariosComponent } from './board-comentarios/board-comentarios.component';
 
 const pageRoutes: Routes = [
     {
@@ -275,7 +276,7 @@ const pageRoutes: Routes = [
     // Comentarios
     {
         path: 'boardComentarios',
-        component: ZonaEspecialComponent,
+        component: BoardComentariosComponent,
         canActivate: [ AsesoresGuard, VerificaTokenGuard ],
         data:
                 {
@@ -284,7 +285,7 @@ const pageRoutes: Routes = [
                 }
     },
     {
-        path: 'comentarios/:clienteid/:numero/:nombre/:idFerrum/:asesor/:inicio/:fin',
+        path: 'comentarios/:clienteid/:numero/:nombre',
         component: ComentariosComponent,
         canActivate: [ AsesoresGuard, VerificaTokenGuard ],
         data:

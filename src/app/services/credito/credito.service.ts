@@ -89,6 +89,30 @@ export class CreditoService {
     return this.http.get( this.url );
   }
 
+  morosidadRelacionAsesor( perid: string ) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=25&perid=' + perid;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=25&perid=' + perid;
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=25&perid=' + perid;
+    }
+
+    return this.http.get( this.url );
+  }
+
+  morosidadRelacionCliente( numero: string, perid: any = '' ) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=26&numero=' + numero + '&perid=' + perid;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=26&numero=' + numero + '&perid=' + perid;
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=26&numero=' + numero + '&perid=' + perid;
+    }
+
+    return this.http.get( this.url );
+  }
+
   morosidadRelacionVirtual( tipo: string ) {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=22&tipo=' + tipo;

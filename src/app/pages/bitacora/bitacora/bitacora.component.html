@@ -28,6 +28,8 @@
 
                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#cambiar" role="tab">Cambiar fecha</a> </li>
 
+                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#buscar" role="tab">Buscar</a> </li>
+
                     <li class="nav-item"> <a class="nav-comentario">Comentarios del Día {{ fecha | date }}</a> </li>
 
                 </ul>
@@ -117,6 +119,72 @@
                             </div>
 
                             <hr>
+
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane" id="buscar" role="tabpanel">
+
+                        <div class="card-body">
+
+                            <form>
+
+                                <div class="form-group">
+
+                                    <input #input (keyup.enter)="buscar(input.value)" type="text" name="buscar" id="buscar" class="form-control" placeholder="Buscar Cliente">
+
+                                </div>
+
+                            </form>
+
+                            <div class="alert alert-info" *ngIf="buscarBol">
+
+                                Buscando cliente.
+
+                            </div>
+
+                            <div class="alert alert-danger" *ngIf="sinsaldo">
+
+                                No hay datos de este cliente.
+
+                            </div>
+
+                            <div class="profiletimeline">
+
+                                <div class="sl-item" *ngFor="let com of busqueda">
+
+                                    <div class="sl-left"> <img src="assets/images/logo-icon.png" alt="user" class="img-circle"> </div>
+
+                                    <div class="sl-right">
+
+                                        <div>
+
+                                            <a href="#" class="link">{{ com.nombre }}</a> <span class="sl-date">{{ com.numero }}</span>
+
+                                            <p class="sl-date">{{ com.asesor }}</p>
+
+                                            <p>{{ com.td }}</p>
+
+                                            <div class="like-comm">
+
+                                                <a href="#modalFolio" class="btn btn-outline-primary" data-dismiss="modal" data-toggle="modal" (click)="openModal(com, 'busqueda')">
+
+                                                    <i class="mdi mdi-comment-text-outline"></i> Ver Mensajes
+
+                                                </a>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <hr>
+
+                                </div>
+
+                            </div>
 
                         </div>
 

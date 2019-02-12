@@ -47,7 +47,7 @@ export class DashborarDirComponent implements OnInit, OnDestroy {
             }
             observer.next(resp);
           });
-      }, 1000);
+      }, 3600000);
     })
     .retry()
     .map((resp) => {

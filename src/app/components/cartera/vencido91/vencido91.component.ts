@@ -108,7 +108,7 @@ export class Vencido91Component implements OnInit, OnDestroy {
 
           });
 
-      }, 10000);
+      }, 1800000);
 
     })
     .retry()

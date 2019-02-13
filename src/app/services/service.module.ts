@@ -30,7 +30,8 @@ import {
   CreditoService,
   GuiasService,
   GpsService,
-  ClienteService
+  ClienteService,
+  GuiasEdoCtaGuard
   // NotificationService
 } from "./services.index";
 
@@ -50,6 +51,7 @@ import {
     DireccionGuard,
     AuditoriaGuard,
     MesaGuard,
+    GuiasEdoCtaGuard,
     // Servicios
     SettingsService,
     SidebarService,

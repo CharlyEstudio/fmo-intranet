@@ -1,0 +1,69 @@
+<div class="ver-mapa">
+
+    <!-- <agm-map [latitude]="lat" [longitude]="lng" [zoom]="12">
+
+        <agm-marker *ngFor="let g of coordenadas" [latitude]="g.origin.lat" [longitude]="g.origin.lng" (markerClick)="clicMarker(g)">
+
+            <agm-info-window>
+
+                <img [src]="imagen | imagen" class="img-flui" width="50%">
+
+                <h5>Factura: {{ factura }}</h5>
+
+                <h6 class="text-uppercase"># {{ numero }} - {{ nombre }}</h6>
+
+                <h6 class="text-uppercase">{{ domicilio }}</h6>
+
+                <h6 class="text-uppercase">{{ poblacion }}</h6>
+
+                <h6 class="text-uppercase">Realizo: {{ realizo }}</h6>
+
+                <h6 class="text-uppercase">{{ vendedor }}</h6>
+
+            </agm-info-window>
+
+        </agm-marker>
+
+        <agm-direction [origin]="origin" [destination]="destination"></agm-direction>
+
+    </agm-map> -->
+
+</div>
+
+<div class="row">
+
+    <div class="col-lg-3 col-md-6 col-sm-12" *ngFor="let g of coordenadas">
+
+        <div class="card bg-light-inverse">
+
+            <div class="card-header">
+
+                <h6 class="card-title text-uppercase"># {{ g.datos.cliente }} - {{ g.datos.nombre }}</h6>
+
+            </div>
+
+            <div class="card-body">
+
+                <h5>Factura: {{ g.factura }}</h5>
+
+                <h6 class="text-uppercase">{{ g.datos.domicilio }}</h6>
+
+                <h6 class="text-uppercase">{{ g.datos.poblacion }}</h6>
+
+                <h6 class="text-uppercase">{{ g.datos.vendedor }}</h6>
+
+                <h6 class="text-uppercase">Realizo: {{ g.datos.realizo }}</h6>
+
+            </div>
+
+            <div class="card-footer">
+
+                <button type="button" class="btn btn-success btn-block" (click)="irUbicacion(g)">IR</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

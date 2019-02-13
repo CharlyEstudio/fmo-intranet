@@ -9,7 +9,8 @@ import {
     ClienteGuard,
     DireccionGuard,
     AuditoriaGuard,
-    MesaGuard
+    MesaGuard,
+    GuiasEdoCtaGuard
 } from '../services/services.index';
 
 // Components
@@ -59,6 +60,8 @@ import { UsuariosClientesComponent } from './usuarios-clientes/usuarios-clientes
 import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.component';
 import { ComentariosComponent } from '../components/comentarios/comentarios.component';
 import { BoardComentariosComponent } from './board-comentarios/board-comentarios.component';
+import { RutasGuiasComponent } from './rutas-guias/rutas-guias.component';
+import { VerMapaComponent } from './ver-mapa/ver-mapa.component';
 
 const pageRoutes: Routes = [
     {
@@ -192,7 +195,7 @@ const pageRoutes: Routes = [
     {
         path: 'edo-cta',
         component: EdoCtaComponent,
-        canActivate: [ AsesoresGuard, VerificaTokenGuard ],
+        canActivate: [ GuiasEdoCtaGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Estado de Cuenta del Cliente',
@@ -513,6 +516,26 @@ const pageRoutes: Routes = [
         path: 'dashboardGuias',
         component: DashboardLogisticaComponent,
         canActivate: [ MesaGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Generación de Guías',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'rutasGuias',
+        component: RutasGuiasComponent,
+        canActivate: [ GuiasEdoCtaGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Generación de Guías',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'verMapa/:guia',
+        component: VerMapaComponent,
+        canActivate: [ GuiasEdoCtaGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Generación de Guías',

@@ -83,10 +83,9 @@ export class GuiasService {
 
     this.url += '?token=' + this.token;
 
-    return this.http.get( this.url )
-      .map( (resp: any) => {
-        return resp;
-      });
+    console.log(this.url);
+
+    return this.http.get( this.url );
   }
 
   procesarGuia(guia: GuiasPartidas) {
@@ -247,6 +246,20 @@ export class GuiasService {
       .map( (resp: any) => {
         return resp;
       });
+  }
+
+  coordenadasCliente(numero: any) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/coordenadas/numero/' + numero;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/coordenadas/numero/' + numero;
+    } else {
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/coordenadas/numero/' + numero;
+    }
+
+    this.url += '?token=' + this.token;
+
+    return this.http.get( this.url );
   }
 
 }

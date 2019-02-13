@@ -14,6 +14,7 @@ import { NgForm } from '@angular/forms';
 export class MostrarInfoBitacoraComponent implements OnInit {
 
   id: any;
+  rol: any;
 
   morosidad: any[] = [];
   charla: any[] = [];
@@ -42,6 +43,7 @@ export class MostrarInfoBitacoraComponent implements OnInit {
   ) {
     // this._pushNotificationService.requestPermission();
     this.id = this._usuariosServices.usuario._id;
+    this.rol = this._usuariosServices.usuario.rol;
     this.tipo = this.get.snapshot.paramMap.get("data");
     this.obtener(this.tipo);
   }

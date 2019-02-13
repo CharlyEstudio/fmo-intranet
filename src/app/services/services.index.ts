@@ -8,6 +8,7 @@ export { ClienteGuard } from "./guards/cliente.guard";
 export { DireccionGuard } from "./guards/direccion.guard";
 export { AuditoriaGuard } from "./guards/auditoria.guard";
 export { MesaGuard } from "./guards/mesa.guard";
+export { GuiasEdoCtaGuard } from './guards/guias-edocta.guard';
 
 // Subir Archivo o Imagen
 export { SubirArchivoService } from "./subirArchivo/subir-archivo.service";

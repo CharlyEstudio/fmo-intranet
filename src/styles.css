@@ -280,6 +280,11 @@ agm-map {
     max-height: 650px;
 }
 
+.ver-mapa agm-map {
+    height: 72vh;
+    max-height: 100%;
+}
+
 
 /**
  * ESCRITORIO GRANDE

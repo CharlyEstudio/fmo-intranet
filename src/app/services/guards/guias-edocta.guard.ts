@@ -4,21 +4,21 @@ import { CanActivate } from '@angular/router';
 import { UsuarioService } from '../usuario/usuario.service';
 
 @Injectable()
-export class MesaGuard implements CanActivate {
+export class GuiasEdoCtaGuard implements CanActivate {
   constructor(
     private _usuarioService: UsuarioService
   ) {}
 
   canActivate() {
-    if ( this._usuarioService.usuario.rol === 'ADMIN_ROLE'
+    if (this._usuarioService.usuario.rol === 'ASE_ROLE'
+    || this._usuarioService.usuario.rol === 'ADMIN_ROLE'
     || this._usuarioService.usuario.rol === 'DIR_ROLE'
     || this._usuarioService.usuario.rol === 'GER_ROLE'
     || this._usuarioService.usuario.rol === 'SUP_ROLE'
-    || this._usuarioService.usuario.rol === 'OF_ROLE'
-    || this._usuarioService.usuario.rol === 'MESA_ROLE' ) {
+    || this._usuarioService.usuario.rol === 'OF_ROLE' ) {
       return true;
     } else {
-      console.log('Bolqueado por MESA GUARD');
+      console.log('Bolqueado por GUIAS GUARD');
       swal('Sin acceso' , 'No tiene autorizado ingresar en esta sección.', 'error');
       return false;
     }

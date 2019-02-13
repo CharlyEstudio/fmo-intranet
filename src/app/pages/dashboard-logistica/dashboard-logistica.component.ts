@@ -180,30 +180,6 @@ export class DashboardLogisticaComponent implements OnInit {
         if (i < 3) {
           this.ultimasGuias.push(guias.guias[i]);
         }
-
-        // Aquí para obtener los especiales
-        this._guiasServices.buscarPartidasFolio(guias.guias[i].folio).subscribe( ( partidas: any ) => {
-          if (partidas.facturas.length > 0) {
-            for (let j = 0; j < partidas.facturas.length; j++) {
-              this._guiasServices.buscarEspeciales(partidas.facturas[j].factura).subscribe( ( especiales: any ) => {
-                if (especiales.length > 0) {
-                  for (let k = 0; k < especiales.length; k++) {
-                    let esEspecial = (pedido) => {
-                      return pedido.clvprov === especiales[k].clvprov;
-                    }
-
-                    if (this.especialesDia.find(esEspecial)) {
-                      this.especialesDia.find(esEspecial).desentregado += especiales[k].desentregado;
-                    } else {
-                      this.especialesDia.push(especiales[k]);
-                    }
-
-                  }
-                }
-              });
-            }
-          }
-        });
       }
     });
   }
@@ -249,25 +225,79 @@ export class DashboardLogisticaComponent implements OnInit {
       return;
     }
 
-    // this._guiasServices.buscarFolioGuia(folio).subscribe((db: any) => {
-    //   if (db.ok) {
-    //     swal('Folio Registrado', 'Este folio ' + forma.value.folio + ' ya esta registrado.', 'error');
-    //   } else {
-    //     let esFolio = (factura) => {
-    //       return factura.folio === folio;
-    //     };
+    this._guiasServices.buscarFolioGuia(forma.value.folio).subscribe((obtener: any) => {
+      if (obtener.ok) {
+        if (obtener.folios.length > 0) {
+          swal('Folio Registrado', 'Este folio ' + forma.value.folio + ' ya esta registrado.', 'error');
+        } else {
+          let esFolio = (fac: any) => {
+            return fac.folio === forma.value.folio;
+          }
 
-    //     if (this.folios.find(esFolio)) {
-    //       swal('Folio Repetido', 'Este folio ' + forma.value.folio + ' ya esta en la guía.', 'error');
-    //     } else {
-    //       this._guiasServices.obtenerFolio(folio).subscribe((factura: any) => {
-    //         console.log(factura);
-    //       });
-    //     }
-    //   }
-    // });
+          if (this.folios.find(esFolio) !== undefined) {
+            swal('Folio Repetido', 'Este folio ' + forma.value.folio + ' ya esta en la guía.', 'error');
+            this.folio = '';
+          } else {
 
-    this._guiasServices.buscarFolioGuia(forma.value.folio).subscribe( ( obtener: any ) => {
+            this._guiasServices.obtenerFolio(forma.value.folio).subscribe( ( partidas: any ) => {
+              if (partidas.status) {
+                this._guiasServices.buscarEspeciales(forma.value.folio).subscribe( ( especiales: any ) => {
+                  if (especiales.status) {
+                    for (let i = 0; i < especiales.respuesta.length; i++) {
+                      let esEspecial = (pedido) => {
+                        return pedido.clvprov === especiales.respuesta[i].clvprov;
+                      }
+
+                      if (this.especiales.find(esEspecial)) {
+                        this.especiales.find(esEspecial).desentregado += especiales.respuesta[i].desentregado;
+                      } else {
+                        this.especiales.push(especiales.respuesta[i]);
+                      }
+
+                    }
+                    localStorage.setItem('especiales', JSON.stringify(this.especiales));
+                  }
+                });
+
+                for (let i = 0; i < partidas.respuesta.length; i++) {
+                  let esCliente = (cliente) => {
+                    return cliente.numero === partidas.respuesta[i].numero;
+                  }
+
+                  if (!this.folios.find(esCliente)) {
+                    if (this.clientes === 0) {
+                      this.clientes = 1;
+                    } else {
+                      this.clientes += 1;
+                    }
+                  }
+                  this.folios.push(partidas.respuesta[i]);
+                }
+
+                localStorage.setItem('guia', JSON.stringify(this.folios));
+
+                this.obtener = true;
+                this.generar = true;
+                this.sinDatos = false;
+
+                this.folio = '';
+              } else {
+                this.obtener = false;
+                this.generar = false;
+                this.sinDatos = true;
+                this.guias = false;
+                swal('Ninguna Factura', 'Este folio ' + forma.value.folio + ' no tiene niguna factura relacionada.', 'error');
+              }
+
+            });
+          }
+        }
+      } else {
+        swal('Error en la Búsqueda', 'Se genero un error, favor de contactar al administrador.', 'error');
+      }
+    });
+
+    /*this._guiasServices.buscarFolioGuia(forma.value.folio).subscribe( ( obtener: any ) => {
       if (obtener.ok) {
         swal('Folio Registrado', 'Este folio ' + forma.value.folio + ' ya esta registrado.', 'error');
         this.folio = '';
@@ -334,7 +364,7 @@ export class DashboardLogisticaComponent implements OnInit {
           });
         }
       }
-    });
+    });*/
 
   }
 

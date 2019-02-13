@@ -96,6 +96,8 @@ import { MapaComponent } from './mapa/mapa.component';
 import { UsuariosClientesComponent } from './usuarios-clientes/usuarios-clientes.component';
 import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.component';
 import { BoardComentariosComponent } from './board-comentarios/board-comentarios.component';
+import { RutasGuiasComponent } from './rutas-guias/rutas-guias.component';
+import { VerMapaComponent } from './ver-mapa/ver-mapa.component';
 
 @NgModule({
     declarations: [
@@ -170,7 +172,9 @@ import { BoardComentariosComponent } from './board-comentarios/board-comentarios
         MapaComponent,
         UsuariosClientesComponent,
         DashboardAdminComponent,
-        BoardComentariosComponent
+        BoardComentariosComponent,
+        RutasGuiasComponent,
+        VerMapaComponent
     ],
     exports: [
         DashborarDirComponent,

@@ -28,6 +28,8 @@ export class AppComponent implements OnInit {
         if (
           localStorage.getItem('rol') !== 'ASE_ROLE'
           && localStorage.getItem('rol') !== 'USER_ROLE'
+          && localStorage.getItem('rol') !== 'OF_ROLE'
+          && localStorage.getItem('rol') !== 'MESA_ROLE'
           && localStorage.getItem('rol') !== 'CLI_ROLE') {
           swal(
             'Mensaje de ' + escuchando.remitente,

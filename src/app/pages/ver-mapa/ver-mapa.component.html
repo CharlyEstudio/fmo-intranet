@@ -1,6 +1,6 @@
 <div class="ver-mapa">
 
-    <!-- <agm-map [latitude]="lat" [longitude]="lng" [zoom]="12">
+    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="12">
 
         <agm-marker *ngFor="let g of coordenadas" [latitude]="g.origin.lat" [longitude]="g.origin.lng" (markerClick)="clicMarker(g)">
 
@@ -24,45 +24,31 @@
 
         </agm-marker>
 
-        <agm-direction [origin]="origin" [destination]="destination"></agm-direction>
+        <agm-direction [origin]="origin" [destination]="destination" [visible]="verDestino"></agm-direction>
 
-    </agm-map> -->
+    </agm-map>
 
 </div>
 
-<div class="row">
+<div class="row pt-3">
 
-    <div class="col-lg-3 col-md-6 col-sm-12" *ngFor="let g of coordenadas">
+    <div class="col-lg-12 col-md-12 col-sm-12">
 
-        <div class="card bg-light-inverse">
+        <form>
 
-            <div class="card-header">
+            <div class="form-group">
 
-                <h6 class="card-title text-uppercase"># {{ g.datos.cliente }} - {{ g.datos.nombre }}</h6>
+                <select name="cliente" [(ngModel)]="selec" id="cliente" class="form-control" (change)="obtener()">
+          
+                  <option value="0">Ver Todo</option>
 
-            </div>
+                  <option *ngFor="let g of coordenadasCopy" [ngValue]="g">{{g.datos.nombre}}</option>
 
-            <div class="card-body">
-
-                <h5>Factura: {{ g.factura }}</h5>
-
-                <h6 class="text-uppercase">{{ g.datos.domicilio }}</h6>
-
-                <h6 class="text-uppercase">{{ g.datos.poblacion }}</h6>
-
-                <h6 class="text-uppercase">{{ g.datos.vendedor }}</h6>
-
-                <h6 class="text-uppercase">Realizo: {{ g.datos.realizo }}</h6>
+              </select>
 
             </div>
 
-            <div class="card-footer">
-
-                <button type="button" class="btn btn-success btn-block" (click)="irUbicacion(g)">IR</button>
-
-            </div>
-
-        </div>
+        </form>
 
     </div>
 

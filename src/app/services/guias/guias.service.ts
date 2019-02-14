@@ -83,8 +83,6 @@ export class GuiasService {
 
     this.url += '?token=' + this.token;
 
-    console.log(this.url);
-
     return this.http.get( this.url );
   }
 
@@ -160,36 +158,41 @@ export class GuiasService {
   }
 
   enviarPDFguia(guiaPar: any, guia: any, especiales: any) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL +
-                          '/api/guias.php?opcion=3&guiaPar=' +
-                          JSON.stringify(guiaPar) +
-                          '&guia=' + JSON.stringify(guia) +
-                          '&especiales=' + JSON.stringify(especiales);
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/guias.php?opcion=3&guiaPar=' +
-                JSON.stringify(guiaPar) +
-                '&guia=' + JSON.stringify(guia) +
-                '&especiales=' + JSON.stringify(especiales);
-    } else {
-      this.url = URL_SERVICIO_GENERAL + ':' +
-                  PUERTO_SERVER + '/api/guias.php?opcion=3&guiaPar=' +
-                  JSON.stringify(guiaPar) +
-                  '&guia=' + JSON.stringify(guia) +
-                  '&especiales=' + JSON.stringify(especiales);
-    }
-
     // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
     //   /*LOCAL*/this.url = URL_LOCAL +
-    //                       '/api/guias.php?opcion=3';
+    //                       '/api/guias.php?opcion=3&guiaPar=' +
+    //                       JSON.stringify(guiaPar) +
+    //                       '&guia=' + JSON.stringify(guia) +
+    //                       '&especiales=' + JSON.stringify(especiales);
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/guias.php?opcion=3';
+    //   this.url = URL_PRUEBAS + '/api/guias.php?opcion=3&guiaPar=' +
+    //             JSON.stringify(guiaPar) +
+    //             '&guia=' + JSON.stringify(guia) +
+    //             '&especiales=' + JSON.stringify(especiales);
     // } else {
     //   this.url = URL_SERVICIO_GENERAL + ':' +
-    //               PUERTO_SERVER + '/api/guias.php?opcion=3';
+    //               PUERTO_SERVER + '/api/guias.php?opcion=3&guiaPar=' +
+    //               JSON.stringify(guiaPar) +
+    //               '&guia=' + JSON.stringify(guia) +
+    //               '&especiales=' + JSON.stringify(especiales);
     // }
 
-    return this.http.get(this.url);
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL +
+                          '/api/guias.php?opcion=3';
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/guias.php?opcion=3';
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' +
+                  PUERTO_SERVER + '/api/guias.php?opcion=3';
+    }
+
+    // return this.http.get(this.url);
+    return this.http.post(
+      this.url,
+      { guiaPar: guiaPar, guia: guia, especiales: especiales },
+      { headers: { 'content-Type': 'application/x-www-form-urlencoded' } }
+    );
   }
 
   reasignarFolio(folio: any) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 // Servicios
@@ -9,9 +9,13 @@ import { GuiasService } from '../../services/services.index';
   templateUrl: './ver-mapa.component.html',
   styles: []
 })
-export class VerMapaComponent implements OnInit {
+export class VerMapaComponent implements OnInit, OnDestroy {
 
+  guia: any;
+  selecciona: any[] = [];
+  selec: any = '0';
   coordenadas: any[] = [];
+  coordenadasCopy: any[] = [];
   lat: number = 0;
   lng: number = 0;
 
@@ -28,53 +32,22 @@ export class VerMapaComponent implements OnInit {
   imagen: string = '';
   factura: number = 0;
 
+  // Ver o no Mapa
+  verRuta: boolean = true;
+  verDestino: boolean = false;
+
   constructor(
     private get: ActivatedRoute,
     private _guiaService: GuiasService
   ) {
-    const guia = JSON.parse(this.get.snapshot.paramMap.get("guia"));
-    navigator.geolocation.getCurrentPosition(() => {});
-    this._guiaService.buscarPartidasFolio(guia.folio).subscribe((facturas: any) => {
-      if (facturas.ok) {
-        const cont = facturas.facturas.length;
-        for (let i = 0; i < cont; i++) {
-          this._guiaService.coordenadasCliente(facturas.facturas[i].cliente).subscribe((coords: any) => {
-              this.lat = coords.coords[0].lat;
-              this.lng = coords.coords[0].lng;
-          });
-          break;
-        }
-        for (let i = 0; i < cont; i++) {
-          this._guiaService.coordenadasCliente(facturas.facturas[i].cliente).subscribe((coords: any) => {
-            if (coords.ok) {
-              this.lat = coords.coords[0].lat;
-              this.lng = coords.coords[0].lng;
-              const enviar = {
-                factura: facturas.facturas[i].factura,
-                origin: {
-                  lat: coords.coords[0].lat,
-                  lng: coords.coords[0].lng
-                },
-                datos: {
-                  cliente: facturas.facturas[i].cliente,
-                  nombre: facturas.facturas[i].nombre,
-                  domicilio: facturas.facturas[i].domicilio,
-                  poblacion: facturas.facturas[i].poblacion,
-                  vendedor: facturas.facturas[i].vendedor,
-                  realizo: facturas.facturas[i].usuario.nombre,
-                  imagen: 'cliente.jpg'
-                }
-              }
-              this.coordenadas.push(enviar);
-            }
-          });
-        }
-      }
-    });
+    this.guia = JSON.parse(this.get.snapshot.paramMap.get("guia"));
+    this.mostrarRuta();
   }
 
   ngOnInit() {
   }
+
+  ngOnDestroy() {}
 
   clicMarker(origin: any) {
     this.numero  = origin.datos.cliente;
@@ -87,13 +60,68 @@ export class VerMapaComponent implements OnInit {
     this.factura  = origin.factura;
   }
 
-  irUbicacion(info: any) {
-    console.log(info);
-    navigator.geolocation.getCurrentPosition((ubicacion: any) => {
-      this.origin = { lat: ubicacion.coords.latitude, lng: ubicacion.coords.longitude};
-      this.destination = info.origin;
-      console.log(this.origin, this.destination);
+  mostrarRuta() {
+    console.log('Entra');
+    this.verRuta = true;
+    this.verDestino = false;
+    this.coordenadasCopy = [];
+    this._guiaService.buscarPartidasFolio(this.guia.folio).subscribe((facturas: any) => {
+      if (facturas.ok) {
+        const cont = facturas.facturas.length;
+        for (let i = 0; i < cont; i++) {
+          this._guiaService.coordenadasCliente(facturas.facturas[i].cliente).subscribe((coords: any) => {
+              this.lat = coords.coords[0].lat;
+              this.lng = coords.coords[0].lng;
+          });
+          break;
+        }
+        for (let i = 0; i < cont; i++) {
+          this._guiaService.coordenadasCliente(facturas.facturas[i].cliente).subscribe((coords: any) => {
+            if (coords.ok) {
+              let esCliente = (cli: any) => {
+                return cli.datos.cliente === facturas.facturas[i].cliente;
+              }
+
+              if (this.coordenadas.find(esCliente) === undefined) {
+                const enviar = {
+                  factura: facturas.facturas[i].factura,
+                  origin: {
+                    lat: coords.coords[0].lat,
+                    lng: coords.coords[0].lng
+                  },
+                  datos: {
+                    cliente: facturas.facturas[i].cliente,
+                    nombre: facturas.facturas[i].nombre,
+                    domicilio: facturas.facturas[i].domicilio,
+                    poblacion: facturas.facturas[i].poblacion,
+                    vendedor: facturas.facturas[i].vendedor,
+                    realizo: facturas.facturas[i].usuario.nombre,
+                    imagen: 'cliente.jpg'
+                  }
+                }
+                this.coordenadas.push(enviar);
+                this.coordenadasCopy.push(enviar);
+              }
+            }
+          });
+        }
+      }
     });
+  }
+
+  obtener() {
+    if (this.selec !== '0') {
+      this.coordenadas = [];
+      this.verRuta = false;
+      this.verDestino = true;
+      navigator.geolocation.getCurrentPosition((ubicacion: any) => {
+        this.origin = { lat: parseFloat(ubicacion.coords.latitude), lng: parseFloat(ubicacion.coords.longitude)};
+        this.destination = this.selec.origin;
+        console.log(this.destination);
+      });
+    } else {
+      this.mostrarRuta();
+    }
   }
 
 }

@@ -573,6 +573,12 @@ const pageRoutes: Routes = [
     },
     {
         path: '',
+        canActivate: [ MesaGuard, VerificaTokenGuard ],
+        redirectTo: '/dashboardGuias',
+        pathMatch: 'full'
+    },
+    {
+        path: '',
         canActivate: [ ClienteGuard, VerificaTokenGuard ],
         redirectTo: '/dashboard',
         pathMatch: 'full'

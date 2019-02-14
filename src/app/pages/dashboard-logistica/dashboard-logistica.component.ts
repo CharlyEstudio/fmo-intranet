@@ -255,6 +255,7 @@ export class DashboardLogisticaComponent implements OnInit {
                       }
 
                     }
+                    this.especiales.reverse();
                     localStorage.setItem('especiales', JSON.stringify(this.especiales));
                   }
                 });
@@ -273,6 +274,8 @@ export class DashboardLogisticaComponent implements OnInit {
                   }
                   this.folios.push(partidas.respuesta[i]);
                 }
+
+                this.folios.reverse();
 
                 localStorage.setItem('guia', JSON.stringify(this.folios));
 
@@ -563,7 +566,7 @@ export class DashboardLogisticaComponent implements OnInit {
 
                   this.importe += this.folios[i].total;
 
-                  this._guiasServices.procesarGuia(ped).subscribe( ( procesado: any ) => {});
+                  // this._guiasServices.procesarGuia(ped).subscribe( ( procesado: any ) => {});
 
                 }
 
@@ -581,10 +584,10 @@ export class DashboardLogisticaComponent implements OnInit {
                   clientes: this.clientes
                 };
 
-                this._guiasServices.guardarGuia(this.guiaGuardar).subscribe( ( guardado: any ) => {});
+                // this._guiasServices.guardarGuia(this.guiaGuardar).subscribe( ( guardado: any ) => {});
                 this._guiasServices.enviarPDFguia(
                   this.pedidos, this.guiaGuardar, this.especiales
-                ).subscribe();
+                ).subscribe((resp: any) => {}, err => {});
 
                 localStorage.removeItem('guia');
                 localStorage.removeItem('especiales');

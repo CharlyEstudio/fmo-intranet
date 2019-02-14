@@ -29,6 +29,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 // Mapa
 import { AgmCoreModule } from '@agm/core';
+import { AgmDirectionModule } from 'agm-direction'
 
 // General
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
@@ -191,7 +192,8 @@ import { VerMapaComponent } from './ver-mapa/ver-mapa.component';
         PdfViewerModule,
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyDLxUFj_KCshQNqoUG2i7WZFbkR0nigdhs'
-        })
+        }),
+        AgmDirectionModule
     ]
 })
 

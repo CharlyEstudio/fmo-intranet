@@ -248,7 +248,10 @@ export class DashboardLogisticaComponent implements OnInit {
         return;
       }
 
-      this.asignar(obtener.folios, 'agregando');
+      if (obtener.folios) {
+        this.asignar(obtener.folios, 'agregando');
+      }
+
       let esFolio = (fac: any) => {
         return fac.folio === forma.value.folio;
       }

@@ -103,6 +103,13 @@
     display: block;
 }
 
+.centrar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 
 /*
 Template Name: Admin pro Admin

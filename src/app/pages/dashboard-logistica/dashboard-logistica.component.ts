@@ -45,6 +45,9 @@ export class DashboardLogisticaComponent implements OnInit {
   tuberias: boolean = false;
   sinDatos: boolean = false;
   reasignadoBol: boolean = false;
+  porFecha: boolean = true;
+  porFolio: boolean = false;
+  facturaEncontrada: boolean = false;
 
   importe: number = 0;
   total: number = 0;
@@ -59,10 +62,18 @@ export class DashboardLogisticaComponent implements OnInit {
   impo: number;
   veri: string;
   ruta: any;
+  cli: any;
 
   /* Modal VER */
   facturas: any[] = [];
   totalModal: number = 0;
+
+  /* FACTURA ENCONTRADA */
+  noFac: number = 0;
+  foliosBusq: any[] = [];
+  folioPrinBusq: any[] = [];
+  generoGuia: any;
+  imgGeneroGuia: any;
 
   constructor(
     private _guiasServices: GuiasService,
@@ -188,6 +199,11 @@ export class DashboardLogisticaComponent implements OnInit {
   checarLista(forma: NgForm) {
     this.total = 0;
 
+    if (forma === undefined) {
+      swal('Sin Datos', 'No se ingreso ningún dato de fecha.', 'warning');
+      return;
+    }
+
     if (forma.value.inicial === undefined) {
       swal('Sin Fecha Inicial', 'No se ingreso fecha inicial para la busqueda.', 'warning');
       return;
@@ -219,6 +235,7 @@ export class DashboardLogisticaComponent implements OnInit {
 
   obtenerFolio(forma: NgForm) {
     this.generar = true;
+    this.sinDatos = false;
     const folio = forma.value.folio;
     if (forma.value.folio === 0) {
       swal('Sin Folio', 'No se ingreso folio para agregar a la guía', 'warning');
@@ -226,148 +243,76 @@ export class DashboardLogisticaComponent implements OnInit {
     }
 
     this._guiasServices.buscarFolioGuia(forma.value.folio).subscribe((obtener: any) => {
-      if (obtener.ok) {
-        if (obtener.folios.length > 0) {
-          swal('Folio Registrado', 'Este folio ' + forma.value.folio + ' ya esta registrado.', 'error');
-        } else {
-          let esFolio = (fac: any) => {
-            return fac.folio === forma.value.folio;
-          }
-
-          if (this.folios.find(esFolio) !== undefined) {
-            swal('Folio Repetido', 'Este folio ' + forma.value.folio + ' ya esta en la guía.', 'error');
-            this.folio = '';
-          } else {
-
-            this._guiasServices.obtenerFolio(forma.value.folio).subscribe( ( partidas: any ) => {
-              if (partidas.status) {
-                this._guiasServices.buscarEspeciales(forma.value.folio).subscribe( ( especiales: any ) => {
-                  if (especiales.status) {
-                    for (let i = 0; i < especiales.respuesta.length; i++) {
-                      let esEspecial = (pedido) => {
-                        return pedido.clvprov === especiales.respuesta[i].clvprov;
-                      }
-
-                      if (this.especiales.find(esEspecial)) {
-                        this.especiales.find(esEspecial).desentregado += especiales.respuesta[i].desentregado;
-                      } else {
-                        this.especiales.push(especiales.respuesta[i]);
-                      }
-
-                    }
-                    this.especiales.reverse();
-                    localStorage.setItem('especiales', JSON.stringify(this.especiales));
-                  }
-                });
-
-                for (let i = 0; i < partidas.respuesta.length; i++) {
-                  let esCliente = (cliente) => {
-                    return cliente.numero === partidas.respuesta[i].numero;
-                  }
-
-                  if (!this.folios.find(esCliente)) {
-                    if (this.clientes === 0) {
-                      this.clientes = 1;
-                    } else {
-                      this.clientes += 1;
-                    }
-                  }
-                  this.folios.push(partidas.respuesta[i]);
-                }
-
-                this.folios.reverse();
-
-                localStorage.setItem('guia', JSON.stringify(this.folios));
-
-                this.obtener = true;
-                this.generar = true;
-                this.sinDatos = false;
-
-                this.folio = '';
-              } else {
-                this.obtener = false;
-                this.generar = false;
-                this.sinDatos = true;
-                this.guias = false;
-                swal('Ninguna Factura', 'Este folio ' + forma.value.folio + ' no tiene niguna factura relacionada.', 'error');
-              }
-
-            });
-          }
-        }
-      } else {
-        swal('Error en la Búsqueda', 'Se genero un error, favor de contactar al administrador.', 'error');
-      }
-    });
-
-    /*this._guiasServices.buscarFolioGuia(forma.value.folio).subscribe( ( obtener: any ) => {
-      if (obtener.ok) {
+      if (!obtener.asignar) {
         swal('Folio Registrado', 'Este folio ' + forma.value.folio + ' ya esta registrado.', 'error');
+        return;
+      }
+
+      this.asignar(obtener.folios, 'agregando');
+      let esFolio = (fac: any) => {
+        return fac.folio === forma.value.folio;
+      }
+
+      if (this.folios.find(esFolio) !== undefined) {
+        swal('Folio Repetido', 'Este folio ' + forma.value.folio + ' ya esta en la guía.', 'error');
         this.folio = '';
       } else {
-        let esFolio = (fac: any) => {
-          return fac.folio === forma.value.folio;
-        }
 
-        if (this.folios.find(esFolio) !== undefined) {
-          swal('Folio Repetido', 'Este folio ' + forma.value.folio + ' ya esta en la guía.', 'error');
-          this.folio = '';
-        } else {
-
-          this._guiasServices.obtenerFolio(forma.value.folio).subscribe( ( partidas: any ) => {
-            if (partidas.status) {
-              this._guiasServices.buscarEspeciales(forma.value.folio).subscribe( ( especiales: any ) => {
-                if (especiales.status) {
-                  for (let i = 0; i < especiales.respuesta.length; i++) {
-                    let esEspecial = (pedido) => {
-                      return pedido.clvprov === especiales.respuesta[i].clvprov;
-                    }
-
-                    if (this.especiales.find(esEspecial)) {
-                      this.especiales.find(esEspecial).desentregado += especiales.respuesta[i].desentregado;
-                    } else {
-                      this.especiales.push(especiales.respuesta[i]);
-                    }
-
+        this._guiasServices.obtenerFolio(forma.value.folio).subscribe( ( partidas: any ) => {
+          if (partidas.status) {
+            this._guiasServices.buscarEspeciales(forma.value.folio).subscribe( ( especiales: any ) => {
+              if (especiales.status) {
+                for (let i = 0; i < especiales.respuesta.length; i++) {
+                  let esEspecial = (pedido) => {
+                    return pedido.clvprov === especiales.respuesta[i].clvprov;
                   }
-                  localStorage.setItem('especiales', JSON.stringify(this.especiales));
-                }
-              });
 
-              for (let i = 0; i < partidas.respuesta.length; i++) {
-                let esCliente = (cliente) => {
-                  return cliente.numero === partidas.respuesta[i].numero;
-                }
-
-                if (!this.folios.find(esCliente)) {
-                  if (this.clientes === 0) {
-                    this.clientes = 1;
+                  if (this.especiales.find(esEspecial)) {
+                    this.especiales.find(esEspecial).desentregado += especiales.respuesta[i].desentregado;
                   } else {
-                    this.clientes += 1;
+                    this.especiales.push(especiales.respuesta[i]);
                   }
+
                 }
-                this.folios.push(partidas.respuesta[i]);
+                this.especiales.reverse();
+                localStorage.setItem('especiales', JSON.stringify(this.especiales));
+              }
+            });
+
+            for (let i = 0; i < partidas.respuesta.length; i++) {
+              let esCliente = (cliente) => {
+                return cliente.numero === partidas.respuesta[i].numero;
               }
 
-              localStorage.setItem('guia', JSON.stringify(this.folios));
-
-              this.obtener = true;
-              this.generar = true;
-              this.sinDatos = false;
-
-              this.folio = '';
-            } else {
-              this.obtener = false;
-              this.generar = false;
-              this.sinDatos = true;
-              this.guias = false;
-              swal('Ninguna Factura', 'Este folio ' + forma.value.folio + ' no tiene niguna factura relacionada.', 'error');
+              if (!this.folios.find(esCliente)) {
+                if (this.clientes === 0) {
+                  this.clientes = 1;
+                } else {
+                  this.clientes += 1;
+                }
+              }
+              this.folios.push(partidas.respuesta[i]);
             }
 
-          });
-        }
+            this.folios.reverse();
+
+            localStorage.setItem('guia', JSON.stringify(this.folios));
+
+            this.obtener = true;
+            this.generar = true;
+            this.sinDatos = false;
+
+            this.folio = '';
+          } else {
+            this.sinDatos = true;
+            swal('Ninguna Factura', 'Este folio ' + forma.value.folio + ' no tiene niguna factura relacionada.', 'error');
+          }
+
+        });
       }
-    });*/
+    }, err => {
+      swal('Error en la Búsqueda', 'Se genero un error, favor de contactar al administrador. Error: ' + err.error.mensaje, 'error');
+    });
 
   }
 
@@ -547,6 +492,8 @@ export class DashboardLogisticaComponent implements OnInit {
 
                 let importe;
 
+                this.folios.reverse();
+
                 for (let i = 0; i < this.folios.length; i++) {
                   let ped = {
                     folio: idFol,
@@ -566,7 +513,7 @@ export class DashboardLogisticaComponent implements OnInit {
 
                   this.importe += this.folios[i].total;
 
-                  // this._guiasServices.procesarGuia(ped).subscribe( ( procesado: any ) => {});
+                  this._guiasServices.procesarGuia(ped).subscribe( ( procesado: any ) => {});
 
                 }
 
@@ -584,7 +531,7 @@ export class DashboardLogisticaComponent implements OnInit {
                   clientes: this.clientes
                 };
 
-                // this._guiasServices.guardarGuia(this.guiaGuardar).subscribe( ( guardado: any ) => {});
+                this._guiasServices.guardarGuia(this.guiaGuardar).subscribe( ( guardado: any ) => {});
                 this._guiasServices.enviarPDFguia(
                   this.pedidos, this.guiaGuardar, this.especiales
                 ).subscribe((resp: any) => {}, err => {});
@@ -629,6 +576,14 @@ export class DashboardLogisticaComponent implements OnInit {
   }
 
   modalPDF(dato: any) {
+    this.chofer = '';
+    this.fol = '';
+    this.hora = '';
+    this.impo = 0;
+    this.veri = '';
+    this.cantidad = 0;
+    this.cajas = '';
+    this.fec = '';
     this.chofer = dato.chofer;
     this.fol = dato.folio;
     this.hora = dato.hora;
@@ -646,6 +601,14 @@ export class DashboardLogisticaComponent implements OnInit {
   // TODO
   modalVer(dato: any) {
     this.totalModal = 0;
+    this.chofer = '';
+    this.fol = '';
+    this.hora = '';
+    this.impo = 0;
+    this.veri = '';
+    this.cantidad = 0;
+    this.cajas = '';
+    this.fec = '';
     this.chofer = dato.chofer;
     this.fol = dato.folio;
     this.hora = dato.hora;
@@ -705,13 +668,15 @@ export class DashboardLogisticaComponent implements OnInit {
     });
   }
 
-  asignar(fac: GuiasPartidas) {
+  asignar(fac: GuiasPartidas, tipo: any = '') {
     fac.reasignar = false;
     this._guiasServices.reasignarFolio(fac).subscribe((reasignado: any) => {
       if (reasignado.ok) {
-        swal('Factura Asignado', 'Esta factura se ha asignado.', 'success');
-        document.getElementById("linea" + fac._id).classList.remove("bg-primary");
-        document.getElementById("linea" + fac._id).classList.remove("text-white");
+        if (tipo === '') {
+          swal('Factura Asignado', 'Esta factura se ha asignado.', 'success');
+          document.getElementById("linea" + fac._id).classList.remove("bg-primary");
+          document.getElementById("linea" + fac._id).classList.remove("text-white");
+        }
       } else {
         swal('Factura No Reasignada', 'Esta factura no se reasigno correctamente.', 'error');
       }
@@ -728,6 +693,59 @@ export class DashboardLogisticaComponent implements OnInit {
       }
     });
 
+  }
+
+  tipoBus(valor: any) {
+    if (valor === '0') {
+      this.porFecha = true;
+      this.porFolio = false;
+    } else {
+      this.porFecha = false;
+      this.porFolio = true;
+    }
+  }
+
+  buscarFolio(folio: any) {
+    this.facturaEncontrada = false;
+    this.foliosBusq = [];
+    const fol = Number(folio);
+    this._guiasServices.buscarFolioHistorial(fol).subscribe((factura: any) => {
+      if (factura.ok) {
+        if (factura.folios.length > 0) {
+          this.facturaEncontrada = true;
+          this.noFac = fol;
+          this.foliosBusq = factura.folios;
+        } else {
+          swal('Factura No Encontrada', 'Esta factura no se ha asignado ninguna guía.', 'error');
+        }
+      } else {
+        swal('Error', 'Error en la búsqueda.', 'error');
+      }
+    });
+  }
+
+  verGuiaPrin(folio: any) {
+    this.chofer = '';
+    this.fol = '';
+    this.hora = '';
+    this.impo = 0;
+    this.veri = '';
+    this.cantidad = 0;
+    this.cajas = '';
+    this.fec = '';
+    this._guiasServices.buscarGuiaPrin(folio).subscribe((gP: any) => {
+      this.chofer = gP.guias.chofer;
+      this.fol = gP.guias.folio;
+      this.hora = gP.guias.hora;
+      this.impo = gP.guias.importe;
+      this.veri = gP.guias.verifico;
+      this.cantidad = gP.guias.cantidad;
+      this.cajas = gP.guias.cajas;
+      this.fec = gP.guias.fecha;
+      this.cli = gP.guias.clientes;
+      this.generoGuia = gP.usuario.nombre;
+      this.imgGeneroGuia = gP.usuario.img;
+    });
   }
 
 }

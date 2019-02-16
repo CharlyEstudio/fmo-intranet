@@ -1,6 +1,6 @@
 <div class="ver-mapa">
 
-    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="12">
+    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="10">
 
         <agm-marker *ngFor="let g of coordenadas" [latitude]="g.origin.lat" [longitude]="g.origin.lng" (markerClick)="clicMarker(g)">
 
@@ -24,6 +24,10 @@
 
         </agm-marker>
 
+        <!-- <agm-data-layer [geoJson]="geoJsonObject" [style]="styleFunc"></agm-data-layer> -->
+
+        <!-- <agm-polygon [paths]="origin"></agm-polygon> -->
+
         <agm-direction [origin]="origin" [destination]="destination" [visible]="verDestino"></agm-direction>
 
     </agm-map>
@@ -40,9 +44,9 @@
 
                 <select name="cliente" [(ngModel)]="selec" id="cliente" class="form-control" (change)="obtener()">
           
-                  <option value="0">Ver Todo</option>
+                  <option value="0">VER TODO</option>
 
-                  <option *ngFor="let g of coordenadasCopy" [ngValue]="g">{{g.datos.nombre}}</option>
+                  <option *ngFor="let g of coordenadasCopy" [ngValue]="g">{{g.datos.nombre}} - {{g.datos.cliente}}</option>
 
               </select>
 

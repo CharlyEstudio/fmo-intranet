@@ -1,10 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CreditoService, WebsocketService, UsuarioService } from '../../../services/services.index';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
 import { Subscription } from 'rxjs/Subscription';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { CreditoService, WebsocketService, UsuarioService } from '../../../services/services.index';
 
 @Component({
   selector: 'app-bitacora',
@@ -14,6 +16,7 @@ import { NgForm } from '@angular/forms';
 export class BitacoraComponent implements OnInit, OnDestroy {
 
   dias: number[] = [];
+  data: number[] = [];
 
   fecha: any;
 
@@ -43,6 +46,7 @@ export class BitacoraComponent implements OnInit, OnDestroy {
   buscarBol: boolean = false;
 
   constructor(
+    private router: Router,
     private _creditoService: CreditoService,
     private _webSocket: WebsocketService,
     private _usuariosServices: UsuarioService
@@ -156,8 +160,8 @@ export class BitacoraComponent implements OnInit, OnDestroy {
   }
 
   openModal( data: any, tipo: any = '' ) {
-    console.log(data);
     this.comentario = '';
+    this.data = data;
     this.charlaBol = false;
     this.nombre = data.nombre;
     this.numero = data.numero;
@@ -175,7 +179,7 @@ export class BitacoraComponent implements OnInit, OnDestroy {
     }
 
     this._creditoService.obtenerComentarios(data.clienteId).subscribe( ( resp: any ) => {
-      if (resp.charla > 0) {
+      if (resp.ok && resp.charla.length > 0) {
         this.charla = resp.charla.reverse();
         this.charlaBol = true;
       }
@@ -275,6 +279,11 @@ export class BitacoraComponent implements OnInit, OnDestroy {
     }, err => {
       console.log(err);
     });
+  }
+
+  irInfo( data: any ) {
+    document.getElementById("cerrarModalBusq").click();
+    this.router.navigate(['/infoFacturas/', data.clienteId, data.nombre, data.numero, data.rango]);
   }
 
 }

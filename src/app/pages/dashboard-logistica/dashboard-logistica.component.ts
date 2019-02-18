@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { NgForm } from '@angular/forms';
 
 // Servicios
-import { GuiasService, UsuarioService } from '../../services/services.index';
+import { GuiasService, UsuarioService, WebsocketService } from '../../services/services.index';
 
 // Modelos
 import { GuiasPartidas } from '../../models/guias.model';
@@ -74,10 +74,12 @@ export class DashboardLogisticaComponent implements OnInit {
   folioPrinBusq: any[] = [];
   generoGuia: any;
   imgGeneroGuia: any;
+  guiaEnc: any;
 
   constructor(
     private _guiasServices: GuiasService,
     private _usuarioService: UsuarioService,
+    private _webSocket: WebsocketService,
     public sanitizer: DomSanitizer
   ) {
     this.idUsuario = this._usuarioService.usuario._id;
@@ -125,6 +127,10 @@ export class DashboardLogisticaComponent implements OnInit {
         this.especiales = especiales;
       }
     }
+
+    this._webSocket.escuchar('guias-watch').subscribe(() => {
+      this.verGuias();
+    });
   }
 
   ngOnInit() {
@@ -248,9 +254,11 @@ export class DashboardLogisticaComponent implements OnInit {
         return;
       }
 
-      if (obtener.folios) {
-        this.asignar(obtener.folios, 'agregando');
-      }
+      // Cambiar estado de FALSE a TRUE a todos los documentos. TODO
+
+      // if (obtener.folios) {
+      //   this.asignar(obtener.folios, 'agregando');
+      // }
 
       let esFolio = (fac: any) => {
         return fac.folio === forma.value.folio;
@@ -658,30 +666,71 @@ export class DashboardLogisticaComponent implements OnInit {
     this.fec = '';
   }
 
-  reasignar(fac: GuiasPartidas) {
-    fac.reasignar = true;
-    this._guiasServices.reasignarFolio(fac).subscribe((reasignado: any) => {
-      if (reasignado.ok) {
-        swal('Factura Reasignado', 'Esta factura se ha liberado.', 'success');
-        document.getElementById("linea" + fac._id).classList.add("bg-primary");
-        document.getElementById("linea" + fac._id).classList.add("text-white");
+  reasignar(fac: GuiasPartidas, tipo: any = '') {
+    console.log(fac);
+    this._guiasServices.buscarFolioHistorial(fac.factura).subscribe((encon: any) => {
+      if (encon.folios.length > 1) {
+        for (let i = 0; i < encon.folios.length; i++) {
+          encon.folios[i].reasignar = true;
+          this._guiasServices.reasignarFolio(encon.folios[i]).subscribe((reasignado: any) => {
+            if (reasignado.ok) {
+              swal('Factura Reasignado', 'Esta factura se ha liberado.', 'success');
+              if (tipo === '') {
+                document.getElementById("linea" + fac._id).classList.add("bg-primary");
+                document.getElementById("linea" + fac._id).classList.add("text-white");
+              }
+            } else {
+              swal('Factura No Reasignada', 'Esta factura no se liberó correctamente.', 'error');
+            }
+          });
+        }
       } else {
-        swal('Factura No Reasignada', 'Esta factura no se liberó correctamente.', 'error');
+        encon.folios[0].reasignar = true;
+        this._guiasServices.reasignarFolio(encon.folios[0]).subscribe((reasignado: any) => {
+          if (reasignado.ok) {
+            swal('Factura Reasignado', 'Esta factura se ha liberado.', 'success');
+            if (tipo === '') {
+              document.getElementById("linea" + fac._id).classList.add("bg-primary");
+              document.getElementById("linea" + fac._id).classList.add("text-white");
+            }
+          } else {
+            swal('Factura No Reasignada', 'Esta factura no se liberó correctamente.', 'error');
+          }
+        });
       }
     });
   }
 
   asignar(fac: GuiasPartidas, tipo: any = '') {
-    fac.reasignar = false;
-    this._guiasServices.reasignarFolio(fac).subscribe((reasignado: any) => {
-      if (reasignado.ok) {
-        if (tipo === '') {
-          swal('Factura Asignado', 'Esta factura se ha asignado.', 'success');
-          document.getElementById("linea" + fac._id).classList.remove("bg-primary");
-          document.getElementById("linea" + fac._id).classList.remove("text-white");
+    this._guiasServices.buscarFolioHistorial(fac.factura).subscribe((encon: any) => {
+      if (encon.folios.length > 1) {
+        for (let i = 0; i < encon.folios.length; i++) {
+          encon.folios[i].reasignar = false;
+          this._guiasServices.reasignarFolio(encon.folios[i]).subscribe((reasignado: any) => {
+            if (reasignado.ok) {
+              swal('Factura Asignado', 'Esta factura se ha asignado.', 'success');
+              if (tipo === '') {
+                document.getElementById("linea" + fac._id).classList.remove("bg-primary");
+                document.getElementById("linea" + fac._id).classList.remove("text-white");
+              }
+            } else {
+              swal('Factura No Reasignada', 'Esta factura no se reasigno correctamente.', 'error');
+            }
+          });
         }
       } else {
-        swal('Factura No Reasignada', 'Esta factura no se reasigno correctamente.', 'error');
+        encon.folios[0].reasignar = false;
+        this._guiasServices.reasignarFolio(encon.folios[0]).subscribe((reasignado: any) => {
+          if (reasignado.ok) {
+            swal('Factura Asignado', 'Esta factura se ha asignado.', 'success');
+            if (tipo === '') {
+              document.getElementById("linea" + fac._id).classList.remove("bg-primary");
+              document.getElementById("linea" + fac._id).classList.remove("text-white");
+            }
+          } else {
+            swal('Factura No Reasignada', 'Esta factura no se reasigno correctamente.', 'error');
+          }
+        });
       }
     });
   }
@@ -699,6 +748,7 @@ export class DashboardLogisticaComponent implements OnInit {
   }
 
   tipoBus(valor: any) {
+    this.foliosBusq = [];
     if (valor === '0') {
       this.porFecha = true;
       this.porFolio = false;
@@ -728,6 +778,7 @@ export class DashboardLogisticaComponent implements OnInit {
   }
 
   verGuiaPrin(folio: any) {
+    this.guiaEnc = '';
     this.chofer = '';
     this.fol = '';
     this.hora = '';
@@ -737,15 +788,16 @@ export class DashboardLogisticaComponent implements OnInit {
     this.cajas = '';
     this.fec = '';
     this._guiasServices.buscarGuiaPrin(folio).subscribe((gP: any) => {
-      this.chofer = gP.guias.chofer;
-      this.fol = gP.guias.folio;
-      this.hora = gP.guias.hora;
-      this.impo = gP.guias.importe;
-      this.veri = gP.guias.verifico;
-      this.cantidad = gP.guias.cantidad;
-      this.cajas = gP.guias.cajas;
-      this.fec = gP.guias.fecha;
-      this.cli = gP.guias.clientes;
+      this.guiaEnc = {factura: this.noFac};
+      this.chofer = gP.factura.chofer;
+      this.fol = gP.factura.folio;
+      this.hora = gP.factura.hora;
+      this.impo = gP.factura.importe;
+      this.veri = gP.factura.verifico;
+      this.cantidad = gP.factura.cantidad;
+      this.cajas = gP.factura.cajas;
+      this.fec = gP.factura.fecha;
+      this.cli = gP.factura.clientes;
       this.generoGuia = gP.usuario.nombre;
       this.imgGeneroGuia = gP.usuario.img;
     });

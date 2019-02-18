@@ -214,7 +214,7 @@
 
                 <!--<button class="btn btn-success" type="button" (click)="descargar(actual)"><i class="mdi mdi-file-excel"></i>Descargar</button>-->
 
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" id="cerrarModalBusq" aria-label="Close">
         
                     <span aria-hidden="true">&times;</span>
         
@@ -227,6 +227,12 @@
                 <div class="card" style="width: 100%;">
 
                     <div class="card-body">
+
+                        <button type="button" class="btn btn-outline-info" (click)="irInfo(data)" *ngIf="rol === 'DIR_ROLE' || data.numero !== 1 && data.numero !== 80 && data.numero !== 1046 && data.numero !== 1739 && data.numero !== 1789 && data.numero !== 2980 && data.numero !== 3611 && data.numero !== 4043 && data.numero !== 4287 && data.numero !== 4365 && data.numero !== 4429 && data.numero !== 4585 && data.numero !== 4636">
+
+                            <i class="mdi mdi-barcode-scan"></i>
+    
+                        </button>
 
                         <h4 class="card-title" *ngIf="charlaBol">Comentarios Recientes</h4>
 

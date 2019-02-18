@@ -88,9 +88,9 @@
 
                             <div class="stats">
 
-                                <form #g="ngForm" *ngIf="porFecha">
+                                <form #g="ngForm">
 
-                                    <div class="">
+                                    <div class="" *ngIf="porFecha">
 
                                         <input type="date" class="form-control" style="margin-bottom: .40rem;" [ngModel]="inicial" name="inicial">
 
@@ -98,23 +98,19 @@
 
                                     </div>
 
+                                    <input #foliobuscar *ngIf="porFolio" (keyup.enter)="buscarFolio(foliobuscar.value)" type="text" class="form-control" name="folio" placeholder="Folio">
+
+                                    <button class="btn btn-rounded btn-outline btn-secondary font-14" (click)="checarLista(g)" *ngIf="porFecha">Buscar</button>
+
+                                    <select style="width: 50%; margin-top: 5px!important;" #select name="tipoBusqueda" id="tipoBusqueda" class="form-control" (change)="tipoBus(select.value)">
+                                            
+                                        <option value="0">Por Fecha</option>
+                                        
+                                        <option value="1">Por Folio</option>
+                                        
+                                    </select>
+
                                 </form>
-
-                                <form #fl="ngForm" *ngIf="porFolio">
-
-                                    <input #foliobuscar (keyup.enter)="buscarFolio(foliobuscar.value)" type="text" class="form-control" name="folio" placeholder="Folio">
-
-                                </form>
-
-                                <button class="btn btn-rounded btn-outline btn-secondary font-14" (click)="checarLista(g)" *ngIf="porFecha">Buscar</button>
-
-                                <select style="width: 50%; margin-top: 5px!important;" #select name="tipoBusqueda" id="tipoBusqueda" class="form-control" (change)="tipoBus(select.value)">
-
-                                    <option value="0">Por Fecha</option>
-
-                                    <option value="1">Por Folio</option>
-
-                                </select>
 
                             </div>
 
@@ -471,6 +467,8 @@
 
                                 <th>Vendedor</th>
 
+                                <th>Estatus</th>
+
                                 <th>Guía</th>
 
                             </tr>
@@ -494,6 +492,14 @@
                                 <td>{{ fol.importe | currency }}</td>
 
                                 <td>{{ fol.vendedor }}</td>
+
+                                <td>
+
+                                    <span class="badge badge-danger" *ngIf="!fol.reasignar">Asignado</span>
+
+                                    <span class="badge badge-success" *ngIf="fol.reasignar">Liberado</span>
+
+                                </td>
 
                                 <td>
 
@@ -882,6 +888,10 @@
             </div>
 
             <div class="modal-footer">
+
+                <button class="btn btn-info btn-sm" (click)="reasignar(guiaEnc, 'busqueda')">Liberar</button>
+
+                <button class="btn btn-success btn-sm" (click)="asignar(guiaEnc, 'busqueda')">Asignar</button>
 
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 

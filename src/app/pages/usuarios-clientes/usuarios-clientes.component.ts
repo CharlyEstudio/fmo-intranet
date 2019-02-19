@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Cliente } from '../../models/clientes.model';
-import { ClienteService } from '../../services/services.index';
+import { ClienteService, WebsocketService } from '../../services/services.index';
 import { ModalUploadService } from '../../components/modal-upload/modal-upload.service';
+
+declare var swal: any;
 
 @Component({
   selector: 'app-usuarios-clientes',
@@ -29,8 +31,14 @@ export class UsuariosClientesComponent implements OnInit {
 
   constructor(
     private _clienteService: ClienteService,
-    public _modalUpLoadService: ModalUploadService
-  ) { }
+    public _modalUpLoadService: ModalUploadService,
+    private _webSocket: WebsocketService
+  ) {
+    this._webSocket.escuchar('registro-watch').subscribe(() => {
+      this.cargarUsuarios();
+      this.cargarUsuariosPendientes();
+    });
+  }
 
   ngOnInit() {
     this.cargarUsuarios();
@@ -44,6 +52,7 @@ export class UsuariosClientesComponent implements OnInit {
   }
 
   cargarUsuarios() {
+    this.usuariosAutorizados = [];
     this.cargando = true;
 
     this._clienteService.cargarUsuarios( this.desde )
@@ -63,15 +72,16 @@ export class UsuariosClientesComponent implements OnInit {
   }
 
   cargarUsuariosPendientes() {
+    this.usuariosPendientes = [];
     this._clienteService.cargarUsuarios( this.desde )
       .subscribe( ( resp: any ) => {
         if (resp.ok) {
           for (let i = 0; i < resp.clientes.length; i++) {
             if (resp.clientes[i].activo !== 'YES') {
               this.usuariosPendientes.push(resp.clientes[i]);
-              this.totalPendientes += 1;
             }
           }
+          this.totalPendientes = this.usuariosPendientes.length;
         }
       })
   }
@@ -134,11 +144,26 @@ export class UsuariosClientesComponent implements OnInit {
   guardarUsuario( cliente: Cliente ) {
     this._clienteService.actualizarUsusario( cliente )
       .subscribe(() => {
-        this.usuariosAutorizados = [];
-        this.usuariosPendientes = [];
-        this.cargarUsuarios();
-        this.cargarUsuariosPendientes();
+        this._webSocket.acciones('registro-watch', cliente);
       });
+  }
+
+  borrarUsuario( usuario: Cliente ) {
+    swal({
+          title: '¿Está seguro?',
+          text: 'Está a punto de borrar a ' + usuario.nombre,
+          icon: 'warning',
+          buttons: true,
+          dangerMode: true
+        }).then( borrar => {
+          if ( borrar ) {
+            this._clienteService.borrarUsuario( usuario._id )
+              .subscribe( borrado => {
+                this.cargarUsuarios();
+                this.cargarUsuariosPendientes();
+              });
+          }
+        });
   }
 
 }

@@ -7,9 +7,12 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 
-import { PipesModule } from '../pipes/pipes.module';
 import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
 import { EstadoEmpresaComponent } from '../components/estado-empresa/estado-empresa.component';
+import { DiferenciasComponent } from '../components/diferencias/diferencias.component';
+import { NewcustomerComponent } from '../components/newcustomer/newcustomer.component';
+
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
     imports: [
@@ -23,7 +26,9 @@ import { EstadoEmpresaComponent } from '../components/estado-empresa/estado-empr
         BreadcrumbsComponent,
         NopagefoundComponent,
         ModalUploadComponent,
-        EstadoEmpresaComponent
+        EstadoEmpresaComponent,
+        DiferenciasComponent,
+        NewcustomerComponent
     ],
     exports: [
         HeaderComponent,

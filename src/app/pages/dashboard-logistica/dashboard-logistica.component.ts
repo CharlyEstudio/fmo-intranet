@@ -128,7 +128,8 @@ export class DashboardLogisticaComponent implements OnInit {
       }
     }
 
-    this._webSocket.escuchar('guias-watch').subscribe(() => {
+    this._webSocket.escuchar('guias-watch').subscribe((datos: any) => {
+      console.log(datos)
       this.verGuias();
     });
   }
@@ -285,7 +286,7 @@ export class DashboardLogisticaComponent implements OnInit {
                   }
 
                 }
-                this.especiales.reverse();
+                // this.especiales.reverse();
                 localStorage.setItem('especiales', JSON.stringify(this.especiales));
               }
             });
@@ -305,7 +306,7 @@ export class DashboardLogisticaComponent implements OnInit {
               this.folios.push(partidas.respuesta[i]);
             }
 
-            this.folios.reverse();
+            // this.folios.reverse();
 
             localStorage.setItem('guia', JSON.stringify(this.folios));
 
@@ -503,7 +504,7 @@ export class DashboardLogisticaComponent implements OnInit {
 
                 let importe;
 
-                this.folios.reverse();
+                // this.folios.reverse();
 
                 for (let i = 0; i < this.folios.length; i++) {
                   let ped = {

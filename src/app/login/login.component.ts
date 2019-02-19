@@ -17,6 +17,10 @@ export class LoginComponent implements OnInit {
 
   email: string;
   recuerdame: boolean = false;
+  error: boolean = false;
+  iniciar: boolean = false;
+  iniciando: boolean = false;
+  mensaje: any;
 
   auth2: any;
 
@@ -37,6 +41,8 @@ export class LoginComponent implements OnInit {
   }
 
   ingresar(forma: NgForm) {
+    this.iniciar = true;
+    this.error = false;
 
     if ( forma.invalid ) {
       return;
@@ -45,11 +51,11 @@ export class LoginComponent implements OnInit {
     let usuario = new Usuario( null, forma.value.email, forma.value.password );
 
     this._usuarioService.login( usuario, forma.value.recuerdame)
-      .subscribe( correcto => {
-
+      .subscribe( (correcto: any) => {
         // this.wsService.socketStatus;
 
-        if ( correcto ) {
+        if ( correcto.ok ) {
+          this.iniciando = true;
 
           if (this._usuarioService.usuario.rol === "ADMIN_ROLE") {
 
@@ -83,11 +89,17 @@ export class LoginComponent implements OnInit {
 
           }
 
+          this.error = false;
+          this.iniciar = false;
           this.wsService.login( 'web', forma.value.email, null, this._usuarioService.usuario.rol );
+        } else {
+          this.mensaje = correcto.mensaje;
+          this.iniciar = false;
+          this.error = true;
         }
 
 
-      });
+      }, err => console.log(err));
 
   }
 

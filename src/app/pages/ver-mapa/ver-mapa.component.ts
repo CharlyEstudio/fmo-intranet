@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 // Servicios
 import { GuiasService } from '../../services/services.index';
+import { google } from '@agm/core/services/google-maps-types';
 
 @Component({
   selector: 'app-ver-mapa',
@@ -20,8 +21,14 @@ export class VerMapaComponent implements OnInit, OnDestroy {
   lat: number = 0;
   lng: number = 0;
 
-  origin: any = {};
-  destination: any = {};
+  origin: any = {
+    lat: 0,
+    lng: 0
+  };
+  destination: any = {
+    lat: 0,
+    lng: 0
+  };
 
   // Window
   numero: number = 0;

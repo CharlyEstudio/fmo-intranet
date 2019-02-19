@@ -1,7 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
-import { RecuperarComponent } from './login/recuperar.component';
 import { RegisterComponent } from './login/register.component';
 import { NopagefoundComponent } from './shared/nopagefound/nopagefound.component';
 
@@ -13,7 +12,6 @@ import { PagesComponent } from './pages/pages.component';
 const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'recuperar', component: RecuperarComponent },
     {
         path: '',
         component: PagesComponent,

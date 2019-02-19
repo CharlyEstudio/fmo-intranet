@@ -1,0 +1,55 @@
+<!-- <div class="row" *ngIf="diferencia">
+
+    <h5 class="card-title">Se encontraron Diferencias</h5>
+
+    <div class="col-lg-12 col-md-12" *ngFor="let dato of datos">
+
+        <div class="alert alert-warning">
+
+            <h4 class="card-title"><span class="font-weight-bold">Cliente:</span> {{ dato.numero }} <span class="font-weight-bold">Nombre:</span> {{ dato.nombre }} <span class="font-weight-bold">Saldo en clientes:</span> {{ dato.saldoCliente | currency }} <span class="font-weight-bold">Saldo en Doc's.:</span>                {{ dato.saldoDoc | currency }} <span class="font-weight-bold">Diferencia:</span> {{ dato.diferencia | currency }} <span class="font-weight-bold">Afecta:</span> {{ dato.afecta }} <span class="font-weight-bold">Tipo Doc.:</span> {{ dato.tipo
+                }}
+            </h4>
+
+        </div>
+
+    </div>
+
+</div> -->
+
+<small *ngIf="diferencia">
+
+    <span class="badge badge-warning">
+        
+        Diferencias:
+
+        <span class="font-weight-bold">Cliente:</span>
+
+        {{ dato.numero }}
+        
+        <span class="font-weight-bold">Nombre:</span>}
+        
+        {{ dato.nombre }}
+        
+        <span class="font-weight-bold">Saldo en clientes:</span>
+        
+        {{ dato.saldoCliente | currency }}
+        
+        <span class="font-weight-bold">Saldo en Doc's.:</span>
+        
+        {{ dato.saldoDoc | currency }}
+        
+        <span class="font-weight-bold">Diferencia:</span>
+        
+        {{ dato.diferencia | currency }}
+        
+        <span class="font-weight-bold">Afecta:</span>
+        
+        {{ dato.afecta }}
+        
+        <span class="font-weight-bold">Tipo Doc.:</span>
+        
+        {{ dato.tipo }}
+    
+    </span>
+
+</small>

@@ -126,17 +126,20 @@ export class UsuarioService {
 
     return this.http.post( url, usuario )
       .map( ( resp: any ) => {
-
-        this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu, resp.usuario.rol);
-
-        return true;
-      })
-      .catch( ( err ) => {
-        swal('Error en el login', err.error.errors.message, 'error');
+        if (resp.ok) {
+          this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu, resp.usuario.rol);
+          return resp;
+        } else {
+          return resp;
+        }
+      });
+      /*.catch( ( err ) => {
+        console.log(err);
+        // swal('Error en el login', err.error.errors.message, 'error');
         // alert('Error en el login ' + err.error.errors.message);
         // return Observable.throw( err );
-        return Observable.throw( err.error.ok );
-      });
+        // return Observable.throw( err.error.ok );
+      });*/
   }
 
   crearUsuario(usuario: Usuario) {

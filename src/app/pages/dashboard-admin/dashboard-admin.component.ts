@@ -52,13 +52,13 @@ export class DashboardAdminComponent implements OnInit {
 
   constructor(
     private _webSocket: WebsocketService
-  ) { }
-
-  ngOnInit() {
+  ) {
     this._webSocket.escuchar('producto-visto').subscribe((producto: any) => {
       console.table(producto);
       this.producto = producto.descripcion;
     });
   }
+
+  ngOnInit() {}
 
 }

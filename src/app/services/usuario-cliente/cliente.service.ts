@@ -59,4 +59,24 @@ export class ClienteService {
       });
   }
 
+  borrarUsuario ( id: string ) {
+    let url;
+
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/' + id;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/clientes/' + id;
+    } else {
+      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/' + id;
+    }
+
+    url += '?token=' + this.token;
+
+    return this.http.delete( url )
+      .map( resp => {
+        swal('Cliente Borrado!', 'El usuario ha sido eliminado correctamente', 'success');
+        return true;
+      });
+  }
+
 }

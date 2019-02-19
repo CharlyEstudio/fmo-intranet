@@ -52,6 +52,7 @@ import { MorosidadBitacoraComponent } from '../components/morosidad-bitacora/mor
 import { MovFolComponent } from '../components/mov-fol/mov-fol.component';
 import { EdoCtaCliComponent } from '../components/edo-cta-cli/edo-cta-cli.component';
 import { ComentariosComponent } from '../components/comentarios/comentarios.component';
+// import { DiferenciasComponent } from '../components/diferencias/diferencias.component';
 // Páginas
 import { ProfileComponent } from './profile/profile.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
@@ -125,6 +126,7 @@ import { VerMapaComponent } from './ver-mapa/ver-mapa.component';
         MovFolComponent,
         EdoCtaCliComponent,
         ComentariosComponent,
+        // DiferenciasComponent,
         // Páginas
         DashborarDirComponent,
         DashboardComponent,

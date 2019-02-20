@@ -149,6 +149,20 @@ export class CreditoService {
     return this.http.get( this.url );
   }
 
+  clienteSaldo( numero: any, fecha: any ) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/obtener/saldo/' + numero + '/' + fecha;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/clientes/obtener/saldo/' + numero + '/' + fecha;
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/obtener/saldo/' + numero + '/' + fecha;
+    }
+
+    this.url += '?token=' + this.token;
+
+    return this.http.get( this.url );
+  }
+
   guardarComentario( comentario: VencidoHistorial ) {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/vencido/historial';

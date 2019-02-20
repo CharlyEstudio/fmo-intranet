@@ -10,6 +10,8 @@ import { NgForm } from '@angular/forms';
 })
 export class EdoCtaCliComponent implements OnInit {
 
+  fecha: any;
+
   // Datos del Usuario
   asesor: number = 0;
   rol: any;
@@ -46,6 +48,28 @@ export class EdoCtaCliComponent implements OnInit {
     this.usuario = this._usuariosService.usuario;
     this.asesor = Number(this.usuario.idFerrum);
     this.rol = this.usuario.rol;
+
+    let h = new Date();
+
+    let dia;
+
+    if (h.getDate() < 10) {
+      dia = '0' + h.getDate();
+    } else {
+      dia = h.getDate();
+    }
+
+    let mes;
+
+    if ((h.getMonth() + 1) < 10) {
+      mes = '0' + (h.getMonth() + 1);
+    } else {
+      mes = (h.getMonth() + 1);
+    }
+
+    let anio = h.getFullYear();
+
+    this.fecha = anio + '-' + mes + '-' + dia;
   }
 
   ngOnInit() {
@@ -74,7 +98,7 @@ export class EdoCtaCliComponent implements OnInit {
           this.number = data[0].NUMERO;
           this.forcre = data[0].FORCRE;
 
-          this._clientesService.obtenerFacturas(data[0].CLIENTEID, forma.value.inicio)
+          this._clientesService.obtenerFacturas(data[0].CLIENTEID, forma.value.inicio, this.fecha)
             .subscribe( ( edocta: any ) => {
 
               for (let i = 0; i < edocta.length; i++) {

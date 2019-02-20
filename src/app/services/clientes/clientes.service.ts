@@ -24,13 +24,14 @@ export class ClientesService {
     return this.http.get( this.url );
   }
 
-  obtenerFacturas( cliente: any, inicio: any ) {
+  obtenerFacturas( cliente: any, inicio: any, fecha: any ) {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=2&clienteid=' + cliente + '&inicio=' + inicio;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=2&clienteid=' + cliente + '&inicio=' + inicio + '&fecha=' + fecha;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=2&clienteid=' + cliente + '&inicio=' + inicio;
+      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=2&clienteid=' + cliente + '&inicio=' + inicio + '&fecha=' + fecha;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=2&clienteid=' + cliente + '&inicio=' + inicio;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER +
+      '/api/clientes.php?opcion=2&clienteid=' + cliente + '&inicio=' + inicio + '&fecha=' + fecha;
     }
 
     return this.http.get( this.url );

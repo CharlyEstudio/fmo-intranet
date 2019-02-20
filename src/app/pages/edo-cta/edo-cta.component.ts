@@ -1,7 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { UsuarioService, ClientesService, ExcelService } from '../../services/services.index';
-import { Usuario } from '../../models/usuario.model';
 import { NgForm } from '@angular/forms';
+
+// Modelos
+import { Usuario } from '../../models/usuario.model';
+
+// Servicios
+import { UsuarioService, ClientesService, ExcelService, CreditoService } from '../../services/services.index';
 
 @Component({
   selector: 'app-edo-cta',
@@ -11,6 +15,8 @@ import { NgForm } from '@angular/forms';
 export class EdoCtaComponent implements OnInit {
 
   @ViewChild('edoCta') edoCta: ElementRef;
+
+  fecha: any;
 
   // Datos del Usuario
   asesor: number = 0;
@@ -24,6 +30,7 @@ export class EdoCtaComponent implements OnInit {
   // Importes
   numero: any = '';
   inicio: any = '';
+  tipo: any = '0';
   abonos: number = 0;
   saldos: number = 0;
   cargos: number = 0;
@@ -33,6 +40,8 @@ export class EdoCtaComponent implements OnInit {
   nombre: any;
   number: any;
   forcre: any;
+  saldoAct: any;
+  limite: any;
 
   // Dato General
   datos: any[] = [];
@@ -40,15 +49,39 @@ export class EdoCtaComponent implements OnInit {
   // Booleanos
   localizado: boolean = false;
   cargando: boolean = false;
+  mostrar: boolean = false;
 
   constructor(
     private _usuariosService: UsuarioService,
     private _clientesService: ClientesService,
+    private _creditoService: CreditoService,
     public _excelService: ExcelService
   ) {
     this.usuario = this._usuariosService.usuario;
     this.asesor = Number(this.usuario.idFerrum);
     this.rol = this.usuario.rol;
+
+    let h = new Date();
+
+    let dia;
+
+    if (h.getDate() < 10) {
+      dia = '0' + h.getDate();
+    } else {
+      dia = h.getDate();
+    }
+
+    let mes;
+
+    if ((h.getMonth() + 1) < 10) {
+      mes = '0' + (h.getMonth() + 1);
+    } else {
+      mes = (h.getMonth() + 1);
+    }
+
+    let anio = h.getFullYear();
+
+    this.fecha = anio + '-' + mes + '-' + dia;
 
     // this.clienteMongo = [
     //   {
@@ -74,7 +107,7 @@ export class EdoCtaComponent implements OnInit {
       return;
     }
 
-    if ( forma.value.inicio === undefined ) {
+    if ( forma.value.inicio === '' ) {
       swal('Debe ingresar la fecha inicial', 'No ha ingresado la fecha inicial para la busqueda.', 'error');
       this.cargando = false;
       return;
@@ -91,8 +124,10 @@ export class EdoCtaComponent implements OnInit {
           this.nombre = data[0].NOMBRE;
           this.number = data[0].NUMERO;
           this.forcre = data[0].FORCRE;
+          this.saldoAct = data[0].SALDO;
+          this.limite = data[0].LIMITE;
 
-          this._clientesService.obtenerFacturas(data[0].CLIENTEID, forma.value.inicio).subscribe((edocta: any) => {
+          this._clientesService.obtenerFacturas(data[0].CLIENTEID, forma.value.inicio, this.fecha).subscribe((edocta: any) => {
             for (let i = 0; i < edocta.length; i++) {
               this.abonos += edocta[i].ABONO;
 
@@ -142,7 +177,8 @@ export class EdoCtaComponent implements OnInit {
                     "NOTA": edocta[i].NOTA,
                     "TOTAL": edocta[i].TOTAL,
                     "TOTALPAGADO": edocta[i].TOTALPAGADO,
-                    "SALDOFINAL": edocta[i].SALDOFINAL
+                    "SALDOFINAL": edocta[i].SALDOFINAL,
+                    "RESTAN": edocta[i].RESTAN
                   }
                 ];
                 this.datos.push(nuevo[0]);
@@ -260,6 +296,122 @@ export class EdoCtaComponent implements OnInit {
       });
   }
 
+  obtenerSaldo(dato: NgForm) {
+    this.cargando = true;
+
+    this.datos = [];
+    this.abonos = 0;
+    this.saldos = 0;
+
+    this.cargando = false;
+    if (dato.value.numero === '') {
+      swal('Debe ingresar el número de cliente', 'No ha ingresado el número de cliente para la busqueda.', 'error');
+      this.cargando = false;
+      return;
+    }
+
+    if (dato.value.tipo === '0') {
+      swal('Debe ingresar el tipo de busqueda', 'No ha seleccionado el tipo de busqueda.', 'error');
+      this.cargando = false;
+      return;
+    }
+
+    this.numero = dato.value.numero;
+
+    this._clientesService.infoCliente(this.numero, this.asesor, this.rol)
+      .subscribe( ( data: any ) => {
+
+        if (data.length > 0) {
+
+          this.clienteFerrum = data[0];
+          this.nombre = data[0].NOMBRE;
+          this.number = data[0].NUMERO;
+          this.forcre = data[0].FORCRE;
+          this.saldoAct = data[0].SALDO;
+          this.limite = data[0].LIMITE;
+
+          this._creditoService.clienteSaldo(this.numero, this.fecha).subscribe((edocta: any) => {
+            for (let i = 0; i < edocta.respuesta.length; i++) {
+              this.abonos += edocta.respuesta[i].ABONO;
+
+              if (edocta.respuesta[i].SALDOFINAL !== 0) {
+                this.saldos += edocta.respuesta[i].SALDOFINAL;
+              }
+
+              let esFolio = (factura) => {
+                return factura.FOLIO === edocta.respuesta[i].FOLIO;
+              };
+
+              if (this.datos.find(esFolio)) {
+                let saldo;
+                let cargo;
+                if (edocta.respuesta[i].TOTALGADO === edocta.respuesta[i].TOTAL) {
+                  saldo = (edocta.respuesta[i].TOTAL - edocta.respuesta[i].ABONO) - edocta.respuesta[i].SALDO
+                } else {
+                  if (edocta.respuesta[i].ABONO < 0) {
+                    saldo = edocta.respuesta[i].SALDOFINAL + (-1 * edocta.respuesta[i].ABONO);
+                  } else {
+                    saldo = edocta.respuesta[i].SALDOFINAL;
+                  }
+                }
+
+                if (this.datos.find(esFolio).SALDO !== 0) {
+                  cargo = this.datos.find(esFolio).SALDO;
+                } else {
+                  if (edocta.respuesta[i].ABONO < 0) {
+                    cargo = 0;
+                  } else {
+                    cargo = edocta.respuesta[i].CARGO;
+                  }
+                }
+
+                let nuevo = [
+                  {
+                    "DOCID": edocta.respuesta[i].DOCID,
+                    "FECHA": edocta.respuesta[i].FECHA,
+                    "FECHAPAG": edocta.respuesta[i].FECHAPAG,
+                    "FOLIO": edocta.respuesta[i].FOLIO,
+                    "SALDO": saldo,
+                    "CARGO": cargo,
+                    "ABONO": edocta.respuesta[i].ABONO,
+                    "RECIBO": edocta.respuesta[i].RECIBO,
+                    "TIPO": edocta.respuesta[i].TIPO,
+                    "FP": edocta.respuesta[i].FP,
+                    "NOTA": edocta.respuesta[i].NOTA,
+                    "TOTAL": edocta.respuesta[i].TOTAL,
+                    "TOTALPAGADO": edocta.respuesta[i].TOTALPAGADO,
+                    "SALDOFINAL": edocta.respuesta[i].SALDOFINAL,
+                    "RESTAN": edocta.respuesta[i].RESTAN
+                  }
+                ];
+                this.datos.push(nuevo[0]);
+              } else {
+                this.datos.push(edocta.respuesta[i]);
+              }
+            }
+
+            this.cargos = this.saldos + this.abonos;
+
+            this.localizado = true;
+
+            this.cargando = false;
+          });
+
+        } else {
+
+          swal('Cliente fuera de Catálogo', 'Este número está fuera de tu catálogo de cliente.', 'error');
+
+          this.localizado = false;
+
+          this.cargando = false;
+
+          return;
+
+        }
+
+      });
+  }
+
   enviarEmail( datos: any, cliente: any ) {
 
     if (cliente.CORREO === 'cnmfmo@gmail.com') {
@@ -338,6 +490,18 @@ export class EdoCtaComponent implements OnInit {
   exportarExcel(dato: any, clienteFerrum: any) {
     let filename = 'reporte_' + clienteFerrum.numero;
     this._excelService.exportAsExcelFile(dato, filename);
+  }
+
+  tipoSel(tipo: any) {
+    this.localizado = false;
+    this.datos = [];
+    this.cargos = 0;
+    this.abonos = 0;
+    if (tipo !== '2') {
+      this.mostrar = false;
+    } else {
+      this.mostrar = true;
+    }
   }
 
   public exportarPDF(numero: any, nombre: any) {

@@ -18,11 +18,27 @@
 
                     <div class="form-group">
 
+                        <select #select [(ngModel)]="tipo" name="tipo" id="tipo" class="form-control" (change)="tipoSel(select.value)">
+    
+                            <option value="0">Seleccione un tipo...</option>
+    
+                            <option value="1">Saldo</option>
+    
+                            <option value="2">Movimientos</option>
+    
+                        </select>
+
+                    </div>
+
+                    <div class="form-group" *ngIf="mostrar">
+
                         <input type="date" [(ngModel)]="inicio" class="form-control" name="inicio" id="inicio" value="0000-00-00">
 
                     </div>
 
-                    <button type="button" class="btn btn-success btn-block waves-effect waves-light m-r-10" (click)="obtenerCliente( f )">Solicitar</button>
+                    <button type="button" class="btn btn-success btn-block waves-effect waves-light m-r-10" (click)="obtenerCliente( f )" *ngIf="mostrar">Solicitar</button>
+
+                    <button type="button" class="btn btn-success btn-block waves-effect waves-light m-r-10" (click)="obtenerSaldo( f )" *ngIf="!mostrar">Solicitar</button>
 
                 </form>
 
@@ -74,6 +90,7 @@
 
                 </h4>
 
+                <p>Saldo Actual: {{ saldoAct | currency }} Límite: {{ limite | currency }} Disponible: {{ (limite - saldoAct) | currency }}</p>
 
                 <div class="table-responsive">
 
@@ -98,6 +115,8 @@
                                 <th class="text-center">Recibo</th>
 
                                 <th class="text-center">Tipo</th>
+
+                                <th class="text-center">Días</th>
 
                             </tr>
 
@@ -133,7 +152,9 @@
 
                                 </td>
 
-                                <td *ngIf="dato.FP !== 'C' && dato.FP !== 'R' && dato.FP !== 'E' && dato.FP !== 'T' && dato.FP !== 'S'"></td>
+                                <!-- <td *ngIf="dato.FP !== 'C' && dato.FP !== 'R' && dato.FP !== 'E' && dato.FP !== 'T' && dato.FP !== 'S'"></td> -->
+
+                                <td class="text-center">{{ dato.RESTAN }}</td>
 
                             </tr>
 

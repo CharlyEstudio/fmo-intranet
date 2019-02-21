@@ -129,7 +129,7 @@ export class DashboardLogisticaComponent implements OnInit {
     }
 
     this._webSocket.escuchar('guias-watch').subscribe((datos: any) => {
-      console.log(datos)
+      console.log(datos);
       this.verGuias();
     });
   }
@@ -543,7 +543,11 @@ export class DashboardLogisticaComponent implements OnInit {
                   clientes: this.clientes
                 };
 
-                this._guiasServices.guardarGuia(this.guiaGuardar).subscribe( ( guardado: any ) => {});
+                this._guiasServices.guardarGuia(this.guiaGuardar).subscribe( ( guardado: any ) => {
+                  if (guardado.ok) {
+                    this._webSocket.acciones('guias-watch', guardado.guiasGuardado);
+                  }
+                });
                 this._guiasServices.enviarPDFguia(
                   this.pedidos, this.guiaGuardar, this.especiales
                 ).subscribe((resp: any) => {}, err => {});

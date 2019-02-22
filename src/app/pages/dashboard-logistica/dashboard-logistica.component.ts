@@ -540,7 +540,8 @@ export class DashboardLogisticaComponent implements OnInit {
                   cajas: cajas,
                   fecha: fecha,
                   hora: hora,
-                  clientes: this.clientes
+                  clientes: this.clientes,
+                  chofer: ''
                 };
 
                 this._guiasServices.guardarGuia(this.guiaGuardar).subscribe( ( guardado: any ) => {

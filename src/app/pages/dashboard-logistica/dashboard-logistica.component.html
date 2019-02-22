@@ -200,9 +200,101 @@
 
         <div class="row" *ngIf="obtener">
 
-            <div class="col-6">
+            <div class="col-lg-12 col-md-12 col-sm-12">
 
-                <h3>Generar Guía</h3>
+                <div class="d-flex justify-content-around">
+
+                    <div class="p-2 bd-highlight">
+
+                        <h3>Generar Guía</h3>
+
+                    </div>
+
+                    <div class="p-2 bd-highlight">
+
+                        <form>
+
+                            <div class="form-group">
+
+                                <select name="chofer" class="form-control">
+                            
+                                    <option value="0">Chofer</option>
+
+                                    <option value="1">Juan Garcia</option>
+        
+                                    <option value="2">Juan</option>
+        
+                                    <option value="3">Yair</option>
+                                    
+                                    <option value="4">Carlos</option>
+        
+                                </select>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div class="p-2 bd-highlight">
+
+                        <form>
+
+                            <div class="form-group">
+
+                                <select name="chofer" class="form-control">
+                            
+                                    <option value="0">Verificó</option>
+
+                                    <option value="1">Juan Garcia</option>
+        
+                                    <option value="2">Juan</option>
+        
+                                    <option value="3">Yair</option>
+                                    
+                                    <option value="4">Carlos</option>
+        
+                                </select>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div class="p-2 bd-highlight">
+
+                        <button *ngIf="folios.length > 0" class="btn btn-outline-primary btn-light m-t-10 font-14" (click)="procesarGuia()">Procesar</button>
+
+                        <button *ngIf="generar" class="btn btn-outline-dark btn-light m-t-10 font-14" (click)="cancelarGuia()">Cancelar</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- <h3>Generar Guía</h3>
+
+                <form>
+
+                    <div class="form-group">
+
+                        <select name="chofer" class="form-control">
+
+                            <option value="0">Juan Garcia</option>
+
+                            <option value="1">Juan</option>
+
+                            <option value="2">Yair</option>
+                            
+                            <option value="3">Carlos</option>
+
+                        </select>
+
+                    </div>
+
+                </form>
 
             </div>
 
@@ -212,9 +304,9 @@
 
                 <button *ngIf="generar" class="btn btn-outline-dark btn-light m-t-10 font-14" (click)="cancelarGuia()">Cancelar</button>
 
-            </div>
+            </div> -->
 
-            <div class="col-12">
+            <div class="col-lg-12 col-md-12 col-sm-12">
 
                 <div class="table-responsive">
 

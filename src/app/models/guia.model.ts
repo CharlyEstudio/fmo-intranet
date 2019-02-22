@@ -9,6 +9,7 @@ export class Guia {
         public fecha: string,
         public hora: string,
         public clientes: number,
+        public chofer_id?: string,
         public _id?: string
     ) { }
 }

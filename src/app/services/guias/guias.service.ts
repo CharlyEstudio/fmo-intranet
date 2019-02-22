@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 
 // Rutas
 import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_SERVER, PUERTO_INTERNO } from '../../config/config';
@@ -7,6 +7,7 @@ import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_SERVER, PUERTO_INT
 // Modelo
 import { GuiasPartidas } from '../../models/guias.model';
 import { Guia } from '../../models/guia.model';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class GuiasService {
@@ -291,6 +292,12 @@ export class GuiasService {
     this.url += '?token=' + this.token;
 
     return this.http.get( this.url );
+  }
+
+  directionsGoogle(origin: any, destiny: any) {
+    // console.log(origin, destiny);
+    return this.http.get('https://maps.googleapis.com/maps/api/directions/json?origin=' + origin.lat + ',' + origin.lng + '&region=es'
+    + '&destination=' + destiny.lat + ',' + destiny.lng + '&departure_time=now&key=AIzaSyDLxUFj_KCshQNqoUG2i7WZFbkR0nigdhs');
   }
 
 }

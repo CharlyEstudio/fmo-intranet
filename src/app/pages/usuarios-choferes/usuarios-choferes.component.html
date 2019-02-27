@@ -1,108 +1,211 @@
-<div class="row el-element-overlay">
+<!-- <div class="row animated fadeIn">
 
-    <div class="col-lg-2 col-md-6" *ngFor="let chofer of choferes">
+    <div class="col-12">
 
         <div class="card">
 
-            <div class="el-card-item">
+            <div class="card-body">
 
-                <div class="el-card-avatar el-overlay-1">
+                <input #input (keyup)="buscarUsuario( input.value )" type="text" class="form-control" placeholder="Buscar usuario...">
 
-                    <img [src]="chofer.img | imagen" class="pl-4 pr-4">
+                <h6 class="text-muted">Para buscar roles Dirección: DIR_ | Gerencia: GER_ | Asesor: ASE_ | Supervisor: SUP_ </h6>
 
-                    <div class="el-overlay">
+            </div>
 
-                        <ul class="el-info">
+        </div>
 
-                            <li>
+    </div>
 
-                                <a class="btn default btn-outline image-popup-vertical-fit" data-toggle="tooltip" title="Actividad" (click)="revisar(chofer)">
+</div> -->
 
-                                    <i class="mdi mdi-link-variant"></i>
+<div class="row animated fadeIn" *ngIf="cargando">
 
-                                </a>
+    <div class="col-sm-12">
 
-                            </li>
+        <div class="alert alert-warning text-center">
 
-                            <li>
+            <strong>Cargando</strong>
 
-                                <a class="btn default btn-outline" data-toggle="tooltip" title="Pedidos" (click)="pedidos(chofer)">
+            <br>
 
-                                    <i class="mdi mdi-dropbox"></i>
+            <i class="fa fa-refresh fa-spin fa-2x"></i>
 
-                                </a>
+            <br>
 
-                            </li>
+            <span>Espere por favor</span>
 
-                            <li *ngIf="rol == 'ADMIN_ROLE'">
+        </div>
 
-                                <a class="btn default btn-outline" data-toggle="tooltip" title="Pre-Comisión" (click)="precomision(chofer)">
+    </div>
 
-                                    <i class="mdi mdi-chart-gantt"></i>
+</div>
 
-                                </a>
+<div class="row animated fadeIn" *ngIf="!cargando">
 
-                            </li>
+    <div class="col-12">
 
-                        </ul>
+        <div class="card">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between mb-3">
+
+                    <div class="p-2 bd-highlight">
+
+                        <h3 class="card-title">Chóferes Registrados (<small>{{ totalResgitro }}</small>)</h3>
+
+                    </div>
+
+                    <div class="p-2 bd-highlight">
+
+                        <button (click)="nuevoChofer()" class="btn btn-info">
+
+                            <i class="fa fa-plus"></i>
+
+                        </button>
 
                     </div>
 
                 </div>
 
-                <div class="el-card-content">
+                <form ngNativeValidate #f="ngForm" *ngIf="nuevo" class="mb-3">
 
-                    <h3 class="box-title">{{ chofer.nombre }}</h3>
+                    <h3>Agregar Chófer</h3>
 
-                    <small>{{ chofer.email }}</small>
+                    <div class="form-row align-items-center">
 
-                    <!-- <div class="row">
+                        <div class="col-auto">
 
-                        <div class="col-6">
+                            <label class="sr-only" for="nombre">Nombre</label>
 
-                            <h6>{{ chofer.porBajarCantidad | number }}</h6>
-
-                            <h6>{{ chofer.porBajarImporte | currency }}</h6>
-
-                            <h6>Facturas a Entregar</h6>
+                            <input ngModel type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" required>
 
                         </div>
 
-                        <div class="col-6">
+                        <div class="col-auto">
 
-                            <h6>{{ chofer.porSurtirCantidad | number }}</h6>
+                            <label class="sr-only" for="zona">Zona</label>
 
-                            <h6>{{ chofer.porSurtirImporte | currency }}</h6>
-
-                            <h6>Por Surtir</h6>
+                            <input ngModel type="text" id="zona" name="zona" class="form-control" placeholder="Zona" required>
 
                         </div>
 
-                        <div class="col-6">
+                        <div class="col-auto">
 
-                            <h6>{{ chofer.facturadoCantidad | number }}</h6>
+                            <label class="sr-only" for="imei">IMEI</label>
 
-                            <h6>{{ chofer.facturadoImporte | currency }}</h6>
-
-                            <h6>Facturados</h6>
+                            <input ngModel type="text" id="imei" name="imei" class="form-control" placeholder="Imei" required>
 
                         </div>
 
-                        <div class="col-6">
+                        <div class="col-auto">
 
-                            <h6>{{ chofer.canceladoCantidad | number }}</h6>
+                            <button class="btn btn-success mb-2" type="button" (click)="agregar(f)">Agregar</button>
 
-                            <h6>{{ chofer.canceladoImporte | currency }}</h6>
-
-                            <h6>Cacenaldos</h6>
+                            <button class="btn btn-danger mb-2" type="button" (click)="cancelar()">Cancelar</button>
 
                         </div>
 
-                    </div> -->
+                    </div>
 
-                    <br>
+
+                </form>
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Imagen</th>
+
+                                <th>Nombre</th>
+
+                                <th>Zona</th>
+
+                                <th>IMEI</th>
+
+                                <th class="text-center">Auth</th>
+
+                                <th></th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr *ngFor="let chofer of choferes">
+
+                                <td class=w70>
+
+                                    <img (click)="mostraModal( chofer._id )" [src]="chofer.img | imagen: 'chofer'" class="img-50 img-circle pointer">
+
+                                </td>
+
+                                <td>{{ chofer.nombre }}</td>
+
+                                <td width="10%">
+
+                                    <input type="text" name="zona" [(ngModel)]="chofer.zona" class="form-control">
+
+                                </td>
+
+                                <td width="25%">
+
+                                    <input type="text" name="imei" [(ngModel)]="chofer.imei" class="form-control text-center">
+
+                                </td>
+
+                                <td width="10%">
+
+                                    <select [(ngModel)]="chofer.activo" name="activo" class="form-control">
+
+                                        <option value="YES">Si</option>
+
+                                        <option value="NOT">No</option>
+
+                                    </select>
+
+                                </td>
+
+                                <td class="text-center">
+
+                                    <button (click)="actualizarUsuario( chofer )" class="btn btn-primary">
+
+                                        <i class="fa fa-save"></i>
+
+                                    </button>
+
+                                    <button (click)="borrarChofer( chofer )" class="btn btn-danger">
+
+                                        <i class="fa fa-trash-o"></i>
+
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
 
                 </div>
+
+                <button (click)="cambiarDesde(-5)" class="btn btn-secondary">
+
+                  Anteriores
+
+                </button>
+
+                <button (click)="cambiarDesde(5)" class="btn btn-secondary">
+
+                  Siguientes
+
+                </button>
 
             </div>
 

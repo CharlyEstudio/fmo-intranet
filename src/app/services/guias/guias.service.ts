@@ -7,7 +7,7 @@ import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_SERVER, PUERTO_INT
 // Modelo
 import { GuiasPartidas } from '../../models/guias.model';
 import { Guia } from '../../models/guia.model';
-import { Observable } from 'rxjs/Observable';
+import { Chofer } from '../../models/chofer.model';
 
 @Injectable()
 export class GuiasService {
@@ -132,7 +132,7 @@ export class GuiasService {
       });
   }
 
-  guardarGuia(guia: Guia) {
+  guardarGuia(guia: Guia, chofer: Chofer) {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/guia';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
@@ -143,7 +143,7 @@ export class GuiasService {
 
     this.url += '?token=' + this.token;
 
-    return this.http.post( this.url, guia )
+    return this.http.post( this.url, {guia: guia, chofer: chofer} )
       .map( (resp: any) => {
         return resp;
       });

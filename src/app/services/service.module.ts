@@ -31,7 +31,8 @@ import {
   GuiasService,
   GpsService,
   ClienteService,
-  GuiasEdoCtaGuard
+  GuiasEdoCtaGuard,
+  ChoferesService
   // NotificationService
 } from "./services.index";
 
@@ -70,7 +71,8 @@ import {
     CreditoService,
     GuiasService,
     GpsService,
-    ClienteService
+    ClienteService,
+    ChoferesService
     // NotificationService
   ],
   declarations: []

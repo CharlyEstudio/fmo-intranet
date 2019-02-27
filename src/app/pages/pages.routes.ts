@@ -62,6 +62,7 @@ import { ComentariosComponent } from '../components/comentarios/comentarios.comp
 import { BoardComentariosComponent } from './board-comentarios/board-comentarios.component';
 import { RutasGuiasComponent } from './rutas-guias/rutas-guias.component';
 import { VerMapaComponent } from './ver-mapa/ver-mapa.component';
+import { UsuariosChoferesComponent } from './usuarios-choferes/usuarios-choferes.component';
 
 const pageRoutes: Routes = [
     {
@@ -148,6 +149,16 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Mantenimiento de Clientes',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'choferes',
+        component: UsuariosChoferesComponent,
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Listado de Choferes',
                     name: 'description'
                 }
     },

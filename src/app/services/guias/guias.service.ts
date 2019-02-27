@@ -300,4 +300,22 @@ export class GuiasService {
     + '&destination=' + destiny.lat + ',' + destiny.lng + '&departure_time=now&key=AIzaSyDLxUFj_KCshQNqoUG2i7WZFbkR0nigdhs');
   }
 
+  gpsMagnitracking(id: any) {
+    return this.http.get(
+      'https://www.magnitracking.net/api/api.php?api=user&ver=1.0&key=3825AD92B3D1A5BA03B725D02E90EB1A&cmd=OBJECT_GET_LOCATIONS,' + id
+    );
+  }
+
+  gpsMagUser() {
+    return this.http.get(
+      'https://www.magnitracking.net/api/api.php?api=user&ver=1.0&key=3825AD92B3D1A5BA03B725D02E90EB1A&cmd=USER_GET_OBJECTS'
+    );
+  }
+
+  gpsMagUserId(id: any) {
+    return this.http.get(
+      'https://www.magnitracking.net/api/api.php?api=user&ver=1.0&key=3825AD92B3D1A5BA03B725D02E90EB1A&cmd=USER_GET_OBJECTS,' + id
+    );
+  }
+
 }

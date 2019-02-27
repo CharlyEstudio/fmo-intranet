@@ -1,14 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+
+import { Observable } from 'rxjs/Observable';
+import { Subscriber } from 'rxjs/Subscriber';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/retry';
+import 'rxjs/add/operator/filter';
 
 // Socket Service
-import { WebsocketService } from '../../services/services.index';
+import { WebsocketService, ClientesService } from '../../services/services.index';
 
 @Component({
   selector: 'app-dashboard-admin',
   templateUrl: './dashboard-admin.component.html',
   styles: []
 })
-export class DashboardAdminComponent implements OnInit {
+export class DashboardAdminComponent implements OnInit, OnDestroy {
+
+  monitor: Subscription;
+  intervalo: any;
+  pedidosWeb: number = 0;
 
   lineChartData: Array<any> = [
     {data: [0, 0, 0, 0], label: 'Mes 1'},
@@ -51,12 +61,49 @@ export class DashboardAdminComponent implements OnInit {
   producto: any;
 
   constructor(
-    private _webSocket: WebsocketService
+    private _webSocket: WebsocketService,
+    private _clienteService: ClientesService
   ) {
     this._webSocket.escuchar('producto-visto').subscribe((producto: any) => {
       console.table(producto);
       this.producto = producto.descripcion;
     });
+
+    // Subscrión a Monitor
+    this.monitor =  this.regresa().subscribe(
+      (numero: any) => this.pedidosWeb = numero.length,
+      error => console.error('Error en el obs', error),
+      () => console.log('El observador termino!')
+    );
+  }
+
+  // Observable de Pedidos por Bajar
+  regresa(): Observable<any> {
+
+    return new Observable((observer: Subscriber<any>) => {
+
+      this.intervalo = setInterval( () => {
+
+        this._clienteService.obtenerPedidosMonitor().subscribe((pedidos: any) => {
+          observer.next(pedidos);
+        });
+
+      }, 1000);
+
+    })
+    .retry()
+    .map((resp) => {
+        return resp;
+    });
+
+  }
+
+  ngOnDestroy() {
+
+    // Intervalo por Bajar
+    this.monitor.unsubscribe();
+    clearInterval(this.intervalo);
+
   }
 
   ngOnInit() {}

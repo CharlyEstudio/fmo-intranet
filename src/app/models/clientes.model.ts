@@ -17,6 +17,5 @@ export class Cliente {
         public factura?: string,
         public precio?: number,
         public _id?: string
-    ) {
-    }
+    ) {}
 }

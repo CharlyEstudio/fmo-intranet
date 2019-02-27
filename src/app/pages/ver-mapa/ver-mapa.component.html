@@ -4,7 +4,7 @@
 
         <agm-map [latitude]="lat" [longitude]="lng" [zoom]="10">
 
-            <agm-marker *ngFor="let g of coordenadas" [latitude]="g.origin.lat" [longitude]="g.origin.lng" [label]="g.label" (markerClick)="clicMarker(g)">
+            <agm-marker *ngFor="let g of coordenadas" [latitude]="g.origin.lat" [longitude]="g.origin.lng" (markerClick)="clicMarker(g)" [iconUrl]="'assets/images/asesores/store.png'">
 
                 <agm-info-window>
 
@@ -23,6 +23,8 @@
                 </agm-info-window>
 
             </agm-marker>
+
+            <agm-marker *ngFor="let ubi of ubicacionesGPS" [latitude]="ubi.lat" [longitude]="ubi.lng" [label]="ubi.label" [iconUrl]="'assets/images/asesores/bus2.png'"></agm-marker>
 
             <agm-direction [origin]="origin" [destination]="destiny" [visible]="verDestino" [provideRouteAlternatives]="alternativa" [panel]="setPanel()"></agm-direction>
 

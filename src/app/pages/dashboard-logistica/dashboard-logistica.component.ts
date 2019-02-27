@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { NgForm } from '@angular/forms';
 
 // Servicios
-import { GuiasService, UsuarioService, WebsocketService } from '../../services/services.index';
+import { GuiasService, UsuarioService, WebsocketService, ChoferesService } from '../../services/services.index';
 
 // Modelos
 import { GuiasPartidas } from '../../models/guias.model';
@@ -28,6 +28,10 @@ export class DashboardLogisticaComponent implements OnInit {
 
   folio: any;
   folios: any[] = [];
+  choferes: any[] = [];
+  verificadores: any[] = [];
+  verifica: any = '0';
+  chf: any = '0';
   clientes: number = 0;
   // pedidos: GuiasPartidas;
   pedidos: any[] = [];
@@ -79,10 +83,23 @@ export class DashboardLogisticaComponent implements OnInit {
   constructor(
     private _guiasServices: GuiasService,
     private _usuarioService: UsuarioService,
+    private _choferService: ChoferesService,
     private _webSocket: WebsocketService,
     public sanitizer: DomSanitizer
   ) {
     this.idUsuario = this._usuarioService.usuario._id;
+
+    this._choferService.obtenerChoferes().subscribe((conductores: any) => {
+      if (conductores.ok) {
+        this.choferes = conductores.choferes;
+      }
+    });
+
+    this._choferService.obtenerVerificadores().subscribe((virify: any) => {
+      if (virify.ok) {
+        this.verificadores = virify.verificadores;
+      }
+    });
 
     let guias = JSON.parse(localStorage.getItem('guia'));
     let especiales = JSON.parse(localStorage.getItem('especiales'));
@@ -135,6 +152,14 @@ export class DashboardLogisticaComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  obtenerChofer() {
+    // console.log(this.chf);
+  }
+
+  obtenerVerify() {
+    // console.log(this.verifica);
   }
 
   generarGuia() {
@@ -389,6 +414,159 @@ export class DashboardLogisticaComponent implements OnInit {
     let idFol = this.idUsuario + '-' + Date.now();
 
     swal({
+      title: "¿Cajas Abiertas?",
+      text: 'Ingrese las cajas cafes/abiertas.',
+      icon: "warning",
+      buttons: {
+        cancel: true,
+        confirm: true
+      },
+      content: {
+        element: "input",
+        attributes: {
+            placeholder: "Abiertas",
+            type: "text",
+        },
+      },
+    })
+    .then((abiertas) => {
+      if (!abiertas) { return null };
+
+      swal({
+        title: "¿Cajas Azules?",
+        text: 'Ingrese las cajas azules.',
+        icon: "warning",
+        buttons: {
+          cancel: true,
+          confirm: true
+        },
+        content: {
+          element: "input",
+          attributes: {
+              placeholder: "Azules",
+              type: "text",
+          },
+        },
+      })
+      .then((azules) => {
+        if (!azules) { return null };
+
+        swal({
+          title: "¿Cajas Naranjas Grandes?",
+          text: 'Ingrese las cajas naranjas grandes.',
+          icon: "warning",
+          buttons: {
+            cancel: true,
+            confirm: true
+          },
+          content: {
+            element: "input",
+            attributes: {
+                placeholder: "Narajnas Grandes",
+                type: "text",
+            },
+          },
+        })
+        .then((narGde) => {
+          if (!narGde) { return null };
+
+          swal({
+            title: "¿Cajas Naranjas Pequeñas?",
+            text: 'Ingrese las cajas naranjas pequeñas.',
+            icon: "warning",
+            buttons: {
+              cancel: true,
+              confirm: true
+            },
+            content: {
+              element: "input",
+              attributes: {
+                  placeholder: "Narajnas Pequeñas",
+                  type: "text",
+              },
+            },
+          })
+          .then((narPeq) => {
+            if (!narPeq) { return null };
+
+            let importe;
+
+            // this.folios.reverse();
+
+            for (let i = 0; i < this.folios.length; i++) {
+              let ped = {
+                folio: idFol,
+                factura: this.folios[i].folio,
+                cliente: this.folios[i].numero,
+                nombre: this.folios[i].nombre,
+                domicilio: this.folios[i].direccion + ', ' + this.folios[i].colonia,
+                poblacion: this.folios[i].ciudad + ', ' + this.folios[i].estado,
+                vendedor: this.folios[i].vendedor,
+                importe: this.folios[i].total,
+                fecha: fecha,
+                hora: hora,
+                reasignar: false
+              };
+
+              this.pedidos.push(ped);
+
+              this.importe += this.folios[i].total;
+
+              // this._guiasServices.procesarGuia(ped).subscribe( ( procesado: any ) => {});
+
+            }
+
+            let cajas = "Cafes: " + abiertas + ", Azules: " + azules + ", NarGde: " + narGde + ", NarPeq: " + narPeq;
+
+            this.guiaGuardar = {
+              folio: idFol,
+              chofer: this.chf.nombre,
+              verifico: this.verifica.nombre,
+              cantidad: this.folios.length,
+              importe: this.importe,
+              cajas: cajas,
+              fecha: fecha,
+              hora: hora,
+              clientes: this.clientes,
+              chofer_id: this.chf._id
+            };
+
+            // console.log(this.guiaGuardar);
+
+            // this._guiasServices.guardarGuia(this.guiaGuardar).subscribe( ( guardado: any ) => {
+            //   if (guardado.ok) {
+            //     this._webSocket.acciones('guias-watch', guardado.guiasGuardado);
+            //   }
+            // });
+            // this._guiasServices.enviarPDFguia(
+            //   this.pedidos, this.guiaGuardar, this.especiales
+            // ).subscribe((resp: any) => {}, err => {});
+
+            localStorage.removeItem('guia');
+            localStorage.removeItem('especiales');
+            this.folio = '';
+            this.folios = [];
+            this.pedidos = [];
+            this.chf = '';
+            this.verifica = '';
+            this.guiaGuardar = null;
+            this.especiales = [];
+            this.importe = 0;
+            this.clientes = 0;
+            this.generar = false;
+            this.guias = true;
+            this.tuberias = false;
+            this.obtener = false;
+            this.sinDatos = false;
+            setTimeout(() => this.verGuias(), 500);
+
+            swal.stopLoading();
+          });
+        });
+      });
+    });
+
+    /*swal({
       title: "¿Procesar Guía?",
       text: 'Ingrese el nombre del chofer.',
       icon: "warning",
@@ -541,8 +719,10 @@ export class DashboardLogisticaComponent implements OnInit {
                   fecha: fecha,
                   hora: hora,
                   clientes: this.clientes,
-                  chofer: ''
+                  chofer_id: ''
                 };
+
+                console.log(this.verifica, this.chf);
 
                 this._guiasServices.guardarGuia(this.guiaGuardar).subscribe( ( guardado: any ) => {
                   if (guardado.ok) {
@@ -575,7 +755,7 @@ export class DashboardLogisticaComponent implements OnInit {
           });
         });
       });
-    });
+    });*/
   }
 
   cancelarGuia() {

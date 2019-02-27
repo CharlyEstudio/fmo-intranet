@@ -1,9 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { Observable } from 'rxjs/Observable';
+import { Subscriber } from 'rxjs/Subscriber';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/retry';
+import 'rxjs/add/operator/filter';
+
 // Servicios
 import { GuiasService } from '../../services/services.index';
-import { google } from '@agm/core/services/google-maps-types';
 
 @Component({
   selector: 'app-ver-mapa',
@@ -11,6 +16,11 @@ import { google } from '@agm/core/services/google-maps-types';
   styles: []
 })
 export class VerMapaComponent implements OnInit, OnDestroy {
+
+  // GPS MAGNITRACKING
+  gps: Subscription;
+  intGPS: any;
+  ubicacionesGPS: any[] = [];
 
   guia: any;
   selecciona: any[] = [];
@@ -22,10 +32,13 @@ export class VerMapaComponent implements OnInit, OnDestroy {
   lng: number = 0;
   alternativa: boolean = true;
 
+  choferes: any = [];
+
   origin: any = {
     lat: 0,
     lng: 0
   };
+
   destiny: any = {
     lat: 0,
     lng: 0
@@ -51,9 +64,65 @@ export class VerMapaComponent implements OnInit, OnDestroy {
   ) {
     this.guia = JSON.parse(this.get.snapshot.paramMap.get("guia"));
     this.mostrarRuta();
+    // Subscrión a Pedidos por Bajar
+    this.gps =  this.regresaBajar().subscribe(
+      numero => {
+        this.ubicacionesGPS = numero;
+      },
+      error => console.error('Error en el obs', error),
+      () => console.log('El observador termino!')
+    );
+  }
+
+  regresaBajar(): Observable<any> {
+
+    return new Observable((observer: Subscriber<any>) => {
+      this.intGPS = setInterval(() => {
+        this._guiaService.gpsMagnitracking('359857081441099').subscribe((location: any) => {
+          this._guiaService.gpsMagUserId('359857081441099').subscribe((userUnidad: any) => {
+            let data = [];
+            for (const key in location) {
+              const loc = {
+                nombre: userUnidad[0].name,
+                placas: userUnidad[0].plate_number,
+                ip: userUnidad[0].ip,
+                label: userUnidad[0].name,
+                lat: Number(location[key].lat),
+                lng: Number(location[key].lng),
+                speed: location[key].speed
+              }
+              data.push(loc);
+            }
+            observer.next(data);
+          });
+        });
+      }, 5000);
+    })
+    .map(data => {
+      return data;
+    });
+
   }
 
   ngOnInit() {
+    this._guiaService.gpsMagnitracking('359857081441099').subscribe((location: any) => {
+      this._guiaService.gpsMagUserId('359857081441099').subscribe((userUnidad: any) => {
+        let data = [];
+        for (const key in location) {
+          const loc = {
+            nombre: userUnidad[0].name,
+            placas: userUnidad[0].plate_number,
+            ip: userUnidad[0].ip,
+            label: userUnidad[0].name,
+            lat: Number(location[key].lat),
+            lng: Number(location[key].lng),
+            speed: location[key].speed
+          }
+          data.push(loc);
+        }
+        this.ubicacionesGPS = data;
+      });
+    });
   }
 
   clicMarker(origin: any) {
@@ -141,7 +210,10 @@ export class VerMapaComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.gps.unsubscribe();
+    clearInterval(this.intGPS);
+  }
 
   // mostrarRuta() {
   //   this.verRuta = true;
@@ -319,7 +391,7 @@ export class VerMapaComponent implements OnInit, OnDestroy {
             lat: this.selec.origin.lat,
             lng: this.selec.origin.lng
           };
-          console.log(this.origin, this.destiny);
+          console.log('1', this.origin, this.destiny);
         } else {
           this.origin = {
             lat: 20.557603,
@@ -329,7 +401,7 @@ export class VerMapaComponent implements OnInit, OnDestroy {
             lat: this.selec.origin.lat,
             lng: this.selec.origin.lng
           };
-          console.log(this.origin, this.destiny);
+          console.log('2', this.origin, this.destiny);
         }
       }
     } else {

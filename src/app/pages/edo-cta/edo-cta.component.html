@@ -104,6 +104,8 @@
 
                                 <th class="text-center">Factura</th>
 
+                                <th class="text-center">Vence</th>
+
                                 <th class="text-center">Cargo</th>
 
                                 <th class="text-center">FechaMov</th>
@@ -129,6 +131,8 @@
                                 <td class="text-center" style="font-weight: 500;">{{ dato.FECHA | date: 'dd-MM-yyyy' }}</td>
 
                                 <td class="text-center" style="font-weight: 700;">{{ dato.FOLIO }}</td>
+
+                                <td class="text-center" style="font-weight: 500;">{{ dato.VENCE | date: 'dd-MM-yyyy' }}</td>
 
                                 <td class="text-center font-weight-bold" style="color: #f62d51;">{{ dato.CARGO | currency }}</td>
 
@@ -160,7 +164,7 @@
 
                             <tr style="background: #f4f6f9; font-weight: 700;">
 
-                                <th colspan="2" class="text-right font-weight-bold">Totales</th>
+                                <th colspan="3" class="text-right font-weight-bold">Totales</th>
 
                                 <th class="text-center font-weight-bold">{{ cargos | currency }}</th>
 

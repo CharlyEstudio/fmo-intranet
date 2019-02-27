@@ -89,4 +89,16 @@ export class ClientesService {
     return this.http.get( this.url );
   }
 
+  obtenerPedidosMonitor() {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=8';
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=8';
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=8';
+    }
+
+    return this.http.get( this.url );
+  }
+
 }

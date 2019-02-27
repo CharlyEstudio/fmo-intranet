@@ -167,6 +167,7 @@ export class EdoCtaComponent implements OnInit {
                     "DOCID": edocta[i].DOCID,
                     "FECHA": edocta[i].FECHA,
                     "FECHAPAG": edocta[i].FECHAPAG,
+                    "VENCE": '',
                     "FOLIO": edocta[i].FOLIO,
                     "SALDO": saldo,
                     "CARGO": cargo,
@@ -331,70 +332,74 @@ export class EdoCtaComponent implements OnInit {
           this.limite = data[0].LIMITE;
 
           this._creditoService.clienteSaldo(this.numero, this.fecha).subscribe((edocta: any) => {
-            for (let i = 0; i < edocta.respuesta.length; i++) {
-              this.abonos += edocta.respuesta[i].ABONO;
+            if (edocta.status) {
+              for (let i = 0; i < edocta.respuesta.length; i++) {
+                this.abonos += edocta.respuesta[i].ABONO;
 
-              if (edocta.respuesta[i].SALDOFINAL !== 0) {
-                this.saldos += edocta.respuesta[i].SALDOFINAL;
-              }
-
-              let esFolio = (factura) => {
-                return factura.FOLIO === edocta.respuesta[i].FOLIO;
-              };
-
-              if (this.datos.find(esFolio)) {
-                let saldo;
-                let cargo;
-                if (edocta.respuesta[i].TOTALGADO === edocta.respuesta[i].TOTAL) {
-                  saldo = (edocta.respuesta[i].TOTAL - edocta.respuesta[i].ABONO) - edocta.respuesta[i].SALDO
-                } else {
-                  if (edocta.respuesta[i].ABONO < 0) {
-                    saldo = edocta.respuesta[i].SALDOFINAL + (-1 * edocta.respuesta[i].ABONO);
-                  } else {
-                    saldo = edocta.respuesta[i].SALDOFINAL;
-                  }
+                if (edocta.respuesta[i].SALDOFINAL !== 0) {
+                  this.saldos += edocta.respuesta[i].SALDOFINAL;
                 }
 
-                if (this.datos.find(esFolio).SALDO !== 0) {
-                  cargo = this.datos.find(esFolio).SALDO;
-                } else {
-                  if (edocta.respuesta[i].ABONO < 0) {
-                    cargo = 0;
-                  } else {
-                    cargo = edocta.respuesta[i].CARGO;
-                  }
-                }
+                let esFolio = (factura) => {
+                  return factura.FOLIO === edocta.respuesta[i].FOLIO;
+                };
 
-                let nuevo = [
-                  {
-                    "DOCID": edocta.respuesta[i].DOCID,
-                    "FECHA": edocta.respuesta[i].FECHA,
-                    "FECHAPAG": edocta.respuesta[i].FECHAPAG,
-                    "FOLIO": edocta.respuesta[i].FOLIO,
-                    "SALDO": saldo,
-                    "CARGO": cargo,
-                    "ABONO": edocta.respuesta[i].ABONO,
-                    "RECIBO": edocta.respuesta[i].RECIBO,
-                    "TIPO": edocta.respuesta[i].TIPO,
-                    "FP": edocta.respuesta[i].FP,
-                    "NOTA": edocta.respuesta[i].NOTA,
-                    "TOTAL": edocta.respuesta[i].TOTAL,
-                    "TOTALPAGADO": edocta.respuesta[i].TOTALPAGADO,
-                    "SALDOFINAL": edocta.respuesta[i].SALDOFINAL,
-                    "RESTAN": edocta.respuesta[i].RESTAN
+                if (this.datos.find(esFolio)) {
+                  let saldo;
+                  let cargo;
+                  if (edocta.respuesta[i].TOTALGADO === edocta.respuesta[i].TOTAL) {
+                    saldo = (edocta.respuesta[i].TOTAL - edocta.respuesta[i].ABONO) - edocta.respuesta[i].SALDO
+                  } else {
+                    if (edocta.respuesta[i].ABONO < 0) {
+                      saldo = edocta.respuesta[i].SALDOFINAL + (-1 * edocta.respuesta[i].ABONO);
+                    } else {
+                      saldo = edocta.respuesta[i].SALDOFINAL;
+                    }
                   }
-                ];
-                this.datos.push(nuevo[0]);
-              } else {
-                this.datos.push(edocta.respuesta[i]);
+
+                  if (this.datos.find(esFolio).SALDO !== 0) {
+                    cargo = this.datos.find(esFolio).SALDO;
+                  } else {
+                    if (edocta.respuesta[i].ABONO < 0) {
+                      cargo = 0;
+                    } else {
+                      cargo = edocta.respuesta[i].CARGO;
+                    }
+                  }
+
+                  let nuevo = [
+                    {
+                      "DOCID": edocta.respuesta[i].DOCID,
+                      "FECHA": edocta.respuesta[i].FECHA,
+                      "FECHAPAG": edocta.respuesta[i].FECHAPAG,
+                      "VENCE": '',
+                      "FOLIO": edocta.respuesta[i].FOLIO,
+                      "SALDO": saldo,
+                      "CARGO": cargo,
+                      "ABONO": edocta.respuesta[i].ABONO,
+                      "RECIBO": edocta.respuesta[i].RECIBO,
+                      "TIPO": edocta.respuesta[i].TIPO,
+                      "FP": edocta.respuesta[i].FP,
+                      "NOTA": edocta.respuesta[i].NOTA,
+                      "TOTAL": edocta.respuesta[i].TOTAL,
+                      "TOTALPAGADO": edocta.respuesta[i].TOTALPAGADO,
+                      "SALDOFINAL": edocta.respuesta[i].SALDOFINAL,
+                      "RESTAN": edocta.respuesta[i].RESTAN
+                    }
+                  ];
+                  this.datos.push(nuevo[0]);
+                  this.cargos = this.saldos + this.abonos;
+
+                } else {
+                  this.datos.push(edocta.respuesta[i]);
+                }
               }
+              this.localizado = true;
+
+              this.cargando = false;
+            } else {
+              swal('Cliente Sin Adeudo', 'El Cliente no tiene ninguna factura vigente.', 'success');
             }
-
-            this.cargos = this.saldos + this.abonos;
-
-            this.localizado = true;
-
-            this.cargando = false;
           });
 
         } else {

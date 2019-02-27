@@ -80,6 +80,11 @@ export class UsuarioService {
   }
 
   guardarStorage(id: string, token: string, usuario: Usuario, menu: any, rol: any) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
+    localStorage.removeItem('menu');
+    localStorage.removeItem('id');
+    localStorage.removeItem('rol');
     localStorage.setItem( 'id', id );
     localStorage.setItem( 'token', token );
     localStorage.setItem( 'usuario', JSON.stringify( usuario ));

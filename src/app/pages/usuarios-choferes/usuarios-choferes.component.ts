@@ -5,7 +5,7 @@ import { NgForm } from '@angular/forms';
 import { Chofer } from '../../models/chofer.model';
 
 // Servicios
-import { UsuarioService, ChoferesService } from '../../services/services.index';
+import { UsuarioService, ChoferesService, WebsocketService } from '../../services/services.index';
 
 // Modal
 import { ModalUploadService } from '../../components/modal-upload/modal-upload.service';
@@ -26,6 +26,7 @@ export class UsuariosChoferesComponent implements OnInit {
   constructor(
     private _usuarioService: UsuarioService,
     private _choferService: ChoferesService,
+    private _webSocket: WebsocketService,
     public _modalUpLoadService: ModalUploadService
   ) {
     this.cargarChoferes();
@@ -109,6 +110,7 @@ export class UsuariosChoferesComponent implements OnInit {
     this._choferService.actualizarUsusario( chofer )
       .subscribe((resp: any) => {
         if (resp.ok) {
+          this._webSocket.acciones('centinela-chofer', resp.chofer);
           swal('Usuario Actualizado!', resp.chofer.nombre, 'success');
         } else {
           swal(resp.mensaje , resp.errors.message, 'error');

@@ -56,6 +56,7 @@ export class DashboardLogisticaComponent implements OnInit {
   porFecha: boolean = true;
   porFolio: boolean = false;
   facturaEncontrada: boolean = false;
+  editarFolio: boolean = false;
 
   importe: number = 0;
   total: number = 0;
@@ -94,17 +95,7 @@ export class DashboardLogisticaComponent implements OnInit {
   ) {
     this.idUsuario = this._usuarioService.usuario._id;
 
-    this._choferService.obtenerChoferesAll().subscribe((conductores: any) => {
-      if (conductores.ok) {
-        this.choferes = conductores.choferes;
-      }
-    });
-
-    this._choferService.obtenerVerificadores().subscribe((virify: any) => {
-      if (virify.ok) {
-        this.verificadores = virify.verificadores;
-      }
-    });
+    this.dataSelect();
 
     let guias = JSON.parse(localStorage.getItem('guia'));
     let especiales = JSON.parse(localStorage.getItem('especiales'));
@@ -150,13 +141,29 @@ export class DashboardLogisticaComponent implements OnInit {
       }
     }
 
-    this._webSocket.escuchar('guias-watch').subscribe((datos: any) => {
-      console.log(datos);
-      this.verGuias();
-    });
+    if (!this.generar && this.folios.length === 0) {
+      this._webSocket.escuchar('guias-watch').subscribe((datos: any) => {
+        this.verGuias();
+      });
+    }
+
   }
 
   ngOnInit() {
+  }
+
+  dataSelect() {
+    this._choferService.obtenerChoferesAll().subscribe((conductores: any) => {
+      if (conductores.ok) {
+        this.choferes = conductores.choferes;
+      }
+    });
+
+    this._choferService.obtenerVerificadores().subscribe((virify: any) => {
+      if (virify.ok) {
+        this.verificadores = virify.verificadores;
+      }
+    });
   }
 
   obtenerChofer() {
@@ -183,7 +190,14 @@ export class DashboardLogisticaComponent implements OnInit {
 
   verGuias() {
     this.ultimasGuias = [];
+    this.choferes = [];
+    this.verificadores = [];
+    this.abiertas = '';
+    this.azules = '';
+    this.nargde = '';
+    this.narpeq = '';
     this.total = 0;
+    this.dataSelect();
 
     let h = new Date();
 
@@ -368,6 +382,37 @@ export class DashboardLogisticaComponent implements OnInit {
   }
 
   procesarGuia() {
+
+    if (this.chf === '0') {
+      swal('Sin Chofer', 'Seleccione un chofer para procesar.', 'error');
+      return;
+    }
+
+    if (this.verifica === '0') {
+      swal('Sin Verificador', 'Seleccione un verificador para procesar.', 'error');
+      return;
+    }
+
+    if (this.abiertas === '') {
+      swal('Sin Número', 'Ingrese una cantidad o cero en cajas abiertas.', 'error');
+      return;
+    }
+
+    if (this.azules === '') {
+      swal('Sin Número', 'Ingrese una cantidad o cero  en cajas azules.', 'error');
+      return;
+    }
+
+    if (this.nargde === '') {
+      swal('Sin Número', 'Ingrese una cantidad o cero  en cajas naranjas grandes.', 'error');
+      return;
+    }
+
+    if (this.narpeq === '') {
+      swal('Sin Número', 'Ingrese una cantidad o cero  en cajas naranjas pequeñas.', 'error');
+      return;
+    }
+
     let h = new Date();
 
     let hor;
@@ -418,158 +463,158 @@ export class DashboardLogisticaComponent implements OnInit {
 
     let idFol = this.idUsuario + '-' + Date.now();
 
-    // swal({
-    //   title: "¿Cajas Abiertas?",
-    //   text: 'Ingrese las cajas cafes/abiertas.',
-    //   icon: "warning",
-    //   buttons: {
-    //     cancel: true,
-    //     confirm: true
-    //   },
-    //   content: {
-    //     element: "input",
-    //     attributes: {
-    //         placeholder: "Abiertas",
-    //         type: "text",
-    //     },
-    //   },
-    // })
-    // .then((abiertas) => {
-    //   if (!abiertas) { return null };
+    /*swal({
+      title: "¿Cajas Abiertas?",
+      text: 'Ingrese las cajas cafes/abiertas.',
+      icon: "warning",
+      buttons: {
+        cancel: true,
+        confirm: true
+      },
+      content: {
+        element: "input",
+        attributes: {
+            placeholder: "Abiertas",
+            type: "text",
+        },
+      },
+    })
+    .then((abiertas) => {
+      if (!abiertas) { return null };
 
-    //   swal({
-    //     title: "¿Cajas Azules?",
-    //     text: 'Ingrese las cajas azules.',
-    //     icon: "warning",
-    //     buttons: {
-    //       cancel: true,
-    //       confirm: true
-    //     },
-    //     content: {
-    //       element: "input",
-    //       attributes: {
-    //           placeholder: "Azules",
-    //           type: "text",
-    //       },
-    //     },
-    //   })
-    //   .then((azules) => {
-    //     if (!azules) { return null };
+      swal({
+        title: "¿Cajas Azules?",
+        text: 'Ingrese las cajas azules.',
+        icon: "warning",
+        buttons: {
+          cancel: true,
+          confirm: true
+        },
+        content: {
+          element: "input",
+          attributes: {
+              placeholder: "Azules",
+              type: "text",
+          },
+        },
+      })
+      .then((azules) => {
+        if (!azules) { return null };
 
-    //     swal({
-    //       title: "¿Cajas Naranjas Grandes?",
-    //       text: 'Ingrese las cajas naranjas grandes.',
-    //       icon: "warning",
-    //       buttons: {
-    //         cancel: true,
-    //         confirm: true
-    //       },
-    //       content: {
-    //         element: "input",
-    //         attributes: {
-    //             placeholder: "Narajnas Grandes",
-    //             type: "text",
-    //         },
-    //       },
-    //     })
-    //     .then((narGde) => {
-    //       if (!narGde) { return null };
+        swal({
+          title: "¿Cajas Naranjas Grandes?",
+          text: 'Ingrese las cajas naranjas grandes.',
+          icon: "warning",
+          buttons: {
+            cancel: true,
+            confirm: true
+          },
+          content: {
+            element: "input",
+            attributes: {
+                placeholder: "Narajnas Grandes",
+                type: "text",
+            },
+          },
+        })
+        .then((narGde) => {
+          if (!narGde) { return null };
 
-    //       swal({
-    //         title: "¿Cajas Naranjas Pequeñas?",
-    //         text: 'Ingrese las cajas naranjas pequeñas.',
-    //         icon: "warning",
-    //         buttons: {
-    //           cancel: true,
-    //           confirm: true
-    //         },
-    //         content: {
-    //           element: "input",
-    //           attributes: {
-    //               placeholder: "Narajnas Pequeñas",
-    //               type: "text",
-    //           },
-    //         },
-    //       })
-    //       .then((narPeq) => {
-    //         if (!narPeq) { return null };
+          swal({
+            title: "¿Cajas Naranjas Pequeñas?",
+            text: 'Ingrese las cajas naranjas pequeñas.',
+            icon: "warning",
+            buttons: {
+              cancel: true,
+              confirm: true
+            },
+            content: {
+              element: "input",
+              attributes: {
+                  placeholder: "Narajnas Pequeñas",
+                  type: "text",
+              },
+            },
+          })
+          .then((narPeq) => {
+            if (!narPeq) { return null };
 
-    //         let importe;
+            let importe;
 
-    //         // this.folios.reverse();
+            // this.folios.reverse();
 
-    //         for (let i = 0; i < this.folios.length; i++) {
-    //           let ped = {
-    //             folio: idFol,
-    //             factura: this.folios[i].folio,
-    //             cliente: this.folios[i].numero,
-    //             nombre: this.folios[i].nombre,
-    //             domicilio: this.folios[i].direccion + ', ' + this.folios[i].colonia,
-    //             poblacion: this.folios[i].ciudad + ', ' + this.folios[i].estado,
-    //             vendedor: this.folios[i].vendedor,
-    //             importe: this.folios[i].total,
-    //             fecha: fecha,
-    //             hora: hora,
-    //             reasignar: false
-    //           };
+            for (let i = 0; i < this.folios.length; i++) {
+              let ped = {
+                folio: idFol,
+                factura: this.folios[i].folio,
+                cliente: this.folios[i].numero,
+                nombre: this.folios[i].nombre,
+                domicilio: this.folios[i].direccion + ', ' + this.folios[i].colonia,
+                poblacion: this.folios[i].ciudad + ', ' + this.folios[i].estado,
+                vendedor: this.folios[i].vendedor,
+                importe: this.folios[i].total,
+                fecha: fecha,
+                hora: hora,
+                reasignar: false
+              };
 
-    //           this.pedidos.push(ped);
+              this.pedidos.push(ped);
 
-    //           this.importe += this.folios[i].total;
+              this.importe += this.folios[i].total;
 
-    //           // this._guiasServices.procesarGuia(ped).subscribe( ( procesado: any ) => {});
+              // this._guiasServices.procesarGuia(ped).subscribe( ( procesado: any ) => {});
 
-    //         }
+            }
 
-    //         let cajas = "Cafes: " + this.abiertas + ", Azules: " + this.azules + ", NarGde: " + this.nargde + ", NarPeq: " + this.narpeq;
+            let cajas = "Cafes: " + this.abiertas + ", Azules: " + this.azules + ", NarGde: " + this.nargde + ", NarPeq: " + this.narpeq;
 
-    //         this.guiaGuardar = {
-    //           folio: idFol,
-    //           chofer: this.chf.nombre,
-    //           verifico: this.verifica.nombre,
-    //           cantidad: this.folios.length,
-    //           importe: this.importe,
-    //           cajas: cajas,
-    //           fecha: fecha,
-    //           hora: hora,
-    //           clientes: this.clientes,
-    //           chofer_id: this.chf._id
-    //         };
+            this.guiaGuardar = {
+              folio: idFol,
+              chofer: this.chf.nombre,
+              verifico: this.verifica.nombre,
+              cantidad: this.folios.length,
+              importe: this.importe,
+              cajas: cajas,
+              fecha: fecha,
+              hora: hora,
+              clientes: this.clientes,
+              chofer_id: this.chf._id
+            };
 
-    //         console.log(this.guiaGuardar);
+            console.log(this.guiaGuardar);
 
-    //         // this._guiasServices.guardarGuia(this.guiaGuardar).subscribe( ( guardado: any ) => {
-    //         //   if (guardado.ok) {
-    //         //     this._webSocket.acciones('guias-watch', guardado.guiasGuardado);
-    //         //   }
-    //         // });
-    //         // this._guiasServices.enviarPDFguia(
-    //         //   this.pedidos, this.guiaGuardar, this.especiales
-    //         // ).subscribe((resp: any) => {}, err => {});
+            // this._guiasServices.guardarGuia(this.guiaGuardar).subscribe( ( guardado: any ) => {
+            //   if (guardado.ok) {
+            //     this._webSocket.acciones('guias-watch', guardado.guiasGuardado);
+            //   }
+            // });
+            // this._guiasServices.enviarPDFguia(
+            //   this.pedidos, this.guiaGuardar, this.especiales
+            // ).subscribe((resp: any) => {}, err => {});
 
-    //         localStorage.removeItem('guia');
-    //         localStorage.removeItem('especiales');
-    //         this.folio = '';
-    //         this.folios = [];
-    //         this.pedidos = [];
-    //         this.chf = '';
-    //         this.verifica = '';
-    //         this.guiaGuardar = null;
-    //         this.especiales = [];
-    //         this.importe = 0;
-    //         this.clientes = 0;
-    //         this.generar = false;
-    //         this.guias = true;
-    //         this.tuberias = false;
-    //         this.obtener = false;
-    //         this.sinDatos = false;
-    //         setTimeout(() => this.verGuias(), 500);
+            localStorage.removeItem('guia');
+            localStorage.removeItem('especiales');
+            this.folio = '';
+            this.folios = [];
+            this.pedidos = [];
+            this.chf = '';
+            this.verifica = '';
+            this.guiaGuardar = null;
+            this.especiales = [];
+            this.importe = 0;
+            this.clientes = 0;
+            this.generar = false;
+            this.guias = true;
+            this.tuberias = false;
+            this.obtener = false;
+            this.sinDatos = false;
+            setTimeout(() => this.verGuias(), 500);
 
-    //         swal.stopLoading();
-    //       });
-    //     });
-    //   });
-    // });
+            swal.stopLoading();
+          });
+        });
+      });
+    });*/
 
     swal({
       title: "¿Quiere procesar la Guía?",
@@ -611,6 +656,8 @@ export class DashboardLogisticaComponent implements OnInit {
 
       let cajas = "Cafes: " + this.abiertas + ", Azules: " + this.azules + ", NarGde: " + this.nargde + ", NarPeq: " + this.narpeq;
 
+      const pdf = this.chf.nombre.toUpperCase() + '-' + this.folios.length + '-' + fecha + '.pdf';
+
       this.guiaGuardar = {
         folio: idFol,
         verifico: this.verifica.nombre,
@@ -619,20 +666,21 @@ export class DashboardLogisticaComponent implements OnInit {
         cajas: cajas,
         fecha: fecha,
         hora: hora,
+        pdf: pdf,
         clientes: this.clientes
       };
 
       this._guiasServices.guardarGuia(this.guiaGuardar, this.chf).subscribe( ( guardado: any ) => {
         if (guardado.ok) {
           this._webSocket.acciones('guias-watch', guardado.guiasGuardado);
-            swal({
-              title: "Guia Procesada",
-              text: 'Procesado Exitosamente'
-            });
+          swal({
+            title: "Guia Procesada",
+            text: 'Procesado Exitosamente'
+          });
         }
       });
       this._guiasServices.enviarPDFguia(
-        this.pedidos, this.guiaGuardar, this.especiales
+        this.pedidos, this.guiaGuardar, this.especiales, this.chf
       ).subscribe((resp: any) => {}, err => {});
 
       localStorage.removeItem('guia');
@@ -657,6 +705,7 @@ export class DashboardLogisticaComponent implements OnInit {
       this.tuberias = false;
       this.obtener = false;
       this.sinDatos = false;
+      this.dataSelect();
     })
     .catch(err => {
       if (err) {
@@ -665,7 +714,7 @@ export class DashboardLogisticaComponent implements OnInit {
         swal.stopLoading();
       }
     });
-  }//
+  }
 
   cancelarGuia() {
     localStorage.removeItem('guia');
@@ -698,9 +747,10 @@ export class DashboardLogisticaComponent implements OnInit {
     this.cantidad = dato.cantidad;
     this.cajas = dato.cajas;
     this.fec = dato.fecha;
+    const pdf = dato.pdf
 
     this.ruta = this.sanitizer.bypassSecurityTrustResourceUrl(
-      'http://www.ferremayoristas.com.mx/api/pdf/' + this.chofer.toUpperCase() + '-' + this.cantidad + '-' + this.fec + '.pdf');
+      'http://www.ferremayoristas.com.mx/api/pdf/' + pdf);
   }
 
 
@@ -897,6 +947,26 @@ export class DashboardLogisticaComponent implements OnInit {
       this.cli = gP.factura.clientes;
       this.generoGuia = gP.usuario.nombre;
       this.imgGeneroGuia = gP.usuario.img;
+    });
+  }
+
+  editar(folio: any) {
+    document.getElementById('edit' + folio._id).style.display = "none";
+    document.getElementById('chofer' + folio._id).style.display = "none";
+    document.getElementById('confirm' + folio._id).style.display = "inline";
+    document.getElementById('choferSel' + folio._id).style.display = "inline";
+  }
+
+  enviarEditar(folio: any) {
+    document.getElementById('edit' + folio._id).style.display = "inline";
+    document.getElementById('chofer' + folio._id).style.display = "inline";
+    document.getElementById('confirm' + folio._id).style.display = "none";
+    document.getElementById('choferSel' + folio._id).style.display = "none";
+    this._guiasServices.actualizarGuiaPri(folio._id, this.chf).subscribe((resp: any) => {
+      if (resp.ok) {
+        this.verGuias();
+        this._webSocket.acciones('centinela-chofer', resp.guia);
+      }
     });
   }
 

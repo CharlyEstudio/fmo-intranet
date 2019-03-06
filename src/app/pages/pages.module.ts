@@ -29,7 +29,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 // Mapa
 import { AgmCoreModule } from '@agm/core';
-import { AgmDirectionModule } from 'agm-direction'
+import { AgmDirectionModule } from 'agm-direction';
 
 // General
 import { AccountSettingsComponent } from './account-settings/account-settings.component';

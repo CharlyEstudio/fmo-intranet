@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 
 // Servicios
-import { GpsService, UsuarioService, WebsocketService } from '../../services/services.index';
+import { GpsService, UsuarioService, WebsocketService, MagnitrackingService } from '../../services/services.index';
 
 @Component({
   selector: 'app-mapa',
@@ -58,25 +58,20 @@ export class MapaComponent implements OnInit, OnDestroy {
 
   constructor(
     private _gps: GpsService,
+    private _gpsMagni: MagnitrackingService,
     private _wsService: WebsocketService,
     private _usuariosServices: UsuarioService
   ) {
-    if (JSON.parse(localStorage.getItem('todoGps')) !== null) {
-      if (JSON.parse(localStorage.getItem('todoGps')).length === 0) {
-        this._gps.obtenerClientesTotal().subscribe((todo: any) => {
-          this.usuarios = todo.gps;
-          localStorage.setItem('todoGps', JSON.stringify(todo.gps));
-        });
-      } else {
-        this.usuarios = JSON.parse(localStorage.getItem('todoGps'));
-      }
+    if (JSON.parse(localStorage.getItem('todoGps'))) {
+      this.usuarios = JSON.parse(localStorage.getItem('todoGps'));
     } else {
       this._gps.obtenerClientesTotal().subscribe((todo: any) => {
-        this.usuarios = todo.gps;
-        localStorage.setItem('todoGps', JSON.stringify(todo.gps));
+        if (todo.status) {
+          this.usuarios = todo.respuesta;
+          localStorage.setItem('todoGps', JSON.stringify(todo.respuesta));
+        }
       });
     }
-
   }
 
   regresa(): Observable<any> {
@@ -121,84 +116,63 @@ export class MapaComponent implements OnInit, OnDestroy {
     }
 
     if (valor === 1) {
-      this._gps.obtenerUbicaciones().subscribe((coords: any) => {
+      this._gpsMagni.gpsMapUser().subscribe((coords: any) => {
         let users: any[] = [];
         this.usuarios = [];
-        for (let i = 0; i < coords.usuarios.length; i++) {
-          if (coords.usuarios[i].lat > 0 || coords.usuarios[i].lng > 0) {
-            let newUsuario = {
-              CLIENTEID: coords.usuarios[i].id,
-              DIAVIS: 'Personal',
-              EMAIL: coords.usuarios[i].email,
-              IMAGEN: coords.usuarios[i].img,
-              LAT: coords.usuarios[i].lat,
-              LNG: coords.usuarios[i].lng,
-              NUMERO: 'Personal',
-              PERID: Number(coords.usuarios[i].idFerrum),
-              TEL: '000 000 0000',
-              ZONA: 'Sin Zona',
-              _id: coords.usuarios[i].id
-            };
-            users.push(newUsuario);
-          }
-        }
-        this.usuarios = users;
+        console.log(coords);
+        // for (let i = 0; i < coords.usuarios.length; i++) {
+        //   if (coords.usuarios[i].lat > 0 || coords.usuarios[i].lng > 0) {
+        //     let newUsuario = {
+        //       CLIENTEID: coords.usuarios[i].id,
+        //       DIAVIS: 'Personal',
+        //       EMAIL: coords.usuarios[i].email,
+        //       IMAGEN: coords.usuarios[i].img,
+        //       LAT: coords.usuarios[i].lat,
+        //       LNG: coords.usuarios[i].lng,
+        //       NUMERO: 'Personal',
+        //       PERID: Number(coords.usuarios[i].idFerrum),
+        //       TEL: '000 000 0000',
+        //       ZONA: 'Sin Zona',
+        //       _id: coords.usuarios[i].id
+        //     };
+        //     users.push(newUsuario);
+        //   }
+        // }
+        // this.usuarios = users;
       });
 
       // Subscripción
-      this.observar = this.regresa().subscribe(
-        coords => {
-          let localizado = (usuario: any) => {
-            return usuario.PERID === coords.perid;
-          }
+      // this.observar = this.regresa().subscribe(
+      //   coords => {
+      //     let localizado = (usuario: any) => {
+      //       return usuario.PERID === coords.perid;
+      //     }
 
-          console.log('Ubicado: ', this.usuarios.find(localizado));
+      //     console.log('Ubicado: ', this.usuarios.find(localizado));
 
-          if (this.usuarios.find(localizado) !== undefined) {
-            this.usuarios.find(localizado).LAT = coords.lat;
-            this.usuarios.find(localizado).LNG = coords.lng;
-          } else {
-            let newUsuario = {
-              CLIENTEID: coords._id,
-              DIAVIS: coords.diavis,
-              EMAIL: coords.email,
-              IMAGEN: coords.imagen,
-              LAT: coords.lat,
-              LNG: coords.lng,
-              NUMERO: coords.numero,
-              PERID: Number(coords.perid),
-              TEL: coords.tel,
-              ZONA: coords.zona,
-              _id: coords._id,
-            };
-            this.usuarios.push(newUsuario);
-          }
-
-          // let users: any[] = [];
-          // this.usuarios = [];
-          // for (let i = 0; i < coords.usuarios.length; i++) {
-          //   if (coords.usuarios[i].lat > 0 || coords.usuarios[i].lng > 0) {
-          //     let newUsuario = {
-          //       CLIENTEID: coords.usuarios[i].id,
-          //       DIAVIS: '',
-          //       EMAIL: coords.usuarios[i].email,
-          //       IMAGEN: coords.usuarios[i].img,
-          //       LAT: coords.usuarios[i].lat,
-          //       LNG: coords.usuarios[i].lng,
-          //       NUMERO: '',
-          //       PERID: Number(coords.usuarios[i].idFerrum),
-          //       TEL: '',
-          //       ZONA: '',
-          //       _id: coords.usuarios[i].id
-          //     };
-          //     users.push(newUsuario);
-          //   }
-          // }
-          // this.usuarios = users;
-        },
-        err => console.error(err),
-        () => console.log('Termina el observador')
-      );
+      //     if (this.usuarios.find(localizado) !== undefined) {
+      //       this.usuarios.find(localizado).LAT = coords.lat;
+      //       this.usuarios.find(localizado).LNG = coords.lng;
+      //     } else {
+      //       let newUsuario = {
+      //         CLIENTEID: coords._id,
+      //         DIAVIS: coords.diavis,
+      //         EMAIL: coords.email,
+      //         IMAGEN: coords.imagen,
+      //         LAT: coords.lat,
+      //         LNG: coords.lng,
+      //         NUMERO: coords.numero,
+      //         PERID: Number(coords.perid),
+      //         TEL: coords.tel,
+      //         ZONA: coords.zona,
+      //         _id: coords._id,
+      //       };
+      //       this.usuarios.push(newUsuario);
+      //     }
+      //   },
+      //   err => console.error(err),
+      //   () => console.log('Termina el observador')
+      // );
 
     }
 

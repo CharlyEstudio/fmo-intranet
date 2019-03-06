@@ -28,7 +28,7 @@
 
                                 <form ngNativeValidate #f="ngForm" style="padding-bottom: 5px;" *ngIf="generar">
 
-                                    <input placeholder="Ingrese el folio a buscar" type="number" class="form-control" [(ngModel)]="folio" name="folio" (change)="obtenerFolio(f)" />
+                                    <input placeholder="Ingrese el folio a buscar" autocomplete="off" type="number" class="form-control" [(ngModel)]="folio" name="folio" (change)="obtenerFolio(f)" />
 
                                 </form>
 
@@ -220,10 +220,10 @@
 
                             <div class="form-group">
 
+                                <label for="chofer">Chofer</label>
+
                                 <select name="chofer" class="form-control" [(ngModel)]="chf" (change)="obtenerChofer()">
                             
-                                    <option class="text-uppercase" value="0">Seleccione chofer</option>
-
                                     <option class="text-uppercase" [ngValue]="chofer" *ngFor="let chofer of choferes">{{ chofer.nombre }}</option>
         
                                 </select>
@@ -240,10 +240,10 @@
 
                             <div class="form-group">
 
+                                <label for="chofer">Verificador</label>
+
                                 <select name="verifica" class="form-control" [(ngModel)]="verifica" (change)="obtenerVerify()">
                             
-                                    <option class="text-uppercase" value="0">Seleccione Verificador</option>
-
                                     <option class="text-uppercase" [ngValue]="verify" *ngFor="let verify of verificadores">
 
                                         {{ verify.nombre }}
@@ -266,33 +266,33 @@
 
                                 <div class="col-3">
 
-                                    <label class="sr-only" for="abiertas">Abiertas</label>
+                                    <label for="abiertas">Abiertas</label>
 
-                                    <input type="number" [(ngModel)]="abiertas" name="abiertas" class="form-control mb-2" id="abiertas" placeholder="Abiertas">
-
-                                </div>
-
-                                <div class="col-3">
-
-                                    <label class="sr-only" for="azules">Azules</label>
-
-                                    <input type="number" [(ngModel)]="azules" name="azules" class="form-control mb-2" id="azules" placeholder="Azules">
+                                    <input type="number" min="0" [(ngModel)]="abiertas" name="abiertas" class="form-control mb-2" id="abiertas" placeholder="Abiertas">
 
                                 </div>
 
                                 <div class="col-3">
 
-                                    <label class="sr-only" for="nargde">NarGde</label>
+                                    <label for="azules">Azules</label>
 
-                                    <input type="number" [(ngModel)]="nargde" name="nargde" class="form-control mb-2" id="nargde" placeholder="NarGde">
+                                    <input type="number" min="0" [(ngModel)]="azules" name="azules" class="form-control mb-2" id="azules" placeholder="Azules">
 
                                 </div>
 
                                 <div class="col-3">
 
-                                    <label class="sr-only" for="narpeq">NarPeq</label>
+                                    <label for="nargde">NarGde</label>
 
-                                    <input type="number" [(ngModel)]="narpeq" name="narpeq" class="form-control mb-2" id="narpeq" placeholder="NarPeq">
+                                    <input type="number" min="0" [(ngModel)]="nargde" name="nargde" class="form-control mb-2" id="nargde" placeholder="NarGde">
+
+                                </div>
+
+                                <div class="col-3">
+
+                                    <label for="narpeq">NarPeq</label>
+
+                                    <input type="number" min="0" [(ngModel)]="narpeq" name="narpeq" class="form-control mb-2" id="narpeq" placeholder="NarPeq">
 
                                 </div>
 
@@ -414,6 +414,8 @@
 
                                 <th class="text-center">Enviar</th>
 
+                                <th class="text-center">Editar</th>
+
                             </tr>
 
                         </thead>
@@ -434,7 +436,22 @@
 
                                 <td class="text-center">{{ g.hora }}</td>
 
-                                <td class="text-left text-uppercase">{{ g.chofer.nombre }}</td>
+                                <td class="text-left text-uppercase">
+
+                                    <span [id]="'chofer' + g._id">
+
+                                        {{ g.chofer.nombre }}
+
+                                    </span>
+
+                                    <select [id]="'choferSel' + g._id" name="chofer" class="form-control" [(ngModel)]="chf" (change)="obtenerChofer()" style="display: none;">
+                            
+                                        <option class="text-uppercase" [ngValue]="chofer" *ngFor="let chofer of choferes">{{ chofer.nombre }}</option>
+            
+                                    </select>
+
+
+                                </td>
 
                                 <td class="text-left text-uppercase">{{ g.verifico }}</td>
 
@@ -463,6 +480,22 @@
                                     <button class="btn btn-outline-info" (click)="enviarEmail(g)">
 
                                         <i class="mdi mdi-email-variant"></i>
+
+                                    </button>
+
+                                </td>
+
+                                <td class="text-center">
+
+                                    <button [id]="'edit' + g._id" class="btn btn-outline-info" (click)="editar(g)">
+
+                                        <i class="mdi mdi-tooltip-edit"></i>
+
+                                    </button>
+
+                                    <button [id]="'confirm' + g._id" class="btn btn-outline-success" (click)="enviarEditar(g)" style="display: none">
+
+                                        <i class="mdi mdi-tooltip-outline-plus"></i>
 
                                     </button>
 

@@ -32,7 +32,8 @@ import {
   GpsService,
   ClienteService,
   GuiasEdoCtaGuard,
-  ChoferesService
+  ChoferesService,
+  MagnitrackingService
   // NotificationService
 } from "./services.index";
 
@@ -72,8 +73,11 @@ import {
     GuiasService,
     GpsService,
     ClienteService,
-    ChoferesService
+    ChoferesService,
+    // Notificaciones
     // NotificationService
+    // Magnitracking
+    MagnitrackingService
   ],
   declarations: []
 })

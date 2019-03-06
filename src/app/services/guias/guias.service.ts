@@ -186,7 +186,7 @@ export class GuiasService {
     return this.http.get( this.url );
   }
 
-  enviarPDFguia(guiaPar: any, guia: any, especiales: any) {
+  enviarPDFguia(guiaPar: any, guia: any, especiales: any, chofer: Chofer) {
     // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
     //   /*LOCAL*/this.url = URL_LOCAL +
     //                       '/api/guias.php?opcion=3&guiaPar=' +
@@ -219,7 +219,7 @@ export class GuiasService {
     // return this.http.get(this.url);
     return this.http.post(
       this.url,
-      { guiaPar: guiaPar, guia: guia, especiales: especiales },
+      { guiaPar: guiaPar, guia: guia, especiales: especiales, chofer: chofer },
       { headers: { 'content-Type': 'application/x-www-form-urlencoded' } }
     );
   }
@@ -316,6 +316,18 @@ export class GuiasService {
     return this.http.get(
       'https://www.magnitracking.net/api/api.php?api=user&ver=1.0&key=3825AD92B3D1A5BA03B725D02E90EB1A&cmd=USER_GET_OBJECTS,' + id
     );
+  }
+
+  actualizarGuiaPri(id: any, chofer: Chofer) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/actualizar/principal/' + id;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/guias/actualizar/principal/' + id;
+    } else {
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/actualizar/principal/' + id;
+    }
+
+    return this.http.put( this.url, chofer );
   }
 
 }

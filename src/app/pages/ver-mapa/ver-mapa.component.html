@@ -44,11 +44,11 @@
 
                 <select name="cliente" [(ngModel)]="selec" id="cliente" class="form-control" (change)="obtener(coordenadasCopy)">
                   
-                          <option value="0">VER TODO</option>
-        
-                          <option *ngFor="let g of coordenadasCopy" [ngValue]="g">{{g.datos.nombre}} - {{g.datos.cliente}}</option>
-        
-                      </select>
+                    <option value="0">VER TODO</option>
+
+                    <option *ngFor="let g of coordenadasCopy" [ngValue]="g">{{g.datos.nombre}} - {{g.datos.cliente}}</option>
+
+                </select>
 
             </div>
 

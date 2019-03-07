@@ -195,7 +195,7 @@ import { UsuariosChoferesComponent } from './usuarios-choferes/usuarios-choferes
         PipesModule,
         PdfViewerModule,
         AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyDLxUFj_KCshQNqoUG2i7WZFbkR0nigdhs'
+            apiKey: ''
         }),
         AgmDirectionModule
     ]

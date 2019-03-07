@@ -141,11 +141,11 @@ export class DashboardLogisticaComponent implements OnInit {
       }
     }
 
-    if (!this.generar && this.folios.length === 0) {
-      this._webSocket.escuchar('guias-watch').subscribe((datos: any) => {
+    this._webSocket.escuchar('guias-watch').subscribe((datos: any) => {
+      if (!this.generar) {
         this.verGuias();
-      });
-    }
+      }
+    });
 
   }
 

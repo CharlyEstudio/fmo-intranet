@@ -33,6 +33,38 @@ export class ClienteService {
     return this.http.get( url );
   }
 
+  cargarUsuariosActivos( desde: number = 0 ) {
+    let url;
+
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/activos?desde=' + desde;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/clientes/activos?desde=' + desde;
+    } else {
+      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/activos?desde=' + desde;
+    }
+
+    url += '&token=' + this.token;
+
+    return this.http.get( url );
+  }
+
+  cargarUsuariosPendientes( desde: number = 0 ) {
+    let url;
+
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/pendientes?desde=' + desde;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/clientes/pendientes?desde=' + desde;
+    } else {
+      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/pendientes?desde=' + desde;
+    }
+
+    url += '&token=' + this.token;
+
+    return this.http.get( url );
+  }
+
   actualizarUsusario( cliente: Cliente ) {
     let url;
 

@@ -1,3 +1,4 @@
+
 // Guards
 export { LoginGuardGuard } from "./guards/login-guard.guard";
 export { AdminGuard } from './guards/admin.guard';
@@ -28,6 +29,7 @@ export { GuiasService } from "./guias/guias.service";
 export { GpsService } from "./gps/gps.service";
 export { ClienteService } from "./usuario-cliente/cliente.service";
 export { ChoferesService } from "./usuario-chofer/choferes.service";
+export { TiendaService } from "./tienda/tienda.service";
 
 // Servicio PHP
 export { PhpService } from "./php/php.service";

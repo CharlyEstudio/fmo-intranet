@@ -63,6 +63,7 @@ import { BoardComentariosComponent } from './board-comentarios/board-comentarios
 import { RutasGuiasComponent } from './rutas-guias/rutas-guias.component';
 import { VerMapaComponent } from './ver-mapa/ver-mapa.component';
 import { UsuariosChoferesComponent } from './usuarios-choferes/usuarios-choferes.component';
+import { PedWebComponent } from './ped-web/ped-web.component';
 
 const pageRoutes: Routes = [
     {
@@ -220,6 +221,16 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Movimiento Detallado de Folios',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'ped-web/:data',
+        component: PedWebComponent,
+        canActivate: [ AsesoresGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Pedidos Web',
                     name: 'description'
                 }
     },

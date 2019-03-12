@@ -33,7 +33,8 @@ import {
   ClienteService,
   GuiasEdoCtaGuard,
   ChoferesService,
-  MagnitrackingService
+  MagnitrackingService,
+  TiendaService
   // NotificationService
 } from "./services.index";
 
@@ -74,6 +75,7 @@ import {
     GpsService,
     ClienteService,
     ChoferesService,
+    TiendaService,
     // Notificaciones
     // NotificationService
     // Magnitracking

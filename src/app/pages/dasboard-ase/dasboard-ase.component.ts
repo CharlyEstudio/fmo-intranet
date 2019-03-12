@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AsesoresService } from '../../services/services.index';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { AsesoresService, WebsocketService, TiendaService } from '../../services/services.index';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,6 +11,7 @@ export class DasboardAseComponent implements OnInit {
 
   // Día
   fecha: number = Date.now();
+  fec: any;
 
   datos: any[] = [];
   asesor: string;
@@ -31,6 +31,9 @@ export class DasboardAseComponent implements OnInit {
   canceladosNumero: number = 0;
   total: number = 0;
   totalNumero: number = 0;
+  web: number = 0;
+  webNumero: number = 0;
+  pedidoWeb: any[] = [];
 
   // Datos
   diaVisita: number = 0;
@@ -54,16 +57,75 @@ export class DasboardAseComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private _asesoresServices: AsesoresService
-  ) {}
-
-  ngOnInit() {
+    private _asesoresServices: AsesoresService,
+    private _tiendaService: TiendaService,
+    private _webSocket: WebsocketService
+  ) {
     this.datos = JSON.parse(localStorage.getItem('usuario'));
+
+    let h = new Date();
+
+    let dia;
+
+    if (h.getDate() < 10) {
+      dia = '0' + h.getDate();
+    } else {
+      dia = h.getDate();
+    }
+
+    let mes;
+
+    if ((h.getMonth() + 1) < 10) {
+      mes = '0' + (h.getMonth() + 1);
+    } else {
+      mes = (h.getMonth() + 1);
+    }
+
+    let anio = h.getFullYear();
+
+    this.fec = anio + '-' + mes + '-' + dia;
 
     this.asesor = this.datos["nombre"];
     this.id = this.datos["_id"];
     this.idFerrum = this.datos["idFerrum"];
 
+    this._tiendaService.obtenerPedidosWeb(this.idFerrum, this.fec).subscribe((web: any) => {
+      if (web.status) {
+        this.webNumero = 0;
+        this.web = 0;
+        this.pedidoWeb = [];
+        this.webNumero = web.respuesta.length;
+        this.pedidoWeb = web.respuesta;
+        for (let i = 0; i < web.respuesta.length; i++) {
+          this.web += (web.respuesta[i].subtotal1 + web.respuesta[i].subtotal2);
+        }
+      }
+    });
+
+    this._webSocket.escuchar('aviso-asesor').subscribe((resp: any) => {
+      if (resp.cliente.perid === this.id) {
+        this._tiendaService.obtenerPedidosWeb(this.idFerrum, this.fec).subscribe((web: any) => {
+          if (web.status) {
+            this.webNumero = 0;
+            this.web = 0;
+            this.pedidoWeb = [];
+            this.webNumero = web.respuesta.length;
+            this.pedidoWeb = web.respuesta;
+            for (let i = 0; i < web.respuesta.length; i++) {
+              this.web += (web.respuesta[i].subtotal1 + web.respuesta[i].subtotal2);
+            }
+          }
+        });
+      }
+    });
+  }
+
+  verPedidosWeb() {
+    const data = JSON.stringify(this.pedidoWeb);
+    this.router.navigate(['/ped-web', data]);
+  }
+
+  ngOnInit() {
     // Zona Asesor
     this._asesoresServices.zonaAsesor(this.idFerrum)
       .subscribe( ( resp: any ) => {

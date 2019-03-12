@@ -101,6 +101,7 @@ import { BoardComentariosComponent } from './board-comentarios/board-comentarios
 import { RutasGuiasComponent } from './rutas-guias/rutas-guias.component';
 import { VerMapaComponent } from './ver-mapa/ver-mapa.component';
 import { UsuariosChoferesComponent } from './usuarios-choferes/usuarios-choferes.component';
+import { PedWebComponent } from './ped-web/ped-web.component';
 
 @NgModule({
     declarations: [
@@ -179,7 +180,8 @@ import { UsuariosChoferesComponent } from './usuarios-choferes/usuarios-choferes
         BoardComentariosComponent,
         RutasGuiasComponent,
         VerMapaComponent,
-        UsuariosChoferesComponent
+        UsuariosChoferesComponent,
+        PedWebComponent
     ],
     exports: [
         DashborarDirComponent,

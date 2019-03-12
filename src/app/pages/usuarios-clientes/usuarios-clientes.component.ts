@@ -55,14 +55,15 @@ export class UsuariosClientesComponent implements OnInit {
     this.usuariosAutorizados = [];
     this.cargando = true;
 
-    this._clienteService.cargarUsuarios( this.desde )
+    this._clienteService.cargarUsuariosActivos( this.desde )
       .subscribe( ( resp: any ) => {
         if (resp.ok) {
-          for (let i = 0; i < resp.clientes.length; i++) {
-            if (resp.clientes[i].activo === 'YES') {
-              this.usuariosAutorizados.push(resp.clientes[i]);
-            }
-          }
+          this.usuariosAutorizados = resp.clientes;
+          // for (let i = 0; i < resp.clientes.length; i++) {
+          //   if (resp.clientes[i].activo === 'YES') {
+          //     this.usuariosAutorizados.push(resp.clientes[i]);
+          //   }
+          // }
           this.totalResgitro = resp.total;
           this.cargando = false;
         } else {
@@ -73,14 +74,15 @@ export class UsuariosClientesComponent implements OnInit {
 
   cargarUsuariosPendientes() {
     this.usuariosPendientes = [];
-    this._clienteService.cargarUsuarios( this.desde )
+    this._clienteService.cargarUsuariosPendientes( this.desde )
       .subscribe( ( resp: any ) => {
         if (resp.ok) {
-          for (let i = 0; i < resp.clientes.length; i++) {
-            if (resp.clientes[i].activo !== 'YES') {
-              this.usuariosPendientes.push(resp.clientes[i]);
-            }
-          }
+          this.usuariosPendientes = resp.clientes;
+          // for (let i = 0; i < resp.clientes.length; i++) {
+          //   if (resp.clientes[i].activo !== 'YES') {
+          //     this.usuariosPendientes.push(resp.clientes[i]);
+          //   }
+          // }
           this.totalPendientes = this.usuariosPendientes.length;
         }
       })

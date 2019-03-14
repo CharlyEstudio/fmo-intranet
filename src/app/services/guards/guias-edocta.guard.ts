@@ -15,6 +15,7 @@ export class GuiasEdoCtaGuard implements CanActivate {
     || this._usuarioService.usuario.rol === 'DIR_ROLE'
     || this._usuarioService.usuario.rol === 'GER_ROLE'
     || this._usuarioService.usuario.rol === 'SUP_ROLE'
+    || this._usuarioService.usuario.rol === 'AUD_ROLE'
     || this._usuarioService.usuario.rol === 'OF_ROLE' ) {
       return true;
     } else {

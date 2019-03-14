@@ -521,6 +521,7 @@ export class DashboardLogisticaComponent implements OnInit {
             title: "Guia Procesada",
             text: 'Procesado Exitosamente'
           });
+          this.verGuias();
         }
       });
       this._guiasServices.enviarPDFguia(
@@ -538,6 +539,7 @@ export class DashboardLogisticaComponent implements OnInit {
       this.especiales = [];
       this.choferes = [];
       this.verificadores = [];
+      this.foliosBusq = [];
       this.abiertas = '';
       this.azules = '';
       this.nargde = '';

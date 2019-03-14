@@ -99,7 +99,7 @@ export class MovimientosFolioComponent implements OnInit {
 
             this.cargando = false;
 
-            this.localizado = false;
+            this.localizado = true;
 
           }
 

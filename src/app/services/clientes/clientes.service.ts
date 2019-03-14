@@ -24,6 +24,19 @@ export class ClientesService {
     return this.http.get( this.url );
   }
 
+  infoClienteCot( cliente: any) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=9&numero=' + cliente;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=9&numero=' + cliente;
+    } else {
+      // tslint:disable-next-line:max-line-length
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=9&numero=' + cliente;
+    }
+
+    return this.http.get( this.url );
+  }
+
   obtenerFacturas( cliente: any, inicio: any, fecha: any ) {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=2&clienteid=' + cliente + '&inicio=' + inicio + '&fecha=' + fecha;
@@ -73,17 +86,17 @@ export class ClientesService {
     return this.http.get( this.url );
   }
 
-  enviarEdoCtaEmail( email: any, info: any, cliente: any ) {
+  enviarEdoCtaEmail( email: any, info: any, cliente: any, asesor: any, telAsesor: any ) {
     let data = JSON.stringify(info);
     let cli = JSON.stringify(cliente);
 
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=4&email=' + email + '&info=' + data + '&cliente=' + cli;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=4&email=' + email + '&info=' + data + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=4&email=' + email + '&info=' + data + '&cliente=' + cli;
+      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=4&email=' + email + '&info=' + data + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor;
     } else {
       // tslint:disable-next-line:max-line-length
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=4&email=' + email + '&info=' + data + '&cliente=' + cli;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=4&email=' + email + '&info=' + data + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor;
     }
 
     return this.http.get( this.url );

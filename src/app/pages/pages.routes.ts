@@ -64,6 +64,7 @@ import { RutasGuiasComponent } from './rutas-guias/rutas-guias.component';
 import { VerMapaComponent } from './ver-mapa/ver-mapa.component';
 import { UsuariosChoferesComponent } from './usuarios-choferes/usuarios-choferes.component';
 import { PedWebComponent } from './ped-web/ped-web.component';
+import { CotizadorComponent } from './cotizador/cotizador.component';
 
 const pageRoutes: Routes = [
     {
@@ -571,6 +572,17 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Geolocalización',
+                    name: 'description'
+                }
+    },
+    // Cotizador
+    {
+        path: 'cotizador',
+        component: CotizadorComponent,
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Cotizador',
                     name: 'description'
                 }
     },

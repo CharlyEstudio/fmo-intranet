@@ -43,6 +43,10 @@ export class EdoCtaComponent implements OnInit {
   saldoAct: any;
   limite: any;
 
+  // Datos Asesor
+  nomAsesor: any;
+  telAsesor: any;
+
   // Dato General
   datos: any[] = [];
 
@@ -126,6 +130,9 @@ export class EdoCtaComponent implements OnInit {
           this.forcre = data[0].FORCRE;
           this.saldoAct = data[0].SALDO;
           this.limite = data[0].LIMITE;
+          this.nomAsesor = data[0].ASESOR;
+          const tel = String(data[0].TEL);
+          this.telAsesor = tel.slice(1, 11);
 
           this._clientesService.obtenerFacturas(data[0].CLIENTEID, forma.value.inicio, this.fecha).subscribe((edocta: any) => {
             for (let i = 0; i < edocta.length; i++) {
@@ -222,7 +229,6 @@ export class EdoCtaComponent implements OnInit {
 
     this._clientesService.infoCliente(this.numero, this.asesor, this.rol)
       .subscribe( ( data: any ) => {
-
         if (data.length > 0) {
 
           this.clienteFerrum = data[0];
@@ -231,6 +237,9 @@ export class EdoCtaComponent implements OnInit {
           this.forcre = data[0].FORCRE;
           this.saldoAct = data[0].SALDO;
           this.limite = data[0].LIMITE;
+          this.nomAsesor = data[0].ASESOR;
+          const tel = String(data[0].TEL);
+          this.telAsesor = tel.slice(1, 11);
 
           this._creditoService.clienteSaldo(this.numero, this.fecha).subscribe((edocta: any) => {
             if (edocta.status) {
@@ -289,12 +298,12 @@ export class EdoCtaComponent implements OnInit {
                     }
                   ];
                   this.datos.push(nuevo[0]);
-                  this.cargos = this.saldos + this.abonos;
 
                 } else {
                   this.datos.push(edocta.respuesta[i]);
                 }
               }
+              this.cargos = this.saldos + this.abonos;
               this.localizado = true;
 
               this.cargando = false;
@@ -318,7 +327,7 @@ export class EdoCtaComponent implements OnInit {
       });
   }
 
-  enviarEmail( datos: any, cliente: any ) {
+  enviarEmail( datos: any, cliente: any, ases: any, telases: any ) {
 
     if (cliente.CORREO === 'cnmfmo@gmail.com') {
 
@@ -378,7 +387,7 @@ export class EdoCtaComponent implements OnInit {
             email = name;
         }
 
-        this._clientesService.enviarEdoCtaEmail(email, datos, cliente).subscribe( ( resp: any ) => {
+        this._clientesService.enviarEdoCtaEmail(email, datos, cliente, ases, telases).subscribe( ( resp: any ) => {
           if (resp[0].status === 'ok') {
             swal('Enviado', 'Correo enviado', 'success');
           } else {

@@ -30,6 +30,7 @@ export { GpsService } from "./gps/gps.service";
 export { ClienteService } from "./usuario-cliente/cliente.service";
 export { ChoferesService } from "./usuario-chofer/choferes.service";
 export { TiendaService } from "./tienda/tienda.service";
+export { PedidosService } from "./pedidos/pedidos.service";
 
 // Servicio PHP
 export { PhpService } from "./php/php.service";

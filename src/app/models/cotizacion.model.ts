@@ -7,6 +7,7 @@ export class Cotizacion {
         public subtotal: number,
         public iva: number,
         public total: number,
+        public folio: string,
         public _id?: string
     ) {}
 }

@@ -19,6 +19,7 @@ export class CotizadorComponent implements OnInit {
   seg: any = '';
 
   file: any;
+  folio: any;
 
   codigo: any = '';
   cantidad: any = '';
@@ -38,6 +39,7 @@ export class CotizadorComponent implements OnInit {
   productos: any[] = [];
   prod: any[] = [];
   cots: any[] = [];
+  ordenGuardada: any;
   cts: any = '0';
   proveedor: any[] = [];
   prove: any = '0';
@@ -141,11 +143,16 @@ export class CotizadorComponent implements OnInit {
       this.nameBol = false;
       this.cotizar = true;
       this.orden = false;
+      if (localStorage.getItem('ordenGuardada') !== null) {
+        this.ordenGuardada = JSON.parse(localStorage.getItem('ordenGuardada'));
+        this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('http://www.ferremayoristas.com.mx/api/cotizaciones/' + this.ordenGuardada.pdf);
+      }
       if (localStorage.getItem('guardado') === 'true') {
         this.guardado = true;
       } else {
         this.guardado = false;
       }
+      this.folio = localStorage.getItem('folio');
       this.file = localStorage.getItem('filePDF');
       this.idFerrum = Number(localStorage.getItem('idFerrumCli'));
       this.numero = localStorage.getItem('numeroCli');
@@ -194,6 +201,7 @@ export class CotizadorComponent implements OnInit {
         this.total = Number(localStorage.getItem('totalPedIntranet'));
       }
     } else if(localStorage.getItem('tipoOperacion') === '2') {
+      this.folio = localStorage.getItem('folio');
       this.file = localStorage.getItem('filePDF');
       this.idFerrum = Number(localStorage.getItem('idFerrumCli'));
       this.numero = localStorage.getItem('numeroCli');
@@ -202,6 +210,10 @@ export class CotizadorComponent implements OnInit {
       this.precio = localStorage.getItem('precioCli');
       this.op = localStorage.getItem('tipoOperacion');
       this.nameBol = false;
+      if (localStorage.getItem('ordenGuardada') !== null) {
+        this.ordenGuardada = JSON.parse(localStorage.getItem('ordenGuardada'));
+        this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('http://www.ferremayoristas.com.mx/api/ordenes/' + this.ordenGuardada.pdf);
+      }
       if (localStorage.getItem('pedidoDistIntranet') !== null) {
         this.file = localStorage.getItem('filePDF');
         this.prod = JSON.parse(localStorage.getItem('prodDistIntranet'));
@@ -243,6 +255,7 @@ export class CotizadorComponent implements OnInit {
       this.nameBol = false;
       this.cotizar = false;
       this.orden = false;
+      this.iniciar();
       localStorage.setItem('tipoOperacion', this.op);
     } else if (this.op === '1') {
       this.verPDF = 'vacio';
@@ -316,7 +329,11 @@ export class CotizadorComponent implements OnInit {
           this.idFerrum = data[0].CLIENTEID;
           this.numero = data[0].NUMERO;
           this.nombre = data[0].NOMBRE;
-          this.file = this.nombre.replace(/ /gi, '-') + '-' + this.seg + '.pdf';
+          // this.file = this.nombre.replace(/ /gi, '-') + '-' + this.seg + '.pdf';
+          const h = new Date();
+          this.file = this.numero + String(h.getMonth()) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds()) + '.pdf';
+          this.folio = 'C' + this.numero + String(h.getMonth() + 1) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds());
+          localStorage.setItem('folio', this.folio);
           this.direccion = data[0].DIRECCION + ' ' + data[0].CASA + ' ' + data[0].INTERIOR + ' ' + data[0].COLONIA + ' ' + data[0].CIUDAD + ', ' + data[0].ESTADO + ', ' + data[0].CP;
           if (data[0].ASESOR !== '') {
             this.asesor = data[0].ASESOR;
@@ -363,7 +380,11 @@ export class CotizadorComponent implements OnInit {
     this.direccion = '';
     if (this.usoNombre.length > 0) {
       this.nombre = this.usoNombre;
-      this.file = this.nombre.replace(/ /gi, '-') + '-' + this.seg + '.pdf';
+      // this.file = this.nombre.replace(/ /gi, '-') + '-' + this.seg + '.pdf';
+      const h = new Date();
+      this.file = String(h.getMonth()) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds()) + '.pdf';
+      this.folio = 'C' + String(h.getMonth() + 1) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds());
+      localStorage.setItem('folio', this.folio);
       this.nameBol = false;
       this.numberBol = false;
       this.lectura = true;
@@ -387,8 +408,12 @@ export class CotizadorComponent implements OnInit {
     this.idFerrum = this.prove.clienteid;
     this.nombre = this.prove.nombre;
     this.direccion = this.prove.direccion + ' ' + this.prove.casa + ' ' + this.prove.interior + ' ' + this.prove.colonia + ' ' + this.prove.ciudad + ', ' + this.prove.estado + ', ' + this.prove.cp;
-    this.file = this.nombre.replace(/ /gi, '-') + '-' + this.seg + '.pdf';
-    localStorage.setItem('idFerrumCli', this.idFerrum);
+    // this.file = this.nombre.replace(/ /gi, '-') + '-' + this.seg + '.pdf';
+    const h = new Date();
+    this.file = this.numero + String(h.getMonth() + 1) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds()) + '.pdf';
+    this.folio = 'C' + this.numero + String(h.getMonth()) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds());
+    localStorage.setItem('folio', this.folio);
+    localStorage.setItem('idFerrumCli', String(this.idFerrum));
     localStorage.setItem('numeroCli', this.numero);
     localStorage.setItem('nombreCli', this.nombre);
     localStorage.setItem('direccionCli', this.direccion);
@@ -577,7 +602,8 @@ export class CotizadorComponent implements OnInit {
         subtotal: this.subtotal,
         iva: this.iva,
         total: this.total,
-        _id: this.id
+        _id: this.id,
+        folio: this.folio
       };
       const p = this.productos;
       const dataPDF = {
@@ -592,8 +618,9 @@ export class CotizadorComponent implements OnInit {
       };
       this._pedidoService.guardarCotizacion(this.cot).subscribe((resp: any) => {
         if (resp.status) {
-          this.guardarPDF(this.cot, dataPDF);
-          // this.iniciar();
+          this.ordenGuardada = resp.respuesta;
+          localStorage.setItem('ordenGuardada', JSON.stringify(this.ordenGuardada));
+          this.guardarPDF(this.cot, dataPDF, resp.respuesta);
         }
       });
     } else {
@@ -603,7 +630,8 @@ export class CotizadorComponent implements OnInit {
         nombre: this.nombre,
         direccion: this.direccion,
         file: this.file,
-        productos: this.productos
+        productos: this.productos,
+        folio: this.folio
       };
 
       const dataPDF = {
@@ -613,26 +641,78 @@ export class CotizadorComponent implements OnInit {
         total: this.total
       };
 
-      this.guardarPDF(datOrder, dataPDF);
-      
-      // this._pedidoService.guardarOrden(datOrder).subscribe((resp: any) => {
-      //   if (resp.status) {
-      //     this.guardarPDF(datOrder, dataPDF);
-      //     swal('Orden Guardada', 'Su orden de compra ha sido guardada.', 'success');
-      //   }
-      // });
+      this._pedidoService.guardarOrden(datOrder).subscribe((resp: any) => {
+        if (resp.status) {
+          this.ordenGuardada = resp.respuesta;
+          localStorage.setItem('ordenGuardada', JSON.stringify(this.ordenGuardada));
+          this.guardarPDF(datOrder, dataPDF, resp.respuesta);
+        }
+      });
     }
   }
 
-  guardarPDF(cotizacion: any, datPDF: any) {
+  guardarPDF(cotizacion: any, datPDF: any, info: any = '') {
     const operacion = localStorage.getItem('tipoOperacion');
-    this._pedidoService.guardarPdf(cotizacion, datPDF, operacion).subscribe((resp: any) => {
-      console.log(resp);
+    this._pedidoService.guardarPdf(cotizacion, datPDF, operacion, info).subscribe((resp: any) => {
       if (resp[0].status.ok) {
-        swal('PDF Creado', resp[0].status.msg, 'success');
+        this.guardado = true;
+        localStorage.setItem('guardado', String(this.guardado));
+        swal('PDF Creado', resp[0].status.msg, {
+          buttons: {
+            catch: {
+              text: "Ok",
+              value: "catch",
+            }
+          },
+        })
+        .then((value) => {
+          if (operacion === '2') {
+            this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('http://www.ferremayoristas.com.mx/api/ordenes/' + info.pdf);
+          } else if (operacion === '1') {
+            this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('http://www.ferremayoristas.com.mx/api/cotizaciones/' + info.pdf);
+          }
+        });
       } else {
         swal('Error', resp[0].status.msg, 'error');
       }
+    });
+  }
+
+  enviarOrden(email: any) {
+    swal({
+      title: "Listo para Evniar!",
+      text: "Coloca el email a donde quieres enviar esta cotización.",
+      icon: "warning",
+      buttons: {
+        cancel: true,
+        confirm: true
+      },
+      content: {
+        element: "input",
+        attributes: {
+            placeholder: "Email",
+            type: "text",
+        },
+      },
+    })
+    .then((email) => {
+      if (email === null) {
+        return;
+      }
+
+      const dataOrder = {
+        nombre: this.nombre,
+        email: email,
+        file: this.ordenGuardada.pdf
+      };
+
+      this._pedidoService.enviarEmailOrden(dataOrder).subscribe((resp: any) => {
+        if (resp[0].status.ok) {
+          swal('Cotización Enviado', resp[0].status.msg, 'success');
+        } else {
+          swal('Error', resp[0].status.msg, 'error');
+        }
+      });
     });
   }
 
@@ -717,7 +797,10 @@ export class CotizadorComponent implements OnInit {
     this.productos = [];
     this.prod = [];
     this.file = '';
+    this.verPDF = 'vacio';
     this.guardado = false;
+    this.ordenGuardada = '';
+    localStorage.removeItem('ordenGuardada');
     localStorage.removeItem('guardado');
     localStorage.removeItem('filePDF');
     localStorage.removeItem('idFerrumCli');

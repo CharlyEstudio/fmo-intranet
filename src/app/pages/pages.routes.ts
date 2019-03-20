@@ -65,6 +65,7 @@ import { VerMapaComponent } from './ver-mapa/ver-mapa.component';
 import { UsuariosChoferesComponent } from './usuarios-choferes/usuarios-choferes.component';
 import { PedWebComponent } from './ped-web/ped-web.component';
 import { CotizadorComponent } from './cotizador/cotizador.component';
+import { NotascreditoComponent } from './notascredito/notascredito.component';
 
 const pageRoutes: Routes = [
     {
@@ -583,6 +584,17 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Cotizador',
+                    name: 'description'
+                }
+    },
+    // Notas de Crédito
+    {
+        path: 'notascredito',
+        component: NotascreditoComponent,
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Notas de Crédito',
                     name: 'description'
                 }
     },

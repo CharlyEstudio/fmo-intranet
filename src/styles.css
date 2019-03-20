@@ -292,9 +292,21 @@ agm-map {
     max-height: 100%;
 }
 
+.bg-primary {
+    background: #67757c!important;
+    color: #fff!important;
+}
+
+.fijar-thead thead, .fijar-thead tbody { display: block; }
+
+.fijar-thead tbody {
+    height: 300px;       /* Just for the demo          */
+    overflow-y: auto;    /* Trigger vertical scroll    */
+    overflow-x: hidden;  /* Hide the horizontal scroll */
+    border: 1px solid black;
+}
 
 /*MAPS DIRECTIONS*/
-
 
 /* #map {
     height: 100%;

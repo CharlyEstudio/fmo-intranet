@@ -35,7 +35,8 @@ import {
   ChoferesService,
   MagnitrackingService,
   TiendaService,
-  PedidosService
+  PedidosService,
+  NcService
   // NotificationService
 } from "./services.index";
 
@@ -78,6 +79,7 @@ import {
     ChoferesService,
     TiendaService,
     PedidosService,
+    NcService,
     // Notificaciones
     // NotificationService
     // Magnitracking

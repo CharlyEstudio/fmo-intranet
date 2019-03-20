@@ -103,6 +103,7 @@ import { VerMapaComponent } from './ver-mapa/ver-mapa.component';
 import { UsuariosChoferesComponent } from './usuarios-choferes/usuarios-choferes.component';
 import { PedWebComponent } from './ped-web/ped-web.component';
 import { CotizadorComponent } from './cotizador/cotizador.component';
+import { NotascreditoComponent } from './notascredito/notascredito.component';
 
 @NgModule({
     declarations: [
@@ -183,7 +184,8 @@ import { CotizadorComponent } from './cotizador/cotizador.component';
         VerMapaComponent,
         UsuariosChoferesComponent,
         PedWebComponent,
-        CotizadorComponent
+        CotizadorComponent,
+        NotascreditoComponent
     ],
     exports: [
         DashborarDirComponent,

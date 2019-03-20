@@ -1,0 +1,265 @@
+<div class="row">
+
+  <div class="col-lg-12 col-md-12 col-sm-12 animated fadeIn" *ngIf="nc.length === 0 && cargando">
+
+    <div class="alert alert-warning text-center">
+
+      <strong>Cargando</strong>
+
+      <br>
+
+      <i class="fa fa-refresh fa-spin fa-2x"></i>
+
+      <br>
+
+      <span>Espere por favor</span>
+
+    </div>
+
+  </div>
+
+  <div class="col-lg-12 col-md-12 col-sm-12 mt-4" *ngIf="nc.length > 0">
+
+    <form #f="ngForm" class="form-inline">
+
+      <div class="form-group mb-2">
+
+        <label for="staticEmail2">Activas</label>
+
+      </div>
+
+      <div class="form-group mx-sm-3 mb-2">
+
+        <label for="inputFec" class="sr-only">NC</label>
+
+        <input [ngModel]="fechaNC" name="fechaNC" type="date" class="form-control" id="inputFec" value="0000-00-00">
+
+      </div>
+
+      <button type="button" class="btn btn-primary mx-sm-3 mb-2" (click)="buscarFecha(f)">Buscar</button>
+
+      <button type="button" class="btn btn-success mx-sm-3 mb-2" (click)="obtenerTodosNC()">Limpiar</button>
+
+      <div class="form-group mx-sm-3 mb-2">
+
+        <label class="font-weight-bold">
+          
+          Total <span class="badge badge-info ml-2">{{ total | number }}</span>
+        
+        </label>
+
+      </div>
+
+      <div class="form-group mx-sm-3 mb-2">
+
+        <label>
+          
+          Trabajadas <span class="badge badge-primary ml-2">{{ trabajadas | number }}</span>
+
+        </label>
+
+      </div>
+
+      <div class="form-group mb-2">
+
+        <label>
+          
+          Pendientes <span class="badge ml-2" [ngClass]="{'badge-danger': pendientes > 0, 'badge-inverse': pendientes === 0}">{{ pendientes | number }}</span>
+        
+        </label>
+
+      </div>
+
+    </form>
+  
+  </div>
+
+  <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="nc.length > 0 && !cargando">
+
+    <div class="table-responsive">
+
+      <table class="table fijar-thead" style="width: 100%">
+
+        <thead>
+
+          <tr>
+
+            <th style="width:7%">FECHA</th>
+
+            <th style="width:8%">TIPO</th>
+            
+            <th style="width:5%">NC</th>
+
+            <th style="width:5%">FACTURA</th>
+
+            <th style="width:30%">CLIENTE</th>
+
+            <th style="width:5%">SUBTOTAL</th>
+
+            <th style="width:5%">IVA</th>
+
+            <th style="width:5%">TOTAL</th>
+
+            <th style="width:20%">ASESOR</th>
+
+            <th style="width:10%">TRABAJADO</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let n of nc" [ngClass]="{'bg-primary': n.trabajado}" [id]="'linea' + n.nc + n.factura">
+
+            <td>{{ n.fecha | date: 'dd-MM-yyyy' }}</td>
+
+            <td>
+              
+              <span class="badge" [ngClass]="{'badge-danger': n.serie === 'D', 'badge-info': n.serie === 'P', 'badge-warning': n.serie === 'F', 'badge-inverse': n.serie === 'G'}">{{ n.tiponc }}</span>
+            
+            </td>
+
+            <td>{{ n.nc }}</td>
+
+            <td>{{ n.factura }}</td>
+
+            <td>{{ n.nombre }}</td>
+
+            <td>{{ n.subtotal | currency }}</td>
+
+            <td>{{ n.iva | currency }}</td>
+
+            <td>{{ n.total | currency }}</td>
+
+            <td>{{ n.vendedor }}</td>
+
+            <td class="text-center" style="width: 12%;">
+
+              <button type="button" class="btn btn-success btn-sm" (click)="trabajado(n)" *ngIf="!n.trabajado">
+
+                <i class="mdi mdi-checkbox-marked-outline"></i>
+
+              </button>
+
+              <button type="button" class="btn btn-danger btn-sm" (click)="quitar(n)" *ngIf="n.trabajado">
+
+                <i class="mdi mdi-delete-empty"></i>
+
+              </button>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+  <div class="col-lg-12 col-md-12 col-sm-12 mt-4" *ngIf="work.length > 0 && !cargando">
+
+    <form class="form-inline">
+
+      <div class="form-group mb-2">
+
+        <label for="staticEmail2">Trabajadas</label>
+
+      </div>
+
+      <div class="form-group mx-sm-3 mb-2">
+
+        <label for="inputNc" class="sr-only">NC</label>
+
+        <input [(ngModel)]="inNC" name="inNC" type="text" class="form-control" id="inputNc" placeholder="Nota de Crédito" autocomplete="off">
+
+      </div>
+
+      <div class="form-group mx-sm-3 mb-2">
+
+        <label for="inputFactura" class="sr-only">Factura</label>
+
+        <input [(ngModel)]="inFac" name="inFac" type="text" class="form-control" id="inputFactura" placeholder="Factura" autocomplete="off">
+
+      </div>
+
+      <button type="button" class="btn btn-primary mx-sm-3 mb-2" (click)="buscarNC()">Buscar</button>
+
+      <button type="button" class="btn btn-success mb-2" (click)="obtenerTrabajados()">Limpiar</button>
+
+    </form>
+  
+  </div>
+
+  <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="work.length > 0 && !cargando">
+
+      <div class="table-responsive">
+  
+        <table class="table fijar-thead" style="width: 100%">
+  
+          <thead>
+  
+            <tr>
+  
+              <th style="width:7%">FECHA</th>
+
+              <th style="width:8%">TIPO</th>
+              
+              <th style="width:5%">NC</th>
+  
+              <th style="width:5%">FACTURA</th>
+  
+              <th style="width:32%">CLIENTE</th>
+  
+              <th style="width:5%">SUBTOTAL</th>
+  
+              <th style="width:5%">IVA</th>
+  
+              <th style="width:5%">TOTAL</th>
+  
+              <th style="width:10%">ASESOR</th>
+  
+            </tr>
+  
+          </thead>
+  
+          <tbody>
+  
+            <tr *ngFor="let w of work">
+  
+              <td style="width:7%">{{ w.fecha | date: 'dd-MM-yyyy' }}</td>
+  
+              <td style="width:8%">
+                
+                <span class="badge" [ngClass]="{'badge-danger': w.serie === 'D', 'badge-info': w.serie === 'P', 'badge-warning': w.serie === 'F', 'badge-inverse': w.serie === 'G'}">{{ w.tiponc }}</span>
+              
+              </td>
+  
+              <td style="width:5%">{{ w.nc }}</td>
+  
+              <td style="width:5%">{{ w.factura }}</td>
+  
+              <td style="width:32%">{{ w.nombre }}</td>
+  
+              <td style="width:5%">{{ w.subtotal | currency }}</td>
+  
+              <td style="width:5%">{{ w.iva | currency }}</td>
+  
+              <td style="width:5%">{{ w.total | currency }}</td>
+  
+              <td style="width:10%">{{ w.vendedor }}</td>
+  
+            </tr>
+  
+          </tbody>
+  
+        </table>
+  
+      </div>
+  
+    </div>
+
+</div>

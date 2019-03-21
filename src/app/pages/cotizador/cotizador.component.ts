@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 // Servicios
@@ -6,6 +6,7 @@ import { UsuarioService, ClientesService, DiariosService, PedidosService } from 
 
 // Modelo
 import { Cotizacion } from '../../models/cotizacion.model';
+import { XmlString } from '../../models/xml.model';
 
 @Component({
   selector: 'app-cotizador',
@@ -13,6 +14,8 @@ import { Cotizacion } from '../../models/cotizacion.model';
   styles: []
 })
 export class CotizadorComponent implements OnInit {
+
+  // @ViewChild('cantidad') cantidadInput: ElementRef;
 
   fecha: any = '';
   hora: any = '';
@@ -23,6 +26,7 @@ export class CotizadorComponent implements OnInit {
 
   codigo: any = '';
   cantidad: any = '';
+  cantidadStep: number = 0;
 
   cot: Cotizacion;
 
@@ -50,6 +54,8 @@ export class CotizadorComponent implements OnInit {
   nombre: string = '';
   direccion: string = '';
   localidad: string = '';
+  correoCli: string = '';
+  rfc: string = '';
 
   // Saldos del Cliente
   saldo: number = 0;
@@ -67,6 +73,7 @@ export class CotizadorComponent implements OnInit {
   numberBol: boolean = true;
   lectura: boolean = false;
   guardado: boolean = false;
+  enviarBool: boolean = false;
 
   // Importes del Pedido/Orden de Compra
   subtotal: number = 0;
@@ -143,6 +150,7 @@ export class CotizadorComponent implements OnInit {
       this.nameBol = false;
       this.cotizar = true;
       this.orden = false;
+      this.enviarBool = false;
       if (localStorage.getItem('ordenGuardada') !== null) {
         this.ordenGuardada = JSON.parse(localStorage.getItem('ordenGuardada'));
         this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('http://www.ferremayoristas.com.mx/api/cotizaciones/' + this.ordenGuardada.pdf);
@@ -152,7 +160,9 @@ export class CotizadorComponent implements OnInit {
       } else {
         this.guardado = false;
       }
+      this.correoCli = localStorage.getItem('correoCli');
       this.folio = localStorage.getItem('folio');
+      this.rfc = localStorage.getItem('rfcCli');
       this.file = localStorage.getItem('filePDF');
       this.idFerrum = Number(localStorage.getItem('idFerrumCli'));
       this.numero = localStorage.getItem('numeroCli');
@@ -179,6 +189,7 @@ export class CotizadorComponent implements OnInit {
         this.total = Number(localStorage.getItem('totalPedIntranet'));
       }
     } else if (localStorage.getItem('tipoOperacion') === '3') {
+      this.enviarBool = true;
       if (localStorage.getItem('guardado') === 'true') {
         this.guardado = true;
       } else {
@@ -201,6 +212,7 @@ export class CotizadorComponent implements OnInit {
         this.total = Number(localStorage.getItem('totalPedIntranet'));
       }
     } else if(localStorage.getItem('tipoOperacion') === '2') {
+      this.enviarBool = false;
       this.folio = localStorage.getItem('folio');
       this.file = localStorage.getItem('filePDF');
       this.idFerrum = Number(localStorage.getItem('idFerrumCli'));
@@ -252,6 +264,7 @@ export class CotizadorComponent implements OnInit {
       this.numero = '';
       this.nombre = '';
       this.direccion = '';
+      this.enviarBool = false;
       this.nameBol = false;
       this.cotizar = false;
       this.orden = false;
@@ -263,6 +276,7 @@ export class CotizadorComponent implements OnInit {
       this.cts = '0';
       this.usoNumero = '';
       this.usoNombre = '';
+      this.enviarBool = false;
       this.numberBol = true;
       this.lectura = false;
       this.nameBol = true;
@@ -278,6 +292,7 @@ export class CotizadorComponent implements OnInit {
       this.nombre = '';
       this.direccion = '';
       this.prove = '0';
+      this.enviarBool = false;
       this.nameBol = false;
       this._diariosServoce.proveedores().subscribe((prov: any) => {
         if (prov.length > 0) {
@@ -293,6 +308,7 @@ export class CotizadorComponent implements OnInit {
         }
       });
     } else if (this.op === '3') {
+      this.enviarBool = true;
       this.verPDF = 'vacio';
       this.cots = [];
       this.cts = '0';
@@ -320,15 +336,21 @@ export class CotizadorComponent implements OnInit {
     this.numberBol = true;
     this.lectura = false;
     this.idFerrum = 0;
+    this.nivelPrecio = 0;
     this.numero = '';
     this.nombre = '';
     this.direccion = '';
+    this.correoCli = '';
+    this.rfc = '';
     if (this.usoNumero.length > 0) {
       this._clienteService.infoClienteCot(this.usoNumero).subscribe((data: any) => {
         if (data.length > 0) {
           this.idFerrum = data[0].CLIENTEID;
           this.numero = data[0].NUMERO;
           this.nombre = data[0].NOMBRE;
+          this.correoCli = data[0].CORREO;
+          this.nivelPrecio = data[0].LISTA;
+          this.rfc = data[0].RFC;
           // this.file = this.nombre.replace(/ /gi, '-') + '-' + this.seg + '.pdf';
           const h = new Date();
           this.file = this.numero + String(h.getMonth()) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds()) + '.pdf';
@@ -353,7 +375,9 @@ export class CotizadorComponent implements OnInit {
           this.linea = data[0].LIMITE;
           this.dias = data[0].DIACREDITO;
 
+          localStorage.setItem('rfcCli', this.rfc);
           localStorage.setItem('filePDF', this.file);
+          localStorage.setItem('correoCli', String(this.correoCli));
           localStorage.setItem('idFerrumCli', String(this.idFerrum));
           localStorage.setItem('numeroCli', this.numero);
           localStorage.setItem('nombreCli', this.nombre);
@@ -378,6 +402,8 @@ export class CotizadorComponent implements OnInit {
     this.numero = '';
     this.nombre = '';
     this.direccion = '';
+    this.correoCli = '';
+    this.rfc = '';
     if (this.usoNombre.length > 0) {
       this.nombre = this.usoNombre;
       // this.file = this.nombre.replace(/ /gi, '-') + '-' + this.seg + '.pdf';
@@ -427,33 +453,52 @@ export class CotizadorComponent implements OnInit {
     localStorage.setItem('cambiarPrecio', this.tp);
   }
 
-  siguiente(input: any) {
-    const inputCodigo = input;
-    if (inputCodigo !== '') {
-      document.getElementById('cantidad').focus();
+  siguiente() {
+    if (this.codigo !== '') {
+      this._pedidoService.buscarLote(this.codigo).subscribe((lote: any) => {
+        if (lote.status) {
+          document.getElementById('cantidad').value = lote.respuesta[0].lote;
+          this.cantidadStep = lote.respuesta[0].lote;
+          document.getElementById('cantidad').readOnly = false;
+          document.getElementById('cantidad').focus();
+        } else {
+          swal('Códgio No Existe', 'Este código no existe.', 'error');
+          document.getElementById('codigo').value = '';
+          document.getElementById('codigo').focus();
+        }
+      });
     } else {
+      document.getElementById('cantidad').readOnly = true;
       document.getElementById('codigo').focus();
       swal('Sin Código', 'No se agrego el código del producto.', 'error');
     }
   }
 
   ingresar() {
-    if (this.proveedor.length === 0) {
-      if (this.codigo !== '') {
-        if (this.nivelPrecio !== 0) {
+    let inputCantidad = document.getElementById('cantidad').value;
+
+    const division = inputCantidad % this.cantidadStep;
+    
+    if (division === 0) {
+      if (this.proveedor.length === 0) {
+        if (this.codigo !== '') {
+          if (this.nivelPrecio === 0) {
+            this.nivelPrecio = 3;
+          }
           this._pedidoService.obtenerProducto(this.codigo, this.nivelPrecio).subscribe((producto: any) => {
             if (producto.status) {
-              this.subtotal += (producto.respuesta[0].precioneto * this.cantidad);
-              this.total += (producto.respuesta[0].precio * this.cantidad);
+              if (producto.respuesta)
+              this.subtotal += (producto.respuesta[0].precioneto * inputCantidad);
+              this.total += (producto.respuesta[0].precio * inputCantidad);
               if (producto.respuesta[0].iva > 0) {
-                this.iva += (producto.respuesta[0].precioneto * this.cantidad) * producto.respuesta[0].iva;
+                this.iva += (producto.respuesta[0].precioneto * inputCantidad) * producto.respuesta[0].iva;
               }
               const agregar = {
                 producto: producto.respuesta[0],
-                precioFinal: (producto.respuesta[0].precioneto * this.cantidad),
+                precioFinal: (producto.respuesta[0].precioneto * inputCantidad),
                 precioDesc: producto.respuesta[0].precioneto,
                 precioTot: producto.respuesta[0].precio,
-                cantidad: this.cantidad,
+                cantidad: inputCantidad,
                 claveUnidad: producto.respuesta[0].claveUnidad,
                 claveProdServ: producto.respuesta[0].claveProdServ
               };
@@ -480,87 +525,110 @@ export class CotizadorComponent implements OnInit {
               this.codigo = '';
               this.cantidad = '';
               document.getElementById('codigo').focus();
+              document.getElementById('cantidad').value = '';
+              document.getElementById('cantidad').readOnly = true;
             }
           });
         } else {
-          swal('Sin Tipo de Precio', 'Favor de asignar un nivel de precio al cliente.', 'error');
-        }
-      } else {
-        document.getElementById('codigo').focus();
-        swal('Sin Código', 'No se agrego el código del producto.', 'error');
-      }
-    } else {
-      this._pedidoService.obtenerProducto(this.codigo, this.nivelPrecio).subscribe((producto: any) => {
-        if (producto.status) {
-          this.subtotal += (producto.respuesta[0].precioneto * this.cantidad);
-          this.total += (producto.respuesta[0].precio * this.cantidad);
-          if (producto.respuesta[0].iva > 0) {
-            this.iva += (producto.respuesta[0].precioneto * this.cantidad) * producto.respuesta[0].iva;
-          }
-          const agregar = {
-            producto: producto.respuesta[0],
-            precioFinal: (producto.respuesta[0].precioneto * this.cantidad),
-            precioDesc: producto.respuesta[0].precioneto,
-            precioTot: producto.respuesta[0].precio,
-            cantidad: this.cantidad,
-            claveUnidad: producto.respuesta[0].claveUnidad,
-            claveProdServ: producto.respuesta[0].claveProdServ
-          };
-          this.prod.push(producto.respuesta[0]);
-          this.productos.push(agregar);
-          if (localStorage.getItem('pedidoDistIntranet') !== null) {
-            localStorage.removeItem('prodDistIntranet');
-            localStorage.removeItem('pedidoDistIntranet');
-            localStorage.removeItem('subtotalPedIntranet');
-            localStorage.removeItem('ivaPedIntranet');
-            localStorage.removeItem('totalPedIntranet');
-            localStorage.setItem('prodDistIntranet', JSON.stringify(this.prod));
-            localStorage.setItem('pedidoDistIntranet', JSON.stringify(this.productos));
-            localStorage.setItem('subtotalPedIntranet', String(this.subtotal));
-            localStorage.setItem('ivaPedIntranet', String(this.iva));
-            localStorage.setItem('totalPedIntranet', String(this.total));
-          } else {
-            localStorage.setItem('prodDistIntranet', JSON.stringify(this.prod));
-            localStorage.setItem('pedidoDistIntranet', JSON.stringify(this.productos));
-            localStorage.setItem('subtotalPedIntranet', String(this.subtotal));
-            localStorage.setItem('ivaPedIntranet', String(this.iva));
-            localStorage.setItem('totalPedIntranet', String(this.total));
-          }
           this.codigo = '';
           this.cantidad = '';
-          document.getElementById('codigo').focus();
+          document.getElementById('cantidad').readOnly = true;
+          swal('Sin Código', 'No se agrego el código del producto.', 'error');
         }
-      });
+      } else {
+        this._pedidoService.obtenerProducto(this.codigo, this.nivelPrecio).subscribe((producto: any) => {
+          if (producto.status) {
+            this.subtotal += (producto.respuesta[0].precioneto * this.cantidad);
+            this.total += (producto.respuesta[0].precio * this.cantidad);
+            if (producto.respuesta[0].iva > 0) {
+              this.iva += (producto.respuesta[0].precioneto * this.cantidad) * producto.respuesta[0].iva;
+            }
+            const agregar = {
+              producto: producto.respuesta[0],
+              precioFinal: (producto.respuesta[0].precioneto * this.cantidad),
+              precioDesc: producto.respuesta[0].precioneto,
+              precioTot: producto.respuesta[0].precio,
+              cantidad: this.cantidad,
+              claveUnidad: producto.respuesta[0].claveUnidad,
+              claveProdServ: producto.respuesta[0].claveProdServ
+            };
+            this.prod.push(producto.respuesta[0]);
+            this.productos.push(agregar);
+            if (localStorage.getItem('pedidoDistIntranet') !== null) {
+              localStorage.removeItem('prodDistIntranet');
+              localStorage.removeItem('pedidoDistIntranet');
+              localStorage.removeItem('subtotalPedIntranet');
+              localStorage.removeItem('ivaPedIntranet');
+              localStorage.removeItem('totalPedIntranet');
+              localStorage.setItem('prodDistIntranet', JSON.stringify(this.prod));
+              localStorage.setItem('pedidoDistIntranet', JSON.stringify(this.productos));
+              localStorage.setItem('subtotalPedIntranet', String(this.subtotal));
+              localStorage.setItem('ivaPedIntranet', String(this.iva));
+              localStorage.setItem('totalPedIntranet', String(this.total));
+            } else {
+              localStorage.setItem('prodDistIntranet', JSON.stringify(this.prod));
+              localStorage.setItem('pedidoDistIntranet', JSON.stringify(this.productos));
+              localStorage.setItem('subtotalPedIntranet', String(this.subtotal));
+              localStorage.setItem('ivaPedIntranet', String(this.iva));
+              localStorage.setItem('totalPedIntranet', String(this.total));
+            }
+            this.codigo = '';
+            this.cantidad = 0;
+            document.getElementById('codigo').focus();
+            document.getElementById('cantidad').readOnly = true;
+          }
+        });
+      }
+    } else {
+      document.getElementById('cantidad').value = this.cantidadStep;
+      swal('ERROR EN CANTIDAD', 'Solo puede ingresar cantidades en multiplos de ' + this.cantidadStep, 'error');
     }
   }
 
-  cambiarCantidad(producto: any, valor: any) {
+  cambiarCantidad(producto: any, valor: any, indice: amy) {
+    const cantAnte = producto.cantidad;
+    const division = valor % producto.producto.lote;
     this.subtotal = 0;
     this.iva = 0;
     this.total = 0;
-    producto.precioFinal = (producto.precioDesc * Number(valor));
-    producto.precioTot = (producto.producto.precio * Number(valor));
-    producto.cantidad = Number(valor);
 
-    for (let i = 0; i < this.productos.length; i++) {
-      this.subtotal += this.productos[i].precioFinal;
+    if (division === 0) {
+      producto.precioFinal = (producto.precioDesc * Number(valor));
+      producto.precioTot = (producto.producto.precio * Number(valor));
+      producto.cantidad = Number(valor);
 
-      if (this.productos[i].producto.iva > 0) {
-        this.iva += this.productos[i].precioFinal * ( this.productos[i].producto.iva );
+      for (let i = 0; i < this.productos.length; i++) {
+        this.subtotal += this.productos[i].precioFinal;
+
+        if (this.productos[i].producto.iva > 0) {
+          this.iva += this.productos[i].precioFinal * ( this.productos[i].producto.iva );
+        }
       }
-    }
-    this.total = this.subtotal + this.iva;
+      this.total = this.subtotal + this.iva;
 
-    localStorage.removeItem('prodDistIntranet');
-    localStorage.removeItem('pedidoDistIntranet');
-    localStorage.removeItem('subtotalPedIntranet');
-    localStorage.removeItem('ivaPedIntranet');
-    localStorage.removeItem('totalPedIntranet');
-    localStorage.setItem('prodDistIntranet', JSON.stringify(this.prod));
-    localStorage.setItem('pedidoDistIntranet', JSON.stringify(this.productos));
-    localStorage.setItem('subtotalPedIntranet', String(this.subtotal));
-    localStorage.setItem('ivaPedIntranet', String(this.iva));
-    localStorage.setItem('totalPedIntranet', String(this.total));
+      localStorage.removeItem('prodDistIntranet');
+      localStorage.removeItem('pedidoDistIntranet');
+      localStorage.removeItem('subtotalPedIntranet');
+      localStorage.removeItem('ivaPedIntranet');
+      localStorage.removeItem('totalPedIntranet');
+      localStorage.setItem('prodDistIntranet', JSON.stringify(this.prod));
+      localStorage.setItem('pedidoDistIntranet', JSON.stringify(this.productos));
+      localStorage.setItem('subtotalPedIntranet', String(this.subtotal));
+      localStorage.setItem('ivaPedIntranet', String(this.iva));
+      localStorage.setItem('totalPedIntranet', String(this.total));
+    } else {
+      const inputCantidad = document.getElementById('inputLista' + producto.producto.codigo + '' + indice);
+      inputCantidad.value = cantAnte;
+      for (let i = 0; i < this.productos.length; i++) {
+        this.subtotal += this.productos[i].precioFinal;
+
+        if (this.productos[i].producto.iva > 0) {
+          this.iva += this.productos[i].precioFinal * ( this.productos[i].producto.iva );
+        }
+      }
+      this.total = this.subtotal + this.iva;
+      swal('ERROR EN CANTIDAD', 'Solo puede ingresar cantidades en multiplos de ' + producto.producto.lote, 'error');
+    }
   }
 
   eliminarProd(index: any) {
@@ -680,7 +748,7 @@ export class CotizadorComponent implements OnInit {
 
   enviarOrden(email: any) {
     swal({
-      title: "Listo para Evniar!",
+      title: "Listo para Enviar!",
       text: "Coloca el email a donde quieres enviar esta cotización.",
       icon: "warning",
       buttons: {
@@ -716,10 +784,16 @@ export class CotizadorComponent implements OnInit {
     });
   }
 
-  enviarEmail(numero: any, nombre: any, direccion: any, saldo: any, linea: any, dias: any, asesor: any, precio: any, productos: any, subtotal: any, iva: any, total: any) {
+  enviarCotPDF() {
+    let mensaje;
+    if (this.correoCli === '') {
+      mensaje = "Coloca el email a donde quieres enviar esta cotización."
+    } else {
+      mensaje = 'Escribe "cliente" y se le enviara al correo: ' + this.correoCli + ' o coloca el correo que deseas enviar.';
+    }
     swal({
-      title: "Listo para Evniar!",
-      text: "Coloca el email a donde quieres enviar esta cotización.",
+      title: "Listo para Enviar!",
+      text: mensaje,
       icon: "warning",
       buttons: {
         cancel: true,
@@ -733,10 +807,74 @@ export class CotizadorComponent implements OnInit {
         },
       },
     })
-    .then((email) => {
-      if (email === null) {
+    .then((correo) => {
+      if (correo === null) {
         return;
       }
+
+      let email;
+
+      switch (correo) {
+        case 'cliente':
+          email = this.correoCli;
+        break;
+        default:
+          email = correo;
+      }
+
+      const dataOrder = {
+        nombre: this.cts.nombre,
+        email: email,
+        f: this.cts.pdf
+      };
+
+      this._pedidoService.enviarEmail(dataOrder).subscribe((resp: any) => {
+        if (resp[0].status.ok) {
+          swal('Cotización Enviado', resp[0].status.msg, 'success');
+        } else {
+          swal('Error', resp[0].status.msg, 'error');
+        }
+      });
+    });
+  }
+
+  enviarEmail(numero: any, nombre: any, direccion: any, saldo: any, linea: any, dias: any, asesor: any, precio: any, productos: any, subtotal: any, iva: any, total: any, correo: any) {
+    let mensaje;
+    if (correo === '') {
+      mensaje = "Coloca el email a donde quieres enviar esta cotización."
+    } else {
+      mensaje = 'Escribe "cliente" y se le enviara al correo: ' + correo + ' o coloca el correo que deseas enviar.';
+    }
+    swal({
+      title: "Listo para Evniar!",
+      text: mensaje,
+      icon: "warning",
+      buttons: {
+        cancel: true,
+        confirm: true
+      },
+      content: {
+        element: "input",
+        attributes: {
+            placeholder: "Email",
+            type: "text",
+        },
+      },
+    })
+    .then((cor) => {
+      if (cor === null) {
+        return;
+      }
+      let email;
+
+      switch (cor) {
+        case 'cliente':
+          email = correo;
+        break;
+        default:
+          email = cor;
+      }
+
       let h = new Date();
       const f = this.file;
       const dataEmail = {
@@ -773,7 +911,60 @@ export class CotizadorComponent implements OnInit {
   }
 
   accionCots() {
+    this.correoCli = '';
+    this._clienteService.clienteCorreo(this.cts.idFerrum).subscribe((correo: any) => {
+      if (correo.length > 0) {
+        this.correoCli = correo[0].CORREO;
+      }
+    });
     this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('http://www.ferremayoristas.com.mx/api/cotizaciones/' + this.cts.pdf);
+  }
+
+  hacerPedido() {
+    if (this.productos.length > 0) {
+      let xml;
+
+      xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+            '<cfdi:Comprobante Version="3.3" Serie="W">' +
+              '<cfdi:Receptor Rfc="' + this.rfc + '" CliNumero="' + this.numero + '"/>' +
+              '<cfdi:Conceptos>';
+
+      for (let i = 0; i < this.productos.length; i++) {
+        xml += '<cfdi:Concepto ClaveProdServ="' + this.productos[i].producto.claveProdServ + '" NoIdentificacion="' + this.productos[i].producto.codigo + '" Cantidad="' + this.productos[i].cantidad + '.000" ClaveUnidad="' + this.productos[i].producto.claveUnidad + '" Unidad="PZ"/>';
+      }
+
+      xml +=  '</cfdi:Conceptos>' +
+            '</cfdi:Comprobante>';
+
+      console.log(xml);
+
+    //   swal({
+    //     title: 'Su pedido será procesado, ¿Seguro que desea enviar su pedido?',
+    //     icon: 'warning',
+    //     buttons: {
+    //       cancel: true,
+    //       confirm: true
+    //     }
+    //   })
+    //   .then(( status ) => {
+    //     if (!status) { return null; }
+
+    //     const enviarXml: XmlString = {
+    //       texto: xml
+    //     };
+        
+    //     this._shoppingCar.enviarPedido(enviarXml).subscribe((info: any) => {
+    //       this.eliminarTodo();
+    //       const envio = {
+    //         cliente: this.cliente,
+    //         pedido: this.productos
+    //       }
+    //       this._webSocket.acciones('aviso-asesor', envio);
+    //     });
+    //   });
+    // } else {
+    //   swal('No hay Productos', 'No se ha ingresado ningún a su pedido.', 'warning');
+    }
   }
 
   iniciar() {
@@ -800,6 +991,12 @@ export class CotizadorComponent implements OnInit {
     this.verPDF = 'vacio';
     this.guardado = false;
     this.ordenGuardada = '';
+    this.correoCli = '';
+    this.codigo = '';
+    this.cantidad = 0;
+    document.getElementById('cantidad').readOnly = true;
+    localStorage.removeItem('rfcCli');
+    localStorage.removeItem('correoCli');
     localStorage.removeItem('ordenGuardada');
     localStorage.removeItem('guardado');
     localStorage.removeItem('filePDF');

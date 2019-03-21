@@ -198,6 +198,7 @@ export class NotascreditoComponent implements OnInit {
     this.cargando = true;
     this.nc = [];
     this._ncService.buscarNCFecha(f).subscribe((resp: any) => {
+      console.log(resp);
       if (resp.status) {
         let nt;
         for (let i = 0; i < resp.respuesta.length; i ++) {

@@ -219,17 +219,6 @@ export class PedidosService {
       this.url,
       {
         nombre: data.nombre,
-        numero: data.numero,
-        direccion: data.direccion,
-        saldo: data.saldo,
-        linea: data.linea,
-        dias: data.dias,
-        asesor: data.asesor,
-        precio: data.precio,
-        productos: data.productos,
-        subtotal: data.subtotal,
-        iva: data.iva,
-        total: data.total,
         email: data.email,
         file: data.f
        },
@@ -247,6 +236,30 @@ export class PedidosService {
     }
 
     return this.http.post(this.url, orden);
+  }
+
+  buscarLote(codigo: any) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/productos/lote/codigo/' + codigo;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/productos/lote/codigo/' + codigo;
+    } else {
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/productos/lote/codigo/' + codigo;
+    }
+
+    return this.http.get(this.url);
+  }
+
+  enviarPedido(xml: any) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/ferrum/subir/pedido/7854956231457643';
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/ferrum/subir/pedido/7854956231457643';
+    } else {
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/ferrum/subir/pedido/7854956231457643';
+    }
+
+    return this.http.post(this.url, xml);
   }
 
 }

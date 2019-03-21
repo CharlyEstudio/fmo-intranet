@@ -24,6 +24,19 @@ export class ClientesService {
     return this.http.get( this.url );
   }
 
+  clienteCorreo(idFerrum: any) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=10&clienteid=' + idFerrum;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=10&clienteid=' + idFerrum;
+    } else {
+      // tslint:disable-next-line:max-line-length
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=10&clienteid=' + idFerrum;
+    }
+
+    return this.http.get( this.url );
+  }
+
   infoClienteCot( cliente: any) {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=9&numero=' + cliente;

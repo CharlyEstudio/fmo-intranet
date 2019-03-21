@@ -36,7 +36,7 @@
 
       </div>
 
-      <button type="button" class="btn btn-primary mx-sm-3 mb-2" (click)="buscarFecha(f)">Buscar</button>
+      <button type="button" class="btn btn-secondary mx-sm-3 mb-2" (click)="buscarFecha(f)">Buscar</button>
 
       <button type="button" class="btn btn-success mx-sm-3 mb-2" (click)="obtenerTodosNC()">Limpiar</button>
 
@@ -44,7 +44,7 @@
 
         <label class="font-weight-bold">
           
-          Total <span class="badge badge-info ml-2">{{ total | number }}</span>
+          Total <h3><span class="badge badge-info ml-2">{{ total | number }}</span></h3>
         
         </label>
 
@@ -52,9 +52,9 @@
 
       <div class="form-group mx-sm-3 mb-2">
 
-        <label>
+        <label class="font-weight-bold">
           
-          Trabajadas <span class="badge badge-primary ml-2">{{ trabajadas | number }}</span>
+          Trabajadas <h3><span class="badge badge-primary ml-2">{{ trabajadas | number }}</span></h3>
 
         </label>
 
@@ -62,9 +62,9 @@
 
       <div class="form-group mb-2">
 
-        <label>
+        <label class="font-weight-bold">
           
-          Pendientes <span class="badge ml-2" [ngClass]="{'badge-danger': pendientes > 0, 'badge-inverse': pendientes === 0}">{{ pendientes | number }}</span>
+          Pendientes <h3><span class="badge ml-2" [ngClass]="{'badge-danger': pendientes > 0, 'badge-inverse': pendientes === 0}">{{ pendientes | number }}</span></h3>
         
         </label>
 
@@ -186,7 +186,7 @@
 
       </div>
 
-      <button type="button" class="btn btn-primary mx-sm-3 mb-2" (click)="buscarNC()">Buscar</button>
+      <button type="button" class="btn btn-secondary mx-sm-3 mb-2" (click)="buscarNC()">Buscar</button>
 
       <button type="button" class="btn btn-success mb-2" (click)="obtenerTrabajados()">Limpiar</button>
 

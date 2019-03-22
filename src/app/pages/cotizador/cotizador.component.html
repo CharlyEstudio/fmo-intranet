@@ -86,7 +86,7 @@
 
       <button type="button" class="btn btn-success btn-block" *ngIf="rfc !== ''" (click)="hacerPedido()">Hacer Pedido</button>
 
-      <button type="button" class="btn btn-danger btn-block" (click)="iniciar()">Iniciar</button>
+      <button type="button" class="btn btn-danger btn-block" (click)="limpiar()">Iniciar</button>
 
     </form>
 
@@ -106,9 +106,9 @@
 
       <button type="button" class="btn btn-primary btn-block" (click)="guardar()">Guardar</button>
 
-      <button type="button" class="btn btn-info btn-block" *ngIf="ordenGuardada.idFerrum > 0" (click)="enviarOrden()">Enviar</button>
+      <button type="button" class="btn btn-info btn-block" *ngIf="ordenGuardada !== undefined" (click)="enviarOrden()">Enviar</button>
       
-      <button type="button" class="btn btn-danger btn-block" (click)="iniciar()">Iniciar</button>
+      <button type="button" class="btn btn-danger btn-block" (click)="limpiar()">Iniciar</button>
 
     </form>
 

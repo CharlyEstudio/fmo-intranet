@@ -92,6 +92,13 @@ export class CotizadorComponent implements OnInit {
   ) {
     this.rol = this._usuarioService.usuario.rol;
     this.id = this._usuarioService.usuario._id;
+  }
+
+  ngOnInit() {
+    this.precarga();
+  }
+
+  precarga() {
     let h = new Date();
 
     let hor;
@@ -252,8 +259,6 @@ export class CotizadorComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
-
   accion() {
     this.lectura = false;
     if (this.op === '0') {
@@ -346,7 +351,7 @@ export class CotizadorComponent implements OnInit {
       this._clienteService.infoClienteCot(this.usoNumero).subscribe((data: any) => {
         if (data.length > 0) {
           this.idFerrum = data[0].CLIENTEID;
-          this.numero = data[0].NUMERO;
+          this.numero = this.usoNumero;
           this.nombre = data[0].NOMBRE;
           this.correoCli = data[0].CORREO;
           this.nivelPrecio = data[0].LISTA;
@@ -457,29 +462,34 @@ export class CotizadorComponent implements OnInit {
     if (this.codigo !== '') {
       this._pedidoService.buscarLote(this.codigo).subscribe((lote: any) => {
         if (lote.status) {
-          document.getElementById('cantidad').value = lote.respuesta[0].lote;
+          const elem = <HTMLInputElement>(document.getElementById('cantidad'));
+          elem.value = lote.respuesta[0].lote;
           this.cantidadStep = lote.respuesta[0].lote;
-          document.getElementById('cantidad').readOnly = false;
-          document.getElementById('cantidad').focus();
+          elem.readOnly = false;
+          elem.focus();
         } else {
           swal('Códgio No Existe', 'Este código no existe.', 'error');
-          document.getElementById('codigo').value = '';
-          document.getElementById('codigo').focus();
+          const elem = <HTMLInputElement>(document.getElementById('codigo'));
+          elem.value = '';
+          elem.focus();
         }
       });
     } else {
-      document.getElementById('cantidad').readOnly = true;
-      document.getElementById('codigo').focus();
+      const elem1 = <HTMLInputElement>(document.getElementById('cantidad'));
+      const elem2 = <HTMLInputElement>(document.getElementById('codigo'));
+      elem1.readOnly = true;
+      elem2.focus();
       swal('Sin Código', 'No se agrego el código del producto.', 'error');
     }
   }
 
   ingresar() {
-    let inputCantidad = document.getElementById('cantidad').value;
+    const ipC = <HTMLInputElement>(document.getElementById('cantidad'));
+    const inputCantidad: any = ipC.value;
 
     const division = inputCantidad % this.cantidadStep;
     
-    if (division === 0) {
+    if (division === 0 && inputCantidad !== '0') {
       if (this.proveedor.length === 0) {
         if (this.codigo !== '') {
           if (this.nivelPrecio === 0) {
@@ -524,15 +534,18 @@ export class CotizadorComponent implements OnInit {
               }
               this.codigo = '';
               this.cantidad = '';
-              document.getElementById('codigo').focus();
-              document.getElementById('cantidad').value = '';
-              document.getElementById('cantidad').readOnly = true;
+              const elem1 = <HTMLInputElement>(document.getElementById('cantidad'));
+              const elem2 = <HTMLInputElement>(document.getElementById('codigo'));
+              elem2.focus();
+              elem1.value = '';
+              elem1.readOnly = true;
             }
           });
         } else {
           this.codigo = '';
           this.cantidad = '';
-          document.getElementById('cantidad').readOnly = true;
+          const elem = <HTMLInputElement>(document.getElementById('cantidad'));
+          elem.readOnly = true;
           swal('Sin Código', 'No se agrego el código del producto.', 'error');
         }
       } else {
@@ -574,25 +587,28 @@ export class CotizadorComponent implements OnInit {
             }
             this.codigo = '';
             this.cantidad = 0;
-            document.getElementById('codigo').focus();
-            document.getElementById('cantidad').readOnly = true;
+            const elem1 = <HTMLInputElement>(document.getElementById('codigo'));
+            const elem2 = <HTMLInputElement>(document.getElementById('cantidad'));
+            elem1.focus();
+            elem2.readOnly = true;
           }
         });
       }
     } else {
-      document.getElementById('cantidad').value = this.cantidadStep;
+      const elem = <HTMLInputElement>(document.getElementById('cantidad'));
+      elem.value = String(this.cantidadStep);
       swal('ERROR EN CANTIDAD', 'Solo puede ingresar cantidades en multiplos de ' + this.cantidadStep, 'error');
     }
   }
 
-  cambiarCantidad(producto: any, valor: any, indice: amy) {
+  cambiarCantidad(producto: any, valor: any, indice: any) {
     const cantAnte = producto.cantidad;
     const division = valor % producto.producto.lote;
     this.subtotal = 0;
     this.iva = 0;
     this.total = 0;
 
-    if (division === 0) {
+    if (division === 0 && valor !== '0') {
       producto.precioFinal = (producto.precioDesc * Number(valor));
       producto.precioTot = (producto.producto.precio * Number(valor));
       producto.cantidad = Number(valor);
@@ -617,7 +633,7 @@ export class CotizadorComponent implements OnInit {
       localStorage.setItem('ivaPedIntranet', String(this.iva));
       localStorage.setItem('totalPedIntranet', String(this.total));
     } else {
-      const inputCantidad = document.getElementById('inputLista' + producto.producto.codigo + '' + indice);
+      const inputCantidad = <HTMLInputElement>(document.getElementById('inputLista' + producto.producto.codigo + '' + indice));
       inputCantidad.value = cantAnte;
       for (let i = 0; i < this.productos.length; i++) {
         this.subtotal += this.productos[i].precioFinal;
@@ -925,7 +941,7 @@ export class CotizadorComponent implements OnInit {
       let xml;
 
       xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
-            '<cfdi:Comprobante Version="3.3" Serie="W">' +
+            '<cfdi:Comprobante Version="3.3" Serie="A">' +
               '<cfdi:Receptor Rfc="' + this.rfc + '" CliNumero="' + this.numero + '"/>' +
               '<cfdi:Conceptos>';
 
@@ -936,34 +952,33 @@ export class CotizadorComponent implements OnInit {
       xml +=  '</cfdi:Conceptos>' +
             '</cfdi:Comprobante>';
 
-      console.log(xml);
+      // console.log(xml);
 
-    //   swal({
-    //     title: 'Su pedido será procesado, ¿Seguro que desea enviar su pedido?',
-    //     icon: 'warning',
-    //     buttons: {
-    //       cancel: true,
-    //       confirm: true
-    //     }
-    //   })
-    //   .then(( status ) => {
-    //     if (!status) { return null; }
+      swal({
+        title: 'Su pedido será procesado, ¿Seguro que desea enviar su pedido?',
+        icon: 'warning',
+        buttons: {
+          cancel: true,
+          confirm: true
+        }
+      })
+      .then(( status ) => {
+        if (!status) { return null; }
 
-    //     const enviarXml: XmlString = {
-    //       texto: xml
-    //     };
+        const enviarXml: XmlString = {
+          texto: xml
+        };
         
-    //     this._shoppingCar.enviarPedido(enviarXml).subscribe((info: any) => {
-    //       this.eliminarTodo();
-    //       const envio = {
-    //         cliente: this.cliente,
-    //         pedido: this.productos
-    //       }
-    //       this._webSocket.acciones('aviso-asesor', envio);
-    //     });
-    //   });
-    // } else {
-    //   swal('No hay Productos', 'No se ha ingresado ningún a su pedido.', 'warning');
+        this._pedidoService.enviarPedido(enviarXml).subscribe((info: any) => {
+          if (info.status) {
+            swal('Pedido Enviado', 'El pedido ha ingresado correctamente.', 'success');
+          } else {
+            swal('Error Pedido', 'El pedido no se ingresó correctamente.', 'success');
+          }
+        });
+      });
+    } else {
+      swal('No hay Productos', 'No se ha ingresado ningún a su pedido.', 'warning');
     }
   }
 
@@ -994,7 +1009,58 @@ export class CotizadorComponent implements OnInit {
     this.correoCli = '';
     this.codigo = '';
     this.cantidad = 0;
-    document.getElementById('cantidad').readOnly = true;
+    localStorage.removeItem('rfcCli');
+    localStorage.removeItem('correoCli');
+    localStorage.removeItem('ordenGuardada');
+    localStorage.removeItem('guardado');
+    localStorage.removeItem('filePDF');
+    localStorage.removeItem('idFerrumCli');
+    localStorage.removeItem('numeroCli');
+    localStorage.removeItem('nombreCli');
+    localStorage.removeItem('direccionCli');
+    localStorage.removeItem('asesorCli');
+    localStorage.removeItem('precioCli');
+    localStorage.removeItem('saldoCli');
+    localStorage.removeItem('lineaCli');
+    localStorage.removeItem('diasCli');
+    localStorage.removeItem('prodDistIntranet');
+    localStorage.removeItem('pedidoDistIntranet');
+    localStorage.removeItem('subtotalPedIntranet');
+    localStorage.removeItem('ivaPedIntranet');
+    localStorage.removeItem('totalPedIntranet');
+    localStorage.removeItem('tipoOperacion');
+    localStorage.removeItem('cambiarPrecio');
+  }
+
+  limpiar() {
+    this.usoNumero = '';
+    this.usoNombre = '';
+    this.op = '0';
+    this.tp = '0';
+    this.subtotal = 0;
+    this.iva = 0;
+    this.total = 0;
+    this.nivelPrecio = 0;
+    this.numberBol = true;
+    this.nameBol = true;
+    this.numero = '';
+    this.nombre = '';
+    this.direccion = '';
+    this.asesor = '';
+    this.lectura = false;
+    this.cotizar = false;
+    this.orden = false;
+    this.productos = [];
+    this.prod = [];
+    this.file = '';
+    this.verPDF = 'vacio';
+    this.guardado = false;
+    this.ordenGuardada = '';
+    this.correoCli = '';
+    this.codigo = '';
+    this.cantidad = 0;
+    const elem = <HTMLInputElement>(document.getElementById('cantidad'));
+    elem.readOnly = true;
     localStorage.removeItem('rfcCli');
     localStorage.removeItem('correoCli');
     localStorage.removeItem('ordenGuardada');

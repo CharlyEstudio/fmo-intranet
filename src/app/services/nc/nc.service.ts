@@ -27,11 +27,11 @@ export class NcService {
 
   buscarNCFecha(fecha: any) {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/nc/fecha/' + fecha;
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/nc/buscar/fecha/' + fecha;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/nc/fecha/' + fecha;
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/nc/buscar/fecha/' + fecha;
     } else {
-      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/nc/fecha/' + fecha;
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/nc/buscar/fecha/' + fecha;
     }
 
     return this.http.get(this.url);

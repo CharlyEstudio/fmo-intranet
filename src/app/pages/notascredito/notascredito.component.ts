@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 // Servicios
 import { NcService, UsuarioService } from '../../services/services.index';
@@ -14,6 +13,8 @@ const swal: SweetAlert = _swal as any;
   styles: []
 })
 export class NotascreditoComponent implements OnInit {
+
+  @ViewChild('buscarFecNC') buscarFecNC: ElementRef;
 
   nc: any[] = [];
   work: any[] = [];
@@ -35,7 +36,6 @@ export class NotascreditoComponent implements OnInit {
     private _ncService: NcService
   ) {
     this.id = this._usuarioService.usuario._id;
-    this.obtenerTodosNC();
 
     this.obtenerTrabajados();
   }
@@ -60,27 +60,51 @@ export class NotascreditoComponent implements OnInit {
     };
     this._ncService.guardarNCtrabajado(nota).subscribe((resp: any) => {
       if (resp.status) {
-        document.getElementById("linea" + nc.nc + nc.factura).classList.add("bg-primary");
+        const elem = <HTMLElement>(document.getElementById("linea" + nc.nc + nc.factura));
+        elem.classList.add("bg-primary");
         nc.trabajado = true;
+        const ncAnt = this.nc;
+        this.nc = [];
+        this.nc = ncAnt;
         this.obtenerTrabajados();
       }
     });
+
+    if (this.fechaNC !== '') {
+      this.buscarFecNC.nativeElement.click();
+    }
   }
 
   quitar(nc: any) {
     this._ncService.quitarNCtrabajado(nc).subscribe((resp: any) => {
       if (resp.status) {
-        document.getElementById("linea" + nc.nc + nc.factura).classList.remove("bg-primary");
+        const elem = <HTMLElement>(document.getElementById("linea" + nc.nc + nc.factura));
+        elem.classList.remove("bg-primary");
         nc.trabajado = false;
         this.obtenerTrabajados();
+        if (this.fechaNC !== '') {
+          this.buscarFecNC.nativeElement.click();
+        }
       }
     });
+  }
+
+  limpiar() {
+    this.total = 0;
+    this.trabajadas = 0;
+    this.pendientes = 0;
+    this.fechaNC = '';
+    this.nc = [];
+    if (this.work.length === 0) {
+      this.obtenerTrabajados();
+    }
   }
 
   obtenerTodosNC() {
     this.total = 0;
     this.trabajadas = 0;
     this.pendientes = 0;
+    this.fechaNC = '';
     this._ncService.obtenerNC().subscribe((notas: any) => {
       if (notas.status) {
         let nt;
@@ -188,68 +212,27 @@ export class NotascreditoComponent implements OnInit {
     });
   }
 
-  buscarFecha(forma: NgForm) {
-    if (forma.value.fechaNC === '') {
+  buscarFecha() {
+    if (this.fechaNC === '') {
       swal('Sin Fecha', 'No ha ingresado una fecha valida.', 'error');
       return;
     }
-    const f = forma.value.fechaNC;
+    const f = this.fechaNC;
     const info = this.nc;
     this.cargando = true;
     this.nc = [];
     this._ncService.buscarNCFecha(f).subscribe((resp: any) => {
-      console.log(resp);
       if (resp.status) {
-        let nt;
         for (let i = 0; i < resp.respuesta.length; i ++) {
           this._ncService.buscarNCtrabajado(resp.respuesta[i].nc, resp.respuesta[i].factura).subscribe((ncFec: any) => {
             if (ncFec.status) {
-              nt = {
-                fecha: resp.respuesta[i].fecha,
-                tiponc: resp.respuesta[i].tiponc,
-                serie: resp.respuesta[i].serie,
-                nc: resp.respuesta[i].nc,
-                factura: resp.respuesta[i].factura,
-                nombre: resp.respuesta[i].nombre,
-                subtotal: resp.respuesta[i].subtotal,
-                iva: resp.respuesta[i].iva,
-                total: resp.respuesta[i].total,
-                saldo: resp.respuesta[i].saldo,
-                perid: resp.respuesta[i].perid,
-                vendedor: resp.respuesta[i].vendedor,
-                trabajado: true
-              };
+              resp.respuesta[i].trabajado = true;
             } else {
-              nt = {
-                fecha: resp.respuesta[i].fecha,
-                tiponc: resp.respuesta[i].tiponc,
-                serie: resp.respuesta[i].serie,
-                nc: resp.respuesta[i].nc,
-                factura: resp.respuesta[i].factura,
-                nombre: resp.respuesta[i].nombre,
-                subtotal: resp.respuesta[i].subtotal,
-                iva: resp.respuesta[i].iva,
-                total: resp.respuesta[i].total,
-                saldo: resp.respuesta[i].saldo,
-                perid: resp.respuesta[i].perid,
-                vendedor: resp.respuesta[i].vendedor,
-                trabajado: false
-              };
+              resp.respuesta[i].trabajado = false;
             }
-            this.nc.push(nt);
-            this.nc.sort((a, b) => {
-              if (a.serie > b.serie) {
-                return 1;
-              }
-
-              if (a.serie < b.serie) {
-                return -1;
-              }
-
-              return 0;
-            });
           });
         }
+        this.nc = resp.respuesta;
         this._ncService.buscarNCTrabFecha(f).subscribe((trab: any) => {
           if (trab.status) {
             this.trabajadas = trab.respuesta.length;

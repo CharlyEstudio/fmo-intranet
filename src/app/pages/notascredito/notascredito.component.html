@@ -18,9 +18,9 @@
 
   </div>
 
-  <div class="col-lg-12 col-md-12 col-sm-12 mt-4" *ngIf="nc.length > 0">
+  <div class="col-lg-12 col-md-12 col-sm-12 mt-4">
 
-    <form #f="ngForm" class="form-inline">
+    <form class="form-inline">
 
       <div class="form-group mb-2">
 
@@ -32,13 +32,13 @@
 
         <label for="inputFec" class="sr-only">NC</label>
 
-        <input [ngModel]="fechaNC" name="fechaNC" type="date" class="form-control" id="inputFec" value="0000-00-00">
+        <input [(ngModel)]="fechaNC" name="fechaNC" type="date" class="form-control" id="inputFec">
 
       </div>
 
-      <button type="button" class="btn btn-secondary mx-sm-3 mb-2" (click)="buscarFecha(f)">Buscar</button>
+      <button #buscarFecNC type="button" class="btn btn-secondary mx-sm-3 mb-2" (click)="buscarFecha()">Buscar</button>
 
-      <button type="button" class="btn btn-success mx-sm-3 mb-2" (click)="obtenerTodosNC()">Limpiar</button>
+      <button type="button" class="btn btn-success mx-sm-3 mb-2" (click)="limpiar()">Limpiar</button>
 
       <div class="form-group mx-sm-3 mb-2">
 

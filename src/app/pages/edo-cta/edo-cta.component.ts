@@ -19,7 +19,7 @@ export class EdoCtaComponent implements OnInit {
 
   fecha: any;
   tipoS: any;
-  verPDF: string = '';
+  verPDF: any = '';
 
   // Datos del Usuario
   asesor: number = 0;
@@ -104,6 +104,7 @@ export class EdoCtaComponent implements OnInit {
   obtenerCliente( forma: NgForm ) {
 
     this.cargando = true;
+    this.verPDF = '';
 
     this.datos = [];
     this.abonos = 0;
@@ -208,6 +209,7 @@ export class EdoCtaComponent implements OnInit {
 
   obtenerSaldo(dato: NgForm) {
     this.cargando = true;
+    this.verPDF = '';
 
     this.datos = [];
     this.abonos = 0;
@@ -431,14 +433,19 @@ export class EdoCtaComponent implements OnInit {
           text: 'El ' + this.tipoS + ' se ha creado correctamente. ¿Quiere enviar este PDF a email o ver?',
           icon: "success",
           buttons: {
-            cancel: 'Cancelar',
+            cancel: {
+              text: 'Cancelar',
+              value: 'cancel'
+            },
             catch: {
-              text: 'Enviar'
+              text: 'Enviar',
+              value: 'catch'
             },
             defeat: {
-              text: 'Ver'
+              text: 'Ver',
+              value: 'defeat'
             },
-          },
+          }
         })
         .then(( value ) => {
 

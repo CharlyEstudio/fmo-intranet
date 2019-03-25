@@ -115,6 +115,30 @@ export class ClientesService {
     return this.http.get( this.url );
   }
 
+  enviarEdoCtaPDFEmail( email: any, cliente: any, asesor: any, telAsesor: any, tipo: any ) {
+    let cli = JSON.stringify(cliente);
+
+    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    //   /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=4&email=' + email + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + '/api/clientes.php?opcion=4&email=' + email + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor;
+    // } else {
+    //   // tslint:disable-next-line:max-line-length
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=4&email=' + email + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor;
+    // }
+
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=11&email=' + email + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor + '&tipo=' + tipo;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=11&email=' + email + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor + '&tipo=' + tipo;
+    } else {
+      // tslint:disable-next-line:max-line-length
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=11&email=' + email + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor + '&tipo=' + tipo;
+    }
+
+    return this.http.get( this.url );
+  }
+
   obtenerPedidosMonitor() {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=8';

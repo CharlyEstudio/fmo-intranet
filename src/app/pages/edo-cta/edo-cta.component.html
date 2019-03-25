@@ -74,7 +74,7 @@
 
 <div class="row" *ngIf="localizado">
 
-    <div class="col" id="edoCta" #edoCta>
+    <div class="col-12" id="edoCta" #edoCta>
 
         <div class="card">
 
@@ -210,9 +210,9 @@
 
                                 <td class="text-center" style="color: #06d79c; font-weight: 700;" *ngIf="dato.ABONO === 0"></td>
 
-                                <td class="text-center" style="color: #f62d51; font-weight: 700;" *ngIf="dato.SALDOFINAL === 0">{{ dato.SALDO | currency }}</td>
+                                <td class="text-center" style="color: #f62d51; font-weight: 700;">{{ dato.SALDO | currency }}</td>
 
-                                <td class="text-center" style="color: #f62d51; font-weight: 700;" *ngIf="dato.SALDOFINAL > 0">{{ dato.SALDOFINAL | currency }}</td>
+                                <!-- <td class="text-center" style="color: #f62d51; font-weight: 700;" *ngIf="dato.SALDOFINAL > 0">{{ dato.SALDOFINAL | currency }}</td> -->
 
                                 <td class="text-center font-weight-bold" *ngIf="dato.RECIBO != 0">{{ dato.RECIBO }}</td>
 
@@ -261,56 +261,24 @@
                     </table>
 
                 </div>
-                    
-                <table style="width:100%;">
 
-                    <tbody>
+                <!-- <button type="button" class="btn btn-success btn-block waves-effect waves-light m-r-10" (click)="exportarExcel(datos, clienteFerrum)"><i class="mdi mdi-file-excel"></i>Descargar</button> -->
 
-                        <tr>
+                <!-- <button type="button" class="btn btn-info btn-block waves-effect waves-light m-r-10" (click)="exportarPDF(number, nombre)"><i class="mdi mdi-file-pdf"></i>Descargar</button> -->
 
-                            <td style="width: 50%!important">
-
-                                <img src="http://www.ferremayoristas.com.mx/intranet/assets/images/logos/firma_edo_cta_2.jpg" class="img-fluid">
-
-                            </td>
-
-                            <td style="width: 25%!important">
-
-                                <div class="col-12">
-
-                                    <h6 class="text-center" style="font-family: Arial!important;font-weight: 700!important;font-size: 16px!important;color: #3f3f3f!important" *ngIf="nomAsesor.length > 0">{{ nomAsesor }}</h6>
-
-                                    <h6 class="text-center" style="font-family: Arial!important;font-weight: 700!important;font-size: 16px!important;color: #3f3f3f!important" *ngIf="nomAsesor.length === 0">Sin Asesor</h6>
-
-                                    <h6 class="text-center" *ngIf="nomAsesor.length > 0" style="font-family: Arial!important;font-size: 14px!important;color: #3f3f3f!important">Tel.: {{ telAsesor }}</h6>
-
-                                    <h6 class="text-center" style="font-family: Arial!important;font-size: 14px!important;color: #3f3f3f!important">Asesor de Venta</h6>
-                                    
-                                </div>
-
-                            </td>
-
-                            <td style="width: 25%!important">
-
-                                <img src="http://www.ferremayoristas.com.mx/intranet/assets/images/logos/firma_edo_cta_4.jpg" class="img-fluid">
-                            
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-                
-                </table>
-
-                <button type="button" class="btn btn-danger btn-block waves-effect waves-light m-r-10" (click)="enviarEmail(datos, clienteFerrum, nomAsesor, telAsesor)">Enviar Email</button>
-
-                <button type="button" class="btn btn-success btn-block waves-effect waves-light m-r-10" (click)="exportarExcel(datos, clienteFerrum)"><i class="mdi mdi-file-excel"></i>Descargar</button>
-
-                <button type="button" class="btn btn-info btn-block waves-effect waves-light m-r-10" (click)="exportarPDF(number, nombre)"><i class="mdi mdi-file-pdf"></i>Descargar</button>
+                <button type="button" class="btn btn-info btn-block waves-effect waves-light m-r-10" (click)="exportarPDF(datos, clienteFerrum, nomAsesor, telAsesor, cargos, abonos, saldoAct)"><i class="mdi mdi-file-pdf"></i>PDF</button>
 
             </div>
 
         </div>
+
+    </div>
+
+    <div class="col-12" *ngIf="verPDF !== ''">
+
+        <embed [src]="verPDF" type="application/pdf" width="100%" height="600">
+
+        <button type="button" class="btn btn-danger btn-block waves-effect waves-light m-r-10" (click)="enviarEmail(clienteFerrum, nomAsesor, telAsesor)">Enviar Email</button>
 
     </div>
 

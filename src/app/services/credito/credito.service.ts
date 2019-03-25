@@ -252,4 +252,30 @@ export class CreditoService {
     return this.http.get( this.url );
   }
 
+  exportarPDFphp(data: any, file: any, cliente: any, asesor: any, tel: any, tipo: any, cargos: any, abonos: any, saldo: any) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/credito.php?opcion=2';
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/credito.php?opcion=2';
+    } else {
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/credito.php?opcion=2';
+    }
+
+    return this.http.post(
+      this.url,
+      {
+        cliente: cliente,
+        file: file,
+        datos: data,
+        asesor: asesor,
+        tel: tel,
+        tipo: tipo,
+        cargos: cargos,
+        abonos: abonos,
+        saldos: saldo
+       },
+      { headers: { 'content-Type': 'application/x-www-form-urlencoded' } }
+    );
+  }
+
 }

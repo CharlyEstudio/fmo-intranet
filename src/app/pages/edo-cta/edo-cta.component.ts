@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 
 // Modelos
 import { Usuario } from '../../models/usuario.model';
@@ -17,6 +18,8 @@ export class EdoCtaComponent implements OnInit {
   @ViewChild('edoCta') edoCta: ElementRef;
 
   fecha: any;
+  tipoS: any;
+  verPDF: string = '';
 
   // Datos del Usuario
   asesor: number = 0;
@@ -56,6 +59,7 @@ export class EdoCtaComponent implements OnInit {
   mostrar: boolean = false;
 
   constructor(
+    public sanitizer: DomSanitizer,
     private _usuariosService: UsuarioService,
     private _clientesService: ClientesService,
     private _creditoService: CreditoService,
@@ -104,6 +108,7 @@ export class EdoCtaComponent implements OnInit {
     this.datos = [];
     this.abonos = 0;
     this.saldos = 0;
+    this.cargos = 0;
 
     if ( forma.value.numero === "" ) {
       swal('Debe ingresar el número de cliente', 'No ha ingresado el número de cliente para la busqueda.', 'error');
@@ -138,10 +143,6 @@ export class EdoCtaComponent implements OnInit {
             for (let i = 0; i < edocta.length; i++) {
               this.abonos += edocta[i].ABONO;
 
-              if (edocta[i].SALDOFINAL !== 0) {
-                this.saldos += edocta[i].SALDOFINAL;
-              }
-
               let esFolio = (factura) => {
                 return factura.FOLIO === edocta[i].FOLIO;
               };
@@ -157,8 +158,10 @@ export class EdoCtaComponent implements OnInit {
                 cargo = edocta[i].CARGO;
               }
 
+              this.cargos += cargo;
 
               saldo = cargo - edocta[i].ABONO;
+              this.saldos += saldo;
 
               let nuevo = [
                 {
@@ -182,8 +185,6 @@ export class EdoCtaComponent implements OnInit {
               ];
               this.datos.push(nuevo[0]);
             }
-
-            this.cargos = this.saldos + this.abonos;
 
             this.localizado = true;
 
@@ -211,6 +212,7 @@ export class EdoCtaComponent implements OnInit {
     this.datos = [];
     this.abonos = 0;
     this.saldos = 0;
+    this.cargos = 0;
 
     this.cargando = false;
     if (dato.value.numero === '') {
@@ -254,56 +256,49 @@ export class EdoCtaComponent implements OnInit {
                   return factura.FOLIO === edocta.respuesta[i].FOLIO;
                 };
 
+                let saldo;
+                let cargo;
+                let car;
+
                 if (this.datos.find(esFolio)) {
-                  let saldo;
-                  let cargo;
-                  if (edocta.respuesta[i].TOTALGADO === edocta.respuesta[i].TOTAL) {
-                    saldo = (edocta.respuesta[i].TOTAL - edocta.respuesta[i].ABONO) - edocta.respuesta[i].SALDO
-                  } else {
-                    if (edocta.respuesta[i].ABONO < 0) {
-                      saldo = edocta.respuesta[i].SALDOFINAL + (-1 * edocta.respuesta[i].ABONO);
-                    } else {
-                      saldo = edocta.respuesta[i].SALDOFINAL;
-                    }
-                  }
-
-                  if (this.datos.find(esFolio).SALDO !== 0) {
-                    cargo = this.datos.find(esFolio).SALDO;
-                  } else {
-                    if (edocta.respuesta[i].ABONO < 0) {
-                      cargo = 0;
-                    } else {
-                      cargo = edocta.respuesta[i].CARGO;
-                    }
-                  }
-
-                  let nuevo = [
-                    {
-                      "DOCID": edocta.respuesta[i].DOCID,
-                      "FECHA": edocta.respuesta[i].FECHA,
-                      "FECHAPAG": edocta.respuesta[i].FECHAPAG,
-                      "VENCE": '',
-                      "FOLIO": edocta.respuesta[i].FOLIO,
-                      "SALDO": saldo,
-                      "CARGO": cargo,
-                      "ABONO": edocta.respuesta[i].ABONO,
-                      "RECIBO": edocta.respuesta[i].RECIBO,
-                      "TIPO": edocta.respuesta[i].TIPO,
-                      "FP": edocta.respuesta[i].FP,
-                      "NOTA": edocta.respuesta[i].NOTA,
-                      "TOTAL": edocta.respuesta[i].TOTAL,
-                      "TOTALPAGADO": edocta.respuesta[i].TOTALPAGADO,
-                      "SALDOFINAL": edocta.respuesta[i].SALDOFINAL,
-                      "RESTAN": edocta.respuesta[i].RESTAN
-                    }
-                  ];
-                  this.datos.push(nuevo[0]);
-
+                  let index = i - 1;
+                  cargo = this.datos[index].SALDO;
+                  car = 0;
                 } else {
-                  this.datos.push(edocta.respuesta[i]);
+                  cargo = edocta.respuesta[i].CARGO;
+                  car = edocta.respuesta[i].CARGO;
                 }
+
+                if (edocta.respuesta[i].ABONO === 0) {
+                  saldo = edocta.respuesta[i].SALDOFINAL;
+                } else {
+                  saldo = cargo - edocta.respuesta[i].ABONO;
+                }
+
+                this.cargos += car;
+                let nuevo = [
+                  {
+                    "DOCID": edocta.respuesta[i].DOCID,
+                    "FECHA": edocta.respuesta[i].FECHA,
+                    "FECHAPAG": edocta.respuesta[i].FECHAPAG,
+                    "VENCE": '',
+                    "FOLIO": edocta.respuesta[i].FOLIO,
+                    "SALDO": saldo,
+                    "CARGO": cargo,
+                    "ABONO": edocta.respuesta[i].ABONO,
+                    "RECIBO": edocta.respuesta[i].RECIBO,
+                    "TIPO": edocta.respuesta[i].TIPO,
+                    "FP": edocta.respuesta[i].FP,
+                    "NOTA": edocta.respuesta[i].NOTA,
+                    "TOTAL": edocta.respuesta[i].TOTAL,
+                    "TOTALPAGADO": edocta.respuesta[i].TOTALPAGADO,
+                    "SALDOFINAL": edocta.respuesta[i].SALDOFINAL,
+                    "RESTAN": edocta.respuesta[i].RESTAN
+                  }
+                ];
+                this.datos.push(nuevo[0]);
               }
-              this.cargos = this.saldos + this.abonos;
+              // this.cargos = this.saldos + this.abonos;
               this.localizado = true;
 
               this.cargando = false;
@@ -327,8 +322,7 @@ export class EdoCtaComponent implements OnInit {
       });
   }
 
-  enviarEmail( datos: any, cliente: any, ases: any, telases: any ) {
-
+  enviarEmail( cliente: any, ases: any, telases: any ) {
     if (cliente.CORREO === 'cnmfmo@gmail.com') {
 
       // tslint:disable-next-line:max-line-length
@@ -387,8 +381,8 @@ export class EdoCtaComponent implements OnInit {
             email = name;
         }
 
-        this._clientesService.enviarEdoCtaEmail(email, datos, cliente, ases, telases).subscribe( ( resp: any ) => {
-          if (resp[0].status === 'ok') {
+        this._clientesService.enviarEdoCtaPDFEmail(email, cliente, ases, telases, this.tipoS).subscribe( ( resp: any ) => {
+          if (resp[0].status) {
             swal('Enviado', 'Correo enviado', 'success');
           } else {
             swal('Error', 'Correo no enviado', 'error');
@@ -409,19 +403,65 @@ export class EdoCtaComponent implements OnInit {
 
   tipoSel(tipo: any) {
     this.localizado = false;
+    this.tipoS = '';
+    this.verPDF = '';
     this.datos = [];
     this.cargos = 0;
     this.abonos = 0;
     if (tipo !== '2') {
       this.mostrar = false;
+      this.tipoS = 'ESTADO DE CUENTA';
     } else {
       this.mostrar = true;
+      this.tipoS = 'MOVIMIENTOS DE CUENTA';
     }
   }
 
-  public exportarPDF(numero: any, nombre: any) {
-    let filename = numero + '-' + nombre;
-    return xepOnline.Formatter.Format('edoCta', {render: 'download', filename: filename, pageWidth: '297mm', pageHeight: '216mm'});
+  // public exportarPDF(numero: any, nombre: any) {
+  //   let filename = numero + '-' + nombre;
+  //   return xepOnline.Formatter.Format('edoCta', {render: 'download', filename: filename, pageWidth: '297mm', pageHeight: '216mm'});
+  // }
+
+  public exportarPDF(datos: any, cliente: any, asesor: any, tel: any, cargos: any, abonos: any, saldo: any) {
+    let filename = cliente.NUMERO + '-' + cliente.NOMBRE + '.pdf';
+    this._creditoService.exportarPDFphp(datos, filename, cliente, asesor, tel, this.tipoS, cargos, abonos, saldo).subscribe((resp: any) => {
+      if (resp[0].msg.ok) {
+        swal({
+          title: 'Correcto ' + resp[0].msg.msg,
+          text: 'El ' + this.tipoS + ' se ha creado correctamente. ¿Quiere enviar este PDF a email o ver?',
+          icon: "success",
+          buttons: {
+            cancel: 'Cancelar',
+            catch: {
+              text: 'Enviar'
+            },
+            defeat: {
+              text: 'Ver'
+            },
+          },
+        })
+        .then(( value ) => {
+
+          switch (value) {
+ 
+            case "defeat":
+              this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('http://www.ferremayoristas.com.mx/api/edo-cta/' + filename);
+              break;
+         
+            case "catch":
+              this.enviarEmail( cliente, asesor, tel );
+              break;
+         
+            default:
+              return null;
+          }
+
+          swal.stopLoading();
+        });
+      } else {
+        swal('Error', 'Contacte con el administrado.', 'error');
+      }
+    });
   }
 
 }

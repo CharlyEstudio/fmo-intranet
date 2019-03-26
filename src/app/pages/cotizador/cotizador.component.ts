@@ -43,8 +43,10 @@ export class CotizadorComponent implements OnInit {
   productos: any[] = [];
   prod: any[] = [];
   cots: any[] = [];
+  ords: any[] = [];
   ordenGuardada: any;
   cts: any = '0';
+  ods: any = '0';
   proveedor: any[] = [];
   prove: any = '0';
 
@@ -264,7 +266,9 @@ export class CotizadorComponent implements OnInit {
     if (this.op === '0') {
       this.verPDF = 'vacio';
       this.cots = [];
+      this.ords = [];
       this.cts = '0';
+      this.ods = '0';
       this.idFerrum = 0;
       this.numero = '';
       this.nombre = '';
@@ -278,7 +282,9 @@ export class CotizadorComponent implements OnInit {
     } else if (this.op === '1') {
       this.verPDF = 'vacio';
       this.cots = [];
+      this.ords = [];
       this.cts = '0';
+      this.ods = '0';
       this.usoNumero = '';
       this.usoNombre = '';
       this.enviarBool = false;
@@ -291,7 +297,9 @@ export class CotizadorComponent implements OnInit {
     } else if (this.op === '2') {
       this.verPDF = 'vacio';
       this.cots = [];
+      this.ords = [];
       this.cts = '0';
+      this.ods = '0';
       this.idFerrum = 0;
       this.numero = '';
       this.nombre = '';
@@ -316,7 +324,9 @@ export class CotizadorComponent implements OnInit {
       this.enviarBool = true;
       this.verPDF = 'vacio';
       this.cots = [];
+      this.ords = [];
       this.cts = '0';
+      this.ods = '0';
       this.idFerrum = 0;
       this.numero = '';
       this.nombre = '';
@@ -333,7 +343,30 @@ export class CotizadorComponent implements OnInit {
           this.cots = cotizaciones.cotizaciones;
         }
       });
+    } else if (this.op === '4') {
+      this.verPDF = 'vacio';
+      this.cots = [];
+      this.ords = [];
+      this.cts = '0';
+      this.ods = '0';
+      this.idFerrum = 0;
+      this.numero = '';
+      this.nombre = '';
+      this.direccion = '';
+      this.enviarBool = false;
+      this.nameBol = true;
+      this.cotizar = false;
+      this.orden = false;
+      this._pedidoService.obtenerOrdenCompra().subscribe((ordenes: any) => {
+        if (ordenes.status) {
+          this.ords = ordenes.ordenes;
+        }
+      });
     }
+  }
+
+  accionOrds() {
+    this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('http://www.ferremayoristas.com.mx/api/ordenes/' + this.ods.pdf);
   }
 
   buscarCliente() {

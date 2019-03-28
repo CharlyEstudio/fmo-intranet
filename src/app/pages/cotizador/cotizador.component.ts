@@ -76,6 +76,7 @@ export class CotizadorComponent implements OnInit {
   lectura: boolean = false;
   guardado: boolean = false;
   enviarBool: boolean = false;
+  verForm: boolean = false;
 
   // Importes del Pedido/Orden de Compra
   subtotal: number = 0;
@@ -277,6 +278,7 @@ export class CotizadorComponent implements OnInit {
       this.nameBol = false;
       this.cotizar = false;
       this.orden = false;
+      this.verForm = false;
       this.iniciar();
       localStorage.setItem('tipoOperacion', this.op);
     } else if (this.op === '1') {
@@ -293,6 +295,7 @@ export class CotizadorComponent implements OnInit {
       this.nameBol = true;
       this.cotizar = true;
       this.orden = false;
+      this.verForm = false;
       localStorage.setItem('tipoOperacion', this.op);
     } else if (this.op === '2') {
       this.verPDF = 'vacio';
@@ -307,6 +310,7 @@ export class CotizadorComponent implements OnInit {
       this.prove = '0';
       this.enviarBool = false;
       this.nameBol = false;
+      this.verForm = false;
       this._diariosServoce.proveedores().subscribe((prov: any) => {
         if (prov.length > 0) {
           this.proveedor = prov;
@@ -338,6 +342,7 @@ export class CotizadorComponent implements OnInit {
       this.nameBol = true;
       this.lectura = false;
       this.nivelPrecio = 0;
+      this.verForm = true;
       this._pedidoService.obtenerCotizaciones().subscribe((cotizaciones: any) => {
         if (cotizaciones.status) {
           this.cots = cotizaciones.cotizaciones;
@@ -357,6 +362,7 @@ export class CotizadorComponent implements OnInit {
       this.nameBol = true;
       this.cotizar = false;
       this.orden = false;
+      this.verForm = false;
       this._pedidoService.obtenerOrdenCompra().subscribe((ordenes: any) => {
         if (ordenes.status) {
           this.ords = ordenes.ordenes;
@@ -713,9 +719,10 @@ export class CotizadorComponent implements OnInit {
     if (this.proveedor.length === 0) {
       this.cot = {
         idFerrum: this.idFerrum,
+        numero: this.numero,
         nombre: this.nombre,
         pdf: this.file,
-        productos: this.prod,
+        productos: this.productos,
         subtotal: this.subtotal,
         iva: this.iva,
         total: this.total,
@@ -769,7 +776,12 @@ export class CotizadorComponent implements OnInit {
   }
 
   guardarPDF(cotizacion: any, datPDF: any, info: any = '') {
-    const operacion = localStorage.getItem('tipoOperacion');
+    let operacion;
+    if (localStorage.getItem('tipoOperacion') !== null) {
+      operacion = localStorage.getItem('tipoOperacion');
+    } else {
+      operacion = '1';
+    }
     this._pedidoService.guardarPdf(cotizacion, datPDF, operacion, info).subscribe((resp: any) => {
       if (resp[0].status.ok) {
         this.guardado = true;
@@ -969,6 +981,126 @@ export class CotizadorComponent implements OnInit {
     this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('http://www.ferremayoristas.com.mx/api/cotizaciones/' + this.cts.pdf);
   }
 
+  cotizarNuevo() {
+    this.productos = [];
+    this.verPDF = 'vacio';
+    this.cotizar = true;
+    this.subtotal = this.cts.subtotal;
+    this.total = this.cts.total;
+    this.iva = this.cts.iva;
+    this.idFerrum = this.cts.idFerrum;
+    this.numero = this.cts.numero;
+    const pr = this.cts.productos;
+    for (let i = 0; i < pr.length; i++) {
+      const agregar = {
+        producto: pr[i].producto,
+        precioFinal: (pr[i].producto.precioneto * Number(pr[i].cantidad)),
+        precioDesc: pr[i].producto.precioneto,
+        precioTot: pr[i].producto.precio,
+        cantidad: pr[i].cantidad,
+        claveUnidad: pr[i].claveUnidad,
+        claveProdServ: pr[i].claveProdServ
+      };
+      this.productos.push(agregar);
+    }
+    this.cts = '0';
+    if (this.numero !== '') {
+      localStorage.removeItem('rfcCli');
+      localStorage.removeItem('filePDF');
+      localStorage.removeItem('correoCli');
+      localStorage.removeItem('idFerrumCli');
+      localStorage.removeItem('numeroCli');
+      localStorage.removeItem('nombreCli');
+      localStorage.removeItem('direccionCli');
+      localStorage.removeItem('asesorCli');
+      localStorage.removeItem('precioCli');
+      localStorage.removeItem('saldoCli');
+      localStorage.removeItem('lineaCli');
+      localStorage.removeItem('diasCli');
+      this._clienteService.infoClienteCot(this.numero).subscribe((data: any) => {
+        this.nombre = data[0].NOMBRE;
+        this.correoCli = data[0].CORREO;
+        this.nivelPrecio = data[0].LISTA;
+        this.rfc = data[0].RFC;
+        const h = new Date();
+        this.file = this.numero + String(h.getMonth()) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds()) + '.pdf';
+        this.folio = 'C' + this.numero + String(h.getMonth() + 1) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds());
+        localStorage.setItem('folio', this.folio);
+        this.direccion = data[0].DIRECCION + ' ' + data[0].CASA + ' ' + data[0].INTERIOR + ' ' + data[0].COLONIA + ' ' + data[0].CIUDAD + ', ' + data[0].ESTADO + ', ' + data[0].CP;
+        if (data[0].ASESOR !== '') {
+          this.asesor = data[0].ASESOR;
+        } else {
+          this.asesor = 'Sin Asesor';
+        }
+    
+        if (data[0].LISTA === 1) {
+          this.precio = 'DISTRIBUIDOR';
+        } else if (data[0].LISTA === 2) {
+          this.precio = 'SUBDISTRIBUIDOR';
+        } else if (data[0].LISTA === 3) {
+          this.precio = 'MAYORISTA';
+        }
+    
+        this.saldo = data[0].SALDO;
+        this.linea = data[0].LIMITE;
+        this.dias = data[0].DIACREDITO;
+    
+        localStorage.setItem('rfcCli', this.rfc);
+        localStorage.setItem('filePDF', this.file);
+        localStorage.setItem('correoCli', String(this.correoCli));
+        localStorage.setItem('idFerrumCli', String(this.idFerrum));
+        localStorage.setItem('numeroCli', this.numero);
+        localStorage.setItem('nombreCli', this.nombre);
+        localStorage.setItem('direccionCli', this.direccion);
+        localStorage.setItem('asesorCli', this.asesor);
+        localStorage.setItem('precioCli', this.precio);
+        localStorage.setItem('saldoCli', String(this.saldo));
+        localStorage.setItem('lineaCli', String(this.linea));
+        localStorage.setItem('diasCli', String(this.dias));
+        this.nameBol = false;
+        this.numberBol = false;
+        this.lectura = true;
+      });
+    } else {
+      localStorage.removeItem('filePDF');
+      localStorage.removeItem('idFerrumCli');
+      localStorage.removeItem('numeroCli');
+      localStorage.removeItem('nombreCli');
+      localStorage.removeItem('direccionCli');
+      localStorage.removeItem('asesorCli');
+      localStorage.removeItem('precioCli');
+      localStorage.removeItem('saldoCli');
+      localStorage.removeItem('lineaCli');
+      localStorage.removeItem('diasCli');
+      this.numberBol = true;
+      this.nameBol = true;
+      this.lectura = false;
+      this.numero = '';
+      this.nombre = '';
+      this.direccion = '';
+      this.correoCli = '';
+      this.rfc = '';
+      this.nombre = this.cts.nombre;
+      const h = new Date();
+      this.file = String(h.getMonth()) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds()) + '.pdf';
+      this.folio = 'C' + String(h.getMonth() + 1) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds());
+      localStorage.setItem('folio', this.folio);
+      this.nameBol = false;
+      this.numberBol = false;
+      this.lectura = true;
+      localStorage.setItem('filePDF', this.file);
+      localStorage.setItem('idFerrumCli', String(this.idFerrum));
+      localStorage.setItem('numeroCli', this.numero);
+      localStorage.setItem('nombreCli', this.nombre);
+      localStorage.setItem('direccionCli', this.direccion);
+      localStorage.setItem('asesorCli', this.asesor);
+      localStorage.setItem('precioCli', this.precio);
+      localStorage.setItem('saldoCli', String(this.saldo));
+      localStorage.setItem('lineaCli', String(this.linea));
+      localStorage.setItem('diasCli', String(this.dias));
+    }
+  }
+
   hacerPedido() {
     if (this.productos.length > 0) {
       let xml;
@@ -1035,6 +1167,7 @@ export class CotizadorComponent implements OnInit {
     this.orden = false;
     this.productos = [];
     this.prod = [];
+    this.cots = [];
     this.file = '';
     this.verPDF = 'vacio';
     this.guardado = false;
@@ -1085,6 +1218,7 @@ export class CotizadorComponent implements OnInit {
     this.orden = false;
     this.productos = [];
     this.prod = [];
+    this.cots = [];
     this.file = '';
     this.verPDF = 'vacio';
     this.guardado = false;

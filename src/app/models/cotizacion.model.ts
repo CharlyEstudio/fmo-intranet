@@ -1,6 +1,7 @@
 export class Cotizacion {
     constructor(
         public idFerrum: number,
+        public numero: string,
         public nombre: string,
         public pdf: string,
         public productos: Array<any>,

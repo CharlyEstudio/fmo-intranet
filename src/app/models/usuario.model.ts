@@ -9,6 +9,7 @@ export class Usuario {
         public img?: string,
         public rol?: string,
         public activo?: string,
+        public imei?: string,
         public google?: boolean,
         public _id?: string
     ) { }

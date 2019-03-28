@@ -40,8 +40,13 @@
 
       <option *ngFor="let d of ords" [ngValue]="d">{{d.nombre}} - Folio: {{ d.folio }}</option>
 
-
     </select>
+
+  </div>
+
+  <div class="col-lg-12 col-md-12 col-sm-12 pt-3" *ngIf="verPDF !== 'vacio' && cts !== '0'">
+
+    <button type="button" class="btn btn-primary" (click)="cotizarNuevo()">Cotizar Nuevo</button>
 
   </div>
 

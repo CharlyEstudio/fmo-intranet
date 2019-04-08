@@ -26,9 +26,9 @@
 
                                 <i class="mdi mdi-barcode-scan display-5 op-3 text-dark"></i>
 
-                                <form ngNativeValidate #f="ngForm" style="padding-bottom: 5px;" *ngIf="generar">
+                                <form style="padding-bottom: 5px;" *ngIf="generar">
 
-                                    <input placeholder="Ingrese el folio a buscar" autocomplete="off" type="number" class="form-control" [(ngModel)]="folio" name="folio" (change)="obtenerFolio(f)" />
+                                    <input id="inputF" #folioIn placeholder="Ingrese el folio a buscar" *ngIf="terminoEspecial" autocomplete="off" type="number" class="form-control" name="folio" (change)="obtenerFolio()" />
 
                                 </form>
 
@@ -842,7 +842,7 @@
 
                         <tbody>
 
-                            <tr id="linea{{fac._id}}" *ngFor="let fac of facturas; let i = index" [ngClass]="{'bg-primary': fac.reasignar === true, 'text-white': fac.reasignar === true}">
+                            <tr id="linea{{fac.factura}}" *ngFor="let fac of facturas; let i = index" [ngClass]="{'bg-primary': fac.reasignar === true, 'text-white': fac.reasignar === true}">
 
                                 <td class="text-center">{{ (i + 1) }}</td>
 
@@ -862,13 +862,13 @@
 
                                 <td class="text-center">
 
-                                    <button class="btn btn-info btn-sm" (click)="reasignar(fac)">Liberar</button>
+                                    <button class="btn btn-info btn-sm" (click)="reasignar(fac, i)">Liberar</button>
 
                                 </td>
 
                                 <td class="text-center">
 
-                                    <button class="btn btn-success btn-sm" (click)="asignar(fac)">Asignar</button>
+                                    <button class="btn btn-success btn-sm" (click)="asignar(fac, i)">Asignar</button>
 
                                 </td>
 

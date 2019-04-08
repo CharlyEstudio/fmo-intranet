@@ -87,6 +87,20 @@ export class GuiasService {
     return this.http.get( this.url );
   }
 
+  buscarFolioGuiaGnl(folio: any) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/buscar/gnal/' + folio;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/guias/buscar/gnal/' + folio;
+    } else {
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/gnal/' + folio;
+    }
+
+    this.url += '?token=' + this.token;
+
+    return this.http.get( this.url );
+  }
+
   buscarFolioHistorial(folio: any) {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/buscar/historial/' + folio;
@@ -113,6 +127,20 @@ export class GuiasService {
     this.url += '?token=' + this.token;
 
     return this.http.get( this.url );
+  }
+
+  buscarGuiaPrinId(guia: any) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/obtener/factura';
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/guias/obtener/factura';
+    } else {
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/obtener/factura';
+    }
+
+    this.url += '?token=' + this.token;
+
+    return this.http.put( this.url, guia );
   }
 
   procesarGuia(guia: GuiasPartidas) {

@@ -104,6 +104,7 @@ import { UsuariosChoferesComponent } from './usuarios-choferes/usuarios-choferes
 import { PedWebComponent } from './ped-web/ped-web.component';
 import { CotizadorComponent } from './cotizador/cotizador.component';
 import { NotascreditoComponent } from './notascredito/notascredito.component';
+import { BackorderAsesorComponent } from './backorder-asesor/backorder-asesor.component';
 
 @NgModule({
     declarations: [
@@ -185,7 +186,8 @@ import { NotascreditoComponent } from './notascredito/notascredito.component';
         UsuariosChoferesComponent,
         PedWebComponent,
         CotizadorComponent,
-        NotascreditoComponent
+        NotascreditoComponent,
+        BackorderAsesorComponent
     ],
     exports: [
         DashborarDirComponent,

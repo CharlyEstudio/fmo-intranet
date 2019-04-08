@@ -17,6 +17,10 @@ export class PedidosDiaComponent implements OnInit {
 
   pedidos: any[] = [];
 
+  partidas: any[] = [];
+
+  msg: any;
+
   constructor(
     private _asesoresService: AsesoresService
   ) { }
@@ -35,6 +39,17 @@ export class PedidosDiaComponent implements OnInit {
         this.pedidos = resp;
       });
 
+  }
+
+  verPedido(pedido: any) {
+    this.msg = '';
+    this._asesoresService.partidas(pedido.folio).subscribe((partidas: any) => {
+      if (partidas.length > 0) {
+        this.partidas = partidas;
+      } else {
+        this.msg = 'No hay partidas de este pedido.';
+      }
+    })
   }
 
 }

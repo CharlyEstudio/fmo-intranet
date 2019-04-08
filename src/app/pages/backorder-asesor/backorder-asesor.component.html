@@ -1,0 +1,60 @@
+<div class="my-2">
+
+  <h6 class="text-justify">El BackOrder genera una consulta de gran escala, pudiendo consumir una cantidad considerable de datos (móviles, entre 8 hasta 10mb), es por esto, que se aconseja que se realice a consideración.</h6>
+
+  <div class="form-group">
+
+    <input #input type="number" name="numero" id="numero" class="form-control"  autocomplete="off" placeholder="Número Cliente eje. 03804">
+
+  </div>
+
+  <button type="button" class="btn btn-dropbox btn-block" (click)="solicitar()">SOLICITAR</button>
+
+  <br>
+
+  <div class="alert alert-warning" *ngIf="cargando">
+
+      <i class="fa fa-spin fa-spinner"></i> Cargando ...
+
+  </div>
+
+  <div class="alert alert-danger text-center" *ngIf="msg !== ''">
+
+    {{msg}}
+
+  </div>
+
+
+</div>
+
+<div class="card text-white bg-secondary" *ngFor="let bo of backorder">
+
+    <div class="card-header">
+
+        <h4 class="m-b-0 text-dark text-white">{{bo.NOMBRE}}</h4></div>
+
+    <div class="card-body">
+
+        <h6 class="card-title text-warning">CODIGO: {{bo.CODIGO}} | CLAVE: {{bo.CLAVE}}</h6>
+
+        <img [src]="bo.IMAGEN" class="img-fluid img-circle my-2" width="30%">
+
+        <h6 class="text-white">Lote: {{bo.LOTE}} pz(s)</h6>
+
+        <h6 class="text-white">Existencias: {{bo.EXISTENCIA}} pz(s)</h6>
+
+        <h6 class="text-white">Fecha de Pedido: {{bo.FECHA | date: 'dd-MM-yyyy'}}</h6>
+
+        <h6 class="text-white">Solicitado: {{bo.SOLICITADO}}</h6>
+
+        <h6 class="text-white">Entregado: {{bo.ENTREGADO}}</h6>
+
+        <h6 class="text-white"> BackOrder: {{bo.BACK}}</h6>
+
+        <h6 class="text-white">Precio Neto Actual: {{bo.PRECIONETO | currency}}</h6>
+
+        <h6 class="text-white">Precio Lote Actual: {{bo.PRECIO | currency}}</h6>
+
+    </div>
+
+</div>

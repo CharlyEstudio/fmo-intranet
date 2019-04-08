@@ -311,6 +311,18 @@ export class AsesoresService {
     return this.http.get( this.url );
   }
 
+  partidas(folio: any) {
+    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=41&folio=' + folio;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=41&folio=' + folio;
+    } else {
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=41&folio=' + folio;
+    }
+
+    return this.http.get( this.url );
+  }
+
   cobroMes( id: any, tipo: any ) {
     if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
       /*LOCAL*/this.url = URL_LOCAL + '/api/comisiones.php?opcion=1&perid=' + id + '&tipo=' + tipo;

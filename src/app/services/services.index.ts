@@ -32,6 +32,8 @@ export { ChoferesService } from "./usuario-chofer/choferes.service";
 export { TiendaService } from "./tienda/tienda.service";
 export { PedidosService } from "./pedidos/pedidos.service";
 export { NcService } from "./nc/nc.service";
+export { BackorderService } from "./backorder/backorder.service";
+export { HerramientasService } from "./herramientas/herramientas.service";
 
 // Servicio PHP
 export { PhpService } from "./php/php.service";

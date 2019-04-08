@@ -36,7 +36,9 @@ import {
   MagnitrackingService,
   TiendaService,
   PedidosService,
-  NcService
+  NcService,
+  BackorderService,
+  HerramientasService,
   // NotificationService
 } from "./services.index";
 
@@ -46,7 +48,7 @@ import {
     HttpClientModule
   ],
   providers: [
-    // Guardas
+    // Guardias
     LoginGuardGuard,
     VerificaTokenGuard,
     AdminGuard,
@@ -80,6 +82,8 @@ import {
     TiendaService,
     PedidosService,
     NcService,
+    BackorderService,
+    HerramientasService,
     // Notificaciones
     // NotificationService
     // Magnitracking

@@ -66,6 +66,7 @@ import { UsuariosChoferesComponent } from './usuarios-choferes/usuarios-choferes
 import { PedWebComponent } from './ped-web/ped-web.component';
 import { CotizadorComponent } from './cotizador/cotizador.component';
 import { NotascreditoComponent } from './notascredito/notascredito.component';
+import { BackorderAsesorComponent } from './backorder-asesor/backorder-asesor.component';
 
 const pageRoutes: Routes = [
     {
@@ -233,6 +234,16 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Pedidos Web',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'backorder-asesor',
+        component: BackorderAsesorComponent,
+        canActivate: [ AsesoresGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Back Order',
                     name: 'description'
                 }
     },

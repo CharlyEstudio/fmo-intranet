@@ -264,11 +264,11 @@
 
                 <i class="mdi mdi-alert-circle-outline lead text-warning"></i>
 
-                <h3 class="text-black">De <span class="font-bold">1 a 8</span> días. <br>
+                <h3 class="text-black">De <span class="font-bold">1 a 30</span> días. <br>
 
-                    <span class="text-black" style="font-weight: bold;">{{ mor18 | currency}}</span></h3>
+                    <span class="text-black" style="font-weight: bold;">{{ mor130 | currency}}</span></h3>
 
-                <button *ngIf="mor18 > 0" (click)="solicitarLista('-1', '-8')" class="btn btn-success">Solicitar</button>
+                <button *ngIf="mor130 > 0" (click)="solicitarLista('-1', '-30')" class="btn btn-success">Solicitar</button>
 
             </div>
 
@@ -276,11 +276,11 @@
 
                 <i class="mdi mdi-alert-outline lead text-warning"></i>
 
-                <h3 class="text-black">De <span class="font-bold">9 a 16</span> días. <br>
+                <h3 class="text-black">De <span class="font-bold">31 a 45</span> días. <br>
 
-                    <span class="text-warning" style="font-weight: bold;">{{ mor916 | currency}}</span></h3>
+                    <span class="text-warning" style="font-weight: bold;">{{ mor3145 | currency}}</span></h3>
 
-                <button *ngIf="mor916 > 0" (click)="solicitarLista('-9', '-16')" class="btn btn-success">Solicitar</button>
+                <button *ngIf="mor3145 > 0" (click)="solicitarLista('-31', '-45')" class="btn btn-success">Solicitar</button>
 
             </div>
 
@@ -288,29 +288,17 @@
 
                 <i class="mdi mdi-alert-octagon lead text-danger"></i>
 
-                <h3 class="text-black">De <span class="font-bold">17 a 30</span> días. <br>
+                <h3 class="text-black">De <span class="font-bold">46 a 60</span> días. <br>
 
-                    <span class="text-danger" style="font-weight: bold;">{{ mor1730 | currency}}</span></h3>
+                    <span class="text-danger" style="font-weight: bold;">{{ mor4660 | currency}}</span></h3>
 
-                <button *ngIf="mor1730 > 0" (click)="solicitarLista('-17', '-30')" class="btn btn-success">Solicitar</button>
+                <button *ngIf="mor4660 > 0" (click)="solicitarLista('-46', '-60')" class="btn btn-success">Solicitar</button>
 
             </div>
 
             <div class="col-lg-4 col-md-6 text-center p-b-20">
 
                 <i class="mdi mdi-alert-octagram lead text-danger"></i>
-
-                <h3 class="text-black">De <span class="font-bold">31 a 60</span> días. <br>
-
-                    <span class="text-danger" style="font-weight: bold;">{{ mor3160 | currency}}</span></h3>
-
-                <button *ngIf="mor3160 > 0" (click)="solicitarLista('-31', '-60')" class="btn btn-success">Solicitar</button>
-
-            </div>
-
-            <div class="col-lg-4 col-md-6 text-center p-b-20">
-
-                <i class="wi wi-moonrise lead text-danger"></i>
 
                 <h3 class="text-black">De <span class="font-bold">61 a 90</span> días. <br>
 
@@ -322,13 +310,25 @@
 
             <div class="col-lg-4 col-md-6 text-center p-b-20">
 
+                <i class="wi wi-moonrise lead text-danger"></i>
+
+                <h3 class="text-black">De <span class="font-bold">91 a 120</span> días. <br>
+
+                    <span class="text-danger" style="font-weight: bold;">{{ mor91120 | currency}}</span></h3>
+
+                <button *ngIf="mor91120 > 0" (click)="solicitarLista('-91', '-120')" class="btn btn-success">Solicitar</button>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6 text-center p-b-20">
+
                 <i class="wi wi-fire lead text-danger"></i>
 
-                <h3 class="text-black">Mayor de <span class="font-bold">90</span> días. <br>
+                <h3 class="text-black">Mayor de <span class="font-bold">120</span> días. <br>
 
-                    <span class="text-danger" style="font-weight: bold;">{{ mor91 | currency}}</span></h3>
+                    <span class="text-danger" style="font-weight: bold;">{{ mor121 | currency}}</span></h3>
 
-                <button *ngIf="mor91 > 0" (click)="solicitarLista('-91')" class="btn btn-success">Solicitar</button>
+                <button *ngIf="mor121 > 0" (click)="solicitarLista('-121')" class="btn btn-success">Solicitar</button>
 
             </div>
 

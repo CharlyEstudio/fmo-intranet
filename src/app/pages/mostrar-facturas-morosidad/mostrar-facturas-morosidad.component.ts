@@ -26,15 +26,19 @@ export class MostrarFacturasMorosidadComponent implements OnInit {
   fecha: any;
   cliID: any;
 
-  mor1a28: any[] = [];
-  mor29a45: any[] = [];
+  mor1a30: any[] = [];
+  mor31a45: any[] = [];
   mor46a60: any[] = [];
-  mor60: any[] = [];
+  mor61a90: any[] = [];
+  mor91a120: any[] = [];
+  mor120: any[] = [];
 
-  mor128Bol: boolean = false;
-  mor2945Bol: boolean = false;
+  mor130Bol: boolean = false;
+  mor3145Bol: boolean = false;
   mor46a60Bol: boolean = false;
-  mor60Bol: boolean = false;
+  mor61a90Bol: boolean = false;
+  mor91a120Bol: boolean = false;
+  mor120Bol: boolean = false;
   charlaBol: boolean = false;
   local: boolean = false;
 
@@ -51,38 +55,40 @@ export class MostrarFacturasMorosidadComponent implements OnInit {
     this.nombre = this.get.snapshot.paramMap.get("nombre");
     this.numero = this.get.snapshot.paramMap.get("numero");
 
-    this.obtenerMor1a28(this.get.snapshot.paramMap.get("clienteid"), 'mor1a28');
-    this.obtenerMor29a45(this.get.snapshot.paramMap.get("clienteid"), 'mor29a45');
+    this.obtenerMor1a30(this.get.snapshot.paramMap.get("clienteid"), 'mor1a30');
+    this.obtenerMor31a45(this.get.snapshot.paramMap.get("clienteid"), 'mor31a45');
     this.obtenerMor46a60(this.get.snapshot.paramMap.get("clienteid"), 'mor46a60');
-    this.obtenerMor60(this.get.snapshot.paramMap.get("clienteid"), 'mor60');
+    this.obtenerMor61a90(this.get.snapshot.paramMap.get("clienteid"), 'mor61a90');
+    this.obtenerMor91a120(this.get.snapshot.paramMap.get("clienteid"), 'mor91a120');
+    this.obtenerMor120(this.get.snapshot.paramMap.get("clienteid"), 'mor120');
     this.obtenerTotal(this.get.snapshot.paramMap.get("clienteid"));
 
   }
 
   ngOnInit() {}
 
-  obtenerMor1a28( clienteid: any, tipo: any ) {
+  obtenerMor1a30( clienteid: any, tipo: any ) {
 
     this._creditoService.clienteMoroso(clienteid, tipo).subscribe( ( relacion: any ) => {
-      this.mor1a28 = relacion;
-      if (this.mor1a28.length === 0) {
-        this.mor128Bol = false;
+      this.mor1a30 = relacion;
+      if (this.mor1a30.length === 0) {
+        this.mor130Bol = false;
       } else {
-        this.mor128Bol = true;
+        this.mor130Bol = true;
       }
     });
 
 
   }
 
-  obtenerMor29a45( clienteid: any, tipo: any ) {
+  obtenerMor31a45( clienteid: any, tipo: any ) {
 
     this._creditoService.clienteMoroso(clienteid, tipo).subscribe( ( relacion: any ) => {
-      this.mor29a45 = relacion;
-      if (this.mor29a45.length === 0) {
-        this.mor2945Bol = false;
+      this.mor31a45 = relacion;
+      if (this.mor31a45.length === 0) {
+        this.mor3145Bol = false;
       } else {
-        this.mor2945Bol = true;
+        this.mor3145Bol = true;
       }
     });
 
@@ -103,14 +109,40 @@ export class MostrarFacturasMorosidadComponent implements OnInit {
 
   }
 
-  obtenerMor60( clienteid: any, tipo: any ) {
+  obtenerMor61a90( clienteid: any, tipo: any ) {
 
     this._creditoService.clienteMoroso(clienteid, tipo).subscribe( ( relacion: any ) => {
-      this.mor60 = relacion;
-      if (this.mor60.length === 0) {
-        this.mor60Bol = false;
+      this.mor61a90 = relacion;
+      if (this.mor61a90.length === 0) {
+        this.mor61a90Bol = false;
       } else {
-        this.mor60Bol = true;
+        this.mor61a90Bol = true;
+      }
+    });
+
+  }
+
+  obtenerMor91a120( clienteid: any, tipo: any ) {
+
+    this._creditoService.clienteMoroso(clienteid, tipo).subscribe( ( relacion: any ) => {
+      this.mor91a120 = relacion;
+      if (this.mor91a120.length === 0) {
+        this.mor91a120Bol = false;
+      } else {
+        this.mor91a120Bol = true;
+      }
+    });
+
+  }
+
+  obtenerMor120( clienteid: any, tipo: any ) {
+
+    this._creditoService.clienteMoroso(clienteid, tipo).subscribe( ( relacion: any ) => {
+      this.mor120 = relacion;
+      if (this.mor120.length === 0) {
+        this.mor120Bol = false;
+      } else {
+        this.mor120Bol = true;
       }
     });
 

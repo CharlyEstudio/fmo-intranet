@@ -67,6 +67,7 @@ import { PedWebComponent } from './ped-web/ped-web.component';
 import { CotizadorComponent } from './cotizador/cotizador.component';
 import { NotascreditoComponent } from './notascredito/notascredito.component';
 import { BackorderAsesorComponent } from './backorder-asesor/backorder-asesor.component';
+import { ProcesofacturasComponent } from './procesofacturas/procesofacturas.component';
 
 const pageRoutes: Routes = [
     {
@@ -546,6 +547,17 @@ const pageRoutes: Routes = [
                     name: 'description'
                 }
     },
+    // Mesas
+    {
+        path: 'procesoFacturas',
+        component: ProcesofacturasComponent,
+        canActivate: [ MesaGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Revisión de Facturas',
+                    name: 'description'
+                }
+    },
     // Logística
     {
         path: 'dashboardGuias',
@@ -631,7 +643,7 @@ const pageRoutes: Routes = [
     {
         path: '',
         canActivate: [ MesaGuard, VerificaTokenGuard ],
-        redirectTo: '/dashboardGuias',
+        redirectTo: '/procesoFacturas',
         pathMatch: 'full'
     },
     {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_INTERNO } from '../../config/config';
+import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_INTERNO, URL_PETICION } from '../../config/config';
 
 @Injectable()
 export class SubirArchivoService {
@@ -28,10 +28,10 @@ export class SubirArchivoService {
 
       let url;
 
-      if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+      if (URL_SERVICIO_GENERAL === URL_PETICION) {
         /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/upload/' + tipo + '/' + id;
       } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-        url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/upload/' + tipo + '/' + id;
+        url = URL_LOCAL + ':' + PUERTO_INTERNO + '/upload/' + tipo + '/' + id;
       } else {
         url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/upload/' + tipo + '/' + id;
       }

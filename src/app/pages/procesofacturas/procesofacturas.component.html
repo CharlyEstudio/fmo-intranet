@@ -1,0 +1,337 @@
+<div class="row">
+
+  <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+
+      <div class="card bg-white">
+
+          <div class="card-body">
+      
+              <div class="row">
+      
+                  <div class="col-lg-8 col-md-8">
+
+                      <p class="text-dark">Sin Impresión</p>
+
+                      <h3 class="text-dark font-light tipo-cursor" (click)="openModal(1)">
+      
+                          <!-- <div class="animated pulse2"> -->
+      
+                              <span data-toggle="modal" data-target="#modalTable" class="display-4 font-bold" [ngClass]="{'text-success': sinImpresion <= 10, 'text-warning': sinImpresion > 10 && sinImpresion <= 25, 'text-danger': sinImpresion > 25}">{{sinImpresion | number}}</span>
+      
+                          <!-- </div> -->
+      
+                      </h3>
+
+                  </div>
+
+                  <div class="col-lg-4 col-md-4 text-center" style="font-size: 5em;">
+
+                    <i class="mdi mdi-tag-remove text-danger"></i>
+
+                  </div>
+
+              </div>
+      
+          </div>
+      
+      </div>
+
+  </div>
+
+  <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+
+      <div class="card bg-inverse">
+
+          <div class="card-body">
+      
+              <div class="row">
+      
+                  <div class="col-lg-8 col-md-8">
+      
+                      <p class="text-white">Sin Enviar</p>
+      
+                      <h3 class="text-white font-light tipo-cursor" (click)="openModal(2)">
+      
+                          <!-- <div class="animated pulse2"> -->
+      
+                              <span data-toggle="modal" data-target="#modalTable" class="display-4 font-bold" [ngClass]="{'text-success': sinEnviar === 0, 'text-warning': sinEnviar > 0 && sinEnviar <= 5, 'text-white': sinEnviar > 5}">{{sinEnviar | number}}</span>
+      
+                          <!-- </div> -->
+      
+                      </h3>
+      
+                  </div>
+
+                  <div class="col-lg-4 col-md-4 text-white text-center" style="font-size: 5em;">
+
+                    <i class="mdi mdi-email-alert text-danger"></i>
+
+                  </div>
+      
+              </div>
+      
+          </div>
+      
+      </div>
+
+  </div>
+
+  <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+
+      <div class="card bg-inverse">
+
+          <div class="card-body">
+      
+              <div class="row">
+      
+                  <div class="col-lg-8 col-md-8">
+      
+                      <p class="text-white">Error Facturar</p>
+      
+                      <h3 class="font-light tipo-cursor" (click)="openModal(3)" [ngClass]="{'text-white': failFacturar === 0, 'text-danger': failFacturar > 0}">
+      
+                          <!-- <div class="animated pulse2"> -->
+      
+                              <span data-toggle="modal" data-target="#modalTable" class="display-4 font-bold">{{failFacturar | number}}</span>
+      
+                          <!-- </div> -->
+      
+                      </h3>
+      
+                  </div>
+
+                  <div class="col-lg-4 col-md-4 text-white text-center" style="font-size: 5em;">
+
+                    <i class="mdi mdi-tag-outline text-danger"></i>
+
+                  </div>
+      
+              </div>
+      
+          </div>
+      
+      </div>
+
+  </div>
+
+  <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+
+      <div class="card bg-white">
+
+          <div class="card-body">
+      
+              <div class="row">
+      
+                  <div class="col-lg-8 col-md-8">
+      
+                      <p class="text-dark">Error Timbrar</p>
+      
+                      <h3 class="font-light tipo-cursor" (click)="openModal(4)" [ngClass]="{'text-dark': failTimbrar === 0, 'text-danger': failTimbrar > 0}">
+      
+                          <!-- <div class="animated pulse2"> -->
+      
+                              <span data-toggle="modal" data-target="#modalTable" class="display-4 font-bold">{{failTimbrar | number}}</span>
+      
+                          <!-- </div> -->
+      
+                      </h3>
+      
+                  </div>
+
+                  <div class="col-lg-4 col-md-4 text-white text-center" style="font-size: 5em;">
+
+                    <i class="mdi mdi-tag-text-outline text-danger"></i>
+
+                  </div>
+      
+              </div>
+      
+          </div>
+      
+      </div>
+
+  </div>
+
+  <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+
+    <div class="table-responsive">
+
+      <table class="table table-hover table-sm">
+
+        <thead>
+
+          <tr>
+
+            <th class="text-center">FACTURA</th>
+
+            <th class="text-center">IMPRESIONES</th>
+
+            <th class="text-center">ENVIOS</th>
+
+            <th class="text-center">FACTURA</th>
+
+            <th class="text-center">ESTADO</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let fac of factTot">
+
+            <td class="text-center font-weight-bold">{{fac.numero}}</td>
+
+            <td class="text-center">
+
+              <h3>
+
+                <span class="badge" [ngClass]="{'badge-success': fac.impresiones > 0, 'badge-danger': fac.impresiones === 0}">{{fac.impresiones}}</span>
+
+              </h3>
+              
+            </td>
+
+            <td class="text-center">
+              
+              <h3>
+
+                <span class="badge" [ngClass]="{'badge-success': fac.correos > 0, 'badge-danger': fac.correos === 0}">{{fac.correos}}</span>
+
+              </h3>
+            
+            </td>
+
+            <td class="text-center">
+
+              <h4>
+
+                <span class="badge" [ngClass]="{'badge-info': fac.estatus === 'CORRECTO', 'badge-danger': fac.estatus !== 'CORRECTO'}">{{fac.estatus}}</span>
+
+              </h4>
+              
+            </td>
+
+            <td class="text-center">
+
+              <h4>
+
+                <span class="badge" [ngClass]="{'badge-info': fac.estado2 === 'COMPLETADO', 'badge-danger': fac.estado2 !== 'COMPLETADO'}">{{fac.estado2}}</span>
+
+              </h4>
+              
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="modalTable" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+
+  <div class="modal-dialog modal-lg" role="document">
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <h5 class="modal-title" id="myLargeModalLabel">{{titulo}}</h5>
+  
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  
+          <span aria-hidden="true">&times;</span>
+  
+        </button>
+        
+      </div>
+
+      <div class="modal-body">
+
+        <div class="table-responsive">
+
+          <table class="table table-bordered table-striped" *ngIf="impresionBol">
+
+            <thead>
+
+              <tr>
+
+                <th>Factura</th>
+
+                <th>Impresiones</th>
+
+                <th>Correos</th>
+
+                <th>Estado</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let mod of modal">
+
+                <td>{{mod.numero}}</td>
+
+                <td>{{mod.impresiones}}</td>
+
+                <td>{{mod.correos}}</td>
+
+                <td>{{mod.estado}}</td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+          <table class="table table-bordered table-striped" *ngIf="facturaBol">
+
+            <thead>
+
+              <tr>
+
+                <th>Factura</th>
+
+                <th>Pedido</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let mod of modal">
+
+                <td>{{mod.numero}}</td>
+
+                <td>{{mod.anterior}}</td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
+      </div>
+
+    </div>
+
+  </div>
+  
+</div>

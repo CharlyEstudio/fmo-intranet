@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 // Config
-import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, PUERTO_SERVER } from '../../config/config';
+import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, PUERTO_SERVER, URL_PETICION } from '../../config/config';
 
 @Injectable()
 export class GpsService {
@@ -18,7 +18,7 @@ export class GpsService {
   }
 
   obtenerUbicaciones() {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/usuario/gps';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/usuario/gps';
@@ -32,7 +32,7 @@ export class GpsService {
   }
 
   obtenerClientesTotal() {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/obtenerCliente';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/clientes/obtenerCliente';
@@ -46,7 +46,7 @@ export class GpsService {
   }
 
   obtenerClientes(diavis: any) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/obtenerCliente/mostrar/' + diavis;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/clientes/obtenerCliente/mostrar/' + diavis;
@@ -60,7 +60,7 @@ export class GpsService {
   }
 
   obtenerAsesorEspefico(id: any) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/usuario/' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/especifico/usuario/' + id;

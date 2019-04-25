@@ -48,12 +48,12 @@ export class DasboardAseComponent implements OnInit {
   clientesPedidosDia: number = 0;
 
   // Morosidad
-  mor18: number = 0;
-  mor916: number = 0;
-  mor1730: number = 0;
-  mor3160: number = 0;
+  mor130: number = 0;
+  mor3145: number = 0;
+  mor4660: number = 0;
   mor6190: number = 0;
-  mor91: number = 0;
+  mor91120: number = 0;
+  mor121: number = 0;
 
   constructor(
     private router: Router,
@@ -215,24 +215,19 @@ export class DasboardAseComponent implements OnInit {
       });
 
     // Morosidad
-    this._asesoresServices.morosidad18(this.idFerrum)
+    this._asesoresServices.morosidad130(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.mor18 = resp[0].importe;
+        this.mor130 = resp[0].importe;
       });
 
-    this._asesoresServices.morosidad916(this.idFerrum)
+    this._asesoresServices.morosidad3145(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.mor916 = resp[0].importe;
+        this.mor3145 = resp[0].importe;
       });
 
-    this._asesoresServices.morosidad1730(this.idFerrum)
+    this._asesoresServices.morosidad4660(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.mor1730 = resp[0].importe;
-      });
-
-    this._asesoresServices.morosidad3160(this.idFerrum)
-      .subscribe( ( resp: any ) => {
-        this.mor3160 = resp[0].importe;
+        this.mor4660 = resp[0].importe;
       });
 
     this._asesoresServices.morosidad6190(this.idFerrum)
@@ -240,9 +235,14 @@ export class DasboardAseComponent implements OnInit {
         this.mor6190 = resp[0].importe;
       });
 
-    this._asesoresServices.morosidad91(this.idFerrum)
+    this._asesoresServices.morosidad91120(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.mor91 = resp[0].importe;
+        this.mor91120 = resp[0].importe;
+      });
+
+    this._asesoresServices.morosidad121(this.idFerrum)
+      .subscribe( ( resp: any ) => {
+        this.mor121 = resp[0].importe;
       });
 
   }

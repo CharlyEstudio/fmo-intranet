@@ -306,6 +306,10 @@ agm-map {
     border: 1px solid black;
 }
 
+.tipo-cursor {
+    cursor: pointer;
+}
+
 /*MAPS DIRECTIONS*/
 
 /* #map {

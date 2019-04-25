@@ -32,7 +32,7 @@
 
 </div>
 
-<div class="row" *ngIf="!mor128Bol">
+<div class="row" *ngIf="!mor130Bol">
 
     <div class="col-lg-12">
 
@@ -40,7 +40,7 @@
 
             <div class="card-body">
 
-                <p class="font-weight-bold">Morosidad de 1 a 28 Días</p>
+                <p class="font-weight-bold">Morosidad de 1 a 30 Días</p>
 
                 <p>No se encontró facturas vencidas en esta etapa.</p>
 
@@ -52,9 +52,9 @@
 
 </div>
 
-<div class="table-responsive" *ngIf="mor128Bol">
+<div class="table-responsive" *ngIf="mor130Bol">
 
-    <h3>Morosidad de 1 a 28 Días</h3>
+    <h3>Morosidad de 1 a 30 Días</h3>
 
     <table class="table table-hover mostrar-folio">
 
@@ -78,7 +78,7 @@
 
         <tbody>
 
-            <tr *ngFor="let mor of mor1a28; let i = index">
+            <tr *ngFor="let mor of mor1a30; let i = index">
 
                 <td class="text-center" style="font-weight: 700;">{{ mor.folio }}</td>
 
@@ -106,7 +106,7 @@
 
 </div>
 
-<div class="row" *ngIf="!mor2945Bol">
+<div class="row" *ngIf="!mor3145Bol">
 
     <div class="col-lg-12">
 
@@ -114,7 +114,7 @@
 
             <div class="card-body">
 
-                <p class="font-weight-bold">Morosidad de 29 a 45 Días</p>
+                <p class="font-weight-bold">Morosidad de 31 a 45 Días</p>
 
                 <p>No se encontró facturas vencidas en esta etapa.</p>
 
@@ -126,9 +126,9 @@
 
 </div>
 
-<div class="table-responsive" *ngIf="mor2945Bol">
+<div class="table-responsive" *ngIf="mor3145Bol">
 
-    <h3>Morosidad de 29 a 45 Días</h3>
+    <h3>Morosidad de 31 a 45 Días</h3>
 
     <table class="table table-hover mostrar-folio">
 
@@ -152,7 +152,7 @@
 
         <tbody>
 
-            <tr *ngFor="let mor of mor29a45; let i = index">
+            <tr *ngFor="let mor of mor31a45; let i = index">
 
                 <td class="text-center" style="font-weight: 700;">{{ mor.folio }}</td>
 
@@ -188,7 +188,7 @@
 
             <div class="card-body">
 
-                <p class="font-weight-bold">Morosidad de 45 a 60 Días</p>
+                <p class="font-weight-bold">Morosidad de 46 a 60 Días</p>
 
                 <p>No se encontró facturas vencidas en esta etapa.</p>
 
@@ -202,7 +202,7 @@
 
 <div class="table-responsive" *ngIf="mor46a60Bol">
 
-    <h3>Morosidad más de 45 Días</h3>
+    <h3>Morosidad de 46 a 60 Días</h3>
 
     <table class="table table-hover mostrar-folio">
 
@@ -254,7 +254,7 @@
 
 </div>
 
-<div class="row" *ngIf="!mor60Bol">
+<div class="row" *ngIf="!mor61a90Bol">
 
     <div class="col-lg-12">
 
@@ -262,7 +262,7 @@
 
             <div class="card-body">
 
-                <p class="font-weight-bold">Morosidad más de 60 Días</p>
+                <p class="font-weight-bold">Morosidad de 61 a 90 Días</p>
 
                 <p>No se encontró facturas vencidas en esta etapa.</p>
 
@@ -274,9 +274,9 @@
 
 </div>
 
-<div class="table-responsive" *ngIf="mor60Bol">
+<div class="table-responsive" *ngIf="mor61a90Bol">
 
-    <h3>Morosidad más de 60 Días</h3>
+    <h3>Morosidad de 61 a 90 Días</h3>
 
     <table class="table table-hover mostrar-folio">
 
@@ -300,7 +300,7 @@
 
         <tbody>
 
-            <tr *ngFor="let mor of mor60; let i = index">
+            <tr *ngFor="let mor of mor61a90; let i = index">
 
                 <td class="text-center" style="font-weight: 700;">{{ mor.folio }}</td>
 
@@ -328,6 +328,156 @@
     </table>
 
 </div>
+
+<div class="row" *ngIf="!mor91a120Bol">
+
+        <div class="col-lg-12">
+    
+            <div class="card card-success">
+    
+                <div class="card-body">
+    
+                    <p class="font-weight-bold">Morosidad de 91 a 120 Días</p>
+    
+                    <p>No se encontró facturas vencidas en esta etapa.</p>
+    
+                </div>
+    
+            </div>
+    
+        </div>
+    
+    </div>
+    
+    <div class="table-responsive" *ngIf="mor91a120Bol">
+    
+        <h3>Morosidad de 91 a 120 Días</h3>
+    
+        <table class="table table-hover mostrar-folio">
+    
+            <thead>
+    
+                <tr>
+    
+                    <th class="text-center">Folio</th>
+    
+                    <th class="text-center">Vence</th>
+    
+                    <th class="text-center">Días Vencidos</th>
+    
+                    <th class="text-center">Saldo</th>
+    
+                    <th class="text-center">Movimientos</th>
+    
+                </tr>
+    
+            </thead>
+    
+            <tbody>
+    
+                <tr *ngFor="let mor of mor91a120; let i = index">
+    
+                    <td class="text-center" style="font-weight: 700;">{{ mor.folio }}</td>
+    
+                    <td class="text-center">{{ mor.vence | date: 'dd-MM-yyyy' }}</td>
+    
+                    <td class="text-center" style="color: #f62d51;">{{ mor.dias_vencidos | number }}</td>
+    
+                    <td class="text-right" style="color: #f62d51;">{{ mor.saldo | currency }}</td>
+    
+                    <td class="text-center">
+    
+                        <a href="#modalMov" class="btn btn-outline-info btn-sm" (click)="modalMovimietos(mor.folio, mor.saldo)" data-dismiss="modal" data-toggle="modal">
+    
+                            <i class="mdi mdi-chart-scatterplot-hexbin"></i>
+    
+                        </a>
+    
+    
+                    </td>
+    
+                </tr>
+    
+            </tbody>
+    
+        </table>
+    
+    </div>
+
+    <div class="row" *ngIf="!mor120Bol">
+
+        <div class="col-lg-12">
+    
+            <div class="card card-success">
+    
+                <div class="card-body">
+    
+                    <p class="font-weight-bold">Morosidad más de 120 Días</p>
+    
+                    <p>No se encontró facturas vencidas en esta etapa.</p>
+    
+                </div>
+    
+            </div>
+    
+        </div>
+    
+    </div>
+    
+    <div class="table-responsive" *ngIf="mor120Bol">
+    
+        <h3>Morosidad más de 120 Días</h3>
+    
+        <table class="table table-hover mostrar-folio">
+    
+            <thead>
+    
+                <tr>
+    
+                    <th class="text-center">Folio</th>
+    
+                    <th class="text-center">Vence</th>
+    
+                    <th class="text-center">Días Vencidos</th>
+    
+                    <th class="text-center">Saldo</th>
+    
+                    <th class="text-center">Movimientos</th>
+    
+                </tr>
+    
+            </thead>
+    
+            <tbody>
+    
+                <tr *ngFor="let mor of mor120; let i = index">
+    
+                    <td class="text-center" style="font-weight: 700;">{{ mor.folio }}</td>
+    
+                    <td class="text-center">{{ mor.vence | date: 'dd-MM-yyyy' }}</td>
+    
+                    <td class="text-center" style="color: #f62d51;">{{ mor.dias_vencidos | number }}</td>
+    
+                    <td class="text-right" style="color: #f62d51;">{{ mor.saldo | currency }}</td>
+    
+                    <td class="text-center">
+    
+                        <a href="#modalMov" class="btn btn-outline-info btn-sm" (click)="modalMovimietos(mor.folio, mor.saldo)" data-dismiss="modal" data-toggle="modal">
+    
+                            <i class="mdi mdi-chart-scatterplot-hexbin"></i>
+    
+                        </a>
+    
+    
+                    </td>
+    
+                </tr>
+    
+            </tbody>
+    
+        </table>
+    
+    </div>
 
 <div id="modalEdoCta" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalEdoCta" aria-hidden="true">
 

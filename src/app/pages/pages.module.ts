@@ -105,6 +105,7 @@ import { PedWebComponent } from './ped-web/ped-web.component';
 import { CotizadorComponent } from './cotizador/cotizador.component';
 import { NotascreditoComponent } from './notascredito/notascredito.component';
 import { BackorderAsesorComponent } from './backorder-asesor/backorder-asesor.component';
+import { ProcesofacturasComponent } from './procesofacturas/procesofacturas.component';
 
 @NgModule({
     declarations: [
@@ -187,7 +188,8 @@ import { BackorderAsesorComponent } from './backorder-asesor/backorder-asesor.co
         PedWebComponent,
         CotizadorComponent,
         NotascreditoComponent,
-        BackorderAsesorComponent
+        BackorderAsesorComponent,
+        ProcesofacturasComponent
     ],
     exports: [
         DashborarDirComponent,

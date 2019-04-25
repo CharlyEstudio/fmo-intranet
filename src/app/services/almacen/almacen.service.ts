@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS } from '../../config/config';
+import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, URL_PETICION } from '../../config/config';
 
 @Injectable()
 export class AlmacenService {
@@ -12,7 +12,7 @@ export class AlmacenService {
   obtenerReporte( area: any, inicio: string, fin: string ) {
     let url;
 
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    // if (URL_SERVICIO_GENERAL === URL_LOCAL) {
     //   /*LOCAL*/url = URL_LOCAL + '/api/almacen.php?opcion=1' + '&area=' + area + '&inicio=' + inicio + '&fin=' + fin;
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
     //   url = URL_PRUEBAS + '/api/almacen.php?opcion=1' + '&area=' + area + '&inicio=' + inicio + '&fin=' + fin;
@@ -20,7 +20,7 @@ export class AlmacenService {
     //   url = URL_SERVICIO_GENERAL + '/api/almacen.php?opcion=1' + '&area=' + area + '&inicio=' + inicio + '&fin=' + fin;
     // }
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/almacen/reporte/' + area + '/' + inicio + '/' + fin;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/almacen/reporte/' + area + '/' + inicio + '/' + fin;

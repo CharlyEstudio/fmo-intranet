@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 // Configuración
-import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS } from '../../config/config';
+import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, URL_PETICION } from '../../config/config';
 
 @Injectable()
 export class NcService {
@@ -14,7 +14,7 @@ export class NcService {
   ) { }
 
   obtenerNC() {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/nc';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/nc';
@@ -25,32 +25,32 @@ export class NcService {
     return this.http.get(this.url);
   }
 
-  buscarNCFecha(fecha: any) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/nc/buscar/fecha/' + fecha;
+  buscarNCFecha(inicial: any, final: any) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/nc/buscar/fecha/rango/' + inicial + '/' + final;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/nc/buscar/fecha/' + fecha;
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/nc/buscar/fecha/rango/' + inicial + '/' + final;
     } else {
-      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/nc/buscar/fecha/' + fecha;
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/nc/buscar/fecha/rango/' + inicial + '/' + final;
     }
 
     return this.http.get(this.url);
   }
 
-  buscarNCTrabFecha(fecha: any) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/nc/trabajados/fecha/' + fecha;
+  buscarNCTrabFecha(inicial: any, final: any) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/nc/trabajados/fecha/' + inicial + '/' + final;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/nc/trabajados/fecha/' + fecha;
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/nc/trabajados/fecha/' + inicial + '/' + final;
     } else {
-      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/nc/trabajados/fecha/' + fecha;
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/nc/trabajados/fecha/' + inicial + '/' + final;
     }
 
     return this.http.get(this.url);
   }
 
   obtenerNCtrabajados() {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/nc/trabajados';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/nc/trabajados';
@@ -62,7 +62,7 @@ export class NcService {
   }
 
   guardarNCtrabajado(nc: any) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/nc';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/nc';
@@ -74,7 +74,7 @@ export class NcService {
   }
 
   quitarNCtrabajado(nc: any) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/nc/' + nc.nc + '/' + nc.factura;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/nc/' + nc.nc + '/' + nc.factura;
@@ -85,13 +85,13 @@ export class NcService {
     return this.http.delete(this.url);
   }
 
-  buscarNCtrabajado(nc: any, factura: string) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/nc/trabajados/buscar/' + nc + '/' + factura;
+  buscarNCtrabajado(nc: any) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/nc/trabajados/buscar/' + nc;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/nc/trabajados/buscar/' + nc + '/' + factura;
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/nc/trabajados/buscar/' + nc;
     } else {
-      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/nc/trabajados/buscar/' + nc + '/' + factura;
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/nc/trabajados/buscar/' + nc;
     }
 
     return this.http.get(this.url, nc);

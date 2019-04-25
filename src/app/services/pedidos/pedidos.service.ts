@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 // Config
-import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, PUERTO_SERVER } from '../../config/config';
+import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, PUERTO_SERVER, URL_PETICION } from '../../config/config';
 
 // Modelo
 import { Cotizacion } from '../../models/cotizacion.model';
@@ -17,7 +17,7 @@ export class PedidosService {
   ) { }
 
   obtenerCotizaciones() {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/cotizacion';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/cotizacion';
@@ -29,7 +29,7 @@ export class PedidosService {
   }
 
   obtenerOrdenCompra() {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/cotizacion/orden';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/cotizacion/orden';
@@ -41,7 +41,7 @@ export class PedidosService {
   }
 
   obtenerProducto(codigo: any, precio: any) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/productos/buscar/codigo/' + codigo + '/' + precio;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/productos/buscar/codigo/' + codigo + '/' + precio;
@@ -53,7 +53,7 @@ export class PedidosService {
   }
 
   guardarCotizacion(cotizacion: Cotizacion) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/cotizacion';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/cotizacion';
@@ -66,10 +66,10 @@ export class PedidosService {
 
   guardarPdf(data: any, pdf: any, operacion: any, info: any = '') {
     if (operacion === '1') {
-      if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-        /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=37';
+      if (URL_SERVICIO_GENERAL === URL_PETICION) {
+        /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=37';
       } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-        this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=37';
+        this.url = URL_PETICION + '/api/pedidos.php?opcion=37';
       } else {
         this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=37';
       }
@@ -118,10 +118,10 @@ export class PedidosService {
         { headers: { 'content-Type': 'application/x-www-form-urlencoded' } }
       );
     } else if (operacion === '2') {
-      if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-        /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=39';
+      if (URL_SERVICIO_GENERAL === URL_PETICION) {
+        /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=39';
       } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-        this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=39';
+        this.url = URL_PETICION + '/api/pedidos.php?opcion=39';
       } else {
         this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=39';
       }
@@ -168,10 +168,10 @@ export class PedidosService {
   }
 
   enviarEmailOrden(data: any) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=40';
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=40';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=40';
+      this.url = URL_PETICION + '/api/pedidos.php?opcion=40';
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=40';
     }
@@ -188,10 +188,10 @@ export class PedidosService {
   }
 
   email(data: any) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=36';
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=36';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=36';
+      this.url = URL_PETICION + '/api/pedidos.php?opcion=36';
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=36';
     }
@@ -219,10 +219,10 @@ export class PedidosService {
   }
 
   enviarEmail(data: any) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=38';
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=38';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=38';
+      this.url = URL_PETICION + '/api/pedidos.php?opcion=38';
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=38';
     }
@@ -239,7 +239,7 @@ export class PedidosService {
   }
 
   guardarOrden(orden: any) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/cotizacion/orden';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/cotizacion/orden';
@@ -251,7 +251,7 @@ export class PedidosService {
   }
 
   buscarLote(codigo: any) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/productos/lote/codigo/' + codigo;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/productos/lote/codigo/' + codigo;
@@ -263,7 +263,7 @@ export class PedidosService {
   }
 
   enviarPedido(xml: any) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/ferrum/subir/pedido/7854956231457643';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/ferrum/subir/pedido/7854956231457643';

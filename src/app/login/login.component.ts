@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
     public router: Router,
     public _usuarioService: UsuarioService,
     public wsService: WebsocketService
-  ) {}
+  ) { }
 
   ngOnInit() {
     init_plugins();
@@ -52,7 +52,6 @@ export class LoginComponent implements OnInit {
 
     this._usuarioService.login( usuario, forma.value.recuerdame)
       .subscribe( (correcto: any) => {
-        // this.wsService.socketStatus;
 
         if ( correcto.ok ) {
           this.iniciando = true;
@@ -81,7 +80,7 @@ export class LoginComponent implements OnInit {
 
           } else if (this._usuarioService.usuario.rol === "MESA_ROLE" || this._usuarioService.usuario.rol === "OF_ROLE") {
 
-            this.router.navigate(['/dashboardGuias']);
+            this.router.navigate(['/procesoFacturas']);
 
           } else {
 

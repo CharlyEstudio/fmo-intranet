@@ -12,7 +12,7 @@ import { Usuario } from '../../models/usuario.model';
 
 import { Comision } from '../../models/comision.model';
 
-import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_INTERNO } from '../../config/config';
+import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_INTERNO, URL_PETICION } from '../../config/config';
 
 import { SweetAlert } from 'sweetalert/typings/core';
 
@@ -32,7 +32,7 @@ export class ComisionesService {
   cargarComisiones() {
     let url;
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/comisiones/';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/comisiones/';
@@ -55,7 +55,7 @@ export class ComisionesService {
   buscarAsesorComision( id: any ) {
     let url;
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id;
@@ -76,7 +76,7 @@ export class ComisionesService {
   buscarMesComision( mes: any, anio: any ) {
     let url;
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/comisiones/buscar/' + mes + "/" + anio;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/comisiones/buscar/' + mes + "/" + anio;
@@ -91,7 +91,7 @@ export class ComisionesService {
 
     let url;
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/comisiones';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/comisiones';
@@ -116,7 +116,7 @@ export class ComisionesService {
   actualizarComisionUsusario( comision: Comision, id: any ) {
     let url;
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/comisiones/' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/comisiones/' + id;

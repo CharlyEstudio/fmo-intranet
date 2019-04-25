@@ -14,10 +14,12 @@ export class MorosidadBitacoraComponent implements OnInit {
   respuestaGeneral: boolean = false;
   esperar: boolean = true;
 
-  mor1a28: number = 0;
-  mor29a48: number = 0;
+  mor1a30: number = 0;
+  mor31a45: number = 0;
   mor46a60: number = 0;
-  mor60: number = 0;
+  mor61a90: number = 0;
+  mor91a120: number = 0;
+  mor120: number = 0;
 
   constructor(
     private router: Router,
@@ -25,20 +27,28 @@ export class MorosidadBitacoraComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this._creditoService.mor1a28().subscribe( ( resp: any ) => {
-      this.mor1a28 = resp[0].importe;
+    this._creditoService.mor1a30().subscribe( ( resp: any ) => {
+      this.mor1a30 = resp[0].importe;
     });
 
-    this._creditoService.mor29a45().subscribe( ( resp: any ) => {
-      this.mor29a48 = resp[0].importe;
+    this._creditoService.mor31a45().subscribe( ( resp: any ) => {
+      this.mor31a45 = resp[0].importe;
     });
 
     this._creditoService.mor46a60().subscribe( ( resp: any ) => {
       this.mor46a60 = resp[0].importe;
     });
 
-    this._creditoService.mor60().subscribe( ( resp: any ) => {
-      this.mor60 = resp[0].importe;
+    this._creditoService.mor61a90().subscribe( ( resp: any ) => {
+      this.mor61a90 = resp[0].importe;
+    });
+
+    this._creditoService.mor91a120().subscribe( ( resp: any ) => {
+      this.mor91a120 = resp[0].importe;
+    });
+
+    this._creditoService.mor120().subscribe( ( resp: any ) => {
+      this.mor120 = resp[0].importe;
     });
 
     this.esperar = false;

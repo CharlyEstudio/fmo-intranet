@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_SERVER, PUERTO_INTERNO } from '../../config/config';
+import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_SERVER, PUERTO_INTERNO, URL_PETICION } from '../../config/config';
 
 @Injectable()
 export class DiariosService {
@@ -12,7 +12,7 @@ export class DiariosService {
   ) { }
 
   asesores() {
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=1';
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
     //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=1';
@@ -20,7 +20,7 @@ export class DiariosService {
     //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=1';
     // }
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/asesores';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/asesores';
@@ -38,7 +38,7 @@ export class DiariosService {
   }
 
   proveedores() {
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=2';
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
     //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=2';
@@ -46,7 +46,7 @@ export class DiariosService {
     //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=2';
     // }
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/proveedores';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/proveedores';
@@ -64,7 +64,7 @@ export class DiariosService {
   }
 
   ventas(fechaIn: any, fechaOut: any, asesor: any = 0) {
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL +
     //   '/api/diarios.php?opcion=3&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&asesor=' + asesor;
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
@@ -75,7 +75,7 @@ export class DiariosService {
     //   ':' + PUERTO_SERVER + '/api/diarios.php?opcion=3&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&asesor=' + asesor;
     // }
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/ventas/' + asesor + '/' + fechaIn + '/' + fechaOut;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/ventas/' + asesor + '/' + fechaIn + '/' + fechaOut;
@@ -93,7 +93,7 @@ export class DiariosService {
   }
 
   ventasAsesor(fechaIn: any, fechaOut: any, asesor: any) {
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL +
     //   '/api/diarios.php?opcion=4&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&asesor=' + asesor;
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
@@ -104,7 +104,7 @@ export class DiariosService {
     //   ':' + PUERTO_SERVER + '/api/diarios.php?opcion=4&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&asesor=' + asesor;
     // }
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/ventas/asesor/' + asesor + '/' + fechaIn + '/' + fechaOut;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/ventas/asesor/' + asesor + '/' + fechaIn + '/' + fechaOut;
@@ -122,7 +122,7 @@ export class DiariosService {
   }
 
   compras(fechaIn: any, fechaOut: any, proveedor: any = 0) {
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL +
     //   '/api/diarios.php?opcion=5&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&proveedor=' + proveedor;
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
@@ -133,7 +133,7 @@ export class DiariosService {
     //   ':' + PUERTO_SERVER + '/api/diarios.php?opcion=5&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&proveedor=' + proveedor;
     // }
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/compras/' + proveedor + '/' + fechaIn + '/' + fechaOut;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/compras/' + proveedor + '/' + fechaIn + '/' + fechaOut;
@@ -151,7 +151,7 @@ export class DiariosService {
   }
 
   comprasProveedor(fechaIn: any, fechaOut: any, proveedor: any) {
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL +
     //   '/api/diarios.php?opcion=6&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&proveedor=' + proveedor;
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
@@ -162,7 +162,7 @@ export class DiariosService {
     //   ':' + PUERTO_SERVER + '/api/diarios.php?opcion=6&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&proveedor=' + proveedor;
     // }
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/compras/proveedor/' + proveedor + '/' + fechaIn + '/' + fechaOut;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/compras/proveedor/' + proveedor + '/' + fechaIn + '/' + fechaOut;
@@ -180,7 +180,7 @@ export class DiariosService {
   }
 
   utilidades(fechaIn: any, fechaOut: any) {
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=7&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
     //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=7&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
@@ -188,7 +188,7 @@ export class DiariosService {
     //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=7&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     // }
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/utilidades/' + fechaIn + '/' + fechaOut;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/utilidades/' + fechaIn + '/' + fechaOut;
@@ -206,7 +206,7 @@ export class DiariosService {
   }
 
   notasCredito(fechaIn: any, fechaOut: any) {
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL +
     //   '/api/diarios.php?opcion=8&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
@@ -217,7 +217,7 @@ export class DiariosService {
     //   ':' + PUERTO_SERVER + '/api/diarios.php?opcion=8&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     // }
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/notas/credito/' + fechaIn + '/' + fechaOut;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/notas/credito/' + fechaIn + '/' + fechaOut;
@@ -235,7 +235,7 @@ export class DiariosService {
   }
 
   inventario() {
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=9';
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
     //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=9';
@@ -243,7 +243,7 @@ export class DiariosService {
     //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=9';
     // }
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/inventario';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/inventario';
@@ -261,7 +261,7 @@ export class DiariosService {
   }
 
   entradaSalida(fechaIn: any, fechaOut: any) {
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=11&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
     //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=11&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
@@ -269,7 +269,7 @@ export class DiariosService {
     //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=11&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     // }
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/entsal/' + fechaIn + '/' + fechaOut;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/entsal/' + fechaIn + '/' + fechaOut;
@@ -287,7 +287,7 @@ export class DiariosService {
   }
 
   consumoInterno(fechaIn: any, fechaOut: any) {
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=15&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
     //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=15&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
@@ -295,7 +295,7 @@ export class DiariosService {
     //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=15&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     // }
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/entsal/consumo/' + fechaIn + '/' + fechaOut;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/entsal/consumo/' + fechaIn + '/' + fechaOut;
@@ -313,7 +313,7 @@ export class DiariosService {
   }
 
   carteraClientes() {
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=14';
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
     //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=14';
@@ -321,7 +321,7 @@ export class DiariosService {
     //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=14';
     // }
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/cartera/clientes';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/cartera/clientes';
@@ -339,7 +339,7 @@ export class DiariosService {
   }
 
   carteraProveedores() {
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=16';
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
     //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=16';
@@ -347,7 +347,7 @@ export class DiariosService {
     //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=16';
     // }
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/cartera/proveedores';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/cartera/proveedores';
@@ -365,7 +365,7 @@ export class DiariosService {
   }
 
   saldoProveedores( fecha: any, id: any ) {
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=17&id=' + id;
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
     //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=17&id=' + id;
@@ -373,7 +373,7 @@ export class DiariosService {
     //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=17&id=' + id;
     // }
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/cartera/proveedores/saldo/' + id + '/' + fecha;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/cartera/proveedores/saldo/' + id + '/' + fecha;
@@ -391,7 +391,7 @@ export class DiariosService {
   }
 
   diasLunes(fecha: any) {
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=18';
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
     //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=18';
@@ -399,7 +399,7 @@ export class DiariosService {
     //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=18';
     // }
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/lunes/' + fecha;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/lunes/' + fecha;
@@ -417,7 +417,7 @@ export class DiariosService {
   }
 
   pedidosDiaLunes( fecha: any, id: any ) {
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=19&id=' + id;
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
     //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=19&id=' + id;
@@ -425,7 +425,7 @@ export class DiariosService {
     //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=19&id=' + id;
     // }
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/lunes/id/' + fecha + '/' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/lunes/id/' + fecha + '/' + id;
@@ -443,7 +443,7 @@ export class DiariosService {
   }
 
   backOrder( fechaIn: any, fechaOut: any ) {
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=20&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
     //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=20&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
@@ -451,7 +451,7 @@ export class DiariosService {
     //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=20&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     // }
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/back/order/' + fechaIn + '/' + fechaOut;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/back/order/' + fechaIn + '/' + fechaOut;
@@ -469,7 +469,7 @@ export class DiariosService {
   }
 
   obtenerBackOrder( tipo: any, fechaIn: any, fechaOut: any, orden: any ) {
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=21&tipo=' +
     //                       tipo + '&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&orden=' + orden;
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
@@ -481,7 +481,7 @@ export class DiariosService {
     //   '/api/diarios.php?opcion=21&tipo=' + tipo + '&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&orden=' + orden;
     // }
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL +
       ':' + PUERTO_INTERNO + '/diarios/back/order/seccion/' + tipo + '/' + fechaIn + '/' + fechaOut + '/' + orden;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {

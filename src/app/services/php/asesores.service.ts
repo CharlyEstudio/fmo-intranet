@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_INTERNO, PUERTO_SERVER } from '../../config/config';
+import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_INTERNO, PUERTO_SERVER, URL_PETICION } from '../../config/config';
 
 @Injectable()
 export class AsesoresService {
@@ -12,10 +12,10 @@ export class AsesoresService {
   ) { }
 
   asesor( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/usuario/' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/especifico/usuario/' + id;
+      this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/usuario/' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/busqueda/especifico/usuario/' + id;
     }
@@ -24,10 +24,10 @@ export class AsesoresService {
   }
 
   zonaAsesor( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=0&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=0&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=0&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=0&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=0&perid=' + id;
     }
@@ -36,10 +36,10 @@ export class AsesoresService {
   }
 
   porBajar( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=1&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=1&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=1&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=1&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=1&perid=' + id;
     }
@@ -48,10 +48,10 @@ export class AsesoresService {
   }
 
   porSurtir( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=2&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=2&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=2&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=2&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=2&perid=' + id;
     }
@@ -60,10 +60,10 @@ export class AsesoresService {
   }
 
   facturado( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=3&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=3&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=3&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=3&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=3&perid=' + id;
     }
@@ -72,10 +72,10 @@ export class AsesoresService {
   }
 
   cancelados( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=4&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=4&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=4&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=4&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=4&perid=' + id;
     }
@@ -84,10 +84,10 @@ export class AsesoresService {
   }
 
   pedidosTotales( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=5&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=5&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=5&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=5&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=5&perid=' + id;
     }
@@ -96,10 +96,10 @@ export class AsesoresService {
   }
 
   diaVisita( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=6&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=6&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=6&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=6&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=6&perid=' + id;
     }
@@ -108,10 +108,10 @@ export class AsesoresService {
   }
 
   ventaMensual( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=7&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=7&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=7&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=7&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=7&perid=' + id;
     }
@@ -120,10 +120,10 @@ export class AsesoresService {
   }
 
   carteraTotal( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=22&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=22&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=22&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=22&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=22&perid=' + id;
     }
@@ -132,10 +132,10 @@ export class AsesoresService {
   }
 
   carteraVencida( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=8&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=8&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=8&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=8&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=8&perid=' + id;
     }
@@ -144,10 +144,10 @@ export class AsesoresService {
   }
 
   carteraVencidaSana( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=23&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=23&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=23&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=23&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=23&perid=' + id;
     }
@@ -156,10 +156,10 @@ export class AsesoresService {
   }
 
   carteraDia( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=9&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=9&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=9&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=9&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=9&perid=' + id;
     }
@@ -168,10 +168,10 @@ export class AsesoresService {
   }
 
   cobroDia( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=10&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=10&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=10&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=10&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=10&perid=' + id;
     }
@@ -180,10 +180,10 @@ export class AsesoresService {
   }
 
   pedidosDiaDiferente( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=11&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=11&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=11&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=11&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=11&perid=' + id;
     }
@@ -192,10 +192,10 @@ export class AsesoresService {
   }
 
   pedidosDia( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=12&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=12&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=12&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=12&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=12&perid=' + id;
     }
@@ -204,10 +204,10 @@ export class AsesoresService {
   }
 
   ventaMesAnterior( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=13&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=13&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=13&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=13&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=13&perid=' + id;
     }
@@ -215,11 +215,11 @@ export class AsesoresService {
     return this.http.get( this.url );
   }
 
-  morosidad18( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=14&perid=' + id;
+  morosidad130( id: any ) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=14&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=14&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=14&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=14&perid=' + id;
     }
@@ -227,11 +227,11 @@ export class AsesoresService {
     return this.http.get( this.url );
   }
 
-  morosidad916( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=15&perid=' + id;
+  morosidad3145( id: any ) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=15&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=15&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=15&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=15&perid=' + id;
     }
@@ -239,11 +239,11 @@ export class AsesoresService {
     return this.http.get( this.url );
   }
 
-  morosidad1730( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=16&perid=' + id;
+  morosidad4660( id: any ) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=16&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=16&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=16&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=16&perid=' + id;
     }
@@ -251,11 +251,11 @@ export class AsesoresService {
     return this.http.get( this.url );
   }
 
-  morosidad3160( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=17&perid=' + id;
+  morosidad6190( id: any ) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=17&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=17&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=17&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=17&perid=' + id;
     }
@@ -263,11 +263,11 @@ export class AsesoresService {
     return this.http.get( this.url );
   }
 
-  morosidad6190( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=18&perid=' + id;
+  morosidad91120( id: any ) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=18&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=18&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=18&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=18&perid=' + id;
     }
@@ -275,11 +275,11 @@ export class AsesoresService {
     return this.http.get( this.url );
   }
 
-  morosidad91( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=19&perid=' + id;
+  morosidad121( id: any ) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=19&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=19&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=19&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=19&perid=' + id;
     }
@@ -288,10 +288,10 @@ export class AsesoresService {
   }
 
   cobranza( id: any = '' ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=20&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=20&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=20&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=20&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=20&perid=' + id;
     }
@@ -300,10 +300,10 @@ export class AsesoresService {
   }
 
   relacionPedidos( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/asesores.php?opcion=21&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=21&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/asesores.php?opcion=21&perid=' + id;
+      this.url = URL_PETICION + '/api/asesores.php?opcion=21&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=21&perid=' + id;
     }
@@ -312,10 +312,10 @@ export class AsesoresService {
   }
 
   partidas(folio: any) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=41&folio=' + folio;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=41&folio=' + folio;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=41&folio=' + folio;
+      this.url = URL_PETICION + '/api/pedidos.php?opcion=41&folio=' + folio;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=41&folio=' + folio;
     }
@@ -324,10 +324,10 @@ export class AsesoresService {
   }
 
   cobroMes( id: any, tipo: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/comisiones.php?opcion=1&perid=' + id + '&tipo=' + tipo;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/comisiones.php?opcion=1&perid=' + id + '&tipo=' + tipo;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/comisiones.php?opcion=1&perid=' + id + '&tipo=' + tipo;
+      this.url = URL_PETICION + '/api/comisiones.php?opcion=1&perid=' + id + '&tipo=' + tipo;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/comisiones.php?opcion=1&perid=' + id + '&tipo=' + tipo;
     }
@@ -336,10 +336,10 @@ export class AsesoresService {
   }
 
   porVencer( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/comisiones.php?opcion=2&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/comisiones.php?opcion=2&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/comisiones.php?opcion=2&perid=' + id;
+      this.url = URL_PETICION + '/api/comisiones.php?opcion=2&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/comisiones.php?opcion=2&perid=' + id;
     }
@@ -348,10 +348,10 @@ export class AsesoresService {
   }
 
   vencidoComision1a8( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/comisiones.php?opcion=3&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/comisiones.php?opcion=3&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/comisiones.php?opcion=3&perid=' + id;
+      this.url = URL_PETICION + '/api/comisiones.php?opcion=3&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/comisiones.php?opcion=3&perid=' + id;
     }
@@ -360,10 +360,10 @@ export class AsesoresService {
   }
 
   vencidoComision9a16( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/comisiones.php?opcion=4&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/comisiones.php?opcion=4&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/comisiones.php?opcion=4&perid=' + id;
+      this.url = URL_PETICION + '/api/comisiones.php?opcion=4&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/comisiones.php?opcion=4&perid=' + id;
     }
@@ -372,10 +372,10 @@ export class AsesoresService {
   }
 
   vencidoComision17( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/comisiones.php?opcion=5&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/comisiones.php?opcion=5&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/comisiones.php?opcion=5&perid=' + id;
+      this.url = URL_PETICION + '/api/comisiones.php?opcion=5&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/comisiones.php?opcion=5&perid=' + id;
     }
@@ -384,10 +384,10 @@ export class AsesoresService {
   }
 
   totalClientesAsesor( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/comisiones.php?opcion=6&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/comisiones.php?opcion=6&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/comisiones.php?opcion=6&perid=' + id;
+      this.url = URL_PETICION + '/api/comisiones.php?opcion=6&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/comisiones.php?opcion=6&perid=' + id;
     }
@@ -396,10 +396,10 @@ export class AsesoresService {
   }
 
   coberturaVentas( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/comisiones.php?opcion=7&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/comisiones.php?opcion=7&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/comisiones.php?opcion=7&perid=' + id;
+      this.url = URL_PETICION + '/api/comisiones.php?opcion=7&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/comisiones.php?opcion=7&perid=' + id;
     }
@@ -408,10 +408,10 @@ export class AsesoresService {
   }
 
   reglonaje( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/comisiones.php?opcion=8&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/comisiones.php?opcion=8&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/comisiones.php?opcion=8&perid=' + id;
+      this.url = URL_PETICION + '/api/comisiones.php?opcion=8&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/comisiones.php?opcion=8&perid=' + id;
     }
@@ -420,10 +420,10 @@ export class AsesoresService {
   }
 
   ventaBruta( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/comisiones.php?opcion=13&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/comisiones.php?opcion=13&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/comisiones.php?opcion=13&perid=' + id;
+      this.url = URL_PETICION + '/api/comisiones.php?opcion=13&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/comisiones.php?opcion=13&perid=' + id;
     }
@@ -432,10 +432,10 @@ export class AsesoresService {
   }
 
   devoluciones( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/comisiones.php?opcion=9&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/comisiones.php?opcion=9&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/comisiones.php?opcion=9&perid=' + id;
+      this.url = URL_PETICION + '/api/comisiones.php?opcion=9&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/comisiones.php?opcion=9&perid=' + id;
     }
@@ -444,10 +444,10 @@ export class AsesoresService {
   }
 
   notasCredito( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/comisiones.php?opcion=10&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/comisiones.php?opcion=10&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/comisiones.php?opcion=10&perid=' + id;
+      this.url = URL_PETICION + '/api/comisiones.php?opcion=10&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/comisiones.php?opcion=10&perid=' + id;
     }
@@ -456,10 +456,10 @@ export class AsesoresService {
   }
 
   bonificacion( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/comisiones.php?opcion=11&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/comisiones.php?opcion=11&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/comisiones.php?opcion=11&perid=' + id;
+      this.url = URL_PETICION + '/api/comisiones.php?opcion=11&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/comisiones.php?opcion=11&perid=' + id;
     }
@@ -468,10 +468,10 @@ export class AsesoresService {
   }
 
   penalizacionPedidos( id: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/comisiones.php?opcion=12&perid=' + id;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/comisiones.php?opcion=12&perid=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/comisiones.php?opcion=12&perid=' + id;
+      this.url = URL_PETICION + '/api/comisiones.php?opcion=12&perid=' + id;
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/comisiones.php?opcion=12&perid=' + id;
     }

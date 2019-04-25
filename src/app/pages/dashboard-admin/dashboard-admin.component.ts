@@ -65,13 +65,14 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     private _clienteService: ClientesService
   ) {
     this._webSocket.escuchar('producto-visto').subscribe((producto: any) => {
-      console.table(producto);
       this.producto = producto.descripcion;
     });
 
     // Subscrión a Monitor
     this.monitor =  this.regresa().subscribe(
-      (numero: any) => this.pedidosWeb = numero.length,
+      (numero: any) => {
+        this.pedidosWeb = numero.length;
+      },
       error => console.error('Error en el obs', error),
       () => console.log('El observador termino!')
     );

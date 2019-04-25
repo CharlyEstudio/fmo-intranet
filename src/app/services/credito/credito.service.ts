@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, PUERTO_SERVER } from '../../config/config';
+import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, PUERTO_SERVER, URL_PETICION } from '../../config/config';
 
 import { VencidoHistorial } from '../../models/vencidoHistorial.model';
 
@@ -18,10 +18,10 @@ export class CreditoService {
   }
 
   obtenerCarteraVencida() {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=12';
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/morosidad.php?opcion=12';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=12';
+      this.url = URL_PETICION + '/api/morosidad.php?opcion=12';
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=12';
     }
@@ -29,11 +29,11 @@ export class CreditoService {
     return this.http.get( this.url );
   }
 
-  mor1a28() {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=13';
+  mor1a30() {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/morosidad.php?opcion=13';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=13';
+      this.url = URL_PETICION + '/api/morosidad.php?opcion=13';
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=13';
     }
@@ -41,11 +41,11 @@ export class CreditoService {
     return this.http.get( this.url );
   }
 
-  mor29a45() {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=14';
+  mor31a45() {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/morosidad.php?opcion=14';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=14';
+      this.url = URL_PETICION + '/api/morosidad.php?opcion=14';
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=14';
     }
@@ -54,10 +54,10 @@ export class CreditoService {
   }
 
   mor46a60() {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=15';
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/morosidad.php?opcion=15';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=15';
+      this.url = URL_PETICION + '/api/morosidad.php?opcion=15';
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=15';
     }
@@ -65,11 +65,11 @@ export class CreditoService {
     return this.http.get( this.url );
   }
 
-  mor60() {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=18';
+  mor61a90() {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/morosidad.php?opcion=18';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=18';
+      this.url = URL_PETICION + '/api/morosidad.php?opcion=18';
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=18';
     }
@@ -77,11 +77,35 @@ export class CreditoService {
     return this.http.get( this.url );
   }
 
-  morosidadRelacion( tipo: string ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=16&tipo=' + tipo;
+  mor91a120() {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/morosidad.php?opcion=27';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=16&tipo=' + tipo;
+      this.url = URL_PETICION + '/api/morosidad.php?opcion=27';
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=27';
+    }
+
+    return this.http.get( this.url );
+  }
+
+  mor120() {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/morosidad.php?opcion=28';
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PETICION + '/api/morosidad.php?opcion=28';
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=28';
+    }
+
+    return this.http.get( this.url );
+  }
+
+  morosidadRelacion( tipo: string ) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/morosidad.php?opcion=16&tipo=' + tipo;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PETICION + '/api/morosidad.php?opcion=16&tipo=' + tipo;
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=16&tipo=' + tipo;
     }
@@ -90,10 +114,10 @@ export class CreditoService {
   }
 
   morosidadRelacionAsesor( perid: string ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=25&perid=' + perid;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/morosidad.php?opcion=25&perid=' + perid;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=25&perid=' + perid;
+      this.url = URL_PETICION + '/api/morosidad.php?opcion=25&perid=' + perid;
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=25&perid=' + perid;
     }
@@ -102,10 +126,10 @@ export class CreditoService {
   }
 
   morosidadRelacionCliente( numero: string, perid: any = '' ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=26&numero=' + numero + '&perid=' + perid;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/morosidad.php?opcion=26&numero=' + numero + '&perid=' + perid;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=26&numero=' + numero + '&perid=' + perid;
+      this.url = URL_PETICION + '/api/morosidad.php?opcion=26&numero=' + numero + '&perid=' + perid;
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=26&numero=' + numero + '&perid=' + perid;
     }
@@ -114,10 +138,10 @@ export class CreditoService {
   }
 
   morosidadRelacionVirtual( tipo: string ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=22&tipo=' + tipo;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/morosidad.php?opcion=22&tipo=' + tipo;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=22&tipo=' + tipo;
+      this.url = URL_PETICION + '/api/morosidad.php?opcion=22&tipo=' + tipo;
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=22&tipo=' + tipo;
     }
@@ -126,10 +150,10 @@ export class CreditoService {
   }
 
   clienteMoroso( clienteid: any, tipo: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=17&tipo=' + tipo + '&clienteid=' + clienteid;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/morosidad.php?opcion=17&tipo=' + tipo + '&clienteid=' + clienteid;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=17&tipo=' + tipo + '&clienteid=' + clienteid;
+      this.url = URL_PETICION + '/api/morosidad.php?opcion=17&tipo=' + tipo + '&clienteid=' + clienteid;
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=17&tipo=' + tipo + '&clienteid=' + clienteid;
     }
@@ -138,10 +162,10 @@ export class CreditoService {
   }
 
   clienteMorosoTotal( clienteid: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=19&clienteid=' + clienteid;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/morosidad.php?opcion=19&clienteid=' + clienteid;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=19&clienteid=' + clienteid;
+      this.url = URL_PETICION + '/api/morosidad.php?opcion=19&clienteid=' + clienteid;
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=19&clienteid=' + clienteid;
     }
@@ -150,10 +174,10 @@ export class CreditoService {
   }
 
   clienteSaldo( numero: any, fecha: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/obtener/saldo/' + numero + '/' + fecha;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/clientes/obtener/saldo/' + numero + '/' + fecha;
+      this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/obtener/saldo/' + numero + '/' + fecha;
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/obtener/saldo/' + numero + '/' + fecha;
     }
@@ -164,10 +188,10 @@ export class CreditoService {
   }
 
   guardarComentario( comentario: VencidoHistorial ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/vencido/historial';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/clientes/vencido/historial';
+      this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/vencido/historial';
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/vencido/historial';
     }
@@ -181,10 +205,10 @@ export class CreditoService {
   }
 
   obtenerComentarios( clienteId: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/' + clienteId;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/' + clienteId;
+      this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/' + clienteId;
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/' + clienteId;
     }
@@ -193,10 +217,10 @@ export class CreditoService {
   }
 
   obtenerComentariosDia( fecha: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/fecha/' + fecha;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/fecha/' + fecha;
+      this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/fecha/' + fecha;
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/fecha/' + fecha;
     }
@@ -205,10 +229,10 @@ export class CreditoService {
   }
 
   ultimosPagos( clienteid: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=20&clienteid=' + clienteid;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/morosidad.php?opcion=20&clienteid=' + clienteid;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=20&clienteid=' + clienteid;
+      this.url = URL_PETICION + '/api/morosidad.php?opcion=20&clienteid=' + clienteid;
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=20&clienteid=' + clienteid;
     }
@@ -217,10 +241,10 @@ export class CreditoService {
   }
 
   pagosRango(inicio: any, final: any) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=24&inicio=' + inicio + '&final=' + final;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/morosidad.php?opcion=24&inicio=' + inicio + '&final=' + final;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=24&inicio=' + inicio + '&final=' + final;
+      this.url = URL_PETICION + '/api/morosidad.php?opcion=24&inicio=' + inicio + '&final=' + final;
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=24&inicio=' + inicio + '&final=' + final;
     }
@@ -229,10 +253,10 @@ export class CreditoService {
   }
 
   pagosMes( clienteid: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=21&clienteid=' + clienteid;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/morosidad.php?opcion=21&clienteid=' + clienteid;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=21&clienteid=' + clienteid;
+      this.url = URL_PETICION + '/api/morosidad.php?opcion=21&clienteid=' + clienteid;
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=21&clienteid=' + clienteid;
     }
@@ -241,10 +265,10 @@ export class CreditoService {
   }
 
   chequesDevueltos() {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=23';
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/morosidad.php?opcion=23';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=23';
+      this.url = URL_PETICION + '/api/morosidad.php?opcion=23';
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=23';
     }
@@ -253,10 +277,10 @@ export class CreditoService {
   }
 
   exportarPDFphp(data: any, file: any, cliente: any, asesor: any, tel: any, tipo: any, cargos: any, abonos: any, saldo: any) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/credito.php?opcion=2';
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/credito.php?opcion=2';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/credito.php?opcion=2';
+      this.url = URL_PETICION + '/api/credito.php?opcion=2';
     } else {
       this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/credito.php?opcion=2';
     }

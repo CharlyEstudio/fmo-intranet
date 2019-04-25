@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_SERVER } from '../../config/config';
+import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_SERVER, URL_PETICION } from '../../config/config';
 
 @Injectable()
 export class ClientesService {
@@ -12,10 +12,10 @@ export class ClientesService {
   ) { }
 
   infoCliente( cliente: any, perid: any = '', rol: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=1&perid=' + perid + '&numero=' + cliente + '&rol=' + rol;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/clientes.php?opcion=1&perid=' + perid + '&numero=' + cliente + '&rol=' + rol;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=1&perid=' + perid + '&numero=' + cliente + '&rol=' + rol;
+      this.url = URL_PETICION + '/api/clientes.php?opcion=1&perid=' + perid + '&numero=' + cliente + '&rol=' + rol;
     } else {
       // tslint:disable-next-line:max-line-length
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=1&perid=' + perid + '&numero=' + cliente + '&rol=' + rol;
@@ -25,10 +25,10 @@ export class ClientesService {
   }
 
   clienteCorreo(idFerrum: any) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=10&clienteid=' + idFerrum;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/clientes.php?opcion=10&clienteid=' + idFerrum;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=10&clienteid=' + idFerrum;
+      this.url = URL_PETICION + '/api/clientes.php?opcion=10&clienteid=' + idFerrum;
     } else {
       // tslint:disable-next-line:max-line-length
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=10&clienteid=' + idFerrum;
@@ -38,10 +38,10 @@ export class ClientesService {
   }
 
   infoClienteCot( cliente: any) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=9&numero=' + cliente;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/clientes.php?opcion=9&numero=' + cliente;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=9&numero=' + cliente;
+      this.url = URL_PETICION + '/api/clientes.php?opcion=9&numero=' + cliente;
     } else {
       // tslint:disable-next-line:max-line-length
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=9&numero=' + cliente;
@@ -51,10 +51,10 @@ export class ClientesService {
   }
 
   obtenerFacturas( cliente: any, inicio: any, fecha: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=2&clienteid=' + cliente + '&inicio=' + inicio + '&fecha=' + fecha;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/clientes.php?opcion=2&clienteid=' + cliente + '&inicio=' + inicio + '&fecha=' + fecha;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=2&clienteid=' + cliente + '&inicio=' + inicio + '&fecha=' + fecha;
+      this.url = URL_PETICION + '/api/clientes.php?opcion=2&clienteid=' + cliente + '&inicio=' + inicio + '&fecha=' + fecha;
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER +
       '/api/clientes.php?opcion=2&clienteid=' + cliente + '&inicio=' + inicio + '&fecha=' + fecha;
@@ -64,10 +64,10 @@ export class ClientesService {
   }
 
   obtenerFolio( folio: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=5&folio=' + folio;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/clientes.php?opcion=5&folio=' + folio;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=5&folio=' + folio;
+      this.url = URL_PETICION + '/api/clientes.php?opcion=5&folio=' + folio;
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=5&folio=' + folio;
     }
@@ -76,10 +76,10 @@ export class ClientesService {
   }
 
   obtenerMovimiento( docid: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=3&docid=' + docid;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/clientes.php?opcion=3&docid=' + docid;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=3&docid=' + docid;
+      this.url = URL_PETICION + '/api/clientes.php?opcion=3&docid=' + docid;
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=3&docid=' + docid;
     }
@@ -88,10 +88,10 @@ export class ClientesService {
   }
 
   obtenerMovimientoNumero( numero: any ) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=6&numero=' + numero;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/clientes.php?opcion=6&numero=' + numero;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=6&numero=' + numero;
+      this.url = URL_PETICION + '/api/clientes.php?opcion=6&numero=' + numero;
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=6&numero=' + numero;
     }
@@ -103,10 +103,10 @@ export class ClientesService {
     let data = JSON.stringify(info);
     let cli = JSON.stringify(cliente);
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=4&email=' + email + '&info=' + data + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/clientes.php?opcion=4&email=' + email + '&info=' + data + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=4&email=' + email + '&info=' + data + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor;
+      this.url = URL_PETICION + '/api/clientes.php?opcion=4&email=' + email + '&info=' + data + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor;
     } else {
       // tslint:disable-next-line:max-line-length
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=4&email=' + email + '&info=' + data + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor;
@@ -118,8 +118,8 @@ export class ClientesService {
   enviarEdoCtaPDFEmail( email: any, cliente: any, asesor: any, telAsesor: any, tipo: any ) {
     let cli = JSON.stringify(cliente);
 
-    // if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=4&email=' + email + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor;
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_PETICION + '/api/clientes.php?opcion=4&email=' + email + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor;
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
     //   this.url = URL_PRUEBAS + '/api/clientes.php?opcion=4&email=' + email + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor;
     // } else {
@@ -127,10 +127,10 @@ export class ClientesService {
     //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=4&email=' + email + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor;
     // }
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=11&email=' + email + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor + '&tipo=' + tipo;
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/clientes.php?opcion=11&email=' + email + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor + '&tipo=' + tipo;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=11&email=' + email + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor + '&tipo=' + tipo;
+      this.url = URL_PETICION + '/api/clientes.php?opcion=11&email=' + email + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor + '&tipo=' + tipo;
     } else {
       // tslint:disable-next-line:max-line-length
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=11&email=' + email + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor + '&tipo=' + tipo;
@@ -140,10 +140,10 @@ export class ClientesService {
   }
 
   obtenerPedidosMonitor() {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/clientes.php?opcion=8';
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/clientes.php?opcion=8';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/clientes.php?opcion=8';
+      this.url = URL_PETICION + '/api/clientes.php?opcion=8';
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=8';
     }

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 
-import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS } from '../../config/config';
+import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, URL_PETICION } from '../../config/config';
 import { Cliente } from '../../models/clientes.model';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class ClienteService {
   cargarUsuarios( desde: number = 0 ) {
     let url;
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes?desde=' + desde;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/clientes?desde=' + desde;
@@ -36,7 +36,7 @@ export class ClienteService {
   cargarUsuariosActivos( desde: number = 0 ) {
     let url;
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/activos?desde=' + desde;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/clientes/activos?desde=' + desde;
@@ -52,7 +52,7 @@ export class ClienteService {
   cargarUsuariosPendientes( desde: number = 0 ) {
     let url;
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/pendientes?desde=' + desde;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/clientes/pendientes?desde=' + desde;
@@ -68,7 +68,7 @@ export class ClienteService {
   actualizarUsusario( cliente: Cliente ) {
     let url;
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/actualizar/' + cliente._id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/clientes/actualizar/' + cliente._id;
@@ -94,7 +94,7 @@ export class ClienteService {
   borrarUsuario ( id: string ) {
     let url;
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/clientes/' + id;

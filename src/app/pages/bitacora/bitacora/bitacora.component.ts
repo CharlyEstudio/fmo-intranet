@@ -6,6 +6,10 @@ import { Subscription } from 'rxjs/Subscription';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
+const swal: SweetAlert = _swal as any;
+
 import { CreditoService, WebsocketService, UsuarioService } from '../../../services/services.index';
 
 @Component({
@@ -15,12 +19,14 @@ import { CreditoService, WebsocketService, UsuarioService } from '../../../servi
 })
 export class BitacoraComponent implements OnInit, OnDestroy {
 
-  dias: number[] = [];
-  data: number[] = [];
+  dias: any[] = [];
+  data: any[] = [];
 
   fecha: any;
 
   id: any;
+
+  rol: any;
 
   comentario: any = '';
 
@@ -52,6 +58,7 @@ export class BitacoraComponent implements OnInit, OnDestroy {
     private _usuariosServices: UsuarioService
   ) {
     this.id = this._usuariosServices.usuario._id;
+    this.rol = this._usuariosServices.usuario.rol;
     let h = new Date();
 
     for (let i = 1; i <= new Date().getDate(); i++) {
@@ -161,7 +168,9 @@ export class BitacoraComponent implements OnInit, OnDestroy {
 
   openModal( data: any, tipo: any = '' ) {
     this.comentario = '';
-    this.data = data;
+    this.data = [];
+    this.data.push(data);
+    console.log(this.data);
     this.charlaBol = false;
     this.nombre = data.nombre;
     this.numero = data.numero;

@@ -32,35 +32,35 @@
 
         <div class="row" *ngIf="respuestaGeneral">
 
-            <div class="col-lg-3 col-md-12 text-center">
+            <div class="col-lg-4 col-md-12 text-center">
 
                 <i class="mdi mdi-alert-circle-outline lead text-warning"></i>
 
-                <h3 class="text-black">De <span class="font-bold">1 a 28</span> días. <br>
+                <h3 class="text-black">De <span class="font-bold">1 a 30</span> días. <br>
 
-                    <span class="text-black" style="font-weight: bold;">{{ mor1a28 | currency}}</span>
+                    <span class="text-black" style="font-weight: bold;">{{ mor1a30 | currency}}</span>
 
                 </h3>
 
-                <button class="btn btn-danger" (click)="enviarDatos('mor1a28')">Obtener</button>
+                <button class="btn btn-danger" (click)="enviarDatos('mor1a30')">Obtener</button>
 
             </div>
 
-            <div class="col-lg-3 col-md-12 text-center">
+            <div class="col-lg-4 col-md-12 text-center">
 
                 <i class="mdi mdi-alert-outline lead text-warning"></i>
 
-                <h3 class="text-black">De <span class="font-bold">29 a 45</span> días. <br>
+                <h3 class="text-black">De <span class="font-bold">31 a 45</span> días. <br>
 
-                    <span class="text-warning" style="font-weight: bold;">{{ mor29a48 | currency}}</span>
+                    <span class="text-warning" style="font-weight: bold;">{{ mor31a45 | currency}}</span>
 
                 </h3>
 
-                <button class="btn btn-danger" (click)="enviarDatos('mor29a45')">Obtener</button>
+                <button class="btn btn-danger" (click)="enviarDatos('mor31a45')">Obtener</button>
 
             </div>
 
-            <div class="col-lg-3 col-md-12 text-center">
+            <div class="col-lg-4 col-md-12 text-center">
 
                 <i class="wi wi-moonrise lead text-danger"></i>
 
@@ -74,17 +74,49 @@
 
             </div>
 
-            <div class="col-lg-3 col-md-12 text-center">
+        </div>
+
+        <div class="row mt-3" *ngIf="respuestaGeneral">
+
+            <div class="col-lg-4 col-md-12 text-center">
 
                 <i class="wi wi-moonrise lead text-danger"></i>
 
-                <h3 class="text-black">Más de <span class="font-bold">60</span> días. <br>
+                <h3 class="text-black">De <span class="font-bold">61 a 90</span> días. <br>
 
-                    <span class="text-danger" style="font-weight: bold;">{{ mor60 | currency}}</span>
+                    <span class="text-danger" style="font-weight: bold;">{{ mor61a90 | currency}}</span>
 
                 </h3>
 
-                <button class="btn btn-danger" (click)="enviarDatos('mor60')">Obtener</button>
+                <button class="btn btn-danger" (click)="enviarDatos('mor61a90')">Obtener</button>
+
+            </div>
+
+            <div class="col-lg-4 col-md-12 text-center">
+
+                <i class="wi wi-moonrise lead text-danger"></i>
+
+                <h3 class="text-black">De <span class="font-bold">91 a 120</span> días. <br>
+
+                    <span class="text-danger" style="font-weight: bold;">{{ mor91a120 | currency}}</span>
+
+                </h3>
+
+                <button class="btn btn-danger" (click)="enviarDatos('mor91a120')">Obtener</button>
+
+            </div>
+
+            <div class="col-lg-4 col-md-12 text-center">
+
+                <i class="wi wi-moonrise lead text-danger"></i>
+
+                <h3 class="text-black">Más de <span class="font-bold">120</span> días. <br>
+
+                    <span class="text-danger" style="font-weight: bold;">{{ mor120 | currency}}</span>
+
+                </h3>
+
+                <button class="btn btn-danger" (click)="enviarDatos('mor120')">Obtener</button>
 
             </div>
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 // Configuración
-import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS } from '../../config/config';
+import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, URL_PETICION } from '../../config/config';
 
 // Modelo
 import { Chofer } from '../../models/chofer.model';
@@ -25,7 +25,7 @@ export class ChoferesService {
   }
 
   obtenerChoferes(desde: number = 0) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/chofer?desde=' + desde;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/chofer?desde=' + desde;
@@ -37,7 +37,7 @@ export class ChoferesService {
   }
 
   obtenerChoferesAll() {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/chofer/all';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/chofer/all';
@@ -49,7 +49,7 @@ export class ChoferesService {
   }
 
   obtenerVerificadores() {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/usuario/verificadores';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/usuario/verificadores';
@@ -61,7 +61,7 @@ export class ChoferesService {
   }
 
   crearChofer(chofer: Chofer, usuario: Usuario) {
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/chofer/new';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/chofer/new';
@@ -75,7 +75,7 @@ export class ChoferesService {
   borrarUsuario ( id: string ) {
     let url;
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/chofer/delete/' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/chofer/delete/' + id;
@@ -91,7 +91,7 @@ export class ChoferesService {
   actualizarUsusario( chofer: Chofer ) {
     let url;
 
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250') {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/chofer/update/' + chofer._id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
       url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/chofer/update/' + chofer._id;

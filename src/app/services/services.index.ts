@@ -34,6 +34,7 @@ export { PedidosService } from "./pedidos/pedidos.service";
 export { NcService } from "./nc/nc.service";
 export { BackorderService } from "./backorder/backorder.service";
 export { HerramientasService } from "./herramientas/herramientas.service";
+export { OficinaService } from "./oficina/oficina.service";
 
 // Servicio PHP
 export { PhpService } from "./php/php.service";

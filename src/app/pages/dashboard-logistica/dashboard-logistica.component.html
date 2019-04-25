@@ -446,7 +446,7 @@
 
                                     <select [id]="'choferSel' + g._id" name="chofer" class="form-control" [(ngModel)]="chf" (change)="obtenerChofer()" style="display: none;">
                             
-                                        <option class="text-uppercase" [ngValue]="chofer" *ngFor="let chofer of choferes">{{ chofer.nombre }}</option>
+                                        <option class="text-uppercase" [ngValue]="chofer" *ngFor="let chofer of choferes">{{ 'chofer.nombre' }}</option>
             
                                     </select>
 
@@ -952,9 +952,9 @@
 
             <div class="modal-footer">
 
-                <button class="btn btn-info btn-sm" (click)="reasignar(guiaEnc, 'busqueda')">Liberar</button>
+                <button class="btn btn-info btn-sm" (click)="reasignar(guiaEnc, 1, 'busqueda')">Liberar</button>
 
-                <button class="btn btn-success btn-sm" (click)="asignar(guiaEnc, 'busqueda')">Asignar</button>
+                <button class="btn btn-success btn-sm" (click)="asignar(guiaEnc, 1, 'busqueda')">Asignar</button>
 
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 

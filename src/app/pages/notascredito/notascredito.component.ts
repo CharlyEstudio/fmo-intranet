@@ -23,6 +23,7 @@ export class NotascreditoComponent implements OnInit {
   inNC: any = '';
   inFac: any = '';
   fechaNC: any = '';
+  fechaNCFinal: any = '';
 
   // Resumen NC Totales - NC Trabajadas
   total: number = 0;
@@ -36,8 +37,9 @@ export class NotascreditoComponent implements OnInit {
     private _ncService: NcService
   ) {
     this.id = this._usuarioService.usuario._id;
+    this.cargando = false;
 
-    this.obtenerTrabajados();
+    // this.obtenerTrabajados();
   }
 
   ngOnInit() { }
@@ -66,13 +68,13 @@ export class NotascreditoComponent implements OnInit {
         const ncAnt = this.nc;
         this.nc = [];
         this.nc = ncAnt;
-        this.obtenerTrabajados();
+        // this.obtenerTrabajados();
       }
     });
 
-    if (this.fechaNC !== '') {
-      this.buscarFecNC.nativeElement.click();
-    }
+    // if (this.fechaNC !== '') {
+    //   this.buscarFecNC.nativeElement.click();
+    // }
   }
 
   quitar(nc: any) {
@@ -81,10 +83,10 @@ export class NotascreditoComponent implements OnInit {
         const elem = <HTMLElement>(document.getElementById("linea" + nc.nc + nc.factura));
         elem.classList.remove("bg-primary");
         nc.trabajado = false;
-        this.obtenerTrabajados();
-        if (this.fechaNC !== '') {
-          this.buscarFecNC.nativeElement.click();
-        }
+        // this.obtenerTrabajados();
+        // if (this.fechaNC !== '') {
+        //   this.buscarFecNC.nativeElement.click();
+        // }
       }
     });
   }
@@ -94,10 +96,17 @@ export class NotascreditoComponent implements OnInit {
     this.trabajadas = 0;
     this.pendientes = 0;
     this.fechaNC = '';
+    this.fechaNCFinal = '';
     this.nc = [];
-    if (this.work.length === 0) {
-      this.obtenerTrabajados();
-    }
+    this.work = [];
+    this.total = 0;
+    this.trabajadas = 0;
+    this.pendientes = 0;
+    this.inNC = '';
+
+    // if (this.work.length === 0) {
+    //   this.obtenerTrabajados();
+    // }
   }
 
   obtenerTodosNC() {
@@ -110,7 +119,7 @@ export class NotascreditoComponent implements OnInit {
         let nt;
         this.nc = [];
         for (let i = 0; i < notas.respuesta.length; i ++) {
-          this._ncService.buscarNCtrabajado(notas.respuesta[i].nc, notas.respuesta[i].factura).subscribe((resp: any) => {
+          this._ncService.buscarNCtrabajado(notas.respuesta[i].nc).subscribe((resp: any) => {
             if (resp.status) {
               nt = {
                 fecha: notas.respuesta[i].fecha,
@@ -193,12 +202,7 @@ export class NotascreditoComponent implements OnInit {
       return;
     }
 
-    if (this.inFac === '') {
-      swal('SIN FACTURA', 'No se ha ingresado una factura.', 'error');
-      return;
-    }
-
-    this._ncService.buscarNCtrabajado(this.inNC, this.inFac).subscribe((resp: any) => {
+    this._ncService.buscarNCtrabajado(this.inNC).subscribe((resp: any) => {
       if (resp.status) {
         this.work = [];
         this.work.push(resp.respuesta);
@@ -214,17 +218,24 @@ export class NotascreditoComponent implements OnInit {
 
   buscarFecha() {
     if (this.fechaNC === '') {
-      swal('Sin Fecha', 'No ha ingresado una fecha valida.', 'error');
+      swal('Sin Fecha Inicial', 'No ha ingresado una fecha valida.', 'error');
       return;
     }
+
+    if (this.fechaNCFinal === '') {
+      swal('Sin Fecha Final', 'No ha ingresado una fecha valida.', 'error');
+      return;
+    }
+    this.trabajadas = 0;
     const f = this.fechaNC;
+    const f2 = this.fechaNCFinal;
     const info = this.nc;
     this.cargando = true;
     this.nc = [];
-    this._ncService.buscarNCFecha(f).subscribe((resp: any) => {
+    this._ncService.buscarNCFecha(f, f2).subscribe((resp: any) => {
       if (resp.status) {
         for (let i = 0; i < resp.respuesta.length; i ++) {
-          this._ncService.buscarNCtrabajado(resp.respuesta[i].nc, resp.respuesta[i].factura).subscribe((ncFec: any) => {
+          this._ncService.buscarNCtrabajado(resp.respuesta[i].nc).subscribe((ncFec: any) => {
             if (ncFec.status) {
               resp.respuesta[i].trabajado = true;
             } else {
@@ -233,9 +244,16 @@ export class NotascreditoComponent implements OnInit {
           });
         }
         this.nc = resp.respuesta;
-        this._ncService.buscarNCTrabFecha(f).subscribe((trab: any) => {
+        this._ncService.buscarNCTrabFecha(f, f2).subscribe((trab: any) => {
           if (trab.status) {
-            this.trabajadas = trab.respuesta.length;
+            for (let i = 0; i < trab.respuesta.length; i++) {
+              let esNC = (fac: any) => {
+                return fac.nc === trab.respuesta[i].nc;
+              }
+              if (this.nc.find(esNC)) {
+                this.trabajadas++;
+              }
+            }
           }
           this.total = resp.respuesta.length;
           this.pendientes = this.total - this.trabajadas;

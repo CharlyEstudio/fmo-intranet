@@ -108,6 +108,8 @@ export class DashboardLogisticaComponent implements OnInit {
 
     let guias = JSON.parse(localStorage.getItem('guia'));
     let especiales = JSON.parse(localStorage.getItem('especiales'));
+    this.clientes = Number(localStorage.getItem('NumCli'));
+    this.importe = Number(localStorage.getItem('importeGuia'));
 
     if (guias !== null) {
       if (guias.length > 0) {
@@ -380,6 +382,7 @@ export class DashboardLogisticaComponent implements OnInit {
                   this.clientes += 1;
                 }
               }
+              localStorage.setItem('NumCli', String(this.clientes));
               this.folios.push(partidas.respuesta[i]);
             }
 
@@ -414,7 +417,6 @@ export class DashboardLogisticaComponent implements OnInit {
   }
 
   procesarGuia() {
-
     if (this.chf === '0') {
       swal('Sin Chofer', 'Seleccione un chofer para procesar.', 'error');
       return;
@@ -527,7 +529,10 @@ export class DashboardLogisticaComponent implements OnInit {
 
         this.pedidos.push(ped);
 
+        // TODO
+
         this.importe += this.folios[i].total;
+        localStorage.setItem('importeGuia', String(this.importe));
 
         // this._guiasServices.procesarGuia(ped).subscribe( ( procesado: any ) => {});
 
@@ -565,30 +570,7 @@ export class DashboardLogisticaComponent implements OnInit {
         this.pedidos, this.guiaGuardar, this.especiales, this.chf
       ).subscribe((resp: any) => {}, err => {});
 
-      localStorage.removeItem('guia');
-      localStorage.removeItem('especiales');
-      this.inputFolio.nativeElement.value = '';
-      this.folios = [];
-      this.pedidos = [];
-      this.chf = '';
-      this.verifica = '';
-      this.guiaGuardar = null;
-      this.especiales = [];
-      this.choferes = [];
-      this.verificadores = [];
-      this.foliosBusq = [];
-      this.abiertas = '';
-      this.azules = '';
-      this.nargde = '';
-      this.narpeq = '';
-      this.importe = 0;
-      this.clientes = 0;
-      this.generar = false;
-      this.guias = true;
-      this.tuberias = false;
-      this.obtener = false;
-      this.sinDatos = false;
-      this.verGuias();
+      this.cancelarGuia();
     })
     .catch(err => {
       if (err) {
@@ -602,9 +584,25 @@ export class DashboardLogisticaComponent implements OnInit {
   cancelarGuia() {
     localStorage.removeItem('guia');
     localStorage.removeItem('especiales');
+    localStorage.removeItem('NumCli');
+    localStorage.removeItem('importeGuia');
     this.inputFolio.nativeElement.value = '';
     this.folios = [];
+    this.pedidos = [];
     this.especiales = [];
+    this.chf = '';
+    this.verifica = '';
+    this.guiaGuardar = null;
+    this.especiales = [];
+    this.choferes = [];
+    this.verificadores = [];
+    this.foliosBusq = [];
+    this.abiertas = '';
+    this.azules = '';
+    this.nargde = '';
+    this.narpeq = '';
+    this.importe = 0;
+    this.clientes = 0;
     this.generar = false;
     this.guias = true;
     this.tuberias = false;

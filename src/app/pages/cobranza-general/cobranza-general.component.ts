@@ -6,8 +6,13 @@ import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/retry';
 import 'rxjs/add/operator/filter';
 
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
+const swal: SweetAlert = _swal as any;
+
 
 import { AsesoresService } from '../../services/services.index';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-cobranza-general',
@@ -16,22 +21,30 @@ import { AsesoresService } from '../../services/services.index';
 })
 export class CobranzaGeneralComponent implements OnInit, OnDestroy {
 
-  observar: Subscription;
-  intervalo: any;
+  observar1: Subscription;
+  intervalo1: any;
+
+  // Esto es provisional, mientras se coloca los sockets
+  observar2: Subscription;
+  intervalo2: any;
 
   cobranza: any[] = [];
+  impTPV: number = 0;
+  tpv: any[] = [];
   cheques: number = 0;
   transferencia: number = 0;
   tarjeta: number = 0;
   efectivo: number = 0;
   notas: number = 0;
   total: number = 0;
+  verPDF: any = 'vacio';
 
   constructor(
+    public sanitizer: DomSanitizer,
     private _asesorService: AsesoresService
   ) {
-    // Subscrión a Diferencias
-    this.observar =  this.regresa().subscribe(
+    // Subscrión a Cobranza
+    this.observar1 =  this.regresa1().subscribe(
       numero => {
         this.cheques = 0;
         this.efectivo = 0;
@@ -71,6 +84,19 @@ export class CobranzaGeneralComponent implements OnInit, OnDestroy {
       error => console.error('Error en el obs', error),
       () => console.log('El observador termino!')
     );
+
+    // Subscrión a Cobranza
+    this.observar2 =  this.regresa2().subscribe(
+      numero => {
+        this.impTPV = 0;
+        this.tpv = numero;
+        for (let i = 0; i < numero.length; i ++) {
+          this.impTPV += numero[i].imporInicial;
+        }
+      },
+      error => console.error('Error en el obs', error),
+      () => console.log('El observador termino!')
+    );
   }
 
   ngOnInit() {
@@ -81,6 +107,7 @@ export class CobranzaGeneralComponent implements OnInit, OnDestroy {
     this.notas = 0;
     this.tarjeta = 0;
     this.total = 0;
+    this.impTPV = 0;
 
     // Otebtener Pagos
     this._asesorService.cobranza()
@@ -115,12 +142,36 @@ export class CobranzaGeneralComponent implements OnInit, OnDestroy {
 
       });
 
+    // Obtener pagos de TPV
+    this._asesorService.cobranzaTPV()
+      .subscribe( ( resp: any ) => {
+        this.tpv = resp;
+        for (let i = 0; i < resp.length; i ++) {
+          this.impTPV += resp[i].imporInicial;
+        }
+      });
+
   }
 
-  regresa(): Observable<any> {
+  regresa1(): Observable<any> {
     return new Observable((observer: Subscriber<any>) => {
-      this.intervalo = setInterval(() => {
+      this.intervalo1 = setInterval(() => {
         this._asesorService.cobranza()
+          .subscribe( ( resp: any ) => {
+            observer.next(resp);
+          });
+      }, 1000);
+    })
+    .retry()
+    .map((resp) => {
+      return resp;
+    });
+  }
+
+  regresa2(): Observable<any> {
+    return new Observable((observer: Subscriber<any>) => {
+      this.intervalo2 = setInterval(() => {
+        this._asesorService.cobranzaTPV()
           .subscribe( ( resp: any ) => {
             observer.next(resp);
           });
@@ -134,8 +185,73 @@ export class CobranzaGeneralComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // Intervalo por Surtir
-    this.observar.unsubscribe();
-    clearInterval(this.intervalo);
+    this.observar1.unsubscribe();
+    clearInterval(this.intervalo1);
+    this.observar2.unsubscribe();
+    clearInterval(this.intervalo2);
+  }
+
+  pdf(datos: any) {
+    swal({
+      text: 'Generar el PDF',
+      buttons: {
+        confirm: {
+          text: 'Generar',
+          closeModal: false
+        }
+      }
+    })
+    .then((value) => {
+      if (!value) {return}
+      return fetch(`http://177.244.55.122/api/visitas.php?opcion=50`, {
+        method: 'POST',
+        body: JSON.stringify(datos),
+        headers: { 'content-Type': 'application/x-www-form-urlencoded' }
+      });
+    })
+    .then(results => {
+      return results.json();
+    })
+    .then(json => {
+      const resp = json[0].msg;
+
+      if (!resp) {
+        return swal({
+          title: 'Error',
+          text: resp.msg,
+          icon: 'danger'
+        });
+      }
+
+      this.verPDF = 'http://www.ferremayoristas.com.mx/api/' + resp.file;
+
+      swal({
+        title: "PDF",
+        text: resp.msg,
+        icon: 'success',
+        buttons: {
+          confirm: {
+            text: 'Ver'
+          }
+        }
+      })
+      .then((value) => {
+        if (!value) {return}
+        let a = document.createElement('a');
+        a.setAttribute('href', this.verPDF);
+        a.setAttribute('target', '_blank');
+        a.click();
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      if (err) {
+        swal("Oh noes!", err, "error");
+      } else {
+        swal.stopLoading();
+        swal.close('true');
+      }
+    });
   }
 
 }

@@ -90,9 +90,39 @@
 
         <div class="card">
 
+            <div class="box bg-white text-center">
+
+                <div class="row">
+
+                        <div class="col-8">
+    
+                            <h1 class="font-light text-dark">{{ impTPV | currency }}</h1>
+
+                            <h6 class="text-dark">TPV</h6>
+    
+                        </div>
+    
+                        <div class="col-4">
+    
+                            <button class="btn btn-danger mt-3" (click)="pdf(tpv)">PDF</button>
+                        </div>
+    
+                    </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Column -->
+    <div class="col-md-12 col-lg-12 col-xlg-4">
+
+        <div class="card">
+
             <div class="box bg-success text-center">
 
-                <h1 class="font-light text-white">{{ total | currency }}</h1>
+                <h1 class="font-light text-white">{{ (total + impTPV) | currency }}</h1>
 
                 <h6 class="text-white">Total</h6>
 

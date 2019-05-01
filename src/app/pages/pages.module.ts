@@ -205,7 +205,7 @@ import { ProcesofacturasComponent } from './procesofacturas/procesofacturas.comp
         PipesModule,
         PdfViewerModule,
         AgmCoreModule.forRoot({
-            apiKey: ''
+            apiKey: 'AIzaSyApgyf9zpctTzuckqSRRYiA9wgrVKeWGFY'
         }),
         AgmDirectionModule
     ]

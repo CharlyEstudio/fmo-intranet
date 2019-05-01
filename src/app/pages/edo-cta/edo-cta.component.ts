@@ -450,15 +450,15 @@ export class EdoCtaComponent implements OnInit {
         .then(( value ) => {
 
           switch (value) {
- 
+
             case "defeat":
               this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('http://www.ferremayoristas.com.mx/api/edo-cta/' + filename);
               break;
-         
+
             case "catch":
               this.enviarEmail( cliente, asesor, tel );
               break;
-         
+
             default:
               return null;
           }

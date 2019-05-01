@@ -299,6 +299,32 @@ export class AsesoresService {
     return this.http.get( this.url );
   }
 
+  cobranzaTPV( id: any = '' ) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=25&perid=' + id;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PETICION + '/api/asesores.php?opcion=25&perid=' + id;
+    } else {
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=25&perid=' + id;
+    }
+
+    return this.http.get( this.url );
+  }
+
+  pdfTPV( data: any ) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/visitas.php?opcion=50';
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PETICION + '/api/visitas.php?opcion=50';
+    } else {
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/visitas.php?opcion=50';
+    }
+
+    return this.http.post( this.url, { datos: data }, {
+      headers: { 'content-Type': 'application/x-www-form-urlencoded' }
+    } );
+  }
+
   relacionPedidos( id: any ) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_PETICION + '/api/asesores.php?opcion=21&perid=' + id;

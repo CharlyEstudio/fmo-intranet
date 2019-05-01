@@ -99,9 +99,6 @@ export class NotascreditoComponent implements OnInit {
     this.fechaNCFinal = '';
     this.nc = [];
     this.work = [];
-    this.total = 0;
-    this.trabajadas = 0;
-    this.pendientes = 0;
     this.inNC = '';
 
     // if (this.work.length === 0) {
@@ -230,6 +227,7 @@ export class NotascreditoComponent implements OnInit {
     const f = this.fechaNC;
     const f2 = this.fechaNCFinal;
     const info = this.nc;
+    let subtotal = 0;
     this.cargando = true;
     this.nc = [];
     this._ncService.buscarNCFecha(f, f2).subscribe((resp: any) => {
@@ -240,6 +238,9 @@ export class NotascreditoComponent implements OnInit {
               resp.respuesta[i].trabajado = true;
             } else {
               resp.respuesta[i].trabajado = false;
+            }
+            if (resp.respuesta[i].serie !== 'NA') {
+              subtotal ++;
             }
           });
         }
@@ -255,11 +256,12 @@ export class NotascreditoComponent implements OnInit {
               }
             }
           }
-          this.total = resp.respuesta.length;
+          this.total = subtotal;
           this.pendientes = this.total - this.trabajadas;
         });
         this.cargando = false;
       } else {
+        this.cargando = false;
         this.nc = info;
         swal('Sin Registro', resp.msg, 'error');
       }

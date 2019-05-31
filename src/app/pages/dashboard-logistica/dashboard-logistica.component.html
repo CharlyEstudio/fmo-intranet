@@ -153,12 +153,6 @@
 
                             </div>
 
-                            <div class="stats-icon text-right ml-auto">
-
-                                <h5 class="text-muted m-b-0">{{ fecha | date }}</h5>
-
-                            </div>
-
                         </div>
 
                     </div>
@@ -199,6 +193,14 @@
                     <div class="p-2 bd-highlight">
 
                         <h3>Generar Guía</h3>
+
+                    </div>
+
+                    <div class="p-2 bd-highlight" *ngIf="diaSemana === 5">
+
+                        <label for="viernes">Fecha Asignar</label>
+
+                        <input [(ngModel)]="fechaAsignar" class="form-control" type="date" name="viernes" id="viernes">
 
                     </div>
 
@@ -438,15 +440,15 @@
 
                                 <td class="text-left text-uppercase">
 
-                                    <span [id]="'chofer' + g._id">
+                                    <span [id]="'chofer' + g.chofer._id">
 
                                         {{ g.chofer.nombre }}
 
                                     </span>
 
-                                    <select [id]="'choferSel' + g._id" name="chofer" class="form-control" [(ngModel)]="chf" (change)="obtenerChofer()" style="display: none;">
+                                    <select [id]="'choferSel' + g.chofer._id" name="chofer" class="form-control" [(ngModel)]="chf" (change)="obtenerChofer()" style="display: none;">
                             
-                                        <option class="text-uppercase" [ngValue]="chofer" *ngFor="let chofer of choferes">{{ 'chofer.nombre' }}</option>
+                                        <option class="text-uppercase" [ngValue]="chofer" *ngFor="let ch of choferes">{{ ch.nombre }}</option>
             
                                     </select>
 
@@ -487,13 +489,13 @@
 
                                 <td class="text-center">
 
-                                    <button [id]="'edit' + g._id" class="btn btn-outline-info" (click)="editar(g)">
+                                    <button [id]="'edit' + g.chofer._id" class="btn btn-outline-info" (click)="editar(g)">
 
                                         <i class="mdi mdi-tooltip-edit"></i>
 
                                     </button>
 
-                                    <button [id]="'confirm' + g._id" class="btn btn-outline-success" (click)="enviarEditar(g)" style="display: none">
+                                    <button [id]="'confirm' + g.chofer._id" class="btn btn-outline-success" (click)="enviarEditar(g)" style="display: none">
 
                                         <i class="mdi mdi-tooltip-outline-plus"></i>
 
@@ -822,7 +824,7 @@
 
                                 <th class="text-center">Cliente</th>
 
-                                <th class="text-center">Nombre</th>
+                                <!-- <th class="text-center">Nombre</th> -->
 
                                 <th class="text-center">Domicilio</th>
 
@@ -850,7 +852,7 @@
 
                                 <td class="text-center">{{ fac.cliente }}</td>
 
-                                <td class="text-left text-uppercase">{{ fac.nombre }}</td>
+                                <!-- <td class="text-left text-uppercase">{{ fac.nombre }}</td> -->
 
                                 <td class="text-left text-uppercase">{{ fac.domicilio }}</td>
 

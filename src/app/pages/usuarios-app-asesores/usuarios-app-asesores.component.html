@@ -1,0 +1,210 @@
+<div class="row animated fadeIn" *ngIf="cargando">
+
+  <div class="col-sm-12">
+
+      <div class="alert alert-warning text-center">
+
+          <strong>Cargando</strong>
+
+          <br>
+
+          <i class="fa fa-refresh fa-spin fa-2x"></i>
+
+          <br>
+
+          <span>Espere por favor</span>
+
+      </div>
+
+  </div>
+
+</div>
+
+<div class="row animated fadeIn" *ngIf="!cargando">
+
+  <div class="col-12">
+
+      <div class="card">
+
+          <div class="card-body">
+
+              <div class="d-flex justify-content-between mb-3">
+
+                  <div class="p-2 bd-highlight">
+
+                      <h3 class="card-title">Visores Registrados (<small>{{ totalResgitro }}</small>)</h3>
+
+                  </div>
+
+                  <div class="p-2 bd-highlight">
+
+                      <button (click)="nuevoVisor()" class="btn btn-info">
+
+                          <i class="fa fa-plus"></i>
+
+                      </button>
+
+                  </div>
+
+              </div>
+
+              <form ngNativeValidate #f="ngForm" *ngIf="nuevo" class="mb-3">
+
+                  <h3>Agregar Visor</h3>
+
+                  <div class="form-row align-items-center">
+
+                      <div class="col-auto">
+
+                          <label class="sr-only" for="nombre">Nombre</label>
+
+                          <input ngModel type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" required>
+
+                      </div>
+
+                      <div class="col-auto">
+
+                          <label class="sr-only" for="email">Email</label>
+
+                          <input ngModel type="email" id="email" name="email" class="form-control" placeholder="Email" required>
+
+                      </div>
+
+                      <div class="col-auto">
+
+                          <label class="sr-only" for="idFerrum">idFerrum</label>
+
+                          <input ngModel type="number" id="idFerrum" name="idFerrum" class="form-control" placeholder="IdFerrum" required>
+
+                      </div>
+
+                      <div class="col-auto">
+
+                          <label class="sr-only" for="imei">IMEI</label>
+
+                          <input ngModel type="text" id="imei" name="imei" class="form-control" placeholder="Imei" required>
+
+                      </div>
+
+                      <div class="col-auto">
+
+                          <button class="btn btn-success mb-2" type="button" (click)="agregar(f)">Agregar</button>
+
+                          <button class="btn btn-danger mb-2" type="button" (click)="cancelar()">Cancelar</button>
+
+                      </div>
+
+                  </div>
+
+
+              </form>
+
+              <div class="table-responsive">
+
+                  <table class="table table-hover">
+
+                      <thead>
+
+                          <tr>
+
+                              <th>Nombre</th>
+
+                              <th>Email</th>
+
+                              <th>IdFerrum</th>
+
+                              <th>IMEI</th>
+
+                              <th class="text-center">Auth</th>
+
+                              <th></th>
+
+                          </tr>
+
+                      </thead>
+
+                      <tbody>
+
+                          <tr *ngFor="let visor of visores">
+
+                              <td>{{ visor.nombre }}</td>
+
+                              <td width="25%">
+
+                                  <input type="text" name="email" [(ngModel)]="visor.email" class="form-control text-left">
+
+                              </td>
+
+                              <td width="5%">
+
+                                  <input type="text" name="idFerrum" [(ngModel)]="visor.idFerrum" class="form-control text-center">
+
+                              </td>
+
+                              <td width="25%">
+
+                                  <input type="text" name="imei" [(ngModel)]="visor.imei" class="form-control text-left">
+
+                              </td>
+
+                              <td width="10%">
+
+                                  <select [(ngModel)]="visor.activo" name="activo" class="form-control">
+
+                                      <option value="YES">Si</option>
+
+                                      <option value="NOT">No</option>
+
+                                  </select>
+
+                              </td>
+
+                              <td class="text-center">
+
+                                  <button (click)="actualizarVisor( visor )" class="btn btn-primary">
+
+                                      <i class="fa fa-save"></i>
+
+                                  </button>
+
+                                  <button (click)="borrarVisor( visor )" class="btn btn-danger">
+
+                                      <i class="fa fa-trash-o"></i>
+
+                                  </button>
+
+                                  <button (click)="verMapa( visor )" class="btn btn-info">
+
+                                    <i class="mdi mdi-google-maps"></i>
+
+                                </button>
+
+                              </td>
+
+                          </tr>
+
+                      </tbody>
+
+                  </table>
+
+              </div>
+
+              <button (click)="cambiarDesde(-5)" class="btn btn-secondary">
+
+                Anteriores
+
+              </button>
+
+              <button (click)="cambiarDesde(5)" class="btn btn-secondary">
+
+                Siguientes
+
+              </button>
+
+          </div>
+
+      </div>
+
+  </div>
+
+</div>

@@ -104,4 +104,20 @@ export class ChoferesService {
     return this.http.put( url, chofer );
   }
 
+  mostrarGuias( id: any ) {
+    let url;
+
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/pordia/chofer/' + id;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/guias/pordia/chofer/' + id;
+    } else {
+      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/guias/pordia/chofer/' + id;
+    }
+
+    url += '?token=' + this.token;
+
+    return this.http.get( url );
+  }
+
 }

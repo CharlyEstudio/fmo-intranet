@@ -11,4 +11,5 @@ export const URL_LOCAL = 'http://192.168.1.250';
 export const URL_PETICION = 'http://192.168.1.250';
 export const URL_PRUEBAS = 'http://192.168.1.250';
 export const PUERTO_INTERNO = 3001;
+export const PUERTO_INTERNO_DOS = 4111;
 export const PUERTO_SERVER = 80;

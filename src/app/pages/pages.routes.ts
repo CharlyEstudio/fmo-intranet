@@ -68,6 +68,8 @@ import { CotizadorComponent } from './cotizador/cotizador.component';
 import { NotascreditoComponent } from './notascredito/notascredito.component';
 import { BackorderAsesorComponent } from './backorder-asesor/backorder-asesor.component';
 import { ProcesofacturasComponent } from './procesofacturas/procesofacturas.component';
+import { UsuariosAppAsesoresComponent } from './usuarios-app-asesores/usuarios-app-asesores.component';
+import { FrecuenciasComponent } from './frecuencias/frecuencias.component';
 
 const pageRoutes: Routes = [
     {
@@ -164,6 +166,16 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Listado de Choferes',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'visor',
+        component: UsuariosAppAsesoresComponent,
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Listado de IMEIs de Asesores',
                     name: 'description'
                 }
     },
@@ -599,11 +611,21 @@ const pageRoutes: Routes = [
                     name: 'description'
                 }
     },
+    {
+        path: 'frecuencia',
+        component: FrecuenciasComponent,
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Frecuencias',
+                    name: 'description'
+                }
+    },
     // Cotizador
     {
         path: 'cotizador',
         component: CotizadorComponent,
-        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        canActivate: [ MesaGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Cotizador',

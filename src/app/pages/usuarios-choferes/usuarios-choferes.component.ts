@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
+const swal: SweetAlert = _swal as any;
+
 // Modelos
 import { Chofer } from '../../models/chofer.model';
 
@@ -94,7 +98,8 @@ export class UsuariosChoferesComponent implements OnInit {
     const enviar = new Chofer(
       forma.value.nombre,
       forma.value.zona,
-      forma.value.imei
+      forma.value.imei,
+      forma.value.rol
     );
     this._choferService.crearChofer(enviar, this._usuarioService.usuario).subscribe((resp: any) => {
       if (resp.ok) {

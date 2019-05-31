@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+
+// Servicios
 import { PhpService } from '../../services/services.index';
+import { UsuarioService } from '../../services/usuario/usuario.service';
 
 @Component({
   selector: 'app-lista-morosidad',
@@ -21,7 +24,8 @@ export class ListaMorosidadComponent implements OnInit {
   constructor(
     private router: ActivatedRoute,
     private ruta: Router,
-    private _phpService: PhpService
+    private _phpService: PhpService,
+    private _usuarioService: UsuarioService
   ) { }
 
   ngOnInit() {
@@ -50,7 +54,11 @@ export class ListaMorosidadComponent implements OnInit {
   }
 
   regresar() {
-    this.ruta.navigate(['/dashboardAse']);
+    if (this._usuarioService.usuario.rol !== 'ADMIN_ROLE') {
+      this.ruta.navigate(['/dashboardAse']);
+    } else {
+      this.ruta.navigate(['/asesor-vista', this.id, this.nombre]);
+    }
   }
 
 }

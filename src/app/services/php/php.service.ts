@@ -648,12 +648,12 @@ export class PhpService {
 
   listaMorosidad( id: any, inicio: any, fin: any ) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_PETICION + '/api/morosidad.php?opcion=10&perid=' + id + '&inicio=' + inicio + '&fin=' + fin;
+      /*LOCAL*/this.url = URL_PETICION + '/api/morosidad.php?opcion=29&perid=' + id + '&inicio=' + inicio + '&fin=' + fin;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PETICION + '/api/morosidad.php?opcion=10&perid=' + id + '&inicio=' + inicio + '&fin=' + fin;
+      this.url = URL_PETICION + '/api/morosidad.php?opcion=29&perid=' + id + '&inicio=' + inicio + '&fin=' + fin;
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' +
-      PUERTO_SERVER + '/api/morosidad.php?opcion=10&perid=' + id + '&inicio=' + inicio + '&fin=' + fin;
+      PUERTO_SERVER + '/api/morosidad.php?opcion=29&perid=' + id + '&inicio=' + inicio + '&fin=' + fin;
     }
 
     return this.http.get( this.url );

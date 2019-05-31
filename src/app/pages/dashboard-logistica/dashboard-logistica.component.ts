@@ -10,6 +10,7 @@ import { GuiasService, UsuarioService, WebsocketService, ChoferesService } from 
 import { GuiasPartidas } from '../../models/guias.model';
 import { Guia } from '../../models/guia.model';
 import { Usuario } from '../../models/usuario.model';
+import { Ruta } from '../../models/ruta.model';
 
 import * as _swal from 'sweetalert';
 import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
@@ -26,11 +27,16 @@ export class DashboardLogisticaComponent implements OnInit {
 
   fecha = Date.now();
 
+  // Si es viernes, se puede elegir la fecha para asignar la guía.
+  diaSemana = new Date().getDay();
+  fechaAsignar: any;
+
   inicial: any;
   final: any;
 
   idUsuario: any;
   usuario: Usuario;
+  rutaEnviar: any[] = [];
 
   // folio: any;
   folios: any[] = [];
@@ -450,6 +456,12 @@ export class DashboardLogisticaComponent implements OnInit {
     let h = new Date();
 
     let hor;
+    let min;
+    let sec;
+    let dia;
+    let mes;
+    let anio = h.getFullYear();
+    let fecha;
 
     if (h.getHours() < 10) {
       hor = '0' + h.getHours();
@@ -457,15 +469,11 @@ export class DashboardLogisticaComponent implements OnInit {
       hor = h.getHours();
     }
 
-    let min;
-
     if (h.getMinutes() < 10) {
       min = '0' + h.getMinutes();
     } else {
       min = h.getMinutes();
     }
-
-    let sec;
 
     if (h.getSeconds() < 10) {
       sec = '0' + h.getSeconds();
@@ -473,15 +481,11 @@ export class DashboardLogisticaComponent implements OnInit {
       sec = h.getSeconds();
     }
 
-    let dia;
-
     if (h.getDate() < 10) {
       dia = '0' + h.getDate();
     } else {
       dia = h.getDate();
     }
-
-    let mes;
 
     if (h.getMonth() < 10) {
       mes = '0' + (h.getMonth() + 1);
@@ -489,11 +493,18 @@ export class DashboardLogisticaComponent implements OnInit {
       mes = (h.getMonth() + 1);
     }
 
-    let anio = h.getFullYear();
-
     let hora = hor + ':' + min + ':' + sec;
 
-    let fecha = anio + '-' + mes + '-' + dia;
+    if (this.diaSemana === 5) {
+      console.log(this.diaSemana, );
+      if (this.fechaAsignar === undefined) {
+        swal('Sin Fecha Asignar', 'Hoy es VIERNES y se necesita asignar la fecha de forma manual.', 'error');
+        return;
+      }
+      fecha = this.fechaAsignar;
+    } else {
+      fecha = anio + '-' + mes + '-' + dia;
+    }
 
     let idFol = this.idUsuario + '-' + Date.now();
 
@@ -534,8 +545,85 @@ export class DashboardLogisticaComponent implements OnInit {
         this.importe += this.folios[i].total;
         localStorage.setItem('importeGuia', String(this.importe));
 
+        // Este no ya que guardaba aparte los folios, queda inoperante
         // this._guiasServices.procesarGuia(ped).subscribe( ( procesado: any ) => {});
 
+      }
+
+      let rutaArmar = [];
+
+      // Guardamos la lista para la app de asesores y choferes
+      let guardarFacturas: any[] = [];
+      let clienteidGF;
+      let latGF;
+      let lngGF;
+      let numeroGF;
+      let nombreGF;
+      let domicilioGF;
+      let poblacionGF;
+      let vendedorGF;
+      let diavisGF;
+      const fechaGF = fecha;
+      const horaGF = hora;
+      let envio: Ruta;;
+
+      for (let i = 0; i < this.folios.length; i++) {
+        let esCliente = (cliente) => {
+          return cliente.numero === this.folios[i].numero;
+        };
+
+        const domicilio = this.folios[i].direccion + ', ' + this.folios[i].colonia;
+
+        if (!rutaArmar.find(esCliente)) {
+          rutaArmar.push(this.folios[i]);
+          guardarFacturas = this.folios[i];
+          clienteidGF = this.folios[i].clienteid;
+          latGF = this.folios[i].lat;
+          lngGF = this.folios[i].lng;
+          numeroGF = this.folios[i].numero;
+          nombreGF = this.folios[i].nombre;
+          domicilioGF = domicilio;
+          poblacionGF = this.folios[i].ciudad;
+          vendedorGF = this.folios[i].perid;
+          diavisGF = this.folios[i].diavis;
+          envio = {
+            clienteid: clienteidGF,
+            lat: latGF,
+            lng: lngGF,
+            numero: numeroGF,
+            nombre: nombreGF,
+            domicilio: domicilioGF,
+            poblacion: poblacionGF,
+            vendedor: vendedorGF,
+            diavis: diavisGF,
+            fecha: fechaGF,
+            hora: horaGF,
+            facturas: guardarFacturas
+          };
+          this.rutaEnviar.push(envio);
+        } else {
+          for (let k = 0; k < this.rutaEnviar.length; k++) {
+            if (this.folios[i].clienteid === this.rutaEnviar[k].clienteid) {
+              const datoAnt = this.rutaEnviar[k].facturas;
+              this.rutaEnviar[k].facturas = [];
+              let newDate = [];
+              if (datoAnt.length === undefined) {
+                newDate.push(datoAnt);
+                newDate.push(this.folios[i]);
+                this.rutaEnviar[k].facturas = newDate;
+              } else {
+                for (let j = 0; j < datoAnt.length; j++) {
+                  newDate.push(datoAnt[j]);
+                }
+                newDate.push(this.folios[i]);
+                this.rutaEnviar[k].facturas = newDate;
+              }
+            }
+          }
+        }
+
+        // Este si
+        this._guiasServices.guardarRuta(this.rutaEnviar, this.chf).subscribe(() => {});
       }
 
       let cajas = "Cafes: " + this.abiertas + ", Azules: " + this.azules + ", NarGde: " + this.nargde + ", NarPeq: " + this.narpeq;
@@ -556,6 +644,7 @@ export class DashboardLogisticaComponent implements OnInit {
         clientes: this.clientes
       };
 
+      // Todo esto si
       this._guiasServices.guardarGuia(this.guiaGuardar, this.chf).subscribe( ( guardado: any ) => {
         if (guardado.ok) {
           // this._webSocket.acciones('guias-watch', guardado.guiasGuardado);
@@ -569,6 +658,8 @@ export class DashboardLogisticaComponent implements OnInit {
       this._guiasServices.enviarPDFguia(
         this.pedidos, this.guiaGuardar, this.especiales, this.chf
       ).subscribe((resp: any) => {}, err => {});
+
+      this._webSocket.acciones('centinela-chofer', this.chf);
 
       this.cancelarGuia();
     })
@@ -799,18 +890,23 @@ export class DashboardLogisticaComponent implements OnInit {
   }
 
   editar(folio: any) {
-    document.getElementById('edit' + folio._id).style.display = "none";
-    document.getElementById('chofer' + folio._id).style.display = "none";
-    document.getElementById('confirm' + folio._id).style.display = "inline";
-    document.getElementById('choferSel' + folio._id).style.display = "inline";
+    console.log(folio);
+    const editar = <HTMLElement>(document.getElementById('edit' + folio.chofer._id));
+    editar.style.display = "none";
+    const chofer = <HTMLElement>(document.getElementById('chofer' + folio.chofer._id));
+    chofer.style.display = "none";
+    const confirm = <HTMLElement>(document.getElementById('confirm' + folio.chofer._id));
+    confirm.style.display = "inline";
+    const choferSel = <HTMLElement>(document.getElementById('choferSel' + folio.chofer._id));
+    choferSel.style.display = "inline";
   }
 
   enviarEditar(folio: any) {
-    document.getElementById('edit' + folio._id).style.display = "inline";
-    document.getElementById('chofer' + folio._id).style.display = "inline";
-    document.getElementById('confirm' + folio._id).style.display = "none";
-    document.getElementById('choferSel' + folio._id).style.display = "none";
-    this._guiasServices.actualizarGuiaPri(folio._id, this.chf).subscribe((resp: any) => {
+    document.getElementById('edit' + folio.chofer._id).style.display = "inline";
+    document.getElementById('chofer' + folio.chofer._id).style.display = "inline";
+    document.getElementById('confirm' + folio.chofer._id).style.display = "none";
+    document.getElementById('choferSel' + folio.chofer._id).style.display = "none";
+    this._guiasServices.actualizarGuiaPri(folio.chofer._id, this.chf).subscribe((resp: any) => {
       if (resp.ok) {
         this.verGuias();
         this._webSocket.acciones('centinela-chofer', resp.guia);

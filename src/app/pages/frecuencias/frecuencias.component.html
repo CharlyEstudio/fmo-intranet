@@ -1,0 +1,75 @@
+<div class="row animated fadeIn">
+
+  <div class="col-12 my-5">
+
+    <h1 *ngIf="!descargado">
+
+      Descargando...
+      
+    </h1>
+
+    <h1 *ngIf="descarga === 100 && descargado">
+
+      {{ (descarga / 100) | percent }}
+      
+    </h1>
+
+    <div class="progress">
+
+      <div class="progress-bar bg-success" role="progressbar" [ngStyle]="{'width': descarga+'%', 'height': 6+'px'}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+
+    </div>
+
+  </div>
+
+  <div class="col-12" *ngIf="descarga === 100 && descargado">
+
+    <button class="btn btn-success" (click)="exportar(clientes)">DESCARGAR A EXCEL</button>
+
+  </div>
+
+  <!-- <table class="table">
+
+    <thead>
+
+      <tr>
+
+        <th>Chofer</th>
+
+        <th>Número</th>
+
+        <th>Domicilio</th>
+
+        <th>Población</th>
+        
+        <th>Fecha</th>
+
+        <th>Vendedor</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let cli of clientes">
+
+        <td>{{cli.chofer}}</td>
+
+        <td>{{cli.cliente}}</td>
+
+        <td>{{cli.domicilio}}</td>
+
+        <td>{{cli.poblacion}}</td>
+
+        <td>{{cli.fecha}}</td>
+
+        <td>{{cli.vendedor}}</td>
+
+      </tr>
+
+    </tbody>
+
+  </table> -->
+
+</div>

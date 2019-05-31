@@ -7,13 +7,15 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import { Observable } from 'rxjs/Observable';
 
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
+const swal: SweetAlert = _swal as any;
+
 import { Usuario } from '../../models/usuario.model';
 
 import { Comision } from '../../models/comision.model';
 
 import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_INTERNO, PUERTO_SERVER, URL_PETICION } from '../../config/config';
-
-import { SweetAlert } from 'sweetalert/typings/core';
 
 import { SubirArchivoService } from '../subirArchivo/subir-archivo.service';
 import { WebsocketService } from '../sockets/websocket.service';

@@ -14,25 +14,25 @@ export class PhpService {
   // Si se cambia a PHP las consultas se debe de cambiar el URL de LOCAL a PETICIO =>>> OJO
 
   porBajar(fecha: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=1';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PETICION + '/api/pedidos.php?opcion=1';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=1';
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/bajar/' + fecha;
+      /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=1';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/bajar/' + fecha;
+      this.url = URL_PETICION + '/api/pedidos.php?opcion=1';
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/bajar/' + fecha;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=1';
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/bajar/' + fecha;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/bajar/' + fecha;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/bajar/' + fecha;
+    // }
+
     return this.http.get( this.url ).map((bajar: any) => {
-      if (bajar.status) {
-        return bajar.respuesta;
+      if (bajar.length > 0) {
+        return bajar[0];
       } else {
         return 0;
       }
@@ -40,25 +40,25 @@ export class PhpService {
   }
 
   porBajarZona( zona: any, fecha: any ) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=12&zona=' + zona;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PETICION + '/api/pedidos.php?opcion=12&zona=' + zona;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=12&zona=' + zona;
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/bajar/zona/' + fecha + '/' + zona;
+      /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=12&zona=' + zona;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/bajar/zona/' + fecha + '/' + zona;
+      this.url = URL_PETICION + '/api/pedidos.php?opcion=12&zona=' + zona;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/bajar/zona/' + fecha + '/' + zona;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=12&zona=' + zona;
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/bajar/zona/' + fecha + '/' + zona;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/bajar/zona/' + fecha + '/' + zona;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/bajar/zona/' + fecha + '/' + zona;
+    // }
+
     return this.http.get( this.url ).map((bajarZona: any) => {
-      if (bajarZona.status) {
-        return bajarZona.respuesta;
+      if (bajarZona.length > 0) {
+        return bajarZona[0];
       } else {
         return 0;
       }
@@ -66,25 +66,25 @@ export class PhpService {
   }
 
   porBajarEspecial(fecha: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=14';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=14';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=14';
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/bajar/especial/' + fecha;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=14';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/bajar/especial/' + fecha;
+      this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=14';
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/bajar/especial/' + fecha;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=14';
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/bajar/especial/' + fecha;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/bajar/especial/' + fecha;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/bajar/especial/' + fecha;
+    // }
+
     return this.http.get( this.url ).map((bajarEspecial: any) => {
-      if (bajarEspecial.status) {
-        return bajarEspecial.respuesta;
+      if (bajarEspecial.length > 0) {
+        return bajarEspecial[0];
       } else {
         return 0;
       }
@@ -92,25 +92,25 @@ export class PhpService {
   }
 
   porSurtir(fecha: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=2';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=2';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=2';
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/surtir/' + fecha;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=2';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/surtir/' + fecha;
+      this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=2';
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/surtir/' + fecha;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=2';
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/surtir/' + fecha;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/surtir/' + fecha;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/surtir/' + fecha;
+    // }
+
     return this.http.get( this.url ).map((surtir: any) => {
-      if (surtir.status) {
-        return surtir.respuesta;
+      if (surtir.length > 0) {
+        return surtir[0];
       } else {
         return 0;
       }
@@ -118,25 +118,25 @@ export class PhpService {
   }
 
   porSurtirZona( zona: any, fecha: any ) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=13&zona=' + zona;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=13&zona=' + zona;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=13&zona=' + zona;
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/surtir/zona/' + fecha + '/' + zona;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=13&zona=' + zona;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/surtir/zona/' + fecha + '/' + zona;
+      this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=13&zona=' + zona;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/surtir/zona/' + fecha + '/' + zona;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=13&zona=' + zona;
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/surtir/zona/' + fecha + '/' + zona;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/surtir/zona/' + fecha + '/' + zona;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/surtir/zona/' + fecha + '/' + zona;
+    // }
+
     return this.http.get( this.url ).map((surtir: any) => {
-      if (surtir.status) {
-        return surtir.respuesta;
+      if (surtir.length > 0) {
+        return surtir[0];
       } else {
         return 0;
       }
@@ -144,25 +144,25 @@ export class PhpService {
   }
 
   porSurtirEspecial(fecha: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=15';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=15';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=15';
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/surtir/especial/' + fecha;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=15';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/surtir/especial/' + fecha;
+      this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=15';
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/surtir/especial/' + fecha;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=15';
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/surtir/especial/' + fecha;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/surtir/especial/' + fecha;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/surtir/especial/' + fecha;
+    // }
+
     return this.http.get( this.url ).map((bajarEspecial: any) => {
-      if (bajarEspecial.status) {
-        return bajarEspecial.respuesta;
+      if (bajarEspecial.length > 0) {
+        return bajarEspecial[0];
       } else {
         return 0;
       }
@@ -170,25 +170,25 @@ export class PhpService {
   }
 
   facturados(fecha: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=3';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=3';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=3';
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/facturado/' + fecha;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=3';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/facturado/' + fecha;
+      this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=3';
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/facturado/' + fecha;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=3';
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/facturado/' + fecha;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/facturado/' + fecha;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/facturado/' + fecha;
+    // }
+
     return this.http.get( this.url ).map((facturado: any) => {
-      if (facturado.status) {
-        return facturado.respuesta;
+      if (facturado.length > 0) {
+        return facturado[0];
       } else {
         return 0;
       }
@@ -196,25 +196,25 @@ export class PhpService {
   }
 
   facturadoZona( zona: any, fecha: any ) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=16&zona=' + zona;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=16&zona=' + zona;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=16&zona=' + zona;
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/facturado/zona/' + fecha + '/' + zona;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=16&zona=' + zona;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/facturado/zona/' + fecha + '/' + zona;
+      this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=16&zona=' + zona;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/facturado/zona/' + fecha + '/' + zona;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=16&zona=' + zona;
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/facturado/zona/' + fecha + '/' + zona;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/facturado/zona/' + fecha + '/' + zona;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/facturado/zona/' + fecha + '/' + zona;
+    // }
+
     return this.http.get( this.url ).map((facZona: any) => {
-      if (facZona.status) {
-        return facZona.respuesta;
+      if (facZona.length > 0) {
+        return facZona[0];
       } else {
         return 0;
       }
@@ -222,25 +222,25 @@ export class PhpService {
   }
 
   facturadoEspecial(fecha: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=17';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=17';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=17';
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/facturado/especiales/' + fecha;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=17';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/facturado/especiales/' + fecha;
+      this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=17';
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/facturado/especiales/' + fecha;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=17';
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/facturado/especiales/' + fecha;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/facturado/especiales/' + fecha;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/facturado/especiales/' + fecha;
+    // }
+
     return this.http.get( this.url ).map((facEsp: any) => {
-      if (facEsp.status) {
-        return facEsp.respuesta;
+      if (facEsp.length > 0) {
+        return facEsp[0];
       } else {
         return 0;
       }
@@ -326,25 +326,25 @@ export class PhpService {
   }
 
   totalPedidos(fecha: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=5';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=5';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=5';
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/pedidos/totales/' + fecha;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=5';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/pedidos/totales/' + fecha;
+      this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=5';
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/pedidos/totales/' + fecha;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=5';
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/pedidos/totales/' + fecha;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/pedidos/totales/' + fecha;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/pedidos/totales/' + fecha;
+    // }
+
     return this.http.get( this.url ).map((totPed: any) => {
-      if (totPed.status) {
-        return totPed.respuesta;
+      if (totPed.length > 0) {
+        return totPed;
       } else {
         return 0;
       }
@@ -389,25 +389,25 @@ export class PhpService {
   }
 
   ventaActual(inicio: any, final: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/ventas.php?opcion=1';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/ventas.php?opcion=1';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/ventas.php?opcion=1';
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/venta/actual/' + inicio + '/' + final;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/ventas.php?opcion=1';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/venta/actual/' + inicio + '/' + final;
+      this.url = URL_PRUEBAS + '/api/ventas.php?opcion=1';
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/venta/actual/' + inicio + '/' + final;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/ventas.php?opcion=1';
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/venta/actual/' + inicio + '/' + final;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/venta/actual/' + inicio + '/' + final;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/venta/actual/' + inicio + '/' + final;
+    // }
+
     return this.http.get( this.url ).map((totPed: any) => {
-      if (totPed.status) {
-        return totPed.respuesta;
+      if (totPed.length > 0) {
+        return totPed[0];
       } else {
         return 0;
       }
@@ -427,25 +427,25 @@ export class PhpService {
   }
 
   zona(inicio: any, final: any, zona: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/ventas.php?opcion=3&zona=1';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/ventas.php?opcion=3&zona=1';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/ventas.php?opcion=3&zona=1';
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/zona/' + zona + '/' + inicio + '/' + final + '/' + zona;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/ventas.php?opcion=3&zona=' + zona;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/zona/' + zona + '/' + inicio + '/' + final + '/' + zona;
+      this.url = URL_PRUEBAS + '/api/ventas.php?opcion=3&zona=' + zona;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/zona/' + zona + '/' + inicio + '/' + final + '/' + zona;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/ventas.php?opcion=3&zona=' + zona;
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/zona/' + zona + '/' + inicio + '/' + final + '/' + zona;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/zona/' + zona + '/' + inicio + '/' + final + '/' + zona;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/zona/' + zona + '/' + inicio + '/' + final + '/' + zona;
+    // }
+
     return this.http.get( this.url ).map((zonas: any) => {
-      if (zonas.status) {
-        return zonas.respuesta;
+      if (zonas.length > 0) {
+        return zonas[0];
       } else {
         return 0;
       }
@@ -453,25 +453,26 @@ export class PhpService {
   }
 
   especial(inicio: any, final: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/ventas.php?opcion=4';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/ventas.php?opcion=4';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/ventas.php?opcion=4';
-    // }
-
+    // No se requiere las fechas de inicio y final
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/especiales/' + inicio + '/' + final;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/ventas.php?opcion=4';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/especiales/' + inicio + '/' + final;
+      this.url = URL_PRUEBAS + '/api/ventas.php?opcion=4';
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/especiales/' + inicio + '/' + final;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/ventas.php?opcion=4';
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/especiales/' + inicio + '/' + final;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/especiales/' + inicio + '/' + final;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/especiales/' + inicio + '/' + final;
+    // }
+
     return this.http.get( this.url ).map((especiales: any) => {
-      if (especiales.status) {
-        return especiales.respuesta;
+      if (especiales.length > 0) {
+        return especiales[0];
       } else {
         return 0;
       }

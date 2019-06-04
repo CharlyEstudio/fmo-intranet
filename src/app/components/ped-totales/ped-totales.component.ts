@@ -75,11 +75,11 @@ export class PedTotalesComponent implements OnInit, OnDestroy {
     // Total de Pedidos
     this._phpService.totalPedidos(fecha)
       .subscribe((data) => {
-        if ( data[0].importe !== 0 ) {
-          this.cantTot = data[0].cantidad + data[1].cantidad,
-          this.sub = data[0].subtotal + data[1].subtotal;
-          this.impuesto = data[0].impuesto + data[1].impuesto;
-          this.tot = data[0].total + data[1].total;
+        if ( data.length > 0 ) {
+          this.cantTot = data[0].cantidad;
+          this.sub = data[0].subtotal;
+          this.impuesto = data[0].impuesto;
+          this.tot = data[0].total;
         } else {
           this.cantTot = 0,
           this.sub = 0;
@@ -128,12 +128,12 @@ export class PedTotalesComponent implements OnInit, OnDestroy {
         this._phpService.totalPedidos(fecha)
           .subscribe( ( data ) => {
 
-            if (data[0].importe !== 0) {
+            if (data.length > 0) {
               const totales = {
-                cantidad: data[0].cantidad + data[1].cantidad,
-                subtotal: data[0].subtotal + data[1].subtotal,
-                impuesto: data[0].impuesto + data[1].impuesto,
-                total: data[0].total + data[1].total
+                cantidad: data[0].cantidad,
+                subtotal: data[0].subtotal,
+                impuesto: data[0].impuesto,
+                total: data[0].total
               };
 
               observer.next(totales);

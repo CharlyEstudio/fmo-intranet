@@ -69,9 +69,9 @@ export class PorSurtirComponent implements OnInit, OnDestroy {
     // Pedidos por Surtir
     this._phpService.porSurtir(fecha)
       .subscribe((data) => {
-        if ( data[0].importe !== 0 ) {
-          this.porSurtir = data[0].cantidad;
-          this.porSurtirImpo = data[0].importe;
+        if ( data !== 0 ) {
+          this.porSurtir = data.cantidad;
+          this.porSurtirImpo = data.importe;
         } else {
           this.porSurtir = 0;
           this.porSurtirImpo = 0;
@@ -81,22 +81,22 @@ export class PorSurtirComponent implements OnInit, OnDestroy {
     // Por Surtir Zona 1
     this._phpService.porSurtirZona('2', fecha)
       .subscribe( ( data ) => {
-        this.zona1 = data[0].cantidad;
-        this.zona1Impo = data[0].importe;
+        this.zona1 = data.cantidad;
+        this.zona1Impo = data.importe;
       });
 
     // Por Surtir Zona 2
     this._phpService.porSurtirZona('1', fecha)
       .subscribe( ( data ) => {
-        this.zona2 = data[0].cantidad;
-        this.zona2Impo = data[0].importe;
+        this.zona2 = data.cantidad;
+        this.zona2Impo = data.importe;
       });
 
     // Por Surtir Especiales
     this._phpService.porSurtirEspecial(fecha)
       .subscribe( ( data ) => {
-        this.especiales = data[0].cantidad;
-        this.especialesImpo = data[0].importe;
+        this.especiales = data.cantidad;
+        this.especialesImpo = data.importe;
       });
 
   }
@@ -140,10 +140,10 @@ export class PorSurtirComponent implements OnInit, OnDestroy {
         this._phpService.porSurtir(fecha)
           .subscribe( ( data ) => {
 
-            if (data[0].importe !== 0) {
+            if (data !== 0) {
               const surtir = {
-                cantidad: data[0].cantidad,
-                importe: data[0].importe
+                cantidad: data.cantidad,
+                importe: data.importe
               };
 
               observer.next(surtir);
@@ -161,22 +161,22 @@ export class PorSurtirComponent implements OnInit, OnDestroy {
         // Por Surtir Zona 1
         this._phpService.porSurtirZona('2', fecha)
         .subscribe( ( data ) => {
-          this.zona1 = data[0].cantidad;
-          this.zona1Impo = data[0].importe;
+          this.zona1 = data.cantidad;
+          this.zona1Impo = data.importe;
         });
 
         // Por Surtir Zona 2
         this._phpService.porSurtirZona('1', fecha)
           .subscribe( ( data ) => {
-            this.zona2 = data[0].cantidad;
-            this.zona2Impo = data[0].importe;
+            this.zona2 = data.cantidad;
+            this.zona2Impo = data.importe;
           });
 
         // Por Surtir Especiales
         this._phpService.porSurtirEspecial(fecha)
           .subscribe( ( data ) => {
-            this.especiales = data[0].cantidad;
-            this.especialesImpo = data[0].importe;
+            this.especiales = data.cantidad;
+            this.especialesImpo = data.importe;
           });
 
       }, 3000);

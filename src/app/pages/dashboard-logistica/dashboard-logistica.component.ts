@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { NgForm } from '@angular/forms';
 
 // Servicios
-import { GuiasService, UsuarioService, WebsocketService, ChoferesService } from '../../services/services.index';
+import { GuiasService, UsuarioService, WebsocketService, ChoferesService, HerramientasService } from '../../services/services.index';
 
 // Modelos
 import { GuiasPartidas } from '../../models/guias.model';
@@ -25,7 +25,7 @@ export class DashboardLogisticaComponent implements OnInit {
 
   @ViewChild('folioIn') inputFolio: ElementRef;
 
-  fecha = Date.now();
+  fecha: any;
 
   // Si es viernes, se puede elegir la fecha para asignar la guía.
   diaSemana = new Date().getDay();
@@ -106,9 +106,11 @@ export class DashboardLogisticaComponent implements OnInit {
     private _usuarioService: UsuarioService,
     private _choferService: ChoferesService,
     private _webSocket: WebsocketService,
+    private _herramientas: HerramientasService,
     public sanitizer: DomSanitizer
   ) {
     this.idUsuario = this._usuarioService.usuario._id;
+    this.fecha = this._herramientas.fechaActual();
 
     this.dataSelect();
 
@@ -340,22 +342,22 @@ export class DashboardLogisticaComponent implements OnInit {
         this.inputFolio.nativeElement.value = '';
       } else {
 
-        this._guiasServices.obtenerFolio(folio).subscribe( ( partidas: any ) => {
-          if (partidas.status) {
+        this._guiasServices.obtenerFolio(folio, this.fecha).subscribe( ( partidas: any ) => {
+          if (partidas.length > 0) {
             this.terminoEspecial = false;
-            this._guiasServices.buscarEspeciales(folio).subscribe( ( especiales: any ) => {
-              if (especiales.status) {
-                for (let i = 0; i < especiales.respuesta.length; i++) {
+            this._guiasServices.buscarEspeciales(folio, this.fecha).subscribe( ( especiales: any ) => {
+              if (especiales.length > 0) {
+                for (let i = 0; i < especiales.length; i++) {
                   let esEspecial = (pedido) => {
-                    return pedido.clvprov === especiales.respuesta[i].clvprov;
+                    return pedido.clvprov === especiales[i].clvprov;
                   }
 
                   if (this.especiales.find(esEspecial)) {
-                    this.especiales.find(esEspecial).desentregado += especiales.respuesta[i].desentregado;
+                    this.especiales.find(esEspecial).desentregado += especiales[i].desentregado;
                   } else {
-                    this.especiales.push(especiales.respuesta[i]);
+                    this.especiales.push(especiales[i]);
                   }
-                  if ((i + 1) === especiales.respuesta.length) {
+                  if ((i + 1) === especiales.length) {
                     this.terminoEspecial = true;
                     setTimeout(() => {
                       this.inputFolio.nativeElement.value = '';
@@ -376,9 +378,9 @@ export class DashboardLogisticaComponent implements OnInit {
               }
             });
 
-            for (let i = 0; i < partidas.respuesta.length; i++) {
+            for (let i = 0; i < partidas.length; i++) {
               let esCliente = (cliente) => {
-                return cliente.numero === partidas.respuesta[i].numero;
+                return cliente.numero === partidas[i].numero;
               }
 
               if (!this.folios.find(esCliente)) {
@@ -389,8 +391,9 @@ export class DashboardLogisticaComponent implements OnInit {
                 }
               }
               localStorage.setItem('NumCli', String(this.clientes));
-              this.folios.push(partidas.respuesta[i]);
+              this.folios.push(partidas[i]);
             }
+
 
             localStorage.setItem('guia', JSON.stringify(this.folios));
 
@@ -462,6 +465,9 @@ export class DashboardLogisticaComponent implements OnInit {
     let mes;
     let anio = h.getFullYear();
     let fecha;
+    let fechaAsig;
+
+    // Arreglar la fecha, debo de obligar que elabore la fecha en forma manual cuando sea viernes.TODO
 
     if (h.getHours() < 10) {
       hor = '0' + h.getHours();
@@ -494,16 +500,16 @@ export class DashboardLogisticaComponent implements OnInit {
     }
 
     let hora = hor + ':' + min + ':' + sec;
+    fecha = anio + '-' + mes + '-' + dia;
 
     if (this.diaSemana === 5) {
-      console.log(this.diaSemana, );
       if (this.fechaAsignar === undefined) {
         swal('Sin Fecha Asignar', 'Hoy es VIERNES y se necesita asignar la fecha de forma manual.', 'error');
         return;
       }
-      fecha = this.fechaAsignar;
+      fechaAsig = this.fechaAsignar;
     } else {
-      fecha = anio + '-' + mes + '-' + dia;
+      fechaAsig = anio + '-' + mes + '-' + dia;
     }
 
     let idFol = this.idUsuario + '-' + Date.now();
@@ -520,8 +526,6 @@ export class DashboardLogisticaComponent implements OnInit {
     })
     .then((aceptar) => {
       if (!aceptar) { return null };
-
-      let importe;
 
       for (let i = 0; i < this.folios.length; i++) {
         let ped = {
@@ -564,8 +568,9 @@ export class DashboardLogisticaComponent implements OnInit {
       let vendedorGF;
       let diavisGF;
       const fechaGF = fecha;
+      const fechaAS = fechaAsig;
       const horaGF = hora;
-      let envio: Ruta;;
+      let envio: Ruta;
 
       for (let i = 0; i < this.folios.length; i++) {
         let esCliente = (cliente) => {
@@ -597,6 +602,7 @@ export class DashboardLogisticaComponent implements OnInit {
             vendedor: vendedorGF,
             diavis: diavisGF,
             fecha: fechaGF,
+            fechaAsig: fechaAS,
             hora: horaGF,
             facturas: guardarFacturas
           };
@@ -639,6 +645,7 @@ export class DashboardLogisticaComponent implements OnInit {
         importe: this.importe,
         cajas: cajas,
         fecha: fecha,
+        fechaAsig: fechaAsig,
         hora: hora,
         pdf: pdf,
         clientes: this.clientes

@@ -95,9 +95,9 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
         this._phpService.nsTruper()
           .subscribe((data) => {
 
-            if ( data[0].importe !== 0 ) {
+            if ( data[0].cotizacion !== 0 ) {
               this.dataTruCot = data[0].cotizacion;
-              this.dataTruFac = data[0].facturacion;
+              this.dataTruFac = data[1].cotizacion;
 
               this.porcentTru = (this.dataTruFac / this.dataTruCot);
             } else {
@@ -113,9 +113,9 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
         this._phpService.nsFMO()
           .subscribe((data) => {
 
-            if ( data[0].importe !== 0 ) {
+            if ( data[0].cotizacion !== 0 ) {
               this.dataFMOCot = data[0].cotizacion;
-              this.dataFMOFac = data[0].facturacion;
+              this.dataFMOFac = data[1].cotizacion;
 
               this.porcentFMO = (this.dataFMOFac / this.dataFMOCot);
             } else {
@@ -171,9 +171,9 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
     this._phpService.nsTruper()
       .subscribe((data) => {
 
-        if ( data[0].importe !== 0 ) {
+        if ( data[0].cotizacion !== 0 ) {
           this.dataTruCot = data[0].cotizacion;
-          this.dataTruFac = data[0].facturacion;
+          this.dataTruFac = data[1].cotizacion;
 
           this.porcentTru = (this.dataTruFac / this.dataTruCot);
         } else {
@@ -189,9 +189,9 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
     this._phpService.nsFMO()
       .subscribe((data) => {
 
-        if ( data[0].importe !== 0 ) {
+        if ( data[0].cotizacion !== 0 ) {
           this.dataFMOCot = data[0].cotizacion;
-          this.dataFMOFac = data[0].facturacion;
+          this.dataFMOFac = data[1].cotizacion;
 
           this.porcentFMO = (this.dataFMOFac / this.dataFMOCot);
         } else {

@@ -8,6 +8,7 @@ export class Guia {
         public importe: number,
         public cajas: string,
         public fecha: string,
+        public fechaAsig: string,
         public hora: string,
         public clientes: number,
         public pdf: string,

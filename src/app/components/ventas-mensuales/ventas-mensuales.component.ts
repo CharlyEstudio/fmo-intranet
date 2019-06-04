@@ -93,9 +93,9 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
         // Venta Actual
         this._phpService.ventaActual(inicio, final)
           .subscribe( ( data ) => {
-            if (data[0].actual !== 0) {
-              this.act = data[0].actual;
-              this.obtenerActual(data[0].actual);
+            if (data !== 0) {
+              this.act = data.actual;
+              this.obtenerActual(data.actual);
             } else {
               this.act = 0;
               this.obtenerActual(0);
@@ -105,8 +105,8 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
         // Venta Zona 1
         this._phpService.zona(inicio, final, '1')
           .subscribe((data) => {
-            if (data[0].zona1 !== 0) {
-              this.zon1 = data[0].zona1;
+            if (data !== 0) {
+              this.zon1 = data.zona1;
             } else {
               this.zon1 = 0;
             }
@@ -115,8 +115,8 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
         // Venta Zona 2
         this._phpService.zona(inicio, final, '2')
           .subscribe((data) => {
-            if (data[0].zona2 !== 0) {
-              this.zon2 = data[0].zona2;
+            if (data !== 0) {
+              this.zon2 = data.zona2;
             } else {
               this.zon2 = 0;
             }
@@ -125,8 +125,8 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
         // Venta Especiales
         this._phpService.especial(inicio, final)
           .subscribe((data) => {
-            if (data[0].especial !== '') {
-              this.espe = data[0].especial;
+            if (data !== '') {
+              this.espe = data.especial;
             } else {
               this.espe = 0;
             }
@@ -177,20 +177,20 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
     // Venta Actual
     this._phpService.ventaActual(inicio, final)
       .subscribe((data) => {
-        if ( data[0].actual !== 0 ) {
-          this.act = data[0].actual;
+        if ( data !== 0 ) {
+          this.act = data.actual;
         } else {
           this.act = 0;
         }
 
-        this.obtenerActual(data[0].actual);
+        this.obtenerActual(data.actual);
       });
 
     // Venta Zona 1
     this._phpService.zona(inicio, final, '1')
     .subscribe((data) => {
-      if ( data[0].zona1 !== 0 ) {
-        this.zon1 = data[0].zona1;
+      if ( data !== 0 ) {
+        this.zon1 = data.zona1;
       } else {
         this.zon1 = 0;
       }
@@ -199,8 +199,8 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
     // Venta Zona 2
     this._phpService.zona(inicio, final, '2')
     .subscribe((data) => {
-      if ( data[0].zona2 !== 0 ) {
-        this.zon2 = data[0].zona2;
+      if ( data !== 0 ) {
+        this.zon2 = data.zona2;
       } else {
         this.zon2 = 0;
       }
@@ -209,8 +209,8 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
     // Venta Especial
     this._phpService.especial(inicio, final)
     .subscribe((data) => {
-      if ( data[0].especial !== 0 ) {
-        this.espe = data[0].especial;
+      if ( data !== 0 ) {
+        this.espe = data.especial;
       } else {
         this.espe = 0;
       }

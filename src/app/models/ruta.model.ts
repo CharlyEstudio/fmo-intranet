@@ -10,6 +10,7 @@ export class Ruta {
         public vendedor: number,
         public diavis: string,
         public fecha: string,
+        public fechaAsig: string,
         public hora: string,
         public facturas: Array<any>,
         public cerrado?: boolean,

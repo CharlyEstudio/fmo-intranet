@@ -103,7 +103,6 @@ export class UsuarioService {
     this.token = '';
     this.menu = [];
 
-
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
     localStorage.removeItem('menu');
@@ -134,6 +133,15 @@ export class UsuarioService {
     return this.http.post( url, usuario )
       .map( ( resp: any ) => {
         if (resp.ok) {
+          this.usuario = null;
+          this.token = '';
+          this.menu = [];
+
+          localStorage.removeItem('token');
+          localStorage.removeItem('usuario');
+          localStorage.removeItem('menu');
+          localStorage.removeItem('id');
+          localStorage.removeItem('socketUsuario');
           this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu, resp.usuario.rol);
           return resp;
         } else {

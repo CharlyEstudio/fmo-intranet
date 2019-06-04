@@ -9,6 +9,7 @@ import { GuiasPartidas } from '../../models/guias.model';
 import { Guia } from '../../models/guia.model';
 import { Chofer } from '../../models/chofer.model';
 import { Ruta } from '../../models/ruta.model';
+import { UsuarioService } from '../usuario/usuario.service';
 
 @Injectable()
 export class GuiasService {
@@ -17,27 +18,29 @@ export class GuiasService {
   token: string;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private _usuario: UsuarioService
   ) {
-    this.token = localStorage.getItem('token');
+    // this.token = localStorage.getItem('token');
+    this.token = this._usuario.token;
   }
 
-  obtenerFolio( folio: any ) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/guias.php?opcion=1&folio=' + folio;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/guias.php?opcion=1&folio=' + folio;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/guias.php?opcion=1&folio=' + folio;
-    // }
-
+  obtenerFolio( folio: any, fecha: any ) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/folio/ferrum/' + folio;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/guias.php?opcion=1&folio=' + folio + '&fecha=' + fecha;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/guias/folio/ferrum/' + folio;
+      this.url = URL_PRUEBAS + '/api/guias.php?opcion=1&folio=' + folio + '&fecha=' + fecha;
     } else {
-      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/folio/ferrum/' + folio;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/guias.php?opcion=1&folio=' + folio + '&fecha=' + fecha;
     }
+
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/folio/ferrum/' + folio;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/guias/folio/ferrum/' + folio;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/folio/ferrum/' + folio;
+    // }
 
     return this.http.get( this.url );
   }
@@ -189,7 +192,7 @@ export class GuiasService {
 
     this.url += '?token=' + this.token;
 
-    return this.http.post( this.url, {ruta: ruta, chofer: chofer} )
+    return this.http.post( this.url, {ruta: ruta[0], chofer: chofer} )
       .map( (resp: any) => {
         return resp;
       });
@@ -212,22 +215,22 @@ export class GuiasService {
       });
   }
 
-  buscarEspeciales(folio: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/guias.php?opcion=2&folio=' + folio;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/guias.php?opcion=2&folio=' + folio;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/guias.php?opcion=2&folio=' + folio;
-    // }
-
+  buscarEspeciales(folio: any, fecha: any) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/folio/ferrum/especiales/' + folio;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/guias.php?opcion=2&folio=' + folio + '&fecha=' + fecha;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/guias/folio/ferrum/especiales/' + folio;
+      this.url = URL_PRUEBAS + '/api/guias.php?opcion=2&folio=' + folio + '&fecha=' + fecha;
     } else {
-      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/folio/ferrum/especiales/' + folio;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/guias.php?opcion=2&folio=' + folio + '&fecha=' + fecha;
     }
+
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/folio/ferrum/especiales/' + folio;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/guias/folio/ferrum/especiales/' + folio;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/folio/ferrum/especiales/' + folio;
+    // }
 
     return this.http.get( this.url );
   }

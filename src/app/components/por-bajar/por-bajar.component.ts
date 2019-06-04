@@ -70,9 +70,9 @@ export class PorBajarComponent implements OnInit, OnDestroy {
     // Pedidos por Bajar
     this._phpService.porBajar(fecha)
       .subscribe((data) => {
-        if ( data[0].importe !== 0 ) {
-          this.porBajar = data[0].cantidad;
-          this.porBajarImpo = data[0].importe;
+        if ( data !== 0 ) {
+          this.porBajar = data.cantidad;
+          this.porBajarImpo = data.importe;
         } else {
           this.porBajar = 0;
           this.porBajarImpo = 0;
@@ -82,22 +82,22 @@ export class PorBajarComponent implements OnInit, OnDestroy {
     // Por Bajar Zona 1
     this._phpService.porBajarZona('2', fecha)
       .subscribe( ( data ) => {
-        this.zona1 = data[0].cantidad;
-        this.zona1Impo = data[0].importe;
+        this.zona1 = data.cantidad;
+        this.zona1Impo = data.importe;
       });
 
     // Por Bajar Zona 2
     this._phpService.porBajarZona('1', fecha)
       .subscribe( ( data ) => {
-        this.zona2 = data[0].cantidad;
-        this.zona2Impo = data[0].importe;
+        this.zona2 = data.cantidad;
+        this.zona2Impo = data.importe;
       });
 
     // Por Bajar Especiales
     this._phpService.porBajarEspecial(fecha)
       .subscribe( ( data ) => {
-        this.especiales = data[0].cantidad;
-        this.especialesImpo = data[0].importe;
+        this.especiales = data.cantidad;
+        this.especialesImpo = data.importe;
       });
 
   }
@@ -143,10 +143,10 @@ export class PorBajarComponent implements OnInit, OnDestroy {
         this._phpService.porBajar(fecha)
           .subscribe( ( data ) => {
 
-            if (data[0].importe !== 0) {
+            if (data !== 0) {
               const bajar = {
-                cantidad: data[0].cantidad,
-                importe: data[0].importe
+                cantidad: data.cantidad,
+                importe: data.importe
               };
 
               observer.next(bajar);
@@ -164,22 +164,22 @@ export class PorBajarComponent implements OnInit, OnDestroy {
         // Por Bajar Zona 1
         this._phpService.porBajarZona('2', fecha)
         .subscribe( ( data ) => {
-          this.zona1 = data[0].cantidad;
-          this.zona1Impo = data[0].importe;
+          this.zona1 = data.cantidad;
+          this.zona1Impo = data.importe;
         });
 
         // Por Bajar Zona 2
         this._phpService.porBajarZona('1', fecha)
           .subscribe( ( data ) => {
-            this.zona2 = data[0].cantidad;
-            this.zona2Impo = data[0].importe;
+            this.zona2 = data.cantidad;
+            this.zona2Impo = data.importe;
           });
 
         // Por Bajar Especiales
         this._phpService.porBajarEspecial(fecha)
           .subscribe( ( data ) => {
-            this.especiales = data[0].cantidad;
-            this.especialesImpo = data[0].importe;
+            this.especiales = data.cantidad;
+            this.especialesImpo = data.importe;
           });
 
       }, 3000);

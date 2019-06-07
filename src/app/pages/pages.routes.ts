@@ -70,6 +70,7 @@ import { BackorderAsesorComponent } from './backorder-asesor/backorder-asesor.co
 import { ProcesofacturasComponent } from './procesofacturas/procesofacturas.component';
 import { UsuariosAppAsesoresComponent } from './usuarios-app-asesores/usuarios-app-asesores.component';
 import { FrecuenciasComponent } from './frecuencias/frecuencias.component';
+import { NotascreditoremComponent } from './notascreditorem/notascreditorem.component';
 
 const pageRoutes: Routes = [
     {
@@ -632,14 +633,25 @@ const pageRoutes: Routes = [
                     name: 'description'
                 }
     },
-    // Notas de Crédito
+    // Notas de Crédito por Facturas
     {
         path: 'notascredito',
         component: NotascreditoComponent,
         canActivate: [ DireccionGuard, VerificaTokenGuard ],
         data:
                 {
-                    titulo: 'Notas de Crédito',
+                    titulo: 'Notas de Crédito por Factura',
+                    name: 'description'
+                }
+    },
+    // Notas de Crédito por Remision
+    {
+        path: 'notascreditorem',
+        component: NotascreditoremComponent,
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Notas de Crédito por Remisión',
                     name: 'description'
                 }
     },

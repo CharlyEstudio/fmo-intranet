@@ -37,6 +37,18 @@ export class NcService {
     return this.http.get(this.url);
   }
 
+  buscarNCRFecha(inicial: any, final: any) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/nc/buscar/remision/fecha/rango/' + inicial + '/' + final;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/nc/buscar/remision/fecha/rango/' + inicial + '/' + final;
+    } else {
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/nc/buscar/remision/fecha/rango/' + inicial + '/' + final;
+    }
+
+    return this.http.get(this.url);
+  }
+
   buscarNCTrabFecha(inicial: any, final: any) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/nc/trabajados/fecha/' + inicial + '/' + final;
@@ -95,6 +107,18 @@ export class NcService {
     }
 
     return this.http.get(this.url, nc);
+  }
+
+  buscarNCRtrabajado(nc: any, factura: any) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/nc/trabajados/buscar/remision/' + nc + '/' + factura;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/nc/trabajados/buscar/remision/' + nc + '/' + factura;
+    } else {
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/nc/trabajados/buscar/remision/' + nc + '/' + factura;
+    }
+
+    return this.http.get(this.url);
   }
 
 }

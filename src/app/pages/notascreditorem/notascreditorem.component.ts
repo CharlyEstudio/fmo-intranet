@@ -8,11 +8,11 @@ import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que fun
 const swal: SweetAlert = _swal as any;
 
 @Component({
-  selector: 'app-notascredito',
-  templateUrl: './notascredito.component.html',
+  selector: 'app-notascreditorem',
+  templateUrl: './notascreditorem.component.html',
   styles: []
 })
-export class NotascreditoComponent implements OnInit {
+export class NotascreditoremComponent implements OnInit {
 
   @ViewChild('buscarFecNC') buscarFecNC: ElementRef;
 
@@ -58,7 +58,6 @@ export class NotascreditoComponent implements OnInit {
       saldo: nc.saldo,
       perid: nc.perid,
       vendedor: nc.vendedor,
-      tipo: 'F',
       usuario: this.id
     };
     this._ncService.guardarNCtrabajado(nota).subscribe((resp: any) => {
@@ -231,11 +230,10 @@ export class NotascreditoComponent implements OnInit {
     let subtotal = 0;
     this.cargando = true;
     this.nc = [];
-    this._ncService.buscarNCFecha(f, f2).subscribe((resp: any) => {
-      console.log(resp.respuesta);
+    this._ncService.buscarNCRFecha(f, f2).subscribe((resp: any) => {
       if (resp.status) {
         for (let i = 0; i < resp.respuesta.length; i ++) {
-          this._ncService.buscarNCtrabajado(resp.respuesta[i].nc).subscribe((ncFec: any) => {
+          this._ncService.buscarNCRtrabajado(resp.respuesta[i].nc, resp.respuesta[i].factura).subscribe((ncFec: any) => {
             if (ncFec.status) {
               resp.respuesta[i].trabajado = true;
             } else if (resp.respuesta[i].serie === 'NA') {
@@ -243,9 +241,10 @@ export class NotascreditoComponent implements OnInit {
             } else {
               resp.respuesta[i].trabajado = false;
             }
-            if (resp.respuesta[i].serie !== 'NA') {
-              subtotal ++;
-            }
+            subtotal ++;
+            // if (resp.respuesta[i].serie !== 'NA') {
+            //   subtotal ++;
+            // }
           });
         }
         this.nc = resp.respuesta;

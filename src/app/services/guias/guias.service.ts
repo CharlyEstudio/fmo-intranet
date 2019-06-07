@@ -91,13 +91,13 @@ export class GuiasService {
     return this.http.get( this.url );
   }
 
-  buscarFolioGuiaGnl(folio: any) {
+  buscarFolioGuiaGnl(folio: any, fecha: any) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/buscar/gnal/' + folio;
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/buscar/gnal/' + folio + '/' + fecha;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/guias/buscar/gnal/' + folio;
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/guias/buscar/gnal/' + folio + '/' + fecha;
     } else {
-      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/gnal/' + folio;
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/gnal/' + folio + '/' + fecha;
     }
 
     this.url += '?token=' + this.token;
@@ -181,6 +181,7 @@ export class GuiasService {
       });
   }
 
+  // Esto ver mas a delante si lo quito
   guardarRuta(ruta: any, chofer: Chofer) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/ruta';
@@ -192,7 +193,24 @@ export class GuiasService {
 
     this.url += '?token=' + this.token;
 
-    return this.http.post( this.url, {ruta: ruta[0], chofer: chofer} )
+    return this.http.post( this.url, {ruta: ruta, chofer: chofer} )
+      .map( (resp: any) => {
+        return resp;
+      });
+  }
+
+  guardarRutaGuia(ruta: any, chofer: Chofer) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/rutas';
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/rutas';
+    } else {
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/rutas';
+    }
+
+    this.url += '?token=' + this.token;
+
+    return this.http.post( this.url, {ruta: ruta, chofer: chofer} )
       .map( (resp: any) => {
         return resp;
       });

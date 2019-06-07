@@ -24,6 +24,7 @@ const swal: SweetAlert = _swal as any;
 export class DashboardLogisticaComponent implements OnInit {
 
   @ViewChild('folioIn') inputFolio: ElementRef;
+  @ViewChild('fecBusqueda') inputFecBusqueda: ElementRef;
 
   fecha: any;
 
@@ -314,13 +315,14 @@ export class DashboardLogisticaComponent implements OnInit {
     this.generar = true;
     this.sinDatos = false;
     const folio = Number(this.inputFolio.nativeElement.value);
+    const fecBus = this.inputFecBusqueda.nativeElement.value;
     if (folio === 0) {
       swal('Sin Folio', 'No se ingreso folio para agregar a la guía', 'warning');
       return;
     }
 
     // this._guiasServices.buscarFolioGuia(folio).subscribe((obtener: any) => {
-    this._guiasServices.buscarFolioGuiaGnl(folio).subscribe((obtener: any) => {
+    this._guiasServices.buscarFolioGuiaGnl(folio, fecBus).subscribe((obtener: any) => {
       if (obtener.ok) {
         swal('Folio Registrado', 'Este folio ' + folio + ' ya esta registrado.', 'error');
         this.inputFolio.nativeElement.value = '';
@@ -342,10 +344,10 @@ export class DashboardLogisticaComponent implements OnInit {
         this.inputFolio.nativeElement.value = '';
       } else {
 
-        this._guiasServices.obtenerFolio(folio, this.fecha).subscribe( ( partidas: any ) => {
+        this._guiasServices.obtenerFolio(folio, fecBus).subscribe( ( partidas: any ) => {
           if (partidas.length > 0) {
             this.terminoEspecial = false;
-            this._guiasServices.buscarEspeciales(folio, this.fecha).subscribe( ( especiales: any ) => {
+            this._guiasServices.buscarEspeciales(folio, fecBus).subscribe( ( especiales: any ) => {
               if (especiales.length > 0) {
                 for (let i = 0; i < especiales.length; i++) {
                   let esEspecial = (pedido) => {
@@ -457,7 +459,6 @@ export class DashboardLogisticaComponent implements OnInit {
     }
 
     let h = new Date();
-
     let hor;
     let min;
     let sec;
@@ -604,7 +605,10 @@ export class DashboardLogisticaComponent implements OnInit {
             fecha: fechaGF,
             fechaAsig: fechaAS,
             hora: horaGF,
-            facturas: guardarFacturas
+            facturas: guardarFacturas,
+            entregado: false,
+            cerrado: false,
+            comentarios: ''
           };
           this.rutaEnviar.push(envio);
         } else {
@@ -627,10 +631,24 @@ export class DashboardLogisticaComponent implements OnInit {
             }
           }
         }
-
-        // Este si
-        this._guiasServices.guardarRuta(this.rutaEnviar, this.chf).subscribe(() => {});
       }
+      // Este si
+      // Guarda por cliente la ruta del chofer
+      // Esto pasará a guardarse como se hacen en las Guias, de forma completa.
+      // Cuando se tenga por completo terminado el servicio nuevo, se dejará de usar este.
+      // ### IMPORTANT ###
+      for (let i = 0; i < this.rutaEnviar.length; i++) {
+        this._guiasServices.guardarRuta(this.rutaEnviar[i], this.chf).subscribe(() => {});
+      }
+
+      // Con esto guardamos de forma completa
+      const subirRuta = {
+        fecha: fechaAS,
+        hora: horaGF,
+        clientes: this.rutaEnviar
+      };
+
+      this._guiasServices.guardarRutaGuia(subirRuta, this.chf).subscribe(() => {});
 
       let cajas = "Cafes: " + this.abiertas + ", Azules: " + this.azules + ", NarGde: " + this.nargde + ", NarPeq: " + this.narpeq;
 
@@ -652,6 +670,7 @@ export class DashboardLogisticaComponent implements OnInit {
       };
 
       // Todo esto si
+      // Guarda la guia de forma completa
       this._guiasServices.guardarGuia(this.guiaGuardar, this.chf).subscribe( ( guardado: any ) => {
         if (guardado.ok) {
           // this._webSocket.acciones('guias-watch', guardado.guiasGuardado);
@@ -662,12 +681,16 @@ export class DashboardLogisticaComponent implements OnInit {
           this.verGuias();
         }
       });
+
+      // Genera el PDF para la guía del chofer
       this._guiasServices.enviarPDFguia(
         this.pedidos, this.guiaGuardar, this.especiales, this.chf
       ).subscribe((resp: any) => {}, err => {});
 
+      // Avisa a todos los sockets que se creo la guia y la ruta
       this._webSocket.acciones('centinela-chofer', this.chf);
 
+      // Iniciamos la guía de cero
       this.cancelarGuia();
     })
     .catch(err => {
@@ -685,9 +708,11 @@ export class DashboardLogisticaComponent implements OnInit {
     localStorage.removeItem('NumCli');
     localStorage.removeItem('importeGuia');
     this.inputFolio.nativeElement.value = '';
+    this.inputFecBusqueda.nativeElement.value = '';
     this.folios = [];
     this.pedidos = [];
     this.especiales = [];
+    this.rutaEnviar = [];
     this.chf = '';
     this.verifica = '';
     this.guiaGuardar = null;

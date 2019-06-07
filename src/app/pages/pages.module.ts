@@ -108,6 +108,7 @@ import { BackorderAsesorComponent } from './backorder-asesor/backorder-asesor.co
 import { ProcesofacturasComponent } from './procesofacturas/procesofacturas.component';
 import { UsuariosAppAsesoresComponent } from './usuarios-app-asesores/usuarios-app-asesores.component';
 import { FrecuenciasComponent } from './frecuencias/frecuencias.component';
+import { NotascreditoremComponent } from './notascreditorem/notascreditorem.component';
 
 @NgModule({
     declarations: [
@@ -193,7 +194,8 @@ import { FrecuenciasComponent } from './frecuencias/frecuencias.component';
         BackorderAsesorComponent,
         ProcesofacturasComponent,
         UsuariosAppAsesoresComponent,
-        FrecuenciasComponent
+        FrecuenciasComponent,
+        NotascreditoremComponent
     ],
     exports: [
         DashborarDirComponent,

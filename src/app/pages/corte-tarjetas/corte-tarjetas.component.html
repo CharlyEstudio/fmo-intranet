@@ -1,0 +1,148 @@
+<div class="row">
+
+  <div class="col-md-2">
+    <form>
+
+      <div class="form-group">
+
+        <input #fechaIni type="date" name="fechaIni" id="fechaIni" class="form-control">
+
+      </div>
+
+      <div class="form-group">
+
+        <input #fechaFin type="date" name="fechaFin" id="fechaFin" class="form-control">
+
+      </div>
+
+      <div class="form-group">
+
+        <select #cobrador name="cobrador" id="cobrador" class="form-control" (change)="obtener()">
+
+          <option value="0">Seleccione un cobrador...</option>
+
+          <option [value]="cob.PERID" *ngFor="let cob of cobradores">{{cob.NOMBRE}}</option>
+
+        </select>
+
+      </div>
+
+      <button class="btn btn-googleplus btn-block" type="button" *ngIf="cobrado.length > 0" (click)="descargar(cobrado)">PDF</button>
+
+    </form>
+
+  </div>
+
+  <div class="col-md-10">
+
+    <p *ngIf="cobrado.length === 0">Sin Información</p>
+
+    <div class="card bg-white" *ngIf="cobrado.length > 0">
+      
+      <div class="card-body">
+    
+        <div class="table-responsive">
+
+          <table class="table table-sm">
+
+            <thead>
+
+              <tr>
+
+                <th>FECHAPAG</th>
+
+                <th>FAC/REM</th>
+
+                <th>NUMERO</th>
+
+                <th>CLIENTE</th>
+
+                <th>COBRADOR</th>
+
+                <th>TOT. FAC.</th>
+
+                <th>PAGADO</th>
+
+                <th>COMISION</th>
+
+                <th>IMPOCOM</th>
+
+                <th>REFERENCIA</th>
+
+                <th>RECIBO</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let cob of cobrado; let i = index">
+
+                <td>{{ cob.FECHAPAG | date:'dd-MM-yyyy' }}</td>
+
+                <td>{{ cob.FACREM }}</td>
+
+                <td>{{ cob.NUMERO }}</td>
+
+                <td>{{ cob.CLIENTE }}</td>
+
+                <td>{{ cob.COBRADOR }}</td>
+
+                <td>{{ cob.TOTAL | currency }}</td>
+
+                <td>{{ cob.PAGADO | currency }}</td>
+
+                <td>{{ cob.COMISION | currency }}</td>
+
+                <td>{{ cob.IMPOCOM | currency }}</td>
+
+                <td>
+                  
+                  <span class="badge badge-danger">{{ cob.PAGREF }}</span>
+                
+                </td>
+
+                <td>
+                  
+                  <span class="badge badge-dark">{{ cob.RECIBO }}</span>
+                
+                </td>
+
+              </tr>
+
+              <tr>
+
+                <th colspan="5" class="text-right">Totales</th>
+
+                <th>{{ total | currency }}</th>
+
+                <th>{{ pagado | currency }}</th>
+
+                <th>{{ comision | currency }}</th>
+
+                <th>{{ impocom | currency }}</th>
+
+                <th colspan="2"></th>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-md-12" *ngIf="pdf !== ''">
+
+      <embed [src]="pdf" type="application/pdf" width="100%" height="600">
+
+  </div>
+
+</div>

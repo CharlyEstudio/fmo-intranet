@@ -94,6 +94,7 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
         // Truper
         this._phpService.nsTruper()
           .subscribe((data) => {
+            console.log(data);
 
             if ( data[0].cotizacion !== 0 ) {
               this.dataTruCot = data[0].cotizacion;

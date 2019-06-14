@@ -131,14 +131,14 @@
                 <th style="width:5%">NC</th>
     
                 <th style="width:5%">FACTURA</th>
+
+                <th style="width:5%">NUMCLI</th>
     
-                <th style="width:30%">CLIENTE</th>
-    
-                <th style="width:5%">SUBTOTAL</th>
-    
-                <th style="width:5%">IVA</th>
+                <th style="width:20%">CLIENTE</th>
     
                 <th style="width:5%">TOTAL</th>
+    
+                <th style="width:5%">SALDO</th>
     
                 <th style="width:20%">ASESOR</th>
     
@@ -157,7 +157,7 @@
                 <td width="8%">
                   
                   <!-- <span class="badge" [ngClass]="{'badge-inverse text-danger': n.serie === 'NA', 'badge-danger': n.serie === 'C', 'badge-primary': n.serie === 'D', 'badge-info': n.serie === 'P', 'badge-warning': n.serie === 'F', 'badge-inverse': n.serie === 'G'}">{{ n.tiponc }}</span> -->
-                  <span class="badge" [ngClass]="{'badge-danger': n.serie === 'C', 'badge-primary': n.serie === 'W', 'badge-info': n.serie === 'X', 'badge-warning': n.serie === 'Y', 'badge-inverse': n.serie === 'Z'}">{{ n.tiponc }}</span>
+                  <span class="badge" [ngClass]="{'badge-danger': n.serie === 'C', 'badge-primary': n.serie === 'W' || n.serie === 'GS', 'badge-info': n.serie === 'X' || n.serie === 'DS', 'badge-warning': n.serie === 'Y' || n.serie === 'PS', 'badge-inverse': n.serie === 'Z' || n.serie === 'FS'}">{{ n.tiponc }}</span>
                 
                 </td>
     
@@ -165,13 +165,13 @@
     
                 <td>{{ n.factura }}</td>
     
+                <td>{{ n.numcli }}</td>
+
                 <td>{{ n.nombre }}</td>
     
-                <td>{{ n.subtotal | currency }}</td>
-    
-                <td>{{ n.iva | currency }}</td>
-    
                 <td>{{ n.total | currency }}</td>
+    
+                <td>{{ n.saldo | currency }}</td>
     
                 <td>{{ n.vendedor }}</td>
     

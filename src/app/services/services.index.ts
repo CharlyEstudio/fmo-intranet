@@ -1,4 +1,3 @@
-
 // Guards
 export { LoginGuardGuard } from "./guards/login-guard.guard";
 export { AdminGuard } from './guards/admin.guard';
@@ -35,6 +34,7 @@ export { NcService } from "./nc/nc.service";
 export { BackorderService } from "./backorder/backorder.service";
 export { HerramientasService } from "./herramientas/herramientas.service";
 export { OficinaService } from "./oficina/oficina.service";
+export { CobradorService } from './cobrador/cobrador.service';
 
 // Servicio PHP
 export { PhpService } from "./php/php.service";

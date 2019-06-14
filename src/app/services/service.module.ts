@@ -39,7 +39,8 @@ import {
   NcService,
   BackorderService,
   HerramientasService,
-  OficinaService
+  OficinaService,
+  CobradorService
   // NotificationService
 } from "./services.index";
 
@@ -86,6 +87,7 @@ import {
     BackorderService,
     HerramientasService,
     OficinaService,
+    CobradorService,
     // Notificaciones
     // NotificationService
     // Magnitracking

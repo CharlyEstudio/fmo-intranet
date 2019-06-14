@@ -71,6 +71,7 @@ import { ProcesofacturasComponent } from './procesofacturas/procesofacturas.comp
 import { UsuariosAppAsesoresComponent } from './usuarios-app-asesores/usuarios-app-asesores.component';
 import { FrecuenciasComponent } from './frecuencias/frecuencias.component';
 import { NotascreditoremComponent } from './notascreditorem/notascreditorem.component';
+import { CorteTarjetasComponent } from './corte-tarjetas/corte-tarjetas.component';
 
 const pageRoutes: Routes = [
     {
@@ -630,6 +631,17 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Cotizador',
+                    name: 'description'
+                }
+    },
+    // Corte Tarjetas
+    {
+        path: 'corte-tarjetas',
+        component: CorteTarjetasComponent,
+        canActivate: [ MesaGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Corte de Tarjetas',
                     name: 'description'
                 }
     },

@@ -227,7 +227,6 @@ export class NotascreditoremComponent implements OnInit {
     const f = this.fechaNC;
     const f2 = this.fechaNCFinal;
     const info = this.nc;
-    let subtotal = 0;
     this.cargando = true;
     this.nc = [];
     this._ncService.buscarNCRFecha(f, f2).subscribe((resp: any) => {
@@ -241,7 +240,6 @@ export class NotascreditoremComponent implements OnInit {
             } else {
               resp.respuesta[i].trabajado = false;
             }
-            subtotal ++;
             // if (resp.respuesta[i].serie !== 'NA') {
             //   subtotal ++;
             // }
@@ -259,7 +257,7 @@ export class NotascreditoremComponent implements OnInit {
               }
             }
           }
-          this.total = subtotal;
+          this.total = resp.respuesta.length;
           this.trabajadas = this.trabajadas >= this.total ? this.total : this.trabajadas;
           this.pendientes = this.trabajadas >= this.total ? 0 : this.total - this.trabajadas;
         });

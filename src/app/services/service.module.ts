@@ -40,7 +40,8 @@ import {
   BackorderService,
   HerramientasService,
   OficinaService,
-  CobradorService
+  CobradorService,
+  VisitasClientesService
   // NotificationService
 } from "./services.index";
 
@@ -88,6 +89,7 @@ import {
     HerramientasService,
     OficinaService,
     CobradorService,
+    VisitasClientesService,
     // Notificaciones
     // NotificationService
     // Magnitracking

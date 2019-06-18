@@ -110,6 +110,7 @@ import { UsuariosAppAsesoresComponent } from './usuarios-app-asesores/usuarios-a
 import { FrecuenciasComponent } from './frecuencias/frecuencias.component';
 import { NotascreditoremComponent } from './notascreditorem/notascreditorem.component';
 import { CorteTarjetasComponent } from './corte-tarjetas/corte-tarjetas.component';
+import { ClientesOficinaComponent } from './clientes-oficina/clientes-oficina.component';
 
 @NgModule({
     declarations: [
@@ -197,7 +198,8 @@ import { CorteTarjetasComponent } from './corte-tarjetas/corte-tarjetas.componen
         UsuariosAppAsesoresComponent,
         FrecuenciasComponent,
         NotascreditoremComponent,
-        CorteTarjetasComponent
+        CorteTarjetasComponent,
+        ClientesOficinaComponent
     ],
     exports: [
         DashborarDirComponent,

@@ -1032,7 +1032,7 @@ export class CotizadorComponent implements OnInit {
         } else {
           this.asesor = 'Sin Asesor';
         }
-    
+
         if (data[0].LISTA === 1) {
           this.precio = 'DISTRIBUIDOR';
         } else if (data[0].LISTA === 2) {
@@ -1040,11 +1040,11 @@ export class CotizadorComponent implements OnInit {
         } else if (data[0].LISTA === 3) {
           this.precio = 'MAYORISTA';
         }
-    
+
         this.saldo = data[0].SALDO;
         this.linea = data[0].LIMITE;
         this.dias = data[0].DIACREDITO;
-    
+
         localStorage.setItem('rfcCli', this.rfc);
         localStorage.setItem('filePDF', this.file);
         localStorage.setItem('correoCli', String(this.correoCli));

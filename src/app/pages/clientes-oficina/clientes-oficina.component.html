@@ -1,0 +1,130 @@
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Visita de Clientes</h4>
+    <div class="d-flex justify-content-between">
+      <div class="p-2 bd-highlight">
+        <button type="button" class="btn btn-info btn-rounded" data-toggle="modal" data-target="#add-contact">Agregar Nueva Visita</button>
+      </div>
+      <div class="p-2 bd-highlight">
+        <button type="button" class="btn btn-success btn-rounded" (click)="obtenerVisitas()">Actualizar</button>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <div id="add-contact" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h4 class="modal-title" id="myModalLabel">Agregar Nueva Visita</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <div class="col-md-12 m-b-20">
+                  <input #fecha type="date" class="form-control" placeholder="Fecha">
+                </div>
+                <div class="col-md-12 m-b-20">
+                  <input #cliente type="text" class="form-control" placeholder="Cliente">
+                </div>
+                <div class="col-md-12 m-b-20">
+                  <input #folio type="number" class="form-control" placeholder="Folio" (keyup.enter)="obtenerInfofolio(folio.value, fecha.value, cliente.value)">
+                </div>
+                <div class="col-md-12 m-b-20" *ngIf="info !== undefined">
+                  <h5>{{info.nombre}}</h5>
+                </div>
+                <div class="col-md-12 m-b-20" *ngIf="info !== undefined">
+                  <div class="fileupload btn btn-danger btn-rounded waves-effect waves-light">
+                    <span>
+                      <i class="ion-upload m-r-5"></i>{{info.tipo}}
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-12 m-b-20" *ngIf="info !== undefined">
+                  <select #pago name="pago" id="pago" class="form-control">
+                    <option value="0">Seleccione un tipo...</option>
+                    <option value="1" *ngIf="info.dc === 1">TDD</option>
+                    <option value="2" *ngIf="info.dc === 1">TDC</option>
+                    <option value="3" *ngIf="info.dc === 1">TDC - 3 Meses</option>
+                    <option value="4" *ngIf="info.dc === 1">TDC - 6 Meses</option>
+                    <option value="5" *ngIf="info.dc === 1">TDC - 9 Meses</option>
+                    <option value="6" *ngIf="info.dc === 1">TDC - 12 Meses</option>
+                    <option value="7" *ngIf="info.dc === 1">TDC - 18 Meses</option>
+                    <option value="8" *ngIf="info.dc !== 1">FIRMO</option>
+                    <option value="9" *ngIf="info.dc !== 1">OFICINA</option>
+                    <option value="10">EFECTIVO</option>
+                  </select>
+                </div>
+                <div class="col-md-12 m-b-20" *ngIf="info !== undefined">
+                  <select #aplicado name="aplicado" id="aplicado" class="form-control">
+                    <option value="0">Seleccione una forma...</option>
+                    <option value="1">Aplicado</option>
+                    <option value="2">Física</option>
+                    <option value="3">Pendiente</option>
+                  </select>
+                </div>
+                <div class="col-md-12 m-b-20" *ngIf="info !== undefined">
+                  <input #atendio type="text" class="form-control" placeholder="Atendio">
+                </div>
+                <div class="col-md-12 m-b-20" *ngIf="info !== undefined">
+                  <textarea #observacion class="form-control" placeholder="Observaciones"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <span class="badge badge-danger" *ngIf="msg !== ''">{{msg}}</span>
+              <button type="button" class="btn btn-danger waves-effect" (click)="cancelar()">Limpiar</button>
+              <button type="button" class="btn btn-info waves-effect" data-dismiss="modal" (click)="guardarData()">Guardar</button>
+              <button type="button" class="btn btn-default waves-effect" data-dismiss="modal" (click)="cancelar()">Cancelar</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <table id="demo-foo-addrow" class="table m-t-30 table-hover contact-list footable-loaded footable" data-page-size="10" *ngIf="visitas.length > 0">
+        <thead>
+          <tr>
+            <th class="text-center">No</th>
+            <th class="text-center">Cliente</th>
+            <th class="text-center">Nombre</th>
+            <th class="text-center">Tipo</th>
+            <th class="text-center">Remisión</th>
+            <th class="text-center">Monto</th>
+            <th class="text-center">Pago</th>
+            <th class="text-center">Aplicado</th>
+            <th class="text-center">Atendio</th>
+            <th class="text-center">Observación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let visita of visitas; let i = index">
+            <td class="text-center">
+              {{(i + 1)}}
+            </td>
+            <td class="text-center">
+              {{visita.cliente}}
+            </td>
+            <td>{{visita.nombre}}</td>
+            <td class="text-center">
+              <span class="label" [ngClass]="{'label-danger': visita.tipo === 'CREDITO', 'label-primary': visita.tipo === 'CONTADO'}">{{visita.tipo}}</span>
+            </td>
+            <td class="text-center">{{visita.folio}}</td>
+            <td class="text-right">{{visita.importe | currency}}</td>
+            <td class="text-center">{{visita.pago}}</td>
+            <td class="text-center">{{visita.aplicado}}</td>
+            <td class="text-center">{{visita.atendio}}</td>
+            <td class="text-left">{{visita.observacion}}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2">
+              <button type="button" class="btn btn-info btn-rounded" data-toggle="modal" data-target="#add-contact">Agregar Nueva Visita</button>
+            </td>
+            
+            <td colspan="8"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>

@@ -31,10 +31,21 @@ export class PedTotalesComponent implements OnInit, OnDestroy {
     // Subscrión a Pedidos Totales
     this.totales =  this.regresaTotales().subscribe(
       numero => {
-        this.cantTot = numero.cantidad,
-        this.sub = numero.subtotal;
-        this.impuesto = numero.impuesto;
-        this.tot = numero.total;
+        // this.cantTot = numero.cantidad,
+        // this.sub = numero.subtotal;
+        // this.impuesto = numero.impuesto;
+        // this.tot = numero.total;
+        if (numero.length) {
+          this.cantTot = numero[0].cantidad + numero[1].cantidad + numero[2].cantidad;
+          this.sub = numero[0].subtotal + numero[1].subtotal + numero[2].subtotal;
+          this.impuesto = numero[0].impuesto + numero[1].impuesto + numero[2].impuesto;
+          this.tot = numero[0].total + numero[1].total + numero[2].total;
+        } else {
+          this.cantTot = 0,
+          this.sub = 0;
+          this.impuesto = 0;
+          this.tot = 0;
+        }
       },
       error => console.error('Error en el obs', error),
       () => console.log('El observador termino!')
@@ -76,10 +87,10 @@ export class PedTotalesComponent implements OnInit, OnDestroy {
     this._phpService.totalPedidos(fecha)
       .subscribe((data) => {
         if ( data.length > 0 ) {
-          this.cantTot = data[0].cantidad;
-          this.sub = data[0].subtotal;
-          this.impuesto = data[0].impuesto;
-          this.tot = data[0].total;
+          this.cantTot = data[0].cantidad + data[1].cantidad + data[2].cantidad;
+          this.sub = data[0].subtotal + data[1].subtotal + data[2].subtotal;
+          this.impuesto = data[0].impuesto + data[1].impuesto + data[2].impuesto;
+          this.tot = data[0].total + data[1].total + data[2].total;
         } else {
           this.cantTot = 0,
           this.sub = 0;
@@ -127,27 +138,7 @@ export class PedTotalesComponent implements OnInit, OnDestroy {
 
         this._phpService.totalPedidos(fecha)
           .subscribe( ( data ) => {
-
-            if (data.length > 0) {
-              const totales = {
-                cantidad: data[0].cantidad,
-                subtotal: data[0].subtotal,
-                impuesto: data[0].impuesto,
-                total: data[0].total
-              };
-
-              observer.next(totales);
-            } else {
-              const totales = {
-                cantidad: 0,
-                subtotal: 0,
-                impuesto: 0,
-                total: 0
-              };
-
-              observer.next(totales);
-            }
-
+            observer.next(data);
           });
 
       }, 4000);

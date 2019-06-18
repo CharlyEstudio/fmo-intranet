@@ -72,6 +72,7 @@ import { UsuariosAppAsesoresComponent } from './usuarios-app-asesores/usuarios-a
 import { FrecuenciasComponent } from './frecuencias/frecuencias.component';
 import { NotascreditoremComponent } from './notascreditorem/notascreditorem.component';
 import { CorteTarjetasComponent } from './corte-tarjetas/corte-tarjetas.component';
+import { ClientesOficinaComponent } from './clientes-oficina/clientes-oficina.component';
 
 const pageRoutes: Routes = [
     {
@@ -569,6 +570,16 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Revisión de Facturas',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'clientes-oficina',
+        component: ClientesOficinaComponent,
+        canActivate: [ MesaGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Visitas de Clientes a Oficina',
                     name: 'description'
                 }
     },

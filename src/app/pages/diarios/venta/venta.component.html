@@ -152,13 +152,13 @@
 
                             <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#profile" role="tab">Venta</a> </li>
 
-                            <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#home" role="tab">Timeline</a> </li>
+                            <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#remisiones" role="tab">Remisiones/Facturas</a> </li>
 
                         </ul>
 
                         <div class="tab-content">
 
-                            <div class="tab-pane" id="home" role="tabpanel">
+                            <div class="tab-pane" id="remisiones" role="tabpanel">
 
                                 <div class="card-body">
 
@@ -182,7 +182,9 @@
 
                                                     <div class="like-comm">
 
-                                                        <a class="link m-r-10">Factura: {{ pedido.factura }}</a>
+                                                        <a class="link m-r-10" *ngIf="pedido.tipo === 'F'">Factura: {{ pedido.factura }}</a>
+
+                                                        <a class="link m-r-10" *ngIf="pedido.tipo === 'N'">Remisión: {{ pedido.factura }}</a>
 
                                                         <a class="link m-r-10">Importe: {{ pedido.importe | currency }}</a>
 

@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 import { NgForm } from '@angular/forms';
 import { DiariosService } from '../../../services/services.index';
-import { SweetAlert } from 'sweetalert/typings/core';
+
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
+const swal: SweetAlert = _swal as any;
 
 @Component({
   selector: 'app-notas',
@@ -20,6 +23,7 @@ export class NotasComponent implements OnInit {
 
   inicio: any;
   final: any;
+  tipo: any = '0';
 
   notas: any;
   subtotal: number = 0;
@@ -35,7 +39,6 @@ export class NotasComponent implements OnInit {
 
   solicitar(forma: NgForm) {
 
-    this.esperar = true;
     this.respuesta = false;
 
     if ( forma.value.inicio === undefined ) {
@@ -48,14 +51,21 @@ export class NotasComponent implements OnInit {
       return;
     }
 
+    if ( forma.value.tipo === '0' ) {
+      swal('Debe seleccionar un tipo', 'No ha selecionado un tipo de nota de crédito.', 'error');
+      return;
+    }
+    this.esperar = true;
+
     this.inicio = forma.value.inicio;
     this.final = forma.value.final;
+    this.tipo = forma.value.tipo;
 
     this.subtotal = 0;
     this.iva = 0;
     this.total = 0;
 
-    this._diariosService.notasCredito(this.inicio, this.final)
+    this._diariosService.notasCredito(this.inicio, this.final, this.tipo)
       .subscribe( ( resp: any ) => {
         if (resp !== '') {
           this.notas = resp;

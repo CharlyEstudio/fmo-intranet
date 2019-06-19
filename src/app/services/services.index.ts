@@ -36,6 +36,7 @@ export { HerramientasService } from "./herramientas/herramientas.service";
 export { OficinaService } from "./oficina/oficina.service";
 export { CobradorService } from './cobrador/cobrador.service';
 export { VisitasClientesService } from './visitas-clientes/visitas-clientes.service';
+export { PaneldiariosService } from './paneldiarios/paneldiarios.service';
 
 // Servicio PHP
 export { PhpService } from "./php/php.service";

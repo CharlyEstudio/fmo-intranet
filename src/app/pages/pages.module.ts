@@ -111,6 +111,7 @@ import { FrecuenciasComponent } from './frecuencias/frecuencias.component';
 import { NotascreditoremComponent } from './notascreditorem/notascreditorem.component';
 import { CorteTarjetasComponent } from './corte-tarjetas/corte-tarjetas.component';
 import { ClientesOficinaComponent } from './clientes-oficina/clientes-oficina.component';
+import { DiariosComponent } from './diarios/diarios.component';
 
 @NgModule({
     declarations: [
@@ -199,7 +200,8 @@ import { ClientesOficinaComponent } from './clientes-oficina/clientes-oficina.co
         FrecuenciasComponent,
         NotascreditoremComponent,
         CorteTarjetasComponent,
-        ClientesOficinaComponent
+        ClientesOficinaComponent,
+        DiariosComponent
     ],
     exports: [
         DashborarDirComponent,

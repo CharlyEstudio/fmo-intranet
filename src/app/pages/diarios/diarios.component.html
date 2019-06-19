@@ -1,0 +1,111 @@
+<div class="row">
+  <div class="col-lg-3">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Mejores Vendedores</h4>
+        <div class="table-responsive m-t-40">
+          <table class="table stylish-table">
+            <thead>
+              <tr>
+                <th colspan="2">Asesor</th>
+                <th>Importe</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let asesor of asesoresVtas; let i = index" [ngClass]="{'active': i === 0}">
+                <td style="width:50px;"><span class="round">{{asesor.CATEGORIA}}</span></td>
+                <td>
+                  <h6>{{asesor.NOMBRE}}</h6><small class="text-muted">Zona: {{asesor.ZONA}} Serie: {{asesor.SERIE}}</small></td>
+                <td>
+                  <span class="label" [ngClass]="{'label-light-success': i === 0, 'label-light-primary': i > 0}">{{asesor.SUBTOTAL | currency}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Mejores Cobradores</h4>
+        <div class="table-responsive m-t-40">
+          <table class="table stylish-table">
+            <thead>
+              <tr>
+                <th colspan="2">Asesor</th>
+                <th>Importe</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cobrador of cobradores; let i = index" [ngClass]="{'active': i === 0}">
+                <td style="width:50px;"><span class="round">{{cobrador.CATEGORIA}}</span></td>
+                <td>
+                  <h6>{{cobrador.NOMBRE}}</h6><small class="text-muted">Zona: {{cobrador.ZONA}} Serie: {{cobrador.SERIE}}</small></td>
+                <td>
+                  <span class="label" [ngClass]="{'label-light-success': i === 0, 'label-light-primary': i > 0}">{{cobrador.PAGO | currency}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Clientes Comprando</h4>
+        <div class="table-responsive m-t-40">
+          <table class="table stylish-table">
+            <thead>
+              <tr>
+                <th colspan="2">Asesor</th>
+                <th>Importe</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cliente of clientesComprando; let i = index" [ngClass]="{'active': i === 0}">
+                <td style="width:50px;"><span class="round">{{cliente.NUMERO}}</span></td>
+                <td>
+                  <h6>{{cliente.NOMBRE}}</h6><small class="text-muted">{{cliente.CIUDAD}}</small>
+                </td>
+                <td>
+                  <span class="label" [ngClass]="{'label-light-success': i === 0, 'label-light-primary': i > 0}">{{cliente.SUBTOTAL | currency}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Clientes Pagando</h4>
+        <div class="table-responsive m-t-40">
+          <table class="table stylish-table">
+            <thead>
+              <tr>
+                <th colspan="2">Asesor</th>
+                <th>Importe</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let pagando of clientesPagando; let i = index" [ngClass]="{'active': i === 0}">
+                <td style="width:50px;"><span class="round">{{pagando.NUMERO}}</span></td>
+                <td>
+                  <h6>{{pagando.NOMBRE}}</h6><small class="text-muted">{{pagando.CIUDAD}}</small></td>
+                <td>
+                  <span class="label" [ngClass]="{'label-light-success': i === 0, 'label-light-primary': i > 0}">{{pagando.PAGADO | currency}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

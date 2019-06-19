@@ -73,6 +73,7 @@ import { FrecuenciasComponent } from './frecuencias/frecuencias.component';
 import { NotascreditoremComponent } from './notascreditorem/notascreditorem.component';
 import { CorteTarjetasComponent } from './corte-tarjetas/corte-tarjetas.component';
 import { ClientesOficinaComponent } from './clientes-oficina/clientes-oficina.component';
+import { DiariosComponent } from './diarios/diarios.component';
 
 const pageRoutes: Routes = [
     {
@@ -462,6 +463,16 @@ const pageRoutes: Routes = [
                 }
     },
     // Diarios
+    {
+        path: 'diarios',
+        component: DiariosComponent,
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Panel Diarios',
+                    name: 'description'
+                }
+    },
     {
         path: 'dVentas',
         component: VentaComponent,

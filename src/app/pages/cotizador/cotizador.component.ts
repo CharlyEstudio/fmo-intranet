@@ -8,6 +8,10 @@ import { UsuarioService, ClientesService, DiariosService, PedidosService } from 
 import { Cotizacion } from '../../models/cotizacion.model';
 import { XmlString } from '../../models/xml.model';
 
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
+const swal: SweetAlert = _swal as any;
+
 @Component({
   selector: 'app-cotizador',
   templateUrl: './cotizador.component.html',

@@ -38,25 +38,25 @@ export class DiariosService {
   }
 
   proveedores() {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=2';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=2';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=2';
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/proveedores';
+      /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=2';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/proveedores';
+      this.url = URL_PRUEBAS + '/api/diarios.php?opcion=2';
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/proveedores';
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=2';
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/proveedores';
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/proveedores';
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/proveedores';
+    // }
+
     return this.http.get( this.url ).map((proveedores: any) => {
-      if (proveedores.status) {
-        return proveedores.respuesta;
+      if (proveedores.length > 0) {
+        return proveedores;
       } else {
         return 0;
       }
@@ -64,28 +64,37 @@ export class DiariosService {
   }
 
   ventas(fechaIn: any, fechaOut: any, asesor: any = 0) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL +
-    //   '/api/diarios.php?opcion=3&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&asesor=' + asesor;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS +
-    //   '/api/diarios.php?opcion=3&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&asesor=' + asesor;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL +
-    //   ':' + PUERTO_SERVER + '/api/diarios.php?opcion=3&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&asesor=' + asesor;
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/ventas/' + asesor + '/' + fechaIn + '/' + fechaOut;
+      /*LOCAL*/this.url = URL_LOCAL +
+      '/api/diarios.php?opcion=3&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&asesor=' + asesor;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/ventas/' + asesor + '/' + fechaIn + '/' + fechaOut;
+      this.url = URL_PRUEBAS +
+      '/api/diarios.php?opcion=3&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&asesor=' + asesor;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/ventas/' + asesor + '/' + fechaIn + '/' + fechaOut;
+      this.url = URL_SERVICIO_GENERAL +
+      ':' + PUERTO_SERVER + '/api/diarios.php?opcion=3&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&asesor=' + asesor;
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/ventas/' + asesor + '/' + fechaIn + '/' + fechaOut;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/ventas/' + asesor + '/' + fechaIn + '/' + fechaOut;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/ventas/' + asesor + '/' + fechaIn + '/' + fechaOut;
+    // }
+
+    // return this.http.get( this.url ).map((ventas: any) => {
+    //   if (ventas.status) {
+    //     return ventas.respuesta;
+    //   } else {
+    //     return 0;
+    //   }
+    // });
+
     return this.http.get( this.url ).map((ventas: any) => {
-      if (ventas.status) {
-        return ventas.respuesta;
+      console.log(ventas);
+      if (ventas.length > 0) {
+        return ventas;
       } else {
         return 0;
       }
@@ -93,28 +102,33 @@ export class DiariosService {
   }
 
   ventasAsesor(fechaIn: any, fechaOut: any, asesor: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL +
-    //   '/api/diarios.php?opcion=4&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&asesor=' + asesor;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS +
-    //   '/api/diarios.php?opcion=4&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&asesor=' + asesor;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL +
-    //   ':' + PUERTO_SERVER + '/api/diarios.php?opcion=4&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&asesor=' + asesor;
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/ventas/asesor/' + asesor + '/' + fechaIn + '/' + fechaOut;
+      /*LOCAL*/this.url = URL_LOCAL +
+      '/api/diarios.php?opcion=4&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&asesor=' + asesor;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/ventas/asesor/' + asesor + '/' + fechaIn + '/' + fechaOut;
+      this.url = URL_PRUEBAS +
+      '/api/diarios.php?opcion=4&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&asesor=' + asesor;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/ventas/asesor/' + asesor + '/' + fechaIn + '/' + fechaOut;
+      this.url = URL_SERVICIO_GENERAL +
+      ':' + PUERTO_SERVER + '/api/diarios.php?opcion=4&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&asesor=' + asesor;
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/ventas/asesor/' + asesor + '/' + fechaIn + '/' + fechaOut;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/ventas/asesor/' + asesor + '/' + fechaIn + '/' + fechaOut;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/ventas/asesor/' + asesor + '/' + fechaIn + '/' + fechaOut;
+    // }
+
     return this.http.get( this.url ).map((datos: any) => {
-      if (datos.status) {
-        return datos.respuesta;
+      // if (datos.status) {
+      //   return datos.respuesta;
+      // } else {
+      //   return 0;
+      // }
+      if (datos.length > 0) {
+        return datos;
       } else {
         return 0;
       }
@@ -122,28 +136,28 @@ export class DiariosService {
   }
 
   compras(fechaIn: any, fechaOut: any, proveedor: any = 0) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL +
-    //   '/api/diarios.php?opcion=5&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&proveedor=' + proveedor;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS +
-    //   '/api/diarios.php?opcion=5&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&proveedor=' + proveedor;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL +
-    //   ':' + PUERTO_SERVER + '/api/diarios.php?opcion=5&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&proveedor=' + proveedor;
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/compras/' + proveedor + '/' + fechaIn + '/' + fechaOut;
+      /*LOCAL*/this.url = URL_LOCAL +
+      '/api/diarios.php?opcion=5&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&proveedor=' + proveedor;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/compras/' + proveedor + '/' + fechaIn + '/' + fechaOut;
+      this.url = URL_PRUEBAS +
+      '/api/diarios.php?opcion=5&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&proveedor=' + proveedor;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/compras/' + proveedor + '/' + fechaIn + '/' + fechaOut;
+      this.url = URL_SERVICIO_GENERAL +
+      ':' + PUERTO_SERVER + '/api/diarios.php?opcion=5&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&proveedor=' + proveedor;
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/compras/' + proveedor + '/' + fechaIn + '/' + fechaOut;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/compras/' + proveedor + '/' + fechaIn + '/' + fechaOut;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/compras/' + proveedor + '/' + fechaIn + '/' + fechaOut;
+    // }
+
     return this.http.get( this.url ).map((compras: any) => {
-      if (compras.status) {
-        return compras.respuesta;
+      if (compras.length > 0) {
+        return compras;
       } else {
         return 0;
       }
@@ -151,28 +165,28 @@ export class DiariosService {
   }
 
   comprasProveedor(fechaIn: any, fechaOut: any, proveedor: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL +
-    //   '/api/diarios.php?opcion=6&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&proveedor=' + proveedor;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS +
-    //   '/api/diarios.php?opcion=6&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&proveedor=' + proveedor;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL +
-    //   ':' + PUERTO_SERVER + '/api/diarios.php?opcion=6&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&proveedor=' + proveedor;
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/compras/proveedor/' + proveedor + '/' + fechaIn + '/' + fechaOut;
+      /*LOCAL*/this.url = URL_LOCAL +
+      '/api/diarios.php?opcion=6&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&proveedor=' + proveedor;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/compras/proveedor/' + proveedor + '/' + fechaIn + '/' + fechaOut;
+      this.url = URL_PRUEBAS +
+      '/api/diarios.php?opcion=6&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&proveedor=' + proveedor;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/compras/proveedor/' + proveedor + '/' + fechaIn + '/' + fechaOut;
+      this.url = URL_SERVICIO_GENERAL +
+      ':' + PUERTO_SERVER + '/api/diarios.php?opcion=6&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&proveedor=' + proveedor;
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/compras/proveedor/' + proveedor + '/' + fechaIn + '/' + fechaOut;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/compras/proveedor/' + proveedor + '/' + fechaIn + '/' + fechaOut;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/compras/proveedor/' + proveedor + '/' + fechaIn + '/' + fechaOut;
+    // }
+
     return this.http.get( this.url ).map((compras: any) => {
-      if (compras.status) {
-        return compras.respuesta;
+      if (compras.length > 0) {
+        return compras;
       } else {
         return 0;
       }
@@ -180,54 +194,54 @@ export class DiariosService {
   }
 
   utilidades(fechaIn: any, fechaOut: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=7&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=7&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=7&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/utilidades/' + fechaIn + '/' + fechaOut;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=7&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/utilidades/' + fechaIn + '/' + fechaOut;
+      this.url = URL_PRUEBAS + '/api/diarios.php?opcion=7&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/utilidades/' + fechaIn + '/' + fechaOut;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=7&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/utilidades/' + fechaIn + '/' + fechaOut;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/utilidades/' + fechaIn + '/' + fechaOut;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/utilidades/' + fechaIn + '/' + fechaOut;
+    // }
+
     return this.http.get( this.url ).map((utilidades: any) => {
-      if (utilidades.status) {
-        return utilidades.respuesta;
+      if (utilidades.length > 0) {
+        return utilidades;
       } else {
         return 0;
       }
     });
   }
 
-  notasCredito(fechaIn: any, fechaOut: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL +
-    //   '/api/diarios.php?opcion=8&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS +
-    //   '/api/diarios.php?opcion=8&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL +
-    //   ':' + PUERTO_SERVER + '/api/diarios.php?opcion=8&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
-    // }
-
+  notasCredito(fechaIn: any, fechaOut: any, tipo: any = '1') {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/notas/credito/' + fechaIn + '/' + fechaOut;
+      /*LOCAL*/this.url = URL_LOCAL +
+      '/api/diarios.php?opcion=8&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&tipo=' + tipo;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/notas/credito/' + fechaIn + '/' + fechaOut;
+      this.url = URL_PRUEBAS +
+      '/api/diarios.php?opcion=8&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&tipo=' + tipo;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/notas/credito/' + fechaIn + '/' + fechaOut;
+      this.url = URL_SERVICIO_GENERAL +
+      ':' + PUERTO_SERVER + '/api/diarios.php?opcion=8&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&tipo=' + tipo;
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/notas/credito/' + fechaIn + '/' + fechaOut;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/notas/credito/' + fechaIn + '/' + fechaOut;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/notas/credito/' + fechaIn + '/' + fechaOut;
+    // }
+
     return this.http.get( this.url ).map((notas: any) => {
-      if (notas.status) {
-        return notas.respuesta;
+      if (notas.length > 0) {
+        return notas;
       } else {
         return 0;
       }
@@ -235,25 +249,25 @@ export class DiariosService {
   }
 
   inventario() {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=9';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=9';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=9';
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/inventario';
+      /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=9';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/inventario';
+      this.url = URL_PRUEBAS + '/api/diarios.php?opcion=9';
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/inventario';
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=9';
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/inventario';
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/inventario';
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/inventario';
+    // }
+
     return this.http.get( this.url ).map((inventario: any) => {
-      if (inventario.status) {
-        return inventario.respuesta;
+      if (inventario.length > 0) {
+        return inventario;
       } else {
         return 0;
       }
@@ -261,25 +275,25 @@ export class DiariosService {
   }
 
   entradaSalida(fechaIn: any, fechaOut: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=11&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=11&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=11&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/entsal/' + fechaIn + '/' + fechaOut;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=11&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/entsal/' + fechaIn + '/' + fechaOut;
+      this.url = URL_PRUEBAS + '/api/diarios.php?opcion=11&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/entsal/' + fechaIn + '/' + fechaOut;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=11&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/entsal/' + fechaIn + '/' + fechaOut;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/entsal/' + fechaIn + '/' + fechaOut;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/entsal/' + fechaIn + '/' + fechaOut;
+    // }
+
     return this.http.get( this.url ).map((entsal: any) => {
-      if (entsal.status) {
-        return entsal.respuesta;
+      if (entsal.length > 0) {
+        return entsal;
       } else {
         return 0;
       }
@@ -287,25 +301,25 @@ export class DiariosService {
   }
 
   consumoInterno(fechaIn: any, fechaOut: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=15&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=15&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=15&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/entsal/consumo/' + fechaIn + '/' + fechaOut;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=15&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/entsal/consumo/' + fechaIn + '/' + fechaOut;
+      this.url = URL_PRUEBAS + '/api/diarios.php?opcion=15&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/entsal/consumo/' + fechaIn + '/' + fechaOut;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=15&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/entsal/consumo/' + fechaIn + '/' + fechaOut;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/entsal/consumo/' + fechaIn + '/' + fechaOut;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/entsal/consumo/' + fechaIn + '/' + fechaOut;
+    // }
+
     return this.http.get( this.url ).map((consumo: any) => {
-      if (consumo.status) {
-        return consumo.respuesta;
+      if (consumo.length > 0) {
+        return consumo;
       } else {
         return 0;
       }
@@ -313,25 +327,25 @@ export class DiariosService {
   }
 
   carteraClientes() {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=14';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=14';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=14';
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/cartera/clientes';
+      /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=14';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/cartera/clientes';
+      this.url = URL_PRUEBAS + '/api/diarios.php?opcion=14';
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/cartera/clientes';
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=14';
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/cartera/clientes';
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/cartera/clientes';
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/cartera/clientes';
+    // }
+
     return this.http.get( this.url ).map((carcli: any) => {
-      if (carcli.status) {
-        return carcli.respuesta;
+      if (carcli.length > 0) {
+        return carcli;
       } else {
         return 0;
       }
@@ -339,25 +353,25 @@ export class DiariosService {
   }
 
   carteraProveedores() {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=16';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=16';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=16';
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/cartera/proveedores';
+      /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=16';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/cartera/proveedores';
+      this.url = URL_PRUEBAS + '/api/diarios.php?opcion=16';
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/cartera/proveedores';
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=16';
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/cartera/proveedores';
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/cartera/proveedores';
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/cartera/proveedores';
+    // }
+
     return this.http.get( this.url ).map((proveedores: any) => {
-      if (proveedores.status) {
-        return proveedores.respuesta;
+      if (proveedores.length > 0) {
+        return proveedores;
       } else {
         return 0;
       }
@@ -365,25 +379,25 @@ export class DiariosService {
   }
 
   saldoProveedores( fecha: any, id: any ) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=17&id=' + id;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=17&id=' + id;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=17&id=' + id;
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/cartera/proveedores/saldo/' + id + '/' + fecha;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=17&id=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/cartera/proveedores/saldo/' + id + '/' + fecha;
+      this.url = URL_PRUEBAS + '/api/diarios.php?opcion=17&id=' + id;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/cartera/proveedores/saldo/' + id + '/' + fecha;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=17&id=' + id;
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/cartera/proveedores/saldo/' + id + '/' + fecha;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/cartera/proveedores/saldo/' + id + '/' + fecha;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/cartera/proveedores/saldo/' + id + '/' + fecha;
+    // }
+
     return this.http.get( this.url ).map((proveedoresSaldo: any) => {
-      if (proveedoresSaldo.status) {
-        return proveedoresSaldo.respuesta;
+      if (proveedoresSaldo.length > 0) {
+        return proveedoresSaldo;
       } else {
         return 0;
       }
@@ -391,25 +405,25 @@ export class DiariosService {
   }
 
   diasLunes(fecha: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=18';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=18';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=18';
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/lunes/' + fecha;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=18';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/lunes/' + fecha;
+      this.url = URL_PRUEBAS + '/api/diarios.php?opcion=18';
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/lunes/' + fecha;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=18';
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/lunes/' + fecha;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/lunes/' + fecha;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/lunes/' + fecha;
+    // }
+
     return this.http.get( this.url ).map((lunes: any) => {
-      if (lunes.status) {
-        return lunes.respuesta;
+      if (lunes.length > 0) {
+        return lunes;
       } else {
         return 0;
       }
@@ -417,25 +431,25 @@ export class DiariosService {
   }
 
   pedidosDiaLunes( fecha: any, id: any ) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=19&id=' + id;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=19&id=' + id;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=19&id=' + id;
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/lunes/id/' + fecha + '/' + id;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=19&id=' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/lunes/id/' + fecha + '/' + id;
+      this.url = URL_PRUEBAS + '/api/diarios.php?opcion=19&id=' + id;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/lunes/id/' + fecha + '/' + id;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=19&id=' + id;
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/lunes/id/' + fecha + '/' + id;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/lunes/id/' + fecha + '/' + id;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/lunes/id/' + fecha + '/' + id;
+    // }
+
     return this.http.get( this.url ).map((lunesId: any) => {
-      if (lunesId.status) {
-        return lunesId.respuesta;
+      if (lunesId.length > 0) {
+        return lunesId;
       } else {
         return 0;
       }
@@ -443,25 +457,25 @@ export class DiariosService {
   }
 
   backOrder( fechaIn: any, fechaOut: any ) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=20&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/diarios.php?opcion=20&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=20&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/back/order/' + fechaIn + '/' + fechaOut;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=20&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/back/order/' + fechaIn + '/' + fechaOut;
+      this.url = URL_PRUEBAS + '/api/diarios.php?opcion=20&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/back/order/' + fechaIn + '/' + fechaOut;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=20&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/back/order/' + fechaIn + '/' + fechaOut;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/back/order/' + fechaIn + '/' + fechaOut;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/back/order/' + fechaIn + '/' + fechaOut;
+    // }
+
     return this.http.get( this.url ).map((back: any) => {
-      if (back.status) {
-        return back.respuesta;
+      if (back.length > 0) {
+        return back;
       } else {
         return 0;
       }

@@ -41,7 +41,8 @@ import {
   HerramientasService,
   OficinaService,
   CobradorService,
-  VisitasClientesService
+  VisitasClientesService,
+  PaneldiariosService
   // NotificationService
 } from "./services.index";
 
@@ -90,10 +91,11 @@ import {
     OficinaService,
     CobradorService,
     VisitasClientesService,
+    PaneldiariosService,
     // Notificaciones
     // NotificationService
     // Magnitracking
-    MagnitrackingService
+    // MagnitrackingService
   ],
   declarations: []
 })

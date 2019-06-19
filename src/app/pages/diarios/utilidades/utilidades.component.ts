@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 import { NgForm } from '@angular/forms';
 import { DiariosService } from '../../../services/services.index';
-import { SweetAlert } from 'sweetalert/typings/core';
+
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
+const swal: SweetAlert = _swal as any;
 
 @Component({
   selector: 'app-utilidades',

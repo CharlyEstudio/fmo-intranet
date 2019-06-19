@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 // Servicios
-import { VisitasClientesService } from '../../services/services.index';
+import { VisitasClientesService, HerramientasService } from '../../services/services.index';
 
 @Component({
   selector: 'app-clientes-oficina',
@@ -23,7 +23,8 @@ export class ClientesOficinaComponent implements OnInit {
   msg: any = '';
 
   constructor(
-    private visitasClientes: VisitasClientesService
+    private visitasClientes: VisitasClientesService,
+    private herramientas: HerramientasService
   ) {
     this.obtenerVisitas();
   }
@@ -33,7 +34,7 @@ export class ClientesOficinaComponent implements OnInit {
 
   obtenerVisitas() {
     console.log('Actualizando..');
-    this.visitasClientes.obtenerVisitas('2019-06-18').subscribe((visitas: any) => {
+    this.visitasClientes.obtenerVisitas().subscribe((visitas: any) => {
       if (visitas.length > 0) {
         this.visitas = visitas;
       }

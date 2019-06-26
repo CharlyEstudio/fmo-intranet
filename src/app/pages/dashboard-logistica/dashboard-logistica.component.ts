@@ -24,7 +24,7 @@ const swal: SweetAlert = _swal as any;
 export class DashboardLogisticaComponent implements OnInit {
 
   @ViewChild('folioIn') inputFolio: ElementRef;
-  @ViewChild('fecBusqueda') inputFecBusqueda: ElementRef;
+  // @ViewChild('fecBusqueda') inputFecBusqueda: ElementRef;
 
   fecha: any;
 
@@ -315,14 +315,13 @@ export class DashboardLogisticaComponent implements OnInit {
     this.generar = true;
     this.sinDatos = false;
     const folio = Number(this.inputFolio.nativeElement.value);
-    const fecBus = this.inputFecBusqueda.nativeElement.value;
+    // const fecBus = this.inputFecBusqueda.nativeElement.value;
     if (folio === 0) {
       swal('Sin Folio', 'No se ingreso folio para agregar a la guía', 'warning');
       return;
     }
 
-    // this._guiasServices.buscarFolioGuia(folio).subscribe((obtener: any) => {
-    this._guiasServices.buscarFolioGuiaGnl(folio, fecBus).subscribe((obtener: any) => {
+    this._guiasServices.buscarFolioGuiaGnl(folio).subscribe((obtener: any) => {
       if (obtener.ok) {
         swal('Folio Registrado', 'Este folio ' + folio + ' ya esta registrado.', 'error');
         this.inputFolio.nativeElement.value = '';
@@ -344,10 +343,10 @@ export class DashboardLogisticaComponent implements OnInit {
         this.inputFolio.nativeElement.value = '';
       } else {
 
-        this._guiasServices.obtenerFolio(folio, fecBus).subscribe( ( partidas: any ) => {
+        this._guiasServices.obtenerFolio(folio).subscribe( ( partidas: any ) => {
           if (partidas.length > 0) {
             this.terminoEspecial = false;
-            this._guiasServices.buscarEspeciales(folio, fecBus).subscribe( ( especiales: any ) => {
+            this._guiasServices.buscarEspeciales(folio).subscribe( ( especiales: any ) => {
               if (especiales.length > 0) {
                 for (let i = 0; i < especiales.length; i++) {
                   let esEspecial = (pedido) => {
@@ -708,7 +707,7 @@ export class DashboardLogisticaComponent implements OnInit {
     localStorage.removeItem('NumCli');
     localStorage.removeItem('importeGuia');
     this.inputFolio.nativeElement.value = '';
-    this.inputFecBusqueda.nativeElement.value = '';
+    // this.inputFecBusqueda.nativeElement.value = '';
     this.folios = [];
     this.pedidos = [];
     this.especiales = [];

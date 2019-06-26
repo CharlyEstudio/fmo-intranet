@@ -392,6 +392,7 @@ export class CotizadorComponent implements OnInit {
     this.rfc = '';
     if (this.usoNumero.length > 0) {
       this._clienteService.infoClienteCot(this.usoNumero).subscribe((data: any) => {
+        console.log(data);
         if (data.length > 0) {
           this.idFerrum = data[0].CLIENTEID;
           this.numero = this.usoNumero;
@@ -531,7 +532,7 @@ export class CotizadorComponent implements OnInit {
     const inputCantidad: any = ipC.value;
 
     const division = inputCantidad % this.cantidadStep;
-    
+
     if (division === 0 && inputCantidad !== '0') {
       if (this.proveedor.length === 0) {
         if (this.codigo !== '') {
@@ -539,6 +540,7 @@ export class CotizadorComponent implements OnInit {
             this.nivelPrecio = 3;
           }
           this._pedidoService.obtenerProducto(this.codigo, this.nivelPrecio).subscribe((producto: any) => {
+            console.log(producto);
             if (producto.status) {
               if (producto.respuesta)
               this.subtotal += (producto.respuesta[0].precioneto * inputCantidad);

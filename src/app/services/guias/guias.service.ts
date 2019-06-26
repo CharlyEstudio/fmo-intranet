@@ -25,13 +25,13 @@ export class GuiasService {
     this.token = this._usuario.token;
   }
 
-  obtenerFolio( folio: any, fecha: any ) {
+  obtenerFolio( folio: any ) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/guias.php?opcion=1&folio=' + folio + '&fecha=' + fecha;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/guias.php?opcion=1&folio=' + folio;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/guias.php?opcion=1&folio=' + folio + '&fecha=' + fecha;
+      this.url = URL_PRUEBAS + '/api/guias.php?opcion=1&folio=' + folio;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/guias.php?opcion=1&folio=' + folio + '&fecha=' + fecha;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/guias.php?opcion=1&folio=' + folio;
     }
 
     // if (URL_SERVICIO_GENERAL === URL_PETICION) {
@@ -91,13 +91,13 @@ export class GuiasService {
     return this.http.get( this.url );
   }
 
-  buscarFolioGuiaGnl(folio: any, fecha: any) {
+  buscarFolioGuiaGnl(folio: any) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/buscar/gnal/' + folio + '/' + fecha;
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/buscar/gnal/' + folio;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/guias/buscar/gnal/' + folio + '/' + fecha;
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/guias/buscar/gnal/' + folio;
     } else {
-      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/gnal/' + folio + '/' + fecha;
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/gnal/' + folio;
     }
 
     this.url += '?token=' + this.token;
@@ -233,13 +233,13 @@ export class GuiasService {
       });
   }
 
-  buscarEspeciales(folio: any, fecha: any) {
+  buscarEspeciales(folio: any) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/guias.php?opcion=2&folio=' + folio + '&fecha=' + fecha;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/guias.php?opcion=2&folio=' + folio;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/guias.php?opcion=2&folio=' + folio + '&fecha=' + fecha;
+      this.url = URL_PRUEBAS + '/api/guias.php?opcion=2&folio=' + folio;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/guias.php?opcion=2&folio=' + folio + '&fecha=' + fecha;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/guias.php?opcion=2&folio=' + folio;
     }
 
     // if (URL_SERVICIO_GENERAL === URL_PETICION) {

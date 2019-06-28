@@ -21,6 +21,13 @@ export class DiferenciasComponent implements OnInit, OnDestroy {
 
   diferencia: boolean = false;
 
+  numero: any = '';
+  nombre: string = '';
+  saldoCliente: number = 0;
+  saldoDoc: number = 0;
+  dif: number = 0;
+  tipo: string = '';
+
   constructor(
     private _phpService: PhpService,
     private _usuarioService: UsuarioService
@@ -29,7 +36,25 @@ export class DiferenciasComponent implements OnInit, OnDestroy {
       // Subscrión a Diferencias
       this.observar =  this.regresa().subscribe(
         numero => {
-          this.datos = numero;
+          if ( numero.numero !== undefined ) {
+            this.diferencia = true;
+            this.numero = numero.numero;
+            this.nombre = numero.nombre;
+            this.saldoCliente = numero.saldoCliente;
+            this.saldoDoc = numero.saldoDoc;
+            this.dif = numero.diferencia;
+            this.tipo = numero.tipo;
+            this.datos = numero;
+          } else {
+            this.diferencia = false;
+            this.numero = 0;
+            this.nombre = '';
+            this.saldoCliente = 0;
+            this.saldoDoc = 0;
+            this.dif = 0;
+            this.tipo = '';
+            this.datos = [];
+          }
         },
         error => console.error('Error en el obs', error),
         () => console.log('El observador termino!')
@@ -42,11 +67,6 @@ export class DiferenciasComponent implements OnInit, OnDestroy {
       this.intervalo = setInterval(() => {
         this._phpService.diferencias()
           .subscribe( ( resp: any ) => {
-            if ( resp !== 0 ) {
-              this.diferencia = true;
-            } else {
-              this.diferencia = false;
-            }
             observer.next(resp);
           });
       }, 10000);
@@ -58,15 +78,28 @@ export class DiferenciasComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (this._usuarioService.rol === 'DIR_ROLE' || this._usuarioService.rol === 'GER_ROLE' || this._usuarioService.rol === 'ADMIN_ROLE') {
+    if (this._usuarioService.usuario.rol === 'DIR_ROLE' || this._usuarioService.usuario.rol === 'GER_ROLE' || this._usuarioService.usuario.rol === 'ADMIN_ROLE') {
       // Diferencias
       this._phpService.diferencias()
         .subscribe( ( resp: any ) => {
-          if ( resp !== 0 ) {
+          if ( resp.numero !== undefined ) {
             this.diferencia = true;
+            this.numero = resp.numero;
+            this.nombre = resp.nombre;
+            this.saldoCliente = resp.saldoCliente;
+            this.saldoDoc = resp.saldoDoc;
+            this.dif = resp.diferencia;
+            this.tipo = resp.tipo;
             this.datos = resp;
           } else {
             this.diferencia = false;
+            this.numero = 0;
+            this.nombre = '';
+            this.saldoCliente = 0;
+            this.saldoDoc = 0;
+            this.dif = 0;
+            this.tipo = '';
+            this.datos = [];
           }
         });
     }

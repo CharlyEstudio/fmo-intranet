@@ -16,7 +16,7 @@
 
 </div> -->
 
-<small *ngIf="diferencia">
+<!-- <small>
 
     <span class="badge badge-warning">
         
@@ -26,7 +26,7 @@
 
         {{ dato.numero }}
         
-        <span class="font-weight-bold">Nombre:</span>}
+        <span class="font-weight-bold">Nombre:</span>
         
         {{ dato.nombre }}
         
@@ -52,4 +52,6 @@
     
     </span>
 
-</small>
+</small> -->
+
+<small class="badge badge-warning" *ngIf="diferencia">Cliente: {{numero}} Nombre: {{nombre}} Saldo Clientes: {{saldoCliente}} Saldo Doc's: {{saldoDoc}} Diferencia: {{dif}} Tipo: {{tipo}}</small>

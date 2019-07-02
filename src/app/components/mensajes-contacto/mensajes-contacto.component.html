@@ -1,0 +1,42 @@
+<div class="card">
+  <div class="card-body">
+      <div class="d-flex">
+          <div>
+              <h4 class="card-title"><span class="lstick"></span>Mensajes de Contacto</h4>
+          </div>
+      </div>
+      <div class="table-responsive m-t-20" *ngIf="mensajes-length > 0">
+          <table class="table vm no-th-brd pro-of-month" style="width: 100%">
+              <thead>
+                  <tr>
+                      <th>Nombre</th>
+                      <th>Tel</th>
+                      <th>Email</th>
+                      <th>Ciudad</th>
+                      <th>confirmar</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let msg of mensajes">
+                      <td>
+                        {{msg.nombre}}
+                        <br>
+                        <small class="text-muted">{{msg.fecha}} - {{msg.hora}}</small>
+                        <br>
+                        <p class="text-break">{{msg.comentario}}</p>
+                      </td>
+                      <td>{{msg.telefono}}</td>
+                      <td>{{msg.email}}</td>
+                      <td>{{msg.direccion}}</td>
+                      <td class="text-center">
+                          <button type="button" class="btn btn-success" (click)="confirmarVisto(msg.idmensaje)">
+                              <i class="mdi mdi-check"></i>
+                          </button>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+      <h3 *ngIf="mensajes.length === 0">Sin Comentarios de la Tienda.</h3>
+  </div>
+</div>

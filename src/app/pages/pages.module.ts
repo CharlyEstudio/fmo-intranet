@@ -113,6 +113,7 @@ import { CorteTarjetasComponent } from './corte-tarjetas/corte-tarjetas.componen
 import { ClientesOficinaComponent } from './clientes-oficina/clientes-oficina.component';
 import { DiariosComponent } from './diarios/diarios.component';
 import { StoreComponent } from '../components/store/store.component';
+import { MensajesContactoComponent } from '../components/mensajes-contacto/mensajes-contacto.component';
 
 @NgModule({
     declarations: [
@@ -203,7 +204,8 @@ import { StoreComponent } from '../components/store/store.component';
         CorteTarjetasComponent,
         ClientesOficinaComponent,
         DiariosComponent,
-        StoreComponent
+        StoreComponent,
+        MensajesContactoComponent
     ],
     exports: [
         DashborarDirComponent,

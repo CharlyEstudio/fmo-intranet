@@ -42,7 +42,8 @@ import {
   OficinaService,
   CobradorService,
   VisitasClientesService,
-  PaneldiariosService
+  PaneldiariosService,
+  ScrumService
   // NotificationService
 } from "./services.index";
 
@@ -92,6 +93,7 @@ import {
     CobradorService,
     VisitasClientesService,
     PaneldiariosService,
+    ScrumService,
     // Notificaciones
     // NotificationService
     // Magnitracking

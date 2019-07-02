@@ -112,6 +112,7 @@ import { NotascreditoremComponent } from './notascreditorem/notascreditorem.comp
 import { CorteTarjetasComponent } from './corte-tarjetas/corte-tarjetas.component';
 import { ClientesOficinaComponent } from './clientes-oficina/clientes-oficina.component';
 import { DiariosComponent } from './diarios/diarios.component';
+import { StoreComponent } from '../components/store/store.component';
 
 @NgModule({
     declarations: [
@@ -201,7 +202,8 @@ import { DiariosComponent } from './diarios/diarios.component';
         NotascreditoremComponent,
         CorteTarjetasComponent,
         ClientesOficinaComponent,
-        DiariosComponent
+        DiariosComponent,
+        StoreComponent
     ],
     exports: [
         DashborarDirComponent,

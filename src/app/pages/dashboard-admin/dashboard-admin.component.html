@@ -1,38 +1,124 @@
 <div class="row">
 
-    <!-- <div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="col-md-4">
 
-        <div class="card">
-
-            <div class="card-body">
-
-                <app-grafico-lineal [lineChartColors]="lineChartColors" [lineChartLabels]="lineChartLabels" [lineChartOptions]="lineChartOptions" [lineChartData]="lineChartData"></app-grafico-lineal>
-
-            </div>
-
-        </div>
-
-    </div> -->
-
-    <div class="col-lg-4 col-md-6 col-sm-12">
-
-        <div class="card bg-warning mb-5">
-
-            <div class="card-header">
-
-                <h3 class="text-white">Nuevos Pedidos WEB</h3>
-
-            </div>
-
-            <div class="card-body mt-4 mb-5">
-
-                <h1 class="text-white">{{pedidosWeb}} Pedido(s)</h1>
-
-            </div>
-
-        </div>
+        <app-store></app-store>
 
     </div>
-    <div class="col-lg-4 col-md-6 col-sm-12"></div>
-    <div class="col-lg-4 col-md-6 col-sm-12"></div>
+
+    <div class="col-md-6"></div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div>
+                        <h4 class="card-title"><span class="lstick"></span>Proyectos</h4>
+                    </div>
+                    <div class="ml-auto">
+                        <select #selectProject class="custom-select b-0" (change)="cambiarVista(selectProject.value)">
+                            <option selected="">Tipo Vista</option>
+                            <option value="0">Ver Tabla</option>
+                            <option value="1">Ver Graficas</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="text-right" *ngIf="!tipoVista">
+                    <button *ngIf="!nuevo" class="btn btn-danger" (click)="activarNuevo(true)">
+                        <i class="mdi mdi-plus"></i>
+                    </button>
+
+                    <button *ngIf="nuevo" class="btn btn-info" (click)="activarNuevo(false)">
+                        <i class="mdi mdi-minus"></i>
+                    </button>
+                </div>
+                <div *ngIf="nuevo" class="my-3">
+                    <h3>Nuevo Proyecto</h3>
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="row">
+                                <div class="col-12">
+                                    <form>
+                                        <div class="form-group">
+                                            <select #desarrollador name="developer" id="developer" class="form-control">
+                                                <option value="0">Seleccione un desarrollador</option>
+                                                <option [value]="devs._id" *ngFor="let devs of developers">{{devs.nombre}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <input #diasActividad (change)="calcularDias()" type="number" name="dias" id="dias" placeholder="*Días para la Actividad" class="form-control" required>
+                                        </div>
+                                    </form>
+                                    <form>
+                                        <div class="form-group">
+                                            <input #actividadTitulo type="text" name="actividad" id="actividad" placeholder="*Actividad" class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input #puntosActividad type="number" name="puntos" id="puntos" placeholder="*Puntos por la Actividad" class="form-control" required>
+                                        </div>
+                                        <button type="button" class="btn btn-primary" (click)="agregarActividad()" *ngIf="puntosFinales !== 0">Agregar</button>
+                                        <button type="button" class="btn btn-danger" (click)="activarActividad()" *ngIf="puntosFinales === 0 && activities.length > 0">Activar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <ul *ngIf="activities.length > 0">
+                                <h3>Puntos Restantes {{puntosFinales}}</h3>
+                                <li *ngFor="let activity of activities">{{activity.actividad}} - {{activity.puntos}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <h3 *ngIf="!tipoVista && sprints.length === 0">Ningún Proyecto Actual</h3>
+                <div class="table-responsive m-t-20 no-wrap" *ngIf="!tipoVista && sprints.length > 0">
+                    <table class="table vm no-th-brd pro-of-month">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Asignado a</th>
+                                <th>Asigno</th>
+                                <th>Prioridad</th>
+                                <th>Nivel Alcanzado</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let spr of sprints">
+                                <td style="width:50px;"><span class="round">I</span></td>
+                                <td>
+                                    <h6>{{spr.asignado.nombre}}</h6><small class="text-muted">{{spr.asignado.email}}</small>
+                                </td>
+                                <td>{{spr.asigno.nombre}}</td>
+                                <td><span class="label label-success label-rounded">Medio</span></td>
+                                <td>{{0 | percent:'0.2'}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-danger" (click)="borrarSprint(spr._id)">
+                                        <i class="mdi mdi-delete"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div *ngIf="tipoVista" class="row">
+                    <div class="col-md-4">
+                        <h3>Iris</h3>
+                        <app-grafico-lineal [lineChartColors]="lineChartColors" [lineChartLabels]="lineChartLabels" [lineChartOptions]="lineChartOptions" [lineChartData]="lineChartData"></app-grafico-lineal>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div>
+                        <h4 class="card-title"><span class="lstick"></span>Mensajes de Contacto</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </div>

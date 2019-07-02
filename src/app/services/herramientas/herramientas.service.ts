@@ -30,6 +30,37 @@ export class HerramientasService {
     return fecha;
   }
 
+  horaActual() {
+    let h = new Date();
+
+    let hour;
+
+    if (h.getHours() < 10) {
+      hour = '0' + h.getHours();
+    } else {
+      hour = h.getHours();
+    }
+
+    let minutes;
+
+    if (h.getMinutes() < 10) {
+      minutes = '0' + h.getMinutes();
+    } else {
+      minutes = h.getMinutes();
+    }
+
+    let seconds;
+
+    if (h.getSeconds() < 10) {
+      seconds = '0' + h.getSeconds();
+    } else {
+      seconds = h.getSeconds();
+    }
+
+    const hora = hour + ':' + minutes + ':' + seconds;
+    return hora;
+  }
+
   fechaInicialMesActual() {
     let h = new Date();
 

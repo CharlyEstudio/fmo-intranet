@@ -310,6 +310,11 @@ agm-map {
     cursor: pointer;
 }
 
+.text-break {
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
 /*MAPS DIRECTIONS*/
 
 /* #map {

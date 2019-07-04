@@ -43,7 +43,8 @@ import {
   CobradorService,
   VisitasClientesService,
   PaneldiariosService,
-  ScrumService
+  ScrumService,
+  ActividadesService
   // NotificationService
 } from "./services.index";
 
@@ -94,6 +95,7 @@ import {
     VisitasClientesService,
     PaneldiariosService,
     ScrumService,
+    ActividadesService,
     // Notificaciones
     // NotificationService
     // Magnitracking

@@ -74,6 +74,7 @@ import { NotascreditoremComponent } from './notascreditorem/notascreditorem.comp
 import { CorteTarjetasComponent } from './corte-tarjetas/corte-tarjetas.component';
 import { ClientesOficinaComponent } from './clientes-oficina/clientes-oficina.component';
 import { DiariosComponent } from './diarios/diarios.component';
+import { ActividadesComponent } from './actividades/actividades.component';
 
 const pageRoutes: Routes = [
     {
@@ -591,6 +592,16 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Visitas de Clientes a Oficina',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'actividades',
+        component: ActividadesComponent,
+        canActivate: [ MesaGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Actividades del día oficina',
                     name: 'description'
                 }
     },

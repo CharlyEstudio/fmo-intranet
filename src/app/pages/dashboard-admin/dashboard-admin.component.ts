@@ -117,7 +117,6 @@ export class DashboardAdminComponent implements OnInit {
       }
     });
     this._ws.escuchar('producto-visto').subscribe((visto: any) => {
-      console.log(visto);
       this.vista = true;
       this.productoVisto = visto.producto.descripcion;
       setTimeout(() => {
@@ -126,7 +125,10 @@ export class DashboardAdminComponent implements OnInit {
       this.tienda.obtenerMejoresTen().subscribe((mejores: any) => {
         if (mejores.status) {
           const numeros = mejores.todos;
-          this.lineChartLabelsVistas = [numeros[0].codigo, numeros[1].codigo, numeros[2].codigo, numeros[3].codigo, numeros[4].codigo, numeros[5].codigo, numeros[6].codigo, numeros[7].codigo, numeros[8].codigo, numeros[9].codigo];
+          setTimeout(() => {
+            this.lineChartLabelsVistas = [];
+            this.lineChartLabelsVistas = [numeros[0].codigo, numeros[1].codigo, numeros[2].codigo, numeros[3].codigo, numeros[4].codigo, numeros[5].codigo, numeros[6].codigo, numeros[7].codigo, numeros[8].codigo, numeros[9].codigo];
+          }, 500);
           this.lineChartDataVistas = [
             {data: [numeros[0].vistas, numeros[1].vistas, numeros[2].vistas, numeros[3].vistas, numeros[4].vistas, numeros[5].vistas, numeros[6].vistas, numeros[7].vistas, numeros[8].vistas, numeros[9].vistas], label: 'Los Más Vistos'}
           ];

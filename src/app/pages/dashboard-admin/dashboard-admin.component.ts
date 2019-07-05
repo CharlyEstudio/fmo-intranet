@@ -8,7 +8,7 @@ const swal: SweetAlert = _swal as any;
 import { Usuario } from '../../models/usuario.model';
 
 // Socket Service
-import { WebsocketService, ClientesService, HerramientasService, UsuarioService, ScrumService } from '../../services/services.index';
+import { WebsocketService, ClientesService, HerramientasService, UsuarioService, ScrumService, TiendaService } from '../../services/services.index';
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -33,7 +33,29 @@ export class DashboardAdminComponent implements OnInit {
   tipoVista: boolean = false;
   nuevo: boolean = false;
 
-  // Gráfica
+  // VISTAS & Grafica
+  lineChartDataVistas: Array<any> = [
+    {data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], label: 'Productos'}
+  ];
+  lineChartLabelsVistas: Array<any> = ['Producto 1', 'Producto 1', 'Producto 1', 'Producto 1', 'Producto 1', 'Producto 1', 'Producto 1', 'Producto 1', 'Producto 1', 'Producto 1'];
+  lineChartOptionsVistas: any = {
+    responsive: true
+  };
+  lineChartColorsVistas: Array<any> = [
+    { // rojo
+      backgroundColor: 'rgba(206, 52, 76,0.2)', // fondo
+      borderColor: 'rgba(206, 52, 76,1)', // puntos
+      pointBackgroundColor: 'rgba(206, 52, 76,1)',
+      pointBorderColor: '#fff', // bordes
+      pointHoverBackgroundColor: '#fff', // bordes
+      pointHoverBorderColor: 'rgba(206, 52, 76,0.8)' // línea
+    }
+  ];
+  vista: boolean = false;
+  stringVistos: any = '';
+  productoVisto: any = '';
+
+  // Gráfica SCRUM/Sprint
   lineChartData: Array<any> = [
     {data: [250, 250, 250, 250, 250, 250, 250], label: 'ACTUAL'},
     {data: [250, 200, 150, 100, 50, 0, 0], label: 'OBJETIVO'}
@@ -77,8 +99,43 @@ export class DashboardAdminComponent implements OnInit {
   constructor(
     private herramientas: HerramientasService,
     private usuario: UsuarioService,
-    private scrum: ScrumService
-  ) {}
+    private scrum: ScrumService,
+    private tienda: TiendaService,
+    private _ws: WebsocketService
+  ) {
+    this.tienda.obtenerMejoresTen().subscribe((mejores: any) => {
+      if (mejores.status) {
+        const numeros = mejores.todos;
+        this.lineChartLabelsVistas = [numeros[0].codigo, numeros[1].codigo, numeros[2].codigo, numeros[3].codigo, numeros[4].codigo, numeros[5].codigo, numeros[6].codigo, numeros[7].codigo, numeros[8].codigo, numeros[9].codigo];
+        setTimeout(() => {
+          this.lineChartDataVistas = [
+            {data: [numeros[0].vistas, numeros[1].vistas, numeros[2].vistas, numeros[3].vistas, numeros[4].vistas, numeros[5].vistas, numeros[6].vistas, numeros[7].vistas, numeros[8].vistas, numeros[9].vistas], label: 'Los Más Vistos'}
+          ];
+        }, 500);
+      } else {
+        this.stringVistos = mejores.mensaje;
+      }
+    });
+    this._ws.escuchar('producto-visto').subscribe((visto: any) => {
+      console.log(visto);
+      this.vista = true;
+      this.productoVisto = visto.producto.descripcion;
+      setTimeout(() => {
+        this.vista = false;
+      }, 3000);
+      this.tienda.obtenerMejoresTen().subscribe((mejores: any) => {
+        if (mejores.status) {
+          const numeros = mejores.todos;
+          this.lineChartLabelsVistas = [numeros[0].codigo, numeros[1].codigo, numeros[2].codigo, numeros[3].codigo, numeros[4].codigo, numeros[5].codigo, numeros[6].codigo, numeros[7].codigo, numeros[8].codigo, numeros[9].codigo];
+          this.lineChartDataVistas = [
+            {data: [numeros[0].vistas, numeros[1].vistas, numeros[2].vistas, numeros[3].vistas, numeros[4].vistas, numeros[5].vistas, numeros[6].vistas, numeros[7].vistas, numeros[8].vistas, numeros[9].vistas], label: 'Los Más Vistos'}
+          ];
+        } else  {
+          this.stringVistos = mejores.mensaje;
+        }
+      });
+    });
+  }
 
   ngOnInit() {
     if (localStorage.getItem('actividades') !== null) {

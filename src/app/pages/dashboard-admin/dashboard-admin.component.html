@@ -13,6 +13,31 @@
             <div class="card-body">
                 <div class="d-flex">
                     <div>
+                        <h4 class="card-title"><span class="lstick"></span>Los Mejores 10 Productos Vistos</h4>
+                    </div>
+                    <div class="ml-auto">
+                        <small *ngIf="vista">
+                            <span class="badge badge-danger">{{productoVisto}} Visto</span>
+                        </small>
+                    </div>
+                </div>
+                <h3 *ngIf="stringVistos !== ''">{{stringVistos}}</h3>
+                <div class="my-4 py-4" *ngIf="stringVistos === ''">
+                    <app-grafico-lineal [lineChartColors]="lineChartColorsVistas" [lineChartLabels]="lineChartLabelsVistas" [lineChartOptions]="lineChartOptionsVistas" [lineChartData]="lineChartDataVistas"></app-grafico-lineal>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <app-mensajes-contacto></app-mensajes-contacto>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div>
                         <h4 class="card-title"><span class="lstick"></span>Proyectos</h4>
                     </div>
                     <div class="ml-auto">
@@ -108,9 +133,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-6">
-        <app-mensajes-contacto></app-mensajes-contacto>
     </div>
     
 </div>

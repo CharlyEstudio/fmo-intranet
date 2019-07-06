@@ -20,4 +20,9 @@ export class ActividadesService {
     this.url = 'http://192.168.1.250/test/check.php?opc=3&id_actividad='+ id_actividad + '&comentario=' + comentario + '&id_usuario=' + id_usuario;
     return this.http.get(this.url);
   }
+
+  asignacion(){
+    this.url = 'http://192.168.1.250/test/check.php?opc=4';
+    return this.http.get(this.url);
+  }
 }

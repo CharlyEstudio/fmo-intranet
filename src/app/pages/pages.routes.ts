@@ -75,6 +75,7 @@ import { CorteTarjetasComponent } from './corte-tarjetas/corte-tarjetas.componen
 import { ClientesOficinaComponent } from './clientes-oficina/clientes-oficina.component';
 import { DiariosComponent } from './diarios/diarios.component';
 import { ActividadesComponent } from './actividades/actividades.component';
+import { AsignacionActividadesComponent } from './asignacion-actividades/asignacion-actividades.component';
 
 const pageRoutes: Routes = [
     {
@@ -602,6 +603,16 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Actividades del día oficina',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'asignaciones-act',
+        component: AsignacionActividadesComponent,
+        canActivate: [ MesaGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Asignación de actividades',
                     name: 'description'
                 }
     },

@@ -115,6 +115,7 @@ import { DiariosComponent } from './diarios/diarios.component';
 import { StoreComponent } from '../components/store/store.component';
 import { MensajesContactoComponent } from '../components/mensajes-contacto/mensajes-contacto.component';
 import { ActividadesComponent } from './actividades/actividades.component';
+import { AsignacionActividadesComponent } from './asignacion-actividades/asignacion-actividades.component';
 
 @NgModule({
     declarations: [
@@ -207,7 +208,8 @@ import { ActividadesComponent } from './actividades/actividades.component';
         DiariosComponent,
         StoreComponent,
         MensajesContactoComponent,
-        ActividadesComponent
+        ActividadesComponent,
+        AsignacionActividadesComponent
     ],
     exports: [
         DashborarDirComponent,

@@ -32,7 +32,18 @@ export class ActividadesComponent implements OnInit {
   ];
 
   lineoptionsActividades: any = {
-    responsive: true
+    responsive: true,
+    scales: {
+      yAxes:[
+        {
+          ticks:{
+            min: 0,
+            max: 2,
+            stepSize: 1
+          }
+        }
+      ]
+    }
   }
 
   constructor(

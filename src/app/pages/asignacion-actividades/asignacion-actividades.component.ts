@@ -12,6 +12,15 @@ export class AsignacionActividadesComponent implements OnInit {
   info: any[] = [];
   idferrum: any;
 
+  grafica: any = {
+    'datos': {
+      'labels': ['SI', 'NO'],
+      'data':  [0, 0],
+      'type': 'doughnut',
+      'leyenda': 'General'
+    }
+  };
+
   constructor(
     public _usuarioService: UsuarioService,
     public _actividades: ActividadesService
@@ -27,7 +36,19 @@ export class AsignacionActividadesComponent implements OnInit {
     this.info = [];
      this._actividades.asignacion().subscribe((asignacion: any) => {
         this.info = asignacion;
-        console.log(this.info);
+        //console.log(this.info.length);
+        for(let i=0; i<this.info.length; i++){
+
+          this.grafica = {
+            'datos': {
+              'labels': ['SI', 'NO'],
+              'data':  [this.info[i].Cantidad_si,this.info[i].Cantidad_no],
+              'type': 'doughnut',
+              'leyenda': 'General'
+            }
+          };
+          
+        }
      });
    }
 }

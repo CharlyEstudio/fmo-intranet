@@ -1,4 +1,38 @@
-<h3 class="text-info float-right">0 Actividades terminadas</h3>
+<div class="card">
+  <div class="card-body">
+    <h3 class="text-info float-right">{{terminados}} Actividades terminadas</h3>
+    <p>Actividades del día</p>
+    <h3 *ngIf="msg !== ''">{{msg}}</h3>
+    <ul class="list-unstyled" *ngIf="act1.length > 0">
+      <li class="media" *ngFor="let d1 of act1">
+        <i class="mdi {{d1.imagen}}" style="font-size: 5em"></i>
+        <div class="media-body ml-4">
+          <h5 class="mt-0 mb-1">Actividad {{d1.id_actividad}}</h5> {{d1.actividad}}
+          <br>
+          <h6><span class="badge badge-danger mr-2" *ngIf="d1.terminado === 'SI'"><i class="mdi mdi-message" style="color:#fff;"></i></span>{{d1.comentario}}</h6>
+        </div>
+        <div *ngIf="d1.terminado === 'NO'" style="width: 40%;">
+          <form>
+            <textarea class="form-control" #text style="background-color:#ffffff;" rows="3"></textarea>
+            <div class="row d-flex align-items-end mb-2 mt-2">
+              <div class="col-md-12">
+                <div class="text-right">
+                  <button type="button" (click)="guardar(d1, text.value)" [id]="d1.id_actividad"class="btn btn-danger btn-rounded z-depth-1a">Terminar</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div *ngIf="d1.terminado === 'SI'" >
+          <!-- <span class="badge badge-success">Actividad realizada</span> -->
+          <i class="mdi mdi-bookmark-check text-success display-6"></i>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- <h3 class="text-info float-right">0 Actividades terminadas</h3>
 <p>Actividades del día</p>
 
 <div class="row" *ngIf="act1.length > 0">
@@ -34,18 +68,44 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     
 
-  <div class="row">
-
-    <div class="card col-8">
-      <p>Gráfica de avance</p>
-      <app-grafico-lineal [lineChartColors]="linecolorActividades" [lineChartLabels]="linelabelActividades" [lineChartOptions]="lineoptionsActividades" [lineChartData]="linedataActividades"></app-grafico-lineal>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h3 *ngIf="msg !== ''">{{msg}}</h3>
+        <div class="row" *ngIf="msg === ''">
+          <div class="col-8">
+            <p>Gráfica de avance</p>
+            <app-grafico-lineal [lineChartColors]="linecolorActividades" [lineChartLabels]="linelabelActividades" [lineChartOptions]="lineoptionsActividades" [lineChartData]="linedataActividades"></app-grafico-lineal>
+          </div>
+          <div class="col-4">
+            <p class="text-center">Tabla de actividades</p>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Actividad</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let d2 of act1">
+                  <td>{{d2.id_actividad}}</td>
+                  <td>{{d2.actividad}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <div class="col-4">
-      <div class="card">
+  <!-- <div class="col-4">
+    <div class="card">
+      <div class="card-body">
         <p class="text-center">Tabla de actividades</p>
         <table class="table">
           <thead>
@@ -62,10 +122,7 @@
           </tbody>
         </table>
       </div>
-    </div> 
+    </div>
+  </div>  -->
 
-  </div>
-        
-
-
-
+</div>

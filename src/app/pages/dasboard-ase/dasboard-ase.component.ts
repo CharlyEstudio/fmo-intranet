@@ -97,7 +97,7 @@ export class DasboardAseComponent implements OnInit {
         this.webNumero = web.respuesta.length;
         this.pedidoWeb = web.respuesta;
         for (let i = 0; i < web.respuesta.length; i++) {
-          this.web += (web.respuesta[i].subtotal1 + web.respuesta[i].subtotal2);
+          this.web += (web.respuesta[i].SUBTOTAL1 + web.respuesta[i].SUBTOTAL2);
         }
       }
     });
@@ -112,7 +112,7 @@ export class DasboardAseComponent implements OnInit {
             this.webNumero = web.respuesta.length;
             this.pedidoWeb = web.respuesta;
             for (let i = 0; i < web.respuesta.length; i++) {
-              this.web += (web.respuesta[i].subtotal1 + web.respuesta[i].subtotal2);
+              this.web += (web.respuesta[i].SUBTOTAL1 + web.respuesta[i].SUBTOTAL2);
             }
           }
         });

@@ -1,53 +1,194 @@
-<p >
-    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Asignacion</a>
-    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">Altas</button>
-    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
-        <i class="mdi mdi-delete-circle" style="color: white"></i>
-    </button>
-</p>
-
-
-<div class="collapse" id="collapseExample">
-    <div class="card card-body">
-        <form>
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Usuario</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Usuario">
+<div class="row">
+    <div class="col-12">
+        <p>
+            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Asignacion</a>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">Altas</button>
+            <!-- <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
+                <i class="mdi mdi-delete-circle" style="color: white"></i>
+            </button> -->
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label for="actividadesAlta" class="mr-2">Actividad</label>
+                        <select [(ngModel)]="activity" name="actividadesAlta" id="actividadesAlta" class="form-control">
+                            <option value="0">Seleccione una actividad</option>
+                            <option [ngValue]="act" *ngFor="let act of selectActividades">{{act.actividad}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label for="usuarioAsignar" class="mr-2">Asignar a</label>
+                        <select #selectUser name="usuarioAsignar" id="usuarioAsignar" class="form-control">
+                            <option value="0">Seleccione un usuario</option>
+                            <option [value]="user.idFerrum" *ngFor="let user of selectUsuario">{{user.nombre}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label for="diaAsignar" class="mr-2">Dia a Asignar</label>
+                        <select [(ngModel)]="selectDiaAsignar" name="diaAsignar" id="diaAsignar" class="form-control" (change)="buscarActividadAsignada(selectUser.value)">
+                            <option value="0">Seleccione un día</option>
+                            <option value="L">Lunes</option>
+                            <option value="M">Martes</option>
+                            <option value="I">Miércoles</option>
+                            <option value="J">Jueves</option>
+                            <option value="V">Viernes</option>
+                        </select>
+                    </div>
+                    <button *ngIf="!asignado" type="submit" class="btn btn-primary mb-2" (click)="asignar(idferrum)" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Guardar</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Asignó</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Asigno">
-            </div>
-            <button type="submit" class="btn btn-primary mb-2">Guardar</button>
-        </form>
-    </div>
- </div>
-
- <div class="collapse" id="collapseExample2">
-    <div class="card card-body">
-        <p>input 2</p>
-    </div>
- </div>
-
- <div class="collapse" id="collapseExample3">
-    <div class="card card-body">
-        <p>input 3</p>
-    </div>
-</div>
+        </div>
     
+        <div class="collapse" id="collapseExample2">
+            <div class="card card-body">
+                <h3>Dar de alta una nueva actividad</h3>
+                <form>
+                    <div class="form-group">
+                        <label for="">Actividad</label>
+                        <input #inputTitulo type="text" name="actividadTitulo" id="actividadTitulo" class="form-control" placeholder="*Nombre de la actividad">
+                    </div>
 
-<div class="row" *ngIf="info.length > 0">
-    <div class="col-md-4 col-sm-12" *ngFor="let res of info">
-        <div class="card">
-            <div class="card-body text-center">
-
-                    <div class="text-center" >
-                            <app-grafico-dona [ChartType]="res.datos.type" [leyenda]="res.datos.leyenda" [ChartData]="res.datos.data" [ChartLabels]="res.datos.labels"></app-grafico-dona>
-                        </div>
-                        
-                <H4 class="text-center">{{res.Nombre}}</H4>
-                <button class="btn btn-primary ">DETALLE</button>
+                    <div class="form-group">
+                        <label for="diaAsignar" class="mr-2">Seleccionar Icono</label>
+                        <select #selectIco name="selIc" id="selIc" class="form-control" (change)="verIcono(selectIco.value)">
+                            <option value="0">Iconos</option>
+                            <option value="mdi-receipt">Recipiente</option>
+                            <option value="mdi-square-inc-cash">Dinero</option>
+                            <option value="mdi-package-variant">Paquete</option>
+                            <option value="mdi-rotate-3d">Reinicio</option>
+                            <option value="mdi-store">Tienda</option>
+                            <option value="mdi-marker-check">Revisar</option>
+                            <option value="mdi-image-filter">Imágenes</option>
+                            <option value="mdi-verified">Verificación</option>
+                            <option value="mdi-human-greeting">Asistencia</option>
+                            <option value="mdi-calendar-clock">Calendario</option>
+                            <option value="mdi-bank">Banco</option>
+                        </select>
+                    </div>
+                    <div class="form-group" *ngIf="icono !== ''">
+                        <i class="mdi {{icono}}" style="font-size: 3em;"></i>
+                    </div>
+                    <button type="button" class="btn btn-primary" (click)="altaNuevoActividad(inputTitulo.value, selectIco.value)" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">Guardar</button>
+                </form>
             </div>
-         </div>
+        </div>
+    
+        <!-- <div class="collapse" id="collapseExample3">
+            <div class="card card-body">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label for="labelSelect" class="sr-only">Elimine una actividad</label>
+                        <input type="text" readonly class="form-control-plaintext" id="labelSelect" value="Elimine una actividad">
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <select #selectActEli class="form-control" name="actividad" id="actividad" (change)="eliminarActividad(selectActEli.value)">
+                            <option value="0">Seleccione una actividad</option>
+                            <option [value]="act.id_actividad" *ngFor="let act of selectActividades">{{act.actividad}}</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div> -->
     </div>
+
+    <div class="col-12" *ngIf="msg === ''">
+        <div class="row" *ngIf="info.length > 0">
+            <div class="col-md-4 col-sm-12" *ngFor="let res of info">
+                <div class="card">
+                    <div class="card-body text-center">
+    
+                        <div class="text-center my-3">
+                            <app-grafico-dona [ChartType]="res.datos.type" [leyenda]="res.Nombre" [ChartData]="res.datos.data" [ChartLabels]="res.datos.labels"></app-grafico-dona>
+                        </div>
+                                
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalDetalles" (click)="verModal(res)">DETALLE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12" *ngIf="msg !== ''">
+        <h2>{{msg}}</h2>
+    </div>
+
+</div>
+
+<div id="modalDetalles" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalDetalles" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg">
+
+        <div class="modal-content p-t-20 p-b-20 p-l-20 p-r-20">
+
+            <div class="modal-header">
+
+                <h5 class="p-b-10 p-t-10">Listado de Actividades de <b>{{ nombreUsuario }}</b></h5>
+
+                <button type="button" class="close" data-dismiss="modal" id="cerrarModalBusq" aria-label="Close">
+        
+                    <span aria-hidden="true">&times;</span>
+        
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="card" style="width: 100%;">
+
+                    <div class="card-body">
+
+                        <div class="chat-box">
+
+                            <!--  -->
+
+                            <table class="table">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>Actividad</th>
+
+                                        <th>Asigno</th>
+
+                                        <th>Estatus</th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                    <tr *ngFor="let tab of tabla">
+
+                                        <td>{{tab.actividad}}</td>
+
+                                        <td>{{tab.Asigno}}</td>
+
+                                        <td class="text-center">
+                                            
+                                            <i class="mdi mdi-check-circle display-6" [ngClass]="{'text-dark': tab.terminado === 'NO', 'text-success': tab.terminado === 'SI'}"></i>
+                                        
+                                        </td>
+                                        
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>

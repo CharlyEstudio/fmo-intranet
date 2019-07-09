@@ -47,4 +47,16 @@ export class TiendaService {
     return this.http.post(this.url, {idmensaje: id}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
   }
 
+  obtenerMejoresTen() {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/bigdata/mejores';
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/bigdata/mejores';
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/bigdata/mejores';
+    }
+
+    return this.http.get(this.url);
+  }
+
 }

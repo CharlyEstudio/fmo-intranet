@@ -1,0 +1,53 @@
+<p >
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Asignacion</a>
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">Altas</button>
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
+        <i class="mdi mdi-delete-circle" style="color: white"></i>
+    </button>
+</p>
+
+
+<div class="collapse" id="collapseExample">
+    <div class="card card-body">
+        <form>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Usuario</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Usuario">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Asignó</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Asigno">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Guardar</button>
+        </form>
+    </div>
+ </div>
+
+ <div class="collapse" id="collapseExample2">
+    <div class="card card-body">
+        <p>input 2</p>
+    </div>
+ </div>
+
+ <div class="collapse" id="collapseExample3">
+    <div class="card card-body">
+        <p>input 3</p>
+    </div>
+</div>
+    
+
+<div class="row" *ngIf="info.length > 0">
+    <div class="col-md-4 col-sm-12" *ngFor="let res of info">
+        <div class="card">
+            <div class="card-body text-center">
+
+                    <div class="text-center" >
+                            <app-grafico-dona [ChartType]="res.datos.type" [leyenda]="res.datos.leyenda" [ChartData]="res.datos.data" [ChartLabels]="res.datos.labels"></app-grafico-dona>
+                        </div>
+                        
+                <H4 class="text-center">{{res.Nombre}}</H4>
+                <button class="btn btn-primary ">DETALLE</button>
+            </div>
+         </div>
+    </div>
+</div>

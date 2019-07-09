@@ -114,6 +114,8 @@ import { ClientesOficinaComponent } from './clientes-oficina/clientes-oficina.co
 import { DiariosComponent } from './diarios/diarios.component';
 import { StoreComponent } from '../components/store/store.component';
 import { MensajesContactoComponent } from '../components/mensajes-contacto/mensajes-contacto.component';
+import { ActividadesComponent } from './actividades/actividades.component';
+import { AsignacionActividadesComponent } from './asignacion-actividades/asignacion-actividades.component';
 
 @NgModule({
     declarations: [
@@ -205,7 +207,9 @@ import { MensajesContactoComponent } from '../components/mensajes-contacto/mensa
         ClientesOficinaComponent,
         DiariosComponent,
         StoreComponent,
-        MensajesContactoComponent
+        MensajesContactoComponent,
+        ActividadesComponent,
+        AsignacionActividadesComponent
     ],
     exports: [
         DashborarDirComponent,

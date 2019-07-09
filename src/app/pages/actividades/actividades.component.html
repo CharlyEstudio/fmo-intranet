@@ -1,0 +1,71 @@
+<h3 class="text-info float-right">0 Actividades terminadas</h3>
+<p>Actividades del día</p>
+
+<div class="row" *ngIf="act1.length > 0">
+  <div class="col-lg-3 col-md-6 col-sm-12" *ngFor="let d1 of act1">
+    <div class="card" style="width: 15rem;">
+        <div class="text-center" *ngIf="d1.terminado === 'SI'" >
+          <i class="mdi {{d1.imagen}}" style="font-size: 7em"></i>
+        </div>
+        <div class ="text-center" *ngIf="d1.terminado === 'NO'" >
+            <i class="mdi {{d1.imagen}}" style="font-size: 7em"></i>
+        </div>
+        
+        <div class="card-body">
+          <p class="card-text text-center">Actividad {{d1.id_actividad}}</p>
+          <h5 class="card-title text-success">{{d1.actividad}}</h5>
+          <div *ngIf="d1.terminado === 'NO'">
+            <form>
+              <textarea #text style="background-color:#ffffff;" rows="3">
+                </textarea>
+                <div class="row d-flex align-items-center mb-2 mt-2">
+                  <div class="col-md-12">
+                    <div class="text-center">
+                      <button type="button" (click)="guardar(d1, text.value)" (click)="guardarhistorial(d1, text.value, d2)" [id]="d1.id_actividad"class="btn btn-danger btn-rounded z-depth-1a">Terminar</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div *ngIf="d1.terminado === 'SI'" >
+              <span class="badge badge-warning">Actividad realizada</span>
+              <h6><span class="badge badge-danger"><i class="mdi mdi-message" style="color:#fff;"></i></span>{{d1.comentario}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+  <div class="row">
+
+    <div class="card col-8">
+      <p>Gráfica de avance</p>
+      <app-grafico-lineal [lineChartColors]="linecolorActividades" [lineChartLabels]="linelabelActividades" [lineChartOptions]="lineoptionsActividades" [lineChartData]="linedataActividades"></app-grafico-lineal>
+    </div>
+
+    <div class="col-4">
+      <div class="card">
+        <p class="text-center">Tabla de actividades</p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Actividad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let d2 of act1">
+              <td>{{d2.id_actividad}}</td>
+              <td>{{d2.actividad}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div> 
+
+  </div>
+        
+
+
+

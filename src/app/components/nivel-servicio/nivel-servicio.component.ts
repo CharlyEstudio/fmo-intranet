@@ -19,7 +19,7 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
       'labels': ['Vendido', 'BackOrder'],
       'data':  [0, 0],
       'type': 'doughnut',
-      'leyenda': 'General'
+      'leyenda': 'Remisionado'
     }
   };
 
@@ -85,7 +85,7 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
                 'labels': ['Vendido', 'BackOrder'],
                 'data':  [(this.porcentGen * 100), (100 - (this.porcentGen * 100))],
                 'type': 'doughnut',
-                'leyenda': 'General'
+                'leyenda': 'Remisionado'
               }
             };
 
@@ -159,7 +159,7 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
             'labels': ['Recibido', '100%'],
             'data':  [(this.porcentGen * 100), (100 - (this.porcentGen * 100))],
             'type': 'doughnut',
-            'leyenda': 'otro'
+            'leyenda': 'Remisionado'
           }
         };
 

@@ -1,6 +1,6 @@
 <div style="display: block">
 
-    <span>{{ porcentaje | percent: '0.2' }} <br> {{ titulo }}</span>
+    <span><span *ngIf="titulo === 'Remisionado'">{{ porcentaje | percent: '0.2' }} <br> </span>{{ titulo }}</span>
 
     <canvas baseChart (chartClick)="chartClicked($event)" [data]="ChartData" [labels]="ChartLabels" [chartType]="ChartType">
     </canvas>

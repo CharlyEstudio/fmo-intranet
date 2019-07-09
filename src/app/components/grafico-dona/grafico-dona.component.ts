@@ -11,7 +11,7 @@ export class GraficoDonaComponent implements OnInit, OnChanges {
   @Input() ChartLabels: string [] = [];
   @Input() ChartData: number [] = [];
   @Input() ChartType: string [] = [];
-  @Input() leyenda: string [] = [];
+  @Input() leyenda: string;
 
   porcentaje: number = 0;
   titulo: string = '';
@@ -22,7 +22,7 @@ export class GraficoDonaComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.porcentaje = this.ChartData[0] / 100;
-    this.titulo = 'Facturado';
+    this.titulo = this.leyenda;
   }
 
   // events
@@ -31,11 +31,14 @@ export class GraficoDonaComponent implements OnInit, OnChanges {
       let index = e.active[0]._index;
       this.porcentaje = this.ChartData[index] / 100;
 
-      if (index === 0) {
-        this.titulo = 'Facturado';
-      } else {
-        this.titulo = 'BackOrder';
+      if (this.leyenda === 'Remisionado') {
+        if (index === 0) {
+          this.titulo = 'Facturado';
+        } else {
+          this.titulo = 'BackOrder';
+        }
       }
+
     }
   }
 

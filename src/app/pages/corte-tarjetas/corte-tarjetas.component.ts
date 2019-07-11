@@ -94,7 +94,7 @@ export class CorteTarjetasComponent implements OnInit {
       if (pdf[0].status) {
         swal('CREADO', 'Archivo PDF creado.', 'success');
         setTimeout(() => {
-          this.pdf = this.sanitizer.bypassSecurityTrustResourceUrl('http://www.ferremayoristas.com.mx/api/' + pdf[0].file);
+          this.pdf = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/' + pdf[0].file);
         }, 1000);
       } else {
       this.pdf = '';

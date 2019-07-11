@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, URL_PETICION } from '../../config/config';
+import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, URL_PETICION, URL_EXTERNO } from '../../config/config';
 
 @Injectable()
 export class AlmacenService {
@@ -20,13 +20,14 @@ export class AlmacenService {
     //   url = URL_SERVICIO_GENERAL + '/api/almacen.php?opcion=1' + '&area=' + area + '&inicio=' + inicio + '&fin=' + fin;
     // }
 
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/almacen/reporte/' + area + '/' + inicio + '/' + fin;
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/almacen/reporte/' + area + '/' + inicio + '/' + fin;
-    } else {
-      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/almacen/reporte/' + area + '/' + inicio + '/' + fin;
-    }
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/almacen/reporte/' + area + '/' + inicio + '/' + fin;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/almacen/reporte/' + area + '/' + inicio + '/' + fin;
+    // } else {
+    //   url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/almacen/reporte/' + area + '/' + inicio + '/' + fin;
+    // }
+    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/almacen/reporte/' + area + '/' + inicio + '/' + fin;
 
     return this.http.get( url ).map((reporte: any) => {
       if (reporte.status) {

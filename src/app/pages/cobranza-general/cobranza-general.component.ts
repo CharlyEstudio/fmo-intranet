@@ -223,7 +223,7 @@ export class CobranzaGeneralComponent implements OnInit, OnDestroy {
         });
       }
 
-      this.verPDF = 'http://www.ferremayoristas.com.mx/api/' + resp.file;
+      this.verPDF = 'https://ferremayoristas.com.mx/api/' + resp.file;
 
       swal({
         title: "PDF",

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_SERVER, PUERTO_INTERNO, URL_PETICION } from '../../config/config';
+import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_SERVER, PUERTO_INTERNO, URL_PETICION, URL_EXTERNO } from '../../config/config';
 
 @Injectable()
 export class DiariosService {
@@ -20,13 +20,14 @@ export class DiariosService {
     //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=1';
     // }
 
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/asesores';
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/asesores';
-    } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/asesores';
-    }
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/asesores';
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/asesores';
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/asesores';
+    // }
+    this.url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/diarios/asesores';
 
     return this.http.get( this.url ).map((asesores: any) => {
       if (asesores.status) {
@@ -92,7 +93,6 @@ export class DiariosService {
     // });
 
     return this.http.get( this.url ).map((ventas: any) => {
-      console.log(ventas);
       if (ventas.length > 0) {
         return ventas;
       } else {
@@ -495,16 +495,18 @@ export class DiariosService {
     //   '/api/diarios.php?opcion=21&tipo=' + tipo + '&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&orden=' + orden;
     // }
 
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL +
-      ':' + PUERTO_INTERNO + '/diarios/back/order/seccion/' + tipo + '/' + fechaIn + '/' + fechaOut + '/' + orden;
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS +
-      ':' + PUERTO_INTERNO + '/diarios/back/order/seccion/' + tipo + '/' + fechaIn + '/' + fechaOut + '/' + orden;
-    } else {
-      this.url = URL_SERVICIO_GENERAL +
-      ':' + PUERTO_INTERNO + '/diarios/back/order/seccion/' + tipo + '/' + fechaIn + '/' + fechaOut + '/' + orden;
-    }
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL +
+    //   ':' + PUERTO_INTERNO + '/diarios/back/order/seccion/' + tipo + '/' + fechaIn + '/' + fechaOut + '/' + orden;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS +
+    //   ':' + PUERTO_INTERNO + '/diarios/back/order/seccion/' + tipo + '/' + fechaIn + '/' + fechaOut + '/' + orden;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL +
+    //   ':' + PUERTO_INTERNO + '/diarios/back/order/seccion/' + tipo + '/' + fechaIn + '/' + fechaOut + '/' + orden;
+    // }
+    this.url = URL_EXTERNO +
+    ':' + PUERTO_INTERNO + '/diarios/back/order/seccion/' + tipo + '/' + fechaIn + '/' + fechaOut + '/' + orden;
 
     return this.http.get( this.url ).map((obtbc: any) => {
       if (obtbc.status) {

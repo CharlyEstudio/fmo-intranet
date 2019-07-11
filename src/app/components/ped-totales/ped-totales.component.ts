@@ -6,7 +6,6 @@ import { Subscriber } from 'rxjs/Subscriber';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/retry';
 import 'rxjs/add/operator/filter';
-import { URL_SERVICIO_GENERAL } from '../../config/config';
 
 @Component({
   selector: 'app-ped-totales',
@@ -54,12 +53,7 @@ export class PedTotalesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
-    if (URL_SERVICIO_GENERAL === 'http://192.168.1.250' || URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.panel = 'http://192.168.1.250/panel/#/';
-    } else {
-      this.panel = 'http://ferremayoristas.com.mx/panel/#/';
-    }
+    this.panel = 'https://ferremayoristas.com.mx/panel/#/';
 
     let h = new Date();
 

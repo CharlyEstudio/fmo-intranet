@@ -12,9 +12,11 @@ import { Usuario } from '../../models/usuario.model';
 
 import { Comision } from '../../models/comision.model';
 
-import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_INTERNO, URL_PETICION } from '../../config/config';
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
+const swal: SweetAlert = _swal as any;
 
-import { SweetAlert } from 'sweetalert/typings/core';
+import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_INTERNO, URL_PETICION, URL_EXTERNO } from '../../config/config';
 
 @Injectable()
 export class ComisionesService {
@@ -32,13 +34,14 @@ export class ComisionesService {
   cargarComisiones() {
     let url;
 
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/comisiones/';
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/comisiones/';
-    } else {
-      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones/';
-    }
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/comisiones/';
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/comisiones/';
+    // } else {
+    //   url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones/';
+    // }
+    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/comisiones/';
 
     url += '?token=' + this.token;
 
@@ -55,13 +58,14 @@ export class ComisionesService {
   buscarAsesorComision( id: any ) {
     let url;
 
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id;
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id;
-    } else {
-      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id;
-    }
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id;
+    // } else {
+    //   url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id;
+    // }
+    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id;
 
     return this.http.get( url )
       .map( (resp: any) => {
@@ -76,13 +80,14 @@ export class ComisionesService {
   buscarMesComision( mes: any, anio: any ) {
     let url;
 
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/comisiones/buscar/' + mes + "/" + anio;
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/comisiones/buscar/' + mes + "/" + anio;
-    } else {
-      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones/buscar/' + mes + "/" + anio;
-    }
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/comisiones/buscar/' + mes + "/" + anio;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/comisiones/buscar/' + mes + "/" + anio;
+    // } else {
+    //   url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones/buscar/' + mes + "/" + anio;
+    // }
+    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/comisiones/buscar/' + mes + "/" + anio;
 
     return this.http.get( url );
   }
@@ -91,13 +96,14 @@ export class ComisionesService {
 
     let url;
 
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/comisiones';
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/comisiones';
-    } else {
-      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones';
-    }
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/comisiones';
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/comisiones';
+    // } else {
+    //   url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones';
+    // }
+    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/comisiones';
 
     url += '?token=' + this.token;
 
@@ -116,13 +122,14 @@ export class ComisionesService {
   actualizarComisionUsusario( comision: Comision, id: any ) {
     let url;
 
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/comisiones/' + id;
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/comisiones/' + id;
-    } else {
-      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones/' + id;
-    }
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/comisiones/' + id;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/comisiones/' + id;
+    // } else {
+    //   url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones/' + id;
+    // }
+    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/comisiones/' + id;
 
     url += '?token=' + this.token;
 

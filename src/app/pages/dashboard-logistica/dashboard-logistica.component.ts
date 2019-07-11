@@ -753,7 +753,7 @@ export class DashboardLogisticaComponent implements OnInit {
     const pdf = dato.pdf
 
     this.ruta = this.sanitizer.bypassSecurityTrustResourceUrl(
-      'http://www.ferremayoristas.com.mx/api/pdf/' + pdf);
+      'https://ferremayoristas.com.mx/api/pdf/' + pdf);
   }
 
 

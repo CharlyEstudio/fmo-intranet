@@ -167,7 +167,7 @@ export class CotizadorComponent implements OnInit {
       this.enviarBool = false;
       if (localStorage.getItem('ordenGuardada') !== null) {
         this.ordenGuardada = JSON.parse(localStorage.getItem('ordenGuardada'));
-        this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('http://www.ferremayoristas.com.mx/api/cotizaciones/' + this.ordenGuardada.pdf);
+        this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/cotizaciones/' + this.ordenGuardada.pdf);
       }
       if (localStorage.getItem('guardado') === 'true') {
         this.guardado = true;
@@ -238,7 +238,7 @@ export class CotizadorComponent implements OnInit {
       this.nameBol = false;
       if (localStorage.getItem('ordenGuardada') !== null) {
         this.ordenGuardada = JSON.parse(localStorage.getItem('ordenGuardada'));
-        this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('http://www.ferremayoristas.com.mx/api/ordenes/' + this.ordenGuardada.pdf);
+        this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/ordenes/' + this.ordenGuardada.pdf);
       }
       if (localStorage.getItem('pedidoDistIntranet') !== null) {
         this.file = localStorage.getItem('filePDF');
@@ -376,7 +376,7 @@ export class CotizadorComponent implements OnInit {
   }
 
   accionOrds() {
-    this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('http://www.ferremayoristas.com.mx/api/ordenes/' + this.ods.pdf);
+    this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/ordenes/' + this.ods.pdf);
   }
 
   buscarCliente() {
@@ -802,9 +802,9 @@ export class CotizadorComponent implements OnInit {
         })
         .then((value) => {
           if (operacion === '2') {
-            this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('http://www.ferremayoristas.com.mx/api/ordenes/' + info.pdf);
+            this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/ordenes/' + info.pdf);
           } else if (operacion === '1') {
-            this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('http://www.ferremayoristas.com.mx/api/cotizaciones/' + info.pdf);
+            this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/cotizaciones/' + info.pdf);
           }
         });
       } else {
@@ -984,7 +984,7 @@ export class CotizadorComponent implements OnInit {
         this.correoCli = correo[0].CORREO;
       }
     });
-    this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('http://www.ferremayoristas.com.mx/api/cotizaciones/' + this.cts.pdf);
+    this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/cotizaciones/' + this.cts.pdf);
   }
 
   cotizarNuevo() {

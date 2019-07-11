@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, PUERTO_SERVER, URL_PETICION } from '../../config/config';
+import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, PUERTO_SERVER, URL_PETICION, URL_EXTERNO } from '../../config/config';
 
 import { VencidoHistorial } from '../../models/vencidoHistorial.model';
 
@@ -174,13 +174,14 @@ export class CreditoService {
   }
 
   clienteSaldo( numero: any, fecha: any ) {
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/obtener/saldo/' + numero + '/' + fecha;
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/obtener/saldo/' + numero + '/' + fecha;
-    } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/obtener/saldo/' + numero + '/' + fecha;
-    }
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/obtener/saldo/' + numero + '/' + fecha;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/obtener/saldo/' + numero + '/' + fecha;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/obtener/saldo/' + numero + '/' + fecha;
+    // }
+    this.url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/clientes/obtener/saldo/' + numero + '/' + fecha;
 
     this.url += '?token=' + this.token;
 
@@ -188,13 +189,14 @@ export class CreditoService {
   }
 
   guardarComentario( comentario: VencidoHistorial ) {
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/vencido/historial';
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/vencido/historial';
-    } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/vencido/historial';
-    }
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/vencido/historial';
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/vencido/historial';
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/vencido/historial';
+    // }
+    this.url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/clientes/vencido/historial';
 
     this.url += '?token=' + this.token;
 
@@ -205,25 +207,27 @@ export class CreditoService {
   }
 
   obtenerComentarios( clienteId: any ) {
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/' + clienteId;
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/' + clienteId;
-    } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/' + clienteId;
-    }
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/' + clienteId;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/' + clienteId;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/' + clienteId;
+    // }
+    this.url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/' + clienteId;
 
     return this.http.get( this.url );
   }
 
   obtenerComentariosDia( fecha: any ) {
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/fecha/' + fecha;
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/fecha/' + fecha;
-    } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/fecha/' + fecha;
-    }
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/fecha/' + fecha;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/fecha/' + fecha;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/fecha/' + fecha;
+    // }
+    this.url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/fecha/' + fecha;
 
     return this.http.get( this.url );
   }

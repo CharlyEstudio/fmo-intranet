@@ -456,7 +456,7 @@ export class EdoCtaComponent implements OnInit {
           switch (value) {
 
             case "defeat":
-              this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('http://www.ferremayoristas.com.mx/api/edo-cta/' + filename);
+              this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/edo-cta/' + filename);
               break;
 
             case "catch":

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/retry';
 import 'rxjs/add/operator/filter';
 
-import { PhpService, UsuarioService } from '../../services/services.index';
+import { PhpService, UsuarioService, DiferenciasService } from '../../services/services.index';
 
 @Component({
   selector: 'app-diferencias',
@@ -15,51 +15,36 @@ import { PhpService, UsuarioService } from '../../services/services.index';
 })
 export class DiferenciasComponent implements OnInit, OnDestroy {
 
+  // @Output() enviar = new EventEmitter();
+
   observar: Subscription;
-  datos: any[] = [];
   intervalo: any;
+
+  saldos: any[] = [];
 
   diferencia: boolean = false;
 
-  numero: any = '';
-  nombre: string = '';
-  saldoCliente: number = 0;
-  saldoDoc: number = 0;
-  dif: number = 0;
-  tipo: string = '';
-
   constructor(
     private _phpService: PhpService,
-    private _usuarioService: UsuarioService
+    private _usuarioService: UsuarioService,
+    private _diferencias: DiferenciasService
   ) {
-    if (this._usuarioService.rol === 'DIR_ROLE' || this._usuarioService.rol === 'GER_ROLE' || this._usuarioService.rol === 'ADMIN_ROLE') {
-      // Subscrión a Diferencias
-      this.observar =  this.regresa().subscribe(
-        numero => {
-          if ( numero.numero !== undefined ) {
+    // Subscrión a Diferencias
+    this.observar =  this.regresa().subscribe(
+      numero => {
+        if (this._usuarioService.usuario.rol === 'DIR_ROLE' || this._usuarioService.usuario.rol === 'GER_ROLE' || this._usuarioService.usuario.rol === 'ADMIN_ROLE') {
+          if ( numero.length > 0 ) {
+            this._diferencias.notificacion.emit(numero);
             this.diferencia = true;
-            this.numero = numero.numero;
-            this.nombre = numero.nombre;
-            this.saldoCliente = numero.saldoCliente;
-            this.saldoDoc = numero.saldoDoc;
-            this.dif = numero.diferencia;
-            this.tipo = numero.tipo;
-            this.datos = numero;
           } else {
+            this._diferencias.notificacion.emit([]);
             this.diferencia = false;
-            this.numero = 0;
-            this.nombre = '';
-            this.saldoCliente = 0;
-            this.saldoDoc = 0;
-            this.dif = 0;
-            this.tipo = '';
-            this.datos = [];
           }
-        },
-        error => console.error('Error en el obs', error),
-        () => console.log('El observador termino!')
-      );
-    }
+        }
+      },
+      error => console.error('Error en el obs', error),
+      () => console.log('El observador termino!')
+    );
   }
 
   regresa(): Observable<any> {
@@ -82,24 +67,12 @@ export class DiferenciasComponent implements OnInit, OnDestroy {
       // Diferencias
       this._phpService.diferencias()
         .subscribe( ( resp: any ) => {
-          if ( resp.numero !== undefined ) {
+          if ( resp.length > 0 ) {
+            console.log(resp);
+            this._diferencias.notificacion.emit(resp);
             this.diferencia = true;
-            this.numero = resp.numero;
-            this.nombre = resp.nombre;
-            this.saldoCliente = resp.saldoCliente;
-            this.saldoDoc = resp.saldoDoc;
-            this.dif = resp.diferencia;
-            this.tipo = resp.tipo;
-            this.datos = resp;
           } else {
             this.diferencia = false;
-            this.numero = 0;
-            this.nombre = '';
-            this.saldoCliente = 0;
-            this.saldoDoc = 0;
-            this.dif = 0;
-            this.tipo = '';
-            this.datos = [];
           }
         });
     }

@@ -41,6 +41,14 @@ export class AppComponent implements OnInit {
       && localStorage.getItem('rol') !== 'OF_ROLE'
       && localStorage.getItem('rol') !== 'MESA_ROLE'
       && localStorage.getItem('rol') !== 'CLI_ROLE') {
+      // Aviso de Ir con el Cliente por el chófer
+      this._wsService.escuchar('aviso-ir-cliente').subscribe((ir: any) => {
+        if (ir.status) {
+          const comentario = 'Realizando entrega a ' + ir.respuesta.guia.nombre + ', con ' + ir.respuesta.guia.facturas.length + ' pedidos';
+          this.pushNot(ir.respuesta.chofer.nombre, 'Viajando', comentario, 'Entrega de Pedido');
+        }
+      });
+
       // Nuevo Comentario del Asesor
       this._wsService.escuchar('comentario-asesor').subscribe((comentar: any) => {
         const comentario = 'Estuvo con el cliente ' + comentar.respuesta.numero + ' y su acción fue ' + comentar.respuesta.accion;

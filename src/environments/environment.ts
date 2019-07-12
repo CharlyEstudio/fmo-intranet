@@ -7,5 +7,8 @@ import { URL_SERVICIO_GENERAL } from "../app/config/config";
 
 export const environment = {
   production: true,
-  wsUrl: 'https://ferremayoristas.com.mx:3001'
+  wsUrl: 'https://ferremayoristas.com.mx:3001',
+  mapbox: {
+    accessToken: 'pk.eyJ1IjoiY2hhcmx5cmRldiIsImEiOiJjankwZ2N6NWwwMTJoM2dscWRpZ3Z1dW5kIn0.W59EjXg2_En1yuTXTyq6cQ'
+  }
 };

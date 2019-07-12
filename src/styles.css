@@ -325,6 +325,10 @@ agm-map {
     flex: 1;
 }
 
+.mapaVisita agm-map {
+    height: 472px;
+}
+
 /*MAPS DIRECTIONS*/
 
 /* #map {

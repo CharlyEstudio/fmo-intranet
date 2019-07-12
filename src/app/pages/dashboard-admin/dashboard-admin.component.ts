@@ -8,7 +8,7 @@ const swal: SweetAlert = _swal as any;
 import { Usuario } from '../../models/usuario.model';
 
 // Socket Service
-import { WebsocketService, ClientesService, HerramientasService, UsuarioService, ScrumService, TiendaService, DiferenciasService } from '../../services/services.index';
+import { WebsocketService, HerramientasService, UsuarioService, ScrumService, TiendaService, DiferenciasService } from '../../services/services.index';
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -97,6 +97,18 @@ export class DashboardAdminComponent implements OnInit {
     }
   ];
 
+  // Mapa
+  // lat: number = 20.557489;
+  // lng: number = -100.417779;
+  lat: number = 23.555243;
+  lng: number = -102.794181;
+  // lat: number = 33.779182;
+  // lng: number = 9.780247;
+  // zoom: number = 2;
+  zoom: number = 5;
+  mapTypeControl: boolean = false;
+  ubicacionVisita: any[] = [];
+
   constructor(
     private herramientas: HerramientasService,
     private usuario: UsuarioService,
@@ -105,8 +117,14 @@ export class DashboardAdminComponent implements OnInit {
     private _ws: WebsocketService,
     private _diferencias: DiferenciasService
   ) {
+    if (localStorage.getItem('ubicacionVisita')) {
+      this.ubicacionVisita = JSON.parse(localStorage.getItem('ubicacionVisita'));
+    }
     this._ws.escuchar('visitas-tienda').subscribe((visita: any) => {
       console.log(visita);
+      this.ubicacionVisita.push(visita);
+      localStorage.removeItem('ubicacionVisita');
+      localStorage.setItem('ubicacionVisita', JSON.stringify(this.ubicacionVisita));
     });
     this._diferencias.notificacion.subscribe((diferencias: any) => {
       this.saldosDiferentes = diferencias;

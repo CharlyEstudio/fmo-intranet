@@ -48,13 +48,19 @@ export class AppComponent implements OnInit {
 
       // Se genera un nuevo pedido en la tienda
       this._wsService.escuchar('aviso-asesor').subscribe((pedido: any) => {
-        this.pushNot('Pedido de', pedido.cliente, 'Nuevo pedido de la tienda', 'Tienda On-Line');
+        this.pushNot('Pedido de', pedido.cliente.nombre, 'Nuevo pedido de la tienda', 'Tienda On-Line');
       });
 
       // Nuevo Cliente registrado en la tienda
       this._wsService.escuchar('registro-watch').subscribe((registro: any) => {
-        if (registro.numero) {
-          this.pushNot(registro.numero, registro.nombre, 'Nuevo cliente registrado desde la tienda.', 'Tienda On-Line');
+        if (registro.nombre) {
+          let numero;
+          if (registro.numero) {
+            numero = registro.numero;
+          } else {
+            numero = 'Sin Número';
+          }
+          this.pushNot(numero, registro.nombre, 'Nuevo cliente registrado desde la tienda.', 'Tienda On-Line');
         } else {
           this.pushNot('Hay', 'nuevo', 'Se registro un nuevo comentario desde la tienda.', 'Tienda On-Line');
         }

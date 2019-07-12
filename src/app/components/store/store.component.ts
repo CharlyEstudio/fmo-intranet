@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
 
 // Servicios
-import { ClientesService } from '../../services/services.index';
+import { ClientesService, TiendaService, WebsocketService } from '../../services/services.index';
 
 @Component({
   selector: 'app-store',
@@ -18,6 +18,7 @@ export class StoreComponent implements OnInit, OnDestroy {
   mtrPed: any[] = [];
 
   monitor: number = 0;
+  mensajes: number = 0;
   bajar: number = 0;
   bajarImpo: number = 0;
 
@@ -27,7 +28,9 @@ export class StoreComponent implements OnInit, OnDestroy {
   intervaloBajar: any;
 
   constructor(
-    private _clienteService: ClientesService
+    private _clienteService: ClientesService,
+    private store: TiendaService,
+    private ws: WebsocketService
   ) {
     // Subscrión a Monitor
     this.monitorOb =  this.regresaMon().subscribe(
@@ -47,6 +50,20 @@ export class StoreComponent implements OnInit, OnDestroy {
       error => console.error('Error en el obs', error),
       () => console.log('El observador termino!')
     );
+
+    // Mensajes de Contacto
+    this.obtenerMensajesContacto();
+    this.ws.escuchar('registro-watch').subscribe(() => {
+      this.obtenerMensajesContacto();
+    });
+  }
+
+  obtenerMensajesContacto() {
+    this.store.obtenerMensajesContacto().subscribe((mensajes: any) => {
+      if (mensajes.length > 0) {
+        this.mensajes = mensajes.length;
+      }
+    });
   }
 
   // Observable de Pedidos en Monitor

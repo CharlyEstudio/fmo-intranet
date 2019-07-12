@@ -81,7 +81,7 @@ export class LoginComponent implements OnInit {
 
           } else if (this._usuarioService.usuario.rol === "MESA_ROLE" || this._usuarioService.usuario.rol === "OF_ROLE") {
 
-            this.router.navigate(['/procesoFacturas']);
+            this.router.navigate(['/clientes-oficina']);
 
           } else {
 

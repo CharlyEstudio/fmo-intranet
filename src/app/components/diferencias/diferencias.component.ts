@@ -32,13 +32,15 @@ export class DiferenciasComponent implements OnInit, OnDestroy {
     // Subscrión a Diferencias
     this.observar =  this.regresa().subscribe(
       numero => {
-        if (this._usuarioService.usuario.rol === 'DIR_ROLE' || this._usuarioService.usuario.rol === 'GER_ROLE' || this._usuarioService.usuario.rol === 'ADMIN_ROLE') {
-          if ( numero.length > 0 ) {
-            this._diferencias.notificacion.emit(numero);
-            this.diferencia = true;
-          } else {
-            this._diferencias.notificacion.emit([]);
-            this.diferencia = false;
+        if (this._usuarioService.usuario !== null) {
+          if (this._usuarioService.usuario.rol === 'DIR_ROLE' || this._usuarioService.usuario.rol === 'GER_ROLE' || this._usuarioService.usuario.rol === 'ADMIN_ROLE') {
+            if ( numero.length > 0 ) {
+              this._diferencias.notificacion.emit(numero);
+              this.diferencia = true;
+            } else {
+              this._diferencias.notificacion.emit([]);
+              this.diferencia = false;
+            }
           }
         }
       },

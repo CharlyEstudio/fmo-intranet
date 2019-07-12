@@ -105,6 +105,9 @@ export class DashboardAdminComponent implements OnInit {
     private _ws: WebsocketService,
     private _diferencias: DiferenciasService
   ) {
+    this._ws.escuchar('visitas-tienda').subscribe((visita: any) => {
+      console.log(visita);
+    });
     this._diferencias.notificacion.subscribe((diferencias: any) => {
       this.saldosDiferentes = diferencias;
     });

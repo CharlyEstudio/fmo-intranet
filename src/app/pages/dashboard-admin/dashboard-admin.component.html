@@ -6,7 +6,39 @@
 
     </div>
 
-    <div class="col-md-4"></div>
+    <div class="col-md-8">
+        <div class="card" *ngIf="saldosDiferentes.length > 0">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div>
+                        <h4 class="card-title"><span class="lstick"></span>Saldos Diferentes</h4>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Saldo/Doc</th>
+                            <th>Saldo/Cli</th>
+                            <th>Diferencia</th>
+                            <th>Tipo</th>
+                            <th>Afecta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let sd of saldosDiferentes">
+                            <td>{{sd.numero}} {{sd.nombre}}</td>
+                            <td>{{sd.saldoDoc | currency}}</td>
+                            <td>{{sd.saldoCliente | currency}}</td>
+                            <td>{{sd.diferencia | currency}}</td>
+                            <td>{{sd.tipo}}</td>
+                            <td>{{sd.afecta}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
     <div class="col-md-6">
         <div class="card">

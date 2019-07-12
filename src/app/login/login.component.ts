@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 
 import { UsuarioService, WebsocketService } from '../services/services.index';
 import { Usuario } from '../models/usuario.model';
+import { PushNotificationOptions, PushNotificationService } from 'ngx-push-notifications';
 
 declare function init_plugins();
 

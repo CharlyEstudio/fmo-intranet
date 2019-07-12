@@ -33,7 +33,6 @@ export class ClientesOficinaComponent implements OnInit {
   }
 
   obtenerVisitas() {
-    console.log('Actualizando..');
     this.visitasClientes.obtenerVisitas().subscribe((visitas: any) => {
       if (visitas.length > 0) {
         this.visitas = visitas;

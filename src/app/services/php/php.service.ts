@@ -661,25 +661,51 @@ export class PhpService {
   }
 
   diferencias() {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/ventas.php?opcion=5';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/ventas.php?opcion=5';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/ventas.php?opcion=5';
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/diferencias/saldo';
+      /*LOCAL*/this.url = URL_LOCAL + '/api/ventas.php?opcion=5';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/diferencias/saldo';
+      this.url = URL_PRUEBAS + '/api/ventas.php?opcion=5';
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/diferencias/saldo';
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/ventas.php?opcion=5';
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/diferencias/saldo';
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/diferencias/saldo';
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/diferencias/saldo';
+    // }
+
     return this.http.get( this.url ).map((diferencias: any) => {
-      if (diferencias.status) {
-        return diferencias.respuesta;
+      if (diferencias.length > 0) {
+        return diferencias;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  nuevosNC() {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/ventas.php?opcion=6';
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/ventas.php?opcion=6';
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/ventas.php?opcion=6';
+    }
+
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/diferencias/saldo';
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/diferencias/saldo';
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/diferencias/saldo';
+    // }
+
+    return this.http.get( this.url ).map((ncs: any) => {
+      if (ncs.length > 0) {
+        return ncs;
       } else {
         return 0;
       }

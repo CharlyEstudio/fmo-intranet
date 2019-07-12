@@ -41,6 +41,9 @@ export class AsignacionActividadesComponent implements OnInit {
     this._ws.escuchar('actividades-diarias').subscribe((actividad: any) => {
       this.asignacion_act();
     });
+    this._ws.escuchar('actividades-realizada').subscribe((actividad: any) => {
+      this.asignacion_act();
+    });
     this.asignacion_act();
     this.actividades();
     this.obtenerUsuarios();

@@ -90,7 +90,6 @@ export class CorteTarjetasComponent implements OnInit {
     this.pdf = '';
     const file = `${this.cob.nativeElement.value}-${Date.now()}.pdf`;
     this.cobrador.hacerPDF(file, cobrado, this.total, this.pagado, this.comision, this.impocom, this.fini.nativeElement.value, this.ffin.nativeElement.value).subscribe((pdf: any) => {
-      console.log(pdf);
       if (pdf[0].status) {
         swal('CREADO', 'Archivo PDF creado.', 'success');
         setTimeout(() => {

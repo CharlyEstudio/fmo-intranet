@@ -14,7 +14,7 @@ const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
 
 // Push Notification
 // npm i ngx-push-notifications
-// import { PushNotificationService } from 'ngx-push-notifications';
+import { PushNotificationService } from 'ngx-push-notifications';
 
 // Modulos
 // import { PagesModule } from './pages/pages.module';
@@ -53,8 +53,8 @@ import { StatusComponent } from './components/status/status.component';
     SharedModule,
     SocketIoModule.forRoot(config)
   ],
-  // providers: [PushNotificationService],
-  providers: [],
+  providers: [PushNotificationService],
+  // providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

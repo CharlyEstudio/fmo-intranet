@@ -39,6 +39,7 @@ export { VisitasClientesService } from './visitas-clientes/visitas-clientes.serv
 export { PaneldiariosService } from './paneldiarios/paneldiarios.service';
 export { ScrumService } from "./scrum/scrum.service";
 export { ActividadesService } from "./actividades/actividades.service";
+export { DiferenciasService } from "../components/diferencias/diferencias.service";
 
 // Servicio PHP
 export { PhpService } from "./php/php.service";

@@ -58,6 +58,9 @@ export class ActividadesComponent implements OnInit {
     this._ws.escuchar('actividades-diarias').subscribe((actividad: any) => {
       this.check();
     });
+    this._ws.escuchar('actividades-realizada').subscribe((actividad: any) => {
+      this.check();
+    });
     this.check();
   }
 
@@ -83,11 +86,11 @@ export class ActividadesComponent implements OnInit {
   }
 
   guardar(d1: any, comentario: any) {
-    this._actividades.guarda(d1.id_actividad, comentario).subscribe((save: any) => {
+    this._actividades.guarda(d1.idactividades_check, comentario).subscribe((save: any) => {
       if (save.length === 0) {
         d1.terminado = 'SI';
         d1.comentario = comentario;
-        this._ws.acciones('actividades-diarias', d1);
+        this._ws.acciones('actividad-realizada', d1);
         this._actividades.guardahistorial(d1.id_actividad, comentario, d1.id_usuario).subscribe((saveAs: any) => {});
       }
     });

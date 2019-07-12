@@ -8,7 +8,7 @@ const swal: SweetAlert = _swal as any;
 import { Usuario } from '../../models/usuario.model';
 
 // Socket Service
-import { WebsocketService, ClientesService, HerramientasService, UsuarioService, ScrumService, TiendaService } from '../../services/services.index';
+import { WebsocketService, ClientesService, HerramientasService, UsuarioService, ScrumService, TiendaService, DiferenciasService } from '../../services/services.index';
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -25,6 +25,7 @@ export class DashboardAdminComponent implements OnInit {
   developers: Usuario;
   sprints: any[] = [];
   activities: any[] = [];
+  saldosDiferentes: any[] = [];
   actividadAsignar: any;
   puntosFinales: number = 0;
   dias: number = 0;
@@ -101,8 +102,12 @@ export class DashboardAdminComponent implements OnInit {
     private usuario: UsuarioService,
     private scrum: ScrumService,
     private tienda: TiendaService,
-    private _ws: WebsocketService
+    private _ws: WebsocketService,
+    private _diferencias: DiferenciasService
   ) {
+    this._diferencias.notificacion.subscribe((diferencias: any) => {
+      this.saldosDiferentes = diferencias;
+    });
     this.tienda.obtenerMejoresTen().subscribe((mejores: any) => {
       if (mejores.status) {
         const numeros = mejores.todos;

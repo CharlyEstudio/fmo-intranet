@@ -41,6 +41,12 @@ export class AppComponent implements OnInit {
       && localStorage.getItem('rol') !== 'OF_ROLE'
       && localStorage.getItem('rol') !== 'MESA_ROLE'
       && localStorage.getItem('rol') !== 'CLI_ROLE') {
+      // Nuevo Comentario del Asesor
+      this._wsService.escuchar('comentario-asesor').subscribe((comentar: any) => {
+        const comentario = 'Estuvo con el cliente ' + comentar.respuesta.numero + ' y su acción fue ' + comentar.respuesta.accion;
+        this.pushNot(comentar.respuesta.hora, comentar.asesor.nombre, comentario, 'Visitas Asesor');
+      });
+
       // Se genera nueva guía
       this._wsService.escuchar('centinela-chofer').subscribe((chofer: any) => {
         this.pushNot('Chofer', chofer.nombre, 'Nueva Guía', 'Guías');

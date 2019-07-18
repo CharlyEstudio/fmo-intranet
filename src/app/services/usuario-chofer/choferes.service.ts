@@ -36,6 +36,18 @@ export class ChoferesService {
     return this.http.get(this.url);
   }
 
+  obtenerChofer(id: string) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/chofer/id/' + id;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/chofer/id/' + id;
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/chofer/id/' + id;
+    }
+
+    return this.http.get(this.url);
+  }
+
   obtenerChoferesAll() {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/chofer/all';

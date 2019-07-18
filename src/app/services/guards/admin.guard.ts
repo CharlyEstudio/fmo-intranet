@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
 import { UsuarioService } from '../usuario/usuario.service';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
 
   constructor(
-    public _usuarioService: UsuarioService
+    public _usuarioService: UsuarioService,
+    public router: Router
   ) {}
 
   canActivate() {
@@ -14,6 +15,7 @@ export class AdminGuard implements CanActivate {
       return true;
     } else {
       console.log('Bolqueado por el ADMIN GUARD');
+      this._usuarioService.logout();
       swal('Sin acceso' , 'No tiene autorizado ingresar en esta sección.', 'error');
       return false;
     }

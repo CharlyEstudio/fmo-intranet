@@ -8,15 +8,15 @@ export class ImagenPipe implements PipeTransform {
 
   transform(img: string, tipo: string = 'usuario'): any {
 
-    let url;
+    let url = 'https://ferremayoristas.com.mx:' + PUERTO_INTERNO + '/img';
 
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      url = URL_LOCAL + ':' + PUERTO_INTERNO + '/img';
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = 'http://192.168.1.250:' + PUERTO_INTERNO + '/img';
-    } else {
-      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/img';
-    }
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   url = URL_LOCAL + ':' + PUERTO_INTERNO + '/img';
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   url = 'https://ferremayoristas.com.mx:' + PUERTO_INTERNO + '/img';
+    // } else {
+    //   url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/img';
+    // }
 
     if ( !img ) {
       return url + '/usuarios/xxx';

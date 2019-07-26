@@ -45,7 +45,8 @@ import {
   PaneldiariosService,
   ScrumService,
   ActividadesService,
-  DiferenciasService
+  DiferenciasService,
+  GoogleService
   // NotificationService
 } from "./services.index";
 
@@ -98,6 +99,7 @@ import {
     ScrumService,
     ActividadesService,
     DiferenciasService,
+    GoogleService,
     // Notificaciones
     // NotificationService
     // Magnitracking

@@ -121,7 +121,13 @@ export class DashboardAdminComponent implements OnInit {
       this.ubicacionVisita = JSON.parse(localStorage.getItem('ubicacionVisita'));
     }
     this._ws.escuchar('visitas-tienda').subscribe((visita: any) => {
-      console.log(visita);
+      let esVisita = (visitaFind: any) => {
+        return visitaFind.lat === visita.lat && visitaFind.lng === visita.lng;
+      }
+
+      if (this.ubicacionVisita.find(esVisita) !== undefined) {
+        console.log(this.ubicacionVisita.find(esVisita));
+      }
       this.ubicacionVisita.push(visita);
       localStorage.removeItem('ubicacionVisita');
       localStorage.setItem('ubicacionVisita', JSON.stringify(this.ubicacionVisita));

@@ -10,7 +10,7 @@ import * as _swal from 'sweetalert';
 import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
 const swal: SweetAlert = _swal as any;
 
-import { CreditoService, WebsocketService, UsuarioService } from '../../../services/services.index';
+import { CreditoService, WebsocketService, UsuarioService, ClientesService } from '../../../services/services.index';
 
 @Component({
   selector: 'app-bitacora',
@@ -55,7 +55,8 @@ export class BitacoraComponent implements OnInit, OnDestroy {
     private router: Router,
     private _creditoService: CreditoService,
     private _webSocket: WebsocketService,
-    private _usuariosServices: UsuarioService
+    private _usuariosServices: UsuarioService,
+    private _clienteService: ClientesService
   ) {
     this.id = this._usuariosServices.usuario._id;
     this.rol = this._usuariosServices.usuario.rol;
@@ -288,6 +289,39 @@ export class BitacoraComponent implements OnInit, OnDestroy {
     }, err => {
       console.log(err);
     });
+  }
+
+  revisar(termino: any) {
+    this.charlaBol = true;
+    this.sinsaldo = false;
+    this.charla = [];
+    this._clienteService.infoCliente(termino, '', this.rol).subscribe((cliente: any) => {
+      if (cliente.length > 0) {
+        this.sinsaldo = false;
+        this._creditoService.obtenerComentarios(cliente[0].CLIENTEID).subscribe((comentarios: any) => {
+          if (comentarios.ok) {
+            this.charla = comentarios.charla;
+            this.charlaBol = true;
+          } else {
+            this.charlaBol = false;
+            this.charla = [];
+          }
+        });
+      } else {
+        this.sinsaldo = true;
+      }
+    });
+    // this._creditoService.morosidadRelacionCliente(termino).subscribe((cuentas: any) => {
+    //   if (cuentas.length > 0) {
+    //     this.busqueda = cuentas;
+    //     this.buscarBol = false;
+    //   } else {
+    //     this.buscarBol = false;
+    //     this.sinsaldo = true;
+    //   }
+    // }, err => {
+    //   console.log(err);
+    // });
   }
 
   irInfo( data: any ) {

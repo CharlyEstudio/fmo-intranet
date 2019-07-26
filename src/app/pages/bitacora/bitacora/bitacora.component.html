@@ -30,6 +30,8 @@
 
                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#buscar" role="tab">Buscar</a> </li>
 
+                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#revisar" role="tab">Revisar Comentarios</a> </li>
+
                     <li class="nav-item"> <a class="nav-comentario">Comentarios del Día {{ fecha | date }}</a> </li>
 
                 </ul>
@@ -184,6 +186,74 @@
 
                                 </div>
 
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane" id="revisar" role="tabpanel">
+
+                        <div class="card-body">
+
+                            <form>
+
+                                <div class="form-group">
+
+                                    <input #input autocomplete="off" (keyup.enter)="revisar(input.value)" type="text" name="buscar" id="buscar" class="form-control" placeholder="Buscar Cliente">
+
+                                </div>
+
+                            </form>
+
+                            <div class="alert alert-info" *ngIf="charlaBol && charla.length === 0">
+
+                                Buscando cliente.
+
+                            </div>
+
+                            <div class="alert alert-danger" *ngIf="sinsaldo">
+
+                                No hay datos de este cliente.
+
+                            </div>
+
+                            <div class="card" style="width: 100%;" *ngIf="charlaBol && charla.length > 0">
+
+                                <div class="card-body">
+            
+                                    <h4 class="card-title" *ngIf="charlaBol">Comentarios Recientes</h4>
+            
+                                    <h4 class="card-title" *ngIf="!charlaBol">No hay Comentarios</h4>
+            
+                                    <div class="chat-box" *ngIf="charlaBol">
+            
+                                        <!--chat Row -->
+                                        <ul class="chat-list" style="overflow-y: scroll; height: 400px;">
+            
+                                            <!--chat Row -->
+                                            <li *ngFor="let c of charla; let i = index" [ngClass]="{'reverse': id === c.usuario._id, '': id !== c.usuario._id}">
+            
+                                                <div class="chat-img" *ngIf="id !== c.usuario._id"><img [src]="c.usuario.img | imagen"></div>
+            
+                                                <div class="chat-content">
+            
+                                                    <h5>{{ c.usuario.nombre }}</h5>
+            
+                                                    <div class="box" [ngClass]="{'bg-light-inverse': id === c.usuario._id, 'bg-light-info': id !== c.usuario._id}">{{ c.comentario }}</div>
+            
+                                                </div>
+            
+                                                <div class="chat-time">{{ c.hora }} <br> {{ c.fecha | date }}</div>
+            
+                                            </li>
+            
+                                        </ul>
+            
+                                    </div>
+            
+                                </div>
+            
                             </div>
 
                         </div>

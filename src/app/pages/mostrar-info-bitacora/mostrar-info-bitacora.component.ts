@@ -204,7 +204,8 @@ export class MostrarInfoBitacoraComponent implements OnInit {
       fecha: fecha,
       hora: hora,
       rango: this.tipo,
-      remitente: this._usuariosServices.usuario.nombre
+      remitente: this._usuariosServices.usuario.nombre,
+      img: this._usuariosServices.usuario.img
     };
 
     this._creditoService.guardarComentario(venHist).subscribe( ( resp: any ) => {

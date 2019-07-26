@@ -46,7 +46,6 @@ export class AppComponent implements OnInit {
       // Nuevo Comentario del Asesor
       this._wsService.escuchar('comentario-asesor').subscribe((comentar: any) => {
         const comentario = 'Estuvo con el cliente ' + comentar.respuesta.numero + ' y su acción fue ' + comentar.respuesta.accion;
-        console.log('Estuvo con el cliente el asesor: ' + 'https://ferremayoristas.com.mx:' + PUERTO_INTERNO + '/img' + '/usuarios/' + comentar.asesor.img);
         this.pushNot(comentar.respuesta.hora, comentar.asesor.nombre, comentario, 'Visitas Asesor', comentar.asesor.img);
       });
 
@@ -59,23 +58,21 @@ export class AppComponent implements OnInit {
           } else {
             numero = 1;
           }
-          const comentario = 'Realizando viaje a ' + ir.respuesta.guia.nombre + ', con ' + numero + ' pedidos';
-          console.log('El chofer viaja: ' + 'https://ferremayoristas.com.mx:' + PUERTO_INTERNO + '/img' + '/choferes/' + ir.respuesta.chofer.img);
-          this.pushNot(ir.respuesta.chofer.nombre, 'Viajando', comentario, 'Entrega de Pedido', ir.respuesta.chofer.img, false, 'choferes');
+          this._choferService.obtenerChofer(ir.respuesta.chofer._id).subscribe((chof: any) => {
+            const comentario = 'Realizando viaje a ' + ir.respuesta.guia.nombre + ', con ' + numero + ' pedidos';
+            this.pushNot(ir.respuesta.chofer.nombre, 'Viajando', comentario, 'Entrega de Pedido', chof.chofer.img, false, 'choferes');
+          });
         }
       });
 
       // Se genera nueva guía
       this._wsService.escuchar('centinela-chofer').subscribe((chofer: any) => {
-        console.log('Nueva guía: ', chofer);
-        console.log('Foto del Chofer: ' + 'https://ferremayoristas.com.mx:' + PUERTO_INTERNO + '/img' + '/usuarios/');
-        this.pushNot('Chofer', chofer.nombre, 'Nueva Guía', 'Guías');
+        this.pushNot('Chofer', chofer.nombre, 'Nueva Guía', 'Guías', chofer.img, false, 'choferes');
       });
 
       // Pedido entregado por el chófer
       this._wsService.escuchar('pedido-entregado').subscribe((chofer: any) => {
         this._choferService.obtenerChofer(chofer.respuesta.chofer).subscribe((chof: any) => {
-          console.log('Entrega pedido el chofer: ' + 'https://ferremayoristas.com.mx:' + PUERTO_INTERNO + '/img' + '/choferes/' + chof.chofer.img);
           const mesage = `Entrega pedido a ${chofer.respuesta.nomcli}`;
           this.pushNot('Chofer', chofer.respuesta.nomchofer, mesage, 'Guías', chof.chofer.img, false, 'choferes');
         });
@@ -103,26 +100,15 @@ export class AppComponent implements OnInit {
 
       // Nuevo mensaje de la bitacora
       this._wsService.escuchar('mensaje-folio').subscribe( ( escuchando: any ) => {
-        console.log(escuchando);
-        this.pushNot(escuchando.numero, escuchando.nombre, escuchando.comentario, escuchando.remitente);
+        this.pushNot(escuchando.numero, escuchando.nombre, escuchando.comentario, escuchando.remitente, escuchando.img);
       });
 
       // Actividad realizada
+      // TODO
       this._wsService.escuchar('actividad-realizada').subscribe((ok: any) => {
         console.log(ok);
-          this.pushNot(ok.nombre, ok.actividad, ok.comentario, 'Actividades Diarias');
+        this.pushNot(ok.nombre, ok.actividad, ok.comentario, 'Actividades Diarias');
       });
-
-      // Subscripción a Diferencias
-      this.observar =  this.regresa().subscribe(
-        numero => {
-          if ( numero.length > 0 ) {
-            this.pushNot('Saldos', 'Diferentes', 'Se encontraron saldos diferentes en clientes, favor de revisar.', 'Diferencia de Saldos');
-          }
-        },
-        error => console.error('Error en el obs', error),
-        () => console.log('El observador termino!')
-      );
 
       // Subscripción a NCS nuevos
       this.observarNCS =  this.regresaNC().subscribe(
@@ -143,6 +129,18 @@ export class AppComponent implements OnInit {
       );
     }
 
+    if (localStorage.getItem('rol') === 'ADMIN_ROLE') {
+      // Subscripción a Diferencias
+      this.observar =  this.regresa().subscribe(
+        numero => {
+          if ( numero.length > 0 ) {
+            this.pushNot('Saldos', 'Diferentes', 'Se encontraron saldos diferentes en clientes, favor de revisar.', 'Diferencia de Saldos');
+          }
+        },
+        error => console.error('Error en el obs', error),
+        () => console.log('El observador termino!')
+      );
+    }
   }
 
   regresa(): Observable<any> {

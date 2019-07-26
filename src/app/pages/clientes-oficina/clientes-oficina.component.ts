@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 // Servicios
-import { VisitasClientesService, HerramientasService } from '../../services/services.index';
+import { VisitasClientesService, HerramientasService, ExcelService } from '../../services/services.index';
 
 @Component({
   selector: 'app-clientes-oficina',
@@ -20,11 +20,14 @@ export class ClientesOficinaComponent implements OnInit {
 
   info: any;
   visitas: any[] = [];
+  visitasDia: any[] = [];
   msg: any = '';
+  fechaActual = 'actual';
 
   constructor(
     private visitasClientes: VisitasClientesService,
-    private herramientas: HerramientasService
+    private herramientas: HerramientasService,
+    private excel: ExcelService
   ) {
     this.obtenerVisitas();
   }
@@ -40,6 +43,11 @@ export class ClientesOficinaComponent implements OnInit {
     });
   }
 
+  obtenerVisitasDia(fecha: any) {
+    this.visitasClientes.obtenerVisitasDia(fecha).subscribe((visitasDia: any) => {
+      this.visitasDia = visitasDia; 
+    });
+  }
   obtenerInfofolio(folio: number, fecha: string, cliente: number) {
     this.visitasClientes.asegurarFolio(folio, fecha, cliente).subscribe((seguro: any) => {
       if (seguro.length === 0) {
@@ -55,6 +63,12 @@ export class ClientesOficinaComponent implements OnInit {
         this.folio.nativeElement.value = '';
       }
     });
+  }
+  
+  
+  exportarVisitas(visitasexport: any, fecha) {
+    const name = 'visitas-' + fecha;
+    this.excel.exportAsExcelFile(visitasexport, name);
   }
 
   guardarData() {

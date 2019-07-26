@@ -5,9 +5,77 @@
       <div class="p-2 bd-highlight">
         <button type="button" class="btn btn-info btn-rounded" data-toggle="modal" data-target="#add-contact">Agregar Nueva Visita</button>
       </div>
+      <div class="">
+        <button type="button" class="btn btn-info btn-rounded" data-toggle="modal" data-target="#ver-info">Historial</button>
+      </div>
+      <div class="">
+        <button type="button" class="btn btn-danger btn-rounded" *ngIf="visitas.length > 0" (click)="exportarVisitas(visitas,fechaActual)">Descargar</button>
+      </div>
       <div class="p-2 bd-highlight">
         <button type="button" class="btn btn-success btn-rounded" (click)="obtenerVisitas()">Actualizar</button>
       </div>
+    </div>
+    
+      <div id="ver-info" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg tablas-modales">
+          <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="myModalLabel">Visitas del día</h2>
+
+                <div>
+                  <form>
+                    <div class="form-group">
+                      <label for="fecha">Selecciona Fecha</label>
+                      <input #fechavis type="date" class="form-control" id='fecha' placeholder="Fecha">
+                    </div>
+                      <button class="btn btn-success" type="button" (click)="obtenerVisitasDia(fechavis.value)">Obtener</button>
+                      
+                      <button class="btn btn-danger" type="button" *ngIf="visitasDia.length > 0" (click)="exportarVisitas(visitasDia, fechavis.value)">Excel</button>
+                  </form>
+
+                  </div>
+              </div>
+                <div class="modal-body">
+                    <table  class="table" *ngIf="visitasDia.length > 0">
+                        <thead>
+                          <tr>
+                            <th class="text-center">Cliente</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Tipo</th>
+                            <th class="text-center">Remisión</th>
+                            <th class="text-center">Monto</th>
+                            <th class="text-center">Pago</th>
+                            <th class="text-center">Aplicado</th>
+                            <th class="text-center">Atendio</th>
+                            <th class="text-center">Observación</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let v of visitasDia;">
+                            <td class="text-center">{{v.cliente}}</td>
+                            <td>{{v.nombre}}</td>
+                            <td class="text-center">{{v.tipo}}</td>
+                            <td class="text-center">{{v.folio}}</td>
+                            <td class="text-right">{{v.importe}}</td>
+                            <td class="text-center">{{v.pago}}</td>
+                            <td class="text-center">{{v.aplicado}}</td>
+                            <td class="text-center">{{v.atendio}}</td>
+                            <td class="text-left">{{v.observacion}}</td>
+                          </tr>
+                        </tbody>
+                        </table>
+                        <div *ngIf="visitasDia.length === 0">
+                          <p>No se registraron visitas</p>
+                        </div>
+                        
+                  </div>
+                    <div class="modal-footer">
+                      
+                  </div>
+                </div>
+              </div>
+
+
     </div>
     <div class="table-responsive">
       <div id="add-contact" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

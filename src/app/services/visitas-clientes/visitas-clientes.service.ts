@@ -23,6 +23,20 @@ export class VisitasClientesService {
     return this.http.get( url );
   }
 
+  obtenerVisitasDia(fecha: any) {
+    let url;
+
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_SERVER + '/api/visitas.php?opcion=52&fecha='+ fecha;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      url = URL_PRUEBAS + ':' + PUERTO_SERVER + '/api/visitas.php?opcion=52&fecha='+ fecha;
+    } else {
+      url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/visitas.php?opcion=52&fecha='+ fecha;
+    }
+
+    return this.http.get( url );
+  }
+
   asegurarFolio(folio: number, fecha: string, cliente: number) {
     let url;
 

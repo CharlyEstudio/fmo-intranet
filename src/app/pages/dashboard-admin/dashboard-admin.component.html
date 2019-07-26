@@ -6,7 +6,7 @@
 
     </div>
 
-    <div class="col-md-8">
+    <div class="col-md-12">
         <div class="card" *ngIf="saldosDiferentes.length > 0">
             <div class="card-body">
                 <div class="d-flex">
@@ -41,7 +41,7 @@
     </div>
 
     <div class="col-md-6">
-        <div class="card">
+        <div class="card" style="height: 550px!important;">
             <div class="card-body">
                 <div class="d-flex">
                     <div>
@@ -62,7 +62,7 @@
     </div>
 
     <div class="col-md-6">
-        <div class="card">
+        <div class="card" style="height: 550px!important;">
             <div class="card-body">
                 <div>
                     <div>
@@ -73,20 +73,23 @@
                             <agm-marker *ngFor="let ubi of ubicacionVisita" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker>
                         </agm-map>
                     </div> -->
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Lugar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let ubi of ubicacionVisita">
-                                <td>1</td>
-                                <td>{{ubi.lat}} : {{ubi.lng}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive" style="height: 450px!important; overflow-y: auto!important;">
+                        <table class="table" *ngIf="ubicacionVisita.length > 0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Lugar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let ubi of ubicacionVisita; let i = index">
+                                    <td>{{(i + 1)}}</td>
+                                    <td>{{ubi.lugar}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h3 *ngIf="ubicacionVisita.length === 0">Sin Visitas</h3>
+                    </div>
                 </div>
             </div>
         </div>

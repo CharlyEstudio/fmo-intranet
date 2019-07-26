@@ -41,6 +41,9 @@ export { ScrumService } from "./scrum/scrum.service";
 export { ActividadesService } from "./actividades/actividades.service";
 export { DiferenciasService } from "../components/diferencias/diferencias.service";
 
+// Servicios de Google
+export { GoogleService } from "./googleconsole/google.service";
+
 // Servicio PHP
 export { PhpService } from "./php/php.service";
 

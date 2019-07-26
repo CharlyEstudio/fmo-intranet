@@ -8,7 +8,7 @@ const swal: SweetAlert = _swal as any;
 import { Usuario } from '../../models/usuario.model';
 
 // Socket Service
-import { WebsocketService, HerramientasService, UsuarioService, ScrumService, TiendaService, DiferenciasService } from '../../services/services.index';
+import { WebsocketService, HerramientasService, UsuarioService, ScrumService, TiendaService, DiferenciasService, GoogleService } from '../../services/services.index';
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -115,7 +115,8 @@ export class DashboardAdminComponent implements OnInit {
     private scrum: ScrumService,
     private tienda: TiendaService,
     private _ws: WebsocketService,
-    private _diferencias: DiferenciasService
+    private _diferencias: DiferenciasService,
+    private _google: GoogleService
   ) {
     if (localStorage.getItem('ubicacionVisita')) {
       this.ubicacionVisita = JSON.parse(localStorage.getItem('ubicacionVisita'));
@@ -125,12 +126,20 @@ export class DashboardAdminComponent implements OnInit {
         return visitaFind.lat === visita.lat && visitaFind.lng === visita.lng;
       }
 
-      if (this.ubicacionVisita.find(esVisita) !== undefined) {
-        console.log(this.ubicacionVisita.find(esVisita));
+      if (!this.ubicacionVisita.find(esVisita)) {
+        // Con est ya puedo guardar la visita y hacer un conteo de visitas.
+        const gps = `${visita.lat}, ${visita.lng}`;
+        this._google.obtenerDireccion(gps).subscribe((dir: any) => {
+          const visit = {
+            'lugar': `Col. ${dir.results[0].address_components[2].long_name} Ciudad ${dir.results[0].address_components[3].long_name}, ${dir.results[0].address_components[4].long_name}; ${dir.results[0].address_components[5].long_name}`,
+            'lat': visita.lat,
+            'lng': visita.lng
+          };
+          this.ubicacionVisita.push(visit);
+          localStorage.removeItem('ubicacionVisita');
+          localStorage.setItem('ubicacionVisita', JSON.stringify(this.ubicacionVisita));
+        });
       }
-      this.ubicacionVisita.push(visita);
-      localStorage.removeItem('ubicacionVisita');
-      localStorage.setItem('ubicacionVisita', JSON.stringify(this.ubicacionVisita));
     });
     this._diferencias.notificacion.subscribe((diferencias: any) => {
       this.saldosDiferentes = diferencias;

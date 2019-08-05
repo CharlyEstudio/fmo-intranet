@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
 
 // Servicios
-import { ClientesService, TiendaService, WebsocketService } from '../../services/services.index';
+import { ClientesService, TiendaService, WebsocketService, HerramientasService } from '../../services/services.index';
 
 @Component({
   selector: 'app-store',
@@ -30,6 +30,7 @@ export class StoreComponent implements OnInit, OnDestroy {
   constructor(
     private _clienteService: ClientesService,
     private store: TiendaService,
+    private herramientas: HerramientasService,
     private ws: WebsocketService
   ) {
     // Subscrión a Monitor
@@ -94,7 +95,7 @@ export class StoreComponent implements OnInit, OnDestroy {
 
       this.intervaloBajar = setInterval( () => {
 
-        this._clienteService.pedidosPorBajarWeb().subscribe((pedidos: any) => {
+        this._clienteService.pedidosPorBajarWeb(this.herramientas.fechaActual()).subscribe((pedidos: any) => {
           observer.next(pedidos);
         });
 
@@ -129,7 +130,7 @@ export class StoreComponent implements OnInit, OnDestroy {
   }
 
   obtenerPorBajarWeb() {
-    this._clienteService.pedidosPorBajarWeb().subscribe((porBajar: any) => {
+    this._clienteService.pedidosPorBajarWeb(this.herramientas.fechaActual()).subscribe((porBajar: any) => {
       this.bajar = porBajar[0].cantidad;
       this.bajarImpo = porBajar[0].importe;
     });

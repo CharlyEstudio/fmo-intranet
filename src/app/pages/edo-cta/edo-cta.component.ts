@@ -287,7 +287,7 @@ export class EdoCtaComponent implements OnInit {
                     "DOCID": edocta.respuesta[i].DOCID,
                     "FECHA": edocta.respuesta[i].FECHA,
                     "FECHAPAG": edocta.respuesta[i].FECHAPAG,
-                    "VENCE": '',
+                    "VENCE": edocta.respuesta[i].VENCE,
                     "FOLIO": edocta.respuesta[i].FOLIO,
                     "SALDO": saldo,
                     "CARGO": cargo,

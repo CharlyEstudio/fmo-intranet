@@ -69,7 +69,8 @@ export class PedCanceladosComponent implements OnInit, OnDestroy {
     // Pedidos Cancelados
     this._phpService.cancelados(fecha)
       .subscribe((data) => {
-        if ( data[0].importe !== 0 ) {
+        console.log(data);
+        if ( data !== 0 ) {
           this.cance = data[0].cantidad;
           this.canceImpo = data[0].importe;
         } else {
@@ -137,7 +138,7 @@ export class PedCanceladosComponent implements OnInit, OnDestroy {
         this._phpService.cancelados(fecha)
           .subscribe( ( data ) => {
 
-            if (data[0].importe !== 0) {
+            if (data !== 0) {
               const cancelados = {
                 cantidad: data[0].cantidad,
                 importe: data[0].importe

@@ -15,11 +15,11 @@ export class PhpService {
 
   porBajar(fecha: any) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=1';
+      /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=1&fecha=' + fecha;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PETICION + '/api/pedidos.php?opcion=1';
+      this.url = URL_PETICION + '/api/pedidos.php?opcion=1&fecha=' + fecha;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=1';
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=1&fecha=' + fecha;
     }
 
     // if (URL_SERVICIO_GENERAL === URL_PETICION) {
@@ -93,11 +93,11 @@ export class PhpService {
 
   porSurtir(fecha: any) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=2';
+      /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=2&fecha=' + fecha;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=2';
+      this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=2&fecha=' + fecha;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=2';
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=2&fecha=' + fecha;
     }
 
     // if (URL_SERVICIO_GENERAL === URL_PETICION) {
@@ -171,11 +171,11 @@ export class PhpService {
 
   facturados(fecha: any) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=3';
+      /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=3&fecha=' + fecha;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=3';
+      this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=3&fecha=' + fecha;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=3';
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=3&fecha=' + fecha;
     }
 
     // if (URL_SERVICIO_GENERAL === URL_PETICION) {
@@ -248,25 +248,25 @@ export class PhpService {
   }
 
   cancelados(fecha: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=4';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=4';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=4';
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/cancelados/' + fecha;
+      /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=4&fecha=' + fecha;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/cancelados/' + fecha;
+      this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=4&fecha=' + fecha;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/cancelados/' + fecha;
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=4&fecha=' + fecha;
     }
 
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/direccion/cancelados/' + fecha;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/direccion/cancelados/' + fecha;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/cancelados/' + fecha;
+    // }
+
     return this.http.get( this.url ).map((cancelados: any) => {
-      if (cancelados.status) {
-        return cancelados.respuesta;
+      if (cancelados.length > 0) {
+        return cancelados;
       } else {
         return 0;
       }
@@ -327,11 +327,11 @@ export class PhpService {
 
   totalPedidos(fecha: any) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=5';
+      /*LOCAL*/this.url = URL_LOCAL + '/api/pedidos.php?opcion=5&fecha=' + fecha;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=5';
+      this.url = URL_PRUEBAS + '/api/pedidos.php?opcion=5&fecha=' + fecha;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=5';
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=5&fecha=' + fecha;
     }
 
     // if (URL_SERVICIO_GENERAL === URL_PETICION) {

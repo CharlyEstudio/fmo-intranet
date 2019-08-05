@@ -151,13 +151,13 @@ export class ClientesService {
     return this.http.get( this.url );
   }
 
-  pedidosPorBajarWeb() {
+  pedidosPorBajarWeb(fecha: any) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=33';
+      /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=33&fecha=' + fecha;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PETICION + '/api/pedidos.php?opcion=33';
+      this.url = URL_PETICION + '/api/pedidos.php?opcion=33&fecha=' + fecha;
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=33';
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=33&fecha=' + fecha;
     }
 
     return this.http.get(this.url);

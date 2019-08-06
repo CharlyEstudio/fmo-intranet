@@ -78,6 +78,19 @@ export class NcService {
     return this.http.get(this.url);
   }
 
+  validarNCtrabajado(nc: any, serie: any) {
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/nc';
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/nc';
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/nc';
+    // }
+    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/nc/trabajados/buscar/ncserie/' + nc + '/' + serie;
+
+    return this.http.post(this.url, nc);
+  }
+
   guardarNCtrabajado(nc: any) {
     // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/nc';

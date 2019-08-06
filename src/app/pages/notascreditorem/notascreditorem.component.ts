@@ -45,33 +45,38 @@ export class NotascreditoremComponent implements OnInit {
   ngOnInit() { }
 
   trabajado(nc: any) {
-    const nota = {
-      fecha: nc.fecha.substr(0, 10),
-      tiponc: nc.tiponc,
-      serie: nc.serie,
-      nc: nc.nc,
-      factura: nc.factura,
-      nombre: nc.nombre,
-      subtotal: nc.subtotal,
-      iva: nc.iva,
-      total: nc.total,
-      saldo: nc.saldo,
-      perid: nc.perid,
-      vendedor: nc.vendedor,
-      usuario: this.id
-    };
-    this._ncService.guardarNCtrabajado(nota).subscribe((resp: any) => {
-      if (resp.status) {
-        const elem = <HTMLElement>(document.getElementById("linea" + nc.nc + nc.factura));
-        elem.classList.add("bg-primary");
-        nc.trabajado = true;
-        const ncAnt = this.nc;
-        this.nc = [];
-        this.nc = ncAnt;
-        // this.obtenerTrabajados();
+    this._ncService.validarNCtrabajado(nc.nc, nc.serie).subscribe((encontrado: any) => {
+      if (!encontrado.status) {
+        const nota = {
+          fecha: nc.fecha.substr(0, 10),
+          tiponc: nc.tiponc,
+          serie: nc.serie,
+          nc: nc.nc,
+          factura: nc.factura,
+          nombre: nc.nombre,
+          subtotal: nc.subtotal,
+          iva: nc.iva,
+          total: nc.total,
+          saldo: nc.saldo,
+          perid: nc.perid,
+          vendedor: nc.vendedor,
+          usuario: this.id
+        };
+        this._ncService.guardarNCtrabajado(nota).subscribe((resp: any) => {
+          if (resp.status) {
+            const elem = <HTMLElement>(document.getElementById("linea" + nc.nc + nc.factura));
+            elem.classList.add("bg-primary");
+            nc.trabajado = true;
+            const ncAnt = this.nc;
+            this.nc = [];
+            this.nc = ncAnt;
+            // this.obtenerTrabajados();
+          }
+        });
+      } else {
+        swal('Nota de Crédito Encontrado', 'Esta nota de crédito ya fue trabajado, si hay un error favor de reportar con el administrador.', 'error');
       }
     });
-
     // if (this.fechaNC !== '') {
     //   this.buscarFecNC.nativeElement.click();
     // }

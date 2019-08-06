@@ -6,6 +6,10 @@ import { NgForm } from '@angular/forms';
 
 // import { PushNotificationOptions, PushNotificationService } from 'ngx-push-notifications';
 
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
+const swal: SweetAlert = _swal as any;
+
 @Component({
   selector: 'app-mostrar-info-bitacora',
   templateUrl: './mostrar-info-bitacora.component.html',

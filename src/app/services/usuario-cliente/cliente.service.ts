@@ -6,6 +6,10 @@ import { Observable } from 'rxjs/Observable';
 import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, URL_PETICION } from '../../config/config';
 import { Cliente } from '../../models/clientes.model';
 
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
+const swal: SweetAlert = _swal as any;
+
 @Injectable()
 export class ClienteService {
 

@@ -4,6 +4,10 @@ import { NgForm } from '@angular/forms';
 
 import { CreditoService } from '../../services/services.index';
 
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
+const swal: SweetAlert = _swal as any;
+
 @Component({
   selector: 'app-buscar-pagos',
   templateUrl: './buscar-pagos.component.html',

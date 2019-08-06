@@ -5,6 +5,10 @@ import { Router } from '@angular/router';
 import { ComisionesService, UsuarioService } from '../../services/services.index';
 import { NgForm } from '@angular/forms';
 
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
+const swal: SweetAlert = _swal as any;
+
 @Component({
   selector: 'app-total-comisiones',
   templateUrl: './total-comisiones.component.html',

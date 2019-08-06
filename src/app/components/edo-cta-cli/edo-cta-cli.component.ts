@@ -3,6 +3,10 @@ import { UsuarioService, ClientesService, ExcelService } from '../../services/se
 import { Usuario } from '../../models/usuario.model';
 import { NgForm } from '@angular/forms';
 
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
+const swal: SweetAlert = _swal as any;
+
 @Component({
   selector: 'app-edo-cta-cli',
   templateUrl: './edo-cta-cli.component.html',

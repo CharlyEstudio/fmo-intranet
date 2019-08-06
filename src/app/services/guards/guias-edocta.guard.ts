@@ -3,6 +3,10 @@ import { CanActivate } from '@angular/router';
 
 import { UsuarioService } from '../usuario/usuario.service';
 
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
+const swal: SweetAlert = _swal as any;
+
 @Injectable()
 export class GuiasEdoCtaGuard implements CanActivate {
   constructor(

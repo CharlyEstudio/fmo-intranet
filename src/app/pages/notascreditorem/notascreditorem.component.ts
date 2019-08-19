@@ -45,6 +45,7 @@ export class NotascreditoremComponent implements OnInit {
   ngOnInit() { }
 
   trabajado(nc: any) {
+    console.log(nc);
     this._ncService.validarNCtrabajado(nc.nc, nc.serie).subscribe((encontrado: any) => {
       if (!encontrado.status) {
         const nota = {

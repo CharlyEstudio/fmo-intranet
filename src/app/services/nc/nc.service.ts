@@ -88,7 +88,7 @@ export class NcService {
     // }
     this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/nc/trabajados/buscar/ncserie/' + nc + '/' + serie;
 
-    return this.http.post(this.url, nc);
+    return this.http.get(this.url, nc);
   }
 
   guardarNCtrabajado(nc: any) {

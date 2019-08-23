@@ -78,11 +78,11 @@ export class GpsService {
 
   obtenerIMEIAsesorAll(desde: number = 0) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = 'http://ferremayoristas.com.mx' + ':' + PUERTO_INTERNO_DOS + '/gps/desde?desde=' + desde;
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO_DOS + '/gps/desde?desde=' + desde;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = 'http://ferremayoristas.com.mx' + ':' + PUERTO_INTERNO_DOS + '/gps/desde?desde=' + desde;
+      this.url = URL_LOCAL + ':' + PUERTO_INTERNO_DOS + '/gps/desde?desde=' + desde;
     } else {
-      this.url = 'http://ferremayoristas.com.mx' + ':' + PUERTO_INTERNO_DOS + '/gps/desde?desde=' + desde;
+      this.url = URL_LOCAL + ':' + PUERTO_INTERNO_DOS + '/gps/desde?desde=' + desde;
     }
 
     return this.http.get(this.url);
@@ -90,11 +90,11 @@ export class GpsService {
 
   actualizarUsusarioImei( usuario: Visor ) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = 'http://ferremayoristas.com.mx' + ':' + PUERTO_INTERNO_DOS + '/gps/' + usuario._id;
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO_DOS + '/gps/' + usuario._id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = 'http://ferremayoristas.com.mx' + ':' + PUERTO_INTERNO_DOS + '/gps/' + usuario._id;
+      this.url = URL_LOCAL + ':' + PUERTO_INTERNO_DOS + '/gps/' + usuario._id;
     } else {
-      this. url = 'http://ferremayoristas.com.mx' + ':' + PUERTO_INTERNO_DOS + '/gps/' + usuario._id;
+      this. url = URL_LOCAL + ':' + PUERTO_INTERNO_DOS + '/gps/' + usuario._id;
     }
 
     return this.http.put( this.url, usuario );
@@ -102,11 +102,11 @@ export class GpsService {
 
   borrarUsuarioImei( id: string ) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = 'http://ferremayoristas.com.mx' + ':' + PUERTO_INTERNO_DOS + '/gps/' + id;
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO_DOS + '/gps/' + id;
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = 'http://ferremayoristas.com.mx' + ':' + PUERTO_INTERNO_DOS + '/gps/' + id;
+      this.url = URL_LOCAL + ':' + PUERTO_INTERNO_DOS + '/gps/' + id;
     } else {
-      this.url = 'http://ferremayoristas.com.mx' + ':' + PUERTO_INTERNO_DOS + '/gps/' + id;
+      this.url = URL_LOCAL + ':' + PUERTO_INTERNO_DOS + '/gps/' + id;
     }
 
     return this.http.delete( this.url );
@@ -114,11 +114,11 @@ export class GpsService {
 
   nuevoUsuarioIMEI(visor: Visor) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = 'http://ferremayoristas.com.mx' + ':' + PUERTO_INTERNO_DOS + '/gps';
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO_DOS + '/gps';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = 'http://ferremayoristas.com.mx' + ':' + PUERTO_INTERNO_DOS + '/gps';
+      this.url = URL_LOCAL + ':' + PUERTO_INTERNO_DOS + '/gps';
     } else {
-      this.url = 'http://ferremayoristas.com.mx' + ':' + PUERTO_INTERNO_DOS + '/gps';
+      this.url = URL_LOCAL + ':' + PUERTO_INTERNO_DOS + '/gps';
     }
 
     return this.http.post( this.url, visor );

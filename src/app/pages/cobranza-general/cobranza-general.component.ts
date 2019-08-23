@@ -203,7 +203,7 @@ export class CobranzaGeneralComponent implements OnInit, OnDestroy {
     })
     .then((value) => {
       if (!value) {return}
-      return fetch(`http://177.244.55.122/api/visitas.php?opcion=50`, {
+      return fetch(`https://ferremayoristas.com.mx/api/visitas.php?opcion=50`, {
         method: 'POST',
         body: JSON.stringify(datos),
         headers: { 'content-Type': 'application/x-www-form-urlencoded' }

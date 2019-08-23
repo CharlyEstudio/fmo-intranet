@@ -65,14 +65,13 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
   regresaNSGeneral(): Observable<any> {
     return new Observable((observer: Subscriber<any>) => {
       this.intNs = setInterval( () => {
-
         // General
         this._phpService.nivelServicio()
-          .subscribe( ( data ) => {
+          .subscribe( ( data: any ) => {
 
-            if (data[0].importe !== 0) {
-              this.dataGenCot = data[0].cotizacion;
-              this.dataGenFac = data[0].facturacion;
+            if (data[0].solicitado_importe !== 0) {
+              this.dataGenCot = data[0].solicitado_importe;
+              this.dataGenFac = data[0].entregado_importe;
               this.porcentGen = (this.dataGenFac / this.dataGenCot);
             } else {
               this.dataGenCot = 0;
@@ -91,13 +90,14 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
 
           });
 
-        // Truper
-        this._phpService.nsTruper()
+        // Por Familia
+        this._phpService.nsFamilia()
           .subscribe((data) => {
 
-            if ( data[0].cotizacion !== 0 ) {
-              this.dataTruCot = data[0].cotizacion;
-              this.dataTruFac = data[1].cotizacion;
+            // Truper
+            if ( data[1].solicitado_importe !== 0 ) {
+              this.dataTruCot = data[1].solicitado_importe;
+              this.dataTruFac = data[1].entregado_importe;
 
               this.porcentTru = (this.dataTruFac / this.dataTruCot);
             } else {
@@ -107,15 +107,10 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
               this.porcentTru = 0;
             }
 
-          });
-
-        // Ferremayoristas
-        this._phpService.nsFMO()
-          .subscribe((data) => {
-
-            if ( data[0].cotizacion !== 0 ) {
-              this.dataFMOCot = data[0].cotizacion;
-              this.dataFMOFac = data[1].cotizacion;
+            // Ferremayoristas
+            if ( data[0].solicitado_importe !== 0 ) {
+              this.dataFMOCot = data[0].solicitado_importe;
+              this.dataFMOFac = data[0].entregado_importe;
 
               this.porcentFMO = (this.dataFMOFac / this.dataFMOCot);
             } else {
@@ -142,9 +137,9 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
     this._phpService.nivelServicio()
       .subscribe((data) => {
 
-        if ( data[0].importe !== 0 ) {
-          this.dataGenCot = data[0].cotizacion;
-          this.dataGenFac = data[0].facturacion;
+        if ( data[0].solicitado_importe !== 0 ) {
+          this.dataGenCot = data[0].solicitado_importe;
+          this.dataGenFac = data[0].entregado_importe;
 
           this.porcentGen = (this.dataGenFac / this.dataGenCot);
         } else {
@@ -167,13 +162,14 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
 
       });
 
-    // Nivel de Servicio Truper
-    this._phpService.nsTruper()
+    // Nivel de Servicio por Familia
+    this._phpService.nsFamilia()
       .subscribe((data) => {
 
-        if ( data[0].cotizacion !== 0 ) {
-          this.dataTruCot = data[0].cotizacion;
-          this.dataTruFac = data[1].cotizacion;
+        // Truper
+        if ( data[1].solicitado_importe !== 0 ) {
+          this.dataTruCot = data[1].solicitado_importe;
+          this.dataTruFac = data[1].entregado_importe;
 
           this.porcentTru = (this.dataTruFac / this.dataTruCot);
         } else {
@@ -183,15 +179,10 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
           this.porcentTru = 0;
         }
 
-      });
-
-    // NIvel de Servicio FMO
-    this._phpService.nsFMO()
-      .subscribe((data) => {
-
-        if ( data[0].cotizacion !== 0 ) {
-          this.dataFMOCot = data[0].cotizacion;
-          this.dataFMOFac = data[1].cotizacion;
+        // Ferremayoristas
+        if ( data[0].solicitado_importe !== 0 ) {
+          this.dataFMOCot = data[0].solicitado_importe;
+          this.dataFMOFac = data[0].entregado_importe;
 
           this.porcentFMO = (this.dataFMOFac / this.dataFMOCot);
         } else {

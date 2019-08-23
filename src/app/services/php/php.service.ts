@@ -353,36 +353,31 @@ export class PhpService {
 
   nivelServicio() {
     // Esto no se puede enviar a BackEnd por que hace 2 consultas al mismo tiempo
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=6';
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PETICION + '/api/pedidos.php?opcion=6';
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=6';
+    // }
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=6';
+      /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=45';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PETICION + '/api/pedidos.php?opcion=6';
+      this.url = URL_PETICION + '/api/pedidos.php?opcion=45';
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=6';
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=45';
     }
 
     return this.http.get( this.url );
   }
 
-  nsTruper() {
+  nsFamilia() {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=7';
+      /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=46';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PETICION + '/api/pedidos.php?opcion=7';
+      this.url = URL_PETICION + '/api/pedidos.php?opcion=46';
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=7';
-    }
-
-    return this.http.get( this.url );
-  }
-
-  nsFMO() {
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=8';
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PETICION + '/api/pedidos.php?opcion=8';
-    } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=8';
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=46';
     }
 
     return this.http.get( this.url );

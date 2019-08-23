@@ -69,7 +69,6 @@ export class PedCanceladosComponent implements OnInit, OnDestroy {
     // Pedidos Cancelados
     this._phpService.cancelados(fecha)
       .subscribe((data) => {
-        console.log(data);
         if ( data !== 0 ) {
           this.cance = data[0].cantidad;
           this.canceImpo = data[0].importe;

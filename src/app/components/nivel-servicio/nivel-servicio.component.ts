@@ -92,34 +92,30 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
 
         // Por Familia
         this._phpService.nsFamilia()
-          .subscribe((data) => {
-
-            // Truper
-            if ( data[1].solicitado_importe !== 0 ) {
-              this.dataTruCot = data[1].solicitado_importe;
-              this.dataTruFac = data[1].entregado_importe;
-
-              this.porcentTru = (this.dataTruFac / this.dataTruCot);
-            } else {
+          .subscribe((data: any) => {
+            if (data.length > 0) {
               this.dataTruCot = 0;
               this.dataTruFac = 0;
-
               this.porcentTru = 0;
-            }
-
-            // Ferremayoristas
-            if ( data[0].solicitado_importe !== 0 ) {
-              this.dataFMOCot = data[0].solicitado_importe;
-              this.dataFMOFac = data[0].entregado_importe;
-
-              this.porcentFMO = (this.dataFMOFac / this.dataFMOCot);
-            } else {
               this.dataFMOCot = 0;
               this.dataFMOFac = 0;
-
               this.porcentFMO = 0;
-            }
+              for (const d of data) {
+                // Truper
+                if (d.marca === 'TRUPER') {
+                  this.dataTruCot += d.solicitado_importe;
+                  this.dataTruFac += d.entregado_importe;
+                }
 
+                // Ferremayoristas
+                if (d.marca === 'FMO') {
+                  this.dataFMOCot += d.solicitado_importe;
+                  this.dataFMOFac += d.entregado_importe;
+                }
+              }
+              this.porcentTru = (this.dataTruFac / this.dataTruCot);
+              this.porcentFMO = (this.dataFMOFac / this.dataFMOCot);
+            }
           });
 
       }, 5000);
@@ -164,32 +160,30 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
 
     // Nivel de Servicio por Familia
     this._phpService.nsFamilia()
-      .subscribe((data) => {
+      .subscribe((data: any) => {
 
-        // Truper
-        if ( data[1].solicitado_importe !== 0 ) {
-          this.dataTruCot = data[1].solicitado_importe;
-          this.dataTruFac = data[1].entregado_importe;
-
-          this.porcentTru = (this.dataTruFac / this.dataTruCot);
-        } else {
+        if (data.length > 0) {
           this.dataTruCot = 0;
           this.dataTruFac = 0;
-
           this.porcentTru = 0;
-        }
-
-        // Ferremayoristas
-        if ( data[0].solicitado_importe !== 0 ) {
-          this.dataFMOCot = data[0].solicitado_importe;
-          this.dataFMOFac = data[0].entregado_importe;
-
-          this.porcentFMO = (this.dataFMOFac / this.dataFMOCot);
-        } else {
           this.dataFMOCot = 0;
           this.dataFMOFac = 0;
-
           this.porcentFMO = 0;
+          for (const d of data) {
+            // Truper
+            if (d.marca === 'TRUPER') {
+              this.dataTruCot += d.solicitado_importe;
+              this.dataTruFac += d.entregado_importe;
+            }
+
+            // Ferremayoristas
+            if (d.marca === 'FMO') {
+              this.dataFMOCot += d.solicitado_importe;
+              this.dataFMOFac += d.entregado_importe;
+            }
+          }
+          this.porcentTru = (this.dataTruFac / this.dataTruCot);
+          this.porcentFMO = (this.dataFMOFac / this.dataFMOCot);
         }
 
       });

@@ -492,7 +492,6 @@ export class DiariosService {
   }
 
   obtenerBackOrder( tipo: any, fechaIn: any, fechaOut: any, orden: any ) {
-    console.log(tipo, fechaIn, fechaOut, orden);
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=26&tipo=' +
                           tipo + '&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&orden=' + orden;

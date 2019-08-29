@@ -26,6 +26,7 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
   // Nivel de Servicio General
   nivelServicio: Subscription;
   dataGenCot: number = 0;
+  dataBoCot: number = 0;
   dataGenFac: number = 0;
   porcentGen: number = 0;
   ns: number = 0;
@@ -69,9 +70,15 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
         this._phpService.nivelServicio()
           .subscribe( ( data: any ) => {
 
-            if (data[0].solicitado_importe !== 0) {
-              this.dataGenCot = data[0].solicitado_importe;
-              this.dataGenFac = data[0].entregado_importe;
+            if (data.length > 0) {
+              for (const d of data) {
+                if (d.tipo === 'remision') {
+                  this.dataGenFac = d.importe;
+                } else if (d.tipo === 'bo') {
+                  this.dataBoCot = d.importe;
+                }
+              }
+              this.dataGenCot = this.dataGenFac + this.dataBoCot;
               this.porcentGen = (this.dataGenFac / this.dataGenCot);
             } else {
               this.dataGenCot = 0;
@@ -100,21 +107,38 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
               this.dataFMOCot = 0;
               this.dataFMOFac = 0;
               this.porcentFMO = 0;
+              let impoboTru = 0;
+              let impoboFmo = 0;
               for (const d of data) {
                 // Truper
-                if (d.marca === 'TRUPER') {
-                  this.dataTruCot += d.solicitado_importe;
-                  this.dataTruFac += d.entregado_importe;
+                if (d.tipo === 'remision-TRUPER') {
+                  this.dataTruFac = d.importe;
+                }
+
+                if (d.tipo === 'bo-TRUPER') {
+                  impoboTru = d.importe;
                 }
 
                 // Ferremayoristas
-                if (d.marca === 'FMO') {
-                  this.dataFMOCot += d.solicitado_importe;
-                  this.dataFMOFac += d.entregado_importe;
+                if (d.tipo === 'remision-FMO') {
+                  this.dataFMOFac = d.importe;
+                }
+
+                if (d.tipo === 'bo-FMO') {
+                  impoboFmo = d.importe;
                 }
               }
+              this.dataTruCot = this.dataTruFac + impoboTru;
+              this.dataFMOCot = this.dataFMOFac + impoboFmo;
               this.porcentTru = (this.dataTruFac / this.dataTruCot);
               this.porcentFMO = (this.dataFMOFac / this.dataFMOCot);
+            } else {
+              this.dataTruCot = 0;
+              this.dataTruFac = 0;
+              this.porcentTru = 0;
+              this.dataFMOCot = 0;
+              this.dataFMOFac = 0;
+              this.porcentFMO = 0;
             }
           });
 
@@ -131,17 +155,21 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
 
     // Nivel de Servicio General
     this._phpService.nivelServicio()
-      .subscribe((data) => {
+      .subscribe((data: any) => {
 
-        if ( data[0].solicitado_importe !== 0 ) {
-          this.dataGenCot = data[0].solicitado_importe;
-          this.dataGenFac = data[0].entregado_importe;
-
+        if (data.length > 0) {
+          for (const d of data) {
+            if (d.tipo === 'remision') {
+              this.dataGenFac = d.importe;
+            } else if (d.tipo === 'bo') {
+              this.dataBoCot = d.importe;
+            }
+          }
+          this.dataGenCot = this.dataGenFac + this.dataBoCot;
           this.porcentGen = (this.dataGenFac / this.dataGenCot);
         } else {
           this.dataGenCot = 0;
           this.dataGenFac = 0;
-
           this.porcentGen = 0;
         }
 
@@ -169,21 +197,38 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
           this.dataFMOCot = 0;
           this.dataFMOFac = 0;
           this.porcentFMO = 0;
+          let impoboTru = 0;
+          let impoboFmo = 0;
           for (const d of data) {
             // Truper
-            if (d.marca === 'TRUPER') {
-              this.dataTruCot += d.solicitado_importe;
-              this.dataTruFac += d.entregado_importe;
+            if (d.tipo === 'remision-TRUPER') {
+              this.dataTruFac = d.importe;
+            }
+
+            if (d.tipo === 'bo-TRUPER') {
+              impoboTru = d.importe;
             }
 
             // Ferremayoristas
-            if (d.marca === 'FMO') {
-              this.dataFMOCot += d.solicitado_importe;
-              this.dataFMOFac += d.entregado_importe;
+            if (d.tipo === 'remision-FMO') {
+              this.dataFMOFac = d.importe;
+            }
+
+            if (d.tipo === 'bo-FMO') {
+              impoboFmo = d.importe;
             }
           }
+          this.dataTruCot = this.dataTruFac + impoboTru;
+          this.dataFMOCot = this.dataFMOFac + impoboFmo;
           this.porcentTru = (this.dataTruFac / this.dataTruCot);
           this.porcentFMO = (this.dataFMOFac / this.dataFMOCot);
+        }  else {
+          this.dataTruCot = 0;
+          this.dataTruFac = 0;
+          this.porcentTru = 0;
+          this.dataFMOCot = 0;
+          this.dataFMOFac = 0;
+          this.porcentFMO = 0;
         }
 
       });

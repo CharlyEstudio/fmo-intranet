@@ -225,7 +225,7 @@ export class CotizadorComponent implements OnInit {
         this.iva = Number(localStorage.getItem('ivaPedIntranet'));
         this.total = Number(localStorage.getItem('totalPedIntranet'));
       }
-    } else if(localStorage.getItem('tipoOperacion') === '2') {
+    } else if (localStorage.getItem('tipoOperacion') === '2') {
       this.enviarBool = false;
       this.folio = localStorage.getItem('folio');
       this.file = localStorage.getItem('filePDF');
@@ -392,7 +392,6 @@ export class CotizadorComponent implements OnInit {
     this.rfc = '';
     if (this.usoNumero.length > 0) {
       this._clienteService.infoClienteCot(this.usoNumero).subscribe((data: any) => {
-        console.log(data);
         if (data.length > 0) {
           this.idFerrum = data[0].CLIENTEID;
           this.numero = this.usoNumero;
@@ -540,50 +539,50 @@ export class CotizadorComponent implements OnInit {
             this.nivelPrecio = 3;
           }
           this._pedidoService.obtenerProducto(this.codigo, this.nivelPrecio).subscribe((producto: any) => {
-            console.log(producto);
             if (producto.status) {
-              if (producto.respuesta)
-              this.subtotal += (producto.respuesta[0].precioneto * inputCantidad);
-              this.total += (producto.respuesta[0].precio * inputCantidad);
-              if (producto.respuesta[0].iva > 0) {
-                this.iva += (producto.respuesta[0].precioneto * inputCantidad) * producto.respuesta[0].iva;
+              if (producto.respuesta) {
+                this.subtotal += (producto.respuesta[0].precioneto * inputCantidad);
+                this.total += (producto.respuesta[0].precio * inputCantidad);
+                if (producto.respuesta[0].iva > 0) {
+                  this.iva += (producto.respuesta[0].precioneto * inputCantidad) * producto.respuesta[0].iva;
+                }
+                const agregar = {
+                  producto: producto.respuesta[0],
+                  precioFinal: (producto.respuesta[0].precioneto * inputCantidad),
+                  precioDesc: producto.respuesta[0].precioneto,
+                  precioTot: producto.respuesta[0].precio,
+                  cantidad: inputCantidad,
+                  claveUnidad: producto.respuesta[0].claveUnidad,
+                  claveProdServ: producto.respuesta[0].claveProdServ
+                };
+                this.prod.push(producto.respuesta[0]);
+                this.productos.push(agregar);
+                if (localStorage.getItem('pedidoDistIntranet') !== null) {
+                  localStorage.removeItem('prodDistIntranet');
+                  localStorage.removeItem('pedidoDistIntranet');
+                  localStorage.removeItem('subtotalPedIntranet');
+                  localStorage.removeItem('ivaPedIntranet');
+                  localStorage.removeItem('totalPedIntranet');
+                  localStorage.setItem('prodDistIntranet', JSON.stringify(this.prod));
+                  localStorage.setItem('pedidoDistIntranet', JSON.stringify(this.productos));
+                  localStorage.setItem('subtotalPedIntranet', String(this.subtotal));
+                  localStorage.setItem('ivaPedIntranet', String(this.iva));
+                  localStorage.setItem('totalPedIntranet', String(this.total));
+                } else {
+                  localStorage.setItem('prodDistIntranet', JSON.stringify(this.prod));
+                  localStorage.setItem('pedidoDistIntranet', JSON.stringify(this.productos));
+                  localStorage.setItem('subtotalPedIntranet', String(this.subtotal));
+                  localStorage.setItem('ivaPedIntranet', String(this.iva));
+                  localStorage.setItem('totalPedIntranet', String(this.total));
+                }
+                this.codigo = '';
+                this.cantidad = '';
+                const elem1 = <HTMLInputElement>(document.getElementById('cantidad'));
+                const elem2 = <HTMLInputElement>(document.getElementById('codigo'));
+                elem2.focus();
+                elem1.value = '';
+                elem1.readOnly = true;
               }
-              const agregar = {
-                producto: producto.respuesta[0],
-                precioFinal: (producto.respuesta[0].precioneto * inputCantidad),
-                precioDesc: producto.respuesta[0].precioneto,
-                precioTot: producto.respuesta[0].precio,
-                cantidad: inputCantidad,
-                claveUnidad: producto.respuesta[0].claveUnidad,
-                claveProdServ: producto.respuesta[0].claveProdServ
-              };
-              this.prod.push(producto.respuesta[0]);
-              this.productos.push(agregar);
-              if (localStorage.getItem('pedidoDistIntranet') !== null) {
-                localStorage.removeItem('prodDistIntranet');
-                localStorage.removeItem('pedidoDistIntranet');
-                localStorage.removeItem('subtotalPedIntranet');
-                localStorage.removeItem('ivaPedIntranet');
-                localStorage.removeItem('totalPedIntranet');
-                localStorage.setItem('prodDistIntranet', JSON.stringify(this.prod));
-                localStorage.setItem('pedidoDistIntranet', JSON.stringify(this.productos));
-                localStorage.setItem('subtotalPedIntranet', String(this.subtotal));
-                localStorage.setItem('ivaPedIntranet', String(this.iva));
-                localStorage.setItem('totalPedIntranet', String(this.total));
-              } else {
-                localStorage.setItem('prodDistIntranet', JSON.stringify(this.prod));
-                localStorage.setItem('pedidoDistIntranet', JSON.stringify(this.productos));
-                localStorage.setItem('subtotalPedIntranet', String(this.subtotal));
-                localStorage.setItem('ivaPedIntranet', String(this.iva));
-                localStorage.setItem('totalPedIntranet', String(this.total));
-              }
-              this.codigo = '';
-              this.cantidad = '';
-              const elem1 = <HTMLInputElement>(document.getElementById('cantidad'));
-              const elem2 = <HTMLInputElement>(document.getElementById('codigo'));
-              elem2.focus();
-              elem1.value = '';
-              elem1.readOnly = true;
             }
           });
         } else {
@@ -830,14 +829,14 @@ export class CotizadorComponent implements OnInit {
         },
       },
     })
-    .then((email) => {
-      if (email === null) {
+    .then((correo) => {
+      if (correo === null) {
         return;
       }
 
       const dataOrder = {
         nombre: this.nombre,
-        email: email,
+        email: correo,
         file: this.ordenGuardada.pdf
       };
 
@@ -1139,7 +1138,7 @@ export class CotizadorComponent implements OnInit {
         const enviarXml: XmlString = {
           texto: xml
         };
-        
+
         this._pedidoService.enviarPedido(enviarXml).subscribe((info: any) => {
           if (info.status) {
             swal('Pedido Enviado', 'El pedido ha ingresado correctamente.', 'success');

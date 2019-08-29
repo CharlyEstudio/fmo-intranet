@@ -885,8 +885,9 @@ export class DashboardLogisticaComponent implements OnInit {
           this.facturaEncontrada = true;
           this.noFac = fol;
           this.foliosBusq = factura.folios;
+          this.foliosBusq.reverse();
         } else {
-          swal('Factura No Encontrada', 'Esta factura no se ha asignado ninguna guía.', 'error');
+          swal('Factura No Encontrada', 'Esta Remisión no se ha asignado ninguna guía.', 'error');
         }
       } else {
         swal('Error', 'Error en la búsqueda.', 'error');

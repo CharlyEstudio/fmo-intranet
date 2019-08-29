@@ -361,11 +361,11 @@ export class PhpService {
     //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=6';
     // }
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=45';
+      /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=47';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PETICION + '/api/pedidos.php?opcion=45';
+      this.url = URL_PETICION + '/api/pedidos.php?opcion=47';
     } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=45';
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=47';
     }
 
     return this.http.get( this.url );

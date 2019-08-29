@@ -97,8 +97,6 @@ export class BackorderComponent implements OnInit {
   obtenerBackOrder(e: any) {
     this.nombre = e.target.id;
 
-    console.log(e.target.id, this.inicio, this.final, this.orden);
-
     this._diariosService.obtenerBackOrder(e.target.id, this.inicio, this.final, this.orden)
       .subscribe( ( resp: any ) => {
         this.mostrar = true;

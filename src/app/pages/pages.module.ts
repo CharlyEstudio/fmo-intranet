@@ -116,6 +116,7 @@ import { StoreComponent } from '../components/store/store.component';
 import { MensajesContactoComponent } from '../components/mensajes-contacto/mensajes-contacto.component';
 import { ActividadesComponent } from './actividades/actividades.component';
 import { AsignacionActividadesComponent } from './asignacion-actividades/asignacion-actividades.component';
+import { AlmacenistasComponent } from './almacenistas/almacenistas.component';
 
 @NgModule({
     declarations: [
@@ -152,6 +153,7 @@ import { AsignacionActividadesComponent } from './asignacion-actividades/asignac
         BusquedaComponent,
         VentaComponent,
         CompraComponent,
+        
         UtilidadesComponent,
         NotasComponent,
         InventarioComponent,
@@ -209,7 +211,8 @@ import { AsignacionActividadesComponent } from './asignacion-actividades/asignac
         StoreComponent,
         MensajesContactoComponent,
         ActividadesComponent,
-        AsignacionActividadesComponent
+        AsignacionActividadesComponent,
+        AlmacenistasComponent
     ],
     exports: [
         DashborarDirComponent,

@@ -46,9 +46,13 @@ import {
   ScrumService,
   ActividadesService,
   DiferenciasService,
-  GoogleService
+  GoogleService,
+  PedidoService
+  
+ 
   // NotificationService
 } from "./services.index";
+
 
 @NgModule({
   imports: [
@@ -100,6 +104,8 @@ import {
     ActividadesService,
     DiferenciasService,
     GoogleService,
+    PedidoService
+   
     // Notificaciones
     // NotificationService
     // Magnitracking

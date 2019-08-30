@@ -26,8 +26,14 @@ function init_plugins() {
                 $('.navbar-brand span').hide();
                 $(".sidebartoggler i").addClass("ti-menu");
             } else {
-                $("body").removeClass("mini-sidebar");
-                $('.navbar-brand span').show();
+                // Este código hace que el menú se haga grande
+                // $("body").removeClass("mini-sidebar");
+                // $('.navbar-brand span').show();
+
+                // Agregue esto para que siempre este minimizado el menú
+                $("body").addClass("mini-sidebar");
+                $('.navbar-brand span').hide();
+                $(".sidebartoggler i").addClass("ti-menu");
             }
 
             var height = ((window.innerHeight > 0) ? window.innerHeight : this.screen.height) - 1;

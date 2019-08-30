@@ -40,6 +40,7 @@ export { PaneldiariosService } from './paneldiarios/paneldiarios.service';
 export { ScrumService } from "./scrum/scrum.service";
 export { ActividadesService } from "./actividades/actividades.service";
 export { DiferenciasService } from "../components/diferencias/diferencias.service";
+export { PedidoService } from './pedido/pedido.service';
 
 // Servicios de Google
 export { GoogleService } from "./googleconsole/google.service";

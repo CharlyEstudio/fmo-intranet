@@ -76,6 +76,7 @@ import { ClientesOficinaComponent } from './clientes-oficina/clientes-oficina.co
 import { DiariosComponent } from './diarios/diarios.component';
 import { ActividadesComponent } from './actividades/actividades.component';
 import { AsignacionActividadesComponent } from './asignacion-actividades/asignacion-actividades.component';
+import { AlmacenistasComponent } from './almacenistas/almacenistas.component';
 
 const pageRoutes: Routes = [
     {
@@ -613,6 +614,16 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Asignación de actividades',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'almacenistas',
+        component: AlmacenistasComponent,
+        canActivate: [ MesaGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Alta Almacenistas',
                     name: 'description'
                 }
     },

@@ -78,9 +78,9 @@ export class PedidoService {
     this.url = URL_EXTERNO + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=16&texto=' + texto;
     return this.http.get(this.url);
   }
-  
-  eliminarPersonal(id: any,idFerrum: any, actividad: any ) {
-    this.url = URL_EXTERNO + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=17&id=' + id+ '&idFerrum=' + idFerrum + '&actividad=' + actividad;
+
+  eliminarPersonal(id: any, idFerrum: any, actividad: any ) {
+    this.url = URL_EXTERNO + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=17&id=' + id + '&idFerrum=' + idFerrum + '&actividad=' + actividad;
     return this.http.get(this.url);
   }
 
@@ -89,11 +89,11 @@ export class PedidoService {
     return this.http.get(this.url);
   }
 
- editarPersonal(id: any, nombre: any,usuario: any, activo: any, tiempo: any, rotacion: any, marquesina: any,capacitacion: any, area: any, seccion: any, idFerrum: any, actividad: any) {
+ editarPersonal(id: any, nombre: any, usuario: any, activo: any, tiempo: any, rotacion: any, marquesina: any, capacitacion: any, area: any, seccion: any, idFerrum: any, actividad: any) {
     this.url = URL_EXTERNO + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=20&id=' + id + '&nombre=' + nombre + '&usuario=' + usuario + '&activo=' + activo + '&tiempo=' + tiempo
     + '&rotacion=' + rotacion + '&marquesina=' + marquesina + '&capacitacion=' + capacitacion + '&area=' + area + '&seccion=' + seccion + '&idFerrum=' + idFerrum + '&actividad=' + actividad;
     return this.http.get(this.url);
-  } 
+  }
 
   guardarRegistro(nombre: any, usuario: any, activo: any, tiempo: any, rotacion: any, marquesina: any, capacitacion: any, area: any, seccion: any, idFerrum: any, actividad: any) {
     this.url = URL_EXTERNO + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=18&nombre=' + nombre + '&usuario=' + usuario + '&activo=' + activo + '&tiempo=' + tiempo

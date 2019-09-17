@@ -6,8 +6,8 @@
 
     </div>
 
-    <div class="col-md-12">
-        <div class="card" *ngIf="saldosDiferentes.length > 0">
+    <div class="col-md-12" *ngIf="saldosDiferentes.length > 0">
+        <div class="card">
             <div class="card-body">
                 <div class="d-flex">
                     <div>
@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <!-- <div class="col-md-6">
         <div class="card" style="height: 550px!important;">
             <div class="card-body">
                 <div class="d-flex">
@@ -68,11 +68,11 @@
                     <div>
                         <h4 class="card-title"><span class="lstick"></span>Visitas en la Tienda</h4>
                     </div>
-                    <!-- <div class="mapaVisita">
+                    <div class="mapaVisita">
                         <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [mapTypeId]="'roadmap'" [mapTypeControl]="mapTypeControl" [scaleControl]="mapTypeControl">
                             <agm-marker *ngFor="let ubi of ubicacionVisita" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker>
                         </agm-map>
-                    </div> -->
+                    </div>
                     <div class="table-responsive" style="height: 450px!important; overflow-y: auto!important;">
                         <table class="table" *ngIf="ubicacionVisita.length > 0">
                             <thead>
@@ -93,13 +93,65 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <div class="col-md-6">
+    <div class="col-md-12" *ngIf="mensajes">
+
         <app-mensajes-contacto></app-mensajes-contacto>
+    
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-12 col-lg-12">
+
+        <div class="card">
+
+            <div class="card-body">
+
+                <h3>Cambios de Contraseña</h3>
+
+                <div class="row">
+
+                    <div class="col-md-2 col-lg-2">
+
+                        <div class="group-form">
+
+                            <select [(ngModel)]="selUsuario" name="usuarios" id="usuarios" class="form-control" (change)="seleccionarUsuario()">
+
+                                <option value="0">Seleccione un usuario</option>
+
+                                <option [id]="us._id" [ngValue]="us" *ngFor="let us of usuarios">{{us.nombre}}</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-8 col-lg-8">
+
+                        <span class="h5" *ngIf="urlCambio !== ''" [id]="'url' + selUsuario._id">{{urlCambio}}</span>
+
+                        <h3 *ngIf="urlCambio === ''">Al seleccionar usuario, aquí aparecerá la url para que el usuario cambie su contraseña.</h3>
+
+                    </div>
+
+                    <div class="col-md-2 col-lg-2" *ngIf="urlCambio !== ''">
+
+                        <button class="btn btn-secondary btn-sm" (click)="copiarUrl()">Copiar</button>
+
+                        <button class="btn btn-danger btn-sm" (click)="terminarUrl()">Terminar</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- <div class="col-md-6">
         <div class="card">
             <div class="card-body">
                 <div class="d-flex">
@@ -199,6 +251,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     
 </div>

@@ -8,7 +8,7 @@ const swal: SweetAlert = _swal as any;
 import { Usuario } from '../../models/usuario.model';
 
 // Socket Service
-import { WebsocketService, HerramientasService, UsuarioService, ScrumService, TiendaService, DiferenciasService, GoogleService } from '../../services/services.index';
+import { WebsocketService, HerramientasService, UsuarioService, ScrumService, TiendaService, DiferenciasService, GoogleService, MensajesContactoService } from '../../services/services.index';
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -23,6 +23,7 @@ export class DashboardAdminComponent implements OnInit {
   @ViewChild('puntosActividad') puntosAct: ElementRef;
 
   developers: Usuario;
+  usuarios: any[] = [];
   sprints: any[] = [];
   activities: any[] = [];
   saldosDiferentes: any[] = [];
@@ -30,9 +31,12 @@ export class DashboardAdminComponent implements OnInit {
   puntosFinales: number = 0;
   dias: number = 0;
   developer: any;
+  selUsuario: any = '0';
+  urlCambio: any = '';
 
   tipoVista: boolean = false;
   nuevo: boolean = false;
+  mensajes: boolean = false;
 
   // VISTAS & Grafica
   lineChartDataVistas: Array<any> = [
@@ -112,12 +116,16 @@ export class DashboardAdminComponent implements OnInit {
   constructor(
     private herramientas: HerramientasService,
     private usuario: UsuarioService,
+    private mensajeService: MensajesContactoService,
     private scrum: ScrumService,
     private tienda: TiendaService,
     private _ws: WebsocketService,
     private _diferencias: DiferenciasService,
     private _google: GoogleService
   ) {
+    this.mensajeService.mensajes.subscribe((mensaje: any) => {
+      this.mensajes = mensaje.status;
+    });
     if (localStorage.getItem('ubicacionVisita')) {
       this.ubicacionVisita = JSON.parse(localStorage.getItem('ubicacionVisita'));
     }
@@ -139,6 +147,11 @@ export class DashboardAdminComponent implements OnInit {
           localStorage.removeItem('ubicacionVisita');
           localStorage.setItem('ubicacionVisita', JSON.stringify(this.ubicacionVisita));
         });
+      }
+    });
+    this.usuario.cargarUsuariosAll().subscribe((users: any) => {
+      if (users.ok) {
+        this.usuarios = users.usuarios;
       }
     });
     this._diferencias.notificacion.subscribe((diferencias: any) => {
@@ -180,7 +193,38 @@ export class DashboardAdminComponent implements OnInit {
     });
   }
 
+  seleccionarUsuario() {
+    if (this.selUsuario !== undefined && this.selUsuario !== '0') {
+      this.usuario.cambiarPassId(this.selUsuario).subscribe((cambiado: any) => {
+        if (cambiado.ok) {
+          this.urlCambio = `https://ferremayoristas.com.mx/intranet/#/campass/${cambiado.token}`;
+        }
+      });
+    }
+  }
+
+  copiarUrl() {
+    const elem = <HTMLElement>(document.getElementById("url" + this.selUsuario._id));
+    const range = document.createRange();
+    range.selectNode(elem);
+    window.getSelection().addRange(range);
+    try {
+      // intentar copiar el contenido seleccionado
+      const resultado = document.execCommand('copy');
+      console.log(resultado ? 'Url copiado' : 'No se pudo copiar el Url');
+    } catch (err) {
+      console.log('ERROR al intentar copiar el Url');
+    }
+    window.getSelection().removeAllRanges();
+  }
+
+  terminarUrl() {
+    this.selUsuario = '0';
+    this.urlCambio = '';
+  }
+
   ngOnInit() {
+    // this.selUsuario.nativeElement.value = '0';
     if (localStorage.getItem('actividades') !== null) {
       this.activities = JSON.parse(localStorage.getItem('actividades'));
       this.dias = Number(localStorage.getItem('diasAct'));

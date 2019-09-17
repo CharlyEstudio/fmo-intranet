@@ -246,6 +246,21 @@ export class UsuarioService {
     return this.http.get( url );
   }
 
+  cargarUsuariosAll() {
+    let url;
+
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/usuario?desde=' + desde;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/usuario?desde=' + desde;
+    // } else {
+    //   url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/usuario?desde=' + desde;
+    // }
+    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/usuario/all';
+
+    return this.http.get( url );
+  }
+
   buscarUsuarios( termino: string ) {
     let url;
 
@@ -379,17 +394,18 @@ export class UsuarioService {
     return this.http.get( url );
   }
 
-  recuperar( id: any ) {
+  // Cambiar Password por Email
+  cambiarPassEmail( email: any ) {
     let url;
+    url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cambio/cambiar/' + email + '/intranet';
 
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/recuperar/usuario/' + id;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/recuperar/usuario/' + id;
-    // } else {
-    //   url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/busqueda/recuperar/usuario/' + id;
-    // }
-    url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/busqueda/recuperar/usuario/' + id;
+    return this.http.get( url );
+  }
+
+  // Cambiar Password por ID
+  cambiarPassId( usuario: Usuario ) {
+    let url;
+    url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cambio/cambiar/id/' + usuario._id + '/intranet';
 
     return this.http.get( url );
   }
@@ -407,6 +423,31 @@ export class UsuarioService {
     url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/usuario/buscar/especifico/' + idFerrum;
 
     return this.http.get( url );
+  }
+
+  enviarEmailCambioPass(usuario: Usuario, token: any, email: any) {
+    const url = URL_EXTERNO + '/api/cambiarpass.php';
+    // const url = 'http://urologochiapas.com/api/cambiarpass.php';
+    // const url = 'http://157.245.170.96/api/cambiarpass.php';
+    return this.http.post(url, {usuario: usuario, token: token, email: email, tipo: 'intranet'}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } })
+      .map((resp: any) => {
+        // console.log(resp[0]);
+        if (resp[0].resp === 'ok') {
+          return true;
+        } else {
+          return false;
+        }
+      });
+  }
+
+  validarToken(token: any) {
+    const url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/cambio/verificar/activotoken?token=' + token;
+    return this.http.get(url);
+  }
+
+  realizarCambioPass(token: any, pass: any) {
+    const url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/cambio?token=' + token + '&pass=' + pass;
+    return this.http.put(url, {});
   }
 
 }

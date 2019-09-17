@@ -67,7 +67,7 @@ export class PedidosService {
     return this.http.post(this.url, cotizacion);
   }
 
-  guardarPdf(data: any, pdf: any, operacion: any, info: any = '') {
+  guardarPdf(data: any, pdf: any, operacion: any, info: any = '', usuario: string, idUser: number, emailUser: string) {
     if (operacion === '1') {
       if (URL_SERVICIO_GENERAL === URL_PETICION) {
         /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=37';
@@ -102,6 +102,9 @@ export class PedidosService {
       return this.http.post(
         this.url,
         {
+          id: idUser,
+          emailUser: emailUser,
+          usuario: usuario,
           nombre: data.nombre,
           numero: pdf.numero,
           direccion: pdf.direccion,

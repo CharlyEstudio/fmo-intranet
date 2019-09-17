@@ -35,7 +35,9 @@ export class CotizadorComponent implements OnInit {
   cot: Cotizacion;
 
   rol: any = null;
+  email: any = null;
   id: any = null;
+  nombreUser: string = '';
   nivelPrecio: number = 0;
   tp: any = '0';
 
@@ -99,6 +101,8 @@ export class CotizadorComponent implements OnInit {
   ) {
     this.rol = this._usuarioService.usuario.rol;
     this.id = this._usuarioService.usuario._id;
+    this.nombreUser = this._usuarioService.usuario.nombre;
+    this.email = this._usuarioService.usuario.email;
   }
 
   ngOnInit() {
@@ -787,7 +791,7 @@ export class CotizadorComponent implements OnInit {
     } else {
       operacion = '1';
     }
-    this._pedidoService.guardarPdf(cotizacion, datPDF, operacion, info).subscribe((resp: any) => {
+    this._pedidoService.guardarPdf(cotizacion, datPDF, operacion, info, this.nombreUser, this.id, this.email).subscribe((resp: any) => {
       if (resp[0].status.ok) {
         this.guardado = true;
         localStorage.setItem('guardado', String(this.guardado));

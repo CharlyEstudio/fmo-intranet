@@ -48,13 +48,13 @@ export class RegisterComponent implements OnInit {
       condiciones: new FormControl(false)
     }, { validators: this.sonIguales('password', 'password2') });
 
-    this.forma.setValue({
-      nombre: '',
-      correo: '@ferremayoristas.com.mx',
-      password: '',
-      password2: '',
-      condiciones: false
-    });
+    // this.forma.setValue({
+    //   nombre: '',
+    //   correo: '@ferremayoristas.com.mx',
+    //   password: '',
+    //   password2: '',
+    //   condiciones: false
+    // });
   }
 
   registrarUsuario() {

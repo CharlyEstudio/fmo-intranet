@@ -47,9 +47,9 @@ import {
   ActividadesService,
   DiferenciasService,
   GoogleService,
-  PedidoService
-  
- 
+  PedidoService,
+  MensajesContactoService,
+  PanelasesoresService
   // NotificationService
 } from "./services.index";
 
@@ -104,8 +104,9 @@ import {
     ActividadesService,
     DiferenciasService,
     GoogleService,
-    PedidoService
-   
+    PedidoService,
+    MensajesContactoService,
+    PanelasesoresService
     // Notificaciones
     // NotificationService
     // Magnitracking

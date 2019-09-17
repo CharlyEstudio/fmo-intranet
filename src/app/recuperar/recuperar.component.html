@@ -1,0 +1,58 @@
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<section id="wrapper" class="login-register login-sidebar" style="background-image:url(assets/images/background/login-register5.jpg);">
+
+  <div class="login-box card">
+
+    <div class="card-body">
+
+      <form ngNativeValidate #f="ngForm" class="form-horizontal form-material" (ngSubmit)="recuperar( f )">
+
+          <a class="text-center db"><img src="assets/images/logo-icon.png" alt="Home" /><br/><img src="assets/images/logo-text.png" alt="Home" /></a>
+
+          <h3 class="box-title m-t-40 m-b-0">Recuperar Contraseña</h3>
+
+          <div class="form-group m-t-40">
+
+              <div class="col-xs-12 text-center">
+
+                  <input [ngModel]='email' name="email" class="form-control" type="email" required placeholder="Correo del usuario" autocomplete="off">
+                  <div class="badge badge-danger" *ngIf="mensaje !== ''">
+                    {{mensaje}}
+                  </div>
+
+              </div>
+
+          </div>
+
+          <div class="form-group text-center m-t-20">
+
+              <div class="col-xs-12">
+
+                  <button class="btn btn-info btn-lg btn-block text-uppercase btn-rounded" type="submit">CAMBIAR CONTRASEÑA</button>
+
+              </div>
+
+          </div>
+
+          <div class="form-group m-b-0">
+
+              <div class="col-sm-12 text-center">
+
+                  <p>Tienes una cuenta? <a routerLink="/login" class="text-info m-l-5"><b>Ingresa Ahora</b></a></p>
+
+              </div>
+
+          </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</section>
+<!-- ============================================================== -->
+<!-- End Wrapper -->
+<!-- ============================================================== -->

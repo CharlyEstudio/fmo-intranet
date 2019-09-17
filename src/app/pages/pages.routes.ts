@@ -77,6 +77,7 @@ import { DiariosComponent } from './diarios/diarios.component';
 import { ActividadesComponent } from './actividades/actividades.component';
 import { AsignacionActividadesComponent } from './asignacion-actividades/asignacion-actividades.component';
 import { AlmacenistasComponent } from './almacenistas/almacenistas.component';
+import { ConfigpanelComponent } from './configpanel/configpanel.component';
 
 const pageRoutes: Routes = [
     {
@@ -719,6 +720,17 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Notas de Crédito por Remisión',
+                    name: 'description'
+                }
+    },
+    // Configuración del Panel
+    {
+        path: 'configPanel',
+        component: ConfigpanelComponent,
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Configuración del Panel de Asesores',
                     name: 'description'
                 }
     },

@@ -1,0 +1,45 @@
+<div class="row">
+
+  <div class="col-md-3 col-lg-3">
+
+    <div class="card">
+
+      <div class="card-body">
+
+        <h3>Importe de Venta Diaría</h3>
+
+        <h4 class="font-weight-bold">{{imporVtaDia | currency}}</h4>
+
+        <h6 class="font-weight-bold">Cambiado por<br>{{emisor}}</h6>
+
+        <div class="form-group mt-3">
+
+          <input #importe type="number" name="importe" id="importe" class="form-control col-md-7 col-lg-7" placeholder="Cambiar el Importe" autocomplete="off">
+
+        </div>
+
+        <button class="btn btn-success" (click)="cambiarImporte(importe.value)">Cambiar</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-lg-9 col-md-9">
+
+      <div class="card">
+
+        <div class="card-body">
+
+          <h3>Asignar los días de trabajo</h3>
+
+          <p>En construcción</p>
+
+        </div>
+  
+      </div>
+
+  </div>
+
+</div>

@@ -41,6 +41,8 @@ export { ScrumService } from "./scrum/scrum.service";
 export { ActividadesService } from "./actividades/actividades.service";
 export { DiferenciasService } from "../components/diferencias/diferencias.service";
 export { PedidoService } from './pedido/pedido.service';
+export { MensajesContactoService } from "../components/mensajes-contacto/mensajes-contacto.service";
+export { PanelasesoresService } from './panelasesores/panelasesores.service';
 
 // Servicios de Google
 export { GoogleService } from "./googleconsole/google.service";

@@ -35,6 +35,8 @@ import { RegisterComponent } from './login/register.component';
 import { PagesComponent } from './pages/pages.component';
 import { SharedModule } from './shared/shared.module';
 import { StatusComponent } from './components/status/status.component';
+import { RecuperarComponent } from './recuperar/recuperar.component';
+import { CambiarComponent } from './cambiar/cambiar.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { StatusComponent } from './components/status/status.component';
     LoginComponent,
     RegisterComponent,
     PagesComponent,
-    StatusComponent
+    StatusComponent,
+    RecuperarComponent,
+    CambiarComponent
   ],
   imports: [
     BrowserModule,

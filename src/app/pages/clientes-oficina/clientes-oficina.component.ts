@@ -108,6 +108,9 @@ export class ClientesOficinaComponent implements OnInit {
       case '11':
         pago = 'TRANSFERENCIA';
         break;
+      case '12':
+        pago = 'CHEQUE';
+        break;
     }
 
     switch (this.aplicado.nativeElement.value) {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Usuario } from '../../models/usuario.model';
-import { UsuarioService } from '../../services/services.index';
+import { UsuarioService, WebsocketService } from '../../services/services.index';
 import { ModalUploadService } from '../../components/modal-upload/modal-upload.service';
 
 declare var swal: any;
@@ -28,6 +28,7 @@ export class UsuariosComponent implements OnInit {
   cargando: boolean = true;
 
   constructor(
+    private _webSocket: WebsocketService,
     public _usuarioService: UsuarioService,
     public _modalUpLoadService: ModalUploadService) { }
 
@@ -109,7 +110,11 @@ export class UsuariosComponent implements OnInit {
 
   guardarUsuario( usuario: Usuario ) {
     this._usuarioService.actualizarUsusario( usuario )
-      .subscribe();
+      .subscribe((act: any) => {
+        if (act) {
+          this._webSocket.acciones('usuario-cambio', usuario);
+        }
+      });
   }
 
 }

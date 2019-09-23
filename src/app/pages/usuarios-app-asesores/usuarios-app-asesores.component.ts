@@ -9,7 +9,7 @@ const swal: SweetAlert = _swal as any;
 import { Visor } from '../../models/visor.model';
 
 // Servicios
-import { GpsService } from '../../services/services.index';
+import { GpsService, ExcelService } from '../../services/services.index';
 
 @Component({
   selector: 'app-usuarios-app-asesores',
@@ -25,7 +25,8 @@ export class UsuariosAppAsesoresComponent implements OnInit {
   totalResgitro: number = 0;
 
   constructor(
-    private gps: GpsService
+    private gps: GpsService,
+    private excelService: ExcelService
   ) {
     this.obtenerTodos();
   }
@@ -118,6 +119,14 @@ export class UsuariosAppAsesoresComponent implements OnInit {
 
   cancelar() {
     this.nuevo = false;
+  }
+
+  descargar() {
+    this.gps.obtenerIMEIAsesorAllDonwload().subscribe((visores: any) => {
+      if (visores.status) {
+        this.excelService.exportAsExcelFile(visores.data, 'visores');
+      }
+    });
   }
 
 }

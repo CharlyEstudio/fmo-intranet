@@ -66,13 +66,17 @@
 
                                 <th>IdFerrum</th>
 
-                                <th>Serie Cot</th>
-
-                                <th>Catalogo Cli</th>
+                                <th>CatCli</th>
+                                
+                                <th>SerCot</th>
 
                                 <th>Role</th>
 
-                                <th>Auth</th>
+                                <th>IMEI</th>
+
+                                <th>Lat/Lng</th>
+
+                                <th>On/Off</th>
 
                                 <th></th>
 
@@ -90,11 +94,11 @@
 
                                 </td>
 
-                                <td>{{ usuario.email }}</td>
+                                <td width="10%">{{ usuario.email }}</td>
 
                                 <td>{{ usuario.nombre }}</td>
 
-                                <td class="text-center" width="10%">
+                                <td class="text-center" width="5%">
 
                                     <!--<span *ngIf="usuario.idFerrum != 0">{{ usuario.idFerrum }}</span>-->
 
@@ -102,15 +106,15 @@
 
                                 </td>
 
-                                <td class="text-center" width="10%">
+                                <td class="text-center" width="5%">
+                                    
+                                    <input type="text" name="cat_cli" [(ngModel)]="usuario.cat_cli" class="form-control">
+                                    
+                                </td>
+                                
+                                <td class="text-center" width="5%">
 
                                     <input type="text" name="serie" [(ngModel)]="usuario.serie" class="form-control">
-
-                                </td>
-
-                                <td class="text-center" width="10%">
-
-                                    <input type="text" name="cat_cli" [(ngModel)]="usuario.cat_cli" class="form-control">
 
                                 </td>
 
@@ -145,15 +149,35 @@
 
                                 </td>
 
-                                <td>
+                                <td class="text-center">
 
-                                    <select [(ngModel)]="usuario.activo" name="activo" class="form-control">
+                                    <input type="text" name="imei" [(ngModel)]="usuario.imei" class="form-control">
+
+                                </td>
+
+                                <td>{{usuario.lat}}/{{usuario.lng}}</td>
+
+                                <td width="5%">
+
+                                    <button class="btn btn-success" *ngIf="usuario.activo === 'YES'" (click)="usuario.activo = 'NOT'">
+
+                                        <i class="mdi mdi-cellphone-link"></i>
+
+                                    </button>
+
+                                    <button class="btn btn-secondary" *ngIf="usuario.activo === 'NOT'" (click)="usuario.activo = 'YES'">
+
+                                        <i class="mdi mdi-cellphone-link-off"></i>
+
+                                    </button>
+
+                                    <!-- <select [(ngModel)]="usuario.activo" name="activo" class="form-control">
 
                                         <option value="YES">Si</option>
 
                                         <option value="NOT">No</option>
 
-                                    </select>
+                                    </select> -->
 
                                 </td>
 

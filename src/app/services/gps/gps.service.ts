@@ -88,6 +88,18 @@ export class GpsService {
     return this.http.get(this.url);
   }
 
+  obtenerIMEIAsesorAllDonwload() {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO_DOS + '/gps';
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_LOCAL + ':' + PUERTO_INTERNO_DOS + '/gps';
+    } else {
+      this.url = URL_LOCAL + ':' + PUERTO_INTERNO_DOS + '/gps';
+    }
+
+    return this.http.get(this.url);
+  }
+
   actualizarUsusarioImei( usuario: Visor ) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO_DOS + '/gps/' + usuario._id;

@@ -4,6 +4,9 @@ import { PedidoService } from '../../services/pedido/pedido.service';
 
 
 // import Swal from 'sweetalert2'
+import * as _swal from 'sweetalert';
+import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
+const swal: SweetAlert = _swal as any;
 
 @Component({
   selector: 'app-almacenistas',
@@ -11,6 +14,7 @@ import { PedidoService } from '../../services/pedido/pedido.service';
   styles: []
 })
 export class AlmacenistasComponent implements OnInit {
+
 
   idFerrum: any;
   id: number = -1;
@@ -25,9 +29,12 @@ export class AlmacenistasComponent implements OnInit {
   area: string;
   seccion: string;
   lista: any[] = [];
+  almacenista: any[] = [];
   datos: any[] = [];
   accionBtn: boolean = false;
+  accionbtn: number = 0;
   actividad: string;
+  
 
 
   constructor(
@@ -36,6 +43,8 @@ export class AlmacenistasComponent implements OnInit {
   ) {
     this.idFerrum = this.usuarioService.usuario.idFerrum;
     this.almacenistas();
+    console.log(this.almacenista.length);
+    
    }
 
   ngOnInit() {
@@ -49,30 +58,36 @@ export class AlmacenistasComponent implements OnInit {
 
   desactivar(id: any){
     this.actividad = 'Desactivado';
-    // Swal.fire({
-    //   title: 'Deseas continuar?',
-    //   text: "Se eliminará el registro!",
-    //   type: 'warning',
-    //   showCancelButton: true,
-    //   confirmButtonColor: '#3085d6',
-    //   cancelButtonColor: '#d33',
-    //   confirmButtonText: 'Eliminar!'
-    // }).then((result) => {
-    //   if (result.value) {
-    //     Swal.fire(
-    //       'Elininado!',
-    //       'Tu registro ha sido eliminado.',
-    //       'success'
-    //     )
-        this.pedidoService.eliminarPersonal(id,this.idFerrum,this.actividad).subscribe((data: any)=>{
-          data.activo = 0;
-        });
-    //   }
-    // })
+    swal({
+      title: "¿Deseas eliminar este registro?",
+      text: "Se eliminara este registro de la lista",
+      icon: "warning",
+      buttons: {
+        cancel: true,
+        confirm: true
+      }
+    })
+    .then((confirm) => {
+      if (confirm) {
+        swal(
+          'Eliminado!',
+          'Tu registro ha sido eliminado.',
+          'success'
+          )
+            this.pedidoService.eliminarPersonal(id,this.idFerrum,this.actividad).subscribe((data: any)=>{
+              data.activo = 0;
+              this.almacenistas();
+            });
+      }
+    })
   }
 
   buscador(texto: any){
-    this.pedidoService.nuevoPersonal(texto).subscribe((data2: any) => {
+    this.almacenista = [];
+    this.pedidoService.nuevoPersonal(texto).subscribe((data: any) => {
+      console.log(data);
+      this.lista = data;
+      this.accionbtn = 1;
     });
   }
 
@@ -80,11 +95,8 @@ export class AlmacenistasComponent implements OnInit {
     this.actividad = 'Registro';
     this.pedidoService.guardarRegistro(this.nombre, this.user, this.activo, this.tiempo, this.rotacion, this.marquesina,
       this.capacitacion, this.area, this.seccion,this.idFerrum,this.actividad).subscribe((guarda: any) => {
-        // Swal.fire(
-        //   'Guardado!',
-        //   'Tu registro se ha guardado correctamente!',
-        //   'success'
-        // )
+        swal('Guardado!', `Tu registro se ha guardado correctamente!`, 'success');
+        this.almacenistas();
       });
       this.nombre = '';
       this.img = '';
@@ -137,21 +149,41 @@ export class AlmacenistasComponent implements OnInit {
   editarAlm(){
     this.actividad = 'Editar';
     this.pedidoService.editarPersonal(this.id, this.nombre, this.user, this.activo, this.tiempo, this.rotacion, this.marquesina,
-      this.capacitacion, this.area, this.seccion,this.idFerrum,this.actividad ).subscribe((ver: any) => {
-      });
-      this.id = -1;
-      this.nombre = '';
-      this.img = '';
-      this.tiempo = '';
-      this.user = '';
-      this.activo = '';
-      this.rotacion = '';
-      this.marquesina = '';
-      this.capacitacion = '';
-      this.area = '';
-      this.seccion = '';
-      this.idFerrum = '';
-      this.actividad = '';
+    this.capacitacion, this.area, this.seccion,this.idFerrum,this.actividad ).subscribe((ver: any) => {
+      
+      swal('Modificado!', `Tu registro guardó las modificaciones`, 'success');
+
+    });
+    this.id = -1;
+    this.nombre = '';
+    this.img = '';
+    this.tiempo = '';
+    this.user = '';
+    this.activo = '';
+    this.rotacion = '';
+    this.marquesina = '';
+    this.capacitacion = '';
+    this.area = '';
+    this.seccion = '';
+    this.idFerrum = '';
+    this.actividad = '';
+  }
+  cancelar(){
+    this.accionbtn = 0;
+    this.id = -1;
+    this.nombre = '';
+    this.img = '';
+    this.tiempo = '';
+    this.user = '';
+    this.activo = '';
+    this.rotacion = '';
+    this.marquesina = '';
+    this.capacitacion = '';
+    this.area = '';
+    this.seccion = '';
+    this.idFerrum = '';
+    this.actividad = '';
+    this.almacenistas();
   }
 
 }

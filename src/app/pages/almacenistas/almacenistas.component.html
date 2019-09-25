@@ -1,48 +1,59 @@
-<button type="button" class="btn btn-primary btn-lg mx-5 my-5" (click)="accion()">Nuevo Registro</button>
 <div class="row mx-5"  style="margin-left: 0px!important; margin-right: 0px!important;">
-  <div class="col-md-12 col-lg-4">
-    <div class="table-responsive" style="overflow-y: auto; height: 935px!important;">
-      <table class="table table-hover">
+  <div class="col-lg-12">
+    <button type="button" class="btn btn-primary btn-lg my-2" (click)="accion()">Nuevo Registro</button>
+  </div>
+  <div class="col-md-12 col-lg-6">
+    <div class="card">
+      <h3 class="card-title m-4">Almacenistas Registrados (<small>{{ lista.length }}</small>)</h3>
+      <div class="col-lg-12">
+        <input #almacenista  class="form-control my-4" type="text" placeholder="Buscar Almacenista" (keyup)="buscador(almacenista.value)">
+      </div>
+      <div class="table-responsive" style="overflow-y: auto; height: 935px!important;">
+        <table class="table table-hover mx-4">
           <thead class="bg-danger text-white">
-          <tr>
-            <th>ID</th>
-            <th>Almacenista</th>
-            <th>Opciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let d of lista, let i = index">
-            <td>{{i + 1}}</td>
-            <td>{{d.nombre}}</td>
-            <td><button class="btn btn-danger mx-2" (click)="desactivar(d.id_almacenista)" [id]="d.id_almacenista">Eliminar</button> <button class="btn btn-secondary mx-2" (click)="verAlm(d.id_almacenista)" [id]="d.id_almacenista">Editar</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div class="col-md-12 col-lg-8" *ngIf="img === ''">
-    <div class="row">
-      <div class="col-sm-12 col-md-6 col-lg-4 centrar">
-            <a href="https://ferremayoristas.com.mx/almacen/vistas/capacitacion.php" target="_blank" class="text-danger"><i class="mdi mdi-file-pdf" style="font-size: 6em;"></i><br>Capacitación</a>
-      </div>
-      <div class="col-sm-12 col-md-6 col-lg-4 centrar">
-            <a href="https://ferremayoristas.com.mx/almacen/vistas/planta.php" target="_blank" class="text-danger"><i class="mdi mdi-file-pdf" style="font-size: 6em;"></i><br>Almacén</a>
-      </div>
-      <div class="col-sm-12 col-md-6 col-lg-4 centrar">
-            <a href="https://ferremayoristas.com.mx/almacen/vistas/cuarto.php" target="_blank" class="text-danger"><i class="mdi mdi-file-pdf" style="font-size: 6em;"></i><br>Cuarto C</a>
-      </div>
-      <div class="col-sm-12 col-md-6 col-lg-4 centrar">
-            <a href="https://ferremayoristas.com.mx/almacen/vistas/vendedores.php" target="_blank" class="text-danger"><i class="mdi mdi-file-pdf" style="font-size: 6em;"></i><br>Vendedores</a>
-      </div>
-      <div class="col-sm-12 col-md-6 col-lg-4 centrar">
-            <a href="https://ferremayoristas.com.mx/almacen/vistas/choferes.php" target="_blank" class="text-danger"><i class="mdi mdi-file-pdf" style="font-size: 6em;"></i><br>Choferes</a>
-      </div>
-      <div class="col-sm-12 col-md-6 col-lg-4 centrar">
-            <a href="https://ferremayoristas.com.mx/almacen/vistas/apoyo.php" target="_blank" class="text-danger"><i class="mdi mdi-file-pdf" style="font-size: 6em;"></i><br>Apoyo</a>
+            <tr>
+              <th>ID</th>
+              <th>Almacenista</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let d of lista, let i = index">
+              <td>{{i + 1}}</td>
+              <td>{{d.nombre}}</td>
+              <td><button class="btn btn-danger mx-2" (click)="desactivar(d.id_almacenista)" [id]="d.id_almacenista"><i class="fa fa-trash-o"></i></button> <button class="btn btn-secondary mx-2" (click)="verAlm(d.id_almacenista)" [id]="d.id_almacenista">Editar</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <button *ngIf="accionbtn === 1" class="btn btn-danger mx-4" (click)="cancelar()">Cancelar</button>
       </div>
     </div>
   </div>
-  <div class="col-lg-8" *ngIf="img === 'newuser2.jpg' || id > -1">
+  <div class="col-md-12 col-lg-6" *ngIf="img === ''">
+    <div class="card" style="height: 1000px!important;">
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-4 centrar">
+          <a href="https://ferremayoristas.com.mx/almacen/vistas/capacitacion.php" target="_blank" class="text-danger"><i class="mdi mdi-file-pdf" style="font-size: 6em;"></i><br>Capacitación</a>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4 centrar">
+          <a href="https://ferremayoristas.com.mx/almacen/vistas/planta.php" target="_blank" class="text-danger"><i class="mdi mdi-file-pdf" style="font-size: 6em;"></i><br>Almacén</a>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4 centrar">
+          <a href="https://ferremayoristas.com.mx/almacen/vistas/cuarto.php" target="_blank" class="text-danger"><i class="mdi mdi-file-pdf" style="font-size: 6em;"></i><br>Cuarto C</a>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4 centrar">
+          <a href="https://ferremayoristas.com.mx/almacen/vistas/vendedores.php" target="_blank" class="text-danger"><i class="mdi mdi-file-pdf" style="font-size: 6em;"></i><br>Vendedores</a>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4 centrar">
+          <a href="https://ferremayoristas.com.mx/almacen/vistas/choferes.php" target="_blank" class="text-danger"><i class="mdi mdi-file-pdf" style="font-size: 6em;"></i><br>Choferes</a>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4 centrar">
+          <a href="https://ferremayoristas.com.mx/almacen/vistas/apoyo.php" target="_blank" class="text-danger"><i class="mdi mdi-file-pdf" style="font-size: 6em;"></i><br>Apoyo</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 col-lg-6" *ngIf="img === 'newuser2.jpg' || id > -1">
     <div class="card">
       <div class="centrar" *ngIf="img !== 'newuser2.jpg'">
         <img class="card-img rounded-circle mt-3" style="width: 40%;" src="https://ferremayoristas.com.mx/almacen/vistas/img/{{img}}" >
@@ -115,8 +126,22 @@
               </select>
             </div>
           </div>
-          <button *ngIf="id > -1" type="submit" (click)="editarAlm()" class="btn btn-primary btn-lg centrar">Guardar</button>
-          <button *ngIf="img === 'newuser2.jpg'" type="submit" (click)="nuevoRegistro(form)" class="btn btn-primary btn-lg centrar">Crear</button>
+          <div class="form-row" *ngIf="id > -1">
+            <div class="form-group col-sm-6 col-md-6">
+              <button *ngIf="id > -1" type="submit" (click)="editarAlm()" class="btn btn-primary btn-lg centrar">Guardar</button>
+            </div>
+            <div class="form-group col-sm-6 col-md-6">
+              <button (click)="cancelar()" class="btn btn-danger btn-lg centrar">Cancelar</button>
+            </div>
+          </div>
+          <div class="form-row" *ngIf="img === 'newuser2.jpg'">
+            <div class="form-group col-sm-6 col-md-6">
+              <button  type="submit" (click)="nuevoRegistro(form)" class="btn btn-primary btn-lg centrar">Crear</button>
+            </div>
+            <div class="form-group col-sm-6 col-md-6">
+              <button (click)="cancelar()" class="btn btn-danger btn-lg centrar">Cancelar</button>
+            </div>
+          </div>
         </form>
       </div>
     </div>

@@ -405,7 +405,7 @@ export class UsuarioService {
   // Cambiar Password por ID
   cambiarPassId( usuario: Usuario ) {
     let url;
-    url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cambio/cambiar/id/' + usuario._id + '/intranet';
+    url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cambio/cambiar/id/' + usuario._id + '/intranet/' + usuario.email;
 
     return this.http.get( url );
   }

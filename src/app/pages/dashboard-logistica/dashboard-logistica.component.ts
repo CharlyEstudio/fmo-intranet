@@ -647,9 +647,10 @@ export class DashboardLogisticaComponent implements OnInit {
         clientes: this.rutaEnviar
       };
 
+      // Este si
       this._guiasServices.guardarRutaGuia(subirRuta, this.chf).subscribe(() => {});
 
-      let cajas = "Cafes: " + this.abiertas + ", Azules: " + this.azules + ", NarGde: " + this.nargde + ", NarPeq: " + this.narpeq;
+      let cajas = "Cafes: " + this.abiertas + "      Azules: " + this.azules + "      Naranja Gde: " + this.nargde + "      Naranja Ch: " + this.narpeq;
 
       const pdf = this.chf.nombre.toUpperCase() + '-' + this.folios.length + '-' + fecha + '.pdf';
 

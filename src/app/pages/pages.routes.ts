@@ -78,6 +78,7 @@ import { ActividadesComponent } from './actividades/actividades.component';
 import { AsignacionActividadesComponent } from './asignacion-actividades/asignacion-actividades.component';
 import { AlmacenistasComponent } from './almacenistas/almacenistas.component';
 import { ConfigpanelComponent } from './configpanel/configpanel.component';
+import { GarantiasComponent } from './garantias/garantias.component';
 
 const pageRoutes: Routes = [
     {
@@ -676,6 +677,17 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Frecuencias',
+                    name: 'description'
+                }
+    },
+    // Garantias
+    {
+        path: 'garantias',
+        component: GarantiasComponent,
+        canActivate: [ MesaGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Garantias',
                     name: 'description'
                 }
     },

@@ -118,6 +118,7 @@ import { ActividadesComponent } from './actividades/actividades.component';
 import { AsignacionActividadesComponent } from './asignacion-actividades/asignacion-actividades.component';
 import { AlmacenistasComponent } from './almacenistas/almacenistas.component';
 import { ConfigpanelComponent } from './configpanel/configpanel.component';
+import { GarantiasComponent } from './garantias/garantias.component';
 
 @NgModule({
     declarations: [
@@ -214,7 +215,8 @@ import { ConfigpanelComponent } from './configpanel/configpanel.component';
         ActividadesComponent,
         AsignacionActividadesComponent,
         AlmacenistasComponent,
-        ConfigpanelComponent
+        ConfigpanelComponent,
+        GarantiasComponent
     ],
     exports: [
         DashborarDirComponent,

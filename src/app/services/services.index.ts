@@ -43,6 +43,7 @@ export { DiferenciasService } from "../components/diferencias/diferencias.servic
 export { PedidoService } from './pedido/pedido.service';
 export { MensajesContactoService } from "../components/mensajes-contacto/mensajes-contacto.service";
 export { PanelasesoresService } from './panelasesores/panelasesores.service';
+export { GarantiasService } from "./garantias/garantias.service";
 
 // Servicios de Google
 export { GoogleService } from "./googleconsole/google.service";

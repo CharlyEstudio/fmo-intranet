@@ -44,6 +44,7 @@ export { PedidoService } from './pedido/pedido.service';
 export { MensajesContactoService } from "../components/mensajes-contacto/mensajes-contacto.service";
 export { PanelasesoresService } from './panelasesores/panelasesores.service';
 export { GarantiasService } from "./garantias/garantias.service";
+export { ProductosService } from "./productos/productos.service";
 
 // Servicios de Google
 export { GoogleService } from "./googleconsole/google.service";

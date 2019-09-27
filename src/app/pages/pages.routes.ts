@@ -79,6 +79,7 @@ import { AsignacionActividadesComponent } from './asignacion-actividades/asignac
 import { AlmacenistasComponent } from './almacenistas/almacenistas.component';
 import { ConfigpanelComponent } from './configpanel/configpanel.component';
 import { GarantiasComponent } from './garantias/garantias.component';
+import { ActividadesDevelopersComponent } from './actividades-developers/actividades-developers.component';
 
 const pageRoutes: Routes = [
     {
@@ -743,6 +744,17 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Configuración del Panel de Asesores',
+                    name: 'description'
+                }
+    },
+    // Sistemas
+    {
+        path: 'actividadesdev',
+        component: ActividadesDevelopersComponent,
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Asignación de Actividades para Developers',
                     name: 'description'
                 }
     },

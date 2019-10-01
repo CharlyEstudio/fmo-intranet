@@ -88,7 +88,6 @@ export class ActividadesdevComponent implements OnInit {
     this.sprints = [];
     this.scrum.obtenerSprints().subscribe((sprints: any) => {
       if (sprints.ok) {
-        console.log(sprints.sprints);
         this.sprints = sprints.sprints;
       }
     });

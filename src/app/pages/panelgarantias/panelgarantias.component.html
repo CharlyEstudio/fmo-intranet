@@ -1,0 +1,175 @@
+<div class="row">
+
+  <div class="col-md-4 col-lg-4">
+
+    <app-cardgarantia [titulo]="'Nuevas Garantías'" [cantidad]="nuevos" [color]="'bg-warning'" [colortext]="'text-white'"></app-cardgarantia>
+
+  </div>
+
+  <div class="col-md-4 col-lg-4">
+
+    <app-cardgarantia [titulo]="'Garantías en Proceso'" [cantidad]="proceso" [color]="'bg-info'" [colortext]="'text-white'"></app-cardgarantia>
+
+  </div>
+
+  <div class="col-md-4 col-lg-4">
+
+    <app-cardgarantia [titulo]="'Garantías Enviadas'" [cantidad]="enviando" [color]="'bg-purple'" [colortext]="'text-white'"></app-cardgarantia>
+    
+  </div>
+
+  <div class="col-md-4 col-lg-4">
+
+    <app-cardgarantia [titulo]="'Garantías en Autorización'" [cantidad]="autorizacion" [color]="'bg-primary'" [colortext]="'text-white'"></app-cardgarantia>
+    
+  </div>
+
+  <div class="col-md-4 col-lg-4">
+
+    <app-cardgarantia [titulo]="'Garantías en Entrega'" [cantidad]="entregar" [color]="'bg-light'" [colortext]="'text-dark'"></app-cardgarantia>
+    
+  </div>
+
+  <div class="col-md-4 col-lg-4">
+
+    <app-cardgarantia [titulo]="'Garantías Terminadas'" [cantidad]="terminado" [color]="'bg-success'" [colortext]="'text-white'"></app-cardgarantia>
+    
+  </div>
+
+  <div class="col-md-12 col-lg-12">
+
+    <h1 class="display-3 text-center" *ngIf="estados.length === 0">SIN GARANTIAS ACTIVAS</h1>
+
+    <div class="table-responsive" *ngIf="estados.length > 0">
+
+      <table class="table">
+
+          <thead>
+  
+              <tr>
+  
+                  <th colspan="7"></th>
+  
+                  <th colspan="2" class="text-center">Truper</th>
+  
+                  <th colspan="2" class="text-center">Término</th>
+  
+                  <th colspan="3"></th>
+  
+              </tr>
+  
+              <tr>
+  
+                  <th class="">Folio #</th>
+  
+                  <th class="">Asesor</th>
+  
+                  <th class="">fecRec</th>
+  
+                  <th class="">Cliente</th>
+  
+                  <th class="">Codigo</th>
+  
+                  <th class="">Pzs</th>
+  
+                  <th class="">Costo</th>
+  
+                  <th class="text-center">FecReg</th>
+  
+                  <th class="text-center">Folio</th>
+  
+                  <th class="text-center">Fecha</th>
+  
+                  <th class="text-center">Folio</th>
+  
+                  <th class="">Observaciones</th>
+  
+                  <th class="">NC</th>
+  
+                  <th class="">FacAfec</th>
+  
+                  <th class="">Estado</th>
+  
+                  <th class=""></th>
+  
+              </tr>
+  
+          </thead>
+  
+          <tbody>
+  
+              <tr class="font-14" *ngFor="let gara of estados">
+  
+                  <td><span class="footable-toggle font-weight-bold"></span>{{gara.folio}}</td>
+  
+                  <td>
+                      {{gara.asesor}}
+                  </td>
+  
+                  <td>{{gara.fecha | date: 'dd-MM-yy'}}</td>
+  
+                  <td>{{gara.numero}}</td>
+  
+                  <td class="font-weight-bold">{{gara.clvprov}}</td>
+  
+                  <td class="font-weight-bold">{{gara.cantidad}}</td>
+  
+                  <td>{{gara.costo | currency}}</td>
+  
+                  <td class="font-weight-bold text-center" *ngIf="gara.feregtru !== '0000-00-00'">{{gara.fecregtru | date: 'dd-MM-yy'}}</td>
+  
+                  <td class="font-weight-bold text-center" *ngIf="gara.feregtru === '0000-00-00'">--</td>
+  
+                  <td class="font-weight-bold text-center" >{{gara.foltru}}</td>
+  
+                  <td class="font-weight-bold text-center" *ngIf="gara.fecenvio !== '0000-00-00'">{{gara.fecenvio | date: 'dd-MM-yy'}}</td>
+  
+                  <td class="font-weight-bold text-center" *ngIf="gara.fecenvio === '0000-00-00'">--</td>
+  
+                  <td class="font-weight-bold text-center">{{(gara.folterm !== '' && gara.folterm !== 0) ? gara.folterm : gara.folnc}}</td>
+  
+                  <td>{{gara.observa}}</td>
+  
+                  <td>{{gara.folnc}}</td>
+  
+                  <td>{{gara.facafec}}</td>
+  
+                  <td>
+  
+                      <span *ngIf="gara.estado === 'NUEVO'" class="label label-warning">Nuevo</span>
+                      
+                      <span *ngIf="gara.estado === 'PROCESO'" class="label label-info">Proceso</span>
+  
+                      <span *ngIf="gara.estado === 'ENVIANDO'" class="label label-light-megna">Enviando</span>
+  
+                      <span *ngIf="gara.estado === 'AUTORIZACION'" class="label label-light-primary">Autorización</span>
+  
+                      <span *ngIf="gara.estado === 'ENTREGAR'" class="label label-light-success">Entregar</span>
+                      
+                      <span *ngIf="gara.estado === 'TERMINADO'" class="label label-success">Terminado</span>
+                      
+                      <span *ngIf="gara.estado === 'CANCELADO'" class="label label-danger">Cancelado</span>
+  
+                  </td>
+  
+                  <td>
+  
+                      <button type="button" class="btn btn-info" data-toggle="tooltip" title="Editar" data-toggle="modal" data-target="#editar" (click)="verInfo(gara)">
+  
+                          <i class="mdi mdi-table-edit"></i>
+  
+                      </button>
+  
+                  </td>
+  
+              </tr>
+  
+          </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>

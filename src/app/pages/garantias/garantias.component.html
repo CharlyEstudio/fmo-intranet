@@ -2,13 +2,43 @@
 
     <div class="form-group">
 
-        <input #buscar type="text" class="form-control" placeholder="Buscar una garantía" (keyup)="search(buscar.value)">
+        <input #buscar type="text" class="form-control w-25" placeholder="Buscar una garantía" (keyup.enter)="search(buscar.value)">
+
+        <button class="btn btn-danger btn-rounded" type="button" (click)="limpiar(); buscar.value = ''">
+
+            <i class="mdi mdi-delete-variant"></i> Limpiar
+
+        </button>
 
     </div>
 
-    <table id="table" class="table m-t-30 table-hover contact-list footable-loaded footable" data-page-size="10">
+    <table id="table" class="table table-sm m-t-30" data-page-size="10">
 
         <thead>
+
+            <tr>
+
+                <td colspan="6">
+
+                    <button type="button" class="btn btn-info btn-rounded" data-toggle="modal" data-target="#add-garantia">Nueva Garantía</button>
+
+                    <button (click)="cambiarDesde(-10)" class="btn btn-secondary btn-rounded" [disabled]="habilitar">
+
+                        Anteriores
+    
+                    </button>
+    
+                    <button (click)="cambiarDesde(10)" class="btn btn-secondary btn-rounded" [disabled]="habilitar">
+    
+                        Siguientes
+    
+                    </button>
+                
+                </td>
+
+                <td colspan="6"></td>
+
+            </tr>
 
             <tr>
 
@@ -64,9 +94,9 @@
 
             <tr class="font-14" *ngFor="let gara of garantias">
 
-                <td><span class="footable-toggle font-weight-bold"></span>{{gara.folio}}</td>
+                <td width="5%"><span class="footable-toggle font-weight-bold"></span>{{gara.folio}}</td>
 
-                <td>
+                <td width="15%">
                     {{gara.asesor}}
                 </td>
 
@@ -90,7 +120,7 @@
 
                 <td class="font-weight-bold text-center" *ngIf="gara.fecenvio === '0000-00-00'">--</td>
 
-                <td class="font-weight-bold text-center">{{gara.folterm}}</td>
+                <td class="font-weight-bold text-center">{{(gara.folterm !== '' && gara.folterm !== 0) ? gara.folterm : gara.folnc}}</td>
 
                 <td>{{gara.observa}}</td>
 
@@ -118,17 +148,17 @@
 
                 <td>
 
-                    <button type="button" class="btn btn-info" data-toggle="tooltip" title="Editar" data-toggle="modal" data-target="#editar" (click)="verInfo(gara)">
+                    <button type="button" class="btn btn-info" data-toggle="tooltip" title="Editar" data-toggle="modal" data-target="#editar" *ngIf="gara.estado !== 'TERMINADO' && usuario.rol === 'OF_ROLE'" (click)="verInfo(gara)">
 
                         <i class="mdi mdi-table-edit"></i>
 
                     </button>
 
-                    <!-- <button type="button" class="btn btn-danger" data-toggle="tooltip" title="Terminar" data-target="#terminar">
+                    <button type="button" class="btn btn-success" data-toggle="tooltip" title="Editar" data-toggle="modal" data-target="#editar" *ngIf="gara.estado === 'TERMINADO' && usuario.rol === 'OF_ROLE'" (click)="verInfo(gara)">
 
-                        <i class="mdi mdi-package-variant-closed"></i>
+                        <i class="mdi mdi-view-module"></i>
 
-                    </button> -->
+                    </button>
 
                 </td>
 
@@ -140,7 +170,7 @@
 
             <tr>
 
-                <td colspan="2">
+                <td colspan="6">
 
                     <button type="button" class="btn btn-info btn-rounded" data-toggle="modal" data-target="#add-garantia">Nueva Garantía</button>
 
@@ -193,7 +223,7 @@
 
                     <div class="form-group col-md-2">
 
-                        <label for="">Folio</label>
+                        <label for="">Folio de Garantía Nueva</label>
 
                         <input ngModel type="number" name="folio" id="folio" class="form-control" placeholder="Ingresar Folio" autocomplete="off" (change)="validarFolio(f)" required>
 
@@ -201,41 +231,62 @@
 
                     <div class="form-group col-md-2">
 
-                        <label for="">Asesor</label>
+                        <label for="">Fecha del Folio</label>
 
-                        <select [(ngModel)]="perid" class="form-control" name="perid" id="perid" required>
-
-                            <option value="0">Seleccione un asesor</option>
-
-                            <option *ngFor="let ase of asesores" [value]="ase.idFerrum">{{ase.nombre}}</option>
-
-                        </select>
+                        <input ngModel type="date" name="fechaFolio" id="fechaFolio" class="form-control" autocomplete="off" required>
 
                     </div>
 
                     <div class="form-group col-md-8"></div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-2">
 
-                        <label for="">Fecha</label>
+                        <label for="">No. de Cliente de la Garantía</label>
 
-                        <input ngModel type="date" name="fechaFolio" id="fechaFolio" class="form-control" autocomplete="off" required>
+                        <input ngModel type="text" name="numcliFol" id="numcliFol" class="form-control" placeholder="Número de Cliente" autocomplete="off" (change)="buscarCli(f)">
+
+                    </div>
+                    
+                    <div class="form-group col-md-10">
+
+                        <label for="">Cliente de la Garantía</label>
+
+                        <input [(ngModel)]="nomcliFol" type="text" name="nomcliFol" id="nomcliFol" class="form-control" placeholder="Nombre del Cliente" autocomplete="off" readonly>
 
                     </div>
                     
                     <div class="form-group col-md-4">
 
-                        <label for="">Factura</label>
+                        <label for="">Factura/Remisión</label>
 
-                        <input ngModel type="text" name="factura" id="factura" class="form-control" placeholder="Folio Factura" autocomplete="off" required>
+                        <input ngModel type="text" name="factura" id="factura" class="form-control" placeholder="Folio Factura" autocomplete="off" (change)="buscarFactura(f)" required>
+
+                    </div>
+
+                    <div class="form-group col-md-4" style="display: none;">
+
+                        <label for="">Orden de Trabajo Truper</label>
+
+                        <input ngModel type="text" name="ordenTrabTrup" id="ordenTrabTrup" class="form-control" autocomplete="off">
 
                     </div>
 
                     <div class="form-group col-md-4">
 
-                        <label for="">Orden de Trabajo Truper</label>
+                        <label for="">Asesor</label>
 
-                        <input ngModel type="text" name="ordenTrabTrup" id="ordenTrabTrup" class="form-control" autocomplete="off" required>
+                        <input [(ngModel)]="perid" type="text" name="perid" id="perid" class="form-control" style="display: none;">
+                        <input [(ngModel)]="asesor" type="text" name="asesor" id="asesor" class="form-control" placeholder="Nombre del Asesor" autocomplete="off" readonly>
+
+                    </div>
+
+                    <div class="form-group col-md-4 centrar">
+
+                        <h1 class="display-6 badge badge-info" *ngIf="numcli === numcliFol && numcli !== 0">MISMO CLIENTE</h1>
+
+                        <h1 class="display-6 badge badge-danger" *ngIf="numcli !== numcliFol && numcli !== 0">DIFERENTE CLIENTE</h1>
+
+                        <input [(ngModel)]="mecompro" type="text" name="mecompro" id="mecompro" class="form-control" style="display: none;">
 
                     </div>
 
@@ -243,7 +294,7 @@
 
                         <label for="">No. de Cliente</label>
 
-                        <input ngModel type="text" name="numcli" id="numcli" class="form-control" placeholder="Número de Cliente" autocomplete="off" required (change)="buscarCliente(f)">
+                        <input [(ngModel)]="numcli" type="text" name="numcli" id="numcli" class="form-control" placeholder="Número de Cliente" autocomplete="off" readonly>
 
                     </div>
                     
@@ -283,7 +334,15 @@
 
                                     <td width="10%" style="padding: 0px!important;">
 
-                                        <input ngModel type="number" name="codigo" id="codigo" class="form-control" placeholder="Código" (change)="buscarProducto(f)" autocomplete="off" required>
+                                        <select [(ngModel)]="products" class="form-control" name="productos" id="productos" (change)="activarProducto(f)">
+
+                                            <option value="0">Seleccione un producto</option>
+
+                                            <option *ngFor="let prod of productosFactura" [ngValue]="prod">{{prod.DESCRIPCIO}}</option>
+
+                                        </select>
+
+                                        <input [(ngModel)]="clvprov" type="text" name="clvprov" id="clvprov" class="form-control" style="display: none;">
 
                                     </td>
                                     

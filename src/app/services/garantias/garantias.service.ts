@@ -23,6 +23,48 @@ export class GarantiasService {
     return this.http.get(url);
   }
 
+  obtenerGarantias() {
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=17';
+
+    return this.http.get(url);
+  }
+
+  obtenerGarantiasNuevos() {
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=11';
+
+    return this.http.get(url);
+  }
+
+  obtenerGarantiasProceso() {
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=12';
+
+    return this.http.get(url);
+  }
+
+  obtenerGarantiasEnviando() {
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=13';
+
+    return this.http.get(url);
+  }
+
+  obtenerGarantiasAutorizacion() {
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=14';
+
+    return this.http.get(url);
+  }
+
+  obtenerGarantiasEntregar() {
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=15';
+
+    return this.http.get(url);
+  }
+
+  obtenerGarantiasTerminado() {
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=16';
+
+    return this.http.get(url);
+  }
+
   buscarGara(text: any) {
     const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=2&texto=' + text;
 
@@ -31,6 +73,18 @@ export class GarantiasService {
 
   validarFolio(folio: number) {
     const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=4&folio=' + folio;
+
+    return this.http.get(url);
+  }
+
+  obtenerFactura(folio: number) {
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=9&folio=' + folio;
+
+    return this.http.get(url);
+  }
+
+  obtenerProductosFacturas(docid: number) {
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=10&docid=' + docid;
 
     return this.http.get(url);
   }

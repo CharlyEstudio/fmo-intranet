@@ -80,6 +80,7 @@ import { AlmacenistasComponent } from './almacenistas/almacenistas.component';
 import { ConfigpanelComponent } from './configpanel/configpanel.component';
 import { GarantiasComponent } from './garantias/garantias.component';
 import { ActividadesDevelopersComponent } from './actividades-developers/actividades-developers.component';
+import { PanelgarantiasComponent } from './panelgarantias/panelgarantias.component';
 
 const pageRoutes: Routes = [
     {
@@ -682,6 +683,16 @@ const pageRoutes: Routes = [
                 }
     },
     // Garantias
+    {
+        path: 'panelgarantias',
+        component: PanelgarantiasComponent,
+        canActivate: [ MesaGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Panel de Garantias',
+                    name: 'description'
+                }
+    },
     {
         path: 'garantias',
         component: GarantiasComponent,

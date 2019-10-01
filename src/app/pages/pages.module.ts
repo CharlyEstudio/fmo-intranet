@@ -52,6 +52,7 @@ import { MorosidadBitacoraComponent } from '../components/morosidad-bitacora/mor
 import { MovFolComponent } from '../components/mov-fol/mov-fol.component';
 import { EdoCtaCliComponent } from '../components/edo-cta-cli/edo-cta-cli.component';
 import { ComentariosComponent } from '../components/comentarios/comentarios.component';
+import { CardgarantiaComponent } from '../components/cardgarantia/cardgarantia.component';
 // import { DiferenciasComponent } from '../components/diferencias/diferencias.component';
 // Páginas
 import { ProfileComponent } from './profile/profile.component';
@@ -121,6 +122,7 @@ import { ConfigpanelComponent } from './configpanel/configpanel.component';
 import { GarantiasComponent } from './garantias/garantias.component';
 import { ActividadesdevComponent } from '../components/actividadesdev/actividadesdev.component';
 import { ActividadesDevelopersComponent } from './actividades-developers/actividades-developers.component';
+import { PanelgarantiasComponent } from './panelgarantias/panelgarantias.component';
 
 @NgModule({
     declarations: [
@@ -147,6 +149,7 @@ import { ActividadesDevelopersComponent } from './actividades-developers/activid
         MovFolComponent,
         EdoCtaCliComponent,
         ComentariosComponent,
+        CardgarantiaComponent,
         // DiferenciasComponent,
         // Páginas
         DashborarDirComponent,
@@ -220,7 +223,8 @@ import { ActividadesDevelopersComponent } from './actividades-developers/activid
         ConfigpanelComponent,
         GarantiasComponent,
         ActividadesdevComponent,
-        ActividadesDevelopersComponent
+        ActividadesDevelopersComponent,
+        PanelgarantiasComponent
     ],
     exports: [
         DashborarDirComponent,

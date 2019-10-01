@@ -52,6 +52,7 @@ import { MorosidadBitacoraComponent } from '../components/morosidad-bitacora/mor
 import { MovFolComponent } from '../components/mov-fol/mov-fol.component';
 import { EdoCtaCliComponent } from '../components/edo-cta-cli/edo-cta-cli.component';
 import { ComentariosComponent } from '../components/comentarios/comentarios.component';
+import { CardgarantiaComponent } from '../components/cardgarantia/cardgarantia.component';
 // import { DiferenciasComponent } from '../components/diferencias/diferencias.component';
 // Páginas
 import { ProfileComponent } from './profile/profile.component';
@@ -119,6 +120,9 @@ import { AsignacionActividadesComponent } from './asignacion-actividades/asignac
 import { AlmacenistasComponent } from './almacenistas/almacenistas.component';
 import { ConfigpanelComponent } from './configpanel/configpanel.component';
 import { GarantiasComponent } from './garantias/garantias.component';
+import { ActividadesdevComponent } from '../components/actividadesdev/actividadesdev.component';
+import { ActividadesDevelopersComponent } from './actividades-developers/actividades-developers.component';
+import { PanelgarantiasComponent } from './panelgarantias/panelgarantias.component';
 
 @NgModule({
     declarations: [
@@ -145,6 +149,7 @@ import { GarantiasComponent } from './garantias/garantias.component';
         MovFolComponent,
         EdoCtaCliComponent,
         ComentariosComponent,
+        CardgarantiaComponent,
         // DiferenciasComponent,
         // Páginas
         DashborarDirComponent,
@@ -155,7 +160,7 @@ import { GarantiasComponent } from './garantias/garantias.component';
         BusquedaComponent,
         VentaComponent,
         CompraComponent,
-        
+
         UtilidadesComponent,
         NotasComponent,
         InventarioComponent,
@@ -216,7 +221,10 @@ import { GarantiasComponent } from './garantias/garantias.component';
         AsignacionActividadesComponent,
         AlmacenistasComponent,
         ConfigpanelComponent,
-        GarantiasComponent
+        GarantiasComponent,
+        ActividadesdevComponent,
+        ActividadesDevelopersComponent,
+        PanelgarantiasComponent
     ],
     exports: [
         DashborarDirComponent,

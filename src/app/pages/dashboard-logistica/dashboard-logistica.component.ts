@@ -139,7 +139,7 @@ export class DashboardLogisticaComponent implements OnInit {
 
       let mes;
 
-      if (h.getMonth() < 10) {
+      if ((h.getMonth() + 1) < 10) {
         mes = '0' + (h.getMonth() + 1);
       } else {
         mes = (h.getMonth() + 1);
@@ -148,6 +148,7 @@ export class DashboardLogisticaComponent implements OnInit {
       let anio = h.getFullYear();
 
       let fecha = anio + '-' + mes + '-' + dia;
+
 
       this._guiasServices.obtenerGuiasDia(fecha).subscribe( ( resp: any ) => {
         this.guiasRecientes = resp.guias;
@@ -238,7 +239,7 @@ export class DashboardLogisticaComponent implements OnInit {
 
     let mes;
 
-    if (h.getMonth() < 10) {
+    if ((h.getMonth() + 1) < 10) {
       mes = '0' + (h.getMonth() + 1);
     } else {
       mes = (h.getMonth() + 1);
@@ -493,7 +494,7 @@ export class DashboardLogisticaComponent implements OnInit {
       dia = h.getDate();
     }
 
-    if (h.getMonth() < 10) {
+    if ((h.getMonth() + 1) < 10) {
       mes = '0' + (h.getMonth() + 1);
     } else {
       mes = (h.getMonth() + 1);

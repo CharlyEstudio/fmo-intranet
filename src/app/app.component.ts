@@ -43,6 +43,20 @@ export class AppComponent implements OnInit {
       && localStorage.getItem('rol') !== 'OF_ROLE'
       && localStorage.getItem('rol') !== 'MESA_ROLE'
       && localStorage.getItem('rol') !== 'CLI_ROLE') {
+      // Nueva garantía realizada
+      this._wsService.escuchar('nueva-garantia').subscribe((garantia: any) => {
+        const remitente = 'Nueva Garantia';
+        const comentario = 'Se realizó una nueva garantía.';
+        this.pushNotGarantia(garantia.datos.numcli, garantia.datos.nomcli, comentario, remitente, garantia.usuario.img);
+      });
+
+      // Seguimientos de garantías realizada
+      this._wsService.escuchar('seguimiento-garantia').subscribe((garantia: any) => {
+        const remitente = 'Seguimiento de Garantia';
+        const comentario = 'cambio de estado a ==' + garantia.estado + '== en la garantía ' + garantia.folio;
+        this.pushNotGarantia(garantia.numeroCli, garantia.nombreCli, comentario, remitente, garantia.usuario.img);
+      });
+
       // Nuevo Comentario del Asesor
       this._wsService.escuchar('comentario-asesor').subscribe((comentar: any) => {
         const comentario = 'Estuvo con el cliente ' + comentar.respuesta.numero + ' y su acción fue ' + comentar.respuesta.accion;
@@ -127,6 +141,20 @@ export class AppComponent implements OnInit {
         error => console.error('Error en el obs', error),
         () => console.log('El observador termino!')
       );
+    } else if (localStorage.getItem('rol') === 'OF_ROLE') {
+      // Nueva garantía realizada
+      this._wsService.escuchar('nueva-garantia').subscribe((garantia: any) => {
+        const remitente = 'Nueva Garantia';
+        const comentario = 'Se realizó una nueva garantía.';
+        this.pushNotGarantia(garantia.datos.numcli, garantia.datos.nomcli, comentario, remitente, garantia.usuario.img);
+      });
+
+      // Seguimientos de garantías realizada
+      this._wsService.escuchar('seguimiento-garantia').subscribe((garantia: any) => {
+        const remitente = 'Seguimiento de Garantia';
+        const comentario = 'cambio de estado a ==' + garantia.estado + '== en la garantía ' + garantia.folio;
+        this.pushNotGarantia(garantia.numeroCli, garantia.nombreCli, comentario, remitente, garantia.usuario.img);
+      });
     }
 
     if (localStorage.getItem('rol') === 'ADMIN_ROLE') {
@@ -182,6 +210,50 @@ export class AppComponent implements OnInit {
     const options = new PushNotificationOptions();
     options.body = numero + ' ' + nombre +
     ', comentario: ' +
+    comentario;
+
+    if (img === '') {
+      options.icon = 'assets/images/users/fmo.png';
+    } else if (cliente) {
+      const imgCli = 'https://ferremayoristas.com.mx/assets/clientes/' + img + '.jpg';
+      if (imgCli) {
+        options.icon = imgCli;
+      } else {
+        options.icon = 'assets/images/users/fmo.png';
+      }
+    } else {
+      if (tipo !== 'choferes') {
+        options.icon = 'https://ferremayoristas.com.mx:' + PUERTO_INTERNO + '/img' + '/usuarios/' + img;
+      } else {
+        options.icon = 'https://ferremayoristas.com.mx:' + PUERTO_INTERNO + '/img' + '/choferes/' + img;
+      }
+    }
+
+    this._pushNotificationService.create(title, options).subscribe((notif) => {
+      if (notif.event.type === 'show') {
+        // console.log('onshow');
+        // setTimeout(() => {
+        //   notif.notification.close();
+        // }, 30000);
+      }
+      if (notif.event.type === 'click') {
+        // console.log('click');
+        notif.notification.close();
+      }
+      if (notif.event.type === 'close') {
+        // console.log('close');
+      }
+    },
+    (err) => {
+         console.log(err);
+    });
+  }
+
+  pushNotGarantia( numero: any, nombre: any, comentario: any, remitente: any, img: any = '', cliente: boolean = false, tipo: any = 'usuarios' ) {
+    const title = remitente;
+    const options = new PushNotificationOptions();
+    options.body = numero + ' ' + nombre +
+    ', ' +
     comentario;
 
     if (img === '') {

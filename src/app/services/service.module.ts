@@ -50,7 +50,8 @@ import {
   PedidoService,
   MensajesContactoService,
   PanelasesoresService,
-  GarantiasService
+  GarantiasService,
+  ProductosService
   // NotificationService
 } from "./services.index";
 
@@ -108,7 +109,8 @@ import {
     PedidoService,
     MensajesContactoService,
     PanelasesoresService,
-    GarantiasService
+    GarantiasService,
+    ProductosService
     // Notificaciones
     // NotificationService
     // Magnitracking

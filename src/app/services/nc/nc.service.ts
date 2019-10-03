@@ -117,7 +117,7 @@ export class NcService {
     return this.http.delete(this.url);
   }
 
-  buscarNCtrabajado(nc: any) {
+  buscarNCtrabajado(nc: any, serie: any) {
     // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/nc/trabajados/buscar/' + nc;
     // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
@@ -125,7 +125,20 @@ export class NcService {
     // } else {
     //   this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/nc/trabajados/buscar/' + nc;
     // }
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/nc/trabajados/buscar/' + nc;
+    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/nc/trabajados/buscar/' + nc + '/' + serie;
+
+    return this.http.get(this.url, nc);
+  }
+
+  buscarNCtrabajadoFolio(nc: any) {
+    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
+    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/nc/trabajados/buscar/' + nc;
+    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/nc/trabajados/buscar/' + nc;
+    // } else {
+    //   this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/nc/trabajados/buscar/' + nc;
+    // }
+    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/nc/trabajados/buscar/folio/' + nc;
 
     return this.http.get(this.url, nc);
   }

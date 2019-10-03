@@ -117,7 +117,7 @@ export class NotascreditoComponent implements OnInit {
         let nt;
         this.nc = [];
         for (let i = 0; i < notas.respuesta.length; i ++) {
-          this._ncService.buscarNCtrabajado(notas.respuesta[i].nc).subscribe((resp: any) => {
+          this._ncService.buscarNCtrabajado(notas.respuesta[i].nc, notas.respuesta[i].serie).subscribe((resp: any) => {
             if (resp.status) {
               nt = {
                 fecha: notas.respuesta[i].fecha,
@@ -200,7 +200,7 @@ export class NotascreditoComponent implements OnInit {
       return;
     }
 
-    this._ncService.buscarNCtrabajado(this.inNC).subscribe((resp: any) => {
+    this._ncService.buscarNCtrabajadoFolio(this.inNC).subscribe((resp: any) => {
       if (resp.status) {
         this.work = [];
         this.work.push(resp.respuesta);
@@ -232,10 +232,9 @@ export class NotascreditoComponent implements OnInit {
     this.cargando = true;
     this.nc = [];
     this._ncService.buscarNCFecha(f, f2).subscribe((resp: any) => {
-      console.log(resp.respuesta);
       if (resp.status) {
         for (let i = 0; i < resp.respuesta.length; i ++) {
-          this._ncService.buscarNCtrabajado(resp.respuesta[i].nc).subscribe((ncFec: any) => {
+          this._ncService.buscarNCtrabajado(resp.respuesta[i].nc, resp.respuesta[i].serie).subscribe((ncFec: any) => {
             if (ncFec.status) {
               resp.respuesta[i].trabajado = true;
             } else if (resp.respuesta[i].serie === 'NA') {

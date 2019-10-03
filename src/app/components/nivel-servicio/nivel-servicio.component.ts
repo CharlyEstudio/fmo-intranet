@@ -1,5 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PhpService } from '../../services/services.index';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
@@ -7,12 +6,18 @@ import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/retry';
 import 'rxjs/add/operator/filter';
 
+// Servicios
+import { PhpService, PedFacturadosService } from '../../services/services.index';
+
 @Component({
   selector: 'app-nivel-servicio',
   templateUrl: './nivel-servicio.component.html',
   styles: []
 })
 export class NivelServicioComponent implements OnInit, OnDestroy {
+
+  // Obtener el importe facturado
+  importeFacturado: number = 0;
 
   graficos: any = {
     'general': {
@@ -51,8 +56,13 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
   grafFmo: any;
 
   constructor(
-    private _phpService: PhpService
+    private _phpService: PhpService,
+    private _emitirFacturado: PedFacturadosService
   ) {
+
+    this._emitirFacturado.importe.subscribe((impor: any) => {
+      this.importeFacturado = impor;
+    });
 
     // Subscrión a Nivel de Servicio General
     this.nivelServicio =  this.regresaNSGeneral().subscribe(
@@ -71,14 +81,9 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
           .subscribe( ( data: any ) => {
 
             if (data.length > 0) {
-              for (const d of data) {
-                if (d.tipo === 'remision') {
-                  this.dataGenFac = d.importe;
-                } else if (d.tipo === 'bo') {
-                  this.dataBoCot = d.importe;
-                }
-              }
-              this.dataGenCot = this.dataGenFac + this.dataBoCot;
+              this.dataGenFac = this.importeFacturado;
+              // this.dataBoCot = (this.importeFacturado + data[0].IMPORTE);
+              this.dataGenCot = (this.importeFacturado + data[0].IMPORTE);
               this.porcentGen = (this.dataGenFac / this.dataGenCot);
             } else {
               this.dataGenCot = 0;
@@ -107,29 +112,44 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
               this.dataFMOCot = 0;
               this.dataFMOFac = 0;
               this.porcentFMO = 0;
-              let impoboTru = 0;
-              let impoboFmo = 0;
-              for (const d of data) {
-                // Truper
-                if (d.tipo === 'remision-TRUPER') {
-                  this.dataTruFac = d.importe;
-                }
 
-                if (d.tipo === 'bo-TRUPER') {
-                  impoboTru = d.importe;
-                }
-
-                // Ferremayoristas
-                if (d.tipo === 'remision-FMO') {
-                  this.dataFMOFac = d.importe;
-                }
-
-                if (d.tipo === 'bo-FMO') {
-                  impoboFmo = d.importe;
+              // Desglozamos todo
+              // FMO
+              for (const familia of data) {
+                if (familia.FAMILIA === 'FMO-BO') {
+                  this.dataFMOCot += familia.IMPORTE;
+                } else {
+                  this.dataFMOCot += 0;
                 }
               }
-              this.dataTruCot = this.dataTruFac + impoboTru;
-              this.dataFMOCot = this.dataFMOFac + impoboFmo;
+
+              for (const familia of data) {
+                if (familia.FAMILIA === 'FMO-FAC') {
+                  this.dataFMOCot += familia.IMPORTE;
+                  this.dataFMOFac = familia.IMPORTE;
+                } else {
+                  this.dataFMOFac += 0;
+                }
+              }
+
+              // TRUPER
+              for (const familia of data) {
+                if (familia.FAMILIA === 'TRUPER-BO') {
+                  this.dataTruCot += familia.IMPORTE;
+                } else {
+                  this.dataTruCot += 0;
+                }
+              }
+
+              for (const familia of data) {
+                if (familia.FAMILIA === 'TRUPER-FAC') {
+                  this.dataTruCot += familia.IMPORTE;
+                  this.dataTruFac = familia.IMPORTE;
+                } else {
+                  this.dataTruFac += 0;
+                }
+              }
+
               this.porcentTru = (this.dataTruFac / this.dataTruCot);
               this.porcentFMO = (this.dataFMOFac / this.dataFMOCot);
             } else {
@@ -158,14 +178,9 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
       .subscribe((data: any) => {
 
         if (data.length > 0) {
-          for (const d of data) {
-            if (d.tipo === 'remision') {
-              this.dataGenFac = d.importe;
-            } else if (d.tipo === 'bo') {
-              this.dataBoCot = d.importe;
-            }
-          }
-          this.dataGenCot = this.dataGenFac + this.dataBoCot;
+          this.dataGenFac = this.importeFacturado;
+          // this.dataBoCot = (this.importeFacturado + data[0].IMPORTE);
+          this.dataGenCot = (this.importeFacturado + data[0].IMPORTE);
           this.porcentGen = (this.dataGenFac / this.dataGenCot);
         } else {
           this.dataGenCot = 0;
@@ -189,7 +204,6 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
     // Nivel de Servicio por Familia
     this._phpService.nsFamilia()
       .subscribe((data: any) => {
-        // console.log(data);
 
         if (data.length > 0) {
           this.dataTruCot = 0;
@@ -198,29 +212,44 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
           this.dataFMOCot = 0;
           this.dataFMOFac = 0;
           this.porcentFMO = 0;
-          let impoboTru = 0;
-          let impoboFmo = 0;
-          for (const d of data) {
-            // Truper
-            if (d.tipo === 'remision-TRUPER') {
-              this.dataTruFac = d.importe;
-            }
 
-            if (d.tipo === 'bo-TRUPER') {
-              impoboTru = d.importe;
-            }
-
-            // Ferremayoristas
-            if (d.tipo === 'remision-FMO') {
-              this.dataFMOFac = d.importe;
-            }
-
-            if (d.tipo === 'bo-FMO') {
-              impoboFmo = d.importe;
+          // Desglozamos todo
+          // FMO
+          for (const familia of data) {
+            if (familia.FAMILIA === 'FMO-BO') {
+              this.dataFMOCot += familia.IMPORTE;
+            } else {
+              this.dataFMOCot += 0;
             }
           }
-          this.dataTruCot = this.dataTruFac + impoboTru;
-          this.dataFMOCot = this.dataFMOFac + impoboFmo;
+
+          for (const familia of data) {
+            if (familia.FAMILIA === 'FMO-FAC') {
+              this.dataFMOCot += familia.IMPORTE;
+              this.dataFMOFac = familia.IMPORTE;
+            } else {
+              this.dataFMOCot += 0;
+            }
+          }
+
+          // TRUPER
+          for (const familia of data) {
+            if (familia.FAMILIA === 'TRUPER-BO') {
+              this.dataTruCot += familia.IMPORTE;
+            } else {
+              this.dataTruCot += 0;
+            }
+          }
+
+          for (const familia of data) {
+            if (familia.FAMILIA === 'TRUPER-FAC') {
+              this.dataTruCot += familia.IMPORTE;
+              this.dataTruFac = familia.IMPORTE;
+            } else {
+              this.dataTruCot += 0;
+            }
+          }
+
           this.porcentTru = (this.dataTruFac / this.dataTruCot);
           this.porcentFMO = (this.dataFMOFac / this.dataFMOCot);
         }  else {

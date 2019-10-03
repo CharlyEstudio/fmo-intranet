@@ -83,87 +83,207 @@ export class VentaComponent implements OnInit {
       return;
     }
 
-    this.inicio = forma.value.inicio;
-    this.final = forma.value.final;
-    this.asesor = forma.value.asesor;
+    const fecha1 = forma.value.inicio.split('-');
+    const fecha2 = forma.value.final.split('-');
 
-    if ( Number(forma.value.asesor) !== 0 ) {
+    if (fecha1[1] === '09' && fecha1[0] === '2019' && fecha2[1] === '09' && fecha2[0] === '2019') {
+      swal({
+        title: "Mes Especial",
+        text: 'Este mes se realizarón cambios en sistema y se estará buscando de forma especial',
+        icon: "warning",
+        buttons: {
+          cancel: true,
+          confirm: true
+        },
+      })
+      .then(( correct ) => {
+        if (!correct) { return null };
 
-      this._diariosService.ventas(this.inicio, this.final, this.asesor)
-        .subscribe( ( resp: any ) => {
+        this.inicio = forma.value.inicio;
+        this.final = forma.value.final;
+        this.asesor = forma.value.asesor;
 
-          this._asesorService.asesor(this.asesor)
-            .subscribe( ( ase: any ) => {
-              // this.vendedor = ase.usuarios[0];
-              this.nombreAse = ase.usuarios[0].nombre;
-              this.imagen = ase.usuarios[0].img;
-              this.email = ase.usuarios[0].email;
-              this.tel = ase.usuarios[0].tel;
-              this.rol = ase.usuarios[0].rol;
+        if ( Number(forma.value.asesor) !== 0 ) {
+
+          this._diariosService.ventasSept(this.inicio, this.final, this.asesor)
+            .subscribe( ( resp: any ) => {
+              console.log(resp);
+
+              this._asesorService.asesor(this.asesor)
+                .subscribe( ( ase: any ) => {
+                  this.nombreAse = ase.usuarios[0].nombre;
+                  this.imagen = ase.usuarios[0].img;
+                  this.email = ase.usuarios[0].email;
+                  this.tel = ase.usuarios[0].tel;
+                  this.rol = ase.usuarios[0].rol;
+                });
+
+              if (resp.length !== 0) {
+                this.nombre = resp[0].NOMBRE;
+                this.id = resp[0].PERID;
+                this.catalogo = resp[0].CATALOGO;
+                this.serie = resp[0].SERIE;
+                this.caja = resp[0].CAJA;
+                this.zona = resp[0].ZONA;
+                this.subtotal = resp[0].SUBTOTAL;
+                this.total = resp[0].TOTAL;
+
+                // Cambiar este servicio
+                this._diariosService.ventasAsesor(this.inicio, this.final, this.asesor)
+                  .subscribe( ( ventAse: any ) => {
+                    console.log(ventAse);
+                    this.pedidosAse = ventAse;
+                    this.totPedidosAse = ventAse.length;
+                  });
+
+                this.respuesta = false;
+                this.esperar = false;
+                this.respuestaIndividual = true;
+                this.respuestaGeneral = false;
+                this.ventas = false;
+
+              } else {
+                this.ventas = true;
+                this.esperar = false;
+                this.respuesta = false;
+                this.respuestaIndividual = false;
+                this.respuestaGeneral = false;
+              }
+
             });
 
-          if (resp.length !== 0) {
-            this.nombre = resp[0].NOMBRE;
-            this.id = resp[0].PERID;
-            this.catalogo = resp[0].CATALOGO;
-            this.serie = resp[0].SERIE;
-            this.caja = resp[0].CAJA;
-            this.zona = resp[0].ZONA;
-            this.subtotal = resp[0].SUBTOTAL;
-            this.total = resp[0].TOTAL;
+        } else {
 
-            this._diariosService.ventasAsesor(this.inicio, this.final, this.asesor)
-              .subscribe( ( ventAse: any ) => {
-                this.pedidosAse = ventAse;
-                this.totPedidosAse = ventAse.length;
+          this.totalGeneral = 0;
+          this.totalIva = 0;
+          this.totalSubtotal = 0;
+
+          this._diariosService.ventasSept(this.inicio, this.final)
+            .subscribe( ( resp: any ) => {
+
+              if (resp.length !== 0) {
+                this.pedidosGen = resp;
+
+                for (let i = 0; i < this.pedidosGen.length; i++) {
+                  this.totalGeneral += this.pedidosGen[i].TOTAL;
+                  this.totalIva += this.pedidosGen[i].IVA;
+                  this.totalSubtotal += this.pedidosGen[i].SUBTOTAL;
+                }
+
+                this.respuesta = false;
+                this.esperar = false;
+                this.respuestaIndividual = false;
+                this.respuestaGeneral = true;
+              } else {
+                this.ventas = true;
+                this.esperar = false;
+                this.respuesta = false;
+                this.respuestaIndividual = false;
+                this.respuestaGeneral = false;
+              }
+            });
+        }
+
+        swal.stopLoading();
+      });
+    } else if (fecha2[1] !== '09' && fecha2[0] === '2019' && (fecha1[1] === '09' && fecha1[0] === '2019')) {
+      this.ventas = false;
+      this.esperar = false;
+      this.respuesta = true;
+      this.respuestaIndividual = false;
+      this.respuestaGeneral = false;
+      swal('Mes Especial', 'Este mes se realizarón cambios en sistema y no puede combinarse con otros meses, favor de seleccionar solo el mes de septiembre.', 'warning');
+    } else if (fecha2[1] === '09' && fecha2[0] === '2019' && (fecha1[1] !== '09' && fecha1[0] === '2019')) {
+      this.ventas = false;
+      this.esperar = false;
+      this.respuesta = true;
+      this.respuestaIndividual = false;
+      this.respuestaGeneral = false;
+      swal('Mes Especial', 'Este mes se realizarón cambios en sistema y no puede combinarse con otros meses, favor de seleccionar solo el mes de septiembre.', 'warning');
+    } else {
+      this.inicio = forma.value.inicio;
+      this.final = forma.value.final;
+      this.asesor = forma.value.asesor;
+
+      if ( Number(forma.value.asesor) !== 0 ) {
+
+        this._diariosService.ventas(this.inicio, this.final, this.asesor)
+          .subscribe( ( resp: any ) => {
+            console.log(resp);
+
+            this._asesorService.asesor(this.asesor)
+              .subscribe( ( ase: any ) => {
+                // this.vendedor = ase.usuarios[0];
+                this.nombreAse = ase.usuarios[0].nombre;
+                this.imagen = ase.usuarios[0].img;
+                this.email = ase.usuarios[0].email;
+                this.tel = ase.usuarios[0].tel;
+                this.rol = ase.usuarios[0].rol;
               });
 
-            this.respuesta = false;
-            this.esperar = false;
-            this.respuestaIndividual = true;
-            this.respuestaGeneral = false;
-            this.ventas = false;
+            if (resp.length !== 0) {
+              this.nombre = resp[0].NOMBRE;
+              this.id = resp[0].PERID;
+              this.catalogo = resp[0].CATALOGO;
+              this.serie = resp[0].SERIE;
+              this.caja = resp[0].CAJA;
+              this.zona = resp[0].ZONA;
+              this.subtotal = resp[0].SUBTOTAL;
+              this.total = resp[0].TOTAL;
 
-          } else {
-            this.ventas = true;
-            this.esperar = false;
-            this.respuesta = false;
-            this.respuestaIndividual = false;
-            this.respuestaGeneral = false;
-          }
+              this._diariosService.ventasAsesor(this.inicio, this.final, this.asesor)
+                .subscribe( ( ventAse: any ) => {
+                  this.pedidosAse = ventAse;
+                  this.totPedidosAse = ventAse.length;
+                });
 
-        });
+              this.respuesta = false;
+              this.esperar = false;
+              this.respuestaIndividual = true;
+              this.respuestaGeneral = false;
+              this.ventas = false;
 
-    } else {
-
-      this.totalGeneral = 0;
-      this.totalIva = 0;
-      this.totalSubtotal = 0;
-
-      this._diariosService.ventas(this.inicio, this.final)
-        .subscribe( ( resp: any ) => {
-
-          if (resp.length !== 0) {
-            this.pedidosGen = resp;
-
-            for (let i = 0; i < this.pedidosGen.length; i++) {
-              this.totalGeneral += this.pedidosGen[i].TOTAL;
-              this.totalIva += this.pedidosGen[i].IVA;
-              this.totalSubtotal += this.pedidosGen[i].SUBTOTAL;
+            } else {
+              this.ventas = true;
+              this.esperar = false;
+              this.respuesta = false;
+              this.respuestaIndividual = false;
+              this.respuestaGeneral = false;
             }
 
-            this.respuesta = false;
-            this.esperar = false;
-            this.respuestaIndividual = false;
-            this.respuestaGeneral = true;
-          } else {
-            this.ventas = true;
-            this.esperar = false;
-            this.respuesta = false;
-            this.respuestaIndividual = false;
-            this.respuestaGeneral = false;
-          }
-        });
+          });
+
+      } else {
+
+        this.totalGeneral = 0;
+        this.totalIva = 0;
+        this.totalSubtotal = 0;
+
+        this._diariosService.ventas(this.inicio, this.final)
+          .subscribe( ( resp: any ) => {
+
+            if (resp.length !== 0) {
+              this.pedidosGen = resp;
+
+              for (let i = 0; i < this.pedidosGen.length; i++) {
+                this.totalGeneral += this.pedidosGen[i].TOTAL;
+                this.totalIva += this.pedidosGen[i].IVA;
+                this.totalSubtotal += this.pedidosGen[i].SUBTOTAL;
+              }
+
+              this.respuesta = false;
+              this.esperar = false;
+              this.respuestaIndividual = false;
+              this.respuestaGeneral = true;
+            } else {
+              this.ventas = true;
+              this.esperar = false;
+              this.respuesta = false;
+              this.respuestaIndividual = false;
+              this.respuestaGeneral = false;
+            }
+          });
+      }
     }
 
   }

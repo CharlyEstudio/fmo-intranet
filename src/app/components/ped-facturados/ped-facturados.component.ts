@@ -7,6 +7,9 @@ import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/retry';
 import 'rxjs/add/operator/filter';
 
+// Servicios
+import { PedFacturadosService } from './ped-facturados.service';
+
 @Component({
   selector: 'app-ped-facturados',
   templateUrl: './ped-facturados.component.html',
@@ -29,13 +32,15 @@ export class PedFacturadosComponent implements OnInit, OnDestroy {
   especialesImpo: number = 0;
 
   constructor(
-    private _phpService: PhpService
+    private _phpService: PhpService,
+    private _emitirFacturado: PedFacturadosService
   ) {
     // Subscrión a Pedidos Facturados
     this.facturados =  this.regresaFacturados().subscribe(
       numero => {
         this.factu = numero.cantidad;
         this.factuImpo = numero.importe;
+        this._emitirFacturado.importe.emit(numero.importe);
       },
       error => console.error('Error en el obs', error),
       () => console.log('El observador termino!')
@@ -72,6 +77,7 @@ export class PedFacturadosComponent implements OnInit, OnDestroy {
         if ( data !== 0 ) {
           this.factu = data.cantidad;
           this.factuImpo = data.importe;
+          this._emitirFacturado.importe.emit(data.importe);
         } else {
           this.factu = 0;
           this.factuImpo = 0;

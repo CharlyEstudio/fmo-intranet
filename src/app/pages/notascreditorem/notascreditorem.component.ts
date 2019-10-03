@@ -122,7 +122,7 @@ export class NotascreditoremComponent implements OnInit {
         let nt;
         this.nc = [];
         for (let i = 0; i < notas.respuesta.length; i ++) {
-          this._ncService.buscarNCtrabajado(notas.respuesta[i].nc).subscribe((resp: any) => {
+          this._ncService.buscarNCtrabajado(notas.respuesta[i].nc, notas.respuesta[i].serie).subscribe((resp: any) => {
             if (resp.status) {
               nt = {
                 fecha: notas.respuesta[i].fecha,
@@ -205,7 +205,7 @@ export class NotascreditoremComponent implements OnInit {
       return;
     }
 
-    this._ncService.buscarNCtrabajado(this.inNC).subscribe((resp: any) => {
+    this._ncService.buscarNCtrabajadoFolio(this.inNC).subscribe((resp: any) => {
       if (resp.status) {
         this.work = [];
         this.work.push(resp.respuesta);

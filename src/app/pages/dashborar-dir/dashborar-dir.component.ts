@@ -14,6 +14,7 @@ export class DashborarDirComponent implements OnInit, OnDestroy {
   mensajes: boolean = false;
   aparecer: boolean = false;
   tiempo: any;
+  importeFacturado: number = 0;
 
   constructor(
     private mensajeService: MensajesContactoService,

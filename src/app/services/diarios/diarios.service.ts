@@ -101,6 +101,27 @@ export class DiariosService {
     });
   }
 
+  ventasSept(fechaIn: any, fechaOut: any, asesor: any = 0) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_LOCAL +
+      '/api/diarios.php?opcion=27&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&asesor=' + asesor;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS +
+      '/api/diarios.php?opcion=27&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&asesor=' + asesor;
+    } else {
+      this.url = URL_SERVICIO_GENERAL +
+      ':' + PUERTO_SERVER + '/api/diarios.php?opcion=27&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&asesor=' + asesor;
+    }
+
+    return this.http.get( this.url ).map((ventas: any) => {
+      if (ventas.length > 0) {
+        return ventas;
+      } else {
+        return 0;
+      }
+    });
+  }
+
   ventasAsesor(fechaIn: any, fechaOut: any, asesor: any) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL +

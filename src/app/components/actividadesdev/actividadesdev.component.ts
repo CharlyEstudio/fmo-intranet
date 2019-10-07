@@ -20,6 +20,7 @@ export class ActividadesdevComponent implements OnInit {
   @ViewChild('desarrollador') desarrollador: ElementRef;
   @ViewChild('diasActividad') diasAct: ElementRef;
   @ViewChild('actividadTitulo') actTitle: ElementRef;
+  @ViewChild('pasos') pasos: ElementRef;
   @ViewChild('puntosActividad') puntosAct: ElementRef;
 
   developers: Usuario;
@@ -76,6 +77,12 @@ export class ActividadesdevComponent implements OnInit {
     this.obtenerSprints();
   }
 
+  recibir(data: any) {
+
+    console.log(data);
+
+  }
+
   obtenerAdmins() {
     this.scrum.obtenerDesarrolladores().subscribe((devs: any) => {
       if (devs.ok) {
@@ -126,6 +133,10 @@ export class ActividadesdevComponent implements OnInit {
   agregarActividad() {
     if (this.actTitle.nativeElement.value === '') {
       swal('Falta Titulo de Actividad', 'warning');
+      return;
+    }
+    if (this.pasos.nativeElement.value < 0) {
+      swal('Falta agregar pasos de actividad', 'warning');
       return;
     }
     if (this.puntosAct.nativeElement.value === '') {
@@ -195,7 +206,9 @@ export class ActividadesdevComponent implements OnInit {
       hora: this.herramientas.horaActual(),
       asigno: this.usuario.usuario._id,
       dias: this.dias,
-      actividad: this.activities
+      actividad: this.activities,
+      pasos: Number(this.pasos.nativeElement.value),
+      paso: 0
     }
     this.scrum.enviarSprint(this.actividadAsignar).subscribe((resp: any) => {
       if (resp.ok) {

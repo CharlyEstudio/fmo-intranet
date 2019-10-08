@@ -28,12 +28,9 @@ export class BarraAvanceComponent implements OnInit {
     }else{
       this.avance = 100;
     }
-    console.log(this.avance);
   }
 
   guardarAvance(cantidad: any){
-    this.avance = cantidad;
-    console.log(this.avance);
     this.paso = cantidad;
     const porcentaje = (this.paso * 100) / this.pasos;
     this.avance = porcentaje;

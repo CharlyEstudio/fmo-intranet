@@ -37,6 +37,18 @@ export class ScrumService {
     return this.http.post(this.url, {data: sprint});
   }
 
+  actualizarSprint(sprint: any) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/scrum/actualiza';
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/scrum/actualiza';
+    } else {
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/scrum/actualiza';
+    }
+
+    return this.http.put(this.url, {data: sprint});
+  }
+
   completarSprint(id: any) {
     console.log(id);
     if (URL_SERVICIO_GENERAL === URL_PETICION) {

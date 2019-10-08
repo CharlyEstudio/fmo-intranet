@@ -107,7 +107,6 @@ export class VentaComponent implements OnInit {
 
           this._diariosService.ventasSept(this.inicio, this.final, this.asesor)
             .subscribe( ( resp: any ) => {
-              console.log(resp);
 
               this._asesorService.asesor(this.asesor)
                 .subscribe( ( ase: any ) => {
@@ -160,6 +159,7 @@ export class VentaComponent implements OnInit {
 
           this._diariosService.ventasSept(this.inicio, this.final)
             .subscribe( ( resp: any ) => {
+              console.log(resp);
 
               if (resp.length !== 0) {
                 this.pedidosGen = resp;

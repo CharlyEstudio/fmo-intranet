@@ -276,7 +276,7 @@
                         <input [(ngModel)]="nomcliFol" type="text" name="nomcliFol" id="nomcliFol" class="form-control" placeholder="Nombre del Cliente" autocomplete="off" readonly>
 
                     </div>
-                    
+
                     <div class="form-group col-md-4">
 
                         <label for="">Factura/Remisión</label>
@@ -285,13 +285,13 @@
 
                     </div>
 
-                    <div class="form-group col-md-4" style="display: none;">
+                    <!-- <div class="form-group col-md-4" style="display: none;">
 
                         <label for="">Orden de Trabajo Truper</label>
 
                         <input ngModel type="text" name="ordenTrabTrup" id="ordenTrabTrup" class="form-control" autocomplete="off">
 
-                    </div>
+                    </div> -->
 
                     <div class="form-group col-md-4">
 
@@ -301,6 +301,20 @@
                         <input [(ngModel)]="asesor" type="text" name="asesor" id="asesor" class="form-control" placeholder="Nombre del Asesor" autocomplete="off" readonly>
 
                     </div>
+
+                    <div class="form-group col-md-4 centrar">
+
+                        <h1 class="display-6 badge badge-info" *ngIf="numcli === numcliFol && numcli !== 0">MISMO CLIENTE</h1>
+
+                        <h1 class="display-6 badge badge-danger" *ngIf="numcli !== numcliFol && numcli !== 0">DIFERENTE CLIENTE</h1>
+
+                        <input [(ngModel)]="mecompro" type="text" name="mecompro" id="mecompro" class="form-control" style="display: none;">
+
+                    </div>
+
+                </form>
+
+                <!-- <form ngNativeValidate class="form-row" #f="ngForm" (ngSubmit)="agregarGarantia(f)">
 
                     <div class="form-group col-md-4 centrar">
 
@@ -405,7 +419,7 @@
 
                     <button class="btn btn-info ml-3" type="button"data-dismiss="modal" aria-label="Close">Cerrar</button>
 
-                </form>
+                </form> -->
 
             </div>
 
@@ -421,6 +435,36 @@
     <div class="modal-dialog modal-lg mw-100" style="width: 95%!important;">
 
         <div class="modal-content" *ngIf="estado !== 'TERMINADO'">
+
+            <div class="modal-header">
+
+                <h3 class="p-b-10 p-t-10">Detalles de la Garantía</h3>
+
+                <h1 *ngIf="estado === 'NUEVO'" class="font-20 badge badge-warning">Nuevo</h1>
+                    
+                <h1 *ngIf="estado === 'PROCESO'" class="font-20 badge badge-info">Proceso</h1>
+
+                <h1 *ngIf="estado === 'ENVIANDO'" class="font-20 badge badge-pill">Enviando</h1>
+
+                <h1 *ngIf="estado === 'AUTORIZACION'" class="font-20 badge badge-primary">Autorización</h1>
+
+                <h1 *ngIf="estado === 'ENTREGAR'" class="font-20 badge badge-light">Entregar</h1>
+                
+                <h1 *ngIf="estado === 'TERMINADO'" class="font-20 badge badge-success">Terminado</h1>
+                
+                <h1 *ngIf="estado === 'CANCELADO'" class="font-20 badge badge-danger">Cancelado</h1>
+
+                <button type="button" class="close" data-dismiss="modal" id="cerrarModalGar" aria-label="Close">
+        
+                    <span aria-hidden="true">&times;</span>
+        
+                </button>
+
+            </div>
+
+            <div class="modal-body"></div>
+
+        <!-- <div class="modal-content" *ngIf="estado !== 'TERMINADO'">
 
             <div class="modal-header">
 
@@ -715,7 +759,6 @@
 
                                     <button type="submit" class="btn btn-danger" *ngIf="estado === 'ENTREGAR' && estado !== 'TERMINADO'">Terminar</button>
 
-                                    <!-- <button type="button" class="btn btn-success">Terminar</button> -->
 
                                 </form>
 
@@ -729,7 +772,7 @@
 
             </div>
 
-        </div>
+        </div> -->
 
         <div class="modal-content" *ngIf="estado === 'TERMINADO'">
 
@@ -860,7 +903,7 @@
 
                                     <td width="10%">{{fechaenviando | date: 'dd-MM-yy'}}</td>
                                     
-                                    <td width="80%">{{'Datos de la camioneta'}}</td>
+                                    <td width="80%">Chofer: <span class="font-weight-bold">{{'ALFREDO MOLINA TREJO'}}</span> No. Transporte: <span class="font-weight-bold">{{1149309}}</span></td>
 
                                 </tr>
                                 <tr>

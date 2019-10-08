@@ -43,8 +43,6 @@ export class AlmacenistasComponent implements OnInit {
   ) {
     this.idFerrum = this.usuarioService.usuario.idFerrum;
     this.almacenistas();
-    console.log(this.almacenista.length);
-    
    }
 
   ngOnInit() {
@@ -85,7 +83,6 @@ export class AlmacenistasComponent implements OnInit {
   buscador(texto: any){
     this.almacenista = [];
     this.pedidoService.nuevoPersonal(texto).subscribe((data: any) => {
-      console.log(data);
       this.lista = data;
       this.accionbtn = 1;
     });

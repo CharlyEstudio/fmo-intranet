@@ -123,6 +123,7 @@ import { GarantiasComponent } from './garantias/garantias.component';
 import { ActividadesdevComponent } from '../components/actividadesdev/actividadesdev.component';
 import { ActividadesDevelopersComponent } from './actividades-developers/actividades-developers.component';
 import { PanelgarantiasComponent } from './panelgarantias/panelgarantias.component';
+import { BarraAvanceComponent } from '../components/barra-avance/barra-avance.component';
 
 @NgModule({
     declarations: [
@@ -224,7 +225,8 @@ import { PanelgarantiasComponent } from './panelgarantias/panelgarantias.compone
         GarantiasComponent,
         ActividadesdevComponent,
         ActividadesDevelopersComponent,
-        PanelgarantiasComponent
+        PanelgarantiasComponent,
+        BarraAvanceComponent
     ],
     exports: [
         DashborarDirComponent,

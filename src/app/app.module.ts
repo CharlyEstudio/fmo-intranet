@@ -46,7 +46,7 @@ import { CambiarComponent } from './cambiar/cambiar.component';
     PagesComponent,
     StatusComponent,
     RecuperarComponent,
-    CambiarComponent
+    CambiarComponent,
   ],
   imports: [
     BrowserModule,

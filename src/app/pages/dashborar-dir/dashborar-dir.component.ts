@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 // Servicios
-import { MensajesContactoService, HerramientasService } from '../../services/services.index';
+import { MensajesContactoService, HerramientasService, TiendaService } from '../../services/services.index';
 
 @Component({
   selector: 'app-dashborar-dir',
@@ -18,10 +18,19 @@ export class DashborarDirComponent implements OnInit, OnDestroy {
 
   constructor(
     private mensajeService: MensajesContactoService,
-    private herramientas: HerramientasService
+    private herramientas: HerramientasService,
+    private store: TiendaService,
   ) {
     this.mensajeService.mensajes.subscribe((mensaje: any) => {
       this.mensajes = mensaje.status;
+    });
+
+    this.store.obtenerMensajesContacto().subscribe((mensajes: any) => {
+      if (mensajes.length > 0) {
+        this.mensajes = true;
+      } else {
+        this.mensajes = false;
+      }
     });
 
     const hora = this.herramientas.horaActual();

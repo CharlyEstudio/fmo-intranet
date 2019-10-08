@@ -52,6 +52,7 @@ export class GarantiasComponent implements OnInit {
   claveprod: any;
   costoprod: number = 0;
   fecha: any;
+  fecreg: any;
   folio: number = 0;
   foltru: number = 0;
   fecregtru: any;
@@ -62,6 +63,16 @@ export class GarantiasComponent implements OnInit {
   idgar: number = 0;
   marca: any;
   numero: number = 0;
+  cliente: any;
+  numeroFol: number = 0;
+  clienteFol: any;
+
+  // Detalles de Fechas
+  fechaproceso: any;
+  fechaenviando: any;
+  fechaautoriza: any;
+  fechaentrega: any;
+  fecenvio: any;
 
   // Estado del Producto
   estado: any;
@@ -172,6 +183,7 @@ export class GarantiasComponent implements OnInit {
     this.claveprod = '';
     this.costoprod = 0;
     this.fecha = '';
+    this.fecreg = '';
     this.tipoFalla = '';
     this.folio = 0;
     this.foltru = 0;
@@ -180,8 +192,22 @@ export class GarantiasComponent implements OnInit {
     this.idgar = 0;
     this.marca = '';
     this.numero = 0;
+    this.cliente = '';
+    this.numeroFol = 0;
+    this.clienteFol = '';
     this.observa = '';
     this.folnc = 0;
+
+    this.fechaproceso = '';
+    this.fechaenviando = '';
+    this.fechaautoriza = '';
+    this.fechaentrega = '';
+    this.fecenvio = '';
+    this.fechaproceso = garantia.fechaproceso;
+    this.fechaenviando = garantia.fechaenviando;
+    this.fechaautoriza = garantia.fechaautoriza;
+    this.fechaentrega = garantia.fechaentrega;
+    this.fecenvio = garantia.fecenvio;
 
     this.estado = '';
     this.estado = garantia.estado;
@@ -202,6 +228,7 @@ export class GarantiasComponent implements OnInit {
     });
     this.costoprod = garantia.costo;
     this.fecha = garantia.fecha;
+    this.fecreg = garantia.fecreg;
     this.folio = garantia.folio;
     this.foltru = garantia.foltru;
     this.fecregtru = garantia.fecregtru;
@@ -209,6 +236,10 @@ export class GarantiasComponent implements OnInit {
     this.idgar = garantia.idgar;
     this.marca = garantia.marca;
     this.numero = garantia.numero;
+    this.cliente = garantia.cliente;
+    this.numeroFol = garantia.numeroFol;
+    this.clienteFol = garantia.clienteFol;
+    this.mecompro = garantia.mecompro;
     this._clientesService.infoClienteCot(this.numero).subscribe((cli: any) => {
       if (cli.length > 0) {
         this.nomcli = cli[0].NOMBRE;

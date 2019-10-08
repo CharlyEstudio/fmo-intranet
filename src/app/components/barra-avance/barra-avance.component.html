@@ -1,7 +1,7 @@
 
 <div *ngIf="avance !== 100 && rol === 'ADMIN_ROLE'">
-    <input #cantidad type="number" name="cantidad" id="cantidad" class="form-control" [value]="paso" [min]="paso" [max]="pasos" placeholder="Cantidad" >
-    <button class="btn btn-themecolor mx-2" (click)="guardarAvance(cantidad.value)"><i class="fa fa-save"></i></button>
+    <input #cantidad type="number" name="cantidad" id="cantidad" (keyup.enter)="guardarAvance(cantidad.value) class="form-control" [value]="paso" [min]="paso" [max]="pasos" placeholder="Cantidad" >
+    <!-- <button class="btn btn-themecolor mx-2" (click)="guardarAvance(cantidad.value)"><i class="fa fa-save"></i></button> -->
 </div>
 <div class="progress">
     <div class="progress-bar" [ngClass]="{'bg-info': avance < 100, 'bg-success': avance === 100}" role="progressbar" [ngStyle]="{'width': avance +'%'}" aria-value="avance" aria-valuemin="0" aria-valuemax="100">{{avance}}</div>

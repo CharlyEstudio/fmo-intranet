@@ -124,6 +124,8 @@
     
               <tr>
     
+                <th style="width:7%">#</th>
+
                 <th style="width:7%">FECHA</th>
     
                 <th style="width:8%">TIPO</th>
@@ -139,6 +141,8 @@
                 <th style="width:5%">IVA</th>
     
                 <th style="width:5%">TOTAL</th>
+
+                <th style="width:5%">SALDO</th>
     
                 <th style="width:20%">ASESOR</th>
     
@@ -150,13 +154,15 @@
     
             <tbody>
     
-              <tr *ngFor="let n of nc" [ngClass]="{'bg-primary': n.trabajado}" [id]="'linea' + n.nc + n.factura">
+              <tr *ngFor="let n of nc, let i = index" [ngClass]="{'bg-primary': n.trabajado}" [id]="'linea' + n.nc + n.factura">
     
+                <td>{{ (i + 1) }}</td>
+
                 <td>{{ n.fecha | date: 'dd-MM-yyyy' }}</td>
     
                 <td>
                   
-                  <span class="badge" [ngClass]="{'badge-inverse text-danger': n.serie === 'NA', 'badge-danger': n.serie === 'C', 'badge-primary': n.serie === 'D', 'badge-info': n.serie === 'P', 'badge-warning': n.serie === 'F', 'badge-inverse': n.serie === 'G'}">{{ n.tiponc }}</span>
+                  <span class="badge" [ngClass]="{'badge-inverse text-danger': n.serie === 'NA', 'badge-danger': n.serie === 'C', 'badge-primary': n.serie === 'D', 'badge-info': n.serie === 'P', 'badge-warning': n.serie === 'F', 'badge-inverse': n.serie === 'G', 'badge-warning': n.serie === 'PAR'}">{{ n.tiponc }}</span>
                 
                 </td>
     
@@ -171,6 +177,8 @@
                 <td>{{ n.iva | currency }}</td>
     
                 <td>{{ n.total | currency }}</td>
+
+                <td><span [ngClass]="{'badge badge-danger': n.saldo < 0}">{{ n.saldo | currency }}</span></td>
     
                 <td>{{ n.vendedor }}</td>
     

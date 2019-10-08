@@ -14,23 +14,23 @@ export class BarraAvanceComponent implements OnInit {
 
   avance:  number = 0;
 
-  constructor() { 
+  constructor() {
   }
-  
+
   ngOnInit() {
     this.calcularAvance();
   }
 
-  calcularAvance(){
+  calcularAvance() {
     const porcentaje = (this.paso * 100) / this.pasos;
-    if(porcentaje >= 0){
+    if (porcentaje >= 0) {
       this.avance = porcentaje;
-    }else{
+    } else {
       this.avance = 100;
     }
   }
 
-  guardarAvance(cantidad: any){
+  guardarAvance(cantidad: any) {
     this.paso = cantidad;
     const porcentaje = (this.paso * 100) / this.pasos;
     this.avance = porcentaje;

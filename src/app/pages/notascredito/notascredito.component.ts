@@ -255,6 +255,7 @@ export class NotascreditoComponent implements OnInit {
                 return fac.nc === trab.respuesta[i].nc;
               }
               if (this.nc.find(esNC)) {
+                console.log(this.nc.find(esNC).nc, this.nc.find(esNC).serie, trab.respuesta[i].nc, trab.respuesta[i].serie);
                 this.trabajadas++;
               }
             }

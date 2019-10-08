@@ -252,10 +252,9 @@ export class NotascreditoComponent implements OnInit {
           if (trab.status) {
             for (let i = 0; i < trab.respuesta.length; i++) {
               let esNC = (fac: any) => {
-                return fac.nc === trab.respuesta[i].nc;
+                return fac.nc === trab.respuesta[i].nc && fac.serie === trab.respuesta[i].serie;
               }
               if (this.nc.find(esNC)) {
-                console.log(this.nc.find(esNC).nc, this.nc.find(esNC).serie, trab.respuesta[i].nc, trab.respuesta[i].serie);
                 this.trabajadas++;
               }
             }

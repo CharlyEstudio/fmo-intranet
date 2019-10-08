@@ -159,7 +159,6 @@ export class VentaComponent implements OnInit {
 
           this._diariosService.ventasSept(this.inicio, this.final)
             .subscribe( ( resp: any ) => {
-              console.log(resp);
 
               if (resp.length !== 0) {
                 this.pedidosGen = resp;

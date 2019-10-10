@@ -237,6 +237,7 @@ export class NotascreditoremComponent implements OnInit {
     this.nc = [];
     this._ncService.buscarNCRFecha(f, f2).subscribe((resp: any) => {
       if (resp.status) {
+        // console.log(resp.respuesta);
         for (let i = 0; i < resp.respuesta.length; i ++) {
           this._ncService.buscarNCRtrabajado(resp.respuesta[i].nc, resp.respuesta[i].factura).subscribe((ncFec: any) => {
             if (ncFec.status) {

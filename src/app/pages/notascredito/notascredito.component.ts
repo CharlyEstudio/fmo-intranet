@@ -38,8 +38,6 @@ export class NotascreditoComponent implements OnInit {
   ) {
     this.id = this._usuarioService.usuario._id;
     this.cargando = false;
-
-    // this.obtenerTrabajados();
   }
 
   ngOnInit() { }
@@ -69,13 +67,8 @@ export class NotascreditoComponent implements OnInit {
         const ncAnt = this.nc;
         this.nc = [];
         this.nc = ncAnt;
-        // this.obtenerTrabajados();
       }
     });
-
-    // if (this.fechaNC !== '') {
-    //   this.buscarFecNC.nativeElement.click();
-    // }
   }
 
   quitar(nc: any) {
@@ -84,10 +77,6 @@ export class NotascreditoComponent implements OnInit {
         const elem = <HTMLElement>(document.getElementById("linea" + nc.nc + nc.factura));
         elem.classList.remove("bg-primary");
         nc.trabajado = false;
-        // this.obtenerTrabajados();
-        // if (this.fechaNC !== '') {
-        //   this.buscarFecNC.nativeElement.click();
-        // }
       }
     });
   }
@@ -101,10 +90,6 @@ export class NotascreditoComponent implements OnInit {
     this.nc = [];
     this.work = [];
     this.inNC = '';
-
-    // if (this.work.length === 0) {
-    //   this.obtenerTrabajados();
-    // }
   }
 
   obtenerTodosNC() {
@@ -170,28 +155,6 @@ export class NotascreditoComponent implements OnInit {
     });
   }
 
-  obtenerTrabajados() {
-    this._ncService.obtenerNCtrabajados().subscribe((trab: any) => {
-      if (trab.status) {
-        this.work = trab.respuesta;
-        this.work.sort((a, b) => {
-          if (a.nc > b.nc) {
-            return 1;
-          }
-
-          if (a.nc < b.nc) {
-            return -1;
-          }
-
-          return 0;
-        });
-        this.cargando = false;
-        this.inNC = '';
-        this.inFac = '';
-      }
-    });
-  }
-
   buscarNC() {
     let nt;
 
@@ -225,6 +188,8 @@ export class NotascreditoComponent implements OnInit {
       return;
     }
     this.trabajadas = 0;
+    this.pendientes = 0;
+    this.total = 0;
     const f = this.fechaNC;
     const f2 = this.fechaNCFinal;
     const info = this.nc;
@@ -237,13 +202,13 @@ export class NotascreditoComponent implements OnInit {
           this._ncService.buscarNCtrabajado(resp.respuesta[i].nc, resp.respuesta[i].serie).subscribe((ncFec: any) => {
             if (ncFec.status) {
               resp.respuesta[i].trabajado = true;
+              // if (resp.respuesta[i].serie !== 'NA') {
+              //   subtotal ++;
+              // }
             } else if (resp.respuesta[i].serie === 'NA') {
               resp.respuesta[i].trabajado = true;
             } else {
               resp.respuesta[i].trabajado = false;
-            }
-            if (resp.respuesta[i].serie !== 'NA') {
-              subtotal ++;
             }
           });
         }
@@ -259,7 +224,8 @@ export class NotascreditoComponent implements OnInit {
               }
             }
           }
-          this.total = subtotal;
+          // this.total = subtotal;
+          this.total = this.nc.length;
           this.trabajadas = this.trabajadas >= this.total ? this.total : this.trabajadas;
           this.pendientes = this.trabajadas >= this.total ? 0 : this.total - this.trabajadas;
         });

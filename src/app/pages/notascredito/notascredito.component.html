@@ -118,43 +118,43 @@
 
         <div class="table-responsive" *ngIf="nc.length > 0 && !cargando">
 
-          <table class="table fijar-thead" style="width: 100%">
+          <table class="table">
     
-            <thead>
+            <thead style="display: table!important; width: calc(100% - 1em)!important; table-layout: fixed!important;">
     
               <tr>
     
-                <th style="width:7%">#</th>
+                <th>#</th>
 
-                <th style="width:7%">FECHA</th>
+                <th>FECHA</th>
     
-                <th style="width:8%">TIPO</th>
+                <th>TIPO</th>
                 
-                <th style="width:5%">NC</th>
+                <th>NC</th>
     
-                <th style="width:5%">FACTURA</th>
+                <th>FACTURA</th>
     
-                <th style="width:30%">CLIENTE</th>
+                <th>CLIENTE</th>
     
-                <th style="width:5%">SUBTOTAL</th>
+                <th>SUBTOTAL</th>
     
-                <th style="width:5%">IVA</th>
+                <th>IVA</th>
     
-                <th style="width:5%">TOTAL</th>
+                <th>TOTAL</th>
 
-                <th style="width:5%">SALDO</th>
+                <th>SALDO</th>
     
-                <th style="width:20%">ASESOR</th>
+                <th>ASESOR</th>
     
-                <th style="width:10%">TRABAJADO</th>
+                <th>TRABAJADO</th>
     
               </tr>
     
             </thead>
     
-            <tbody>
+            <tbody style="display: block!important; height: 200px!important; overflow: auto!important;">
     
-              <tr *ngFor="let n of nc, let i = index" [ngClass]="{'bg-primary': n.trabajado}" [id]="'linea' + n.nc + n.factura">
+              <tr style="display: table!important; width: calc(100% - 1em)!important; table-layout: fixed!important;" *ngFor="let n of nc, let i = index" [ngClass]="{'bg-primary': n.trabajado}" [id]="'linea' + n.nc + n.factura">
     
                 <td>{{ (i + 1) }}</td>
 
@@ -162,7 +162,13 @@
     
                 <td>
                   
-                  <span class="badge" [ngClass]="{'badge-inverse text-danger': n.serie === 'NA', 'badge-danger': n.serie === 'C', 'badge-primary': n.serie === 'D', 'badge-info': n.serie === 'P', 'badge-warning': n.serie === 'F', 'badge-inverse': n.serie === 'G', 'badge-warning': n.serie === 'PAR'}">{{ n.tiponc }}</span>
+                  <span class="badge badge-inverse text-danger" *ngIf="n.serie === 'NA'">{{ n.tiponc }}</span>
+                  <span class="badge badge-danger" *ngIf="n.serie === 'C'">{{ n.tiponc }}</span>
+                  <span class="badge badge-primary" *ngIf="n.serie === 'D'">{{ n.tiponc }}</span>
+                  <span class="badge badge-info" *ngIf="n.serie === 'P'">{{ n.tiponc }}</span>
+                  <span class="badge badge-warning" *ngIf="n.serie === 'F'">{{ n.tiponc }}</span>
+                  <span class="badge badge-inverse" *ngIf="n.serie === 'G'">{{ n.tiponc }}</span>
+                  <span class="badge badge-warning" *ngIf="n.serie === 'PAR'">{{ n.tiponc }}</span>
                 
                 </td>
     

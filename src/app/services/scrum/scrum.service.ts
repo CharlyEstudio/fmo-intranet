@@ -50,7 +50,6 @@ export class ScrumService {
   }
 
   completarSprint(id: any) {
-    console.log(id);
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/scrum';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {

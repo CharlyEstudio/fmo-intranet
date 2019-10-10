@@ -451,6 +451,24 @@ export class DiariosService {
     });
   }
 
+  diasLunesDocInc() {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=29';
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/diarios.php?opcion=29';
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=29';
+    }
+
+    return this.http.get( this.url ).map((lunes: any) => {
+      if (lunes.length > 0) {
+        return lunes;
+      } else {
+        return 0;
+      }
+    });
+  }
+
   pedidosDiaLunes( fecha: any, id: any ) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=19&id=' + id;
@@ -467,6 +485,42 @@ export class DiariosService {
     // } else {
     //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/lunes/id/' + fecha + '/' + id;
     // }
+
+    return this.http.get( this.url ).map((lunesId: any) => {
+      if (lunesId.length > 0) {
+        return lunesId;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  pedidosDiaLunesCH( ) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=28';
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/diarios.php?opcion=28';
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=28';
+    }
+
+    return this.http.get( this.url ).map((lunesId: any) => {
+      if (lunesId.length > 0) {
+        return lunesId;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  pedidosDiaLunesDocInc( ) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=30';
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS + '/api/diarios.php?opcion=30';
+    } else {
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=30';
+    }
 
     return this.http.get( this.url ).map((lunesId: any) => {
       if (lunesId.length > 0) {

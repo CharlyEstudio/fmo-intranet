@@ -64,7 +64,6 @@ export class ActividadesdevComponent implements OnInit {
     private usuario: UsuarioService,
   ) {
     this.user = this.usuario.usuario;
-    
   }
 
   ngOnInit() {
@@ -80,23 +79,9 @@ export class ActividadesdevComponent implements OnInit {
   }
 
   recibir(data: any) {
-    console.log()
-
     this.scrum.actualizarSprint(data).subscribe((resp: any) => {
       console.log(resp);
     });
-    // this.actividadAsignar = {
-    //   desarrollador: this.developer,
-    //   fecha: this.herramientas.fechaActual(),
-    //   hora: this.herramientas.horaActual(),
-    //   asigno: this.usuario.usuario._id,
-    //   dias: this.dias,
-    //   actividad: this.activities,
-    //   pasos: Number(this.pasos.nativeElement.value),
-    //   paso: data.paso
-    // }
-    // this.scrum.enviarSprint(this.actividadAsignar).subscribe((resp: any) => {
-    // });
 
   }
 

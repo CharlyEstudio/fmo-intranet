@@ -94,7 +94,7 @@ export class RepoLunesComponent implements OnInit {
     this.actual = [];
     this.nombre = '';
 
-    if (data.id !== 80000 && data.id !== 843) {
+    if (data.id !== 80000 && data.id !== 843 && data.id !== 80001) {
       let h = new Date();
 
       let dia;
@@ -125,6 +125,15 @@ export class RepoLunesComponent implements OnInit {
       // Obtener Cheques devueltos
       this._diariosService.pedidosDiaLunesCH()
         .subscribe( ( resp: any ) => {
+          this.nombre = data.asesor;
+          this.actual = resp;
+        });
+    } else if (data.id === 80001) {
+      // Obtener Victor Especiales
+      console.log(data.id);
+      this._diariosService.pedidosDiaLunesEspecials()
+        .subscribe( ( resp: any ) => {
+          console.log(resp);
           this.nombre = data.asesor;
           this.actual = resp;
         });

@@ -22,6 +22,8 @@
 
                             <th class="text-center">Personal</th>
 
+                            <th class="text-center">Clientes</th>
+
                             <th class="text-center">Cantidad</th>
 
                             <th class="text-center">Total</th>
@@ -36,13 +38,15 @@
 
                             <td class="sorting_1">
 
-                                <a id="{{lunes.id}}" href="#modalDiaLunes" (click)="obtenerPedidos($event)" data-dismiss="modal" data-toggle="modal">
+                                <a id="{{lunes.id}}" href="#modalDiaLunes" (click)="obtenerPedidos(lunes)" data-dismiss="modal" data-toggle="modal">
                   
-                  {{ lunes.asesor }}
+                                    {{ lunes.asesor }}
 
-                </a>
+                                </a>
 
                             </td>
+
+                            <td class="text-center">{{ lunes.clientes }}</td>
 
                             <td class="text-center">{{ lunes.cantidad }}</td>
 
@@ -50,11 +54,35 @@
 
                         </tr>
 
-                        <tr>
+                        <tr class="bg-info text-white font-weight-bold">
 
-                            <th colspan="2">TOTAL</th>
+                            <th>TOTAL</th>
+
+                            <th class="text-center">{{ clientes | number }}</th>
+
+                            <th class="text-center">{{ cantidad | number }}</th>
 
                             <th class="text-center">{{ saldo | currency }}</th>
+
+                        </tr>
+
+                        <tr *ngFor="let inc of icobrables">
+
+                            <td class="sorting_1">
+
+                                <a id="{{inc.id}}" href="#modalDiaLunes" (click)="obtenerPedidos(inc)" data-dismiss="modal" data-toggle="modal">
+                    
+                                    {{ inc.asesor }}
+
+                                </a>
+
+                            </td>
+
+                            <td class="text-center">{{ inc.clientes }}</td>
+
+                            <td class="text-center">{{ inc.cantidad }}</td>
+
+                            <td class="text-center">{{ inc.saldo | currency }}</td>
 
                         </tr>
 
@@ -92,13 +120,21 @@
 
             <div class="modal-body">
 
-                <div class="table-responsive">
+                <div class="alert alert-warning" *ngIf="actual.length === 0">
+
+                    Obteniendo registros
+        
+                </div>
+
+                <div class="table-responsive" *ngIf="actual.length > 0">
 
                     <table class="display nowrap table table-hover table-striped table-bordered dataTable" cellspacing="0" width="100%" role="grid" aria-describedby="example23_info" style="width: 100%;">
 
                         <thead>
 
                             <tr role="row">
+
+                                <th class="text-center">#</th>
 
                                 <th class="text-center">Número</th>
 
@@ -120,7 +156,9 @@
 
                         <tbody>
 
-                            <tr role="row" class="odd" *ngFor="let act of actual">
+                            <tr role="row" class="odd" *ngFor="let act of actual, let i = index">
+
+                                <td class="text-center">{{(i + 1)}}</td>
 
                                 <td class="text-center" *ngIf="act.opcion === 2">
 

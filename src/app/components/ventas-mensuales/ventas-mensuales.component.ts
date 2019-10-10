@@ -15,6 +15,8 @@ import 'rxjs/add/operator/filter';
 export class VentasMensualesComponent implements OnInit, OnDestroy {
 
   fecha: number = Date.now();
+  fec: any = new Date(this.fecha);
+  mesAnt: any;
   date = new Date(this.fecha);
   dia = this.date.getDay();
   mes = this.date.getMonth() - 1;
@@ -51,6 +53,8 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
   constructor(
     private _phpService: PhpService
   ) {
+
+    this.mesAnt = this.fec.getFullYear() + '-' + this.fec.getMonth() + '-' + this.fec.getDate();
 
     // Subscripción Total
     this.general = this.regresar()

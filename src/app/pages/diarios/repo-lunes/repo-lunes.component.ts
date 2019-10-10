@@ -19,7 +19,10 @@ export class RepoLunesComponent implements OnInit {
 
   diasLunes: any;
   saldo: number = 0;
+  cantidad: number = 0;
+  clientes: number = 0;
   actual: any[] = [];
+  icobrables: any[] = [];
   nombre: string;
 
   constructor(
@@ -66,6 +69,8 @@ export class RepoLunesComponent implements OnInit {
 
           for (let i = 0; i < this.diasLunes.length; i++) {
             this.saldo += this.diasLunes[i].saldo;
+            this.cantidad += this.diasLunes[i].cantidad;
+            this.clientes += this.diasLunes[i].clientes;
           }
 
           this.esperar = false;
@@ -78,37 +83,59 @@ export class RepoLunesComponent implements OnInit {
         }
       });
 
+    this._diariosService.diasLunesDocInc()
+      .subscribe( ( inco: any ) => {
+        this.icobrables = inco;
+      });
+
   }
 
-  obtenerPedidos(e) {
+  obtenerPedidos(data: any) {
     this.actual = [];
-    let h = new Date();
+    this.nombre = '';
 
-    let dia;
+    if (data.id !== 80000 && data.id !== 843) {
+      let h = new Date();
 
-    if (h.getDate() < 10) {
-      dia = '0' + h.getDate();
+      let dia;
+
+      if (h.getDate() < 10) {
+        dia = '0' + h.getDate();
+      } else {
+        dia = h.getDate();
+      }
+
+      let mes: any;
+
+      if (h.getMonth() < 10) {
+        mes = '0' + (h.getMonth() + 1);
+      } else {
+        mes = (h.getMonth() + 1);
+      }
+
+      let anio = h.getFullYear();
+
+      let fecha = anio + '-' + mes + '-' + dia;
+      this._diariosService.pedidosDiaLunes(fecha, data.id)
+        .subscribe( ( resp: any ) => {
+          this.nombre = data.asesor;
+          this.actual = resp;
+        });
+    } else if (data.id === 80000) {
+      // Obtener Cheques devueltos
+      this._diariosService.pedidosDiaLunesCH()
+        .subscribe( ( resp: any ) => {
+          this.nombre = data.asesor;
+          this.actual = resp;
+        });
     } else {
-      dia = h.getDate();
+      // Obtener Cheques devueltos
+      this._diariosService.pedidosDiaLunesDocInc()
+        .subscribe( ( resp: any ) => {
+          this.nombre = data.asesor;
+          this.actual = resp;
+        });
     }
-
-    let mes;
-
-    if (h.getMonth() < 10) {
-      mes = '0' + (h.getMonth() + 1);
-    } else {
-      mes = (h.getMonth() + 1);
-    }
-
-    let anio = h.getFullYear();
-
-    let fecha = anio + '-' + mes + '-' + dia;
-
-    this._diariosService.pedidosDiaLunes(fecha, e.target.id)
-      .subscribe( ( resp: any ) => {
-        this.nombre = resp[0].asesor;
-        this.actual = resp;
-      });
   }
 
   descargar( data: any ) {

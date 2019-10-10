@@ -120,48 +120,48 @@
 
           <table class="table fijar-thead" style="width: 100%">
     
-            <thead>
+            <thead style="display: table!important; width: calc(100% - 1em)!important; table-layout: fixed!important;">
     
               <tr>
     
-                <th style="width:7%">FECHA</th>
+                <th>FECHA</th>
     
-                <th style="width:8%">TIPO</th>
+                <th>TIPO</th>
                 
-                <th style="width:5%">NC</th>
+                <th>NC</th>
     
-                <th style="width:5%">FACTURA</th>
+                <th>FACTURA</th>
 
-                <th style="width:5%">NUMCLI</th>
+                <th>NUMCLI</th>
     
-                <th style="width:20%">CLIENTE</th>
+                <th>CLIENTE</th>
     
-                <th style="width:5%">TOTAL</th>
+                <th>TOTAL</th>
     
-                <th style="width:5%">SALDO</th>
+                <th>SALDO</th>
     
-                <th style="width:20%">ASESOR</th>
+                <th>ASESOR</th>
     
-                <th style="width:10%">TRABAJADO</th>
+                <th>TRABAJADO</th>
     
               </tr>
     
             </thead>
     
-            <tbody>
+            <tbody style="display: block!important; height: 200px!important; overflow: auto!important;">
     
-              <tr *ngFor="let n of nc" [ngClass]="{'bg-primary': n.trabajado}" [id]="'linea' + n.nc + n.factura">
+              <tr style="display: table!important; width: calc(100% - 1em)!important; table-layout: fixed!important;" *ngFor="let n of nc" [ngClass]="{'bg-primary': n.trabajado}" [id]="'linea' + n.nc + n.factura">
     
                 <td>{{ n.fecha | date: 'dd-MM-yyyy' }}</td>
     
-                <td width="8%">
+                <td>
                   
                   <!-- <span class="badge" [ngClass]="{'badge-inverse text-danger': n.serie === 'NA', 'badge-danger': n.serie === 'C', 'badge-primary': n.serie === 'D', 'badge-info': n.serie === 'P', 'badge-warning': n.serie === 'F', 'badge-inverse': n.serie === 'G'}">{{ n.tiponc }}</span> -->
                   <span class="badge" [ngClass]="{'badge-danger': n.serie === 'C', 'badge-primary': n.serie === 'W' || n.serie === 'GS', 'badge-info': n.serie === 'X' || n.serie === 'DS', 'badge-warning': n.serie === 'Y' || n.serie === 'PS', 'badge-inverse': n.serie === 'Z' || n.serie === 'FS'}">{{ n.tiponc }}</span>
                 
                 </td>
     
-                <td width="5%">{{ n.nc }}</td>
+                <td>{{ n.nc }}</td>
     
                 <td>{{ n.factura }}</td>
     
@@ -175,7 +175,7 @@
     
                 <td>{{ n.vendedor }}</td>
     
-                <td class="text-center" style="width: 12%;">
+                <td class="text-center">
     
                   <button type="button" class="btn btn-success btn-sm" (click)="trabajado(n)" *ngIf="!n.trabajado && n.serie != 'NA'">
     

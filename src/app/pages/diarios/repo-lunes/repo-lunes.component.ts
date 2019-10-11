@@ -130,10 +130,8 @@ export class RepoLunesComponent implements OnInit {
         });
     } else if (data.id === 80001) {
       // Obtener Victor Especiales
-      console.log(data.id);
       this._diariosService.pedidosDiaLunesEspecials()
         .subscribe( ( resp: any ) => {
-          console.log(resp);
           this.nombre = data.asesor;
           this.actual = resp;
         });

@@ -93,6 +93,7 @@ export class RepoLunesComponent implements OnInit {
   obtenerPedidos(data: any) {
     this.actual = [];
     this.nombre = '';
+    console.log(data.id);
 
     if (data.id !== 80000 && data.id !== 843 && data.id !== 80001) {
       let h = new Date();
@@ -132,6 +133,7 @@ export class RepoLunesComponent implements OnInit {
       // Obtener Victor Especiales
       this._diariosService.pedidosDiaLunesEspecials()
         .subscribe( ( resp: any ) => {
+          console.log(resp);
           this.nombre = data.asesor;
           this.actual = resp;
         });
@@ -148,6 +150,22 @@ export class RepoLunesComponent implements OnInit {
   descargar( data: any ) {
     let filename = 'reporte_' + data[0].asesor;
     this._excel.exportAsExcelFile(data, filename);
+  }
+
+  descargarPDF(data: any, seccion: string = 'Nombredeseccion') {
+    const f = seccion.split(' ');
+    let file: any = '';
+    for (const d of f) {
+      file += d;
+    }
+    this._diariosService.enviarPDF(data, file).subscribe((msg: any) => {
+      if (msg.length > 0) {
+        const a = document.createElement('a');
+        a.setAttribute('href', `https://ferremayoristas.com.mx/api/${msg[0].status}`);
+        a.setAttribute('target', '_blank');
+        setTimeout(() => a.click(), 100);
+      }
+    });
   }
 
 }

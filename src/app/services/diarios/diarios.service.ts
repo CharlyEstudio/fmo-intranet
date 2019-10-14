@@ -632,4 +632,10 @@ export class DiariosService {
     });
   }
 
+  enviarPDF(datos: any, archivo: string) {
+    const url = `${URL_SERVICIO_GENERAL}/api/diarios.php?opcion=32`;
+
+    return this.http.post(url, {data: datos, file: archivo}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
+  }
+
 }

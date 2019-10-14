@@ -100,7 +100,7 @@
 
 <div id="modalDiaLunes" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalDiaLunes" aria-hidden="true">
 
-    <div class="modal-dialog modal-lg tablas-modales">
+    <div class="modal-dialog modal-lg tablas-modales" style="max-width: 95%!important;">
 
         <div class="modal-content p-t-20 p-b-20 p-l-20 p-r-20">
 
@@ -108,7 +108,9 @@
 
                 <h3 class="display-5 p-b-10 p-t-10">Reporte de {{nombre}}</h3>
 
-                <button class="btn btn-success" type="button" (click)="descargar(actual)"><i class="mdi mdi-file-excel"></i>Descargar</button>
+                <!-- <button class="btn btn-success" type="button" (click)="descargar(actual)"><i class="mdi mdi-file-excel"></i>XLS</button> -->
+                
+                <button class="btn btn-danger" type="button" (click)="descargarPDF(actual, nombre)"><i class="mdi mdi-file-excel"></i>PDF</button>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 
@@ -128,7 +130,7 @@
 
                 <div class="table-responsive" *ngIf="actual.length > 0">
 
-                    <table class="display nowrap table table-hover table-striped table-bordered dataTable" cellspacing="0" width="100%" role="grid" aria-describedby="example23_info" style="width: 100%;">
+                    <table class="display table-sm font-14 nowrap table table-hover table-striped table-bordered dataTable" cellspacing="0" width="100%" role="grid" aria-describedby="example23_info" style="width: 100%;">
 
                         <thead>
 
@@ -148,7 +150,13 @@
 
                                 <th class="text-center">Folio</th>
 
+                                <th class="text-center">Total</th>
+
                                 <th class="text-center">Saldo</th>
+
+                                <th class="text-center">Fecha UltAbo</th>
+
+                                <th class="text-center">Abono</th>
 
                             </tr>
 
@@ -178,7 +186,7 @@
 
                                 </td>
 
-                                <td class="text-center">{{ act.cliente }}</td>
+                                <td class="text-left">{{ act.cliente }}</td>
 
                                 <td class="text-center">{{ act.fecha | date:'dd-MM-yyyy' }}</td>
 
@@ -188,7 +196,13 @@
 
                                 <td class="text-center">{{ act.folio }}</td>
 
+                                <td class="text-center">{{ act.total | currency }}</td>
+
                                 <td class="text-center">{{ act.saldo | currency }}</td>
+
+                                <td class="text-center">{{ act.ultimoabono | date:'dd-MM-yyyy' }}</td>
+
+                                <td class="text-center">{{ act.abono | currency }}</td>
 
                             </tr>
 

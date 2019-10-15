@@ -65,6 +65,7 @@ export class NotascreditoComponent implements OnInit {
         elem.classList.add("bg-primary");
         nc.trabajado = true;
         const ncAnt = this.nc;
+        this.trabajadas += 1;
         this.nc = [];
         this.nc = ncAnt;
       }
@@ -199,13 +200,18 @@ export class NotascreditoComponent implements OnInit {
     this._ncService.buscarNCFecha(f, f2).subscribe((resp: any) => {
       if (resp.status) {
         for (let i = 0; i < resp.respuesta.length; i ++) {
+          // if (resp.respuesta[i].nc === 1721) {
+          //   console.log(resp.respuesta[i].nc, resp.respuesta[i].serie);
+          // }
           this._ncService.buscarNCtrabajado(resp.respuesta[i].nc, resp.respuesta[i].serie).subscribe((ncFec: any) => {
             if (ncFec.status) {
               resp.respuesta[i].trabajado = true;
+              this.trabajadas++;
               // if (resp.respuesta[i].serie !== 'NA') {
               //   subtotal ++;
               // }
             } else if (resp.respuesta[i].serie === 'NA') {
+              this.trabajadas++;
               resp.respuesta[i].trabajado = true;
             } else {
               resp.respuesta[i].trabajado = false;
@@ -213,22 +219,27 @@ export class NotascreditoComponent implements OnInit {
           });
         }
         this.nc = resp.respuesta;
-        this._ncService.buscarNCTrabFecha(f, f2).subscribe((trab: any) => {
-          if (trab.status) {
-            for (let i = 0; i < trab.respuesta.length; i++) {
-              let esNC = (fac: any) => {
-                return fac.nc === trab.respuesta[i].nc && fac.serie === trab.respuesta[i].serie;
-              }
-              if (this.nc.find(esNC)) {
-                this.trabajadas++;
-              }
-            }
-          }
-          // this.total = subtotal;
-          this.total = this.nc.length;
-          this.trabajadas = this.trabajadas >= this.total ? this.total : this.trabajadas;
-          this.pendientes = this.trabajadas >= this.total ? 0 : this.total - this.trabajadas;
-        });
+        this.total = this.nc.length;
+        this.trabajadas = this.trabajadas >= this.total ? this.total : this.trabajadas;
+        this.pendientes = this.trabajadas >= this.total ? 0 : this.total - this.trabajadas;
+        // this._ncService.buscarNCTrabFecha(f, f2).subscribe((trab: any) => {
+        //   if (trab.status) {
+        //     for (let i = 0; i < trab.respuesta.length; i++) {
+        //       let esNC = (fac: any) => {
+        //         return fac.nc === trab.respuesta[i].nc && fac.serie === trab.respuesta[i].serie;
+        //       }
+        //       if (this.nc.find(esNC)) {
+        //         this.trabajadas++;
+        //       }
+        //     }
+        //   }
+        //   this.total = subtotal;
+        //   console.log(this.nc);
+        //   console.log(this.nc.length, this.trabajadas);
+        //   this.total = this.nc.length;
+        //   this.trabajadas = this.trabajadas >= this.total ? this.total : this.trabajadas;
+        //   this.pendientes = this.trabajadas >= this.total ? 0 : this.total - this.trabajadas;
+        // });
         this.cargando = false;
       } else {
         this.cargando = false;

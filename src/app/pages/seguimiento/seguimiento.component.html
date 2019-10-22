@@ -1,142 +1,153 @@
-<div class="card-body centrar" style="height: 400px!important;" *ngIf="trabajandoZona1 < cantidadZona1">
-  <div class="spinner-grow text-secondary" role="status" style="width: 3rem; height: 3rem;"></div>
-  <span class="">Calificando Zona 1</span>
-</div>
+<div class="row">
 
-<div *ngIf="trabajandoZona1 === cantidadZona1">
+  <div class="col-md-6 col-lg-6">
 
-  <h3>Zona 1</h3>
+    <div class="card-body centrar" style="height: 400px!important;" *ngIf="trabajandoZona1 < cantidadZona1">
 
-  <div class="responsive-table font-14">
+      <div class="spinner-grow text-secondary" role="status" style="width: 3rem; height: 3rem;"></div>
 
-    <table class="table table-sm stylish-table table-hover">
+      <span class="">Calificando Zona 1</span>
 
-      <thead>
+    </div>
 
-        <tr>
+    <h3 *ngIf="trabajandoZona1 === cantidadZona1">Zona 1</h3>
 
-          <th>Asesor</th>
+    <div class="responsive-table font-14" *ngIf="trabajandoZona1 === cantidadZona1">
 
-          <th class="text-center">Calificacion</th>
+      <table class="table table-sm stylish-table table-hover">
 
-          <th class="text-center">Clientes</th>
+        <thead>
 
-          <th>Ventas</th>
+          <tr>
 
-          <th>Cobranza</th>
+            <th>Asesor</th>
 
-        </tr>
+            <th class="text-center">Calificacion</th>
 
-      </thead>
+            <th class="text-center">Clientes</th>
 
-      <tbody>
+            <th>Ventas</th>
 
-        <tr *ngFor="let mv of zona1">
+            <th>Cobranza</th>
 
-          <td class="font-weight-bold">
-            <a style="padding: 0px!important;" class="nav-link cursor" (click)="verAsesor(mv)" href="#modalFolio" data-dismiss="modal" data-toggle="modal">{{mv.NOMBRE}}</a>
-          </td>
-          
-          <td class="font-weight-bold text-center" [ngClass]="{'text-danger': (mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) < 5}">{{(mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) | number:'0.2'}}</td>
+          </tr>
 
-          <td class="font-weight-bold text-center">{{mv.CLIENTES}}</td>
+        </thead>
 
-          <td class="font-weight-bold">{{mv.VENTAS | currency}}</td>
+        <tbody>
 
-          <td class="font-weight-bold">{{mv.COBRADO | currency}}</td>
+          <tr *ngFor="let mv of zona1">
 
-        </tr>
+            <td class="font-weight-bold">
+              <a style="padding: 0px!important;" class="nav-link cursor" (click)="verAsesor(mv)" href="#modalFolio" data-dismiss="modal" data-toggle="modal">{{mv.NOMBRE}}</a>
+            </td>
+            
+            <td class="font-weight-bold text-center" [ngClass]="{'text-danger': (mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) < 6}">{{(mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) | number:'0.2'}}</td>
 
-        <tr class="bg-info text-white">
+            <td class="font-weight-bold text-center">{{mv.CLIENTES}}</td>
 
-          <th></th>
+            <td class="font-weight-bold">{{mv.VENTAS | currency}}</td>
 
-          <th>{{importeTotal2 | currency}}</th>
+            <td class="font-weight-bold">{{mv.COBRADO | currency}}</td>
 
-          <th>{{importeFalta2 | currency}}</th>
+          </tr>
 
-          <th class="text-center">{{clienteTotal2}}</th>
+          <tr class="bg-info text-white">
 
-          <th class="text-center">{{clienteFalta2}}</th>
+            <th></th>
 
-        </tr>
+            <th>{{importeTotal2 | currency}}</th>
 
-      </tbody>
+            <th>{{importeFalta2 | currency}}</th>
 
-    </table>
+            <th class="text-center">{{clienteTotal2}}</th>
+
+            <th class="text-center">{{clienteFalta2}}</th>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+  <div class="col-md-6 col-lg-6"></div>
+
+  <div class="col-md-6 col-lg-6">
+
+    <div class="card-body centrar" style="height: 400px!important;" *ngIf="trabajandoZona2 < cantidadZona2">
+      <div class="spinner-grow text-secondary" role="status" style="width: 3rem; height: 3rem;"></div>
+      <span class="">Calificando Zona 2</span>
+    </div>
+
+    <h3 *ngIf="trabajandoZona2 === cantidadZona2">Zona 2</h3>
+
+    <div class="responsive-table font-14" *ngIf="trabajandoZona2 === cantidadZona2">
+
+      <table class="table table-sm stylish-table table-hover">
+
+        <thead>
+
+          <tr>
+
+            <th>Asesor</th>
+
+            <th class="text-center">Calificacion</th>
+
+            <th class="text-center">Clientes</th>
+
+            <th>Ventas</th>
+
+            <th>Cobranza</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let mv of zona2">
+
+            <td class="font-weight-bold">
+              <a style="padding: 0px!important;" class="nav-link cursor" (click)="verAsesor(mv)" href="#modalFolio" data-dismiss="modal" data-toggle="modal">{{mv.NOMBRE}}</a>
+            </td>
+            
+            <td class="font-weight-bold text-center" [ngClass]="{'text-danger': (mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) < 6}">{{(mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) | number:'0.2'}}</td>
+
+            <td class="font-weight-bold text-center">{{mv.CLIENTES}}</td>
+
+            <td class="font-weight-bold">{{mv.VENTAS | currency}}</td>
+
+            <td class="font-weight-bold">{{mv.COBRADO | currency}}</td>
+
+          </tr>
+
+          <tr class="bg-info text-white">
+
+            <th></th>
+
+            <th>{{importeTotal2 | currency}}</th>
+
+            <th>{{importeFalta2 | currency}}</th>
+
+            <th class="text-center">{{clienteTotal2}}</th>
+
+            <th class="text-center">{{clienteFalta2}}</th>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
 
   </div>
 
-</div>
-
-<div class="card-body centrar" style="height: 400px!important;" *ngIf="trabajandoZona2 < cantidadZona2">
-  <div class="spinner-grow text-secondary" role="status" style="width: 3rem; height: 3rem;"></div>
-  <span class="">Calificando Zona 2</span>
-</div>
-
-<div *ngIf="trabajandoZona2 === cantidadZona2">
-
-  <h3>Zona 2</h3>
-
-  <div class="responsive-table font-14">
-
-    <table class="table table-sm stylish-table table-hover">
-
-      <thead>
-
-        <tr>
-
-          <th>Asesor</th>
-
-          <th class="text-center">Calificacion</th>
-
-          <th class="text-center">Clientes</th>
-
-          <th>Ventas</th>
-
-          <th>Cobranza</th>
-
-        </tr>
-
-      </thead>
-
-      <tbody>
-
-        <tr *ngFor="let mv of zona2">
-
-          <td class="font-weight-bold">
-            <a style="padding: 0px!important;" class="nav-link cursor" (click)="verAsesor(mv)" href="#modalFolio" data-dismiss="modal" data-toggle="modal">{{mv.NOMBRE}}</a>
-          </td>
-          
-          <td class="font-weight-bold text-center" [ngClass]="{'text-danger': (mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) < 5}">{{(mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) | number:'0.2'}}</td>
-
-          <td class="font-weight-bold text-center">{{mv.CLIENTES}}</td>
-
-          <td class="font-weight-bold">{{mv.VENTAS | currency}}</td>
-
-          <td class="font-weight-bold">{{mv.COBRADO | currency}}</td>
-
-        </tr>
-
-        <tr class="bg-info text-white">
-
-          <th></th>
-
-          <th>{{importeTotal2 | currency}}</th>
-
-          <th>{{importeFalta2 | currency}}</th>
-
-          <th class="text-center">{{clienteTotal2}}</th>
-
-          <th class="text-center">{{clienteFalta2}}</th>
-
-        </tr>
-
-      </tbody>
-
-    </table>
-
-  </div>
+  <div class="col-md-6 col-lg-6"></div>
 
 </div>
 

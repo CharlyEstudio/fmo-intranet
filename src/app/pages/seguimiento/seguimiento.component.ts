@@ -35,12 +35,27 @@ export class SeguimientoComponent implements OnInit {
         this.cantidadZona1 = aseZ1.length;
         this.trabajandoZona1 = 0;
         this.zona1 = [];
+        const zonaPush = [];
         for (const ase of aseZ1) {
           this.panelAsesores.obtenerCalificacion(ase.perid).subscribe((calificacion: any) => {
-            this.zona1.push(calificacion[0]);
+            zonaPush.push(calificacion[0]);
+            zonaPush.sort((a, b) => {
+              const datoA = (a.TRABAJADO_CLI + a.TRABAJADO_VEN + a.TRABAJADO_COB);
+              const datoB = (b.TRABAJADO_CLI + b.TRABAJADO_VEN + b.TRABAJADO_COB);
+              if (datoA < datoB) {
+                return 1;
+              }
+
+              if (datoA > datoB) {
+                return -1;
+              }
+
+              return 0;
+            });
             this.trabajandoZona1++;
           });
         }
+        this.zona1 = zonaPush;
       }
     });
   }
@@ -52,12 +67,27 @@ export class SeguimientoComponent implements OnInit {
         this.cantidadZona2 = aseZ2.length;
         this.trabajandoZona2 = 0;
         this.zona2 = [];
+        const zonaPush = [];
         for (const ase of aseZ2) {
           this.panelAsesores.obtenerCalificacion(ase.perid).subscribe((calificacion: any) => {
-            this.zona2.push(calificacion[0]);
+            zonaPush.push(calificacion[0]);
+            zonaPush.sort((a, b) => {
+              const datoA = (a.TRABAJADO_CLI + a.TRABAJADO_VEN + a.TRABAJADO_COB);
+              const datoB = (b.TRABAJADO_CLI + b.TRABAJADO_VEN + b.TRABAJADO_COB);
+              if (datoA < datoB) {
+                return 1;
+              }
+
+              if (datoA > datoB) {
+                return -1;
+              }
+
+              return 0;
+            });
             this.trabajandoZona2++;
           });
         }
+        this.zona2 = zonaPush;
       }
     });
   }

@@ -81,6 +81,7 @@ import { ConfigpanelComponent } from './configpanel/configpanel.component';
 import { GarantiasComponent } from './garantias/garantias.component';
 import { ActividadesDevelopersComponent } from './actividades-developers/actividades-developers.component';
 import { PanelgarantiasComponent } from './panelgarantias/panelgarantias.component';
+import { SeguimientoComponent } from './seguimiento/seguimiento.component';
 
 const pageRoutes: Routes = [
     {
@@ -101,6 +102,7 @@ const pageRoutes: Routes = [
                     name: 'description'
                 }
     },
+    // Asesores
     {
         path: 'dashboardAse',
         canActivate: [ AsesoresGuard, VerificaTokenGuard ],
@@ -191,6 +193,15 @@ const pageRoutes: Routes = [
                 }
     },
     // Asesores
+    {
+        path: 'seguimiento',
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        component: SeguimientoComponent,
+        data:   {
+                    titulo: 'Seguimiento Ventas vs Cobranza',
+                    name: 'description'
+                }
+    },
     {
         path: 'cobranza',
         component: CobranzaComponent,

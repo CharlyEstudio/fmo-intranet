@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 // Configs
-import { URL_EXTERNO, PUERTO_SERVER } from '../../config/config';
+import { URL_EXTERNO, PUERTO_SERVER, PUERTO_INTERNO } from '../../config/config';
 
 // Modelos
 import { Usuario } from '../../models/usuario.model';
@@ -24,6 +24,18 @@ export class PanelasesoresService {
   // Cambiar el importe de venta diaria
   cambiarImporteVtaDiaria(importe: number, usuario: Usuario) {
     const url = URL_EXTERNO + ':' + PUERTO_SERVER + '/api/panelasesores.php?opcion=2&importe=' + importe + '&idFerrum=' + usuario.idFerrum;
+
+    return this.http.get(url);
+  }
+
+  obtenerAsesores(zona: any) {
+    const url = URL_EXTERNO + ':' + PUERTO_SERVER + '/api/seguimiento.php?opcion=1&zona=' + zona;
+
+    return this.http.get(url);
+  }
+
+  obtenerCalificacion(perid: any, fecha: any = '2019-10-22') {
+    const url = URL_EXTERNO + ':' + PUERTO_SERVER + '/api/seguimiento.php?opcion=2&perid=' + perid + '&fecha=' + fecha;
 
     return this.http.get(url);
   }

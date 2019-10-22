@@ -199,6 +199,7 @@ export class NotascreditoComponent implements OnInit {
     this.nc = [];
     this._ncService.buscarNCFecha(f, f2).subscribe((resp: any) => {
       if (resp.status) {
+        this.pendientes = resp.respuesta.length;
         for (let i = 0; i < resp.respuesta.length; i ++) {
           // if (resp.respuesta[i].nc === 1721) {
           //   console.log(resp.respuesta[i].nc, resp.respuesta[i].serie);
@@ -207,6 +208,7 @@ export class NotascreditoComponent implements OnInit {
             if (ncFec.status) {
               resp.respuesta[i].trabajado = true;
               this.trabajadas++;
+              this.pendientes--;
               // if (resp.respuesta[i].serie !== 'NA') {
               //   subtotal ++;
               // }
@@ -220,8 +222,9 @@ export class NotascreditoComponent implements OnInit {
         }
         this.nc = resp.respuesta;
         this.total = this.nc.length;
-        this.trabajadas = this.trabajadas >= this.total ? this.total : this.trabajadas;
-        this.pendientes = this.trabajadas >= this.total ? 0 : this.total - this.trabajadas;
+        // this.trabajadas = this.trabajadas >= this.total ? this.total : this.trabajadas;
+        // this.pendientes = this.total - this.trabajadas;
+        // console.log(this.total, this.trabajadas, this.pendientes);
         // this._ncService.buscarNCTrabFecha(f, f2).subscribe((trab: any) => {
         //   if (trab.status) {
         //     for (let i = 0; i < trab.respuesta.length; i++) {

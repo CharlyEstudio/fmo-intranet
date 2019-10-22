@@ -66,6 +66,7 @@ export class NotascreditoComponent implements OnInit {
         nc.trabajado = true;
         const ncAnt = this.nc;
         this.trabajadas += 1;
+        this.pendientes -= 1;
         this.nc = [];
         this.nc = ncAnt;
       }
@@ -78,6 +79,8 @@ export class NotascreditoComponent implements OnInit {
         const elem = <HTMLElement>(document.getElementById("linea" + nc.nc + nc.factura));
         elem.classList.remove("bg-primary");
         nc.trabajado = false;
+        this.trabajadas -= 1;
+        this.pendientes += 1;
       }
     });
   }
@@ -201,10 +204,10 @@ export class NotascreditoComponent implements OnInit {
       if (resp.status) {
         this.pendientes = resp.respuesta.length;
         for (let i = 0; i < resp.respuesta.length; i ++) {
-          // if (resp.respuesta[i].nc === 1721) {
-          //   console.log(resp.respuesta[i].nc, resp.respuesta[i].serie);
-          // }
           this._ncService.buscarNCtrabajado(resp.respuesta[i].nc, resp.respuesta[i].serie).subscribe((ncFec: any) => {
+            // if (resp.respuesta[i].nc === 3321) {
+            //   console.log(resp.respuesta[i].nc, resp.respuesta[i].serie, ncFec);
+            // }
             if (ncFec.status) {
               resp.respuesta[i].trabajado = true;
               this.trabajadas++;

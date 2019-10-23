@@ -4,6 +4,9 @@ import { HttpClient } from '@angular/common/http';
 // COnfiguración
 import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_SERVER, PUERTO_INTERNO, URL_PETICION, URL_EXTERNO } from '../../config/config';
 
+// Modelos
+import { MonitorFactura } from '../../models/monitorfactura.model';
+
 @Injectable()
 export class OficinaService {
 
@@ -76,6 +79,42 @@ export class OficinaService {
     this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/oficina/facturas/error/timbrar/' + fecha;
 
     return this.http.get(this.url);
+  }
+
+  verfacturasTrab(fecha: any) {
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/monitorfactura/fecha/' + fecha;
+
+    return this.http.get(this.url);
+  }
+
+  verfacturasTrabEspe(factura: any) {
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/monitorfactura/' + factura;
+
+    return this.http.get(this.url);
+  }
+
+  verFacturasDia() {
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/oficina.php?opcion=1';
+
+    return this.http.get(this.url);
+  }
+
+  guardarFacturaTrab(datos: any, fechaTrab: any, horaTrab: any, id: any) {
+    const factura = new MonitorFactura(
+      datos.DOCID,
+      datos.ORIGENID,
+      datos.DESTINOID,
+      datos.NUMERO,
+      datos.FECHA,
+      fechaTrab,
+      horaTrab,
+      datos.TOTAL,
+      datos.XIMPRESION,
+      id
+    );
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/monitorfactura';
+
+    return this.http.post(this.url, factura);
   }
 
 }

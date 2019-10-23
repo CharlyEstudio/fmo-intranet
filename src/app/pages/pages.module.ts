@@ -125,6 +125,7 @@ import { ActividadesDevelopersComponent } from './actividades-developers/activid
 import { PanelgarantiasComponent } from './panelgarantias/panelgarantias.component';
 import { BarraAvanceComponent } from '../components/barra-avance/barra-avance.component';
 import { SeguimientoComponent } from './seguimiento/seguimiento.component';
+import { FacturasmonitorComponent } from './facturasmonitor/facturasmonitor.component';
 
 @NgModule({
     declarations: [
@@ -228,7 +229,8 @@ import { SeguimientoComponent } from './seguimiento/seguimiento.component';
         ActividadesDevelopersComponent,
         PanelgarantiasComponent,
         BarraAvanceComponent,
-        SeguimientoComponent
+        SeguimientoComponent,
+        FacturasmonitorComponent
     ],
     exports: [
         DashborarDirComponent,

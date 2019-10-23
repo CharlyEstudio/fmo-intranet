@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 // Servicios
 import { PanelasesoresService } from '../../services/services.index';
+import { HerramientasService } from '../../services/herramientas/herramientas.service';
 
 @Component({
   selector: 'app-seguimiento',
@@ -20,7 +21,8 @@ export class SeguimientoComponent implements OnInit {
   asesor: any = '';
 
   constructor(
-    private panelAsesores: PanelasesoresService
+    private panelAsesores: PanelasesoresService,
+    private herramientas: HerramientasService
   ) { }
 
   ngOnInit() {
@@ -37,7 +39,7 @@ export class SeguimientoComponent implements OnInit {
         this.zona1 = [];
         const zonaPush = [];
         for (const ase of aseZ1) {
-          this.panelAsesores.obtenerCalificacion(ase.perid).subscribe((calificacion: any) => {
+          this.panelAsesores.obtenerCalificacion(ase.perid, this.herramientas.fechaActual()).subscribe((calificacion: any) => {
             zonaPush.push(calificacion[0]);
             zonaPush.sort((a, b) => {
               const datoA = (a.TRABAJADO_CLI + a.TRABAJADO_VEN + a.TRABAJADO_COB);
@@ -69,7 +71,7 @@ export class SeguimientoComponent implements OnInit {
         this.zona2 = [];
         const zonaPush = [];
         for (const ase of aseZ2) {
-          this.panelAsesores.obtenerCalificacion(ase.perid).subscribe((calificacion: any) => {
+          this.panelAsesores.obtenerCalificacion(ase.perid, this.herramientas.fechaActual()).subscribe((calificacion: any) => {
             zonaPush.push(calificacion[0]);
             zonaPush.sort((a, b) => {
               const datoA = (a.TRABAJADO_CLI + a.TRABAJADO_VEN + a.TRABAJADO_COB);

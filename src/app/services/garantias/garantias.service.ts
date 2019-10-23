@@ -2,10 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 // config
-import { URL_SERVICIO_GENERAL, PUERTO_SERVER } from '../../config/config';
+import { URL_SERVICIO_GENERAL, PUERTO_SERVER, URL_PETICION, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, URL_EXTERNO } from '../../config/config';
 
 @Injectable()
 export class GarantiasService {
+
+  url: string;
+  token: string;
 
   constructor(
     public http: HttpClient
@@ -117,6 +120,19 @@ export class GarantiasService {
     const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=8';
 
     return this.http.post(url, {data: garantia, estate: estado}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
+  }
+  cancelarGarantia(idgar: number){
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=18&idgar=' + idgar;
+
+    return this.http.get(url);
+  }
+
+  buscarFolioHistorial(folio: any) {
+    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/guias/buscar/historial/' + folio;
+
+    this.url += '?token=' + this.token;
+
+    return this.http.get( this.url );
   }
 
 }

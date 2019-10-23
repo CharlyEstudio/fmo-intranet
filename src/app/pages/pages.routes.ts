@@ -82,6 +82,7 @@ import { GarantiasComponent } from './garantias/garantias.component';
 import { ActividadesDevelopersComponent } from './actividades-developers/actividades-developers.component';
 import { PanelgarantiasComponent } from './panelgarantias/panelgarantias.component';
 import { SeguimientoComponent } from './seguimiento/seguimiento.component';
+import { FacturasmonitorComponent } from './facturasmonitor/facturasmonitor.component';
 
 const pageRoutes: Routes = [
     {
@@ -591,7 +592,7 @@ const pageRoutes: Routes = [
                     name: 'description'
                 }
     },
-    // Mesas
+    // Mesas & Oficina
     {
         path: 'procesoFacturas',
         component: ProcesofacturasComponent,
@@ -599,6 +600,16 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Revisión de Facturas',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'facturamonitor',
+        component: FacturasmonitorComponent,
+        canActivate: [ MesaGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Monitoreo de Facturas Trabajadas',
                     name: 'description'
                 }
     },

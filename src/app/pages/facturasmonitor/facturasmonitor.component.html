@@ -1,0 +1,119 @@
+<div class="row">
+
+  <div class="col-md-3 col-lg-3 col-sm-12">
+
+    <div class="form-group">
+
+      <input #factura type="number" name="factura" id="factura" class="form-control" (change)="trabajar()" autocomplete="off" autofocus placeholder="Ingrese la factura" required>
+
+    </div>
+
+  </div>
+
+  <div class="col-md-9 col-lg-9 col-sm-12"></div>
+
+  <div class="col-md-4 col-lg-4 col-sm-12">
+
+    <div class="table-responsive">
+
+      <table class="table table-sm">
+
+        <thead>
+
+          <tr>
+
+            <th class="text-center">#</th>
+
+            <th class="text-center">Número</th>
+
+            <th>Total</th>
+
+            <th class="text-center">Pendiente</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let fac of facturas, let i = index">
+
+            <td class="text-center">{{(i + 1)}}</td>
+
+            <td class="text-center">{{fac.NUMERO}}</td>
+
+            <td>{{fac.TOTAL | currency}}</td>
+
+            <td class="text-center">
+              <i class="mdi mdi-clock"></i>
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+  <div class="col-md-4 col-lg-4 col-sm-12">
+
+    <div class="table-responsive">
+
+      <table class="table table-sm">
+
+        <thead>
+
+          <tr>
+
+            <th class="text-center">#</th>
+
+            <th class="text-center">Número</th>
+
+            <th>Total</th>
+
+            <th class="text-center">Trabajados</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let fac of facturasTrab, let i = index">
+
+            <td class="text-center">{{(i + 1)}}</td>
+
+            <td class="text-center">{{fac.numero}}</td>
+
+            <td>{{fac.total | currency}}</td>
+
+            <td class="text-center">
+              <i class="mdi mdi-check-circle-outline text-info"></i>
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+  <div class="col-md-4 col-lg-4 col-sm-12 text-center">
+
+    <h3>PENDIENTES</h3>
+
+    <h1 class="display-1 text-danger">{{pendientes}}</h1>
+
+    <h3>TRABAJADOS</h3>
+
+    <h1 class="display-1 text-info">{{trabajados}}</h1>
+
+  </div>
+
+</div>

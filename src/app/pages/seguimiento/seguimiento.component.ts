@@ -24,7 +24,7 @@ export class SeguimientoComponent implements OnInit {
   trabajandoZona2: number = 0;
 
   vtaMin: number = 0;
-  cliMin: number = 15;
+  cliMin: number = 20;
 
   asesor: any = '';
 
@@ -96,11 +96,11 @@ export class SeguimientoComponent implements OnInit {
             zonaPush.sort((a, b) => {
               const datoA = (a.TRABAJADO_CLI + a.TRABAJADO_VEN + a.TRABAJADO_COB);
               const datoB = (b.TRABAJADO_CLI + b.TRABAJADO_VEN + b.TRABAJADO_COB);
-              if (datoA < datoB) {
+              if (datoA > datoB) {
                 return 1;
               }
 
-              if (datoA > datoB) {
+              if (datoA < datoB) {
                 return -1;
               }
 
@@ -128,11 +128,11 @@ export class SeguimientoComponent implements OnInit {
             zonaPush.sort((a, b) => {
               const datoA = (a.TRABAJADO_CLI + a.TRABAJADO_VEN + a.TRABAJADO_COB);
               const datoB = (b.TRABAJADO_CLI + b.TRABAJADO_VEN + b.TRABAJADO_COB);
-              if (datoA < datoB) {
+              if (datoA > datoB) {
                 return 1;
               }
 
-              if (datoA > datoB) {
+              if (datoA < datoB) {
                 return -1;
               }
 

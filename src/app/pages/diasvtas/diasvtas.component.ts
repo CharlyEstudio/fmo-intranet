@@ -27,6 +27,7 @@ export class DiasvtasComponent implements OnInit {
   asesores: any[] = [];
   comparar: any[] = [];
   asesor: any = '0';
+  total: number = 0;
 
   varios: boolean = false;
 
@@ -68,7 +69,7 @@ export class DiasvtasComponent implements OnInit {
       {dia: '3', activo: this.martes.nativeElement.checked, nombre: 'Martes'}
     );
     dias.push(
-      {dia: '4', activo: this.miercoles.nativeElement.checked, nombre: 'Miércoles'}
+      {dia: '4', activo: this.miercoles.nativeElement.checked, nombre: 'Miercoles'}
     );
     dias.push(
       {dia: '5', activo: this.jueves.nativeElement.checked, nombre: 'Jueves'}
@@ -84,42 +85,83 @@ export class DiasvtasComponent implements OnInit {
             for (const fecha of rangos) {
               this.diasVtasService.obtenerVentasDia(fecha.date, this.asesor.idFerrum).subscribe((vtas: any) => {
                 if (vtas[0].d === Number(dia.dia)) {
-                  const esFecha = (dato: any) => {
-                    return dato.d === vtas[0].d;
-                  };
-
-                  if (!this.comparar.find(esFecha)) {
-                    const day = {
-                      d: Number(dia.dia),
-                      dia: dia.nombre,
-                      dato: vtas
+                  for (const cli of vtas) {
+                    const esCliente = (cl: any) => {
+                      return cl.cliente === cli.numero;
                     };
-                    this.comparar.push(day);
-                    this.comparar.sort((a, b) => {
-                      if (a.d > b.d) {
-                        return 1;
-                      }
 
-                      if (a.d < b.d) {
-                        return -1;
-                      }
-
-                      return 0;
-                    });
-                  } else {
-                    this.comparar.find(esFecha).dato.push(vtas[0]);
-                    for (const arr of this.comparar.find(esFecha).dato) {
-                      this.comparar.find(esFecha).dato.sort((a, b) => {
-                        if (a.dia > b.dia) {
+                    if (!this.comparar.find(esCliente)) {
+                      const day = {
+                        cliente: cli.numero,
+                        nombre: cli.cliente,
+                        saldo: cli.saldo,
+                        zona: cli.zona,
+                        ultcom: cli.ultcom,
+                        fecultcom: cli.fecultcom,
+                        impoultcom: cli.impoultcom,
+                        diaultcom: cli.diaultcom,
+                        limite: cli.limite,
+                        asesor: cli.asesor,
+                        fecultpag: cli.fecultpag,
+                        ultpag: cli.ultpag,
+                        diaultpag: cli.diaultpag,
+                        d: cli.d,
+                        day: [
+                          {
+                            d: cli.d,
+                            nombre: cli.nombre,
+                            dato: [
+                              {
+                                fecha: fecha.date,
+                                datos: cli
+                              }
+                            ]
+                          }
+                        ]
+                      };
+                      this.comparar.push(day);
+                      this.comparar.sort((a, b) => {
+                        if (a.d > b.d) {
                           return 1;
                         }
 
-                        if (a.dia < b.dia) {
+                        if (a.d < b.d) {
                           return -1;
                         }
 
                         return 0;
                       });
+                    } else {
+                      for (const d of this.comparar.find(esCliente).day) {
+                        if (d.d === cli.d) {
+                          d.dato.push({
+                            fecha: cli.dia,
+                            datos: cli
+                          });
+                          d.dato.sort((a, b) => {
+                            if (a.fecha > b.fecha) {
+                              return 1;
+                            }
+
+                            if (a.fecha < b.fecha) {
+                              return -1;
+                            }
+
+                            return 0;
+                          });
+                        } else {
+                          this.comparar.find(esCliente).day.push({
+                            d: cli.d,
+                            nombre: cli.nombre,
+                            dato: [
+                              {
+                                fecha: fecha.date,
+                                datos: cli
+                              }
+                            ]
+                          });
+                        }
+                      }
                     }
                   }
                 }

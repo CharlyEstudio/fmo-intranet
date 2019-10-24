@@ -90,9 +90,9 @@
 
           <tr>
 
-            <th>Dia</th>
+            <th>Cliente</th>
 
-            <th>Fecha</th>
+            <th></th>
 
           </tr>
 
@@ -102,11 +102,135 @@
 
           <tr *ngFor="let comp of comparar">
 
-            <td class="font-weight-bold">{{comp.dia}}</td>
+            <td class="font-weight-bold" width="60%">
 
-            <td>
+              <div class="row">
 
-              <table class="table table-sm stylish-table table-hover">
+                <div class="col-12">
+
+                  #{{comp.cliente}} {{comp.nombre}}
+
+                </div>
+
+                <div class="col-12 font-weight-bold">
+
+                  Asesor {{comp.asesor}}
+
+                </div>
+
+                <div class="col-12 font-weight-bold">
+
+                  Zona {{comp.zona}}
+
+                </div>
+
+                <div class="col-12">
+
+                  <table class="table table-sm">
+
+                    <thead>
+
+                      <tr>
+
+                        <th>Concepto</th>
+
+                        <th>Fecha</th>
+
+                        <th>Importe</th>
+
+                        <td></td>
+
+                      </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                      <tr>
+
+                        <td>Último Compra</td>
+
+                        <td>{{comp.fecultcom | date:'dd-MM-yy'}}</td>
+
+                        <td>{{comp.impoultcom | currency}}</td>
+
+                        <td>{{comp.diaultcom}}</td>
+
+                      </tr>
+
+                      <tr>
+
+                        <td>Último Abono</td>
+
+                        <td>{{comp.ultpag | date:'dd-MM-yy'}}</td>
+
+                        <td>{{comp.ultpag | currency}}</td>
+
+                        <td>{{comp.diaultpag}}</td>
+
+                      </tr>
+
+                      <tr>
+
+                        <td>Saldo</td>
+
+                        <td></td>
+
+                        <td [ngClass]="{'text-success': comp.saldo < comp.limite, 'text-warning': comp.saldo === comp.limite, 'text-danger': comp.saldo > comp.limite}">{{comp.saldo | currency}}</td>
+
+                        <td></td>
+
+                      </tr>
+
+                    </tbody>
+
+                  </table>
+
+                </div>
+
+                <!-- <div class="col-12">
+
+                  Última Compra el {{comp.ultcom | date:'dd-MM-yy'}}
+
+                </div> -->
+
+                <div class="col-12">
+
+                  Límite de Crédito {{comp.limite | currency}}
+
+                </div>
+
+                <!-- <div class="col-12">
+
+                  Importe Último Abono {{comp.ultpag | currency}}
+
+                </div> -->
+
+                <!-- <div class="col-12">
+
+                  Fecha Último Abono {{comp.fecultpag | date:'dd-MM-yy'}}
+
+                </div> -->
+
+                <!-- <div class="col-12">
+
+                  Día Último Abono {{comp.diaultpag}}
+
+                </div> -->
+
+                <!-- <div class="col-12 font-weight-bold" [ngClass]="{'text-success': comp.saldo < comp.limite, 'text-warning': comp.saldo === comp.limite, 'text-danger': comp.saldo > comp.limite}">
+
+                  Saldo {{comp.saldo | currency}}
+
+                </div> -->
+
+              </div>
+            
+            </td>
+
+            <td width="40%">
+
+              <table class="table table-sm">
 
                 <thead>
 
@@ -114,9 +238,7 @@
 
                     <th class="text-center">DIA</th>
 
-                    <th class="text-center">CLIENTES CON VENTA</th>
-
-                    <th class="text-center">TOTAL CLIENTES</th>
+                    <th class="text-center"></th>
 
                   </tr>
                   
@@ -124,13 +246,41 @@
 
                 <tbody>
 
-                  <tr *ngFor="let d of comp.dato">
+                  <tr *ngFor="let primera of comp.day">
 
-                    <td class="text-center">{{d.dia}}</td>
+                    <td class="text-center">{{primera.nombre}}</td>
 
-                    <td class="text-center">{{d.clivta}}</td>
+                    <td class="text-center">
 
-                    <td class="text-center">{{d.clidia}}</td>
+                      <table class="table table-sm stylish-table table-hover">
+
+                        <thead>
+        
+                          <tr>
+        
+                            <th class="text-center">FECHA</th>
+        
+                            <th class="text-center">PEDIDOS</th>
+        
+                          </tr>
+                          
+                        </thead>
+        
+                        <tbody>
+        
+                          <tr *ngFor="let segunda of primera.dato">
+        
+                            <td class="text-center">{{segunda.fecha | date:'dd-MM-yy'}}</td>
+        
+                            <td class="text-center" [ngClass]="{'text-danger font-weight-bold': segunda.datos.pedidos === 0}">{{segunda.datos.pedidos}}</td>
+        
+                          </tr>
+        
+                        </tbody>
+        
+                      </table>
+
+                    </td>
 
                   </tr>
 

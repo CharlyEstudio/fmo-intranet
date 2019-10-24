@@ -93,8 +93,8 @@ export class OficinaService {
     return this.http.get(this.url);
   }
 
-  verFacturasDia() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/oficina.php?opcion=1';
+  verFacturasDia(fecha: any) {
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/oficina.php?opcion=1&fecha=' + fecha;
 
     return this.http.get(this.url);
   }

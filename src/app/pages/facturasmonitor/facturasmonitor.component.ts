@@ -50,12 +50,16 @@ export class FacturasmonitorComponent implements OnInit {
   // }
 
   ngOnInit() {
+    this.actualizar();
+  }
+
+  actualizar() {
     this.obtenerFacturasDia();
     this.obtenerFacturasTrabajadasDia();
   }
 
   obtenerFacturasDia() {
-    this.oficinaService.verFacturasDia().subscribe((facturas: any) => {
+    this.oficinaService.verFacturasDia(this.herramientasService.fechaActual()).subscribe((facturas: any) => {
       this.facturas = [];
       this.pendientes = 0;
       for (const fac of facturas) {
@@ -114,6 +118,50 @@ export class FacturasmonitorComponent implements OnInit {
     } else {
       swal('Sin Factura', 'No ingreso niguna factura para trabajar.', 'error');
     }
+  }
+
+  buscar(fecha: any) {
+    this.oficinaService.verfacturasTrab(fecha).subscribe((trab: any) => {
+      if (trab.status) {
+        this.facturasTrab = trab.facturas;
+        this.trabajados = trab.facturas.length;
+        this.oficinaService.verFacturasDia(fecha).subscribe((facturas: any) => {
+          this.facturas = [];
+          this.pendientes = 0;
+          for (const fac of facturas) {
+            this.oficinaService.verfacturasTrabEspe(fac.NUMERO).subscribe((data: any) => {
+              if (!data.status) {
+                this.pendientes++;
+                this.facturas.push(fac);
+                this.facturas.sort((a, b) => {
+                  if (a.NUMERO > b.NUMERO) {
+                    return 1;
+                  }
+
+                  if (a.NUMERO < b.NUMERO) {
+                    return -1;
+                  }
+
+                  return 0;
+                });
+              }
+            });
+          }
+        });
+      } else {
+        swal('Sin Datos', 'No hay facturas trabajadas en esta fecha.', 'warning');
+      }
+    });
+  }
+
+  buscarFolio(folio: any) {
+    this.oficinaService.verfacturasTrabEspe(folio).subscribe((trab: any) => {
+      if (trab.status) {
+        this.facturasTrab = [];
+        this.facturasTrab.push(trab.factura);
+        this.trabajados = this.facturasTrab.length;
+      }
+    });
   }
 
 }

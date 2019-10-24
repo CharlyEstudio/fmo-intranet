@@ -10,7 +10,35 @@
 
   </div>
 
-  <div class="col-md-9 col-lg-9 col-sm-12"></div>
+  <div class="col-md-6 col-lg-6 col-sm-12">
+
+    <form class="form-inline">
+
+      <label class="mb-2 mr-sm-2" for="fechaIn">Por Fecha</label>
+
+      <label class="sr-only" for="fecha">Inicio</label>
+
+      <input #fecha name="fecha" type="date" class="form-control mb-2 mr-sm-2" id="fecha">
+    
+      <button type="button" class="btn btn-info mb-2 mr-sm-2" (click)="buscar(fecha.value)">Buscar</button>
+
+      <label class="mb-2 mr-sm-2" for="fechaIn">Por Folio</label>
+
+      <label class="sr-only" for="fecha">Folio</label>
+
+      <input #folio name="folio" type="number" class="form-control mb-2 mr-sm-2" id="folio">
+    
+      <button type="button" class="btn btn-info mb-2" (click)="buscarFolio(folio.value)">Buscar</button>
+
+    </form>
+
+  </div>
+
+  <div class="col-md-3 col-lg-3 col-sm-12">
+
+    <button type="button" class="btn btn-info mb-2" (click)="actualizar()">Limpiar</button>
+
+  </div>
 
   <div class="col-md-4 col-lg-4 col-sm-12">
 

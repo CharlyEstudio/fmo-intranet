@@ -18,7 +18,7 @@ export class HerramientasService {
 
     let mes;
 
-    if (h.getMonth() < 10) {
+    if ((h.getMonth() + 1) < 10) {
       mes = '0' + (h.getMonth() + 1);
     } else {
       mes = (h.getMonth() + 1);
@@ -66,7 +66,7 @@ export class HerramientasService {
 
     let mes;
 
-    if (h.getMonth() < 10) {
+    if ((h.getMonth() + 1) < 10) {
       mes = '0' + (h.getMonth() + 1);
     } else {
       mes = (h.getMonth() + 1);

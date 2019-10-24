@@ -52,7 +52,8 @@ import {
   PanelasesoresService,
   GarantiasService,
   ProductosService,
-  PedFacturadosService
+  PedFacturadosService,
+  DiasvtasService
   // NotificationService
 } from "./services.index";
 
@@ -112,7 +113,8 @@ import {
     PanelasesoresService,
     GarantiasService,
     ProductosService,
-    PedFacturadosService
+    PedFacturadosService,
+    DiasvtasService
     // Notificaciones
     // NotificationService
     // Magnitracking

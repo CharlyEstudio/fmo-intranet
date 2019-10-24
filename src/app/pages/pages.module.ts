@@ -126,6 +126,7 @@ import { PanelgarantiasComponent } from './panelgarantias/panelgarantias.compone
 import { BarraAvanceComponent } from '../components/barra-avance/barra-avance.component';
 import { SeguimientoComponent } from './seguimiento/seguimiento.component';
 import { FacturasmonitorComponent } from './facturasmonitor/facturasmonitor.component';
+import { DiasvtasComponent } from './diasvtas/diasvtas.component';
 
 @NgModule({
     declarations: [
@@ -230,7 +231,8 @@ import { FacturasmonitorComponent } from './facturasmonitor/facturasmonitor.comp
         PanelgarantiasComponent,
         BarraAvanceComponent,
         SeguimientoComponent,
-        FacturasmonitorComponent
+        FacturasmonitorComponent,
+        DiasvtasComponent
     ],
     exports: [
         DashborarDirComponent,

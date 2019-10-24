@@ -46,6 +46,7 @@ export { PanelasesoresService } from './panelasesores/panelasesores.service';
 export { GarantiasService } from "./garantias/garantias.service";
 export { ProductosService } from "./productos/productos.service";
 export { PedFacturadosService } from '../components/ped-facturados/ped-facturados.service';
+export { DiasvtasService } from './diasvtas/diasvtas.service';
 
 // Servicios de Google
 export { GoogleService } from "./googleconsole/google.service";

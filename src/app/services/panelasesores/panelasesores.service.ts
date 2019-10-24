@@ -34,8 +34,14 @@ export class PanelasesoresService {
     return this.http.get(url);
   }
 
-  obtenerCalificacion(perid: any, fecha: any) {
-    const url = URL_EXTERNO + ':' + PUERTO_SERVER + '/api/seguimiento.php?opcion=2&perid=' + perid + '&fecha=' + fecha;
+  obtenerCalificacion(perid: any, fechaIn: any, fechaOut: any, vtaMin: any, cliMin: any, rango: boolean) {
+    const url = URL_EXTERNO + ':' + PUERTO_SERVER + '/api/seguimiento.php?opcion=2&perid=' + perid + '&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&vtaMin=' + vtaMin + '&cliMin=' + cliMin + '&rango=' + rango;
+
+    return this.http.get(url);
+  }
+
+  obtenerImporteVtaMinDiaria() {
+    const url = URL_EXTERNO + ':' + PUERTO_SERVER + '/api/panelasesores.php?opcion=0';
 
     return this.http.get(url);
   }

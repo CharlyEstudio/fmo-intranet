@@ -83,6 +83,7 @@ import { ActividadesDevelopersComponent } from './actividades-developers/activid
 import { PanelgarantiasComponent } from './panelgarantias/panelgarantias.component';
 import { SeguimientoComponent } from './seguimiento/seguimiento.component';
 import { FacturasmonitorComponent } from './facturasmonitor/facturasmonitor.component';
+import { DiasvtasComponent } from './diasvtas/diasvtas.component';
 
 const pageRoutes: Routes = [
     {
@@ -482,6 +483,16 @@ const pageRoutes: Routes = [
                 }
     },
     // Diarios
+    {
+        path: 'diasvtas',
+        component: DiasvtasComponent,
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Comparación de Ventas por Día',
+                    name: 'description'
+                }
+    },
     {
         path: 'diarios',
         component: DiariosComponent,

@@ -1,0 +1,23 @@
+<form #f="ngForm" class="form-inline" (ngSubmit)="obtener(f)">
+
+  <div class="form-group">
+
+    <label for="fechaIn" class="mr-sm-2">Fecha Inicial</label>
+
+    <input ngModel type="date" name="fechaIn" id="fechaIn" class="form-control mb-2 mr-sm-2">
+    
+  </div>
+
+  <div class="form-group">
+
+    <label for="fechaOut" class="mr-sm-2">Fecha Final</label>
+
+    <input ngModel type="date" name="fechaOut" id="fechaOut" class="form-control mb-2 mr-sm-2">
+
+  </div>
+
+  <button type="submit" class="btn btn-info mb-2" [ngClass]="{'mr-sm-2': data.length > 0}">Obtener</button>
+
+  <button type="button" (click)="descargar()" class="btn btn-success mb-2" *ngIf="data.length > 0">Descargar</button>
+
+</form>

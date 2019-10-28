@@ -53,7 +53,8 @@ import {
   GarantiasService,
   ProductosService,
   PedFacturadosService,
-  DiasvtasService
+  DiasvtasService,
+  ChoferService
   // NotificationService
 } from "./services.index";
 
@@ -114,7 +115,8 @@ import {
     GarantiasService,
     ProductosService,
     PedFacturadosService,
-    DiasvtasService
+    DiasvtasService,
+    ChoferService
     // Notificaciones
     // NotificationService
     // Magnitracking

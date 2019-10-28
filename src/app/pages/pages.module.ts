@@ -127,6 +127,7 @@ import { BarraAvanceComponent } from '../components/barra-avance/barra-avance.co
 import { SeguimientoComponent } from './seguimiento/seguimiento.component';
 import { FacturasmonitorComponent } from './facturasmonitor/facturasmonitor.component';
 import { DiasvtasComponent } from './diasvtas/diasvtas.component';
+import { ComisioneschoferesComponent } from './comisioneschoferes/comisioneschoferes.component';
 
 @NgModule({
     declarations: [
@@ -232,7 +233,8 @@ import { DiasvtasComponent } from './diasvtas/diasvtas.component';
         BarraAvanceComponent,
         SeguimientoComponent,
         FacturasmonitorComponent,
-        DiasvtasComponent
+        DiasvtasComponent,
+        ComisioneschoferesComponent
     ],
     exports: [
         DashborarDirComponent,

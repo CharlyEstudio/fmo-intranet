@@ -47,6 +47,7 @@ export { GarantiasService } from "./garantias/garantias.service";
 export { ProductosService } from "./productos/productos.service";
 export { PedFacturadosService } from '../components/ped-facturados/ped-facturados.service';
 export { DiasvtasService } from './diasvtas/diasvtas.service';
+export { ChoferService } from "./choferes/chofer.service";
 
 // Servicios de Google
 export { GoogleService } from "./googleconsole/google.service";

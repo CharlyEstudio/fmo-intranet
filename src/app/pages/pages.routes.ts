@@ -84,6 +84,7 @@ import { PanelgarantiasComponent } from './panelgarantias/panelgarantias.compone
 import { SeguimientoComponent } from './seguimiento/seguimiento.component';
 import { FacturasmonitorComponent } from './facturasmonitor/facturasmonitor.component';
 import { DiasvtasComponent } from './diasvtas/diasvtas.component';
+import { ComisioneschoferesComponent } from './comisioneschoferes/comisioneschoferes.component';
 
 const pageRoutes: Routes = [
     {
@@ -799,6 +800,17 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Asignación de Actividades para Developers',
+                    name: 'description'
+                }
+    },
+    // Choferes
+    {
+        path: 'comisionChoferes',
+        component: ComisioneschoferesComponent,
+        canActivate: [],
+        data:
+                {
+                    titulo: 'Generar Comisiones a Chóferes',
                     name: 'description'
                 }
     },

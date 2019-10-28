@@ -20,4 +20,10 @@ export class DiasvtasService {
     return this.http.get(url);
   }
 
+  obtenerClientesSinMov(fechaIn: any, fechaOut: any, perid: any) {
+    const url = 'https://ferremayoristas.com.mx/api/compararvts.php?opcion=3&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&perid=' + perid;
+
+    return this.http.get(url);
+  }
+
 }

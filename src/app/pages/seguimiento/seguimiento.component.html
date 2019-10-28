@@ -2,21 +2,11 @@
 
   <div class="col-md-12 col-lg-12 mb-3">
 
-    <form #f="ngForm" class="form-inline" (ngSubmit)="solicitar(f)">
-
-      <!-- <label class="sr-only" for="fechaIn">Name</label>
-
-      <input ngModel name="fechaIn" type="date" class="form-control mb-2 mr-sm-2" id="fechaIn">
-      
-      <label class="sr-only" for="fechaOut">Username</label>
-
-      <input ngModel name="fechaOut" type="date" class="form-control mb-2 mr-sm-2" id="fechaOut">
-    
-      <button type="submit" class="btn btn-primary mb-2 mr-sm-2">Solicitar</button> -->
+    <div class="form-group">
 
       <button type="button" class="btn btn-info mb-2" (click)="actualizar()">Actualizar</button>
 
-    </form>
+    </div>
 
   </div>
 
@@ -38,25 +28,13 @@
 
         <thead>
 
-          <tr>
+          <!-- <tr>
 
             <th colspan="2"></th>
 
-            <th class="text-center" colspan="6">PONDERACION</th>
+            <th class="text-center" colspan="4">PONDERACION</th>
 
-          </tr>
-
-          <tr>
-
-            <th colspan="2"></th>
-
-            <th class="text-center" colspan="2">4 PTS</th>
-
-            <th colspan="2">1 PT</th>
-
-            <th colspan="2">5 PTS</th>
-
-          </tr>
+          </tr> -->
 
           <tr>
 
@@ -66,15 +44,23 @@
 
             <th class="text-center">Clientes</th>
 
-            <th class="text-center">Meta</th>
-
             <th>Ventas</th>
-
-            <th>Meta</th>
 
             <th>Cobranza</th>
 
             <th>Meta</th>
+
+          </tr>
+
+          <tr>
+
+            <th colspan="2"></th>
+
+            <th class="text-center">{{cliMin}}</th>
+
+            <th>{{vtaMin | currency}}</th>
+
+            <th colspan="2"></th>
 
           </tr>
 
@@ -90,37 +76,29 @@
 
             <td class="font-weight-bold text-center" [ngClass]="{'text-danger': (mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) < 6}">{{(mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) | number:'0.2'}}</td>
             
-            <!-- <td class="font-weight-bold text-center" *ngIf="mv.OBJ_COB > mv.COBRADO" [ngClass]="{'text-danger': (mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) < 6}">{{(mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) | number:'0.2'}}</td>
-
-            <td class="font-weight-bold text-center" *ngIf="mv.COBRADO > mv.OBJ_COB" [ngClass]="{'text-danger': (mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) < 6}">{{(mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + 5) | number:'0.2'}}</td> -->
-
             <td class="font-weight-bold text-center">{{mv.CLIENTES}}</td>
-
-            <td class="font-weight-bold text-center">{{cliMin}}</td>
 
             <td class="font-weight-bold">{{mv.VENTAS | currency}}</td>
 
-            <td class="font-weight-bold">{{vtaMin | currency}}</td>
-
             <td class="font-weight-bold">{{mv.COBRADO | currency}}</td>
 
-            <td class="font-weight-bold">{{mv.SALDO | currency}}</td>
+            <td class="font-weight-bold">{{mv.OBJ_COB | currency}}</td>
 
           </tr>
 
           <tr class="bg-info text-white">
 
+            <th colspan="2">PONDERACION</th>
+
+            <th class="text-center">4 PTS</th>
+
+            <th>1 PT</th>
+
+            <th>5 PTS</th>
+
+            <th class="text-center"></th>
+
             <th></th>
-
-            <th>{{importeTotal2 | currency}}</th>
-
-            <th>{{importeFalta2 | currency}}</th>
-
-            <th class="text-center">{{clienteTotal2}}</th>
-
-            <th class="text-center">{{clienteFalta2}}</th>
-
-            <th colspan="3"></th>
 
           </tr>
 
@@ -149,25 +127,13 @@
 
         <thead>
 
-          <tr>
+          <!-- <tr>
 
             <th colspan="2"></th>
 
-            <th class="text-center" colspan="6">PONDERACION</th>
+            <th class="text-center" colspan="4">PONDERACION</th>
 
-          </tr>
-
-          <tr>
-
-            <th colspan="2"></th>
-
-            <th class="text-center" colspan="2">4 PTS</th>
-
-            <th colspan="2">1 PT</th>
-
-            <th colspan="2">5 PTS</th>
-
-          </tr>
+          </tr> -->
 
           <tr>
 
@@ -176,16 +142,24 @@
             <th class="text-center">Calificacion</th>
 
             <th class="text-center">Clientes</th>
-            
-            <th class="text-center">Meta</th>
 
             <th>Ventas</th>
-
-            <th>Meta</th>
 
             <th>Cobranza</th>
 
             <th>Meta</th>
+
+          </tr>
+
+          <tr>
+
+            <th colspan="2"></th>
+
+            <th class="text-center">{{cliMin}}</th>
+
+            <th>{{vtaMin | currency}}</th>
+
+            <th colspan="2"></th>
 
           </tr>
 
@@ -200,37 +174,30 @@
             </td>
             
             <td class="font-weight-bold text-center" [ngClass]="{'text-danger': (mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) < 6}">{{(mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) | number:'0.2'}}</td>
-            <!-- <td class="font-weight-bold text-center" *ngIf="mv.OBJ_COB > mv.COBRADO" [ngClass]="{'text-danger': (mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) < 6}">{{(mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) | number:'0.2'}}</td>
-
-            <td class="font-weight-bold text-center" *ngIf="mv.COBRADO > mv.OBJ_COB" [ngClass]="{'text-danger': (mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) < 6}">{{(mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + 5) | number:'0.2'}}</td> -->
 
             <td class="font-weight-bold text-center">{{mv.CLIENTES}}</td>
 
-            <td class="font-weight-bold text-center">{{cliMin}}</td>
-
             <td class="font-weight-bold">{{mv.VENTAS | currency}}</td>
-
-            <td class="font-weight-bold">{{vtaMin | currency}}</td>
 
             <td class="font-weight-bold">{{mv.COBRADO | currency}}</td>
 
-            <td class="font-weight-bold">{{mv.SALDO | currency}}</td>
+            <td class="font-weight-bold">{{mv.OBJ_COB | currency}}</td>
 
           </tr>
 
           <tr class="bg-info text-white">
 
+            <th colspan="2">PODENRACION</th>
+
+            <th class="text-center">4 PTS</th>
+
+            <th>1 PT</th>
+
+            <th>5 PTS</th>
+
+            <th class="text-center"></th>
+
             <th></th>
-
-            <th>{{importeTotal2 | currency}}</th>
-
-            <th>{{importeFalta2 | currency}}</th>
-
-            <th class="text-center">{{clienteTotal2}}</th>
-
-            <th class="text-center">{{clienteFalta2}}</th>
-
-            <th colspan="3"></th>
 
           </tr>
 
@@ -345,9 +312,6 @@
                 <td class="text-center">{{asesor.PTS_OBJ_COBRANZA  | number:'0.6'}}</td>
 
                 <td class="text-center">{{asesor.TRABAJADO_COB | number:'0.2'}}</td>
-                <!-- <td class="text-center" *ngIf="asesor.OBJ_COB > asesor.COBRADO">{{asesor.TRABAJADO_COB | number:'0.2'}}</td>
-
-                <td class="text-center" *ngIf="asesor.COBRADO > asesor.OBJ_COB">{{5 | number:'0.2'}}</td> -->
 
               </tr>
 
@@ -358,18 +322,12 @@
                 <th colspan="5"></th>
 
                 <th class="text-center">{{(asesor.TRABAJADO_CLI + asesor.TRABAJADO_VEN + asesor.TRABAJADO_COB) | number:'0.2'}}</th>
-                <!-- <th class="text-center" *ngIf="asesor.OBJ_COB > asesor.COBRADO">{{(asesor.TRABAJADO_CLI + asesor.TRABAJADO_VEN + asesor.TRABAJADO_COB) | number:'0.2'}}</th>
-
-                <th class="text-center" *ngIf="asesor.COBRADO > asesor.OBJ_COB">{{(asesor.TRABAJADO_CLI + asesor.TRABAJADO_VEN + 5) | number:'0.2'}}</th> -->
 
               </tr>
 
               <tr class="bg-info text-white">
 
                 <th class="text-center font-20" colspan="7">{{(asesor.TRABAJADO_CLI + asesor.TRABAJADO_VEN + asesor.TRABAJADO_COB) | number:'0.2'}}</th>
-                <!-- <th class="text-center font-20" colspan="7" *ngIf="asesor.OBJ_COB > asesor.COBRADO">{{(asesor.TRABAJADO_CLI + asesor.TRABAJADO_VEN + asesor.TRABAJADO_COB) | number:'0.2'}}</th>
-
-                <th class="text-center font-20" colspan="7" *ngIf="asesor.COBRADO > asesor.OBJ_COB">{{(asesor.TRABAJADO_CLI + asesor.TRABAJADO_VEN + 5) | number:'0.2'}}</th> -->
 
               </tr>
 

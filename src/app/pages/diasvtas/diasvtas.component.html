@@ -4,29 +4,83 @@
 
     <div class="form-group">
 
-      <select [(ngModel)]="asesor" name="asesor" id="asesor" class="form-control">
+      <label for="tipo">Tipo de Consulta</label>
 
-        <option value="0">Seleccione un asesor</option>
+      <select [(ngModel)]="tipo" name="tipo" id="tipo" class="form-control" (change)="selecionar()">
 
-        <option [ngValue]="ase" *ngFor="let ase of asesores">{{ase.nombre}}</option>
+        <option value="0">Seleccione un tipo de consulta</option>
+
+        <option value="1">Por Día</option>
+
+        <option value="2">Sin Movimiento</option>
 
       </select>
 
     </div>
 
-    <div class="form-group">
+    <div class="form-group" *ngIf="porDia">
+
+      <label for="asesor">Asesor</label>
+
+      <select [(ngModel)]="asesor" name="asesor" id="asesor" class="form-control">
+
+        <option value="0">Seleccione un asesor</option>
+
+        <option [ngValue]="ase" *ngFor="let ase of asesores">{{ase.NOMBRE}}</option>
+
+      </select>
+
+    </div>
+
+    <div class="form-group" *ngIf="sinMovimiento">
+
+      <label for="asesor">Asesor</label>
+
+      <select [(ngModel)]="asesor" name="asesor" id="asesor" class="form-control">
+
+        <option value="0">Seleccione un asesor</option>
+
+        <option [ngValue]="ase" *ngFor="let ase of asesores">{{ase.NOMBRE}}</option>
+
+      </select>
+
+    </div>
+
+    <div class="form-group" *ngIf="porDia">
+
+      <label for="fechaIn">Fecha Inicial</label>
 
       <input #fechaIn type="date" name="fechaIn" id="fechaIn" class="form-control">
 
     </div>
 
-    <div class="form-group">
+    <div class="form-group" *ngIf="porDia">
+
+      <label for="fechaOut">Fecha Final</label>
 
       <input #fechaOut type="date" name="fechaOut" id="fechaOut" class="form-control">
 
     </div>
 
-    <div class="form-group">
+    <div class="form-group" *ngIf="sinMovimiento">
+
+      <label for="fechaIn">Fecha Inicial</label>
+
+      <input #fechaIn type="date" name="fechaIn" id="fechaIn" class="form-control">
+
+    </div>
+
+    <div class="form-group" *ngIf="sinMovimiento">
+
+      <label for="fechaOut">Fecha Final</label>
+
+      <input #fechaOut type="date" name="fechaOut" id="fechaOut" class="form-control">
+
+    </div>
+
+    <div class="form-group" *ngIf="porDia">
+
+      <label for="fechaOut">Seleccione Día de Semana</label>
 
       <div class="form-check form-check">
 
@@ -70,19 +124,27 @@
 
     </div>
 
-    <button type="button" class="btn btn-info" (click)="solicitar()">SOLICITAR</button>
+    <button type="button" class="btn btn-info" (click)="solicitar()" *ngIf="porDia">SOLICITAR</button>
+
+    <button type="button" class="btn btn-danger" (click)="solicitarSinMov()" *ngIf="sinMovimiento">SOLICITAR</button>
 
   </div>
 
-  <div class="col-md-10 col-lg-10 col-sm-12" *ngIf="comparar.length === 0">
+  <div class="col-md-10 col-lg-10 col-sm-12" *ngIf="porDia && comparar.length === 0">
 
     <h3>Sin datos seleccionados</h3>
     
   </div>
 
-  <div class="col-md-10 col-lg-10 col-sm-12" *ngIf="comparar.length > 0">
+  <div class="col-md-10 col-lg-10 col-sm-12" *ngIf="sinMovimiento && sinmovimientos.length === 0">
 
-    <div class="table-responsive">
+    <h3>Sin datos seleccionados</h3>
+    
+  </div>
+
+  <div class="col-md-10 col-lg-10 col-sm-12">
+
+    <div class="table-responsive" *ngIf="porDia && comparar.length > 0">
 
       <table class="table table-sm stylish-table table-hover">
 
@@ -104,23 +166,35 @@
 
             <td class="font-weight-bold" width="60%">
 
-              <div class="row">
+              <div class="row my-4">
 
                 <div class="col-12">
 
-                  #{{comp.cliente}} {{comp.nombre}}
+                  NÚMERO DE CLIENTE {{comp.cliente}}
+
+                </div>
+
+                <div class="col-12">
+
+                  CLIENTE {{comp.nombre}}
 
                 </div>
 
                 <div class="col-12 font-weight-bold">
 
-                  Asesor {{comp.asesor}}
+                  ASESOR {{comp.asesor}}
 
                 </div>
 
                 <div class="col-12 font-weight-bold">
 
                   Zona {{comp.zona}}
+
+                </div>
+
+                <div class="col-12 font-weight-bold mb-1">
+
+                  Semanas Sin Pedidos <span class="badge" [ngClass]="{'badge-danger': comp.pedidos > 0, 'badge-success': comp.pedidos === 0}">{{comp.pedidos}}</span>
 
                 </div>
 
@@ -162,7 +236,7 @@
 
                         <td>Último Abono</td>
 
-                        <td>{{comp.ultpag | date:'dd-MM-yy'}}</td>
+                        <td>{{comp.fecultpag | date:'dd-MM-yy'}}</td>
 
                         <td>{{comp.ultpag | currency}}</td>
 
@@ -188,41 +262,11 @@
 
                 </div>
 
-                <!-- <div class="col-12">
-
-                  Última Compra el {{comp.ultcom | date:'dd-MM-yy'}}
-
-                </div> -->
-
                 <div class="col-12">
 
-                  Límite de Crédito {{comp.limite | currency}}
+                  Límite de Crédito <span class="text-danger">{{comp.limite | currency}}</span>
 
                 </div>
-
-                <!-- <div class="col-12">
-
-                  Importe Último Abono {{comp.ultpag | currency}}
-
-                </div> -->
-
-                <!-- <div class="col-12">
-
-                  Fecha Último Abono {{comp.fecultpag | date:'dd-MM-yy'}}
-
-                </div> -->
-
-                <!-- <div class="col-12">
-
-                  Día Último Abono {{comp.diaultpag}}
-
-                </div> -->
-
-                <!-- <div class="col-12 font-weight-bold" [ngClass]="{'text-success': comp.saldo < comp.limite, 'text-warning': comp.saldo === comp.limite, 'text-danger': comp.saldo > comp.limite}">
-
-                  Saldo {{comp.saldo | currency}}
-
-                </div> -->
 
               </div>
             
@@ -238,7 +282,7 @@
 
                     <th class="text-center">DIA</th>
 
-                    <th class="text-center"></th>
+                    <th class="text-center">SEMANAS</th>
 
                   </tr>
                   
@@ -256,7 +300,15 @@
 
                         <thead>
         
+                          <!-- <tr>
+        
+                            <th class="text-center" colspan="2">{{primera.nombre}}</th>
+        
+                          </tr> -->
+
                           <tr>
+
+                            <th class="text-center">#</th>
         
                             <th class="text-center">FECHA</th>
         
@@ -268,7 +320,9 @@
         
                         <tbody>
         
-                          <tr *ngFor="let segunda of primera.dato">
+                          <tr *ngFor="let segunda of primera.dato, let i = index">
+
+                            <td class="text-center">{{(i + 1)}}</td>
         
                             <td class="text-center">{{segunda.fecha | date:'dd-MM-yy'}}</td>
         
@@ -281,6 +335,86 @@
                       </table>
 
                     </td>
+
+                  </tr>
+
+                </tbody>
+
+              </table>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <div class="table-responsive" *ngIf="sinMovimiento && sinmovimientos.length > 0">
+
+      <h3>{{vendedor}}</h3>
+
+      <table class="table table-sm stylish-table table-hover">
+
+        <thead>
+
+          <tr>
+
+            <th>DIAS</th>
+
+            <th>CLIENTES</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let dias of sinmovimientos">
+
+            <td>{{dias.dia}}</td>
+
+            <td>
+
+              <table class="table table-sm">
+
+                <thead>
+
+                  <tr>
+
+                    <th>NUMERO</th>
+
+                    <th>NOMBRE</th>
+
+                    <th>ULTIMA COMPRA</th>
+
+                    <th>ULTIMO ABONO</th>
+
+                    <th>SALDO</th>
+
+                    <th>LINEA</th>
+
+                  </tr>
+
+                </thead>
+
+                <tbody>
+
+                  <tr *ngFor="let cli of dias.clientes">
+
+                    <td>{{cli.numero}}</td>
+
+                    <td>{{cli.nombre}}</td>
+
+                    <td>{{cli.ultcom | date:'dd-MM-yy'}}</td>
+
+                    <td>{{cli.ultpag | date:'dd-MM-yy'}}</td>
+
+                    <td>{{cli.saldo | currency}}</td>
+
+                    <td>{{cli.limite | currency}}</td>
 
                   </tr>
 

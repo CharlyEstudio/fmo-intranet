@@ -157,6 +157,7 @@ export class FacturasmonitorComponent implements OnInit {
   buscarFolio(folio: any) {
     this.oficinaService.verfacturasTrabEspe(folio).subscribe((trab: any) => {
       if (trab.status) {
+        console.log(trab);
         this.facturasTrab = [];
         this.facturasTrab.push(trab.factura);
         this.trabajados = this.facturasTrab.length;

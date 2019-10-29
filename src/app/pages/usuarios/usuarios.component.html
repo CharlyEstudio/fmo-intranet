@@ -78,6 +78,8 @@
 
                                 <th>On/Off</th>
 
+                                <th>LatLng</th>
+
                                 <th></th>
 
                             </tr>
@@ -181,6 +183,16 @@
 
                                 </td>
 
+                                <td width="5%">
+
+                                    <button class="btn btn-info" href="#modalFolio" data-dismiss="modal" data-toggle="modal" (click)="openPosition(usuario)">
+
+                                        <i class="mdi mdi-google-maps"></i>
+
+                                    </button>
+
+                                </td>
+
                                 <td>
 
                                     <button (click)="guardarUsuario( usuario )" class="btn btn-primary">
@@ -218,6 +230,32 @@
                 </button>
 
             </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div id="modalFolio" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalFolio" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg">
+
+        <div class="modal-content p-t-20 p-b-20 p-l-20 p-r-20">
+
+            <div class="modal-header">
+
+                <h5 class="p-b-10 p-t-10">Posición de <b>{{ nom_asesor }}</b></h5>
+
+                <button type="button" class="close" data-dismiss="modal" id="cerrarModalBusq" aria-label="Close">
+        
+                    <span aria-hidden="true">&times;</span>
+        
+                </button>
+
+            </div>
+
+            <div class="modal-body"></div>
 
         </div>
 

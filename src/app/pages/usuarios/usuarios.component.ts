@@ -15,6 +15,10 @@ export class UsuariosComponent implements OnInit {
 
   usuarios: Usuario[] = [];
 
+  nom_asesor: any;
+  id_asesor: any;
+  idFerrum_asesor: any;
+
   idFerrum: number = 0;
 
   serie: number = 0;
@@ -30,7 +34,11 @@ export class UsuariosComponent implements OnInit {
   constructor(
     private _webSocket: WebsocketService,
     public _usuarioService: UsuarioService,
-    public _modalUpLoadService: ModalUploadService) { }
+    public _modalUpLoadService: ModalUploadService) {
+      this._webSocket.escuchar('movil-aqui-estoy').subscribe((aqui: any) => {
+        console.log(aqui);
+      });
+    }
 
   ngOnInit() {
     this.cargarUsuarios();
@@ -115,6 +123,14 @@ export class UsuariosComponent implements OnInit {
           this._webSocket.acciones('usuario-cambio', usuario);
         }
       });
+  }
+
+  openPosition(usuario: Usuario) {
+    console.log(usuario);
+    this.nom_asesor = usuario.nombre;
+    this.id_asesor = usuario._id;
+    this.idFerrum_asesor = usuario.idFerrum;
+    this._webSocket.acciones('movil-donde-estas', usuario);
   }
 
 }

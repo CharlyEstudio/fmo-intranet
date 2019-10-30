@@ -99,8 +99,8 @@ export class FacturasmonitorComponent implements OnInit {
         if (!trab.status) {
           for (const fac of this.facturas) {
             if (Number(this.factura.nativeElement.value) === fac.NUMERO) {
-              this.oficinaService.guardarFacturaTrab(fac, this.herramientasService.fechaActual(), this.herramientasService.horaActual(), this.usuarioService.usuario._id).subscribe((trab: any) => {
-                if (trab.status) {
+              this.oficinaService.guardarFacturaTrab(fac, this.herramientasService.fechaActual(), this.herramientasService.horaActual(), this.usuarioService.usuario._id).subscribe((trabaj: any) => {
+                if (trabaj.status) {
                   this.factura.nativeElement.value = '';
                   this.factura.nativeElement.focus();
                   this.obtenerFacturasDia();

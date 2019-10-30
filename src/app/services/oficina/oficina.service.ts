@@ -110,6 +110,7 @@ export class OficinaService {
       horaTrab,
       datos.TOTAL,
       datos.XIMPRESION,
+      datos.DIACREDITO,
       id
     );
     this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/monitorfactura';

@@ -154,10 +154,11 @@ export class EdoCtaComponent implements OnInit {
 
               let saldo;
               let cargo;
-              let index;
+              // let index;
 
               if (this.datos.find(esFolio)) {
-                const index = i - 1;
+                // const index = i - 1;
+                let index = i - 1;
                 cargo = this.datos[index].SALDO;
               } else {
                 cargo = edocta[i].CARGO;

@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import * as _swal from 'sweetalert';
 import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
@@ -6,7 +7,6 @@ const swal: SweetAlert = _swal as any;
 
 // Servicios
 import { DiasvtasService, DiariosService } from '../../services/services.index';
-import { UsuarioService } from '../../services/usuario/usuario.service';
 
 @Component({
   selector: 'app-diasvtas',
@@ -32,11 +32,14 @@ export class DiasvtasComponent implements OnInit {
   tipo: any = '0';
   total: number = 0;
 
+  verPDF: any = '';
+
   varios: boolean = false;
   porDia: boolean = false;
   sinMovimiento: boolean = false;
 
   constructor(
+    public sanitizer: DomSanitizer,
     private diasVtasService: DiasvtasService,
     private _diariosService: DiariosService
   ) { }
@@ -49,6 +52,9 @@ export class DiasvtasComponent implements OnInit {
   }
 
   selecionar() {
+    this.comparar = [];
+    this.sinmovimientos = [];
+    this.verPDF = '';
     if (this.tipo === '1') {
       this.sinMovimiento = false;
       this.porDia = true;
@@ -196,7 +202,6 @@ export class DiasvtasComponent implements OnInit {
             }
           }
         });
-        console.log(this.comparar);
       } else {
         contar++;
         if (contar === 5) {
@@ -205,105 +210,6 @@ export class DiasvtasComponent implements OnInit {
       }
     }
   }
-
-  /*solicitarSinMov() {
-    if (this.asesor.idFerrum === undefined || this.asesor.idFerrum === '0') {
-      swal('Sin Asesor', 'Se requiere seleccionar un asesor.', 'error');
-      return;
-    }
-
-    if (this.fechaIn.nativeElement.value === '') {
-      swal('Sin Fecha Inicial', 'Se requiere seleccionar fecha inicial.', 'error');
-      return;
-    }
-
-    if (this.fechaOut.nativeElement.value === '') {
-      swal('Sin Fecha Final', 'Se requiere seleccionar fecha final.', 'error');
-      return;
-    }
-
-    const dias = [];
-    this.comparar = [];
-    dias.push(
-      {dia: 2, nombre: 'Lunes'}
-    );
-    dias.push(
-      {dia: 3, nombre: 'Martes'}
-    );
-    dias.push(
-      {dia: 4, nombre: 'Miercoles'}
-    );
-    dias.push(
-      {dia: 5, nombre: 'Jueves'}
-    );
-    dias.push(
-      {dia: 6, nombre: 'Viernes'}
-    );
-    const reporte = [];
-    for (const dia of dias) {
-      this.diasVtasService.obtenerFechaDias(this.fechaIn.nativeElement.value, this.fechaOut.nativeElement.value, dia.dia).subscribe((rangos: any) => {
-        for (const ran of rangos) {
-          if (ran.d === dia.dia) {
-            this.diasVtasService.obtenerClientesSinMov(ran.date, this.asesor.idFerrum).subscribe((sinmov: any) => {
-              if (this.vendedor === '') {
-                this.vendedor = sinmov[0].asesor;
-              }
-              const esDia = (d: any) => {
-                return d.d === ran.d
-              };
-
-              if (!reporte.find(esDia)) {
-                reporte.push(
-                  {
-                    d: ran.d,
-                    dia: dia.nombre,
-                    ultcom: dia.ultcom,
-                    ultpag: dia.ultpag,
-                    datos: [{
-                      fecha: ran.date,
-                      clientes: sinmov
-                    }]
-                  }
-                );
-                reporte.sort((a, b) => {
-                  if (a.d > b.d) {
-                    return 1;
-                  }
-
-                  if (a.d < b.d) {
-                    return -1;
-                  }
-
-                  return 0;
-                });
-              } else {
-                for (const ver of reporte) {
-                  if (ran.d === ver.d) {
-                    ver.datos.push({
-                      fecha: ran.date,
-                      clientes: sinmov
-                    });
-                    ver.datos.sort((a, b) => {
-                      if (a.fecha > b.fecha) {
-                        return 1;
-                      }
-
-                      if (a.fecha < b.fecha) {
-                        return -1;
-                      }
-
-                      return 0;
-                    });
-                  }
-                }
-              }
-            });
-          }
-        }
-      });
-    }
-    this.sinmovimientos = reporte;
-  }*/
 
   solicitarSinMov() {
     if (this.asesor.PERID === undefined || this.asesor.PERID === '0') {
@@ -322,7 +228,7 @@ export class DiasvtasComponent implements OnInit {
     }
 
     const dias = [];
-    this.comparar = [];
+    this.sinmovimientos = [];
     dias.push(
       {dia: 2, nombre: 'Lunes'}
     );
@@ -359,6 +265,15 @@ export class DiasvtasComponent implements OnInit {
         }
       }
       this.sinmovimientos = reporte;
+    });
+  }
+
+  descargar(dato: any, tipo: any, asesor: any) {
+    this.verPDF = '';
+    this.diasVtasService.crearPdf(dato, tipo, asesor).subscribe((resp: any) => {
+      if (resp !== '') {
+        this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/' + resp);
+      }
     });
   }
 

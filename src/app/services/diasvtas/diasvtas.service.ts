@@ -26,4 +26,10 @@ export class DiasvtasService {
     return this.http.get(url);
   }
 
+  crearPdf(datos: any, tipo: any, asesor: any) {
+    const url = 'https://ferremayoristas.com.mx/api/compararvts.php?opcion=4';
+
+    return this.http.post(url, {datos, tipo, asesor});
+  }
+
 }

@@ -128,6 +128,18 @@
 
     <button type="button" class="btn btn-danger" (click)="solicitarSinMov()" *ngIf="sinMovimiento">SOLICITAR</button>
 
+    <!-- <button type="button" class="btn btn-googleplus" (click)="descargar(comparar, 'POR DIA', vendedor)" *ngIf="comparar.length > 0">
+
+      <i class="mdi mdi-file-pdf"></i>
+
+    </button> -->
+
+    <button type="button" class="btn btn-googleplus" (click)="descargar(sinmovimientos, 'SIN MOVIMIENTOS', vendedor)" *ngIf="sinmovimientos.length > 0">
+
+      <i class="mdi mdi-file-pdf"></i>
+
+    </button>
+
   </div>
 
   <div class="col-md-10 col-lg-10 col-sm-12" *ngIf="porDia && comparar.length === 0">
@@ -431,6 +443,12 @@
       </table>
 
     </div>
+
+  </div>
+
+  <div class="col-12" *ngIf="verPDF !== ''">
+
+    <embed [src]="verPDF" type="application/pdf" width="100%" height="600">
 
   </div>
 

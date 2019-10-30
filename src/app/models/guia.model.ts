@@ -12,6 +12,7 @@ export class Guia {
         public hora: string,
         public clientes: number,
         public pdf: string,
+        public unidad: String,
         public _id?: string
     ) { }
 }

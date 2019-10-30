@@ -8,6 +8,7 @@ import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_SERVER, PUERTO_INT
 import { GuiasPartidas } from '../../models/guias.model';
 import { Guia } from '../../models/guia.model';
 import { Chofer } from '../../models/chofer.model';
+import { Unidades } from '../../models/unidades.model';
 import { Ruta } from '../../models/ruta.model';
 import { UsuarioService } from '../usuario/usuario.service';
 
@@ -265,7 +266,7 @@ export class GuiasService {
     return this.http.get( this.url );
   }
 
-  enviarPDFguia(guiaPar: any, guia: any, especiales: any, chofer: Chofer) {
+  enviarPDFguia(guiaPar: any, guia: any, especiales: any, chofer: Chofer, carro: Unidades) {
     // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL +
     //                       '/api/guias.php?opcion=3&guiaPar=' +
@@ -298,7 +299,7 @@ export class GuiasService {
     // return this.http.get(this.url);
     return this.http.post(
       this.url,
-      { guiaPar: guiaPar, guia: guia, especiales: especiales, chofer: chofer },
+      { guiaPar: guiaPar, guia: guia, especiales: especiales, chofer: chofer, unidad: carro },
       { headers: { 'content-Type': 'application/x-www-form-urlencoded' } }
     );
   }
@@ -412,6 +413,12 @@ export class GuiasService {
     this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/guias/actualizar/principal/' + id;
 
     return this.http.put( this.url, chofer );
+  }
+
+  obtenerUnidades() {
+    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/unidades';
+
+    return this.http.get(this.url);
   }
 
 }

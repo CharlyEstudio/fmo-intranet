@@ -24,6 +24,19 @@ export class ClientesService {
     return this.http.get( this.url );
   }
 
+  infoClienteGarantia( numero: any ) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_PETICION + '/api/clientes.php?opcion=15&numero=' + numero;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PETICION + '/api/clientes.php?opcion=15&numero=' + numero;
+    } else {
+      // tslint:disable-next-line:max-line-length
+      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=15&numero=' + numero;
+    }
+
+    return this.http.get( this.url );
+  }
+
   clienteCorreo(idFerrum: any) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_PETICION + '/api/clientes.php?opcion=10&clienteid=' + idFerrum;

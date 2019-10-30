@@ -227,8 +227,32 @@
                                 <label for="chofer">Chofer</label>
 
                                 <select name="chofer" class="form-control" [(ngModel)]="chf" (change)="obtenerChofer()">
+
+                                    <option value="0">Seleccione un chófer</option>
                             
                                     <option class="text-uppercase" [ngValue]="chofer" *ngFor="let chofer of choferes">{{ chofer.nombre }}</option>
+        
+                                </select>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div class="p-2 bd-highlight">
+
+                        <form>
+
+                            <div class="form-group">
+
+                                <label for="chofer">Vehículo</label>
+
+                                <select name="carro" class="form-control" [(ngModel)]="carro" (change)="obtenerUnidad()">
+
+                                    <option value="0">Seleccione una unidad</option>
+                            
+                                    <option class="text-uppercase" [ngValue]="car" *ngFor="let car of unidades">{{ car.PLACAS }}</option>
         
                                 </select>
 
@@ -247,6 +271,8 @@
                                 <label for="chofer">Verificador</label>
 
                                 <select name="verifica" class="form-control" [(ngModel)]="verifica" (change)="obtenerVerify()">
+
+                                        <option value="0">Seleccione un verificador</option>
                             
                                     <option class="text-uppercase" [ngValue]="verify" *ngFor="let verify of verificadores">
 
@@ -636,11 +662,22 @@
 
                             <tr>
 
+                                <th colspan="2"></th>
+
+                                <th colspan="2" class="text-center border border-bottom-0">Fecha</th>
+
+                                <th colspan="6"></th>
+                            </tr>
+
+                            <tr>
+
                                 <th class="text-center">#</th>
 
                                 <th class="text-center">Realizó</th>
 
-                                <th class="text-center">Fecha</th>
+                                <th class="text-center border border-bottom-0 border-top-0 border-right-0">FecCre</th>
+
+                                <th class="text-center border border-bottom-0 border-top-0 border-left-0">FecAsig</th>
 
                                 <th class="text-center">Hora</th>
 
@@ -667,6 +704,8 @@
                                 <td class="text-uppercase">{{ fol.usuario.nombre }}</td>
 
                                 <td>{{ fol.fecha | date: 'dd-MM-yyyy' }}</td>
+
+                                <td>{{ fol.fechaAsig | date: 'dd-MM-yyyy' }}</td>
 
                                 <td>{{ fol.hora }}</td>
 
@@ -773,8 +812,10 @@
                                 <h3 class="font-bold">Chofer {{ chofer }}</h3>
 
                                 <h5>Total {{ impo | currency }} / {{ cantidad | number }} Factura(s) | {{ fec | date }} {{ hora }} | Verificó {{ veri }}</h5>
-
+                                
                                 <p>Cajas: {{ cajas }}</p>
+
+                                <h5>Unidad: {{ unidad }} Placas: {{ placa }}</h5>
 
                             </div>
 

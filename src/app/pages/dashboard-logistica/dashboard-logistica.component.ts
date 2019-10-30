@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { NgForm } from '@angular/forms';
 
 // Servicios
-import { GuiasService, UsuarioService, WebsocketService, ChoferesService, HerramientasService } from '../../services/services.index';
+import { GuiasService, UsuarioService, WebsocketService, ChoferesService, HerramientasService, ClientesService } from '../../services/services.index';
 
 // Modelos
 import { GuiasPartidas } from '../../models/guias.model';
@@ -39,6 +39,9 @@ export class DashboardLogisticaComponent implements OnInit {
   usuario: Usuario;
   rutaEnviar: any[] = [];
 
+  // Vehículos
+  unidades: any[] = [];
+
   // folio: any;
   folios: any[] = [];
   choferes: any[] = [];
@@ -48,6 +51,7 @@ export class DashboardLogisticaComponent implements OnInit {
   nargde: any = '';
   narpeq: any = '';
   verifica: any = '0';
+  carro: any = '0';
   chf: any = '0';
   clientes: number = 0;
   // pedidos: GuiasPartidas;
@@ -91,6 +95,8 @@ export class DashboardLogisticaComponent implements OnInit {
   cli: any;
 
   /* Modal VER */
+  unidad: any = '';
+  placa: any = '';
   facturas: any[] = [];
   totalModal: number = 0;
 
@@ -105,6 +111,7 @@ export class DashboardLogisticaComponent implements OnInit {
   constructor(
     private _guiasServices: GuiasService,
     private _usuarioService: UsuarioService,
+    private _clienteService: ClientesService,
     private _choferService: ChoferesService,
     private _webSocket: WebsocketService,
     private _herramientas: HerramientasService,
@@ -114,6 +121,7 @@ export class DashboardLogisticaComponent implements OnInit {
     this.fecha = this._herramientas.fechaActual();
 
     this.dataSelect();
+    this.vehiculos();
 
     let guias = JSON.parse(localStorage.getItem('guia'));
     let especiales = JSON.parse(localStorage.getItem('especiales'));
@@ -161,16 +169,21 @@ export class DashboardLogisticaComponent implements OnInit {
         this.especiales = especiales;
       }
     }
-
-    // this._webSocket.escuchar('guias-watch').subscribe((datos: any) => {
-    //   if (!this.generar) {
-    //     this.verGuias();
-    //   }
-    // });
-
   }
 
   ngOnInit() {
+  }
+
+  vehiculos() {
+    this._guiasServices.obtenerUnidades().subscribe((cars: any) => {
+      if (cars.status) {
+        this.unidades = cars.carros;
+      }
+    });
+  }
+
+  obtenerUnidad() {
+    // console.log(this.carro);
   }
 
   dataSelect() {
@@ -316,7 +329,6 @@ export class DashboardLogisticaComponent implements OnInit {
     this.generar = true;
     this.sinDatos = false;
     const folio = Number(this.inputFolio.nativeElement.value);
-    // const fecBus = this.inputFecBusqueda.nativeElement.value;
     if (folio === 0) {
       swal('Sin Folio', 'No se ingreso folio para agregar a la guía', 'warning');
       return;
@@ -328,12 +340,6 @@ export class DashboardLogisticaComponent implements OnInit {
         this.inputFolio.nativeElement.value = '';
         return;
       }
-
-      // Cambiar estado de FALSE a TRUE a todos los documentos. TODO
-
-      // if (obtener.folios) {
-      //   this.asignar(obtener.folios, 'agregando');
-      // }
 
       let esFolio = (fac: any) => {
         return fac.folio === folio;
@@ -396,7 +402,6 @@ export class DashboardLogisticaComponent implements OnInit {
               this.folios.push(partidas[i]);
             }
 
-
             localStorage.setItem('guia', JSON.stringify(this.folios));
 
             this.obtener = true;
@@ -405,9 +410,127 @@ export class DashboardLogisticaComponent implements OnInit {
 
             this.inputFolio.nativeElement.value = '';
           } else {
-            this.sinDatos = true;
-            swal('Ninguna Factura', 'Este folio ' + folio + ' no tiene niguna factura relacionada.', 'error');
-            this.inputFolio.nativeElement.value = '';
+            // Aquí va la pregunta si es garantia
+            swal({
+              title: '¿Folio Garantía?',
+              text: 'El folio que ingreso no se encuentra en Ferrum, desea manejarlo como garantía?',
+              icon: "warning",
+              buttons: {
+                catch: {
+                  text: 'Cancelar',
+                  value: false
+                },
+                defeat: {
+                  text: 'Si',
+                  value: true
+                },
+              }
+            })
+            .then(( value ) => {
+              if (value) {
+                swal({
+                  title: "Agregando Garantía",
+                  text: 'Ingrese el No. de Cliente',
+                  icon: "success",
+                  buttons: {
+                    cancel: true,
+                    confirm: true
+                  },
+                  content: {
+                    element: "input",
+                    attributes: {
+                        placeholder: "Número de Cliente",
+                        type: "text",
+                    },
+                  },
+                })
+                .then(( numero ) => {
+                  if (!numero) {
+                    this.sinDatos = true;
+                    swal('Ninguna Factura', 'Este folio ' + folio + ' no tiene niguna factura relacionada.', 'error');
+                    this.inputFolio.nativeElement.value = '';
+                    return;
+                  };
+
+                  swal({
+                    title: "Agregando Garantía",
+                    text: 'Ingrese el importe de la Garantía',
+                    icon: "success",
+                    buttons: {
+                      cancel: true,
+                      confirm: true
+                    },
+                    content: {
+                      element: "input",
+                      attributes: {
+                          placeholder: "Importe",
+                          type: "number",
+                      },
+                    },
+                  })
+                  .then(( importe ) => {
+                    if (!importe) {
+                      this.sinDatos = true;
+                      swal('Ninguna Factura', 'Este folio ' + folio + ' no tiene niguna factura relacionada.', 'error');
+                      this.inputFolio.nativeElement.value = '';
+                      return;
+                    };
+
+                    this._clienteService.infoClienteGarantia(numero).subscribe((cli: any) => {
+                      if (cli.length === 0) {
+                        this.sinDatos = true;
+                        swal('Sin Cliente', 'Este número de cliente no existe.', 'error');
+                        this.inputFolio.nativeElement.value = '';
+                        return;
+                      }
+                      const ingresarFolio = {
+                        cerrado: 0,
+                        ciudad: cli[0].CIUDAD,
+                        clienteid: cli[0].CLIENTEID,
+                        colonia: cli[0].COLONIA,
+                        diavis: cli[0].DIAVIS,
+                        direccion: cli[0].DIRECCION,
+                        entregado: 0,
+                        estado: cli[0].ESTADO,
+                        folio: folio,
+                        lat: cli[0].LAT,
+                        lng: cli[0].LNG,
+                        nombre: cli[0].NOMBRE,
+                        numero: numero,
+                        perid: cli[0].VENDEDORID,
+                        total: Number(importe),
+                        vendedor: 'Victor Leal'
+                      };
+                      let esCliente = (cliente) => {
+                        return cliente.numero === ingresarFolio.numero;
+                      }
+
+                      if (!this.folios.find(esCliente)) {
+                        if (this.clientes === 0) {
+                          this.clientes = 1;
+                        } else {
+                          this.clientes += 1;
+                        }
+                      }
+                      localStorage.setItem('NumCli', String(this.clientes));
+                      this.folios.push(ingresarFolio);
+                      localStorage.setItem('guia', JSON.stringify(this.folios));
+
+                      this.obtener = true;
+                      this.generar = true;
+                      this.sinDatos = false;
+
+                      this.inputFolio.nativeElement.value = '';
+                      swal.stopLoading();
+                    });
+                  });
+                });
+              } else {
+                this.sinDatos = true;
+                swal('Ninguna Factura', 'Este folio ' + folio + ' no tiene niguna factura relacionada.', 'error');
+                this.inputFolio.nativeElement.value = '';
+              }
+            });
           }
 
         });
@@ -435,6 +558,11 @@ export class DashboardLogisticaComponent implements OnInit {
 
     if (this.verifica === '0') {
       swal('Sin Verificador', 'Seleccione un verificador para procesar.', 'error');
+      return;
+    }
+
+    if (this.carro === '0') {
+      swal('Sin Vehículo', 'Seleccione un vehículo para procesar.', 'error');
       return;
     }
 
@@ -467,8 +595,6 @@ export class DashboardLogisticaComponent implements OnInit {
     let anio = h.getFullYear();
     let fecha;
     let fechaAsig;
-
-    // Arreglar la fecha, debo de obligar que elabore la fecha en forma manual cuando sea viernes.TODO
 
     if (h.getHours() < 10) {
       hor = '0' + h.getHours();
@@ -549,10 +675,6 @@ export class DashboardLogisticaComponent implements OnInit {
 
         this.importe += this.folios[i].total;
         localStorage.setItem('importeGuia', String(this.importe));
-
-        // Este no ya que guardaba aparte los folios, queda inoperante
-        // this._guiasServices.procesarGuia(ped).subscribe( ( procesado: any ) => {});
-
       }
 
       let rutaArmar = [];
@@ -667,14 +789,15 @@ export class DashboardLogisticaComponent implements OnInit {
         fechaAsig: fechaAsig,
         hora: hora,
         pdf: pdf,
-        clientes: this.clientes
+        clientes: this.clientes,
+        unidad: this.carro._id
       };
 
       // Todo esto si
       // Guarda la guia de forma completa
       this._guiasServices.guardarGuia(this.guiaGuardar, this.chf).subscribe( ( guardado: any ) => {
         if (guardado.ok) {
-          // this._webSocket.acciones('guias-watch', guardado.guiasGuardado);
+          this._webSocket.acciones('guias-watch', guardado.guiasGuardado);
           swal({
             title: "Guia Procesada",
             text: 'Procesado Exitosamente'
@@ -685,11 +808,8 @@ export class DashboardLogisticaComponent implements OnInit {
 
       // Genera el PDF para la guía del chofer
       this._guiasServices.enviarPDFguia(
-        this.pedidos, this.guiaGuardar, this.especiales, this.chf
+        this.pedidos, this.guiaGuardar, this.especiales, this.chf, this.carro
       ).subscribe((resp: any) => {}, err => {});
-
-      // Avisa a todos los sockets que se creo la guia y la ruta
-      this._webSocket.acciones('centinela-chofer', this.chf);
 
       // Iniciamos la guía de cero
       this.cancelarGuia();
@@ -714,8 +834,9 @@ export class DashboardLogisticaComponent implements OnInit {
     this.pedidos = [];
     this.especiales = [];
     this.rutaEnviar = [];
-    this.chf = '';
-    this.verifica = '';
+    this.carro = '0';
+    this.chf = '0';
+    this.verifica = '0';
     this.guiaGuardar = null;
     this.especiales = [];
     this.choferes = [];
@@ -766,6 +887,8 @@ export class DashboardLogisticaComponent implements OnInit {
     this.totalModal = 0;
     this.chofer = '';
     this.choferImg = '';
+    this.unidad = '';
+    this.placa = '';
     this.fol = '';
     this.hora = '';
     this.impo = 0;
@@ -773,6 +896,13 @@ export class DashboardLogisticaComponent implements OnInit {
     this.cantidad = 0;
     this.cajas = '';
     this.fec = '';
+    if (dato.unidad !== undefined) {
+      this.unidad = dato.unidad.AUTO;
+      this.placa = dato.unidad.PLACAS;
+    } else {
+      this.unidad = 'Sin Unidad Registrado';
+      this.placa = 'XXXXX';
+    }
     this.infoDato = dato;
     this.idModal = dato._id;
     this.chofer = dato.chofer.nombre;
@@ -786,29 +916,6 @@ export class DashboardLogisticaComponent implements OnInit {
     this.fec = dato.fecha;
     this.facturas = dato.facturas;
     this.especialesDiaModal = dato.especiales;
-
-    /*this._guiasServices.obtenerFacturasFolio(this.fol).subscribe( ( facturas: any ) => {
-      this.facturas = facturas.facturas;
-      for (let i = 0; i < facturas.facturas.length; i++) {
-        this.totalModal += facturas.facturas[i].importe;
-        this._guiasServices.buscarEspeciales(facturas.facturas[i].factura).subscribe( ( especiales: any ) => {
-          if (especiales.status) {
-            for (let k = 0; k < especiales.respuesta.length; k++) {
-              let esEspecial = (pedido) => {
-                return pedido.clvprov === especiales.respuesta[k].clvprov;
-              }
-
-              if (this.especialesDiaModal.find(esEspecial)) {
-                this.especialesDiaModal.find(esEspecial).desentregado += especiales.respuesta[k].desentregado;
-              } else {
-                this.especialesDiaModal.push(especiales.respuesta[k]);
-              }
-
-            }
-          }
-        });
-      }
-    });*/
   }
 
   borarModalVer() {
@@ -883,6 +990,7 @@ export class DashboardLogisticaComponent implements OnInit {
     const fol = Number(folio);
     this._guiasServices.buscarFolioHistorial(fol).subscribe((factura: any) => {
       if (factura.ok) {
+        console.log(factura);
         if (factura.folios.length > 0) {
           this.facturaEncontrada = true;
           this.noFac = fol;

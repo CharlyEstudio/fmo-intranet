@@ -9,6 +9,7 @@ export class MonitorFactura {
         public horaTrab: string,
         public total: number,
         public ximpresion: number,
+        public diacredito: number,
         public _id?: string
     ) { }
 }

@@ -64,7 +64,7 @@
 
         <tbody>
 
-          <tr *ngFor="let fac of facturas, let i = index">
+          <tr *ngFor="let fac of facturas, let i = index" [ngClass]="{'bg-danger text-white': fac.DIACREDITO === 0}">
 
             <td class="text-center">{{(i + 1)}}</td>
 
@@ -110,7 +110,7 @@
 
         <tbody>
 
-          <tr *ngFor="let fac of facturasTrab, let i = index">
+          <tr *ngFor="let fac of facturasTrab, let i = index" [ngClass]="{'bg-danger text-white': fac.diacredito === 0}">
 
             <td class="text-center">{{(i + 1)}}</td>
 

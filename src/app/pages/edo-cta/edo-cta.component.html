@@ -172,6 +172,8 @@
 
                                 <th class="text-center" style="width: 5%!important">Fecha Abonos</th>
 
+                                <th class="text-center" style="width: 5%!important">Días P/Pago</th>
+
                                 <th class="text-center">Abonos</th>
 
                                 <th class="text-center">Saldo</th>
@@ -205,6 +207,8 @@
                                 <td class="text-center font-weight-bold" style="color: #f62d51;">{{ dato.CARGO | currency }}</td>
 
                                 <td class="text-center" style="font-weight: 500;">{{ dato.FECHAPAG | date: 'dd-MM-yy' }}</td>
+
+                                <td class="text-center" style="font-weight: 500;" [ngClass]="{'text-danger': dato.DIASPAGO > 0, 'text-success': dato.DIASPAGO <= 0}">{{ dato.DIASPAGO }}</td>
 
                                 <td class="text-center" style="color: #06d79c; font-weight: 700;" *ngIf="dato.ABONO > 0 || dato.ABONO < 0">{{ dato.ABONO | currency }}</td>
 

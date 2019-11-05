@@ -329,6 +329,16 @@ agm-map {
     height: 472px;
 }
 
+.mapaUbicacion {
+    height: 472px;
+    width: 100%!important;
+}
+
+.mapaUbicacion agm-map {
+    height: 472px;
+    width: 100%!important;
+}
+
 /*MAPS DIRECTIONS*/
 
 /* #map {

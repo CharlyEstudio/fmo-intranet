@@ -54,7 +54,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
     private _phpService: PhpService
   ) {
 
-    this.mesAnt = this.fec.getFullYear() + '-' + this.fec.getMonth() + '-' + this.fec.getDate();
+    this.mesAnt = this.fec.getFullYear() + '-' + (this.fec.getMonth() + 1) + '-' + this.fec.getDate();
 
     // Subscripción Total
     this.general = this.regresar()
@@ -83,7 +83,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
 
         let mes;
 
-        if (h.getMonth() < 10) {
+        if ((h.getMonth() + 1) < 10) {
           mes = '0' + (h.getMonth() + 1);
         } else {
           mes = (h.getMonth() + 1);
@@ -155,7 +155,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
 
     let mes;
 
-    if (h.getMonth() < 10) {
+    if ((h.getMonth() + 1) < 10) {
       mes = '0' + (h.getMonth() + 1);
     } else {
       mes = (h.getMonth() + 1);

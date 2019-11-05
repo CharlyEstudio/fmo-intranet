@@ -15,6 +15,8 @@ export class UsuariosComponent implements OnInit {
 
   usuarios: Usuario[] = [];
 
+  verMapa: boolean = false;
+
   nom_asesor: any;
   id_asesor: any;
   idFerrum_asesor: any;
@@ -30,6 +32,10 @@ export class UsuariosComponent implements OnInit {
   totalResgitro: number = 0;
 
   cargando: boolean = true;
+
+  lat: number = 0;
+
+  lng: number = 0;
 
   constructor(
     private _webSocket: WebsocketService,
@@ -125,12 +131,14 @@ export class UsuariosComponent implements OnInit {
       });
   }
 
-  openPosition(usuario: Usuario) {
-    console.log(usuario);
+  openPosition(usuario: any) {
     this.nom_asesor = usuario.nombre;
     this.id_asesor = usuario._id;
     this.idFerrum_asesor = usuario.idFerrum;
-    this._webSocket.acciones('movil-donde-estas', usuario);
+    this.lat = usuario.lat;
+    this.lng = usuario.lng;
+    this.verMapa = true;
+    // this._webSocket.acciones('movil-donde-estas', usuario);
   }
 
 }

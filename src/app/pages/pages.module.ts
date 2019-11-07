@@ -53,6 +53,7 @@ import { MovFolComponent } from '../components/mov-fol/mov-fol.component';
 import { EdoCtaCliComponent } from '../components/edo-cta-cli/edo-cta-cli.component';
 import { ComentariosComponent } from '../components/comentarios/comentarios.component';
 import { CardgarantiaComponent } from '../components/cardgarantia/cardgarantia.component';
+import { TablachdevComponent } from '../components/tablachdev/tablachdev.component';
 // import { DiferenciasComponent } from '../components/diferencias/diferencias.component';
 // Páginas
 import { ProfileComponent } from './profile/profile.component';
@@ -128,6 +129,7 @@ import { SeguimientoComponent } from './seguimiento/seguimiento.component';
 import { FacturasmonitorComponent } from './facturasmonitor/facturasmonitor.component';
 import { DiasvtasComponent } from './diasvtas/diasvtas.component';
 import { ComisioneschoferesComponent } from './comisioneschoferes/comisioneschoferes.component';
+import { ChequesdevComponent } from './chequesdev/chequesdev.component';
 
 @NgModule({
     declarations: [
@@ -155,6 +157,7 @@ import { ComisioneschoferesComponent } from './comisioneschoferes/comisioneschof
         EdoCtaCliComponent,
         ComentariosComponent,
         CardgarantiaComponent,
+        TablachdevComponent,
         // DiferenciasComponent,
         // Páginas
         DashborarDirComponent,
@@ -234,7 +237,8 @@ import { ComisioneschoferesComponent } from './comisioneschoferes/comisioneschof
         SeguimientoComponent,
         FacturasmonitorComponent,
         DiasvtasComponent,
-        ComisioneschoferesComponent
+        ComisioneschoferesComponent,
+        ChequesdevComponent
     ],
     exports: [
         DashborarDirComponent,

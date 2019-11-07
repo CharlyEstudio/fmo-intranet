@@ -85,6 +85,7 @@ import { SeguimientoComponent } from './seguimiento/seguimiento.component';
 import { FacturasmonitorComponent } from './facturasmonitor/facturasmonitor.component';
 import { DiasvtasComponent } from './diasvtas/diasvtas.component';
 import { ComisioneschoferesComponent } from './comisioneschoferes/comisioneschoferes.component';
+import { ChequesdevComponent } from './chequesdev/chequesdev.component';
 
 const pageRoutes: Routes = [
     {
@@ -778,6 +779,17 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Notas de Crédito por Remisión',
+                    name: 'description'
+                }
+    },
+    // Cheques Devueltos
+    {
+        path: 'chequesdev',
+        component: ChequesdevComponent,
+        canActivate: [ AuditoriaGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Cheques Devueltos',
                     name: 'description'
                 }
     },

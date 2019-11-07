@@ -1,0 +1,253 @@
+<div class="card">
+
+  <div class="card-body">
+
+    <div class="d-flex justify-content-end">
+
+      <div class="d-flex flex-row-reverse bd-highlight">
+
+        <div class="p-2 bd-highlight">
+
+          <div class="form-group">
+
+            <select [(ngModel)]="seleccionarFiltro" name="filtro" id="filtro" class="form-control" (change)="filtrar()">
+
+              <option value="0">Seleccione filtro</option>
+
+              <option value="1">Todos</option>
+
+              <option value="2">Cobrados</option>
+
+              <option value="3">Pendientes</option>
+
+              <option value="4">Terminados</option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+      </div>
+
+  </div>
+
+    <div class="table-responsive">
+
+      <table class="table">
+
+        <thead>
+
+          <th class="text-center">#</th>
+
+          <th class="text-center">Número</th>
+
+          <th>Cliente</th>
+
+          <th>Folio</th>
+
+          <th class="text-center">Observación</th>
+
+          <th class="text-center">Fecha Aplicación</th>
+
+          <th>Importe</th>
+
+          <th class="text-center">Fecha Cheque</th>
+
+          <th class="text-center">Banco</th>
+
+          <th class="text-center">No. Cheque</th>
+
+          <th class="text-center">Cobrado</th>
+
+          <th class="text-center"></th>
+
+          <th class="text-center" *ngIf="rol === 'GER_ROLE' || rol === 'AUD_ROLE'"></th>
+
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let ch of chequesDev, let i = index">
+
+            <td class="text-center">{{(i +1)}}</td>
+
+            <td class="text-center">{{ch.cliente}}</td>
+
+            <td>{{ch.nombre}}</td>
+
+            <td class="text-center">{{ch.folio}}</td>
+
+            <td>
+
+              {{ch.facturas}}
+
+              <!-- <table class="table table-borderless">
+
+                <tbody>
+
+                  <tr *ngFor="let ft of ch.facturas">
+
+                    <td class="text-center border border-0">{{ft.numero}}</td>
+
+                  </tr>
+
+                </tbody>
+
+              </table> -->
+
+            </td>
+
+            <td class="text-center">{{ch.fechaaplica | date:'dd-MM-yy'}}</td>
+
+            <td>{{ch.importe | currency}}</td>
+
+            <td class="text-center">{{ch.fechacheque | date:'dd-MM-yy'}}</td>
+
+            <td class="text-center">{{ch.banco}}</td>
+
+            <td class="text-center">{{ch.nocheque}}</td>
+
+            <td class="text-center"><span [ngClass]="{'badge badge-success': ch.cobrado}">{{(ch.cobrado) ? 'Cobrado' : ''}}</span></td>
+
+            <!-- <td class="text-center" *ngIf="!ch.cobrado && rol === 'AUD_ROLE'">
+
+              <button class="btn btn-info btn-sm" (click)="cobro(ch)">
+
+                <i class="mdi mdi-close-octagon"></i>
+
+              </button>
+
+            </td> -->
+
+            <td class="text-center" *ngIf="ch.clienteid !== '' && rol === 'DIR_ROLE'">
+
+              <button class="btn btn-info btn-sm" *ngIf="!ch.terminado" (click)="terminar(ch)">
+
+                <i class="mdi mdi-check-circle-outline"></i>
+
+              </button>
+
+              <button class="btn btn-danger btn-sm" *ngIf="ch.terminado" (click)="recuperar(ch)">
+
+                <i class="mdi mdi-close-circle-outline"></i>
+
+              </button>
+
+            </td>
+
+            <td class="text-center" *ngIf="ch.clienteid !== '' && rol === 'GER_ROLE'">
+
+              <i class="mdi mdi-check-circle-outline text-info" *ngIf="ch.terminado"></i>
+
+              <i class="mdi mdi-close-circle-outline text-inverse" *ngIf="!ch.terminado"></i>
+
+            </td>
+
+            <td *ngIf="ch.clienteid === ''">
+
+              <div class="badge badge-danger">INICIADO</div>
+
+            </td>
+
+            <td class="text-center" *ngIf="rol === 'GER_ROLE' || rol === 'ADMIN_ROLE'">
+
+              <button class="btn btn-dark btn-sm" data-toggle="modal" data-target="#modalInfo" (click)="abrirModal(ch)" *ngIf="ch.clienteid === ''">RECOPILAR</button>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div id="modalInfo" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalInfo" aria-hidden="true">
+
+  <div class="modal-dialog modal-lg">
+
+    <div class="modal-content p-t-20 p-b-20 p-l-20 p-r-20">
+
+      <div class="modal-header">
+
+        <h5 class="p-b-10 p-t-10"><b>Información de Cheque Devuelto {{importe | currency}}</b></h5>
+
+        <button type="button" class="close" data-dismiss="modal" id="cerrarModalBusq" aria-label="Close">
+
+          <span aria-hidden="true">&times;</span>
+
+        </button>
+
+      </div>
+
+      <div class="modal-body">
+
+        <form ngNativeValidate #f="ngForm">
+
+          <div class="form-group">
+
+            <input ngModel type="text" name="nocheque" id="nocheque" placeholder="Número de Cheque" class="form-control" autocomplete="off" autofocus required>
+
+          </div>
+
+          <!-- <div class="form-group">
+
+            <input type="number" #inputFact name="factura" id="factura" autocomplete="off" placeholder="Ingrese Factura" class="form-control" (keyup.enter)="agregarfactura(inputFact.value)" required>
+
+            <select name="facturas" id="facturas" class="form-control" multiple>
+
+              <option [value]="fac.numero" *ngFor="let fac of folios">{{fac.numero}}</option>
+
+            </select>
+
+            <small id="passwordHelpBlock" class="form-text text-danger" *ngIf="msg !== ''">
+              {{msg}}
+            </small>
+
+          </div> -->
+
+          <div class="form-group">
+
+            <input ngModel type="text" name="banco" id="banco" placeholder="Banco" class="form-control" autocomplete="off" required>
+
+          </div>
+
+          <div class="form-group">
+
+            <input #inputNumero ngModel type="number" name="folio" id="folio" placeholder="Número de Folio" class="form-control" autocomplete="off" required (keyup.enter)="buscarFolio(inputNumero.value)">
+
+            <small id="passwordHelpBlock" class="form-text text-danger" *ngIf="msgFol !== ''">
+              {{msgFol}}
+            </small>
+
+          </div>
+
+          <!-- <div class="form-group">
+
+            <input #inputNumero type="number" name="numero" id="numero" placeholder="Número de Cliente" class="form-control" autocomplete="off" required (keyup.enter)="buscarCliente(inputNumero.value)">
+
+            <input [(ngModel)]="cliente" type="text" name="cliente" id="cliente" placeholder="Cliente" class="form-control" readonly>
+
+            <small id="passwordHelpBlock" class="form-text text-danger" *ngIf="msgCli !== ''">
+              {{msgCli}}
+            </small>
+
+          </div> -->
+
+          <button type="button" (click)="guardar(f)" class="btn btn-info btn-block">GUARDAR</button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

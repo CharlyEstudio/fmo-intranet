@@ -37,6 +37,7 @@ import { SharedModule } from './shared/shared.module';
 import { StatusComponent } from './components/status/status.component';
 import { RecuperarComponent } from './recuperar/recuperar.component';
 import { CambiarComponent } from './cambiar/cambiar.component';
+import { TablachdevService } from './components/tablachdev/tablachdev.service';
 
 @NgModule({
   declarations: [
@@ -57,8 +58,7 @@ import { CambiarComponent } from './cambiar/cambiar.component';
     SharedModule,
     SocketIoModule.forRoot(config)
   ],
-  providers: [PushNotificationService],
-  // providers: [],
+  providers: [PushNotificationService, TablachdevService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -44,6 +44,27 @@ export class AppComponent implements OnInit {
       && localStorage.getItem('rol') !== 'MESA_ROLE'
       && localStorage.getItem('rol') !== 'CLI_ROLE') {
       // Nueva garantía realizada
+      this._wsService.escuchar('nuevo-cheque-devuelto').subscribe((chd: any) => {
+        const remitente = 'Cheque Devuelto';
+        let comentario: any;
+        switch (chd.opcion) {
+          case 1:
+            comentario = `${chd.msg} por $ ${chd.data}`;
+            break;
+          case 2:
+            comentario = `${chd.msg} del Folio: ${chd.folio} Cliente: ${chd.cliente} Importe: ${chd.importe}`;
+            break;
+          case 3:
+            comentario = `${chd.msg} del Folio: ${chd.folio} Cliente: ${chd.cliente} Importe: ${chd.importe}`;
+            break;
+          case 4:
+            comentario = `${chd.msg} del Folio: ${chd.folio} Cliente: ${chd.cliente} Importe: ${chd.importe}`;
+            break;
+        }
+        this.pushNotCHD(comentario, remitente);
+      });
+
+      // Nueva garantía realizada
       this._wsService.escuchar('nueva-garantia').subscribe((garantia: any) => {
         const remitente = 'Nueva Garantia';
         const comentario = 'Se realizó una nueva garantía.';
@@ -272,6 +293,33 @@ export class AppComponent implements OnInit {
         options.icon = 'https://ferremayoristas.com.mx:' + PUERTO_INTERNO + '/img' + '/choferes/' + img;
       }
     }
+
+    this._pushNotificationService.create(title, options).subscribe((notif) => {
+      if (notif.event.type === 'show') {
+        // console.log('onshow');
+        setTimeout(() => {
+          notif.notification.close();
+        }, 30000);
+      }
+      if (notif.event.type === 'click') {
+        // console.log('click');
+        notif.notification.close();
+      }
+      if (notif.event.type === 'close') {
+        // console.log('close');
+      }
+    },
+    (err) => {
+         console.log(err);
+    });
+  }
+
+  pushNotCHD( comentario: any, remitente: any ) {
+    const title = remitente;
+    const options = new PushNotificationOptions();
+    options.body = comentario;
+
+    options.icon = 'assets/images/users/fmo.png';
 
     this._pushNotificationService.create(title, options).subscribe((notif) => {
       if (notif.event.type === 'show') {

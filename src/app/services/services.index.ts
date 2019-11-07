@@ -48,6 +48,7 @@ export { ProductosService } from "./productos/productos.service";
 export { PedFacturadosService } from '../components/ped-facturados/ped-facturados.service';
 export { DiasvtasService } from './diasvtas/diasvtas.service';
 export { ChoferService } from "./choferes/chofer.service";
+export { ChequesdevService } from './chequesdev/chequesdev.service';
 
 // Servicios de Google
 export { GoogleService } from "./googleconsole/google.service";

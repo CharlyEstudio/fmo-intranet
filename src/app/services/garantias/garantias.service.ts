@@ -92,11 +92,12 @@ export class GarantiasService {
     return this.http.get(url);
   }
 
-  nuevaGarantia(garantia: any) {
+  nuevaGarantia(garantia: any, observa: any) {
     const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=3';
 
-    return this.http.post(url, {data: garantia}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
+    return this.http.post(url, {data: garantia, observa: observa}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
   }
+
 
   actualizarGarantia(garantia: any, estado: any) {
     const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=5';
@@ -121,6 +122,13 @@ export class GarantiasService {
 
     return this.http.post(url, {data: garantia, estate: estado}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
   }
+
+  devolucionGarantia(idgar: number, estado: any, folterm: any) {
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=19&idgar=' + idgar + '&estado=' + estado + '&folterm=' + folterm;
+
+    return this.http.get(url);
+  }
+
   cancelarGarantia(idgar: number){
     const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=18&idgar=' + idgar;
 

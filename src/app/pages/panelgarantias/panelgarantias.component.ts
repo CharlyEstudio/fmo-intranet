@@ -81,4 +81,7 @@ export class PanelgarantiasComponent implements OnInit {
     });
   }
 
+    
+  
+
 }

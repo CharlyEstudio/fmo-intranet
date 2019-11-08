@@ -169,18 +169,18 @@
 
                         <td width="3%" class="text-center border-0">
 
-                            <button type="button" class="btn btn-info" data-toggle="tooltip" title="Editar" data-toggle="modal" data-target="#editar" *ngIf="gara.estado !== 'TERMINADO'" (click)="verInfo(gara)" (click)="obtenerFolio(gara)">
+                            <button type="button" class="btn btn-info" data-toggle="tooltip" title="Editar" data-toggle="modal" data-target="#editar" *ngIf="gara.estado === 'ENTREGAR' || gara.estado === 'ENTREGANDO' " (click)="verInfo(gara)" (click)="obtenerFolio(gara)">
 
                                 <i class="mdi mdi-table-edit"></i>
 
                             </button>
-                            <!-- <button type="button" class="btn btn-danger" data-toggle="tooltip" title="Editar" data-toggle="modal" data-target="#editar"  *ngIf="gara.estado === 'ENTREGAR'" (click)="obtenerFolio(gara)">
+                            <button type="button" class="btn btn-info" data-toggle="tooltip" title="Editar" data-toggle="modal" data-target="#editar"  *ngIf="gara.estado !== 'TERMINADO' && gara.estado !== 'ENTREGAR' && gara.estado !== 'ENTREGANDO'" (click)="verInfo(gara)">
 
                                 <i class="mdi mdi-table-edit"></i>
 
-                            </button> -->
+                            </button>
 
-                            <button type="button" class="btn btn-success" data-toggle="tooltip" title="Editar" data-toggle="modal" data-target="#editar" *ngIf="gara.estado === 'TERMINADO'" (click)="verInfo(gara)">
+                            <button type="button" class="btn btn-success" data-toggle="tooltip" title="Editar" data-toggle="modal" data-target="#editar" *ngIf="gara.estado === 'TERMINADO'" (click)="verInfo(gara)" (click)="obtenerFolio(gara)">
 
                                 <i class="mdi mdi-view-module"></i>
 
@@ -237,7 +237,7 @@
 
             <div class="modal-header">
 
-                <h5 class="p-b-10 p-t-10">Nueva Garantía</h5>
+                <h3 class="p-b-10 p-t-10"><strong>Nueva Garantía</strong></h3>
 
                 <button type="button" class="close" data-dismiss="modal" id="cerrarModalGar" aria-label="Close">
         
@@ -324,6 +324,7 @@
                         <h1 class="display-6 badge badge-danger" *ngIf="numcli !== numcliFol && numcli !== 0">DIFERENTE CLIENTE</h1>
                         
                         <input [(ngModel)]="mecompro" type="text" name="mecompro" id="mecompro" class="form-control" style="display: none;">
+                        <input [(ngModel)]="numFacturaO" type="text" name="numFacturaO" id="numFacturaO" class="form-control" style="display: none;">
                         
                     </div>
 
@@ -342,6 +343,8 @@
                         <div class="form-group col-md-4">
 
                                 <label for="">Asesor</label>
+
+                                
 
                                 <input [(ngModel)]="numcliO" type="number" name="numcliO" id="numcliO" class="form-control" style="display: none;">
 
@@ -580,7 +583,7 @@
 
                     <div class="col-md-6">
 
-                        <div class="alert alert-primary form-group" role="alert">
+                        <div  style="height: 200px!important;" class="alert alert-primary form-group" role="alert">
 
                             <h3><strong>Garantia</strong></h3>
 
@@ -598,7 +601,7 @@
 
                     <div class="col-md-6">
 
-                        <div class="alert alert-primary form-group" role="alert">
+                        <div style="height: 200px!important;" class="alert alert-primary form-group" role="alert">
 
                             <h3><strong>Factura Afectada</strong></h3>
 
@@ -609,12 +612,14 @@
                             <h5># Cliente: {{numero}}</h5>
 
                             <h6 *ngIf="observa !== ''" class="badge badge-success">Factura Pagada</h6>
-                                
+                            
+                            <h5 *ngIf="observa !== ''">Factura por sustitución de factura pagada: {{observa}} </h5>   
+
                         </div>
 
                     </div>
 
-                    <div class="col-md-12">
+                    <!-- <div class="col-md-12">
 
                         <div *ngIf="observa !== ''" class="alert alert-danger form-group" role="alert">
 
@@ -624,60 +629,65 @@
                                 
                         </div>
 
+                    </div> -->
+
+                    <div class="col-md-6">
+
+                        <div style="height: 250px!important;" class="alert alert-warning form-group" role="alert">
+
+                            <h3><strong>Producto</strong></h3>
+    
+                            <table class="table table-striped">
+        
+                                <thead>
+        
+                                     <tr>
+                                        <th>CLAVE</th>
+        
+                                        <th>CODIGO</th>
+        
+                                        <th>PRECIO</th>
+        
+                                        <th>DESCRIPCION</th>
+        
+                                        <th>CANTIDAD</th>
+        
+                                        <th>FALLA</th>
+        
+                                    </tr>
+        
+                                </thead>
+        
+                                <tbody>
+        
+                                    <tr>
+        
+                                        <td>{{claveprod}}</td>
+        
+                                        <td>{{clvprov}}</td>
+        
+                                        <td>{{costoprod}}</td>
+        
+                                        <td>{{descr}}</td>
+        
+                                        <td>{{cantidad}}</td>
+        
+                                        <td>{{tipoFalla}}</td>
+        
+                                    </tr>
+        
+                                </tbody>
+        
+                            </table>
+                        </div>
                     </div>
 
-                    <div class="col-md-12">
-                        
-                        <h3 class="p-2"><strong>Producto</strong></h3>
-
-                    </div>
-
-                    <table class="table table-striped">
-
-                        <thead>
-
-                             <tr>
-                                <th>CLAVE</th>
-
-                                <th>CODIGO</th>
-
-                                <th>PRECIO</th>
-
-                                <th>DESCRIPCION</th>
-
-                                <th>CANTIDAD</th>
-
-                                <th>FALLA</th>
-
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-
-                            <tr>
-
-                                <td>{{claveprod}}</td>
-
-                                <td>{{clvprov}}</td>
-
-                                <td>{{costoprod}}</td>
-
-                                <td>{{descr}}</td>
-
-                                <td>{{cantidad}}</td>
-
-                                <td>{{tipoFalla}}</td>
-
-                            </tr>
-
-                        </tbody>
-
-                    </table>
 
                     <input [(ngModel)]="idgar" type="number" name="idgar" id="idgar" class="form-control" style="display: none;">
 
-                    <div class="col-md-6">
+                    <input [ngModel]="folterm" type="text" name="folterm" id="folterm" class="form-control" style="display: none;">
+
+                    <div style="height: 100px!important;" class="col-md-6">
 
                         <div *ngIf="estado !== 'NUEVO'" class="alert alert-warning form-group" role="alert">
                                 
@@ -689,21 +699,19 @@
                                 
                         </div>
 
-                    </div>
-
-                    <div class="col-md-6">
-
-                        <div *ngIf="estado !== 'NUEVO' && estado !== 'PROCESO'" class="alert alert-warning form-group" role="alert">
-                            
-                            <h3><strong>Datos de envio</strong></h3>
-
-                            <h5>Chofer/Paquetería: {{chofer}}</h5>
-                            
-                            <h5>Placas:{{placas}} </h5>
+                        <div style="height: 100px!important;" *ngIf="estado !== 'NUEVO' && estado !== 'PROCESO'" class="alert alert-warning form-group" role="alert">
                                 
-                        </div>
+                                <h3><strong>Datos de envio</strong></h3>
+    
+                                <h5>Chofer/Paquetería: {{chofer}}</h5>
+                                
+                                <h5>Placas:{{placas}} </h5>
+                                    
+                            </div>
 
                     </div>
+
+                    
 
                     <div class="col-md-6">
 
@@ -721,11 +729,28 @@
 
                     </div>
 
-                    <div class="col-md-6">
-                       <div *ngIf="estado === 'ENTREGAR' && guia === 'DATOS DE GUIA' || estado === 'ENTREGANDO'" class="alert alert-info form-group" role="alert">
-                           <h3 class="centrar">{{guia}}</h3>   
-                           <div class="col-md-8">
+                    <!-- <div class="col-md-6">
 
+                            <div style="height: 300px!important;" *ngIf="estado !== 'NUEVO' && estado !== 'PROCESO'" class="alert alert-warning form-group" role="alert">
+                                
+                                <h3><strong>Datos de envio</strong></h3>
+    
+                                <h5>Chofer/Paquetería: {{chofer}}</h5>
+                                
+                                <h5>Placas:{{placas}} </h5>
+                                    
+                            </div>
+    
+                        </div> -->
+
+                    <div class="col-md-6">
+                            <div *ngIf="estado === 'ENTREGAR' && guia === 'GUIA NO ENCONTRADA'"  class="alert alert-info form-group" role="alert">
+                                    <h3 class="centrar"><strong>{{guia}}</strong></h3>
+                                </div>
+                       <div *ngIf="estado === 'ENTREGAR' && guia === 'DATOS DE GUIA' || estado === 'ENTREGANDO' || estado === 'TERMINADO'" class="alert alert-info form-group" role="alert">
+                           <h3 class="centrar"><strong>{{guia}}</strong></h3>   
+                           <div class="col-12">
+                                
                                 <table class="table table-striped">
             
                                     <thead>
@@ -741,6 +766,11 @@
                                             <th class="text-center">Chofer</th>
             
                                             <th class="text-center">Verifico</th>
+                                            
+                                            <th></th>
+                                            
+                                            <!-- <th class="text-center">Devolución</th> -->
+
 
                                         </tr>
             
@@ -748,7 +778,7 @@
             
                                     <tbody>
             
-                                        <tr *ngFor="let res of foliosGuia, let i = index">
+                                        <tr *ngFor="let res of foliosGuia, let i = index" [ngClass]="{'table-info': i === 0, 'text-white': i === 0}">
             
                                             <td class="text-center">{{res.usuario.nombre}}</td>
                                             
@@ -760,8 +790,11 @@
             
                                             <td class="text-center">{{res.verifico}}</td>
 
-                                            
+                                            <td class="text-center"><img style="width: 100px;" [src]="res.chofer.img | imagen" alt=""></td>
 
+                                            <!-- <td *ngIf="folterm === '' || folterm === NULL">NO</td>
+                                            <td *ngIf="folterm === 'Devolucion'">SI</td> -->
+                                            
                                         </tr>
             
                                     </tbody>
@@ -770,34 +803,10 @@
 
                             </div>
 
-                            <!-- <div class="col-md-3">
-
-                                    <img style="width: 50px;" [src]="foliosGuia.chofer.img | imagen" alt="" class="rounded">
-
-                            </div> -->
-
                        </div>
 
                     </div>
 
-                    <!-- <div *ngIf="estado === 'ENTREGAR' && folnc === '' || estado === 'TERMINADO' && folnc === '' || estado === 'ENTREGANDO' && folnc === ''" class="form-group col-md-12">
-
-                        <h3 class="centrar"><strong> GARANTIA AUTORIZADA POR TRUPER </strong><i style="color: orange; font-size: 35px;" class="mdi mdi-check-all"></i></h3>
-
-                    </div>
-
-                    <div *ngIf="estado === 'ENTREGAR' && folnc > 0 || estado === 'TERMINADO' && folnc > 0 || estado === 'ENTREGANDO' && folnc > 0" class="form-group col-md-12">
-
-                        <h3 class="centrar"><strong> GARANTIA AUTORIZADA POR EL CLIENTE </strong><i style="color: red; font-size: 35px;" class="mdi mdi-check-all"></i></h3>
-
-                    </div>
-
-                    <div *ngIf="estado === 'ENTREGAR' && folnc > 0 || estado === 'TERMINADO' && folnc > 0 || estado === 'ENTREGANDO' && folnc > 0" class="col-md-12 centrar">
-                        
-                        <h3>Folio Nota de Credito: {{folnc}}</h3>
-                        
-                    </div> -->
-                    
                     <h3 *ngIf="estado === 'NUEVO'" class="py-4">Orden de trabajo</h3>
 
                     <div *ngIf="estado === 'NUEVO'" class="form-group col-md-12">
@@ -807,13 +816,7 @@
                         <input  ngModel type="text" name="foltru" id="foltru" class="form-control" placeholder="Folio truper o Asesor que autoriza" autocomplete="off" required>
                         
                     </div>
-                    
-                    <!-- <div *ngIf="estado === 'NUEVO'" class="form-group col-md-5">
-                        
-                        <input ngModel type="date" name="fecregtru" id="fecregtru" class="form-control" required style="display: none;">
 
-                    </div> -->
-                    
                     <div *ngIf="estado === 'PROCESO'" class="form-group col-md-12">
                         
                         <label for="">Chofer/Paquetería</label>
@@ -855,58 +858,6 @@
                         </div>
 
                     </div>
-                    <div *ngIf="estado === 'ENTREGAR' && guia === 'GUIA NO ENCONTRADA'">
-                        <h3 class="centrar">{{guia}}</h3>
-                    </div>
-
-                    <!-- <div *ngIf="estado === 'ENTREGAR' && guia === 'DATOS DE GUIA' || estado === 'ENTREGANDO'" class="form-group col-md-12">
-                        <h3 class="centrar">{{guia}}</h3>   
-
-                                <table class="table table-striped">
-            
-                                    <thead>
-            
-                                        <tr>
-                                            
-                                            <th class="text-center">Realizo</th>
-
-                                            <th class="text-center">Fecha</th>
-            
-                                            <th class="text-center">Hora</th>
-            
-                                            <th class="text-center">Chofer</th>
-            
-                                            <th class="text-center">Verifico</th>
-
-                                            <th></th>
-            
-                                        </tr>
-            
-                                    </thead>
-            
-                                    <tbody>
-            
-                                        <tr *ngFor="let res of foliosGuia, let i = index">
-            
-                                            <td class="text-center">{{res.usuario.nombre}}</td>
-                                            
-                                            <td class="text-center">{{res.fecha}}</td>
-            
-                                            <td class="text-center">{{res.hora}}</td>
-            
-                                            <td class="text-center">{{res.chofer.nombre}}</td>
-            
-                                            <td class="text-center">{{res.verifico}}</td>
-
-                                            <td style="width:50px;"><img [src]="res.chofer.img | imagen" class="round">
-            
-                                        </tr>
-            
-                                    </tbody>
-            
-                                </table>
-            
-                    </div> -->
                     
                     <h4 *ngIf="estado === 'AUTORIZACION'" class="px-2">AUTORIZACION</h4>
 
@@ -954,6 +905,11 @@
 
                     </div>
 
+                        
+                        
+
+
+
                     <div class="col-md-12">
 
                         <button *ngIf="estado === 'NUEVO' || estado === 'PROCESO' || estado === 'ENVIANDO' || estado === 'ENTREGAR' && guia !== 'GUIA NO ENCONTRADA' || estado === 'AUTORIZACION' && enviar !== 'NO'" type="submit" class="btn btn-info">Guardar</button>
@@ -961,6 +917,8 @@
                         <button *ngIf="estado === 'ENTREGANDO' && estado !== 'TERMINADO'" type="submit" class="btn btn-info">Terminar</button>
                         
                         <button *ngIf="estado !== 'TERMINADO' && guia !== 'GUIA NO ENCONTRADA'" (click)="cancelar(g)" class="btn btn-info" >Cancelar Garantía</button>
+                        
+                        <button *ngIf="estado === 'ENTREGANDO'" (click)="devolucion(g)" class="btn btn-info">Devolucion</button>
 
                     </div>
 

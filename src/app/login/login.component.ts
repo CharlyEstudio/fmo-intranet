@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit {
 
           this.error = false;
           this.iniciar = false;
-          this.wsService.login( 'web', forma.value.email, null, this._usuarioService.usuario.rol );
+          this.wsService.login( this._usuarioService.usuario );
         } else {
           this.mensaje = correcto.mensaje;
           this.iniciar = false;

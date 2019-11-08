@@ -375,7 +375,7 @@ export class UsuarioService {
   }
 
   getLoginUsuarioSocket () {
-    return this.wsService.escuchar('login-usuario');
+    return this.wsService.escuchar('usuarios-lista');
   }
 
   enviarPassword( usuario: Usuario ) {

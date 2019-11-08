@@ -43,11 +43,11 @@ export class WebsocketService {
     return this.socket.fromEvent(evento);
   }
 
-  login( nombre: string, email: string, password: string, sala: string ) {
+  login( usuario: Usuario ) {
     return new Promise( ( resolve, reject ) => {
 
-      this.acciones( 'configurar-usuario', { nombre, email, password, sala }, resp => {
-        let usuarioSocket = {nombre, email, sala};
+      this.acciones( 'configurar-usuario', usuario, resp => {
+        let usuarioSocket = {usuario, sala: usuario.rol};
         this.guardarStorage(usuarioSocket);
         resolve();
       });
@@ -62,7 +62,7 @@ export class WebsocketService {
   cargarStorage() {
     if (localStorage.getItem('socketUsuario')) {
       let usuarioSocket = JSON.parse(localStorage.getItem('socketUsuario'));
-      this.login(null, usuarioSocket.email, null, usuarioSocket.sala);
+      this.login(usuarioSocket);
     }
   }
 

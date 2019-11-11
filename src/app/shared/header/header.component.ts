@@ -30,16 +30,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.usuario = this._usuarioService.usuario;
 
-    // this._usuarioService.getLoginUsuarioSocket().subscribe( ( login: any ) => {
-    //   if (login.activo === 'YES') {
-    //     this.userConnected = true;
-    //     this.showSuccess(login);
-    //     setTimeout(() => {
-    //       this.userConnected = false;
-    //     }, 3000);
-    //   }
-    // });
-
     this.ws.escuchar('usuarios-lista').subscribe((resp: any) => {
       console.log(resp);
     });

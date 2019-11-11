@@ -13,6 +13,7 @@ export class BarraAvanceComponent implements OnInit {
   @Output() enviar = new EventEmitter();
 
   avance:  number = 0;
+  avance2:  number = 0;
 
   constructor() {
   }
@@ -22,18 +23,23 @@ export class BarraAvanceComponent implements OnInit {
   }
 
   calcularAvance() {
-    const porcentaje = (this.paso * 100) / this.pasos;
-    if (porcentaje >= 0) {
+    const porcentaje = (this.paso * 1) / this.pasos;
+    const porcentaje2 = (this.paso * 100) / this.pasos;
+    if (porcentaje2 >= 0) {
       this.avance = porcentaje;
+      this.avance2 = porcentaje2;
     } else {
-      this.avance = 100;
+      this.avance = 1;
+      this.avance2 = 100;
     }
   }
 
   guardarAvance(cantidad: any) {
     this.paso = cantidad;
-    const porcentaje = (this.paso * 100) / this.pasos;
+    const porcentaje = (this.paso * 1) / this.pasos;
     this.avance = porcentaje;
+    const porcentaje2 = (this.paso * 100) / this.pasos;
+    this.avance2 = porcentaje2;
     const data = {
       paso: cantidad,
       _id: this.id

@@ -37,6 +37,8 @@ export class UsuariosComponent implements OnInit {
 
   lng: number = 0;
 
+  ultimaPosicion: any;
+
   constructor(
     private _webSocket: WebsocketService,
     public _usuarioService: UsuarioService,
@@ -137,8 +139,8 @@ export class UsuariosComponent implements OnInit {
     this.idFerrum_asesor = usuario.idFerrum;
     this.lat = usuario.lat;
     this.lng = usuario.lng;
+    this.ultimaPosicion = usuario.horaUbicacion;
     this.verMapa = true;
-    // this._webSocket.acciones('movil-donde-estas', usuario);
   }
 
 }

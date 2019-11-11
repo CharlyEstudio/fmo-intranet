@@ -178,7 +178,9 @@ export class ChequesdevComponent implements OnInit {
         this.todos = cheques.length;
         this.chequesDev = cheques;
         // for (const ch of cheques) {
-        //   console.log(ch);
+        //   if (!ch.cobrado) {
+        //     console.log(ch);
+        //   }
         // }
       }
     });

@@ -24,6 +24,7 @@ export class EdoCtaComponent implements OnInit {
   fecha: any;
   tipoS: any;
   verPDF: any = '';
+  filename: any = '';
 
   // Datos del Usuario
   asesor: number = 0;
@@ -433,6 +434,7 @@ export class EdoCtaComponent implements OnInit {
 
   public exportarPDF(datos: any, cliente: any, asesor: any, tel: any, cargos: any, abonos: any, saldo: any) {
     let filename = cliente.NUMERO + '-' + cliente.NOMBRE + '.pdf';
+    this.filename = cliente.NUMERO + '-' + cliente.NOMBRE + '.pdf';
     this._creditoService.exportarPDFphp(datos, filename, cliente, asesor, tel, this.tipoS, cargos, abonos, saldo).subscribe((resp: any) => {
       if (resp[0].msg.ok) {
         swal({
@@ -477,5 +479,10 @@ export class EdoCtaComponent implements OnInit {
       }
     });
   }
+
+  // descargarPDF(pdf: any) {
+  //   console.log(pdf);
+  //   document.execCommand('SaveAs', true, pdf);
+  // }
 
 }

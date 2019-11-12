@@ -383,8 +383,8 @@ export class EdoCtaComponent implements OnInit {
             email = 'mmontes@ferremayoristas.com.mx';
           break;
 
-          case 'contacto':
-            email = 'contacto@ferremayoristas.com.mx';
+          case 'admin':
+            email = 'jcramirez@ferremayoristas.com.mx';
           break;
 
           default:

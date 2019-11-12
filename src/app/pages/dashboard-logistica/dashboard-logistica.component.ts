@@ -374,7 +374,17 @@ export class DashboardLogisticaComponent implements OnInit {
                   } else {
                     this.terminoEspecial = false;
                   }
+                  this.especiales.sort((a, b) => {
+                    if (a.clvprov > b.clvprov) {
+                      return 1;
+                    }
 
+                    if (a.clvprov < b.clvprov) {
+                      return -1;
+                    }
+
+                    return 0;
+                  });
                 }
                 localStorage.setItem('especiales', JSON.stringify(this.especiales));
               } else {

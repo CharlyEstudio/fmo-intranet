@@ -149,6 +149,9 @@ export class BackorderComponent implements OnInit {
   }
 
   descargarFile() {
+    for (const des of this.descargar) {
+      des.codigo = "'" + des.codigo;
+    }
     this._excelService.exportAsExcelFile(this.descargar, 'BackOrder-Detalle');
   }
 

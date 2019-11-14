@@ -7,7 +7,7 @@ import 'rxjs/add/operator/retry';
 import 'rxjs/add/operator/filter';
 
 // Servicios
-import { PhpService, PedFacturadosService } from '../../services/services.index';
+import { PhpService, PedFacturadosService, DiariosService } from '../../services/services.index';
 
 @Component({
   selector: 'app-nivel-servicio',
@@ -39,10 +39,19 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
   intNs: any;
   // grafGeneral: any;
 
+  // Nivel de Servicio por Familia vs Tipo
+  inicioTru: number = 0;
+  mesasTru: number = 0;
+  canceladosTru: number = 0;
+  inicioFmo: number = 0;
+  mesasFmo: number = 0;
+  canceladosFmo: number = 0;
+
   // Nivel de Servicio Truper
   dataTruCot: number = 0;
   dataTruFac: number = 0;
   porcentTru: number = 0;
+  porcentTruPlusCan: number = 0;
   nsT: number = 0;
   nsTImpo: number = 0;
   grafTruper: any;
@@ -51,13 +60,19 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
   dataFMOCot: number = 0;
   dataFMOFac: number = 0;
   porcentFMO: number = 0;
+  porcentFMOPlusCan: number = 0;
   nsFmo: number = 0;
   nsFmoImpo: number = 0;
   grafFmo: any;
 
+  // Nivel de Servicio Cancelados
+  dataFMOCan: number = 0;
+  dataTruCan: number = 0;
+
   constructor(
     private _phpService: PhpService,
-    private _emitirFacturado: PedFacturadosService
+    private _emitirFacturado: PedFacturadosService,
+    private _diariosService: DiariosService
   ) {
 
     this._emitirFacturado.importe.subscribe((impor: any) => {
@@ -102,6 +117,60 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
 
           });
 
+        // Nivel de Servicio por tipo
+        const f = new Date();
+        let d;
+        let m;
+        const y = f.getFullYear();
+
+        if ((f.getMonth() + 1) < 10) {
+          m = '0' + (f.getMonth() + 1);
+        } else {
+          m = f.getMonth() + 1;
+        }
+
+        if (f.getDate() < 10) {
+          d = '0' + f.getDate();
+        } else {
+          d = f.getDate();
+        }
+
+        const fecha = y + '-' + m + '-' + d;
+        this._diariosService.obtenerBackOrderTipoTotales(fecha, fecha).subscribe((resp: any) => {
+          if (resp.length > 0) {
+            this.inicioFmo = 0;
+            this.mesasFmo = 0;
+            this.canceladosFmo = 0;
+            this.inicioTru = 0;
+            this.mesasTru = 0;
+            this.canceladosTru = 0;
+            for (const sit of resp) {
+              if (sit.familia === 'FMO') {
+                if (sit.nivel === 'R') {
+                  this.inicioFmo += sit.venta;
+                }
+                if (sit.nivel === 'F') {
+                  this.mesasFmo += sit.venta;
+                }
+                if (sit.nivel === 'C') {
+                  this.canceladosFmo += sit.venta;
+                }
+              }
+              if (sit.familia === 'TRUPER') {
+                if (sit.nivel === 'R') {
+                  this.inicioTru += sit.venta;
+                }
+                if (sit.nivel === 'F') {
+                  this.mesasTru += sit.venta;
+                }
+                if (sit.nivel === 'C') {
+                  this.canceladosTru += sit.venta;
+                }
+              }
+            }
+          }
+        });
+
         // Por Familia
         this._phpService.nsFamilia()
           .subscribe((data: any) => {
@@ -112,6 +181,8 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
               this.dataFMOCot = 0;
               this.dataFMOFac = 0;
               this.porcentFMO = 0;
+              this.dataFMOCan = 0;
+              this.dataTruCan = 0;
 
               // Desglozamos todo
               // FMO
@@ -129,6 +200,14 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
                   this.dataFMOFac = familia.IMPORTE;
                 } else {
                   this.dataFMOFac += 0;
+                }
+              }
+
+              for (const familia of data) {
+                if (familia.FAMILIA === 'FMO-CAN') {
+                  this.dataFMOCan += familia.IMPORTE;
+                } else {
+                  this.dataFMOCan += 0;
                 }
               }
 
@@ -150,8 +229,30 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
                 }
               }
 
+              for (const familia of data) {
+                if (familia.FAMILIA === 'TRUPER-CAN') {
+                  this.dataTruCan += familia.IMPORTE;
+                } else {
+                  this.dataTruCan += 0;
+                }
+              }
+
               this.porcentTru = (this.dataTruFac / this.dataTruCot);
+              if (isNaN(this.porcentTru)) {
+                this.porcentTru = 0;
+              }
+              this.porcentTruPlusCan = (this.dataTruFac / (this.dataTruCot + this.dataTruCan));
+              if (isNaN(this.porcentTruPlusCan)) {
+                this.porcentTruPlusCan = 0;
+              }
               this.porcentFMO = (this.dataFMOFac / this.dataFMOCot);
+              if (isNaN(this.porcentFMO)) {
+                this.porcentFMO = 0;
+              }
+              this.porcentFMOPlusCan = (this.dataFMOFac / (this.dataFMOCot + this.dataFMOCan));
+              if (isNaN(this.porcentFMOPlusCan)) {
+                this.porcentFMOPlusCan = 0;
+              }
             } else {
               this.dataTruCot = 0;
               this.dataTruFac = 0;
@@ -159,6 +260,8 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
               this.dataFMOCot = 0;
               this.dataFMOFac = 0;
               this.porcentFMO = 0;
+              this.dataFMOCan = 0;
+              this.dataTruCan = 0;
             }
           });
 
@@ -201,6 +304,60 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
 
       });
 
+    // Nivel de Servicio por tipo
+    const f = new Date();
+    let d;
+    let m;
+    const y = f.getFullYear();
+
+    if ((f.getMonth() + 1) < 10) {
+      m = '0' + (f.getMonth() + 1);
+    } else {
+      m = f.getMonth() + 1;
+    }
+
+    if (f.getDate() < 10) {
+      d = '0' + f.getDate();
+    } else {
+      d = f.getDate();
+    }
+
+    const fecha = y + '-' + m + '-' + d;
+    this._diariosService.obtenerBackOrderTipoTotales(fecha, fecha).subscribe((resp: any) => {
+      if (resp.length > 0) {
+        this.inicioFmo = 0;
+        this.mesasFmo = 0;
+        this.canceladosFmo = 0;
+        this.inicioTru = 0;
+        this.mesasTru = 0;
+        this.canceladosTru = 0;
+        for (const sit of resp) {
+          if (sit.familia === 'FMO') {
+            if (sit.nivel === 'R') {
+              this.inicioFmo += sit.venta;
+            }
+            if (sit.nivel === 'F') {
+              this.mesasFmo += sit.venta;
+            }
+            if (sit.nivel === 'C') {
+              this.canceladosFmo += sit.venta;
+            }
+          }
+          if (sit.familia === 'TRUPER') {
+            if (sit.nivel === 'R') {
+              this.inicioTru += sit.venta;
+            }
+            if (sit.nivel === 'F') {
+              this.mesasTru += sit.venta;
+            }
+            if (sit.nivel === 'C') {
+              this.canceladosTru += sit.venta;
+            }
+          }
+        }
+      }
+    });
+
     // Nivel de Servicio por Familia
     this._phpService.nsFamilia()
       .subscribe((data: any) => {
@@ -212,6 +369,8 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
           this.dataFMOCot = 0;
           this.dataFMOFac = 0;
           this.porcentFMO = 0;
+          this.dataFMOCan = 0;
+          this.dataTruCan = 0;
 
           // Desglozamos todo
           // FMO
@@ -229,6 +388,14 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
               this.dataFMOFac = familia.IMPORTE;
             } else {
               this.dataFMOCot += 0;
+            }
+          }
+
+          for (const familia of data) {
+            if (familia.FAMILIA === 'FMO-CAN') {
+              this.dataFMOCan += familia.IMPORTE;
+            } else {
+              this.dataFMOCan += 0;
             }
           }
 
@@ -250,8 +417,30 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
             }
           }
 
+          for (const familia of data) {
+            if (familia.FAMILIA === 'TRUPER-CAN') {
+              this.dataTruCan += familia.IMPORTE;
+            } else {
+              this.dataTruCan += 0;
+            }
+          }
+
           this.porcentTru = (this.dataTruFac / this.dataTruCot);
+          if (isNaN(this.porcentTru)) {
+            this.porcentTru = 0;
+          }
+          this.porcentTruPlusCan = (this.dataTruFac / (this.dataTruCot + this.dataTruCan));
+          if (isNaN(this.porcentTruPlusCan)) {
+            this.porcentTruPlusCan = 0;
+          }
           this.porcentFMO = (this.dataFMOFac / this.dataFMOCot);
+          if (isNaN(this.porcentFMO)) {
+            this.porcentFMO = 0;
+          }
+          this.porcentFMOPlusCan = (this.dataFMOFac / (this.dataFMOCot + this.dataFMOCan));
+          if (isNaN(this.porcentFMOPlusCan)) {
+            this.porcentFMOPlusCan = 0;
+          }
         }  else {
           this.dataTruCot = 0;
           this.dataTruFac = 0;
@@ -259,6 +448,8 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
           this.dataFMOCot = 0;
           this.dataFMOFac = 0;
           this.porcentFMO = 0;
+          this.dataFMOCan = 0;
+          this.dataTruCan = 0;
         }
 
       });

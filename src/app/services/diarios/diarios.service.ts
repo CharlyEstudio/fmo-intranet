@@ -597,31 +597,48 @@ export class DiariosService {
       '/api/diarios.php?opcion=26&tipo=' + tipo + '&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&orden=' + orden;
     }
 
-    // BackOrder Anterior
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=21&tipo=' +
-    //                       tipo + '&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&orden=' + orden;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS +
-    //   '/api/diarios.php?opcion=21&tipo=' + tipo + '&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&orden=' + orden;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL +
-    //   ':' + PUERTO_SERVER +
-    //   '/api/diarios.php?opcion=21&tipo=' + tipo + '&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&orden=' + orden;
-    // }
+    return this.http.get( this.url ).map((obtbc: any) => {
+      if (obtbc.length > 0) {
+        return obtbc;
+      } else {
+        return 0;
+      }
+    });
+  }
 
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL +
-    //   ':' + PUERTO_INTERNO + '/diarios/back/order/seccion/' + tipo + '/' + fechaIn + '/' + fechaOut + '/' + orden;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS +
-    //   ':' + PUERTO_INTERNO + '/diarios/back/order/seccion/' + tipo + '/' + fechaIn + '/' + fechaOut + '/' + orden;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL +
-    //   ':' + PUERTO_INTERNO + '/diarios/back/order/seccion/' + tipo + '/' + fechaIn + '/' + fechaOut + '/' + orden;
-    // }
-    // this.url = URL_EXTERNO +
-    // ':' + PUERTO_INTERNO + '/diarios/back/order/seccion/' + tipo + '/' + fechaIn + '/' + fechaOut + '/' + orden;
+  obtenerBackOrderTipo( tipo: any, fechaIn: any, fechaOut: any ) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=33&tipo=' +
+                          tipo + '&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS +
+      '/api/diarios.php?opcion=33&tipo=' + tipo + '&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
+    } else {
+      this.url = URL_SERVICIO_GENERAL +
+      ':' + PUERTO_SERVER +
+      '/api/diarios.php?opcion=33&tipo=' + tipo + '&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
+    }
+
+    return this.http.get( this.url ).map((obtbc: any) => {
+      if (obtbc.length > 0) {
+        return obtbc;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  obtenerBackOrderTipoTotales( fechaIn: any, fechaOut: any ) {
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=34&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      this.url = URL_PRUEBAS +
+      '/api/diarios.php?opcion=34&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
+    } else {
+      this.url = URL_SERVICIO_GENERAL +
+      ':' + PUERTO_SERVER +
+      '/api/diarios.php?opcion=34&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
+    }
 
     return this.http.get( this.url ).map((obtbc: any) => {
       if (obtbc.length > 0) {

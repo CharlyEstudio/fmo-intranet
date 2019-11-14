@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { DiariosService } from '../../../services/services.index';
+import { DiariosService, ExcelService } from '../../../services/services.index';
 import { NgForm } from '@angular/forms';
 
 import * as _swal from 'sweetalert';
@@ -30,12 +30,20 @@ export class BackorderComponent implements OnInit {
   costo: number = 0;
   venta: number = 0;
 
+  // Totales de cada tipo
+  descargar: any[] = [];
+  bajan: number = 0;
+  mesas: number = 0;
+  cancel: number = 0;
+
   backs: any;
+  backsTipo: any[] = [];
 
   nombre: string;
 
   constructor(
-    private _diariosService: DiariosService
+    private _diariosService: DiariosService,
+    private _excelService: ExcelService
   ) { }
 
   ngOnInit() {
@@ -80,6 +88,7 @@ export class BackorderComponent implements OnInit {
             this.costo += Number(this.backorder[i].costo);
             this.venta += Number(this.backorder[i].venta);
           }
+          this.datosBackOrder();
 
           this.respuesta = false;
           this.esperar = false;
@@ -99,9 +108,48 @@ export class BackorderComponent implements OnInit {
 
     this._diariosService.obtenerBackOrder(e.target.id, this.inicio, this.final, this.orden)
       .subscribe( ( resp: any ) => {
-        this.mostrar = true;
-        this.backs = resp;
+        if (resp.length > 0) {
+          this.mostrar = true;
+          this.backs = resp;
+          this._diariosService.obtenerBackOrderTipo(e.target.id, this.inicio, this.final)
+            .subscribe( ( porTipo: any ) => {
+              if (porTipo.length > 0) {
+                this.backsTipo = porTipo;
+              }
+            });
+        } else {
+          this.mostrar = false;
+        }
       });
+  }
+
+  datosBackOrder() {
+    this.bajan = 0;
+    this.mesas = 0;
+    this.cancel = 0;
+    this._diariosService.obtenerBackOrderTipoTotales(this.inicio, this.final)
+      .subscribe( ( porTipo: any ) => {
+        if (porTipo.length > 0) {
+          this.descargar = porTipo;
+          for (const tp of porTipo) {
+            if (tp.nivel === 'R') {
+              this.bajan += tp.venta;
+            }
+
+            if (tp.nivel === 'F') {
+              this.mesas += tp.venta;
+            }
+
+            if (tp.nivel === 'C') {
+              this.cancel += tp.venta;
+            }
+          }
+        }
+      });
+  }
+
+  descargarFile() {
+    this._excelService.exportAsExcelFile(this.descargar, 'BackOrder-Detalle');
   }
 
 }

@@ -827,9 +827,13 @@ export class DashboardLogisticaComponent implements OnInit {
             clientes: this.clientes,
             unidad: this.carro._id
           };
+          const razon = {
+            nombre: 'Leobardo Olvera Lafuente',
+            rfc: 'OELL 900511 LQ6',
+          };
           // Genera el PDF para la guía del chofer
           this._guiasServices.enviarPDFguia(
-            this.pedidos, guiaGuardarPDF, this.especiales, this.chf, this.carro
+            this.pedidos, guiaGuardarPDF, this.especiales, this.chf, this.carro, razon
           ).subscribe((resp: any) => {}, err => {});
           // Iniciamos la guía de cero
           this.cancelarGuia();
@@ -1164,8 +1168,13 @@ export class DashboardLogisticaComponent implements OnInit {
           unidad: veh._id
         };
 
+        const razon = {
+          nombre: 'Ferremayoristas Olvera S.A. de C.V.',
+          rfc: 'FOL 160621 K23',
+        };
+
         this._guiasServices.enviarPDFguia(
-          all, ggPDF, espec, cho, veh
+          all, ggPDF, espec, cho, veh, razon
         ).subscribe((resp: any) => {
           if (resp === null) {
             this.chofer = cho.nombre;

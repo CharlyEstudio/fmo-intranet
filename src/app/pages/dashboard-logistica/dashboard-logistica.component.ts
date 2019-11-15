@@ -16,6 +16,8 @@ import * as _swal from 'sweetalert';
 import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
 const swal: SweetAlert = _swal as any;
 
+declare var $: any;
+
 @Component({
   selector: 'app-dashboard-logistica',
   templateUrl: './dashboard-logistica.component.html',
@@ -1085,6 +1087,101 @@ export class DashboardLogisticaComponent implements OnInit {
       if (resp.ok) {
         this.verGuias();
         this._webSocket.acciones('centinela-chofer', resp.guia);
+      }
+    });
+  }
+
+  procesarGuiaTX() {
+    // Obtener todas las facturas de Zona 1
+    $('#modalPDFInicio').modal('show');
+    this._guiasServices.obtenerTodasFacturasTx().subscribe((all: any) => {
+      if (all.length > 0) {
+        let impor = 0;
+        const espec = [];
+        for (const fac of all) {
+          impor += fac.total;
+          this._guiasServices.buscarEspeciales(fac.factura).subscribe( ( especiales: any ) => {
+            if (especiales.length > 0) {
+              for (let i = 0; i < especiales.length; i++) {
+                let esEspecial = (pedido) => {
+                  return pedido.clvprov === especiales[i].clvprov;
+                }
+
+                if (espec.find(esEspecial)) {
+                  espec.find(esEspecial).desentregado += especiales[i].desentregado;
+                } else {
+                  espec.push(especiales[i]);
+                }
+                espec.sort((a, b) => {
+                  if (a.clvprov > b.clvprov) {
+                    return 1;
+                  }
+
+                  if (a.clvprov < b.clvprov) {
+                    return -1;
+                  }
+
+                  return 0;
+                });
+              }
+            }
+          });
+        }
+
+        let cho: any;
+
+        for (const chf of this.choferes) {
+          if (chf._id === "5c76cd8aa4f94439bda6129e") {
+            cho = chf;
+            break
+          }
+        };
+
+        let veh: any;
+
+        for (const uni of this.unidades) {
+          if (uni._id === "5db86cd62f13b90fa5221cff") {
+            veh = uni;
+            break;
+          }
+        };
+
+        const pdfTx = cho.nombre.toUpperCase() + '-' + all.length + '-' + this._herramientas.fechaActual() + '.pdf';
+
+        const ggPDF = {
+          folio: 'TX-' + veh.PLACAS,
+          facturas: all,
+          especiales: espec,
+          verifico: 'Ruta de Salida',
+          cantidad: all.length,
+          importe: impor,
+          cajas: '',
+          fecha: this._herramientas.fechaActual(),
+          fechaAsig: this._herramientas.fechaActual(),
+          hora: this._herramientas.horaActual(),
+          pdf: pdfTx,
+          clientes: '',
+          unidad: veh._id
+        };
+
+        this._guiasServices.enviarPDFguia(
+          all, ggPDF, espec, cho, veh
+        ).subscribe((resp: any) => {
+          if (resp === null) {
+            this.chofer = cho.nombre;
+            this.impo = impor;
+            this.cantidad = all.length;
+            this.fec = this._herramientas.fechaActual();
+            this.hora = this._herramientas.horaActual();
+            this.veri = 'Ruta de Salida';
+            this.ruta = this.sanitizer.bypassSecurityTrustResourceUrl(
+              'https://ferremayoristas.com.mx/api/pdf/' + pdfTx);
+            $('#modalPDFInicio').modal('hide');
+            $('#modalPDF').modal('show');
+          }
+        }, err => {
+          console.log(err);
+        });
       }
     });
   }

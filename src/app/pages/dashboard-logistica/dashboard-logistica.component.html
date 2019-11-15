@@ -20,6 +20,8 @@
 
                                 <button *ngIf="!generar" class="btn btn-rounded btn-outline btn-light m-t-10 font-14" (click)="generarGuia()">Generar Guía</button>
 
+                                <button *ngIf="!generar" class="btn btn-rounded btn-outline btn-dropbox m-t-10 font-14" (click)="procesarGuiaTX()">Procesar Guía</button>
+
                             </div>
 
                             <div class="stats-icon text-right ml-auto">
@@ -730,6 +732,30 @@
                     </table>
 
                 </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div id="modalPDFInicio" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalPDF" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg">
+
+        <div class="modal-content p-t-20 p-b-20 p-l-20 p-r-20">
+
+            <div class="modal-header">
+
+                <h3 class="font-bold">Espere por favor...</h3>
+
+            </div>
+
+            <div class="modal-body text-center">
+
+                <h1>INICIANDO CONSTRUCCION DE PDF PARA TX</h1>
 
             </div>
 

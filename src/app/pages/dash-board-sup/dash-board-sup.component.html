@@ -236,11 +236,11 @@
 
                             <div class="mapaReporte">
 
-                                <agm-map [usePanning]="usePanning" [latitude]="lat" [longitude]="lng" [zoom]="zoom" [mapTypeId]="'roadmap'" [mapTypeControl]="mapTypeControl" [scaleControl]="mapTypeControl">
+                                <agm-map [styles]="styles" [usePanning]="usePanning" [latitude]="lat" [longitude]="lng" [zoom]="zoom" [mapTypeId]="'roadmap'" [mapTypeControl]="mapTypeControl" [scaleControl]="mapTypeControl">
 
                                     <agm-marker [latitude]="lat" [longitude]="lng" [iconUrl]="markerIcon()"></agm-marker>
 
-                                    <agm-marker *ngFor="let ubi of ruta" [iconUrl]="markerIconCli(ubi)" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker>
+                                    <agm-marker *ngFor="let ubi of ruta" [title]="titleCli(ubi.numero)" [iconUrl]="markerIconCli(ubi)" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker>
 
                                     <agm-marker *ngFor="let ubi of ubicacionVisita; let in = index" [label]="darLabelCli(in)" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker>
 
@@ -272,7 +272,7 @@
 
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 
                 <button type="button" class="btn btn-success" type="submit" styleSheetFile="assets/plugins/bootstrap/css/bootstrap.min.css" useExistingCss="true" printSectionId="print-section" ngxPrint>Imprimir Reporte</button>
 

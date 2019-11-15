@@ -402,4 +402,10 @@ export class GuiasService {
     return this.http.get(this.url);
   }
 
+  obtenerTodasFacturasTx() {
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/guias.php?opcion=5';
+
+    return this.http.get(this.url);
+  }
+
 }

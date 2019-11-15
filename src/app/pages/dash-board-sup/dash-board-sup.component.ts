@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { UsuarioService, AsesoresService, SupervisoresService, VisitasClientesService } from '../../services/services.index';
 import { Router } from '@angular/router';
 
+// Estilos de Mapas
+import { AUBERGINE_STYLE, GREY_STYLE, SILVER_STYLE, STANDAR_STYLE, DARK_STYLE, NIGHT_STYLE, RETRO_STYLE } from '../../config/mapas_style';
+
 @Component({
   selector: 'app-dash-board-sup',
   templateUrl: './dash-board-sup.component.html',
@@ -20,6 +23,7 @@ export class DashBoardSupComponent implements OnInit {
   ruta: any[] = [];
 
   // Información en el Mapa
+  labelCli: string = '';
   lat: number = 0;
   lng: number = 0;
   zoom: number = 11;
@@ -39,6 +43,7 @@ export class DashBoardSupComponent implements OnInit {
       color: '#2196f3'
     }
   ];
+  styles = SILVER_STYLE;
 
   constructor(
     private router: Router,
@@ -246,6 +251,11 @@ export class DashBoardSupComponent implements OnInit {
   darLabelCli(indice: number) {
     const ind = indice + 1;
     return String(ind + '-C');
+  }
+
+  titleCli(numero: number) {
+    const num = String('#' + numero);
+    return num
   }
 
 }

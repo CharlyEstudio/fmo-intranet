@@ -33,4 +33,10 @@ export class SupervisoresService {
     });
   }
 
+  getComentarios(perid: any) {
+    this.url = URL_SERVICIO_GENERAL + '/api/visitas.php?opcion=5&perid=' + perid;
+
+    return this.http.get(this.url);
+  }
+
 }

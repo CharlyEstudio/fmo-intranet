@@ -6,7 +6,9 @@
 
             <div class="el-card-item">
 
-                <div class="el-card-avatar el-overlay-1"> <img [src]="asesor.img | imagen" alt="user">
+                <div class="el-card-avatar el-overlay-1">
+                    
+                    <img [src]="asesor.img | imagen" alt="user">
 
                     <div class="el-overlay">
 
@@ -47,6 +49,16 @@
                                 <a class="btn default btn-outline" data-toggle="tooltip" title="Pre-Comisión" (click)="precomision(asesor.idFerrum, asesor.nombre, asesor.img)">
 
                                     <i class="mdi mdi-chart-gantt"></i>
+
+                                </a>
+
+                            </li>
+
+                            <li>
+
+                                <a class="btn default btn-outline" href="#modalReporte" data-dismiss="modal" data-toggle="modal" (click)="reporte(asesor.idFerrum, asesor.nombre, asesor.img, asesor.lat, asesor.lng)">
+
+                                    <i class="mdi mdi-projector"></i>
 
                                 </a>
 
@@ -111,6 +123,158 @@
                     <br>
 
                 </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div id="modalReporte" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalReporte" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg" style="max-width: 95%!important;">
+
+        <div class="modal-content p-t-20 p-b-20 p-l-20 p-r-20">
+
+            <div id="print-section">
+
+                <div class="modal-header">
+
+                    <div class="row">
+
+                        <div class="col-1">
+
+                            <img [src]="img | imagen" class="img-fluid">
+
+                        </div>
+
+                        <div class="col-11">
+
+                            <h3 class="font-bold text-uppercase">{{asesor}}</h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-body" style="display: initial!important;">
+
+                    <div class="row">
+
+                        <div class="col-md-8 col-lg-8 col-sm-7">
+
+                            <table class="table table-sm" style="font-size: 12px!important;">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th colspan="7"></th>
+
+                                        <th>Distancia</th>
+
+                                    </tr>
+
+                                    <tr>
+
+                                        <th>Lugar</th>
+
+                                        <th>Hora</th>
+
+                                        <th>Número</th>
+
+                                        <th>Cliente</th>
+
+                                        <th>Venta</th>
+
+                                        <th>Cobro</th>
+
+                                        <th>Visitado</th>
+
+                                        <th>del Reporte</th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                    <tr *ngFor="let cli of ruta, let i = index">
+
+                                        <td>{{(cli.horaReporte !== '') ? (i + 1) : '--'}}</td>
+
+                                        <td>{{cli.horaReporte}}</td>
+
+                                        <td>{{cli.numero}}</td>
+
+                                        <td>{{cli.nombre}}</td>
+
+                                        <td>{{cli.vendio | currency}}</td>
+
+                                        <td>{{cli.cobro | currency}}</td>
+
+                                        <td>
+                                            
+                                            <span class="badge" [ngClass]="{'badge-danger': !cli.visitado, 'badge-success': cli.visitado}">{{(cli.visitado) ? 'SI' : 'NO'}}</span>
+                                        
+                                        </td>
+                                        
+                                        <td>{{cli.distancia}} {{cli.medida}}</td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                        <div class="col-md-4 col-lg-4 col-sm-5">
+
+                            <div class="mapaReporte">
+
+                                <agm-map [usePanning]="usePanning" [latitude]="lat" [longitude]="lng" [zoom]="zoom" [mapTypeId]="'roadmap'" [mapTypeControl]="mapTypeControl" [scaleControl]="mapTypeControl">
+
+                                    <agm-marker [latitude]="lat" [longitude]="lng" [iconUrl]="markerIcon()"></agm-marker>
+
+                                    <agm-marker *ngFor="let ubi of ruta" [iconUrl]="markerIconCli(ubi)" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker>
+
+                                    <agm-marker *ngFor="let ubi of ubicacionVisita; let in = index" [label]="darLabelCli(in)" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker>
+
+                                    <agm-marker *ngFor="let ubi of ubicacionVisitaOrigen; let in = index" [label]="darLabel(in)" [latitude]="ubi.latOrig" [longitude]="ubi.lngOrig"></agm-marker>
+
+                                    <agm-polyline *ngFor="let polyline of visitasRep; let i = index" [strokeColor]="polyline.color">
+
+                                        <agm-polyline-point *ngFor="let point of polyline.path" [latitude]="point.lat" [longitude]="point.lng"></agm-polyline-point>
+
+                                    </agm-polyline>
+
+                                    <agm-polyline *ngFor="let polyline of sigueCLi; let i = index" [strokeColor]="polyline.color">
+
+                                        <agm-polyline-point *ngFor="let point of polyline.path" [latitude]="point.latOrig" [longitude]="point.lngOrig"></agm-polyline-point>
+
+                                    </agm-polyline>
+
+                                </agm-map>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                <button type="button" class="btn btn-success" type="submit" styleSheetFile="assets/plugins/bootstrap/css/bootstrap.min.css" useExistingCss="true" printSectionId="print-section" ngxPrint>Imprimir Reporte</button>
 
             </div>
 

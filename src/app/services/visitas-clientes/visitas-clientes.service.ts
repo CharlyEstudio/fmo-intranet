@@ -1,13 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
+// Config URL
 import { URL_SERVICIO_GENERAL, URL_PETICION, URL_LOCAL, PUERTO_INTERNO_DOS, PUERTO_SERVER, URL_PRUEBAS, PUERTO_INTERNO } from '../../config/config';
+
+// Servicios
+import { UsuarioService } from '../usuario/usuario.service';
 
 @Injectable()
 export class VisitasClientesService {
 
+  token: any;
+
   constructor(
-    private http: HttpClient
-  ) { }
+    private http: HttpClient,
+    private _usuarioService: UsuarioService
+  ) {
+    this.token = this._usuarioService.token;
+  }
 
   obtenerVisitas() {
     let url;
@@ -77,6 +87,12 @@ export class VisitasClientesService {
     }
 
     return this.http.get( url );
+  }
+
+  resumenVisitaAsesorFecha(perid: any, fecha: any) {
+    const url = `https://ferremayoristas.com.mx:3001/visitas/asesor/${perid}/${fecha}?token=${this.token}`;
+
+    return this.http.get(url);
   }
 
 }

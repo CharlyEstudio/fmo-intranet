@@ -267,33 +267,14 @@ export class GuiasService {
   }
 
   enviarPDFguia(guiaPar: any, guia: any, especiales: any, chofer: Chofer, carro: Unidades) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL +
-    //                       '/api/guias.php?opcion=3&guiaPar=' +
-    //                       JSON.stringify(guiaPar) +
-    //                       '&guia=' + JSON.stringify(guia) +
-    //                       '&especiales=' + JSON.stringify(especiales);
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/guias.php?opcion=3&guiaPar=' +
-    //             JSON.stringify(guiaPar) +
-    //             '&guia=' + JSON.stringify(guia) +
-    //             '&especiales=' + JSON.stringify(especiales);
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' +
-    //               PUERTO_SERVER + '/api/guias.php?opcion=3&guiaPar=' +
-    //               JSON.stringify(guiaPar) +
-    //               '&guia=' + JSON.stringify(guia) +
-    //               '&especiales=' + JSON.stringify(especiales);
-    // }
-
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_PETICION +
-                          '/api/guias.php?opcion=3';
+                          '/api/guias.php?opcion=4';
     } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PETICION + '/api/guias.php?opcion=3';
+      this.url = URL_PETICION + '/api/guias.php?opcion=4';
     } else {
       this.url = URL_SERVICIO_GENERAL + ':' +
-                  PUERTO_SERVER + '/api/guias.php?opcion=3';
+                  PUERTO_SERVER + '/api/guias.php?opcion=4';
     }
 
     // return this.http.get(this.url);

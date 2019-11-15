@@ -266,7 +266,7 @@ export class GuiasService {
     return this.http.get( this.url );
   }
 
-  enviarPDFguia(guiaPar: any, guia: any, especiales: any, chofer: Chofer, carro: Unidades) {
+  enviarPDFguia(guiaPar: any, guia: any, especiales: any, chofer: Chofer, carro: Unidades, razon: any) {
     if (URL_SERVICIO_GENERAL === URL_PETICION) {
       /*LOCAL*/this.url = URL_PETICION +
                           '/api/guias.php?opcion=4';
@@ -280,7 +280,7 @@ export class GuiasService {
     // return this.http.get(this.url);
     return this.http.post(
       this.url,
-      { guiaPar: guiaPar, guia: guia, especiales: especiales, chofer: chofer, unidad: carro },
+      { guiaPar: guiaPar, guia: guia, especiales: especiales, chofer: chofer, unidad: carro, razon: razon },
       { headers: { 'content-Type': 'application/x-www-form-urlencoded' } }
     );
   }

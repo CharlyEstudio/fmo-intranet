@@ -1,6 +1,5 @@
 export class Guia {
     constructor(
-        public folio: string,
         public facturas: Array<any>,
         public especiales: Array<any>,
         public verifico: string,

@@ -769,9 +769,9 @@ export class DashboardLogisticaComponent implements OnInit {
       // Esto pasará a guardarse como se hacen en las Guias, de forma completa.
       // Cuando se tenga por completo terminado el servicio nuevo, se dejará de usar este.
       // ### IMPORTANT ###
-      for (let i = 0; i < this.rutaEnviar.length; i++) {
-        this._guiasServices.guardarRuta(this.rutaEnviar[i], this.chf).subscribe(() => {});
-      }
+      // for (let i = 0; i < this.rutaEnviar.length; i++) {
+      //   this._guiasServices.guardarRuta(this.rutaEnviar[i], this.chf).subscribe(() => {});
+      // }
 
       // Con esto guardamos de forma completa
       const subirRuta = {
@@ -787,8 +787,11 @@ export class DashboardLogisticaComponent implements OnInit {
 
       const pdf = this.chf.nombre.toUpperCase() + '-' + this.folios.length + '-' + fecha + '.pdf';
 
+      // Necesito guardar primero, luego recibir el id para agregarlo aquí y luego enviarlo al PDF
+      // Esto para que guarde el Folio adecuado
+      // Cambiar al lugar cuando se guarde la guía.
+      // De igual forma el servicio para general el PDF debe ir adentro de guardarGuia.
       this.guiaGuardar = {
-        folio: idFol,
         facturas: this.pedidos,
         especiales: this.especiales,
         verifico: this.verifica.nombre,
@@ -807,22 +810,42 @@ export class DashboardLogisticaComponent implements OnInit {
       // Guarda la guia de forma completa
       this._guiasServices.guardarGuia(this.guiaGuardar, this.chf).subscribe( ( guardado: any ) => {
         if (guardado.ok) {
+          const guiaGuardarPDF = {
+            folio: guardado.guiasGuardado._id, // Aquí va el folio generado cuando se guarda la guia
+            facturas: this.pedidos,
+            especiales: this.especiales,
+            verifico: this.verifica.nombre,
+            cantidad: this.folios.length,
+            importe: this.importe,
+            cajas: cajas,
+            fecha: fecha,
+            fechaAsig: fechaAsig,
+            hora: hora,
+            pdf: pdf,
+            clientes: this.clientes,
+            unidad: this.carro._id
+          };
+          // Genera el PDF para la guía del chofer
+          this._guiasServices.enviarPDFguia(
+            this.pedidos, guiaGuardarPDF, this.especiales, this.chf, this.carro
+          ).subscribe((resp: any) => {}, err => {});
+          // Iniciamos la guía de cero
+          this.cancelarGuia();
           this._webSocket.acciones('guias-watch', guardado.guiasGuardado);
           swal({
             title: "Guia Procesada",
             text: 'Procesado Exitosamente'
           });
-          this.verGuias();
         }
       });
 
       // Genera el PDF para la guía del chofer
-      this._guiasServices.enviarPDFguia(
-        this.pedidos, this.guiaGuardar, this.especiales, this.chf, this.carro
-      ).subscribe((resp: any) => {}, err => {});
+      // this._guiasServices.enviarPDFguia(
+      //   this.pedidos, this.guiaGuardar, this.especiales, this.chf, this.carro
+      // ).subscribe((resp: any) => {}, err => {});
 
       // Iniciamos la guía de cero
-      this.cancelarGuia();
+      // this.cancelarGuia();
     })
     .catch(err => {
       if (err) {

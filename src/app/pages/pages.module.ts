@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
+// Imprimir
+import {NgxPrintModule} from 'ngx-print';
+
 /* ------ Componentes ----- */
 // Escritorios
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -256,7 +259,8 @@ import { ChequesdevComponent } from './chequesdev/chequesdev.component';
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyApgyf9zpctTzuckqSRRYiA9wgrVKeWGFY'
         }),
-        AgmDirectionModule
+        AgmDirectionModule,
+        NgxPrintModule
     ]
 })
 

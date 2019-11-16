@@ -80,7 +80,7 @@ export class ActividadesdevComponent implements OnInit {
 
   recibir(data: any) {
     this.scrum.actualizarSprint(data).subscribe((resp: any) => {
-      console.log(resp);
+      // console.log(resp);
     });
 
   }

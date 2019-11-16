@@ -332,7 +332,7 @@ agm-map {
 .mapaReporte {
     height: 472px;
     width: 100%!important;
-    background: #06d79c;
+    /* background: #06d79c; */
 }
 
 .mapaReporte agm-map {

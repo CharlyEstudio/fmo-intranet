@@ -56,7 +56,7 @@
 
                             <li>
 
-                                <a class="btn default btn-outline" href="#modalReporte" data-dismiss="modal" data-toggle="modal" (click)="reporte(asesor.idFerrum, asesor.nombre, asesor.img, asesor.lat, asesor.lng)">
+                                <a class="btn default btn-outline" href="#modalReporte" data-dismiss="modal" data-toggle="modal" (click)="reporte(asesor.idFerrum, asesor.nombre, asesor.img, asesor.lat, asesor.lng, asesor.horaUbicacion)">
 
                                     <i class="mdi mdi-projector"></i>
 
@@ -154,6 +154,8 @@
 
                             <h3 class="font-bold text-uppercase">{{asesor}}</h3>
 
+                            <h5 class="p-b-10 p-t-10">Última Posición <b>{{ ultimaPosicion | date: 'dd-MM-yy h:mm:ss a' }}</b></h5>
+
                         </div>
 
                     </div>
@@ -164,19 +166,17 @@
 
                     <div class="row">
 
+                        <div class="col-md-12 col-lg-12 col-sm-12" *ngIf="sinruta !== ''">
+
+                            <h1 class="display-1">{{sinruta}}</h1>
+
+                        </div>
+
                         <div class="col-md-8 col-lg-8 col-sm-7">
 
-                            <table class="table table-sm" style="font-size: 12px!important;">
+                            <table class="table table-sm" style="font-size: 12px!important;" *ngIf="sinruta === ''">
 
                                 <thead>
-
-                                    <tr>
-
-                                        <th colspan="7"></th>
-
-                                        <th>Distancia</th>
-
-                                    </tr>
 
                                     <tr>
 
@@ -194,7 +194,7 @@
 
                                         <th>Visitado</th>
 
-                                        <th>del Reporte</th>
+                                        <th>Distancia</th>
 
                                     </tr>
 
@@ -210,7 +210,7 @@
 
                                         <td>{{cli.numero}}</td>
 
-                                        <td>{{cli.nombre}}</td>
+                                        <td style="font-size: 12px!important;">{{cli.nombre}}</td>
 
                                         <td>{{cli.vendio | currency}}</td>
 
@@ -234,25 +234,49 @@
 
                         <div class="col-md-4 col-lg-4 col-sm-5">
 
-                            <div class="mapaReporte">
+                            <div class="mapaReporte" *ngIf="sinruta === ''">
+
+                                <div class="form-check form-check-inline">
+
+                                    <input checked="true" class="form-check-input" type="checkbox" id="inlineCheckbox1" value="1" (click)="mostrarRuta(1)">
+
+                                    <label class="form-check-label" for="inlineCheckbox1">{{(mostrarRuta1 === 1) ? 'Ocultar ruta clientes' : 'Mostrar ruta clientes'}}</label>
+
+                                </div>
+
+                                <div class="form-check form-check-inline">
+
+                                    <input checked="true" class="form-check-input" type="checkbox" id="inlineCheckbox2" value="2" (click)="mostrarRuta(2)">
+
+                                    <label class="form-check-label" for="inlineCheckbox2">{{(mostrarRuta2 === 1) ? 'Ocultar ruta asesor' : 'Mostrar ruta asesor'}}</label>
+
+                                </div>
+
+                                <div class="form-check form-check-inline">
+
+                                    <input checked="true" class="form-check-input" type="checkbox" id="inlineCheckbox3" value="3" (click)="mostrarRuta(3)">
+
+                                    <label class="form-check-label" for="inlineCheckbox3">{{(mostrarClientes === 1) ? 'Ocultar clientes' : 'Mostrar clientes'}}</label>
+
+                                </div>
 
                                 <agm-map [styles]="styles" [usePanning]="usePanning" [latitude]="lat" [longitude]="lng" [zoom]="zoom" [mapTypeId]="'roadmap'" [mapTypeControl]="mapTypeControl" [scaleControl]="mapTypeControl">
 
                                     <agm-marker [latitude]="lat" [longitude]="lng" [iconUrl]="markerIcon()"></agm-marker>
 
-                                    <agm-marker *ngFor="let ubi of ruta" [title]="titleCli(ubi.numero)" [iconUrl]="markerIconCli(ubi)" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker>
+                                    <agm-marker *ngFor="let ubi of ruta" [opacity]="mostrarClientes" [title]="titleCli(ubi.numero)" [iconUrl]="markerIconCli(ubi)" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker>
 
-                                    <agm-marker *ngFor="let ubi of ubicacionVisita; let in = index" [label]="darLabelCli(in)" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker>
+                                    <agm-marker [opacity]="mostrarRuta1" *ngFor="let ubi of ubicacionVisita; let in = index" [label]="darLabelCli(in)" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker>
 
-                                    <agm-marker *ngFor="let ubi of ubicacionVisitaOrigen; let in = index" [label]="darLabel(in)" [latitude]="ubi.latOrig" [longitude]="ubi.lngOrig"></agm-marker>
+                                    <agm-marker [opacity]="mostrarRuta2" *ngFor="let ubi of ubicacionVisitaOrigen; let in = index" [label]="darLabel(in)" [latitude]="ubi.latOrig" [longitude]="ubi.lngOrig"></agm-marker>
 
-                                    <agm-polyline *ngFor="let polyline of visitasRep; let i = index" [strokeColor]="polyline.color">
+                                    <agm-polyline [visible]="mostrarPolyline1" *ngFor="let polyline of visitasRep; let i = index" [strokeColor]="polyline.color">
 
                                         <agm-polyline-point *ngFor="let point of polyline.path" [latitude]="point.lat" [longitude]="point.lng"></agm-polyline-point>
 
                                     </agm-polyline>
 
-                                    <agm-polyline *ngFor="let polyline of sigueCLi; let i = index" [strokeColor]="polyline.color">
+                                    <agm-polyline [visible]="mostrarPolyline2" *ngFor="let polyline of sigueCLi; let i = index" [strokeColor]="polyline.color">
 
                                         <agm-polyline-point *ngFor="let point of polyline.path" [latitude]="point.latOrig" [longitude]="point.lngOrig"></agm-polyline-point>
 

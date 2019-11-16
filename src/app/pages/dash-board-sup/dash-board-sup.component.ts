@@ -14,16 +14,23 @@ export class DashBoardSupComponent implements OnInit {
 
   datos: any[] = [];
   rol: any;
+  sinruta: any = '';
 
   asesores: any[] = [];
 
   // Ver Información del Asesor con la ruta del día
   img: any;
   asesor: any;
+  ultimaPosicion: any;
   ruta: any[] = [];
 
   // Información en el Mapa
   labelCli: string = '';
+  mostrarRuta1: number = 1;
+  mostrarRuta2: number = 1;
+  mostrarPolyline1: boolean = true;
+  mostrarPolyline2: boolean = true;
+  mostrarClientes: number = 1;
   lat: number = 0;
   lng: number = 0;
   zoom: number = 11;
@@ -95,6 +102,7 @@ export class DashBoardSupComponent implements OnInit {
                   img: resp[i].img,
                   lat: resp[i].lat,
                   lng: resp[i].lng,
+                  horaUbicacion: resp[i].horaUbicacion,
                   porBajarCantidad: data[0].cantidad,
                   porBajarImporte: data[0].importe,
                   porSurtirCantidad: data[1].cantidad,
@@ -138,15 +146,18 @@ export class DashBoardSupComponent implements OnInit {
     this.router.navigate(['/precom-vista/', idFerrum, nombre, img]);
   }
 
-  reporte( idFerrum: any, nombre: any, img: any = '', lat: any, lng: any ) {
+  reporte( idFerrum: any, nombre: any, img: any = '', lat: any, lng: any, horaUbicacion: any ) {
     this.lat = lat;
     this.lng = lng;
+    this.sinruta = '';
     this._supervisoresServices.getComentarios(idFerrum).subscribe((datos: any) => {
       if (datos.length > 0) {
         this.img = img;
         this.asesor = nombre;
+        this.ultimaPosicion = horaUbicacion;
         this.ruta = datos;
         this.ubicacionVisita = [];
+        this.ubicacionVisitaOrigen = [];
         this.sigueCLi[0].path = [];
         this.visitasRep[0].path = [];
         this._visitasService.resumenVisitaAsesorFecha(idFerrum, '2019-11-15').subscribe((visitas: any) => {
@@ -224,6 +235,18 @@ export class DashBoardSupComponent implements OnInit {
             }
           }
         });
+      } else {
+        this.lat = 0;
+        this.lng = 0;
+        this.img = img;
+        this.asesor = nombre;
+        this.ultimaPosicion = horaUbicacion;
+        this.ruta = datos;
+        this.ubicacionVisita = [];
+        this.ubicacionVisitaOrigen = [];
+        this.sigueCLi[0].path = [];
+        this.visitasRep[0].path = [];
+        this.sinruta = 'Sin Ruta';
       }
     });
   }
@@ -256,6 +279,40 @@ export class DashBoardSupComponent implements OnInit {
   titleCli(numero: number) {
     const num = String('#' + numero);
     return num
+  }
+
+  mostrarRuta(opcion: number) {
+    switch (opcion) {
+      case 1:
+        if (this.mostrarRuta1) {
+          this.mostrarRuta1 = 0;
+          this.mostrarPolyline1 = false;
+        } else {
+          this.mostrarRuta1 = 1;
+          this.mostrarPolyline1 = true;
+        }
+        break;
+      case 2:
+        if (this.mostrarRuta2) {
+          this.mostrarRuta2 = 0;
+          this.mostrarPolyline2 = false;
+        } else {
+          this.mostrarRuta2 = 1;
+          this.mostrarPolyline2 = true;
+        }
+        break;
+      case 3:
+        if (this.mostrarClientes) {
+          this.mostrarClientes = 0;
+        } else {
+          this.mostrarClientes = 1;
+        }
+        break;
+      default:
+        this.mostrarRuta1 = 1;
+        this.mostrarRuta2 = 1;
+        this.mostrarClientes = 1;
+    }
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioService, AsesoresService, SupervisoresService, VisitasClientesService } from '../../services/services.index';
+import { UsuarioService, AsesoresService, SupervisoresService, VisitasClientesService, HerramientasService } from '../../services/services.index';
 import { Router } from '@angular/router';
 
 // Estilos de Mapas
@@ -23,6 +23,8 @@ export class DashBoardSupComponent implements OnInit {
   asesor: any;
   ultimaPosicion: any;
   ruta: any[] = [];
+  comentario: string = '';
+  cliente: string = '';
 
   // Información en el Mapa
   labelCli: string = '';
@@ -55,7 +57,7 @@ export class DashBoardSupComponent implements OnInit {
   constructor(
     private router: Router,
     private _usuarioService: UsuarioService,
-    private _asesoresService: AsesoresService,
+    private _herramientas: HerramientasService,
     private _supervisoresServices: SupervisoresService,
     private _visitasService: VisitasClientesService
   ) { }
@@ -152,6 +154,7 @@ export class DashBoardSupComponent implements OnInit {
     this.sinruta = '';
     this._supervisoresServices.getComentarios(idFerrum).subscribe((datos: any) => {
       if (datos.length > 0) {
+        console.log(datos);
         this.img = img;
         this.asesor = nombre;
         this.ultimaPosicion = horaUbicacion;
@@ -160,7 +163,7 @@ export class DashBoardSupComponent implements OnInit {
         this.ubicacionVisitaOrigen = [];
         this.sigueCLi[0].path = [];
         this.visitasRep[0].path = [];
-        this._visitasService.resumenVisitaAsesorFecha(idFerrum, '2019-11-15').subscribe((visitas: any) => {
+        this._visitasService.resumenVisitaAsesorFecha(idFerrum, this._herramientas.fechaActual()).subscribe((visitas: any) => {
           if (visitas.status) {
             for (const dat of datos ) {
               const esCli = (cli: any) => {
@@ -168,6 +171,7 @@ export class DashBoardSupComponent implements OnInit {
               };
 
               if (visitas.visitados.find(esCli)) {
+                visitas.visitados.find(esCli).numero = Number(dat.numero);
                 // Ver los clientes según visitados
                 const dividirDestino = visitas.visitados.find(esCli).destino.split(',');
                 visitas.visitados.find(esCli).lat = Number(dividirDestino[0]);
@@ -266,14 +270,14 @@ export class DashBoardSupComponent implements OnInit {
     return imagen;
   }
 
-  darLabel(indice: number) {
+  darLabel(indice: number, ubi: any) {
     const ind = indice + 1;
-    return String(ind + '-A');
+    return String('#' + ubi.numero + '|' + ind + '-A');
   }
 
-  darLabelCli(indice: number) {
+  darLabelCli(indice: number, ubi: any) {
     const ind = indice + 1;
-    return String(ind + '-C');
+    return String('#' + ubi.numero + '|' + ind + '-C');
   }
 
   titleCli(numero: number) {
@@ -313,6 +317,16 @@ export class DashBoardSupComponent implements OnInit {
         this.mostrarRuta2 = 1;
         this.mostrarClientes = 1;
     }
+  }
+
+  entraMouse(event: any) {
+    this.comentario = '';
+    if (event.comentario !== '') {
+      this.comentario = event.comentario;
+    } else {
+      this.comentario = 'Sin Comentarios';
+    }
+    this.cliente = event.numero;
   }
 
 }

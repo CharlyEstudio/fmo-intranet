@@ -1,6 +1,6 @@
 <div class="row el-element-overlay">
 
-    <div class="col-lg-4 col-md-6" *ngFor="let asesor of asesores">
+    <div class="col-lg-3 col-md-6" *ngFor="let asesor of asesores">
 
         <div class="card">
 
@@ -150,11 +150,19 @@
 
                         </div>
 
-                        <div class="col-11">
+                        <div class="col-4">
 
                             <h3 class="font-bold text-uppercase">{{asesor}}</h3>
 
                             <h5 class="p-b-10 p-t-10">Última Posición <b>{{ ultimaPosicion | date: 'dd-MM-yy h:mm:ss a' }}</b></h5>
+
+                        </div>
+
+                        <div class="col-7">
+
+                            <h6>{{cliente}}</h6>
+
+                            <h6>{{comentario | uppercase}}</h6>
 
                         </div>
 
@@ -172,9 +180,9 @@
 
                         </div>
 
-                        <div class="col-md-8 col-lg-8 col-sm-7">
+                        <div class="col-md-4 col-lg-4 col-sm-4">
 
-                            <table class="table table-sm" style="font-size: 12px!important;" *ngIf="sinruta === ''">
+                            <table class="table table-sm table-hover" style="font-size: 12px!important;" *ngIf="sinruta === ''">
 
                                 <thead>
 
@@ -185,8 +193,6 @@
                                         <th>Hora</th>
 
                                         <th>Número</th>
-
-                                        <th>Cliente</th>
 
                                         <th>Venta</th>
 
@@ -202,7 +208,7 @@
 
                                 <tbody>
 
-                                    <tr *ngFor="let cli of ruta, let i = index">
+                                    <tr *ngFor="let cli of ruta, let i = index" (mouseenter)="entraMouse(cli)">
 
                                         <td>{{(cli.horaReporte !== '') ? (i + 1) : '--'}}</td>
 
@@ -210,7 +216,7 @@
 
                                         <td>{{cli.numero}}</td>
 
-                                        <td style="font-size: 12px!important;">{{cli.nombre}}</td>
+                                        <!-- <td style="font-size: 12px!important;">{{cli.nombre}}</td> -->
 
                                         <td>{{cli.vendio | currency}}</td>
 
@@ -226,13 +232,20 @@
 
                                     </tr>
 
+                                    <!-- <tr *ngFor="let cli of ruta, let i = index">
+
+                                        <td>Estatus: </td>
+
+                                        <td colspan="6">{{cli.comentario}}</td>
+                                    </tr> -->
+
                                 </tbody>
 
                             </table>
 
                         </div>
 
-                        <div class="col-md-4 col-lg-4 col-sm-5">
+                        <div class="col-md-8 col-lg-8 col-sm-8">
 
                             <div class="mapaReporte" *ngIf="sinruta === ''">
 
@@ -266,9 +279,9 @@
 
                                     <agm-marker *ngFor="let ubi of ruta" [opacity]="mostrarClientes" [title]="titleCli(ubi.numero)" [iconUrl]="markerIconCli(ubi)" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker>
 
-                                    <agm-marker [opacity]="mostrarRuta1" *ngFor="let ubi of ubicacionVisita; let in = index" [label]="darLabelCli(in)" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker>
+                                    <agm-marker [opacity]="mostrarRuta1" *ngFor="let ubi of ubicacionVisita; let in = index" [iconUrl]="markerIconCli(ubi)" [title]="darLabelCli(in, ubi)" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker>
 
-                                    <agm-marker [opacity]="mostrarRuta2" *ngFor="let ubi of ubicacionVisitaOrigen; let in = index" [label]="darLabel(in)" [latitude]="ubi.latOrig" [longitude]="ubi.lngOrig"></agm-marker>
+                                    <agm-marker [opacity]="mostrarRuta2" *ngFor="let ubi of ubicacionVisitaOrigen; let in = index" [iconUrl]="markerIcon()" [title]="darLabel(in, ubi)" [latitude]="ubi.latOrig" [longitude]="ubi.lngOrig"></agm-marker>
 
                                     <agm-polyline [visible]="mostrarPolyline1" *ngFor="let polyline of visitasRep; let i = index" [strokeColor]="polyline.color">
 

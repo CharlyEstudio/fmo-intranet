@@ -162,6 +162,8 @@ export class GarantiasComponent implements OnInit {
       swal('Sin Cliente', 'Es necesario ingresar un número de cliente para continuar.', 'error');
     }
     this.numcliFol = garantia.value.numcliFol;
+    // console.log(this.numcliFol);
+
     this._clientesService.infoClienteCot(this.numcliFol).subscribe((cli: any) => {
       if (cli.length > 0) {
         this.nomcliFol = cli[0].NOMBRE;
@@ -198,6 +200,7 @@ export class GarantiasComponent implements OnInit {
       } else {
         swal('Factura Vacía', 'No se encontro registro de este folio.', 'error');
       }
+      console.log(this.numcli);
     });
   }
 
@@ -249,7 +252,36 @@ export class GarantiasComponent implements OnInit {
 
   }
   limpiando(){
+    // console.log(this.garantias);
     this.garantias = [];
+    this.pro = 0;
+    this.accion = false;
+    this.numFactura= '';
+    this.numFacturaO= '';
+
+    this.falla= '';
+    this.clave = '';
+    this.costo = 0;
+    this.descr = '';
+    this. nomcli= '';
+    this.nomcliO= '';
+    this.nomcliFol = '';
+    this.lista = 0;
+    this.listaO = 0;
+    this.mecompro = '';
+    this.numcli = 5;
+    this.numcliO = 0;
+    this.numcliFol = 5;
+    this.saldo = 0;
+    this.saldoO = 0;
+
+    // Detalles
+    this.asesor = '';
+    this.asesorO = '';
+    this.cantidad = 0;
+    this.clvprov = 0;
+    this.claveprod;
+    this.costoprod = 0;
   }
 
   verInfo(garantia: any) {
@@ -318,7 +350,6 @@ export class GarantiasComponent implements OnInit {
   limpiar() {
     this.habilitar = false;
     this.obtenerTodasGarantias();
-    this.limpiando();
   }
 
   validarFolio(data: any) {
@@ -330,36 +361,42 @@ export class GarantiasComponent implements OnInit {
         }
       });
     }
-    this.limpiando();
   }
 
 
   agregarGarantia(garantia: NgForm) {
-   if(garantia.value.numFacturaO === ''){
-     this.observa = '';
-   }else {
-     this.observa = garantia.value.facturaDos;
-   }
-
-      this._garantiaService.nuevaGarantia(garantia.value, this.observa).subscribe((resp: any) => {
-        if (resp) {
-          swal('Nueva Garantia', 'Los datos de la garantia se han guardado correctamente.', 'success');
-          const cerrar = <HTMLElement>(document.getElementById('cerrarModalGar'));
-          cerrar.click();
-           this.obtenerTodasGarantias();
-           this.limpiando();
-           setTimeout(() => {
-            const payload = {
-               datos: garantia.value,
-               usuario: this.usuario
-             };
-             this._webSocket.acciones('nueva-garantia', payload);
-           }, 100);
-         }
-      });
+    // console.log(garantia.value);
+    if(garantia.value.numFacturaO === ''){
+      this.observa = '';
+    }else {
+      this.observa = garantia.value.facturaDos;
     }
+    console.log(this.numcli, this.numcliFol);
+    
+    this.numcli = 1;
+    this.numcliFol = 1;
+
+    this._garantiaService.nuevaGarantia(garantia.value, this.observa).subscribe((resp: any) => {
+      if (resp) {
+        swal('Nueva Garantia', 'Los datos de la garantia se han guardado correctamente.', 'success');
+        const cerrar = <HTMLElement>(document.getElementById('cerrarModalGar'));
+        cerrar.click();
+          // this.obtenerTodasGarantias();
+          garantia.resetForm();
+          setTimeout(() => {
+            const payload = {
+              datos: garantia.value,
+              usuario: this.usuario
+            };
+            this._webSocket.acciones('nueva-garantia', payload);
+          }, 100);
+        }
+      });
+      console.log( this.numcliFol,this.numcli);
+      this.limpiando();
+      console.log(this.numcli, this.numcliFol);
+  }
    
-  
  
   autorizacion(valor: any) {
     if (valor === 'NO') {
@@ -370,7 +407,7 @@ export class GarantiasComponent implements OnInit {
   }
  
   actualizarGarantia(garantia: NgForm) {
-    console.log(garantia.value);
+    // console.log(garantia.value);
     if (this.estado === 'NUEVO') {
       if (garantia.value.fechaTrup < this.fecha) {
         swal('Fecha Incorrecta', 'No se puede colocar una fecha menor a la de registro.', 'error');
@@ -381,7 +418,6 @@ export class GarantiasComponent implements OnInit {
             const cerrar = <HTMLElement>(document.getElementById('editar'));
             cerrar.click();
             this.obtenerTodasGarantias();
-            this.limpiando();
             setTimeout(() => {
               this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
             }, 100);
@@ -418,7 +454,6 @@ export class GarantiasComponent implements OnInit {
             const cerrar = <HTMLElement>(document.getElementById('editar'));
             cerrar.click();
             this.obtenerTodasGarantias();
-            this.limpiando();
             setTimeout(() => {
               this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
             }, 100);
@@ -433,7 +468,6 @@ export class GarantiasComponent implements OnInit {
             const cerrar = <HTMLElement>(document.getElementById('editar'));
             cerrar.click();
             this.obtenerTodasGarantias();
-            this.limpiando();
             setTimeout(() => {
               this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
             }, 100);
@@ -449,7 +483,6 @@ export class GarantiasComponent implements OnInit {
           const cerrar = <HTMLElement>(document.getElementById('editar'));
           cerrar.click();
           this.obtenerTodasGarantias();
-          this.limpiando();
           setTimeout(() => {
             this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
           }, 100);
@@ -464,7 +497,6 @@ export class GarantiasComponent implements OnInit {
           const cerrar = <HTMLElement>(document.getElementById('editar'));
           cerrar.click();
           this.obtenerTodasGarantias();
-          this.limpiando();
           setTimeout(() => {
             this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
           }, 100);
@@ -481,7 +513,6 @@ export class GarantiasComponent implements OnInit {
             const cerrar = <HTMLElement>(document.getElementById('editar'));
             cerrar.click();
             this.obtenerTodasGarantias();
-            this.limpiando();
             setTimeout(() => {
               this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
             }, 100);
@@ -493,7 +524,6 @@ export class GarantiasComponent implements OnInit {
         swal('Sin Selección', 'No ah selecionado nada.', 'error');
       }
     }
-    this.limpiando();
   }
 
   cancelar(){
@@ -502,7 +532,6 @@ export class GarantiasComponent implements OnInit {
       const cerrar = <HTMLElement>(document.getElementById('editar'));
           cerrar.click();
           this.obtenerTodasGarantias();
-          this.limpiando();
     });
   }
 
@@ -539,13 +568,12 @@ export class GarantiasComponent implements OnInit {
     // console.log(this.estado);
     this.estado = 'ENTREGAR';
     this.folterm = 'Devolucion';
-    console.log(this.folterm)
+    // console.log(this.folterm)
     this._garantiaService.devolucionGarantia(this.idgar, this.estado, this.folterm).subscribe((resp:any) => {
       swal('Devolucion', 'Esta garantía esta devuelta', 'success');
       const cerrar = <HTMLElement>(document.getElementById('editar'));
           cerrar.click();
           this.obtenerTodasGarantias();
-          this.limpiando();
           // this.folterm = '';
     });
 

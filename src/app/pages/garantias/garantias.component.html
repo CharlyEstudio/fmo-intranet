@@ -321,7 +321,10 @@
 
                         <h1 class="display-6 badge badge-info" *ngIf="numcli === numcliFol && numcli !== 0">MISMO CLIENTE</h1>
 
-                        <h1 class="display-6 badge badge-danger" *ngIf="numcli !== numcliFol && numcli !== 0">DIFERENTE CLIENTE</h1>
+                        <h4>NUMCLI{{numcli}}</h4>
+                        <h4>NUMCLIFOL{{numcliFol}}</h4>
+
+                        <h1 class="display-6 badge badge-danger" *ngIf="numcli !== numcliFol && numcli !== 0 ">DIFERENTE CLIENTE</h1>
                         
                         <input [(ngModel)]="mecompro" type="text" name="mecompro" id="mecompro" class="form-control" style="display: none;">
                         <input [(ngModel)]="numFacturaO" type="text" name="numFacturaO" id="numFacturaO" class="form-control" style="display: none;">
@@ -340,15 +343,16 @@
     
                         </div>
 
+                        <h4>NUMCLI{{numcli}}</h4>
+                        <h4>NUMCLIFOL{{numcliFol}}</h4>
+
                         <div class="form-group col-md-4">
 
                                 <label for="">Asesor</label>
 
-                                
-
                                 <input [(ngModel)]="numcliO" type="number" name="numcliO" id="numcliO" class="form-control" style="display: none;">
 
-                                <input [(ngModel)]="nomcliO" type="text" name="nomcliO" id="nomcliO" class="form-control" style="display: none;">
+                                <input [(ngModel)]="numcliFolO" type="text" name="numcliFolO" id="numcliFolO" class="form-control" style="display: none;">
 
                                 <input [(ngModel)]="peridO" type="number" name="peridO" id="peridO" class="form-control" style="display: none;">
 
@@ -356,11 +360,11 @@
                                 
                         </div>
 
-                        <div class="form-group col-md-4 centrar">
+                        <!-- <div class="form-group col-md-4 centrar">
                        
-                            <h1 class="display-6 badge badge-danger" *ngIf="numcli !== numcliFol && numcli !== 0">DIFERENTE CLIENTE</h1>
+                            <h1 class="display-6 badge badge-danger" *ngIf="numcliO !== numcliFol && numcliO !== 0">DIFERENTE CLIENTE</h1>
 
-                        </div>
+                        </div> -->
 
                     </div>
                     

@@ -67,7 +67,7 @@ export class GarantiasComponent implements OnInit {
   asesorO: any = '';
   cantidad: number = 0;
   clvprov: number = 0;
-  claveprod: any;
+  claveprod: any = '';
   costoprod: number = 0;
   fecha: any;
   fecreg: any;

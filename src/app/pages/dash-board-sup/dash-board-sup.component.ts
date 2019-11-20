@@ -68,6 +68,11 @@ export class DashBoardSupComponent implements OnInit {
 
     this.rol = this.datos["rol"];
 
+    this.inicio();
+  }
+
+  inicio() {
+    this.asesores = [];
     this._usuarioService.buscarUsuarios('ASE_ROLE')
       .subscribe( ( resp: any ) => {
         let h = new Date();

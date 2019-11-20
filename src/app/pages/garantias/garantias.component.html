@@ -239,7 +239,7 @@
 
                 <h3 class="p-b-10 p-t-10"><strong>Nueva Garantía</strong></h3>
 
-                <button type="button" class="close" data-dismiss="modal" id="cerrarModalGar" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" id="cerrarModalGar" (click)="limpiando()" aria-label="Close">
         
                     <span aria-hidden="true">&times;</span>
         
@@ -273,7 +273,7 @@
 
                         <label for="">No. de Cliente de la Garantía</label>
 
-                        <input ngModel type="number" name="numcliFol" id="numcliFol" class="form-control" placeholder="Número de Cliente" autocomplete="off" (change)="buscarCli(f)">
+                        <input ngModel type="number" name="numcliFol" id="numcliFol" class="form-control" placeholder="Número de Cliente" autocomplete="off" (change)="buscarCli(f)" required>
 
                     </div>
                     
@@ -285,14 +285,13 @@
 
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div *ngIf="numcliFol > 0" class="form-group col-md-4">
 
                         <label for="">Factura/Remisión</label>
 
-                        <input ngModel type="text" name="factura" id="factura" class="form-control" placeholder="Folio Factura" autocomplete="off" (change)="buscarFactura(f)" required>
+                        <input ngModel type="number" name="factura" id="factura" class="form-control" placeholder="Folio Factura" autocomplete="off" (change)="buscarFactura(f)" required>
 
                     </div>
-
                     <!-- <div class="form-group col-md-4" style="display: none;">
 
                         <label for="">Orden de Trabajo Truper</label>
@@ -302,8 +301,7 @@
                     </div> -->
                     
                       
-
-                    <div class="form-group col-md-4">
+                    <div *ngIf="numcliFol > 0" class="form-group col-md-4">
 
                         <label for="">Asesor</label>
 
@@ -313,16 +311,13 @@
                         
                         <input [(ngModel)]="nomcli" type="text" name="nomcli" id="nomcli" class="form-control" style="display: none;">
                         
-                        <input [(ngModel)]="asesor" type="text" name="asesor" id="asesor" class="form-control" placeholder="Nombre del Asesor" autocomplete="off" readonly>
+                        <input [(ngModel)]="asesor" type="text" name="asesor" id="asesor" class="form-control" placeholder="Nombre del Asesor" autocomplete="off" required readonly>
                         
                     </div>
 
                     <div class="form-group col-md-4 centrar">
 
                         <h1 class="display-6 badge badge-info" *ngIf="numcli === numcliFol && numcli !== 0">MISMO CLIENTE</h1>
-
-                        <h4>NUMCLI{{numcli}}</h4>
-                        <h4>NUMCLIFOL{{numcliFol}}</h4>
 
                         <h1 class="display-6 badge badge-danger" *ngIf="numcli !== numcliFol && numcli !== 0 ">DIFERENTE CLIENTE</h1>
                         
@@ -343,8 +338,6 @@
     
                         </div>
 
-                        <h4>NUMCLI{{numcli}}</h4>
-                        <h4>NUMCLIFOL{{numcliFol}}</h4>
 
                         <div class="form-group col-md-4">
 
@@ -360,17 +353,17 @@
                                 
                         </div>
 
-                        <!-- <div class="form-group col-md-4 centrar">
+                        <div class="form-group col-md-4 centrar">
                        
                             <h1 class="display-6 badge badge-danger" *ngIf="numcliO !== numcliFol && numcliO !== 0">DIFERENTE CLIENTE</h1>
 
-                        </div> -->
+                        </div>
 
                     </div>
                     
                     <div class="col-md-4" *ngIf="saldo !== 0 || saldoO !==0">
                         
-                        <select [(ngModel)]="pro" class="form-control" name="productos" id="productos" (change)="obtenerPro(f)">
+                        <select [(ngModel)]="pro" class="form-control" name="productos" id="productos" (change)="obtenerPro(f)" required>
                             
                             <option value="0">Selecciona un producto</option>
                             
@@ -415,9 +408,9 @@
 
                                     <td>{{descr}}</td>
 
-                                    <td><input ngModel type="number" name="cantidad" id="cantidad" class="form-control" placeholder="Cantidad" (change)="obtenerPro(f)"></td>
+                                    <td><input ngModel type="number" name="cantidad" id="cantidad" class="form-control" placeholder="Cantidad" (change)="obtenerPro(f)" required></td>
 
-                                    <td><input ngModel type="text" name="falla" id="falla" class="form-control" placeholder="Descripción Falla" (change)="obtenerPro(f)"></td>
+                                    <td><input ngModel type="text" name="falla" id="falla" class="form-control" placeholder="Descripción Falla" (change)="obtenerPro(f)" required></td>
 
                                 </tr>
 
@@ -427,8 +420,8 @@
 
                     </div>
 
-                    <button type="submit" class="btn btn-danger">Guardar</button>
-                    <!-- <button type="submit" class="btn btn-info" (change)="ver(f)">GuardarDos</button> -->
+                    <button type="submit" class="btn btn-danger"><i class="mdi mdi-content-save"></i> Guardar</button>
+                    <button style="margin-left: 4px;" type="button" class="btn btn-info" (click)="reset(f)"><i class="mdi mdi-delete-variant"></i>Limpiar</button>
 
                 </form>
 
@@ -916,9 +909,11 @@
 
                     <div class="col-md-12">
 
-                        <button *ngIf="estado === 'NUEVO' || estado === 'PROCESO' || estado === 'ENVIANDO' || estado === 'ENTREGAR' && guia !== 'GUIA NO ENCONTRADA' || estado === 'AUTORIZACION' && enviar !== 'NO'" type="submit" class="btn btn-info">Guardar</button>
+                        <button *ngIf="estado === 'NUEVO' || estado === 'PROCESO' || estado === 'ENVIANDO'  && guia !== 'GUIA NO ENCONTRADA' || estado === 'AUTORIZACION' && enviar !== 'NO'" type="submit" class="btn btn-info">Guardar</button>
 
                         <button *ngIf="estado === 'ENTREGANDO' && estado !== 'TERMINADO'" type="submit" class="btn btn-info">Terminar</button>
+                        
+                        <button *ngIf="estado === 'ENTREGAR'" type="submit" class="btn btn-info">Entregando</button>
                         
                         <button *ngIf="estado !== 'TERMINADO' && guia !== 'GUIA NO ENCONTRADA'" (click)="cancelar(g)" class="btn btn-info" >Cancelar Garantía</button>
                         

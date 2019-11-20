@@ -67,7 +67,7 @@ export class GarantiasComponent implements OnInit {
   asesorO: any = '';
   cantidad: number = 0;
   clvprov: number = 0;
-  claveprod: any;
+  claveprod: any = '';
   costoprod: number = 0;
   fecha: any;
   fecreg: any;
@@ -269,9 +269,9 @@ export class GarantiasComponent implements OnInit {
     this.lista = 0;
     this.listaO = 0;
     this.mecompro = '';
-    this.numcli = 5;
+    this.numcli = 0;
     this.numcliO = 0;
-    this.numcliFol = 5;
+    this.numcliFol = 0;
     this.saldo = 0;
     this.saldoO = 0;
 
@@ -280,7 +280,7 @@ export class GarantiasComponent implements OnInit {
     this.asesorO = '';
     this.cantidad = 0;
     this.clvprov = 0;
-    this.claveprod;
+    this.claveprod = '';
     this.costoprod = 0;
   }
 
@@ -373,27 +373,31 @@ export class GarantiasComponent implements OnInit {
     }
     console.log(this.numcli, this.numcliFol);
     
-    this.numcli = 1;
-    this.numcliFol = 1;
+    // this.numcli = 1;
+    // this.numcliFol = 1;
 
-    this._garantiaService.nuevaGarantia(garantia.value, this.observa).subscribe((resp: any) => {
-      if (resp) {
-        swal('Nueva Garantia', 'Los datos de la garantia se han guardado correctamente.', 'success');
-        const cerrar = <HTMLElement>(document.getElementById('cerrarModalGar'));
-        cerrar.click();
-          // this.obtenerTodasGarantias();
-          garantia.resetForm();
-          setTimeout(() => {
-            const payload = {
-              datos: garantia.value,
-              usuario: this.usuario
-            };
-            this._webSocket.acciones('nueva-garantia', payload);
-          }, 100);
-        }
-      });
+    // this._garantiaService.nuevaGarantia(garantia.value, this.observa).subscribe((resp: any) => {
+    //   if (resp) {
+    //     swal('Nueva Garantia', 'Los datos de la garantia se han guardado correctamente.', 'success');
+    //     const cerrar = <HTMLElement>(document.getElementById('cerrarModalGar'));
+    //     cerrar.click();
+    //       // this.obtenerTodasGarantias();
+    //       garantia.resetForm();
+    //       setTimeout(() => {
+    //         const payload = {
+    //           datos: garantia.value,
+    //           usuario: this.usuario
+    //         };
+    //         this._webSocket.acciones('nueva-garantia', payload);
+    //       }, 100);
+    //     }
+    //   });
       console.log( this.numcliFol,this.numcli);
+      garantia.resetForm();
       this.limpiando();
+      this.obtenerTodasGarantias();
+      const cerrar = <HTMLElement>(document.getElementById('cerrarModalGar'));
+      cerrar.click();
       console.log(this.numcli, this.numcliFol);
   }
    

@@ -2,17 +2,22 @@
   <div class="p-2 bd-highlight">
     <form class="form-inline">
       <div class="form-group mb-2">
-        <select [(ngModel)]="proveedor" name="proveedores" id="proveedores" class="form-control-plaintext">
-          <option value="0">Seleccione un proveedor</option>
-          <option *ngFor="let prov of proveedores" [ngValue]="prov">{{prov.nombre}}</option>
-        </select>
+        <ng-multiselect-dropdown
+          [placeholder]="'Seleccione un proveedor'"
+          [data]="dropdownList"
+          [settings]="dropdownSettings"
+          (onSelect)="onItemSelect($event)"
+          (onDeSelect)="onDeSelect($event)"
+        >
+        </ng-multiselect-dropdown>
       </div>
       <button type="button" class="btn btn-primary ml-2 mb-2" (click)="obtener()">Obtener Costos</button>
       <button type="button" class="btn btn-secondary ml-2 mb-2" (click)="descargar()">Descargar</button>
     </form>
   </div>
 </div>
-<div class="d-flex justify-content-around">
+
+<!-- <div class="d-flex justify-content-around">
   <div class="p-2 bd-highlight">
     <form class="form-inline">
       <div class="form-group mb-2">
@@ -21,7 +26,7 @@
       </div>
     </form>
   </div>
-</div>
+</div> -->
 
 <div class="card">
   <div class="card-body">
@@ -32,6 +37,8 @@
       <table class="table table-sm">
         <thead>
           <tr>
+            <th>Número</th>
+            <th>Proveedor</th>
             <th>Código</th>
             <th>Clave</th>
             <th>Artículo</th>
@@ -42,6 +49,8 @@
         </thead>
         <tbody>
           <tr *ngFor="let prod of productos" [id]="prod.articuloid">
+            <td>{{prod.numero}}</td>
+            <td>{{prod.proveedor}}</td>
             <td>{{prod.codigo}}</td>
             <td>{{prod.clave}}</td>
             <td>{{prod.descripcio}}</td>

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 
 import * as _swal from 'sweetalert';
 import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
 const swal: SweetAlert = _swal as any;
+
+// MultiSelect
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 // Servicios
 import { ProveedoresService, ExcelService, HerramientasService } from '../../services/services.index';
@@ -14,6 +16,10 @@ import { ProveedoresService, ExcelService, HerramientasService } from '../../ser
   styles: []
 })
 export class CostosComponent implements OnInit {
+
+  // MultiSelect
+  dropdownList = [];
+  dropdownSettings: IDropdownSettings = {};
 
   proveedor: any = '0';
   proveedores: any[] = [];
@@ -29,30 +35,57 @@ export class CostosComponent implements OnInit {
 
   ngOnInit() {
     this.obtenerProveedores();
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      enableCheckAll: false,
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
   }
 
   obtenerProveedores() {
     this.proveedoresService.obtenerProveedores().subscribe((prov: any) => {
       if (prov.length > 0) {
-        this.proveedores = prov;
+        this.dropdownList = prov;
       }
     });
   }
 
+  onItemSelect(item: any) {
+    this.proveedores.push(item);
+  }
+
+  onDeSelect(items: any) {
+    const esBorrado = prov => {
+      return prov.item_id === items.item_id;
+    };
+    if (this.proveedores.find(esBorrado)) {
+      const indice = this.proveedores.indexOf(this.proveedores.find(esBorrado));
+      this.proveedores.splice(indice, 1);
+    }
+  }
+
   obtener() {
-    if (this.proveedor === '0') {
-      swal('Sin Proveedor', 'No ah seleccionado un proveedor.', 'warning');
+    if (this.proveedores.length === 0) {
+      swal('Sin Proveedor', 'No ah seleccionado proveedor.', 'warning');
       return;
     }
     this.buscando = true;
     this.productos = [];
-    this.proveedoresService.obtenerProductos(this.proveedor.clienteid).subscribe((prods: any) => {
-      if (prods.length > 0) {
-        this.productos = prods;
-        this.productosTemp = prods;
-      }
-      this.buscando = false;
-    });
+    this.productosTemp = [];
+    for (const prove of this.proveedores) {
+      this.proveedoresService.obtenerProductos(prove.item_id).subscribe((prods: any) => {
+        if (prods.length > 0) {
+          for (const prod of prods) {
+            this.productos.push(prod);
+            this.productosTemp.push(prod);
+          }
+        }
+      });
+    }
+    this.buscando = false;
   }
 
   filtrar(codigo: any) {

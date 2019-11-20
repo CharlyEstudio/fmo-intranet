@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 // Imprimir
 import {NgxPrintModule} from 'ngx-print';
 
+// MultiSelect
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+
 /* ------ Componentes ----- */
 // Escritorios
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -261,6 +264,7 @@ import { CostosComponent } from './costos/costos.component';
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyApgyf9zpctTzuckqSRRYiA9wgrVKeWGFY'
         }),
+        NgMultiSelectDropDownModule.forRoot(),
         AgmDirectionModule,
         NgxPrintModule
     ]

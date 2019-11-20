@@ -35,7 +35,7 @@ export class GarantiasComponent implements OnInit {
   accion: boolean = false;
   enviar: any = '';
   guia: any = '';
-  
+
   // Formulario del Producto
   folioGar: number = 0;
   numFactura: any = '';
@@ -162,8 +162,6 @@ export class GarantiasComponent implements OnInit {
       swal('Sin Cliente', 'Es necesario ingresar un número de cliente para continuar.', 'error');
     }
     this.numcliFol = garantia.value.numcliFol;
-    // console.log(this.numcliFol);
-
     this._clientesService.infoClienteCot(this.numcliFol).subscribe((cli: any) => {
       if (cli.length > 0) {
         this.nomcliFol = cli[0].NOMBRE;
@@ -176,7 +174,6 @@ export class GarantiasComponent implements OnInit {
     if (this.numFactura === '') {
       swal('Sin Folio', 'El folio de la factura es importante para scontinuar.', 'error');
     }
-    
     this._garantiaService.obtenerFactura(this.numFactura).subscribe((fac: any) => {
       if (fac.length > 0) {
         this.perid = fac[0].VENDEDORID;
@@ -200,7 +197,6 @@ export class GarantiasComponent implements OnInit {
       } else {
         swal('Factura Vacía', 'No se encontro registro de este folio.', 'error');
       }
-      console.log(this.numcli);
     });
   }
 
@@ -209,7 +205,6 @@ export class GarantiasComponent implements OnInit {
     if (this.numFacturaO === '') {
       swal('Sin Folio', 'El folio de la factura es importante para continuar.', 'error');
     }
-    
     this._garantiaService.obtenerFactura(this.numFacturaO).subscribe((fact: any) => {
       if (fact.length > 0) {
         this.peridO = fact[0].VENDEDORID;
@@ -236,12 +231,11 @@ export class GarantiasComponent implements OnInit {
     });
   }
 
-  enviarCosto(enviar: any){
+  enviarCosto(enviar: any) {
     this.enviar = enviar;
   }
-  
-  
-  obtenerPro(garantia: any){
+
+  obtenerPro(garantia: any) {
     this.accion = true;
     this.falla = garantia.value.falla;
     this.cantidad = garantia.value.cantidad;
@@ -249,52 +243,49 @@ export class GarantiasComponent implements OnInit {
     this.clvprov = this.pro.CLVPROV;
     this.costo = this.pro.PRECIO;
     this.descr = this.pro.DESCRIPCIO;
-
   }
-  limpiando(){
-    // console.log(this.garantias);
-    this.garantias = [];
+
+  limpiando() {
     this.pro = 0;
     this.accion = false;
-    this.numFactura= '';
-    this.numFacturaO= '';
-
-    this.falla= '';
+    this.numFactura = '';
+    this.numFacturaO = '';
+    this.falla = '';
     this.clave = '';
     this.costo = 0;
     this.descr = '';
-    this. nomcli= '';
-    this.nomcliO= '';
+    this.nomcli = '';
+    this.nomcliO = '';
     this.nomcliFol = '';
     this.lista = 0;
     this.listaO = 0;
     this.mecompro = '';
-    this.numcli = 5;
+    this.numcli = 0;
     this.numcliO = 0;
-    this.numcliFol = 5;
+    this.numcliFol = 0;
     this.saldo = 0;
     this.saldoO = 0;
-
-    // Detalles
     this.asesor = '';
     this.asesorO = '';
     this.cantidad = 0;
     this.clvprov = 0;
-    this.claveprod;
+    this.claveprod = '';
     this.costoprod = 0;
   }
 
+  reset(garantia: any) {
+    console.log(garantia);
+    garantia.resetForm();
+    this.limpiando();
+  }
+
   verInfo(garantia: any) {
-    
-    // this.fecregtru = Date;
-    
 
     this.fechaproceso = garantia.fechaproceso;
     this.fechaenviando = garantia.fechaenviando;
     this.fechaautoriza = garantia.fechaautoriza;
     this.fechaentrega = garantia.fechaentrega;
     this.fecenvio = garantia.fecenvio;
-    // this.estado = '';
     this.estado = garantia.estado;
     this.tipoFalla = garantia.falla;
     this.asesor = garantia.asesor;
@@ -307,7 +298,7 @@ export class GarantiasComponent implements OnInit {
       if (product.status) {
         this.claveprod = product.respuesta[0].clave;
         this.descr = product.respuesta[0].descripcion;
-      } 
+      }
     });
     this.costoprod = garantia.costo;
     this.fecha = garantia.fecha;
@@ -325,7 +316,6 @@ export class GarantiasComponent implements OnInit {
     this.mecompro = garantia.mecompro;
     this.placas = garantia.placas;
     this.chofer = garantia.chofer;
-    
     this._clientesService.infoClienteCot(this.numero).subscribe((cli: any) => {
       if (cli.length > 0) {
         this.nomcli = cli[0].NOMBRE;
@@ -365,24 +355,20 @@ export class GarantiasComponent implements OnInit {
 
 
   agregarGarantia(garantia: NgForm) {
-    // console.log(garantia.value);
-    if(garantia.value.numFacturaO === ''){
+
+    if (garantia.value.numFacturaO === '') {
       this.observa = '';
-    }else {
+    } else {
       this.observa = garantia.value.facturaDos;
     }
-    console.log(this.numcli, this.numcliFol);
-    
-    this.numcli = 1;
-    this.numcliFol = 1;
-
     this._garantiaService.nuevaGarantia(garantia.value, this.observa).subscribe((resp: any) => {
       if (resp) {
         swal('Nueva Garantia', 'Los datos de la garantia se han guardado correctamente.', 'success');
+        garantia.resetForm();
+        this.limpiando();
+        this.obtenerTodasGarantias();
         const cerrar = <HTMLElement>(document.getElementById('cerrarModalGar'));
         cerrar.click();
-          // this.obtenerTodasGarantias();
-          garantia.resetForm();
           setTimeout(() => {
             const payload = {
               datos: garantia.value,
@@ -390,14 +376,10 @@ export class GarantiasComponent implements OnInit {
             };
             this._webSocket.acciones('nueva-garantia', payload);
           }, 100);
-        }
-      });
-      console.log( this.numcliFol,this.numcli);
-      this.limpiando();
-      console.log(this.numcli, this.numcliFol);
+      }
+    });
   }
-   
- 
+
   autorizacion(valor: any) {
     if (valor === 'NO') {
       this.autorizado = false;
@@ -407,7 +389,6 @@ export class GarantiasComponent implements OnInit {
   }
  
   actualizarGarantia(garantia: NgForm) {
-    // console.log(garantia.value);
     if (this.estado === 'NUEVO') {
       if (garantia.value.fechaTrup < this.fecha) {
         swal('Fecha Incorrecta', 'No se puede colocar una fecha menor a la de registro.', 'error');
@@ -434,7 +415,6 @@ export class GarantiasComponent implements OnInit {
             const cerrar = <HTMLElement>(document.getElementById('editar'));
             cerrar.click();
             this.obtenerTodasGarantias();
-            
             setTimeout(() => {
               this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
             }, 100);
@@ -504,8 +484,7 @@ export class GarantiasComponent implements OnInit {
           swal('Cliente No Actualizado', 'Error al actualizar', 'error');
         }
       });
- 
-    }else if (this.estado === 'ENTREGANDO') {
+    } else if (this.estado === 'ENTREGANDO') {
       if (garantia.value !== '') {
         this.estado = 'TERMINADO';
         this._garantiaService.terminarGarantia(garantia.value, this.estado).subscribe((actualizado: any) => {
@@ -526,8 +505,8 @@ export class GarantiasComponent implements OnInit {
     }
   }
 
-  cancelar(){
-    this._garantiaService.cancelarGarantia(this.idgar).subscribe((resp:any) => {
+  cancelar() {
+    this._garantiaService.cancelarGarantia(this.idgar).subscribe((resp: any) => {
       swal('Garantia Cancelada', 'Esta garantía ha sido cancelada.', 'success');
       const cerrar = <HTMLElement>(document.getElementById('editar'));
           cerrar.click();
@@ -550,33 +529,27 @@ export class GarantiasComponent implements OnInit {
   obtenerFolio(garantia: any) {
     this.guia = '';
     this.foliosGuia = [];
-    this._garantiaService.buscarFolioHistorial(garantia.foltru).subscribe((resp: any)=>{
-      if(resp.ok){
-        if(resp.folios.length > 0){
+    this._garantiaService.buscarFolioHistorial(garantia.foltru).subscribe((resp: any) => {
+      if (resp.ok) {
+        if (resp.folios.length > 0) {
           this.foliosGuia = resp.folios;
-          var reversed = this.foliosGuia.reverse(); 
-          // console.log(reversed);
+          let reversed = this.foliosGuia.reverse();
           this.guia = 'DATOS DE GUIA';
-        }else{
+        } else {
           this.guia = 'GUIA NO ENCONTRADA';
         }
       }
     });
   }
 
-  devolucion(){
-    // console.log(this.estado);
+  devolucion() {
     this.estado = 'ENTREGAR';
     this.folterm = 'Devolucion';
-    // console.log(this.folterm)
     this._garantiaService.devolucionGarantia(this.idgar, this.estado, this.folterm).subscribe((resp:any) => {
       swal('Devolucion', 'Esta garantía esta devuelta', 'success');
       const cerrar = <HTMLElement>(document.getElementById('editar'));
           cerrar.click();
           this.obtenerTodasGarantias();
-          // this.folterm = '';
     });
-
   }
-
 }

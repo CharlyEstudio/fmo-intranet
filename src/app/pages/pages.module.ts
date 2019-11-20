@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 // Imprimir
 import {NgxPrintModule} from 'ngx-print';
 
+// MultiSelect
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+
 /* ------ Componentes ----- */
 // Escritorios
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -133,6 +136,7 @@ import { FacturasmonitorComponent } from './facturasmonitor/facturasmonitor.comp
 import { DiasvtasComponent } from './diasvtas/diasvtas.component';
 import { ComisioneschoferesComponent } from './comisioneschoferes/comisioneschoferes.component';
 import { ChequesdevComponent } from './chequesdev/chequesdev.component';
+import { CostosComponent } from './costos/costos.component';
 
 @NgModule({
     declarations: [
@@ -241,7 +245,8 @@ import { ChequesdevComponent } from './chequesdev/chequesdev.component';
         FacturasmonitorComponent,
         DiasvtasComponent,
         ComisioneschoferesComponent,
-        ChequesdevComponent
+        ChequesdevComponent,
+        CostosComponent
     ],
     exports: [
         DashborarDirComponent,
@@ -259,6 +264,7 @@ import { ChequesdevComponent } from './chequesdev/chequesdev.component';
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyApgyf9zpctTzuckqSRRYiA9wgrVKeWGFY'
         }),
+        NgMultiSelectDropDownModule.forRoot(),
         AgmDirectionModule,
         NgxPrintModule
     ]

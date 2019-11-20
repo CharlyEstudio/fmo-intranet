@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-around">
+  <div class="p-2 bd-highlight">
+    <form class="form-inline">
+      <div class="form-group mb-2">
+        <select [(ngModel)]="proveedor" name="proveedores" id="proveedores" class="form-control-plaintext">
+          <option value="0">Seleccione un proveedor</option>
+          <option *ngFor="let prov of proveedores" [ngValue]="prov">{{prov.nombre}}</option>
+        </select>
+      </div>
+      <button type="button" class="btn btn-primary ml-2 mb-2" (click)="obtener()">Obtener Costos</button>
+      <button type="button" class="btn btn-secondary ml-2 mb-2" (click)="descargar()">Descargar</button>
+    </form>
+  </div>
+</div>
+<div class="d-flex justify-content-around">
+  <div class="p-2 bd-highlight">
+    <form class="form-inline">
+      <div class="form-group mb-2">
+        <label for="codigo">Filtrar por Código: </label>
+        <input #codigo type="text" name="codigo" id="codigo" class="form-control-plaintext ml-2" placeholder="Ingrese código a buscar" autocomplete="off" (keyup)="filtrar(codigo.value)">
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <h3 *ngIf="productos.length === 0 && !buscando">Sin información a mostrar.</h3>
+    <h3 *ngIf="productos.length === 0 && buscando">Buscando...</h3>
+
+    <div class="table-responsive" *ngIf="productos.length > 0 && !buscando">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Clave</th>
+            <th>Artículo</th>
+            <th>SubCosto</th>
+            <th>IVA</th>
+            <th>Costo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let prod of productos" [id]="prod.articuloid">
+            <td>{{prod.codigo}}</td>
+            <td>{{prod.clave}}</td>
+            <td>{{prod.descripcio}}</td>
+            <td>{{prod.precio_bruto | currency}}</td>
+            <td>{{prod.iva | currency}}</td>
+            <td>{{prod.precio_neto | currency}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

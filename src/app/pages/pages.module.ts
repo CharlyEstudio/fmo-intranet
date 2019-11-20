@@ -133,6 +133,7 @@ import { FacturasmonitorComponent } from './facturasmonitor/facturasmonitor.comp
 import { DiasvtasComponent } from './diasvtas/diasvtas.component';
 import { ComisioneschoferesComponent } from './comisioneschoferes/comisioneschoferes.component';
 import { ChequesdevComponent } from './chequesdev/chequesdev.component';
+import { CostosComponent } from './costos/costos.component';
 
 @NgModule({
     declarations: [
@@ -241,7 +242,8 @@ import { ChequesdevComponent } from './chequesdev/chequesdev.component';
         FacturasmonitorComponent,
         DiasvtasComponent,
         ComisioneschoferesComponent,
-        ChequesdevComponent
+        ChequesdevComponent,
+        CostosComponent
     ],
     exports: [
         DashborarDirComponent,

@@ -86,6 +86,7 @@ import { FacturasmonitorComponent } from './facturasmonitor/facturasmonitor.comp
 import { DiasvtasComponent } from './diasvtas/diasvtas.component';
 import { ComisioneschoferesComponent } from './comisioneschoferes/comisioneschoferes.component';
 import { ChequesdevComponent } from './chequesdev/chequesdev.component';
+import { CostosComponent } from './costos/costos.component';
 
 const pageRoutes: Routes = [
     {
@@ -602,6 +603,16 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Cartera de Clientes',
+                    name: 'description'
+                }
+    },
+    // Costos Proveedores
+    {
+        path: 'costos',
+        component: CostosComponent,
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        data:   {
+                    titulo: 'Costos de Productos por Proveedor',
                     name: 'description'
                 }
     },

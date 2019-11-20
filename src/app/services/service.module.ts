@@ -55,7 +55,8 @@ import {
   PedFacturadosService,
   DiasvtasService,
   ChoferService,
-  ChequesdevService
+  ChequesdevService,
+  ProveedoresService
   // NotificationService
 } from "./services.index";
 
@@ -118,7 +119,8 @@ import {
     PedFacturadosService,
     DiasvtasService,
     ChoferService,
-    ChequesdevService
+    ChequesdevService,
+    ProveedoresService
     // Notificaciones
     // NotificationService
     // Magnitracking

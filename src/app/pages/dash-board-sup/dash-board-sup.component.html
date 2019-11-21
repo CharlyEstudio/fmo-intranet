@@ -281,7 +281,7 @@
                                     <!-- <agm-marker [opacity]="mostrarRuta1" *ngFor="let ubi of ubicacionVisita; let in = index" [iconUrl]="markerIconCli(ubi)" [title]="darLabelCli(in, ubi)" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker> -->
 
                                     <!-- Este si -->
-                                    <agm-marker [opacity]="mostrarRuta2" *ngFor="let ubi of ubicacionVisitaOrigen; let in = index" [iconUrl]="markerIconIcons(ubi)" [title]="darLabel(in, ubi)" [latitude]="ubi.latOrig" [longitude]="ubi.lngOrig"></agm-marker>
+                                    <agm-marker [opacity]="mostrarRuta2" *ngFor="let ubi of ubicacionVisitaOrigen; let in = index" [iconUrl]="markerIconIcons(in, ubi)" [title]="darLabel(in, ubi)" [latitude]="ubi.latOrig" [longitude]="ubi.lngOrig"></agm-marker>
 
                                     <!-- Este no -->
                                     <!-- <agm-polyline [visible]="mostrarPolyline1" *ngFor="let polyline of visitasRep; let i = index" [strokeColor]="polyline.color">

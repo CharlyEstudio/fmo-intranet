@@ -268,18 +268,32 @@ export class DashBoardSupComponent implements OnInit {
     });
   }
 
-  markerIconIcons(cli: any) {
+  markerIconIcons(index: number, cli: any) {
     let imagen;
-    if ((cli.venta !== '' || cli.cobro !== '') && cli.visita && cli.hora !== '') {
-      imagen = 'assets/images/asesores/4.png';
-    } else if ((cli.venta !== '' || cli.cobro !== '') && !cli.visita && cli.hora !== '') {
-      imagen = 'assets/images/asesores/2.png';
-    } else if ((cli.venta === '' && cli.cobro === '') && cli.visita && cli.hora !== '') {
-      imagen = 'assets/images/asesores/3.png';
-    } else if ((cli.venta === '' && cli.cobro === '') && !cli.visita && cli.hora !== '') {
-      imagen = 'assets/images/asesores/211.png';
+    if (index === 0) {
+      if ((cli.venta !== '' || cli.cobro !== '') && cli.visita && cli.hora !== '') {
+        imagen = 'assets/images/asesores/4-inicio.png';
+      } else if ((cli.venta !== '' || cli.cobro !== '') && !cli.visita && cli.hora !== '') {
+        imagen = 'assets/images/asesores/2-inicio.png';
+      } else if ((cli.venta === '' && cli.cobro === '') && cli.visita && cli.hora !== '') {
+        imagen = 'assets/images/asesores/3-inicio.png';
+      } else if ((cli.venta === '' && cli.cobro === '') && !cli.visita && cli.hora !== '') {
+        imagen = 'assets/images/asesores/211-inicio.png';
+      } else {
+        imagen = 'assets/images/asesores/8-inicio.png';
+      }
     } else {
-      imagen = 'assets/images/asesores/8.png';
+      if ((cli.venta !== '' || cli.cobro !== '') && cli.visita && cli.hora !== '') {
+        imagen = 'assets/images/asesores/4.png';
+      } else if ((cli.venta !== '' || cli.cobro !== '') && !cli.visita && cli.hora !== '') {
+        imagen = 'assets/images/asesores/2.png';
+      } else if ((cli.venta === '' && cli.cobro === '') && cli.visita && cli.hora !== '') {
+        imagen = 'assets/images/asesores/3.png';
+      } else if ((cli.venta === '' && cli.cobro === '') && !cli.visita && cli.hora !== '') {
+        imagen = 'assets/images/asesores/211.png';
+      } else {
+        imagen = 'assets/images/asesores/8.png';
+      }
     }
     return imagen;
   }

@@ -67,6 +67,11 @@
     color: #ffffff;
 }
 
+.badge-pink {
+    background: #EDB2F9;
+    color: #000000;
+}
+
 .card-warning {
     background: #ffb22b;
     color: #fff;
@@ -335,13 +340,13 @@ agm-map {
 }
 
 .mapaReporte {
-    height: 472px;
+    height: 100%;
     width: 100%!important;
     /* background: #06d79c; */
 }
 
 .mapaReporte agm-map {
-    height: 472px;
+    height: 90%;
 }
 
 .mapaUbicacion {

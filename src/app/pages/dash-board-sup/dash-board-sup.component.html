@@ -148,15 +148,15 @@
 
                 <div class="modal-header">
 
-                    <div class="row">
+                    <div class="d-flex justify-content-around">
 
-                        <div class="col-1">
+                        <div class="p-2 bd-highlight">
 
-                            <img [src]="img | imagen" class="img-fluid" width="900">
+                            <img [src]="img | imagen" class="rounded-circle" width="90">
 
                         </div>
 
-                        <div class="col-4">
+                        <div class="p-2 bd-highlight">
 
                             <h3 class="font-bold text-uppercase">{{asesor}}</h3>
 
@@ -164,7 +164,7 @@
 
                         </div>
 
-                        <div class="col-7">
+                        <div class="p-2 bd-highlight">
 
                             <h6>{{cliente}}</h6>
 
@@ -231,7 +231,7 @@
                                             <span class="badge badge-danger" *ngIf="(cli.vendio !== '' || cli.cobro !== '') && !cli.visitado && cli.horaReporte !== ''">ENGAÑO</span>
                                             <span class="badge badge-success" *ngIf="(cli.vendio !== '' || cli.cobro !== '') && cli.visitado && cli.horaReporte !== ''">CORRECTO</span>
                                             <span class="badge badge-warning" *ngIf="(cli.vendio === '' && cli.cobro === '') && cli.visitado && cli.horaReporte !== ''">ADVERTENCIA</span>
-                                            <span class="badge badge-engano" *ngIf="(cli.vendio === '' && cli.cobro === '') && !cli.visitado && cli.horaReporte !== ''">SIN VISITA</span>
+                                            <span class="badge badge-pink" *ngIf="(cli.vendio === '' && cli.cobro === '') && !cli.visitado && cli.horaReporte !== ''">SIN VISITA</span>
                                             <span class="badge badge-dark" *ngIf="(cli.vendio === '' && cli.cobro === '') && !cli.visitado && cli.horaReporte === ''">PENDIENTE</span>
                                         </td>
                                         
@@ -275,15 +275,13 @@
 
                                 <agm-map [styles]="styles" [usePanning]="usePanning" [latitude]="lat" [longitude]="lng" [zoom]="zoom" [mapTypeId]="'roadmap'" [mapTypeControl]="mapTypeControl" [scaleControl]="mapTypeControl">
 
-                                    <agm-marker [latitude]="lat" [longitude]="lng" [iconUrl]="markerIcon()"></agm-marker>
-
-                                    <agm-marker *ngFor="let ubi of ruta" [opacity]="mostrarClientes" [title]="titleCli(ubi.numero)" [iconUrl]="markerIconCli(ubi)" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker>
+                                    <agm-marker *ngFor="let ubi of ruta; let indice = i" [opacity]="mostrarClientes" [title]="titleCli(ubi.numero)" [iconUrl]="markerIconCli(ubi)" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker>
 
                                     <!-- Este no -->
                                     <!-- <agm-marker [opacity]="mostrarRuta1" *ngFor="let ubi of ubicacionVisita; let in = index" [iconUrl]="markerIconCli(ubi)" [title]="darLabelCli(in, ubi)" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker> -->
 
                                     <!-- Este si -->
-                                    <agm-marker [opacity]="mostrarRuta2" *ngFor="let ubi of ubicacionVisitaOrigen; let in = index" [iconUrl]="markerIconIcons(ubi)" [title]="darLabel(in, ubi)" [latitude]="ubi.latOrig" [longitude]="ubi.lngOrig"></agm-marker>
+                                    <agm-marker [opacity]="mostrarRuta2" *ngFor="let ubi of ubicacionVisitaOrigen; let in = index" [iconUrl]="markerIconIcons(in, ubi)" [title]="darLabel(in, ubi)" [latitude]="ubi.latOrig" [longitude]="ubi.lngOrig"></agm-marker>
 
                                     <!-- Este no -->
                                     <!-- <agm-polyline [visible]="mostrarPolyline1" *ngFor="let polyline of visitasRep; let i = index" [strokeColor]="polyline.color">

@@ -152,7 +152,7 @@
 
                         <div class="col-1">
 
-                            <img [src]="img | imagen" class="img-fluid">
+                            <img [src]="img | imagen" class="img-fluid" width="900">
 
                         </div>
 
@@ -222,28 +222,22 @@
 
                                         <td>{{cli.numero}}</td>
 
-                                        <!-- <td style="font-size: 12px!important;">{{cli.nombre}}</td> -->
-
                                         <td>{{cli.vendio | currency}}</td>
 
                                         <td>{{cli.cobro | currency}}</td>
 
                                         <td>
                                             
-                                            <span class="badge" [ngClass]="{'badge-danger': !cli.visitado, 'badge-success': cli.visitado}">{{(cli.visitado) ? 'SI' : 'NO'}}</span>
-                                        
+                                            <span class="badge badge-danger" *ngIf="(cli.vendio !== '' || cli.cobro !== '') && !cli.visitado && cli.horaReporte !== ''">ENGAÑO</span>
+                                            <span class="badge badge-success" *ngIf="(cli.vendio !== '' || cli.cobro !== '') && cli.visitado && cli.horaReporte !== ''">CORRECTO</span>
+                                            <span class="badge badge-warning" *ngIf="(cli.vendio === '' && cli.cobro === '') && cli.visitado && cli.horaReporte !== ''">ADVERTENCIA</span>
+                                            <span class="badge badge-engano" *ngIf="(cli.vendio === '' && cli.cobro === '') && !cli.visitado && cli.horaReporte !== ''">SIN VISITA</span>
+                                            <span class="badge badge-dark" *ngIf="(cli.vendio === '' && cli.cobro === '') && !cli.visitado && cli.horaReporte === ''">PENDIENTE</span>
                                         </td>
                                         
                                         <td>{{cli.distancia}} {{cli.medida}}</td>
 
                                     </tr>
-
-                                    <!-- <tr *ngFor="let cli of ruta, let i = index">
-
-                                        <td>Estatus: </td>
-
-                                        <td colspan="6">{{cli.comentario}}</td>
-                                    </tr> -->
 
                                 </tbody>
 
@@ -255,13 +249,13 @@
 
                             <div class="mapaReporte" *ngIf="sinruta === ''">
 
-                                <div class="form-check form-check-inline">
+                                <!-- <div class="form-check form-check-inline">
 
                                     <input checked="true" class="form-check-input" type="checkbox" id="inlineCheckbox1" value="1" (click)="mostrarRuta(1)">
 
                                     <label class="form-check-label" for="inlineCheckbox1">{{(mostrarRuta1 === 1) ? 'Ocultar ruta clientes' : 'Mostrar ruta clientes'}}</label>
 
-                                </div>
+                                </div> -->
 
                                 <div class="form-check form-check-inline">
 
@@ -285,21 +279,27 @@
 
                                     <agm-marker *ngFor="let ubi of ruta" [opacity]="mostrarClientes" [title]="titleCli(ubi.numero)" [iconUrl]="markerIconCli(ubi)" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker>
 
-                                    <agm-marker [opacity]="mostrarRuta1" *ngFor="let ubi of ubicacionVisita; let in = index" [iconUrl]="markerIconCli(ubi)" [title]="darLabelCli(in, ubi)" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker>
+                                    <!-- Este no -->
+                                    <!-- <agm-marker [opacity]="mostrarRuta1" *ngFor="let ubi of ubicacionVisita; let in = index" [iconUrl]="markerIconCli(ubi)" [title]="darLabelCli(in, ubi)" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker> -->
 
-                                    <agm-marker [opacity]="mostrarRuta2" *ngFor="let ubi of ubicacionVisitaOrigen; let in = index" [iconUrl]="markerIcon()" [title]="darLabel(in, ubi)" [latitude]="ubi.latOrig" [longitude]="ubi.lngOrig"></agm-marker>
+                                    <!-- Este si -->
+                                    <agm-marker [opacity]="mostrarRuta2" *ngFor="let ubi of ubicacionVisitaOrigen; let in = index" [iconUrl]="markerIconIcons(ubi)" [title]="darLabel(in, ubi)" [latitude]="ubi.latOrig" [longitude]="ubi.lngOrig"></agm-marker>
 
-                                    <agm-polyline [visible]="mostrarPolyline1" *ngFor="let polyline of visitasRep; let i = index" [strokeColor]="polyline.color">
+                                    <!-- Este no -->
+                                    <!-- <agm-polyline [visible]="mostrarPolyline1" *ngFor="let polyline of visitasRep; let i = index" [strokeColor]="polyline.color">
 
                                         <agm-polyline-point *ngFor="let point of polyline.path" [latitude]="point.lat" [longitude]="point.lng"></agm-polyline-point>
 
-                                    </agm-polyline>
+                                    </agm-polyline> -->
 
+                                    <!-- Este si -->
                                     <agm-polyline [visible]="mostrarPolyline2" *ngFor="let polyline of sigueCLi; let i = index" [strokeColor]="polyline.color">
 
                                         <agm-polyline-point *ngFor="let point of polyline.path" [latitude]="point.latOrig" [longitude]="point.lngOrig"></agm-polyline-point>
 
                                     </agm-polyline>
+
+                                    <agm-marker [latitude]="lat" [longitude]="lng" [iconUrl]="markerIcon()"></agm-marker>
 
                                 </agm-map>
 

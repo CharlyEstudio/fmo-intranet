@@ -23,8 +23,8 @@ export class DashBoardSupComponent implements OnInit {
   asesor: any;
   ultimaPosicion: any;
   ruta: any[] = [];
-  comentario: string = '';
-  cliente: string = '';
+  comentario: string = 'Comentario';
+  cliente: string = 'Número de Cliente';
 
   // Información en el Mapa
   labelCli: string = '';
@@ -49,7 +49,7 @@ export class DashBoardSupComponent implements OnInit {
   sigueCLi = [
     {
       path: [],
-      color: '#2196f3'
+      color: '#06d79c'
     }
   ];
   styles = SILVER_STYLE;
@@ -153,16 +153,25 @@ export class DashBoardSupComponent implements OnInit {
     this.router.navigate(['/precom-vista/', idFerrum, nombre, img]);
   }
 
-  reporte( idFerrum: any, nombre: any, img: any = '', lat: any, lng: any, horaUbicacion: any ) {
-    this.lat = lat;
-    this.lng = lng;
+  reporte( idFerrum: any, nombre: any, img: any = '' ) {
+    this._usuarioService.buscarUsuarioEsp(idFerrum).subscribe((user: any) => {
+      if (user.ok) {
+        this.lat = user.usuario.lat;
+        this.lng = user.usuario.lng;
+        this.ultimaPosicion = user.usuario.horaUbicacion;
+      } else {
+        this.lat = 0;
+        this.lng = 0;
+        this.ultimaPosicion = null;
+      }
+    });
     this.sinruta = '';
+    this.comentario = 'Comentario';
+    this.cliente = 'Número de Cliente';
     this._supervisoresServices.getComentarios(idFerrum).subscribe((datos: any) => {
       if (datos.length > 0) {
-        console.log(datos);
         this.img = img;
         this.asesor = nombre;
-        this.ultimaPosicion = horaUbicacion;
         this.ruta = datos;
         this.ubicacionVisita = [];
         this.ubicacionVisitaOrigen = [];
@@ -188,6 +197,8 @@ export class DashBoardSupComponent implements OnInit {
                 const dividirOrigen = visitas.visitados.find(esCli).origen.split(',');
                 visitas.visitados.find(esCli).latOrig = Number(dividirOrigen[0]);
                 visitas.visitados.find(esCli).lngOrig = Number(dividirOrigen[1]);
+                visitas.visitados.find(esCli).venta = dat.vendio;
+                visitas.visitados.find(esCli).cobro = dat.cobro;
                 this.sigueCLi[0].path.push(visitas.visitados.find(esCli));
                 this.ubicacionVisitaOrigen.push(visitas.visitados.find(esCli));
 
@@ -245,11 +256,8 @@ export class DashBoardSupComponent implements OnInit {
           }
         });
       } else {
-        this.lat = 0;
-        this.lng = 0;
         this.img = img;
         this.asesor = nombre;
-        this.ultimaPosicion = horaUbicacion;
         this.ruta = datos;
         this.ubicacionVisita = [];
         this.ubicacionVisitaOrigen = [];
@@ -260,18 +268,27 @@ export class DashBoardSupComponent implements OnInit {
     });
   }
 
+  markerIconIcons(cli: any) {
+    let imagen;
+    if ((cli.venta !== 0 || cli.cobro !== '') && cli.visita) {
+      imagen = 'assets/images/asesores/4.png';
+    } else if ((cli.venta !== 0 || cli.cobro !== '') && !cli.visita) {
+      imagen = 'assets/images/asesores/2.png';
+    } else if ((cli.venta === 0 || cli.cobro === '') && cli.visita) {
+      imagen = 'assets/images/asesores/3.png';
+    } else if ((cli.venta === 0 || cli.cobro === '') && !cli.visita) {
+      imagen = 'assets/images/asesores/2.png';
+    }
+    return imagen;
+  }
+
   markerIcon() {
-    const imagen = 'assets/images/asesores/sup.png';
+    const imagen = 'assets/images/asesores/arrow.png';
     return imagen;
   }
 
   markerIconCli(cli: any) {
-    let imagen;
-    if (cli.visitado) {
-      imagen = 'assets/images/asesores/asesor.png';
-    } else {
-      imagen = 'assets/images/asesores/customer.png';
-    }
+    const imagen = 'assets/images/asesores/tienda.png';
     return imagen;
   }
 
@@ -325,7 +342,8 @@ export class DashBoardSupComponent implements OnInit {
   }
 
   entraMouse(event: any) {
-    this.comentario = '';
+    this.comentario = 'Comentario';
+    this.cliente = 'Número de Cliente';
     if (event.comentario !== '') {
       this.comentario = event.comentario;
     } else {

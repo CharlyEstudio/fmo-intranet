@@ -12,7 +12,8 @@
         </ng-multiselect-dropdown>
       </div>
       <button type="button" class="btn btn-primary ml-2 mb-2" (click)="obtener()">Obtener Costos</button>
-      <button type="button" class="btn btn-secondary ml-2 mb-2" (click)="descargar()">Descargar</button>
+      <button type="button" class="btn btn-secondary ml-2 mb-2" (click)="descargar()">Excel</button>
+      <button type="button" class="btn btn-youtube ml-2 mb-2" (click)="descargarPDF()">PDF</button>
     </form>
   </div>
 </div>
@@ -60,6 +61,10 @@
           </tr>
         </tbody>
       </table>
+    </div>
+
+    <div class="col-md-12" *ngIf="pdf !== ''">
+        <embed [src]="pdf" type="application/pdf" width="100%" height="600">
     </div>
   </div>
 </div>

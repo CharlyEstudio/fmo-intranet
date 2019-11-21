@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import * as _swal from 'sweetalert';
 import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
@@ -26,11 +27,13 @@ export class CostosComponent implements OnInit {
   productos: any[] = [];
   productosTemp: any[] = [];
   buscando: boolean = false;
+  pdf: any = '';
 
   constructor(
     private proveedoresService: ProveedoresService,
     private excelService: ExcelService,
-    private herramientasService: HerramientasService
+    private herramientasService: HerramientasService,
+    public sanitizer: DomSanitizer,
   ) { }
 
   ngOnInit() {
@@ -72,6 +75,7 @@ export class CostosComponent implements OnInit {
       swal('Sin Proveedor', 'No ah seleccionado proveedor.', 'warning');
       return;
     }
+    this.pdf = '';
     this.buscando = true;
     this.productos = [];
     this.productosTemp = [];
@@ -106,8 +110,20 @@ export class CostosComponent implements OnInit {
       swal('Sin Productos', 'No se puede descargar nada, por que no hay productos.', 'warning');
       return;
     }
-    const file = this.proveedor.nombre + '_' + this.herramientasService.fechaActual();
+    const file = 'Proveedores_' + this.herramientasService.fechaActual();
     this.excelService.exportAsExcelFile(this.productos, file);
+  }
+
+  descargarPDF() {
+    if (this.productos.length === 0) {
+      swal('Sin Productos', 'No se puede descargar nada, por que no hay productos.', 'warning');
+      return;
+    }
+    this.proveedoresService.descargarPDF(this.productos).subscribe((resp: any) => {
+      if (resp.ok) {
+        this.pdf = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/' + resp.file);
+      }
+    });
   }
 
 }

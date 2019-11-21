@@ -29,4 +29,10 @@ export class ProveedoresService {
     return this.http.get( url );
   }
 
+  descargarPDF(datos: any) {
+    const url = `${URL_SERVICIO_GENERAL}:${PUERTO_SERVER}/api/proveedores.php?opcion=3`;
+
+    return this.http.post( url, {data: datos}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } } );
+  }
+
 }

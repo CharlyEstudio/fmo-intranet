@@ -270,14 +270,16 @@ export class DashBoardSupComponent implements OnInit {
 
   markerIconIcons(cli: any) {
     let imagen;
-    if ((cli.venta !== 0 || cli.cobro !== '') && cli.visita) {
+    if ((cli.venta !== '' || cli.cobro !== '') && cli.visita && cli.hora !== '') {
       imagen = 'assets/images/asesores/4.png';
-    } else if ((cli.venta !== 0 || cli.cobro !== '') && !cli.visita) {
+    } else if ((cli.venta !== '' || cli.cobro !== '') && !cli.visita && cli.hora !== '') {
       imagen = 'assets/images/asesores/2.png';
-    } else if ((cli.venta === 0 || cli.cobro === '') && cli.visita) {
+    } else if ((cli.venta === '' && cli.cobro === '') && cli.visita && cli.hora !== '') {
       imagen = 'assets/images/asesores/3.png';
-    } else if ((cli.venta === 0 || cli.cobro === '') && !cli.visita) {
-      imagen = 'assets/images/asesores/2.png';
+    } else if ((cli.venta === '' && cli.cobro === '') && !cli.visita && cli.hora !== '') {
+      imagen = 'assets/images/asesores/211.png';
+    } else {
+      imagen = 'assets/images/asesores/8.png';
     }
     return imagen;
   }
@@ -299,7 +301,9 @@ export class DashBoardSupComponent implements OnInit {
 
   darLabelCli(indice: number, ubi: any) {
     const ind = indice + 1;
-    return String('#' + ubi.numero + '|' + ind + '-C');
+    const name = '#' + ubi.numero + '|' + ind + '-C';
+    const label = {color: 'black', fontWeight: 'bold', text: name};
+    return label;
   }
 
   titleCli(numero: number) {

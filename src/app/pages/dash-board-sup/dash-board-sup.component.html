@@ -273,6 +273,32 @@
 
                                 </div>
 
+                                <div class="form-check form-check-inline m-b-0">
+
+                                    <table class="table table-sm font-size-4 m-b-0" style="font-size: 12px!important;">
+
+                                        <tbody>
+        
+                                            <tr>
+        
+                                                <td class="p-0"><i class="fa fa-circle m-l-10 font-10 text-success"></i> SI V/C & SI VISITA</td>
+        
+                                                <td class="p-0"><i class="fa fa-circle m-l-10 font-10 text-danger"></i> SI V/C & NO VISITA</td>
+        
+                                                <td class="p-0"><i class="fa fa-circle m-l-10 font-10 text-warning"></i> NO V/C & SI VISITA</td>
+        
+                                                <td class="p-0"><i class="fa fa-circle m-l-10 font-10 text-pink"></i> NO V/C & NO VISITA</td>
+        
+                                                <td class="p-0"><i class="fa fa-circle m-l-10 font-10 text-dark"></i> PENDIENTE</td>
+        
+                                            </tr>
+        
+                                        </tbody>
+        
+                                    </table>
+
+                                </div>
+
                                 <agm-map [styles]="styles" [usePanning]="usePanning" [latitude]="lat" [longitude]="lng" [zoom]="zoom" [mapTypeId]="'roadmap'" [mapTypeControl]="mapTypeControl" [scaleControl]="mapTypeControl">
 
                                     <agm-marker *ngFor="let ubi of ruta; let indice = i" [opacity]="mostrarClientes" [title]="titleCli(ubi.numero)" [iconUrl]="markerIconCli(ubi)" [latitude]="ubi.lat" [longitude]="ubi.lng"></agm-marker>

@@ -392,7 +392,8 @@ export class DashBoardSupComponent implements OnInit {
   }
 
   verCliMap(cli: any) {
-    this.zoom = 11;
+    this.limpiarPre();
+    this.zoom = 14;
     this.mostrarPre = true;
     this.mostrarPolyline2 = false;
     this.mostrarRuta2 = 0;

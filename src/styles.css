@@ -72,6 +72,10 @@
     color: #000000;
 }
 
+.text-pink {
+    color: #EDB2F9;
+}
+
 .card-warning {
     background: #ffb22b;
     color: #fff;
@@ -207,7 +211,7 @@ User card page
 .el-element-overlay .el-card-item .el-overlay-1:hover img {
     -ms-transform: scale(1.2) translateZ(0);
     -webkit-transform: scale(1.2) translateZ(0);
-    /* transform: scale(1.2) translateZ(0); */
+    transform: scale(1.2) translateZ(0);
 }
 
 .el-element-overlay .el-card-item .el-overlay-1 .el-info {
@@ -340,13 +344,14 @@ agm-map {
 }
 
 .mapaReporte {
-    height: 100%;
-    width: 100%!important;
+    height: 600px;
+    /* width: 600px!important; */
     /* background: #06d79c; */
 }
 
 .mapaReporte agm-map {
-    height: 90%;
+    height: 100%;
+    width: 100%;
 }
 
 .mapaUbicacion {

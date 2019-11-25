@@ -201,7 +201,7 @@ export class AppComponent implements OnInit {
           });
       }, 10000);
     })
-    .retry()
+    // .retry()
     .map((resp) => {
       return resp;
     });
@@ -216,7 +216,7 @@ export class AppComponent implements OnInit {
           });
       }, 10000);
     })
-    .retry()
+    // .retry()
     .map((resp) => {
       return resp;
     });

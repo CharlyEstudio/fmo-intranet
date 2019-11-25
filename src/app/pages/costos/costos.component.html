@@ -2,7 +2,7 @@
   <div class="p-2 bd-highlight">
     <form class="form-inline">
       <div class="form-group mb-2">
-        <ng-multiselect-dropdown
+        <ng-multiselect-dropdown style="width: 700px!important;"
           [placeholder]="'Seleccione un proveedor'"
           [data]="dropdownList"
           [settings]="dropdownSettings"
@@ -17,17 +17,6 @@
     </form>
   </div>
 </div>
-
-<!-- <div class="d-flex justify-content-around">
-  <div class="p-2 bd-highlight">
-    <form class="form-inline">
-      <div class="form-group mb-2">
-        <label for="codigo">Filtrar por Código: </label>
-        <input #codigo type="text" name="codigo" id="codigo" class="form-control-plaintext ml-2" placeholder="Ingrese código a buscar" autocomplete="off" (keyup)="filtrar(codigo.value)">
-      </div>
-    </form>
-  </div>
-</div> -->
 
 <div class="card">
   <div class="card-body">

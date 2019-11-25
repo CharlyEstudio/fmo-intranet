@@ -156,7 +156,7 @@
 
                         </div>
 
-                        <div class="p-2 bd-highlight">
+                        <div class="p-2 bd-highlight" style="width: 800px;">
 
                             <h3 class="font-bold text-uppercase">{{asesor}}</h3>
 
@@ -188,6 +188,19 @@
 
                         <div class="col-md-4 col-lg-4 col-sm-4">
 
+                            <button type="submit" class="btn btn-info" (click)="limpiarPre()" [disabled]="!mostrarPre">Limpiar</button>
+
+                            <!-- <select #tipoMapa name="tipoMapa" id="tipomapa" class="form-control-plaintext" (change)="cambiarMapa(tipoMapa.value)">
+                                <option value="0">Seleccione un color de mapa</option>
+                                <option value="STANDAR_STYLE">Normal</option>
+                                <option value="NIGHT_STYLE">Noche</option>
+                                <option value="DARK_STYLE">Oscuro</option>
+                                <option value="RETRO_STYLE">Retro</option>
+                                <option value="SILVER_STYLE">Plata</option>
+                                <option value="GREY_STYLE">Gris</option>
+                                <option value="AUBERGINE_STYLE">Nocturno Azul</option>
+                            </select> -->
+
                             <table class="table table-sm table-hover" style="font-size: 12px!important;" *ngIf="sinruta === ''">
 
                                 <thead>
@@ -214,7 +227,7 @@
 
                                 <tbody>
 
-                                    <tr *ngFor="let cli of ruta, let i = index" (mouseenter)="entraMouse(cli)">
+                                    <tr *ngFor="let cli of ruta, let i = index" class="tipo-cursor" (click)="verCliMap(cli)" (mouseenter)="entraMouse(cli)">
 
                                         <td>{{(cli.horaReporte !== '') ? (i + 1) : '--'}}</td>
 
@@ -259,7 +272,7 @@
 
                                 <div class="form-check form-check-inline">
 
-                                    <input checked="true" class="form-check-input" type="checkbox" id="inlineCheckbox2" value="2" (click)="mostrarRuta(2)">
+                                    <input [disabled]="mostrarPre ? true : false" [checked]="mostrarPre ? false : true" class="form-check-input" type="checkbox" id="inlineCheckbox2" value="2" (click)="mostrarRuta(2)">
 
                                     <label class="form-check-label" for="inlineCheckbox2">{{(mostrarRuta2 === 1) ? 'Ocultar ruta asesor' : 'Mostrar ruta asesor'}}</label>
 
@@ -267,7 +280,7 @@
 
                                 <div class="form-check form-check-inline">
 
-                                    <input checked="true" class="form-check-input" type="checkbox" id="inlineCheckbox3" value="3" (click)="mostrarRuta(3)">
+                                    <input class="form-check-input" checked="true" type="checkbox" id="inlineCheckbox3" value="3" (click)="mostrarRuta(3)">
 
                                     <label class="form-check-label" for="inlineCheckbox3">{{(mostrarClientes === 1) ? 'Ocultar clientes' : 'Mostrar clientes'}}</label>
 
@@ -323,7 +336,16 @@
 
                                     </agm-polyline>
 
-                                    <agm-marker [latitude]="lat" [longitude]="lng" [iconUrl]="markerIcon()"></agm-marker>
+                                    <!-- Este si -->
+                                    <agm-polyline [visible]="mostrarPre" *ngFor="let polyline of preliminar; let i = index" [strokeColor]="polyline.color">
+
+                                        <agm-polyline-point *ngFor="let point of polyline.path" [latitude]="point.lat" [longitude]="point.lng"></agm-polyline-point>
+
+                                    </agm-polyline>
+
+                                    <agm-marker [opacity]="mostrarPre ? 1 : 0" [latitude]="lat" [longitude]="lng" [iconUrl]="markerIconPre()"></agm-marker>
+
+                                    <agm-marker [opacity]="!mostrarPre ? 1 : 0" [latitude]="lat" [longitude]="lng" [iconUrl]="markerIcon()"></agm-marker>
 
                                 </agm-map>
 

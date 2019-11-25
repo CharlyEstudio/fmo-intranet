@@ -52,7 +52,17 @@ export class DashBoardSupComponent implements OnInit {
       color: '#06d79c'
     }
   ];
-  styles = SILVER_STYLE;
+  // Mostrar Preliminar
+  mostrarPre: boolean = false;
+  latPre: number = 0;
+  lngPre: number = 0;
+  preliminar = [
+    {
+      path: [],
+      color: 'red'
+    }
+  ];
+  styles = AUBERGINE_STYLE;
 
   constructor(
     private router: Router,
@@ -61,6 +71,10 @@ export class DashBoardSupComponent implements OnInit {
     private _supervisoresServices: SupervisoresService,
     private _visitasService: VisitasClientesService
   ) { }
+
+  cambiarMapa(tipo: any) {
+    this.styles = tipo;
+  }
 
   ngOnInit() {
 
@@ -154,6 +168,13 @@ export class DashBoardSupComponent implements OnInit {
   }
 
   reporte( idFerrum: any, nombre: any, img: any = '' ) {
+    this.zoom = 11;
+    this.mostrarPre = false;
+    this.mostrarPolyline2 = true;
+    this.mostrarRuta2 = 1;
+    this.latPre = 0;
+    this.lngPre = 0;
+    this.preliminar[0].path = [];
     this._usuarioService.buscarUsuarioEsp(idFerrum).subscribe((user: any) => {
       if (user.ok) {
         this.lat = user.usuario.lat;
@@ -368,6 +389,53 @@ export class DashBoardSupComponent implements OnInit {
       this.comentario = 'Sin Comentarios';
     }
     this.cliente = event.numero;
+  }
+
+  verCliMap(cli: any) {
+    this.zoom = 11;
+    this.mostrarPre = true;
+    this.mostrarPolyline2 = false;
+    this.mostrarRuta2 = 0;
+    this.latPre = this.lat;
+    this.lngPre = this.lng;
+    if (cli.origen !== '') {
+      this.zoom = 16;
+      const origenPre = cli.origen.split(',');
+      const destinoPre = cli.destino.split(',');
+      this.lat = Number(origenPre[0]);
+      this.lng = Number(origenPre[1]);
+      const cargar = [
+        {lat: Number(origenPre[0]), lng: Number(origenPre[1])},
+        {lat: Number(destinoPre[0]), lng: Number(destinoPre[1])},
+      ];
+      this.preliminar[0].path = cargar;
+    } else {
+      this.zoom = 19;
+      this.lat = cli.lat;
+      this.lng = cli.lng;
+      const cargar = [
+        {lat: cli.lat, lng: cli.lng},
+        {lat: cli.lat, lng: cli.lng},
+      ];
+      this.preliminar[0].path = cargar;
+    }
+  }
+
+  markerIconPre() {
+    const imagen = 'assets/images/asesores/8-inicio.png';
+    return imagen;
+  }
+
+  limpiarPre() {
+    this.mostrarPre = false;
+    this.mostrarPolyline2 = true;
+    this.mostrarRuta2 = 1;
+    this.lat = this.latPre;
+    this.lng = this.lngPre;
+    this.latPre = 0;
+    this.lngPre = 0;
+    this.preliminar[0].path = [];
+    this.zoom = 11;
   }
 
 }

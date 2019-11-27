@@ -56,7 +56,8 @@ import {
   DiasvtasService,
   ChoferService,
   ChequesdevService,
-  ProveedoresService
+  ProveedoresService,
+  ContaGuard
   // NotificationService
 } from "./services.index";
 
@@ -78,6 +79,7 @@ import {
     AuditoriaGuard,
     MesaGuard,
     GuiasEdoCtaGuard,
+    ContaGuard,
     // Servicios
     SettingsService,
     SidebarService,

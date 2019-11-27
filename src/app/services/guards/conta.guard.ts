@@ -8,7 +8,7 @@ const swal: SweetAlert = _swal as any;
 import { UsuarioService } from '../usuario/usuario.service';
 
 @Injectable()
-export class DireccionGuard implements CanActivate {
+export class ContaGuard implements CanActivate {
   constructor(
     private _usuarioService: UsuarioService
   ) {}
@@ -16,11 +16,11 @@ export class DireccionGuard implements CanActivate {
   canActivate() {
     if ( this._usuarioService.usuario.rol === 'ADMIN_ROLE'
           || this._usuarioService.usuario.rol === 'DIR_ROLE'
-          // || this._usuarioService.usuario.rol === 'CONTA_ROLE'
-          || this._usuarioService.usuario.rol === 'GER_ROLE' ) {
+          || this._usuarioService.usuario.rol === 'GER_ROLE'
+          || this._usuarioService.usuario.rol === 'CONTA_ROLE' ) {
       return true;
     } else {
-      console.log('Bolqueado por el DIR GUARD');
+      console.log('Bolqueado por el CONTA GUARD');
       swal('Sin acceso' , 'No tiene autorizado ingresar en esta sección.', 'error');
       return false;
     }

@@ -70,6 +70,10 @@ export class LoginComponent implements OnInit {
 
             this.router.navigate(['/dashboardAse']);
 
+          } else if (this._usuarioService.usuario.rol === "CONTA_ROLE") {
+
+            this.router.navigate(['/diasvtas']);
+
           } else if (this._usuarioService.usuario.rol === "SUP_ROLE") {
 
             this.router.navigate(['/dashBoardSup']);

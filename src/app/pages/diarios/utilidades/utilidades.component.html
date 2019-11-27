@@ -22,6 +22,8 @@
 
       <button type="button" class="btn btn-success btn-block waves-effect waves-light m-r-10" (click)="solicitar( f )">Solicitar</button>
 
+      <button type="button" class="btn btn-danger btn-block waves-effect waves-light m-r-10" (click)="descargar( f )">Descargar</button>
+
     </form>
 
   </div>
@@ -37,6 +39,8 @@
     <span *ngIf="respuesta">No ha solicitado nada.</span>
 
     <span *ngIf="ventas">No hay detalles.</span>
+
+    <span *ngIf="descarga">Datos descargado.</span>
 
     <div class="container-fluid" *ngIf="respuestaGeneral">
 

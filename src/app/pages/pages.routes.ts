@@ -10,7 +10,8 @@ import {
     DireccionGuard,
     AuditoriaGuard,
     MesaGuard,
-    GuiasEdoCtaGuard
+    GuiasEdoCtaGuard,
+    ContaGuard
 } from '../services/services.index';
 
 // Components
@@ -489,7 +490,7 @@ const pageRoutes: Routes = [
     {
         path: 'diasvtas',
         component: DiasvtasComponent,
-        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        canActivate: [ ContaGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Comparación de Ventas por Día',
@@ -499,7 +500,7 @@ const pageRoutes: Routes = [
     {
         path: 'diarios',
         component: DiariosComponent,
-        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        canActivate: [ ContaGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Panel Diarios',
@@ -509,7 +510,7 @@ const pageRoutes: Routes = [
     {
         path: 'dVentas',
         component: VentaComponent,
-        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        canActivate: [ ContaGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Diario de Ventas',
@@ -519,7 +520,7 @@ const pageRoutes: Routes = [
     {
         path: 'dCompras',
         component: CompraComponent,
-        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        canActivate: [ ContaGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Diario de Compras',
@@ -529,7 +530,7 @@ const pageRoutes: Routes = [
     {
         path: 'utilidades',
         component: UtilidadesComponent,
-        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        canActivate: [ ContaGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Utilidades',
@@ -539,7 +540,7 @@ const pageRoutes: Routes = [
     {
         path: 'notCred',
         component: NotasComponent,
-        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        canActivate: [ ContaGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Notas de Crédito',
@@ -549,7 +550,7 @@ const pageRoutes: Routes = [
     {
         path: 'dInventario',
         component: InventarioComponent,
-        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        canActivate: [ ContaGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Diario de Inventario',
@@ -559,7 +560,7 @@ const pageRoutes: Routes = [
     {
         path: 'backorder',
         component: BackorderComponent,
-        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        canActivate: [ ContaGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Back Order',
@@ -569,7 +570,7 @@ const pageRoutes: Routes = [
     {
         path: 'ent-sal',
         component: EntSalComponent,
-        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        canActivate: [ ContaGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Entradas & Salidas',
@@ -589,7 +590,7 @@ const pageRoutes: Routes = [
     {
         path: 'cProveedores',
         component: CarteraProveedoresComponent,
-        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        canActivate: [ ContaGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Cartera de Proveedores',
@@ -599,7 +600,7 @@ const pageRoutes: Routes = [
     {
         path: 'cClientes',
         component: CarteraClientesComponent,
-        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        canActivate: [ ContaGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Cartera de Clientes',

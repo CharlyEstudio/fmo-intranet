@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { NgForm } from '@angular/forms';
-import { DiariosService } from '../../../services/services.index';
+import { DiariosService, ExcelService } from '../../../services/services.index';
 
 import * as _swal from 'sweetalert';
 import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
@@ -25,6 +25,7 @@ export class UtilidadesComponent implements OnInit {
   respuestaGeneral: boolean = false;
   ventas: boolean = false;
   esperar: boolean = false;
+  descarga: boolean = false;
 
   // Totales
   utilidades: any;
@@ -33,7 +34,8 @@ export class UtilidadesComponent implements OnInit {
   utilidad: number = 0;
 
   constructor(
-    private _diariosService: DiariosService
+    private _diariosService: DiariosService,
+    private excelService: ExcelService
   ) {}
 
   ngOnInit() {
@@ -64,6 +66,7 @@ export class UtilidadesComponent implements OnInit {
     this._diariosService.utilidades(this.inicio, this.final)
       .subscribe( ( resp: any ) => {
         if (resp !== '') {
+          console.log(resp);
           this.utilidades = resp;
 
           for (let i = 0; i < this.utilidades.length; i++) {
@@ -84,6 +87,43 @@ export class UtilidadesComponent implements OnInit {
         }
       });
 
+  }
+
+  descargar(forma: NgForm) {
+    this.esperar = true;
+    this.respuesta = false;
+
+    if ( forma.value.inicio === undefined ) {
+      swal('Debe ingresar las fechas', 'No ha selecionado un rango de fechas.', 'error');
+      return;
+    }
+
+    if ( forma.value.final === undefined ) {
+      swal('Debe ingresar las fechas', 'No ha selecionado un rango de fechas.', 'error');
+      return;
+    }
+
+    this.inicio = forma.value.inicio;
+    this.final = forma.value.final;
+
+    this._diariosService.utilidadesDesgloce(this.inicio, this.final).subscribe((desc: any) => {
+      if (desc !== '') {
+        const file = `Utilidad-${this.inicio}_${this.final}`;
+        this.excelService.exportAsExcelFile(desc, file);
+
+        this.respuesta = false;
+        this.respuestaGeneral = false;
+        this.esperar = false;
+        this.ventas = false;
+        this.descarga = true;
+      } else {
+        this.descarga = true;
+        this.ventas = false;
+        this.respuesta = false;
+        this.esperar = false;
+        this.respuestaGeneral = false;
+      }
+    });
   }
 
 }

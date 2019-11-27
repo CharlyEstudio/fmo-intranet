@@ -215,21 +215,19 @@ export class DiariosService {
   }
 
   utilidades(fechaIn: any, fechaOut: any) {
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + '/api/diarios.php?opcion=7&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + '/api/diarios.php?opcion=7&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
-    } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=7&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
-    }
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=7&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
 
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/utilidades/' + fechaIn + '/' + fechaOut;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/utilidades/' + fechaIn + '/' + fechaOut;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/utilidades/' + fechaIn + '/' + fechaOut;
-    // }
+    return this.http.get( this.url ).map((utilidades: any) => {
+      if (utilidades.length > 0) {
+        return utilidades;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  utilidadesDesgloce(fechaIn: any, fechaOut: any) {
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=35&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut;
 
     return this.http.get( this.url ).map((utilidades: any) => {
       if (utilidades.length > 0) {

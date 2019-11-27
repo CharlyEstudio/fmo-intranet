@@ -42,6 +42,7 @@ export class AppComponent implements OnInit {
       && localStorage.getItem('rol') !== 'USER_ROLE'
       && localStorage.getItem('rol') !== 'OF_ROLE'
       && localStorage.getItem('rol') !== 'MESA_ROLE'
+      && localStorage.getItem('rol') !== 'CONTA_ROLE'
       && localStorage.getItem('rol') !== 'CLI_ROLE') {
       // Nueva garantía realizada
       this._wsService.escuchar('nuevo-cheque-devuelto').subscribe((chd: any) => {

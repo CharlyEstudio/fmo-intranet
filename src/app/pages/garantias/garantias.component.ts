@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
+// Importante para que funcione el sweet alert
 import * as _swal from 'sweetalert';
-import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
+import { SweetAlert } from 'sweetalert/typings/core'; 
 const swal: SweetAlert = _swal as any;
 
 // Modelos
@@ -51,7 +52,7 @@ export class GarantiasComponent implements OnInit {
   lista: number = 0;
   listaO: number = 0;
   products: any = '0';
-  mecompro: any = '';
+  mismocliente: any = '';
   numcli: number = 0;
   numcliO: number = 0;
   numcliFol: number = 0;
@@ -61,6 +62,7 @@ export class GarantiasComponent implements OnInit {
   saldoO: number = 0;
   folioFact: number = 0;
   folioFactO: number = 0;
+  codigo: number = 0;
 
   // Detalles
   asesor: any = '';
@@ -98,12 +100,13 @@ export class GarantiasComponent implements OnInit {
   // Estado del Producto
   estado: any;
   idcance: number;
-
   realizo: any;
   fechaGuia: any;
   hora: any;
   choferGuia: any;
   verifico: any;
+  existe: any = '';
+  clienteFmo: any = '';
 
   constructor(
     private _garantiaService: GarantiasService,
@@ -143,18 +146,23 @@ export class GarantiasComponent implements OnInit {
 
   cambiarDesde( valor: number ) {
     let desde = this.desde + valor;
-
     if ( desde >= this.totalResgitro ) {
       return;
     }
-
     if ( desde < 0 ) {
       return;
     }
 
     this.desde += valor;
-
     this.obtenerTodasGarantias();
+  }
+
+  existencia(existencias: any) {
+    this.existe = existencias;
+  }
+
+  escliente(res: any) {
+    this.clienteFmo = res;
   }
 
   buscarCli(garantia: any) {
@@ -162,17 +170,19 @@ export class GarantiasComponent implements OnInit {
       swal('Sin Cliente', 'Es necesario ingresar un número de cliente para continuar.', 'error');
     }
     this.numcliFol = garantia.value.numcliFol;
-    this._clientesService.infoClienteCot(this.numcliFol).subscribe((cli: any) => {
-      if (cli.length > 0) {
-        this.nomcliFol = cli[0].NOMBRE;
-      }
-    });
+    if (this.numcliFol !== 0) {
+      this._clientesService.infoClienteCot(this.numcliFol).subscribe((cli: any) => {
+        if (cli.length > 0) {
+          this.nomcliFol = cli[0].NOMBRE;
+        }
+      });
+    }
   }
 
   buscarFactura(garantia: any) {
     this.numFactura = garantia.value.factura;
     if (this.numFactura === '') {
-      swal('Sin Folio', 'El folio de la factura es importante para scontinuar.', 'error');
+      swal('Sin Folio', 'El folio de la factura es importante para continuar.', 'error');
     }
     this._garantiaService.obtenerFactura(this.numFactura).subscribe((fac: any) => {
       if (fac.length > 0) {
@@ -185,9 +195,9 @@ export class GarantiasComponent implements OnInit {
         this.lista = fac[0].LISTA;
         this.folioFact = fac[0].DOCID;
         if (this.numcli === this.numcliFol) {
-          this.mecompro = 'SI';
+          this.mismocliente = 'SI';
         } else {
-          this.mecompro = 'NO';
+          this.mismocliente = 'NO';
         }
         this._garantiaService.obtenerProductosFacturas(this.folioFact).subscribe((prod: any) => {
           if (prod.length > 0) {
@@ -215,11 +225,6 @@ export class GarantiasComponent implements OnInit {
         this.saldoO = fact[0].SALDO;
         this.listaO = fact[0].LISTA;
         this.folioFactO = fact[0].DOCID;
-        if (this.numcliO === this.numcliFol) {
-          this.mecompro = 'SI';
-        } else {
-          this.mecompro = 'NO';
-        }
         this._garantiaService.obtenerProductosFacturas(this.folioFactO).subscribe((prod: any) => {
           if (prod.length > 0) {
             this.productosFactura = prod;
@@ -259,7 +264,7 @@ export class GarantiasComponent implements OnInit {
     this.nomcliFol = '';
     this.lista = 0;
     this.listaO = 0;
-    this.mecompro = '';
+    this.mismocliente = '';
     this.numcli = 0;
     this.numcliO = 0;
     this.numcliFol = 0;
@@ -271,10 +276,12 @@ export class GarantiasComponent implements OnInit {
     this.clvprov = 0;
     this.claveprod = '';
     this.costoprod = 0;
+    this.existe = '';
+    this.clienteFmo = '';
+    this.codigo = 0;
   }
 
   reset(garantia: any) {
-    console.log(garantia);
     garantia.resetForm();
     this.limpiando();
   }
@@ -310,17 +317,18 @@ export class GarantiasComponent implements OnInit {
     this.idgar = garantia.idgar;
     this.marca = garantia.marca;
     this.numero = garantia.numero;
-    this.cliente = garantia.cliente;
+    this.cliente = garantia.nombre;
     this.numeroFol = garantia.numeroFol;
     this.clienteFol = garantia.clienteFol;
-    this.mecompro = garantia.mecompro;
+    this.nomcliFol = garantia.nomcliFol;
+    this.mismocliente = garantia.mismocliente;
     this.placas = garantia.placas;
     this.chofer = garantia.chofer;
-    this._clientesService.infoClienteCot(this.numero).subscribe((cli: any) => {
-      if (cli.length > 0) {
-        this.nomcli = cli[0].NOMBRE;
-      }
-    });
+      this._clientesService.infoClienteCot(this.numero).subscribe((cli: any) => {
+        if (cli.length > 0) {
+          this.nomcli = cli[0].NOMBRE;
+        }
+      });
   }
 
   search(texto: any) {
@@ -353,31 +361,65 @@ export class GarantiasComponent implements OnInit {
     }
   }
 
+  buscarCodigo(codigo: any) {
+    this.codigo = codigo.value.codigo;
+    if (this.codigo === 0) {
+      swal('Sin código', 'El código del producto es importante para continuar.', 'error');
+    }
+    this._garantiaService.buscarCodigo(this.codigo).subscribe((cod: any) => {
+      this.clave = cod[0].CLAVE;
+      this.clvprov = cod[0].CLVPROV;
+      this.costo = cod[0].COSTO;
+      this.descr = cod[0].DESCRIPCIO;
+  });
+  }
 
   agregarGarantia(garantia: NgForm) {
+    this.nomcliFol = garantia.value.nomcliFol;
 
-    if (garantia.value.numFacturaO === '') {
-      this.observa = '';
-    } else {
-      this.observa = garantia.value.facturaDos;
-    }
-    this._garantiaService.nuevaGarantia(garantia.value, this.observa).subscribe((resp: any) => {
-      if (resp) {
-        swal('Nueva Garantia', 'Los datos de la garantia se han guardado correctamente.', 'success');
-        garantia.resetForm();
-        this.limpiando();
-        this.obtenerTodasGarantias();
-        const cerrar = <HTMLElement>(document.getElementById('cerrarModalGar'));
-        cerrar.click();
-          setTimeout(() => {
-            const payload = {
-              datos: garantia.value,
-              usuario: this.usuario
-            };
-            this._webSocket.acciones('nueva-garantia', payload);
-          }, 100);
+    if (this.existe === 'SI') {
+      if (garantia.value.numFacturaO === '') {
+        this.observa = '';
+      } else {
+        this.observa = garantia.value.facturaDos;
       }
-    });
+
+      this._garantiaService.nuevaGarantia(garantia.value, this.observa).subscribe((resp: any) => {
+        if (resp) {
+          swal('Nueva Garantia', 'Los datos de la garantia se han guardado correctamente.', 'success');
+          garantia.resetForm();
+          this.limpiando();
+          this.obtenerTodasGarantias();
+          const cerrar = <HTMLElement>(document.getElementById('cerrarModalGar'));
+          cerrar.click();
+            setTimeout(() => {
+              const payload = {
+                datos: garantia.value,
+                usuario: this.usuario
+              };
+              this._webSocket.acciones('nueva-garantia', payload);
+            }, 100);
+        }
+      });
+    } else if (this.existe === 'NO') {
+      this._garantiaService.nuevaGarantiaDesc(garantia.value, this.clvprov, this.costo, this.clienteFmo, this.nomcliFol).subscribe((resp: any) => {
+        if (resp) {
+          swal('Nueva Garantia', 'Los datos de la garantia se han guardado correctamente.', 'success');
+          garantia.resetForm();
+          this.limpiando();
+          this.obtenerTodasGarantias();
+          const cerrar = <HTMLElement>(document.getElementById('cerrarModalGar'));
+          cerrar.click();
+            setTimeout(() => {
+              const payload = {
+                datos: garantia.value,
+                usuario: this.usuario
+              };
+              this._webSocket.acciones('nueva-garantia', payload);
+            }, 100);
+        }
+      });
+    }
   }
 
   autorizacion(valor: any) {

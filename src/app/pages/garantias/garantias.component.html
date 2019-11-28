@@ -20,40 +20,20 @@
 
                 <thead>
 
-                    <!-- <tr>
-
-                        <td colspan="6">
-
-                            <button type="button" class="btn btn-info btn-rounded" data-toggle="modal" data-target="#add-garantia">Nueva Garantía</button>
-
-                            <button (click)="cambiarDesde(-10)" class="btn btn-secondary btn-rounded" [disabled]="habilitar">
-
-                                Anteriores
-            
-                            </button>
-            
-                            <button (click)="cambiarDesde(10)" class="btn btn-secondary btn-rounded" [disabled]="habilitar">
-            
-                                Siguientes
-            
-                            </button>
-                        
-                        </td>
-
-                        <td colspan="6"></td>
-
-                    </tr> -->
-
                     <tr>
 
-                        <th colspan="2"></th>
+                        <th colspan="1"></th>
 
                         <th colspan="2" class="border border-bottom-0 text-center">CLIENTE DEL FOLIO</th>
 
                         <th class="text-center">Fecha</th>
 
                         <th colspan="2" class="border border-bottom-0 text-center">CLIENTE DE FACTURA</th>
+                        
+                        <th colspan="1"></th>
 
+                        <th class="text-center">Mismo</th>
+                        
                         <th class="text-center">Es</th>
 
                         <th colspan="6" class="text-center border border-bottom-0">FECHAS</th>
@@ -66,8 +46,6 @@
 
                         <th class="">Folio</th>
 
-                        <th class="">Asesor</th>
-
                         <th class="text-center border border-bottom-0 border-right-0 border-top-0">Número</th>
 
                         <th class="text-center border border-bottom-0 border-left-0 border-top-0">Nombre</th>
@@ -78,6 +56,10 @@
 
                         <th class="text-center border border-bottom-0 border-left-0 border-top-0">Nombre</th>
 
+                        <th class="">Asesor</th>
+
+                        <th class="text-center">Cliente</th>
+                        
                         <th class="text-center">Cliente</th>
 
                         <th class="text-center border border-bottom-0 border-right-0 border-top-0">Registro</th>
@@ -86,7 +68,7 @@
 
                         <th class="text-center border-0">Enviado</th>
 
-                        <th class="text-center border-0">Auotorizado</th>
+                        <th class="text-center border-0">Autorizado</th>
 
                         <th class="text-center border-0">Entregado</th>
 
@@ -106,19 +88,27 @@
 
                         <td width="5%" class="border-0">{{gara.folio}}</td>
 
-                        <td width="10%" class="border-0">
-                            {{gara.asesor}}
-                        </td>
+                        <td *ngIf="gara.numeroFol !== 0" class="text-center border border-right-0 border-top-0">{{gara.numeroFol}}</td>
+                        
+                        <td *ngIf="gara.numeroFol === 0" class="text-center border border-right-0 border-top-0"> 0 </td>
 
-                        <td class="text-center border border-right-0 border-top-0">{{gara.numero}}</td>
-
-                        <td class="text-truncate border border-left-0 border-top-0" style="max-width: 100px!important; width: 180px!important">{{gara.cliente}}</td>
+                        <td *ngIf="gara.numeroFol !== 0" class="text-truncate border border-left-0 border-top-0" style="max-width: 100px!important; width: 180px!important">{{gara.clienteFol}}</td>
+                        
+                        <td *ngIf="gara.numeroFol === 0" class="text-truncate border border-left-0 border-top-0" style="max-width: 100px!important; width: 180px!important">{{gara.nomcliFol}}</td>
 
                         <td class="text-center border-0">{{gara.fecha | date: 'dd-MM-yy'}}</td>
 
-                        <td class="text-center border border-right-0 border-top-0">{{gara.numeroFol}}</td>
+                        <td class="text-center border border-right-0 border-top-0">{{gara.numero}}</td>
 
-                        <td class="text-truncate border border-left-0 border-top-0" style="max-width: 100px!important; width: 180px!important">{{gara.clienteFol}}</td>
+                        <td class="text-truncate border border-left-0 border-top-0" style="max-width: 100px!important; width: 180px!important">{{gara.nombre}}</td>
+                        
+                        <td width="10%" class="border-0">
+
+                            {{gara.asesor}}
+
+                        </td>
+
+                        <td width="5%" class="text-center border-0">{{gara.mismocliente}}</td>
 
                         <td width="5%" class="text-center border-0">{{gara.mecompro}}</td>
 
@@ -161,9 +151,9 @@
                             <span *ngIf="gara.estado === 'ENTREGANDO'" class="label label-custom">Entregando</span>
                             
                             <span *ngIf="gara.estado === 'TERMINADO'" class="label label-success">Terminado</span>
-
                             
                             <span *ngIf="gara.estado === 'CANCELADO'" class="label label-danger">Cancelado</span>
+
 
                         </td>
 
@@ -174,7 +164,8 @@
                                 <i class="mdi mdi-table-edit"></i>
 
                             </button>
-                            <button type="button" class="btn btn-info" data-toggle="tooltip" title="Editar" data-toggle="modal" data-target="#editar"  *ngIf="gara.estado !== 'TERMINADO' && gara.estado !== 'ENTREGAR' && gara.estado !== 'ENTREGANDO'" (click)="verInfo(gara)">
+
+                            <button type="button" class="btn btn-info" data-toggle="tooltip" title="Editar" data-toggle="modal" data-target="#editar"  *ngIf="gara.estado !== 'TERMINADO' && gara.estado !== 'ENTREGAR' && gara.estado !== 'ENTREGANDO'" (click)="verInfo(gara)" (click)="obtenerFolio(gara)">
 
                                 <i class="mdi mdi-table-edit"></i>
 
@@ -198,15 +189,15 @@
 
                         <td colspan="6" class="border-0">
 
-                            <button type="button" class="btn btn-info btn-rounded" data-toggle="modal" data-target="#add-garantia">Nueva Garantía</button>
+                            <button type="button" class="btn btn-info btn-rounded mt-3" data-toggle="modal" data-target="#add-garantia">Nueva Garantía</button>
 
-                            <button (click)="cambiarDesde(-10)" class="btn btn-secondary btn-rounded" [disabled]="habilitar">
+                            <button (click)="cambiarDesde(-10)" class="btn btn-secondary btn-rounded mt-3" [disabled]="habilitar">
 
                                 Anteriores
             
                             </button>
             
-                            <button (click)="cambiarDesde(10)" class="btn btn-secondary btn-rounded" [disabled]="habilitar">
+                            <button (click)="cambiarDesde(10)" class="btn btn-secondary btn-rounded mt-3" [disabled]="habilitar">
             
                                 Siguientes
             
@@ -267,7 +258,38 @@
 
                     </div>
 
-                    <div class="form-group col-md-8"></div>
+                    <div class="form-group col-md-8">
+
+                    </div>
+                        
+                    <div class="col-md-12">
+
+                        <h3>¿El producto sigue vigente en catálogo?</h3>
+
+                            <div class="form-check form-check-inline">
+
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="descontinuado" value="descontinuado" (click)="existencia('NO')">
+
+                                    <label class="form-check-label" for="descontinuado">NO</label>
+
+                             </div>
+
+                                  <div class="form-check form-check-inline">
+
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="vigente" value="vigente" (click)="existencia('SI')">
+
+                                    <label class="form-check-label" for="vigente">SI</label>
+
+                            </div>
+                                  
+                    </div>
+
+                    <div *ngIf="existe ==='NO'" class="col-md-2">
+
+                        <label for="">Códio de producto</label>
+
+                        <input ngModel type="number" name="codigo" id="codigo" class="form-control" placeholder="Código" autocomplete="off" (change)="buscarCodigo(f)" required>
+                    </div>
 
                     <div class="form-group col-md-2">
 
@@ -277,31 +299,48 @@
 
                     </div>
                     
+
                     <div class="form-group col-md-10">
 
                         <label for="">Cliente de la Garantía</label>
 
-                        <input [(ngModel)]="nomcliFol" type="text" name="nomcliFol" id="nomcliFol" class="form-control" placeholder="Nombre del Cliente" autocomplete="off" readonly>
+                        <input *ngIf="numcliFol !== 0" [(ngModel)]="nomcliFol" type="text" name="nomcliFol" id="nomcliFol" class="form-control" placeholder="Nombre del Cliente" autocomplete="off" readonly>
+                        
+                        <input *ngIf="numcliFol === 0" [(ngModel)]="nomcliFol" type="text" name="nomcliFol" id="nomcliFol" class="form-control" placeholder="Nombre del Cliente" autocomplete="off">
 
                     </div>
 
-                    <div *ngIf="numcliFol > 0" class="form-group col-md-4">
+                    <div *ngIf="existe === 'NO'" class="col-md-12">
+
+                        <h3>¿Es cliente FMO?</h3>
+
+                        <div class="form-check form-check-inline">
+
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="siescliente" value="siescliente" (click)="escliente('SI')">
+
+                                <label class="form-check-label" for="siescliente">SI</label>
+
+                         </div>
+
+                              <div class="form-check form-check-inline">
+
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="noescliente" value="noescliente" (click)="escliente('NO')">
+
+                                <label class="form-check-label" for="noescliente">NO</label>
+
+                        </div>
+
+                    </div>
+
+                    <div *ngIf="numcliFol > 0 && existe === 'SI'" class="form-group col-md-4">
 
                         <label for="">Factura/Remisión</label>
 
                         <input ngModel type="number" name="factura" id="factura" class="form-control" placeholder="Folio Factura" autocomplete="off" (change)="buscarFactura(f)" required>
 
                     </div>
-                    <!-- <div class="form-group col-md-4" style="display: none;">
-
-                        <label for="">Orden de Trabajo Truper</label>
-
-                        <input ngModel type="text" name="ordenTrabTrup" id="ordenTrabTrup" class="form-control" autocomplete="off">
-
-                    </div> -->
-                    
                       
-                    <div *ngIf="numcliFol > 0" class="form-group col-md-4">
+                    <div *ngIf="numcliFol > 0 && existe === 'SI'" class="form-group col-md-4">
 
                         <label for="">Asesor</label>
 
@@ -315,18 +354,19 @@
                         
                     </div>
 
-                    <div class="form-group col-md-4 centrar">
+                    <div *ngIf="existe === 'SI'" class="form-group col-md-4 centrar">
 
                         <h1 class="display-6 badge badge-info" *ngIf="numcli === numcliFol && numcli !== 0">MISMO CLIENTE</h1>
 
                         <h1 class="display-6 badge badge-danger" *ngIf="numcli !== numcliFol && numcli !== 0 ">DIFERENTE CLIENTE</h1>
-                        
-                        <input [(ngModel)]="mecompro" type="text" name="mecompro" id="mecompro" class="form-control" style="display: none;">
+
+                        <input [(ngModel)]="mismocliente" type="text" name="mismocliente" id="mismocliente" class="form-control" style="display: none;">
+
                         <input [(ngModel)]="numFacturaO" type="text" name="numFacturaO" id="numFacturaO" class="form-control" style="display: none;">
                         
                     </div>
 
-                    <div class="col-12" *ngIf="numcli === numcliFol && numcli !== 0 && saldo === 0">
+                    <div class="col-12" *ngIf="numcli === numcliFol && numcli !== 0 && saldo === 0 && existe === 'SI'">
                         
                         <div class="col-12 alert alert-danger" role="alert">Esta factura esta pagada. Selecciona otra</div>
                         
@@ -337,7 +377,6 @@
                             <input ngModel type="text" name="facturaDos" id="facturaDos" class="form-control" placeholder="Folio Factura" autocomplete="off" (change)="buscarFacturaOtro(f)">
     
                         </div>
-
 
                         <div class="form-group col-md-4">
 
@@ -361,6 +400,7 @@
 
                     </div>
                     
+                        
                     <div class="col-md-4" *ngIf="saldo !== 0 || saldoO !==0">
                         
                         <select [(ngModel)]="pro" class="form-control" name="productos" id="productos" (change)="obtenerPro(f)" required>
@@ -373,9 +413,10 @@
                         
                     </div>
                         
-                    <div class="col-12" *ngIf="accion === true">
+                    <div class="col-12" *ngIf="accion === true || codigo !== 0">
 
                         <table class="table table-striped">
+
                             <thead>
 
                                 <tr>
@@ -400,17 +441,28 @@
 
                                 <tr>
 
-                                    <td>{{clave}}</td>
+                                    <td>{{clave}}
+                                    </td>
 
-                                    <td>{{clvprov}}</td>
+                                    <td>{{clvprov}}
 
-                                    <td>{{costo}}</td>
+                                    </td>
 
-                                    <td>{{descr}}</td>
+                                    <td>{{costo}}
 
-                                    <td><input ngModel type="number" name="cantidad" id="cantidad" class="form-control" placeholder="Cantidad" (change)="obtenerPro(f)" required></td>
+                                    </td>
 
-                                    <td><input ngModel type="text" name="falla" id="falla" class="form-control" placeholder="Descripción Falla" (change)="obtenerPro(f)" required></td>
+                                    <td>{{descr}}
+
+                                    </td>
+
+                                    <td><input *ngIf="existe === 'SI'" ngModel type="number" name="cantidad" id="cantidad" class="form-control" placeholder="Cantidad" (change)="obtenerPro(f)" required></td>
+
+                                    <td><input *ngIf="existe === 'SI'" ngModel type="text" name="falla" id="falla" class="form-control" placeholder="Descripción Falla" (change)="obtenerPro(f)" required></td>
+                                    
+                                    <td><input *ngIf="existe === 'NO'" ngModel type="number" name="cantidad" id="cantidad" class="form-control" placeholder="Cantidad"  required></td>
+
+                                    <td><input *ngIf="existe === 'NO'" ngModel type="text" name="falla" id="falla" class="form-control" placeholder="Descripción Falla"  required></td>
 
                                 </tr>
 
@@ -420,8 +472,13 @@
 
                     </div>
 
-                    <button type="submit" class="btn btn-danger"><i class="mdi mdi-content-save"></i> Guardar</button>
-                    <button style="margin-left: 4px;" type="button" class="btn btn-info" (click)="reset(f)"><i class="mdi mdi-delete-variant"></i>Limpiar</button>
+                    <div class="col-md-12">
+
+                        <button type="submit" class="btn btn-danger"><i class="mdi mdi-content-save"></i> Guardar</button>
+
+                        <button style="margin-left: 4px;" type="button" class="btn btn-info" (click)="reset(f)"><i class="mdi mdi-delete-variant"></i>Limpiar</button>
+                    
+                    </div>
 
                 </form>
 
@@ -586,9 +643,11 @@
 
                             <h5>Folio: {{folio}}</h5>
 
-                            <h5>Solicitó: {{clienteFol}}</h5>
+                            <h5 *ngIf="numeroFol > 0">Solicitó: {{clienteFol}}</h5>
+                            
+                            <h5 *ngIf="numeroFol === 0" >Solicitó: {{nomcliFol}}</h5>
 
-                            <h5># Cliente: {{numeroFol}}</h5>
+                            <h5># Cliente: {{numeroFol}}</h5><h6 *ngIf="numeroFol === 0" class="badge badge-info">No es Cliente</h6>
 
                             <h5>Fecha de solicitud: {{fecreg}}</h5>
 
@@ -604,9 +663,11 @@
 
                             <h5>Factura: {{factura}}</h5>
 
-                            <h5>Cliente: {{cliente}}</h5>
+                            <h6 *ngIf="factura === 'NINGUNA'" class="badge badge-info">Producto Descontinuado</h6>
 
-                            <h5># Cliente: {{numero}}</h5>
+                            <h5 *ngIf="factura !== 'NINGUNA'">Cliente: {{cliente}}</h5>
+
+                            <h5 *ngIf="factura !== 'NINGUNA'"># Cliente: {{numero}}</h5>
 
                             <h6 *ngIf="observa !== ''" class="badge badge-success">Factura Pagada</h6>
                             
@@ -615,18 +676,6 @@
                         </div>
 
                     </div>
-
-                    <!-- <div class="col-md-12">
-
-                        <div *ngIf="observa !== ''" class="alert alert-danger form-group" role="alert">
-
-                            <h3><strong>Factura por sustitución de factura pagada</strong></h3>
-
-                            <h5>Factura: {{observa}}</h5>
-                                
-                        </div>
-
-                    </div> -->
 
                     <div class="col-md-6">
 
@@ -676,7 +725,9 @@
                                 </tbody>
         
                             </table>
+
                         </div>
+
                     </div>
 
 
@@ -697,18 +748,16 @@
                         </div>
 
                         <div style="height: 100px!important;" *ngIf="estado !== 'NUEVO' && estado !== 'PROCESO'" class="alert alert-warning form-group" role="alert">
+                            
+                            <h3><strong>Datos de envio</strong></h3>
+
+                            <h5>Chofer/Paquetería: {{chofer}}</h5>
+                            
+                            <h5>Placas:{{placas}} </h5>
                                 
-                                <h3><strong>Datos de envio</strong></h3>
-    
-                                <h5>Chofer/Paquetería: {{chofer}}</h5>
-                                
-                                <h5>Placas:{{placas}} </h5>
-                                    
-                            </div>
+                        </div>
 
                     </div>
-
-                    
 
                     <div class="col-md-6">
 
@@ -720,33 +769,27 @@
                     
                         <div *ngIf="estado === 'ENTREGAR' && folnc > 0 || estado === 'TERMINADO' && folnc > 0 || estado === 'ENTREGANDO' && folnc > 0" class="alert alert-info form-group" role="alert">
                             
-                                <h3 class="centrar"><strong> GARANTIA AUTORIZADA POR EL CLIENTE </strong><i style="color: red; font-size: 35px;" class="mdi mdi-check-all"></i></h3>
-                                <h3 class="centrar">Folio Nota de Credito: {{folnc}}</h3>
+                            <h3 class="centrar"><strong> GARANTIA AUTORIZADA POR EL CLIENTE </strong><i style="color: red; font-size: 35px;" class="mdi mdi-check-all"></i></h3>
+                           
+                            <h3 class="centrar">Folio Nota de Credito: {{folnc}}</h3>
+                        
                         </div>
 
                     </div>
 
-                    <!-- <div class="col-md-6">
-
-                            <div style="height: 300px!important;" *ngIf="estado !== 'NUEVO' && estado !== 'PROCESO'" class="alert alert-warning form-group" role="alert">
-                                
-                                <h3><strong>Datos de envio</strong></h3>
-    
-                                <h5>Chofer/Paquetería: {{chofer}}</h5>
-                                
-                                <h5>Placas:{{placas}} </h5>
-                                    
-                            </div>
-    
-                        </div> -->
-
                     <div class="col-md-6">
-                            <div *ngIf="estado === 'ENTREGAR' && guia === 'GUIA NO ENCONTRADA'"  class="alert alert-info form-group" role="alert">
-                                    <h3 class="centrar"><strong>{{guia}}</strong></h3>
-                                </div>
+
+                        <div *ngIf="estado === 'ENTREGAR' && guia === 'GUIA NO ENCONTRADA'"  class="alert alert-info form-group" role="alert">
+                            
+                            <h3 class="centrar"><strong>{{guia}}</strong></h3>
+
+                        </div>
+
                        <div *ngIf="estado === 'ENTREGAR' && guia === 'DATOS DE GUIA' || estado === 'ENTREGANDO' || estado === 'TERMINADO'" class="alert alert-info form-group" role="alert">
-                           <h3 class="centrar"><strong>{{guia}}</strong></h3>   
-                           <div class="col-12">
+                           
+                            <h3 class="centrar"><strong>{{guia}}</strong></h3>   
+                           
+                                <div class="col-12">
                                 
                                 <table class="table table-striped">
             
@@ -765,9 +808,6 @@
                                             <th class="text-center">Verifico</th>
                                             
                                             <th></th>
-                                            
-                                            <!-- <th class="text-center">Devolución</th> -->
-
 
                                         </tr>
             
@@ -789,9 +829,6 @@
 
                                             <td class="text-center"><img style="width: 100px;" [src]="res.chofer.img | imagen" alt=""></td>
 
-                                            <!-- <td *ngIf="folterm === '' || folterm === NULL">NO</td>
-                                            <td *ngIf="folterm === 'Devolucion'">SI</td> -->
-                                            
                                         </tr>
             
                                     </tbody>
@@ -901,10 +938,6 @@
                         <div class="col-12 alert alert-danger" role="alert">Garantía con costo no autorizada, se eliminará.</div>
 
                     </div>
-
-                        
-                        
-
 
 
                     <div class="col-md-12">

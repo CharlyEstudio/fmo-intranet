@@ -22,6 +22,7 @@ export class PanelgarantiasComponent implements OnInit {
   enviando: number = 0;
   autorizacion: number = 0;
   entregar: number = 0;
+  entregando: number = 0;
   terminado: number = 0;
 
   constructor(
@@ -43,6 +44,7 @@ export class PanelgarantiasComponent implements OnInit {
     this.enviando = 0;
     this.autorizacion = 0;
     this.entregar = 0;
+    this.entregando = 0;
     this.terminado = 0;
     this._garantiaService.obtenerGarantias().subscribe((gar: any) => {
       if (gar.length > 0) {
@@ -80,8 +82,5 @@ export class PanelgarantiasComponent implements OnInit {
       }
     });
   }
-
-    
-  
 
 }

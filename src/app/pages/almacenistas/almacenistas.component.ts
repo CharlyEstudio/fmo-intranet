@@ -72,7 +72,7 @@ export class AlmacenistasComponent implements OnInit {
           'Tu registro ha sido eliminado.',
           'success'
           )
-            this.pedidoService.eliminarPersonal(id,this.idFerrum,this.actividad).subscribe((data: any)=>{
+            this.pedidoService.eliminarPersonal(id, this.idFerrum, this.actividad).subscribe((data: any)=>{
               data.activo = 0;
               this.almacenistas();
             });
@@ -80,7 +80,7 @@ export class AlmacenistasComponent implements OnInit {
     })
   }
 
-  buscador(texto: any){
+  buscador(texto: any) {
     this.almacenista = [];
     this.pedidoService.nuevoPersonal(texto).subscribe((data: any) => {
       this.lista = data;
@@ -88,10 +88,10 @@ export class AlmacenistasComponent implements OnInit {
     });
   }
 
-  nuevoRegistro(){
+  nuevoRegistro() {
     this.actividad = 'Registro';
     this.pedidoService.guardarRegistro(this.nombre, this.user, this.activo, this.tiempo, this.rotacion, this.marquesina,
-      this.capacitacion, this.area, this.seccion,this.idFerrum,this.actividad).subscribe((guarda: any) => {
+      this.capacitacion, this.area, this.seccion, this.idFerrum, this.actividad).subscribe((guarda: any) => {
         swal('Guardado!', `Tu registro se ha guardado correctamente!`, 'success');
         this.almacenistas();
       });

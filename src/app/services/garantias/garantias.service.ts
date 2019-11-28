@@ -85,7 +85,11 @@ export class GarantiasService {
 
     return this.http.get(url);
   }
+  buscarCodigo(codigo: number) {
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=20&codigo=' + codigo;
 
+    return this.http.get(url);
+  }
   obtenerProductosFacturas(docid: number) {
     const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=10&docid=' + docid;
 
@@ -96,6 +100,12 @@ export class GarantiasService {
     const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=3';
 
     return this.http.post(url, {data: garantia, observa: observa}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
+  }
+
+  nuevaGarantiaDesc(garantia: any, clvprov: any, costo: any, clienteFmo: any, nomcliFol: any) {
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=21';
+
+    return this.http.post(url, {data: garantia, clvprov: clvprov, costo: costo, clienteFmo: clienteFmo, nomcliFol: nomcliFol}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
   }
 
 

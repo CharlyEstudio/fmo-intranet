@@ -34,8 +34,21 @@ export class PanelasesoresService {
     return this.http.get(url);
   }
 
-  obtenerCalificacion(perid: any, fechaIn: any, fechaOut: any, vtaMin: any, cliMin: any, rango: boolean) {
-    const url = URL_EXTERNO + ':' + PUERTO_SERVER + '/api/seguimiento.php?opcion=2&perid=' + perid + '&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&vtaMin=' + vtaMin + '&cliMin=' + cliMin + '&rango=' + rango;
+  obtenerCalificacion(perid: any, fechaIn: any, vtaMin: any, cliMin: any, rango: boolean) {
+    const url = URL_EXTERNO + ':' + PUERTO_SERVER + '/api/seguimiento.php?opcion=2&perid=' + perid + '&fechaIn=' + fechaIn + '&vtaMin=' + vtaMin + '&cliMin=' + cliMin + '&rango=' + rango;
+
+    return this.http.get(url);
+  }
+
+  pedidosOutTime(perid: any, fecha: any) {
+    const url = URL_EXTERNO + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=24&perid=' + perid;
+
+    return this.http.get(url);
+  }
+
+  visitasFalsas(perid: any, fecha: any) {
+    // https://ferremayoristas.com.mx:3001/visitas/asesor/calificacion/$perid/$fecha
+    const url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/visitas/asesor/calificacion/' + perid + '/' + fecha;
 
     return this.http.get(url);
   }

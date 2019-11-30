@@ -131,12 +131,13 @@ import { ActividadesdevComponent } from '../components/actividadesdev/actividade
 import { ActividadesDevelopersComponent } from './actividades-developers/actividades-developers.component';
 import { PanelgarantiasComponent } from './panelgarantias/panelgarantias.component';
 import { BarraAvanceComponent } from '../components/barra-avance/barra-avance.component';
-import { SeguimientoComponent } from './seguimiento/seguimiento.component';
+import { CalificacionComponent } from './calificacion/calificacion.component';
 import { FacturasmonitorComponent } from './facturasmonitor/facturasmonitor.component';
 import { DiasvtasComponent } from './diasvtas/diasvtas.component';
 import { ComisioneschoferesComponent } from './comisioneschoferes/comisioneschoferes.component';
 import { ChequesdevComponent } from './chequesdev/chequesdev.component';
 import { CostosComponent } from './costos/costos.component';
+import { SeguimientoComponent } from './seguimiento/seguimiento.component';
 
 @NgModule({
     declarations: [
@@ -241,12 +242,13 @@ import { CostosComponent } from './costos/costos.component';
         ActividadesDevelopersComponent,
         PanelgarantiasComponent,
         BarraAvanceComponent,
-        SeguimientoComponent,
+        CalificacionComponent,
         FacturasmonitorComponent,
         DiasvtasComponent,
         ComisioneschoferesComponent,
         ChequesdevComponent,
-        CostosComponent
+        CostosComponent,
+        SeguimientoComponent
     ],
     exports: [
         DashborarDirComponent,

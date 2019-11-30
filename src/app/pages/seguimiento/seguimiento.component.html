@@ -1,104 +1,88 @@
-<div class="row">
+<div class="card">
 
-  <div class="col-md-12 col-lg-12 mb-3">
+  <div class="card-body">
 
-    <div class="form-group">
+    <h1 class="card-title m-b-5"><span class="lstick"></span>Zona 1</h1>
 
-      <button type="button" class="btn btn-info mb-2" (click)="actualizar()">Actualizar</button>
-
-    </div>
-
-  </div>
-
-  <div class="col-md-8 col-lg-8">
-
-    <div class="card-body centrar" style="height: 400px!important;" *ngIf="trabajandoZona1 < cantidadZona1">
-
-      <div class="spinner-grow text-secondary" role="status" style="width: 3rem; height: 3rem;"></div>
-
-      <span class="">Calificando Zona 1</span>
-
-    </div>
-
-    <h3 *ngIf="trabajandoZona1 === cantidadZona1">Zona 1</h3>
-
-    <div class="responsive-table font-14" *ngIf="trabajandoZona1 === cantidadZona1">
+    <div class="table-responsive">
 
       <table class="table table-sm stylish-table table-hover">
 
-        <thead>
-
-          <!-- <tr>
-
-            <th colspan="2"></th>
-
-            <th class="text-center" colspan="4">PONDERACION</th>
-
-          </tr> -->
-
-          <tr>
-
-            <th>Asesor</th>
-
-            <th class="text-center">Calificacion</th>
-
-            <th class="text-center">Clientes</th>
-
-            <th>Ventas</th>
-
-            <th>Cobranza</th>
-
-            <th>Meta</th>
-
-          </tr>
-
-          <tr>
-
-            <th colspan="2"></th>
-
-            <th class="text-center">{{cliMin}}</th>
-
-            <th>{{vtaMin | currency}}</th>
-
-            <th colspan="2"></th>
-
-          </tr>
-
-        </thead>
-
         <tbody>
 
-          <tr *ngFor="let mv of zona1">
+          <tr *ngFor="let ase of asesores1">
 
-            <td class="font-weight-bold">
-              <a style="padding: 0px!important;" class="nav-link cursor" (click)="verAsesor(mv)" href="#modalFolio" data-dismiss="modal" data-toggle="modal">{{mv.NOMBRE}}</a>
+            <td>{{ase.ruta}} {{ase.nombre}}</td>
+
+            <td>
+
+              <table class="table table-sm">
+
+                <thead>
+
+                  <tr>
+
+                    <th>Día</th>
+
+                    <th>Fecha</th>
+
+                    <th>Clientes</th>
+                    
+                    <th>Venta</th>
+                    
+                    <th>Cobranza</th>
+                    
+                    <th>Meta</th>
+                    
+                    <th>Calificación</th>
+
+                    <th>Sin Visita</th>
+
+                    <th>Out Time</th>
+
+                    <th>Penalización</th>
+
+                    <th>Final</th>
+
+                  </tr>
+
+                </thead>
+
+                <tbody>
+
+                  <tr *ngFor="let sem of ase.semana">
+
+                    <td>{{sem.dia}}</td>
+
+                    <td>{{sem.fecha}}</td>
+
+                    <td>{{sem.datos.clientes}}</td>
+                    
+                    <td>{{sem.datos.ventas | currency}}</td>
+                    
+                    <td>{{sem.datos.cobranza | currency}}</td>
+                    
+                    <td>{{sem.datos.cobranzaObj | currency}}</td>
+                    
+                    <td>{{sem.datos.calificacion | number: '0.2'}}</td>
+                    
+                    <td>{{sem.datos.sinvisita | number: '0.2'}}</td>
+
+                    <td>{{sem.datos.outtime | number: '0.2'}}</td>
+
+                    <td class="font-weight-bold" [ngClass]="{'text-danger': sem.datos.penalizacion > 0, 'text-success': sem.datos.penalizacion === 0}">{{sem.datos.penalizacion | number: '0.2'}}</td>
+
+                    <td class="font-weight-bold" [ngClass]="{'text-danger': (sem.datos.calificacion - sem.datos.penalizacion) < 6, 'text-dark': (sem.datos.calificacion - sem.datos.penalizacion) >= 6}" *ngIf="sem.datos !== false">{{(sem.datos.calificacion - sem.datos.penalizacion) | number: '0.2'}}</td>
+
+                    <td *ngIf="!sem.datos">0</td>
+
+                  </tr>
+
+                </tbody>
+
+              </table>
+
             </td>
-
-            <td class="font-weight-bold text-center" [ngClass]="{'text-danger': (mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) < 6}">{{(mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) | number:'0.2'}}</td>
-            
-            <td class="font-weight-bold text-center">{{mv.CLIENTES}}</td>
-
-            <td class="font-weight-bold">{{mv.VENTAS | currency}}</td>
-
-            <td class="font-weight-bold">{{mv.COBRADO | currency}}</td>
-
-            <td class="font-weight-bold">{{mv.OBJ_COB | currency}}</td>
-
-          </tr>
-
-          <tr class="bg-info text-white">
-
-            <th colspan="2">PONDERACION</th>
-
-            <th class="text-center">4 PTS</th>
-
-            <th>1 PT</th>
-
-            <th>5 PTS</th>
-
-            <th class="text-center"></th>
-
-            <th></th>
 
           </tr>
 
@@ -109,235 +93,92 @@
     </div>
 
   </div>
-
-  <div class="col-md-4 col-lg-4"></div>
-
-  <div class="col-md-8 col-lg-8">
-
-    <div class="card-body centrar" style="height: 400px!important;" *ngIf="trabajandoZona2 < cantidadZona2">
-      <div class="spinner-grow text-secondary" role="status" style="width: 3rem; height: 3rem;"></div>
-      <span class="">Calificando Zona 2</span>
-    </div>
-
-    <h3 *ngIf="trabajandoZona2 === cantidadZona2">Zona 2</h3>
-
-    <div class="responsive-table font-14" *ngIf="trabajandoZona2 === cantidadZona2">
-
-      <table class="table table-sm stylish-table table-hover">
-
-        <thead>
-
-          <!-- <tr>
-
-            <th colspan="2"></th>
-
-            <th class="text-center" colspan="4">PONDERACION</th>
-
-          </tr> -->
-
-          <tr>
-
-            <th>Asesor</th>
-
-            <th class="text-center">Calificacion</th>
-
-            <th class="text-center">Clientes</th>
-
-            <th>Ventas</th>
-
-            <th>Cobranza</th>
-
-            <th>Meta</th>
-
-          </tr>
-
-          <tr>
-
-            <th colspan="2"></th>
-
-            <th class="text-center">{{cliMin}}</th>
-
-            <th>{{vtaMin | currency}}</th>
-
-            <th colspan="2"></th>
-
-          </tr>
-
-        </thead>
-
-        <tbody>
-
-          <tr *ngFor="let mv of zona2">
-
-            <td class="font-weight-bold">
-              <a style="padding: 0px!important;" class="nav-link cursor" (click)="verAsesor(mv)" href="#modalFolio" data-dismiss="modal" data-toggle="modal">{{mv.NOMBRE}}</a>
-            </td>
-            
-            <td class="font-weight-bold text-center" [ngClass]="{'text-danger': (mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) < 6}">{{(mv.TRABAJADO_CLI + mv.TRABAJADO_VEN + mv.TRABAJADO_COB) | number:'0.2'}}</td>
-
-            <td class="font-weight-bold text-center">{{mv.CLIENTES}}</td>
-
-            <td class="font-weight-bold">{{mv.VENTAS | currency}}</td>
-
-            <td class="font-weight-bold">{{mv.COBRADO | currency}}</td>
-
-            <td class="font-weight-bold">{{mv.OBJ_COB | currency}}</td>
-
-          </tr>
-
-          <tr class="bg-info text-white">
-
-            <th colspan="2">PODENRACION</th>
-
-            <th class="text-center">4 PTS</th>
-
-            <th>1 PT</th>
-
-            <th>5 PTS</th>
-
-            <th class="text-center"></th>
-
-            <th></th>
-
-          </tr>
-
-        </tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
-  <div class="col-md-4 col-lg-4"></div>
 
 </div>
 
-<div id="modalFolio" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalFolio" aria-hidden="true">
+<div class="card">
 
-  <div class="modal-dialog modal-lg mw-100" style="width: 97%!important;">
+  <div class="card-body">
 
-    <div class="modal-content p-t-20 p-b-20 p-l-20 p-r-20" *ngIf="asesor !== ''">
+    <h1 class="card-title m-b-5"><span class="lstick"></span>Zona 2</h1>
 
-      <div class="modal-header">
+    <div class="table-responsive">
 
-          <h3 class="card-title">Información Detallada del Asesor <b>{{asesor.NOMBRE}}</b></h3>
+      <table class="table table-sm stylish-table table-hover">
 
-          <button type="button" class="close" data-dismiss="modal" id="cerrarModalBusq" aria-label="Close">
-  
-              <span aria-hidden="true">&times;</span>
-  
-          </button>
+        <tbody>
 
-      </div>
+          <tr *ngFor="let ase of asesores2">
 
-      <div class="modal-body">
+            <td>{{ase.ruta}} {{ase.nombre}}</td>
 
-        <div class="table-responsive">
+            <td>
 
-          <table class="table table-sm stylish-table table-hover">
+              <table class="table table-sm">
 
-            <thead>
+                <thead>
 
-              <tr>
+                  <tr>
 
-                <th class="text-center">PONDE</th>
+                    <th>Día</th>
 
-                <th>CONCEPTO</th>
+                    <th>Fecha</th>
 
-                <th class="text-center">OBJETIVO</th>
+                    <th>Clientes</th>
+                    
+                    <th>Venta</th>
+                    
+                    <th>Cobranza</th>
+                    
+                    <th>Meta</th>
+                    
+                    <th>Califiación</th>
 
-                <th class="text-center">REALIZADO</th>
+                    <th>Penalización</th>
 
-                <th class="text-center">TRABAJADO</th>
+                    <th>Final</th>
 
-                <th class="text-center">PTS/OBJ</th>
+                  </tr>
 
-                <th class="text-center">CALIFICACION</th>
+                </thead>
 
-              </tr>
+                <tbody>
 
-            </thead>
+                  <tr *ngFor="let sem of ase.semana">
 
-            <tbody>
+                    <td>{{sem.dia}}</td>
 
-              <tr>
+                    <td>{{sem.fecha}}</td>
 
-                <td class="text-center">{{asesor.PONDE_CLI}}</td>
+                    <td>{{sem.datos.clientes}}</td>
+                    
+                    <td>{{sem.datos.ventas | currency}}</td>
+                    
+                    <td>{{sem.datos.cobranza | currency}}</td>
+                    
+                    <td>{{sem.datos.cobranzaObj | currency}}</td>
+                    
+                    <td>{{sem.datos.calificacion | number: '0.2'}}</td>
 
-                <td>CLIENTES</td>
+                    <td>{{sem.datos.penalizacion | number: '0.2'}}</td>
 
-                <td class="text-center">{{asesor.OBJ_CLI}}</td>
+                    <td class="font-weight-bold" [ngClass]="{'text-danger': (sem.datos.calificacion - sem.datos.penalizacion) < 6, 'text-dark': (sem.datos.calificacion - sem.datos.penalizacion) >= 6}" *ngIf="sem.datos !== false">{{(sem.datos.calificacion - sem.datos.penalizacion) | number: '0.2'}}</td>
 
-                <td class="text-center">{{asesor.CLIENTES}}</td>
+                    <td *ngIf="!sem.datos">0</td>
 
-                <td class="text-center">{{(asesor.CLIENTES / asesor.OBJ_CLI) | percent:'0.2'}}</td>
+                  </tr>
 
-                <td class="text-center">{{asesor.PTS_OBJ_CLIENTES}}</td>
+                </tbody>
 
-                <td class="text-center">{{asesor.TRABAJADO_CLI}}</td>
-                
-              </tr>
+              </table>
 
-              <tr>
+            </td>
 
-                <td class="text-center">{{asesor.PONDE_VEN}}</td>
+          </tr>
 
-                <td>VENTA</td>
+        </tbody>
 
-                <td class="text-center">{{asesor.OBJ_VEN | currency}}</td>
-
-                <td class="text-center">{{asesor.VENTAS | currency}}</td>
-
-                <td class="text-center">{{(asesor.VENTAS / asesor.OBJ_VEN) | percent:'0.2'}}</td>
-
-                <td class="text-center">{{asesor.PTS_OBJ_VENTAS}}</td>
-
-                <td class="text-center">{{asesor.TRABAJADO_VEN}}</td>
-
-              </tr>
-
-              <tr>
-
-                <td class="text-center">{{asesor.PONDE_COB}}</td>
-
-                <td>COBRANZA</td>
-
-                <td class="text-center">{{asesor.OBJ_COB  | currency}}</td>
-
-                <td class="text-center">{{asesor.COBRADO | currency}}</td>
-
-                <td class="text-center">{{(asesor.COBRADO / asesor.OBJ_COB) | percent:'0.2'}}</td>
-
-                <td class="text-center">{{asesor.PTS_OBJ_COBRANZA  | number:'0.6'}}</td>
-
-                <td class="text-center">{{asesor.TRABAJADO_COB | number:'0.2'}}</td>
-
-              </tr>
-
-              <tr class="bg-dark text-white">
-
-                <th class="text-center">{{(asesor.PONDE_CLI + asesor.PONDE_VEN + asesor.PONDE_COB)}}</th>
-
-                <th colspan="5"></th>
-
-                <th class="text-center">{{(asesor.TRABAJADO_CLI + asesor.TRABAJADO_VEN + asesor.TRABAJADO_COB) | number:'0.2'}}</th>
-
-              </tr>
-
-              <tr class="bg-info text-white">
-
-                <th class="text-center font-20" colspan="7">{{(asesor.TRABAJADO_CLI + asesor.TRABAJADO_VEN + asesor.TRABAJADO_COB) | number:'0.2'}}</th>
-
-              </tr>
-
-            </tbody>
-
-          </table>
-
-        </div>
-
-      </div>
+      </table>
 
     </div>
 

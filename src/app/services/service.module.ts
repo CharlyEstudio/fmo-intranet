@@ -57,7 +57,8 @@ import {
   ChoferService,
   ChequesdevService,
   ProveedoresService,
-  ContaGuard
+  ContaGuard,
+  SeguimientoService
   // NotificationService
 } from "./services.index";
 
@@ -122,7 +123,8 @@ import {
     DiasvtasService,
     ChoferService,
     ChequesdevService,
-    ProveedoresService
+    ProveedoresService,
+    SeguimientoService
     // Notificaciones
     // NotificationService
     // Magnitracking

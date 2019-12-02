@@ -41,13 +41,12 @@ export class PanelasesoresService {
   }
 
   pedidosOutTime(perid: any, fecha: any) {
-    const url = URL_EXTERNO + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=24&perid=' + perid;
+    const url = URL_EXTERNO + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=51&perid=' + perid + '&fecha=' + fecha;
 
     return this.http.get(url);
   }
 
   visitasFalsas(perid: any, fecha: any) {
-    // https://ferremayoristas.com.mx:3001/visitas/asesor/calificacion/$perid/$fecha
     const url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/visitas/asesor/calificacion/' + perid + '/' + fecha;
 
     return this.http.get(url);

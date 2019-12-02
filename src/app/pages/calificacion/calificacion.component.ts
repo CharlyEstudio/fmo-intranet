@@ -62,7 +62,7 @@ export class CalificacionComponent implements OnInit {
               this.panelAsesores.pedidosOutTime(ase.perid, fecha).subscribe((pedout: any) => {
                 this.panelAsesores.visitasFalsas(ase.perid, fecha).subscribe((visfal: any) => {
                   calificacion[0].SINVISITA = visfal.status ? (visfal.visitados.length * 0.1) : 0;
-                  calificacion[0].TIMEOUT = pedout.length > 0 ? (pedout.length * 0.1) : 0;
+                  calificacion[0].TIMEOUT = pedout.length > 0 ? (pedout[0].cantidad * 0.1) : 0;
                   zonaPush.push(calificacion[0]);
                   zonaPush.sort((a, b) => {
                     const datoA = (a.TRABAJADO_CLI + a.TRABAJADO_VEN + a.TRABAJADO_COB);
@@ -102,7 +102,7 @@ export class CalificacionComponent implements OnInit {
               this.panelAsesores.pedidosOutTime(ase.perid, fecha).subscribe((pedout: any) => {
                 this.panelAsesores.visitasFalsas(ase.perid, fecha).subscribe((visfal: any) => {
                   calificacion[0].SINVISITA = visfal.status ? (visfal.visitados.length * 0.1) : 0;
-                  calificacion[0].TIMEOUT = pedout.length > 0 ? (pedout.length * 0.1) : 0;
+                  calificacion[0].TIMEOUT = pedout.length > 0 ? (pedout[0].cantidad * 0.1) : 0;
                   zonaPush.push(calificacion[0]);
                   zonaPush.sort((a, b) => {
                     const datoA = (a.TRABAJADO_CLI + a.TRABAJADO_VEN + a.TRABAJADO_COB);

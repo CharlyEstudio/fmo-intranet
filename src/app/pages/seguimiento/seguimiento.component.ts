@@ -1,13 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-
-import * as _swal from 'sweetalert';
-import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
-const swal: SweetAlert = _swal as any;
 
 // Servicios
-import { PanelasesoresService } from '../../services/services.index';
-import { HerramientasService } from '../../services/herramientas/herramientas.service';
+import { DiasvtasService, SeguimientoService, PanelasesoresService } from '../../services/services.index';
 
 @Component({
   selector: 'app-seguimiento',
@@ -16,138 +10,213 @@ import { HerramientasService } from '../../services/herramientas/herramientas.se
 })
 export class SeguimientoComponent implements OnInit {
 
-  zona1: any[] = [];
-  cantidadZona1: number = 0;
-  trabajandoZona1: number = 0;
-  zona2: any[] = [];
-  cantidadZona2: number = 0;
-  trabajandoZona2: number = 0;
-
-  vtaMin: number = 0;
-  cliMin: number = 20;
-
-  asesor: any = '';
+  reporte: any[] = [];
+  asesores1: any[] = [];
+  asesores2: any[] = [];
 
   constructor(
-    private panelAsesores: PanelasesoresService,
-    private herramientas: HerramientasService
+    private diasVtasService: DiasvtasService,
+    private seguimientoService: SeguimientoService,
+    private panelAsesoresService: PanelasesoresService
   ) { }
 
   ngOnInit() {
-    this.actualizar();
+    this.obtenerReporte1();
+    this.obtenerReporte2();
   }
 
-  actualizar() {
-    // Obtenemos la venta mínima diaria
-    this.panelAsesores.obtenerImporteVtaMinDiaria().subscribe((impoMin: any) => {
-      if (impoMin.length > 0) {
-        this.vtaMin = impoMin[0].data;
-      }
-    });
-    this.obtenerAsesores1(this.herramientas.fechaActual(), this.herramientas.fechaActual(), false);
-    this.obtenerAsesores2(this.herramientas.fechaActual(), this.herramientas.fechaActual(), false);
-  }
+  obtenerReporte1() {
+    const dias = [];
+    dias.push(
+      {dia: 2, nombre: 'Lunes'}
+    );
+    dias.push(
+      {dia: 3, nombre: 'Martes'}
+    );
+    dias.push(
+      {dia: 4, nombre: 'Miercoles'}
+    );
+    dias.push(
+      {dia: 5, nombre: 'Jueves'}
+    );
+    dias.push(
+      {dia: 6, nombre: 'Viernes'}
+    );
+    this.panelAsesoresService.obtenerAsesores(1).subscribe((asesores: any) => {
+      if (asesores.length > 0) {
+        for (const ase of asesores) {
+          for (const dia of dias) {
+            this.seguimientoService.obtenerFechaDias(dia.dia).subscribe((rangos: any) => {
+              if (rangos.length > 0) {
+                for (const day of rangos) {
+                  this.seguimientoService.obtenerSeguimiento(rangos[0].date, ase.perid).subscribe((datos: any) => {
+                    const esAsesor = (asesor: any) => {
+                      return asesor.idFerrum === ase.perid;
+                    };
+                    if (!this.asesores1.find(esAsesor)) {
+                      this.asesores1.push({
+                        idFerrum: ase.perid,
+                        ruta: ase.ruta,
+                        nombre: ase.nombre,
+                        semana: [
+                          {
+                            id: day.d,
+                            dia: dia.nombre,
+                            fecha: rangos[0].date,
+                            datos: datos.length > 0
+                                  ? {
+                                    calificacion: (datos[0].trabajado_cli + datos[0].trabajado_ven + datos[0].trabajado_cob),
+                                    clientesObj: 20,
+                                    clientes: datos[0].clientes,
+                                    ventasObj: 40000,
+                                    ventas: datos[0].ventas,
+                                    cobranza: datos[0].cobrado,
+                                    cobranzaObj: datos[0].obj_cob,
+                                    sinvisita: datos[0].sinvisita,
+                                    outtime: datos[0].outtime,
+                                    penalizacion: datos[0].penalizacion
+                                  }
+                                  : false
+                          }
+                        ]
+                      });
+                    } else {
+                      this.asesores1.find(esAsesor).semana.push({
+                        id: day.d,
+                        dia: dia.nombre,
+                        fecha: rangos[0].date,
+                        datos: datos.length > 0
+                              ? {
+                                calificacion: (datos[0].trabajado_cli + datos[0].trabajado_ven + datos[0].trabajado_cob),
+                                clientesObj: 20,
+                                clientes: datos[0].clientes,
+                                ventasObj: 40000,
+                                ventas: datos[0].ventas,
+                                cobranza: datos[0].cobrado,
+                                cobranzaObj: datos[0].obj_cob,
+                                sinvisita: datos[0].sinvisita,
+                                outtime: datos[0].outtime,
+                                penalizacion: datos[0].penalizacion
+                              }
+                              : false
+                      });
+                    }
+                    this.asesores1.find(esAsesor).semana.sort((a, b) => {
+                      if (a.id > b.id) {
+                        return 1;
+                      }
 
-  solicitar(forma: NgForm) {
-    if (forma.value.fechaIn === '') {
-      swal('Sin Fecha', 'No selecciono fecha inicial', 'error');
-      return;
-    }
+                      if (a.id < b.id) {
+                        return -1;
+                      }
 
-    if (forma.value.fechaOut === '') {
-      swal('Sin Fecha', 'No selecciono fecha final', 'error');
-      return;
-    }
-
-    // Fecha de inicio
-    const d1 = Date.parse(forma.value.fechaIn);
-    const diIn = new Date(d1);
-    diIn.setTime(diIn.getTime() + 1 * 24 * 60 * 60 * 1000);
-    const diaIn = diIn.getDate();
-
-    // Fecha final
-    const d2 = Date.parse(forma.value.fechaOut);
-    const diOut = new Date(d2);
-    diOut.setTime(diOut.getTime() + 1 * 24 * 60 * 60 * 1000);
-    const diaOut = diOut.getDate();
-
-    // Resta
-    const dias = diaOut - diaIn + 1;
-
-    const vtaMinDias = dias * this.vtaMin;
-    const cteMin = dias * this.cliMin;
-    this.cliMin = cteMin;
-    this.vtaMin = vtaMinDias;
-    this.obtenerAsesores1(forma.value.fechaIn, forma.value.fechaOut, true);
-    this.obtenerAsesores2(forma.value.fechaIn, forma.value.fechaOut, true);
-  }
-
-  obtenerAsesores1(fechaIn: any, fechaOut: any, rango: boolean) {
-    this.panelAsesores.obtenerAsesores(1).subscribe((aseZ1: any) => {
-      if (aseZ1.length > 0) {
-        this.cantidadZona1 = 0;
-        this.cantidadZona1 = aseZ1.length;
-        this.trabajandoZona1 = 0;
-        this.zona1 = [];
-        const zonaPush = [];
-        for (const ase of aseZ1) {
-          this.panelAsesores.obtenerCalificacion(ase.perid, fechaIn, fechaOut, this.vtaMin, this.cliMin, rango).subscribe((calificacion: any) => {
-            zonaPush.push(calificacion[0]);
-            zonaPush.sort((a, b) => {
-              const datoA = (a.TRABAJADO_CLI + a.TRABAJADO_VEN + a.TRABAJADO_COB);
-              const datoB = (b.TRABAJADO_CLI + b.TRABAJADO_VEN + b.TRABAJADO_COB);
-              if (datoA > datoB) {
-                return 1;
+                      return 0;
+                    });
+                  });
+                }
               }
-
-              if (datoA < datoB) {
-                return -1;
-              }
-
-              return 0;
             });
-            this.trabajandoZona1++;
-          });
+          }
         }
-        this.zona1 = zonaPush;
       }
     });
   }
 
-  obtenerAsesores2(fechaIn: any = this.herramientas.fechaActual(), fechaOut: any = this.herramientas.fechaActual(), rango: boolean = false) {
-    this.panelAsesores.obtenerAsesores(2).subscribe((aseZ2: any) => {
-      if (aseZ2.length > 0) {
-        this.cantidadZona2 = 0;
-        this.cantidadZona2 = aseZ2.length;
-        this.trabajandoZona2 = 0;
-        this.zona2 = [];
-        const zonaPush = [];
-        for (const ase of aseZ2) {
-          this.panelAsesores.obtenerCalificacion(ase.perid, fechaIn, fechaOut, this.vtaMin, this.cliMin, rango).subscribe((calificacion: any) => {
-            zonaPush.push(calificacion[0]);
-            zonaPush.sort((a, b) => {
-              const datoA = (a.TRABAJADO_CLI + a.TRABAJADO_VEN + a.TRABAJADO_COB);
-              const datoB = (b.TRABAJADO_CLI + b.TRABAJADO_VEN + b.TRABAJADO_COB);
-              if (datoA > datoB) {
-                return 1;
-              }
+  obtenerReporte2() {
+    const dias = [];
+    dias.push(
+      {dia: 2, nombre: 'Lunes'}
+    );
+    dias.push(
+      {dia: 3, nombre: 'Martes'}
+    );
+    dias.push(
+      {dia: 4, nombre: 'Miercoles'}
+    );
+    dias.push(
+      {dia: 5, nombre: 'Jueves'}
+    );
+    dias.push(
+      {dia: 6, nombre: 'Viernes'}
+    );
+    this.panelAsesoresService.obtenerAsesores(2).subscribe((asesores: any) => {
+      if (asesores.length > 0) {
+        for (const ase of asesores) {
+          for (const dia of dias) {
+            this.seguimientoService.obtenerFechaDias(dia.dia).subscribe((rangos: any) => {
+              if (rangos.length > 0) {
+                for (const day of rangos) {
+                  this.seguimientoService.obtenerSeguimiento(rangos[0].date, ase.perid).subscribe((datos: any) => {
+                    const esAsesor = (asesor: any) => {
+                      return asesor.idFerrum === ase.perid;
+                    };
+                    if (!this.asesores2.find(esAsesor)) {
+                      this.asesores2.push({
+                        idFerrum: ase.perid,
+                        ruta: ase.ruta,
+                        nombre: ase.nombre,
+                        semana: [
+                          {
+                            id: day.d,
+                            dia: dia.nombre,
+                            fecha: rangos[0].date,
+                            datos: datos.length > 0
+                                  ? {
+                                    calificacion: (datos[0].trabajado_cli + datos[0].trabajado_ven + datos[0].trabajado_cob),
+                                    clientesObj: 20,
+                                    clientes: datos[0].clientes,
+                                    ventasObj: 40000,
+                                    ventas: datos[0].ventas,
+                                    cobranza: datos[0].cobrado,
+                                    cobranzaObj: datos[0].obj_cob,
+                                    sinvisita: datos[0].sinvisita,
+                                    outtime: datos[0].outtime,
+                                    penalizacion: datos[0].penalizacion
+                                  }
+                                  : false
+                          }
+                        ]
+                      });
+                    } else {
+                      this.asesores2.find(esAsesor).semana.push({
+                        id: day.d,
+                        dia: dia.nombre,
+                        fecha: rangos[0].date,
+                        datos: datos.length > 0
+                              ? {
+                                calificacion: (datos[0].trabajado_cli + datos[0].trabajado_ven + datos[0].trabajado_cob),
+                                clientesObj: 20,
+                                clientes: datos[0].clientes,
+                                ventasObj: 40000,
+                                ventas: datos[0].ventas,
+                                cobranza: datos[0].cobrado,
+                                cobranzaObj: datos[0].obj_cob,
+                                sinvisita: datos[0].sinvisita,
+                                outtime: datos[0].outtime,
+                                penalizacion: datos[0].penalizacion
+                              }
+                              : false
+                      });
+                    }
+                    this.asesores2.find(esAsesor).semana.sort((a, b) => {
+                      if (a.id > b.id) {
+                        return 1;
+                      }
 
-              if (datoA < datoB) {
-                return -1;
-              }
+                      if (a.id < b.id) {
+                        return -1;
+                      }
 
-              return 0;
+                      return 0;
+                    });
+                  });
+                }
+              }
             });
-            this.trabajandoZona2++;
-          });
+          }
         }
-        this.zona2 = zonaPush;
       }
     });
-  }
-
-  verAsesor(seccion: any) {
-    this.asesor = seccion;
   }
 
 }

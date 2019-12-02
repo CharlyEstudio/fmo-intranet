@@ -82,12 +82,13 @@ import { ConfigpanelComponent } from './configpanel/configpanel.component';
 import { GarantiasComponent } from './garantias/garantias.component';
 import { ActividadesDevelopersComponent } from './actividades-developers/actividades-developers.component';
 import { PanelgarantiasComponent } from './panelgarantias/panelgarantias.component';
-import { SeguimientoComponent } from './seguimiento/seguimiento.component';
+import { CalificacionComponent } from './calificacion/calificacion.component';
 import { FacturasmonitorComponent } from './facturasmonitor/facturasmonitor.component';
 import { DiasvtasComponent } from './diasvtas/diasvtas.component';
 import { ComisioneschoferesComponent } from './comisioneschoferes/comisioneschoferes.component';
 import { ChequesdevComponent } from './chequesdev/chequesdev.component';
 import { CostosComponent } from './costos/costos.component';
+import { SeguimientoComponent } from './seguimiento/seguimiento.component';
 
 const pageRoutes: Routes = [
     {
@@ -200,11 +201,20 @@ const pageRoutes: Routes = [
     },
     // Asesores
     {
+        path: 'calificacion',
+        canActivate: [ DireccionGuard, VerificaTokenGuard ],
+        component: CalificacionComponent,
+        data:   {
+                    titulo: 'Seguimiento Ventas vs Cobranza',
+                    name: 'description'
+                }
+    },
+    {
         path: 'seguimiento',
         canActivate: [ DireccionGuard, VerificaTokenGuard ],
         component: SeguimientoComponent,
         data:   {
-                    titulo: 'Seguimiento Ventas vs Cobranza',
+                    titulo: 'Seguimiento Semanal',
                     name: 'description'
                 }
     },

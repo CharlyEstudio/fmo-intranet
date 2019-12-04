@@ -957,7 +957,7 @@
 
                         <button *ngIf="estado === 'ENTREGANDO' && estado !== 'TERMINADO'" type="submit" class="btn btn-info">Terminar</button>
                         
-                        <button *ngIf="estado === 'ENTREGAR' && guia !== 'GUIA NO ENCONTRADA'" type="button" (click)="descargar(g)" class="btn btn-info">Entregando</button>
+                        <button *ngIf="estado === 'ENTREGAR' && guia !== 'GUIA NO ENCONTRADA'" type="submit" (click)="descargar(g)" class="btn btn-info">Entregando</button>
                         
                         <button *ngIf="estado !== 'TERMINADO' && guia !== 'GUIA NO ENCONTRADA'" (click)="cancelar()" class="btn btn-info" >Cancelar Garantía</button>
                         

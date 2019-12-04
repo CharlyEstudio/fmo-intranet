@@ -399,8 +399,6 @@ export class GarantiasComponent implements OnInit {
   }
 
   agregarGarantia(garantia: NgForm) {
-    console.log(garantia.value);
-    console.log(this.clave, this.clvprov, this.costo, this.descr);
     this.nomcliFol = garantia.value.nomcliFol;
 
     if (this.existe === 'SI') {
@@ -611,8 +609,6 @@ export class GarantiasComponent implements OnInit {
       this.nombrePdf = resp[0].nomcliFol;
      }
 
-    //  console.log(this.domidpdf);
-
      this._garantiaService.buscarDomicilio(this.domidpdf).subscribe((res: any) => {
       this.direccion = res[0].DIRECCION;
       this.numerodir = res[0].NUMERO;
@@ -624,19 +620,18 @@ export class GarantiasComponent implements OnInit {
 
       const file = `${this.id}-${Date.now()}.pdf`;
 
-      this._garantiaService.hacerPDF(file, this.folioPdf, this.numfolpdf,  this.cantidadPdf , this.clvprovPdf,this.clavePdf, this.nombrePdf, 
+      this._garantiaService.hacerPDF(file, this.folioPdf, this.numfolpdf,  this.cantidadPdf , this.clvprovPdf,this.clavePdf, this.nombrePdf,
       this.descrPdf, this.diavisPdf, this.diaentrega, this.vendedorPdf, this.direccion, this.numerodir, this.interior, this.colonia, this.ciudad).subscribe((pdf: any) => {
 
-      console.log(pdf);
-    //   //   if (pdf[0].status) {
-    //   //   swal('CREADO', 'Archivo PDF creado.', 'success');
-    //   //   setTimeout(() => {
-    //   //     this.pdf = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/' + pdf[0].file);
-    //   //   }, 1000);
-    //   // } else {
-    //   // this.pdf = '';
-    //   //   swal('ERROR', 'Revisar con el administrador.', 'error');
-    //   // }
+        if (pdf) {
+        swal('CREADO', 'Archivo PDF creado.', 'success');
+        setTimeout(() => {
+          this.pdf = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/' + pdf[0].file);
+        }, 1000);
+      } else {
+      this.pdf = '';
+        swal('ERROR', 'Revisar con el administrador.', 'error');
+      }
 
      });
 
@@ -645,8 +640,6 @@ export class GarantiasComponent implements OnInit {
     });
 
   }
-
-
 
   seguimiento(data: any, user: Usuario, estate: any, fol: any, numCli: any, nomCli: any) {
     const payload = {
@@ -688,14 +681,12 @@ export class GarantiasComponent implements OnInit {
   }
 
   cancelar() {
-    console.log(this.idgar);
     this._garantiaService.cancelarGarantia(this.idgar).subscribe((resp: any) => {
       swal('Garantia Cancelada', 'Esta garantía ha sido cancelada.', 'success');
       const cerrar = <HTMLElement>(document.getElementById('editar'));
           cerrar.click();
           this.obtenerTodasGarantias();
     });
-    console.log('HOLAAAAAAAAAAAAAAAAAAA');
   }
 
 

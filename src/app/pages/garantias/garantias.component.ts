@@ -11,6 +11,7 @@ import { Usuario } from '../../models/usuario.model';
 
 // Servicios
 import { GarantiasService, HerramientasService, ProductosService, ClientesService, UsuarioService, WebsocketService } from '../../services/services.index';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-garantias',
@@ -25,6 +26,7 @@ export class GarantiasComponent implements OnInit {
   asesores: any[] = [];
   garantias: any[] = [];
   foliosGuia: any[] = [];
+  garantiasResp: any[] = [];
   desde: number = 0;
   hasta: number = 10;
   totalResgitro: number = 0;
@@ -32,7 +34,7 @@ export class GarantiasComponent implements OnInit {
   habilitar: boolean = false;
   requerido: boolean = true;
   truperHabilitado: boolean = false;
-  autorizado: boolean = true;
+  autorizado: boolean = false;
   accion: boolean = false;
   enviar: any = '';
   guia: any = '';
@@ -108,7 +110,29 @@ export class GarantiasComponent implements OnInit {
   existe: any = '';
   clienteFmo: any = '';
 
+  pdf: any = '';
+  id: number;
+
+  clvprovPdf: number;
+  cantidadPdf: number;
+  folioPdf: number;
+  nombrePdf: any;
+  numeroPdf: any;
+  numfolpdf: number;
+  clavePdf: any;
+  descrPdf: any;
+  diavisPdf: any;
+  diaentrega: any;
+  vendedorPdf: any;
+  domidpdf: number;
+  direccion: any;
+  numerodir: any;
+  interior: any;
+  colonia: any;
+  ciudad: any;
+
   constructor(
+    public sanitizer: DomSanitizer,
     private _garantiaService: GarantiasService,
     private herramienta: HerramientasService,
     private _productoService: ProductosService,
@@ -375,6 +399,8 @@ export class GarantiasComponent implements OnInit {
   }
 
   agregarGarantia(garantia: NgForm) {
+    console.log(garantia.value);
+    console.log(this.clave, this.clvprov, this.costo, this.descr);
     this.nomcliFol = garantia.value.nomcliFol;
 
     if (this.existe === 'SI') {
@@ -384,7 +410,7 @@ export class GarantiasComponent implements OnInit {
         this.observa = garantia.value.facturaDos;
       }
 
-      this._garantiaService.nuevaGarantia(garantia.value, this.observa).subscribe((resp: any) => {
+      this._garantiaService.nuevaGarantia(garantia.value, this.observa, this.clave, this.clvprov, this.costo, this.descr).subscribe((resp: any) => {
         if (resp) {
           swal('Nueva Garantia', 'Los datos de la garantia se han guardado correctamente.', 'success');
           garantia.resetForm();
@@ -429,7 +455,7 @@ export class GarantiasComponent implements OnInit {
       this.autorizado = true;
     }
   }
- 
+  
   actualizarGarantia(garantia: NgForm) {
     if (this.estado === 'NUEVO') {
       if (garantia.value.fechaTrup < this.fecha) {
@@ -547,14 +573,80 @@ export class GarantiasComponent implements OnInit {
     }
   }
 
-  cancelar() {
-    this._garantiaService.cancelarGarantia(this.idgar).subscribe((resp: any) => {
-      swal('Garantia Cancelada', 'Esta garantía ha sido cancelada.', 'success');
-      const cerrar = <HTMLElement>(document.getElementById('editar'));
-          cerrar.click();
-          this.obtenerTodasGarantias();
+  descargar(garantia: any) {
+
+    this.id = garantia.value.idgar;
+
+    this._garantiaService.buscarDatos(this.id).subscribe((resp: any) => {
+
+      this.folioPdf = resp[0].folio;
+      this.numfolpdf = resp[0].numeroFol;
+      this.cantidadPdf = resp[0].cantidad;
+      this.clvprovPdf = resp[0].clvprov;
+      this.clavePdf = resp[0].clave;
+      this.descrPdf = resp[0].descripcio;
+      this.vendedorPdf = resp[0].asesor;
+      this.domidpdf = resp[0].domid;
+
+      if (resp[0].diavis === 'L') {
+        this.diavisPdf = 'Lunes';
+        this.diaentrega = 'Martes';
+      } else if (resp[0].diavis === 'M') {
+        this.diavisPdf = 'Martes';
+        this.diaentrega = 'Miercoles';
+      } else if (resp[0].diavis === 'I') {
+        this.diavisPdf = 'Miercoles';
+        this.diaentrega = 'Jueves';
+      } else if (resp[0].diavis === 'J') {
+        this.diavisPdf = 'Jueves';
+        this.diaentrega = 'Viernes';
+      } else if (resp[0].diavis === 'V') {
+        this.diavisPdf = 'Viernes';
+        this.diaentrega = 'Lunes';
+      }
+
+     if (resp[0].nomcliFol === '') {
+      this.nombrePdf = resp[0].clienteFol;
+     } else {
+      this.nombrePdf = resp[0].nomcliFol;
+     }
+
+    //  console.log(this.domidpdf);
+
+     this._garantiaService.buscarDomicilio(this.domidpdf).subscribe((res: any) => {
+      this.direccion = res[0].DIRECCION;
+      this.numerodir = res[0].NUMERO;
+      this.interior = res[0].INTERIOR;
+      this.colonia = res[0].COLONIA;
+      this.ciudad = res[0].CIUDAD;
+
+      this.pdf = '';
+
+      const file = `${this.id}-${Date.now()}.pdf`;
+
+      this._garantiaService.hacerPDF(file, this.folioPdf, this.numfolpdf,  this.cantidadPdf , this.clvprovPdf,this.clavePdf, this.nombrePdf, 
+      this.descrPdf, this.diavisPdf, this.diaentrega, this.vendedorPdf, this.direccion, this.numerodir, this.interior, this.colonia, this.ciudad).subscribe((pdf: any) => {
+
+      console.log(pdf);
+    //   //   if (pdf[0].status) {
+    //   //   swal('CREADO', 'Archivo PDF creado.', 'success');
+    //   //   setTimeout(() => {
+    //   //     this.pdf = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/' + pdf[0].file);
+    //   //   }, 1000);
+    //   // } else {
+    //   // this.pdf = '';
+    //   //   swal('ERROR', 'Revisar con el administrador.', 'error');
+    //   // }
+
+     });
+
+     });
+
     });
+
   }
+
+
 
   seguimiento(data: any, user: Usuario, estate: any, fol: any, numCli: any, nomCli: any) {
     const payload = {
@@ -594,4 +686,17 @@ export class GarantiasComponent implements OnInit {
           this.obtenerTodasGarantias();
     });
   }
+
+  cancelar() {
+    console.log(this.idgar);
+    this._garantiaService.cancelarGarantia(this.idgar).subscribe((resp: any) => {
+      swal('Garantia Cancelada', 'Esta garantía ha sido cancelada.', 'success');
+      const cerrar = <HTMLElement>(document.getElementById('editar'));
+          cerrar.click();
+          this.obtenerTodasGarantias();
+    });
+    console.log('HOLAAAAAAAAAAAAAAAAAAA');
+  }
+
+
 }

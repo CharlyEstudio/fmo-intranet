@@ -96,10 +96,10 @@ export class GarantiasService {
     return this.http.get(url);
   }
 
-  nuevaGarantia(garantia: any, observa: any) {
+  nuevaGarantia(garantia: any, observa: any, clave: any, clvprov: any, costo: any, descr: any) {
     const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=3';
 
-    return this.http.post(url, {data: garantia, observa: observa}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
+    return this.http.post(url, {data: garantia, observa: observa, clave: clave, clvprov: clvprov, costo: costo, descr: descr}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
   }
 
   nuevaGarantiaDesc(garantia: any, clvprov: any, costo: any, clienteFmo: any, nomcliFol: any) {
@@ -152,5 +152,52 @@ export class GarantiasService {
 
     return this.http.get( this.url );
   }
+
+  buscarDatos(idgar: number) {
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=22&idgar=' + idgar;
+
+    return this.http.get(url);
+  }
+
+  buscarDomicilio(domid: number) {
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=24&domid=' + domid;
+
+    return this.http.get(url);
+  }
+
+
+  hacerPDF(file: string, folioPdf: number, numfolpdf: number, cantidadPdf: number, clvprovPdf: number, clavePdf: any , 
+    nombrePdf: any, descrPdf: any, diavisPdf: any, diaentrega: any, vendedorPdf: any, direccion: any, numerodir: any, interior: any, colonia: any, ciudad: any) {
+    let url;
+
+    if (URL_SERVICIO_GENERAL === URL_PETICION) {
+      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=23';
+    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
+      url = URL_PRUEBAS + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=23';
+    } else {
+      url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=23';
+    }
+    return this.http.post(url, {
+      file: file,
+      folioPdf: folioPdf,
+      numfolpdf: numfolpdf,
+      cantidadPdf: cantidadPdf,
+      clvprovPdf: clvprovPdf,
+      clavePdf: clavePdf,
+      nombrePdf: nombrePdf,
+      descrPdf: descrPdf,
+      diavisPdf: diavisPdf,
+      diaentrega: diaentrega,
+      vendedorPdf: vendedorPdf,
+      direccion: direccion,
+      numerodir: numerodir,
+      interior: interior,
+      colonia: colonia,
+      ciudad: ciudad
+
+     },
+    { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
+  }
+
 
 }

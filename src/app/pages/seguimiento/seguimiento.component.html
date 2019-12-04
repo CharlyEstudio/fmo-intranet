@@ -134,6 +134,10 @@
                     
                     <th>Califiación</th>
 
+                    <th>Sin Visita</th>
+
+                    <th>Out Time</th>
+
                     <th>Penalización</th>
 
                     <th>Final</th>
@@ -160,7 +164,11 @@
                     
                     <td>{{sem.datos.calificacion | number: '0.2'}}</td>
 
-                    <td>{{sem.datos.penalizacion | number: '0.2'}}</td>
+                    <td>{{sem.datos.sinvisita | number: '0.2'}}</td>
+
+                    <td>{{sem.datos.outtime | number: '0.2'}}</td>
+
+                    <td class="font-weight-bold" [ngClass]="{'text-danger': sem.datos.penalizacion > 0, 'text-success': sem.datos.penalizacion === 0}">{{sem.datos.penalizacion | number: '0.2'}}</td>
 
                     <td class="font-weight-bold" [ngClass]="{'text-danger': (sem.datos.calificacion - sem.datos.penalizacion) < 6, 'text-dark': (sem.datos.calificacion - sem.datos.penalizacion) >= 6}" *ngIf="sem.datos !== false">{{(sem.datos.calificacion - sem.datos.penalizacion) | number: '0.2'}}</td>
 

@@ -26,6 +26,12 @@ export class GarantiasService {
     return this.http.get(url);
   }
 
+  obtenerGarantiasDesdeFmo(desde: number = 0) {
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=25&desde=' + desde;
+
+    return this.http.get(url);
+  }
+
   obtenerGarantias() {
     const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=17';
 
@@ -96,16 +102,16 @@ export class GarantiasService {
     return this.http.get(url);
   }
 
-  nuevaGarantia(garantia: any, observa: any, clave: any, clvprov: any, costo: any, descr: any) {
+  nuevaGarantia(garantia: any, marca: any) {
     const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=3';
 
-    return this.http.post(url, {data: garantia, observa: observa, clave: clave, clvprov: clvprov, costo: costo, descr: descr}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
+    return this.http.post(url, {data: garantia, marca: marca}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
   }
 
-  nuevaGarantiaDesc(garantia: any, clvprov: any, costo: any, clienteFmo: any, nomcliFol: any) {
+  nuevaGarantiaNofact(garantia: any, clvprov: any, clave: any, descr: any, costo: any, marca: any, clienteFmo: any) {
     const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=21';
 
-    return this.http.post(url, {data: garantia, clvprov: clvprov, costo: costo, clienteFmo: clienteFmo, nomcliFol: nomcliFol}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
+    return this.http.post(url, {data: garantia, clvprov: clvprov, clave: clave, descr: descr, costo: costo, marca: marca, clienteFmo: clienteFmo}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
   }
 
 

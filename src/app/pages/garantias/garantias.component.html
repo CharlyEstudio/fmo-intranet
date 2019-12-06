@@ -28,13 +28,13 @@
 
                         <th class="text-center">Fecha</th>
 
-                        <th colspan="2" class="border border-bottom-0 text-center">CLIENTE DE FACTURA</th>
+                        <th colspan="1" class="border border-bottom-0 text-center">FACTURA</th>
                         
                         <th colspan="1"></th>
 
-                        <th class="text-center">Mismo</th>
-                        
                         <th class="text-center">Es</th>
+                        
+                        <th class="text-center">Me</th>
 
                         <th colspan="6" class="text-center border border-bottom-0">FECHAS</th>
 
@@ -52,15 +52,13 @@
 
                         <th class="text-center">Folio</th>
 
-                        <th class="text-center border border-bottom-0 border-right-0 border-top-0">Número</th>
-
-                        <th class="text-center border border-bottom-0 border-left-0 border-top-0">Nombre</th>
+                        <th class="text-center border border-bottom-0 border-right-0 border-top-0">#Factura</th>
 
                         <th class="">Asesor</th>
 
                         <th class="text-center">Cliente</th>
                         
-                        <th class="text-center">Cliente</th>
+                        <th class="text-center">Compro</th>
 
                         <th class="text-center border border-bottom-0 border-right-0 border-top-0">Registro</th>
 
@@ -88,20 +86,14 @@
 
                         <td width="5%" class="border-0">{{gara.folio}}</td>
 
-                        <td *ngIf="gara.numeroFol !== 0" class="text-center border border-right-0 border-top-0">{{gara.numeroFol}}</td>
+                        <td  class="text-center border border-right-0 border-top-0">{{gara.numero}}</td>
                         
-                        <td *ngIf="gara.numeroFol === 0" class="text-center border border-right-0 border-top-0"> 0 </td>
-
-                        <td *ngIf="gara.numeroFol !== 0" class="text-truncate border border-left-0 border-top-0" style="max-width: 100px!important; width: 180px!important">{{gara.clienteFol}}</td>
+                        <td  class="text-truncate border border-left-0 border-top-0" style="max-width: 100px!important; width: 180px!important">{{gara.nombre}}</td>
                         
-                        <td *ngIf="gara.numeroFol === 0" class="text-truncate border border-left-0 border-top-0" style="max-width: 100px!important; width: 180px!important">{{gara.nomcliFol}}</td>
-
                         <td class="text-center border-0">{{gara.fecha | date: 'dd-MM-yy'}}</td>
 
-                        <td class="text-center border border-right-0 border-top-0">{{gara.numero}}</td>
+                        <td class="text-center border border-right-0 border-top-0">{{gara.facafec}}</td>
 
-                        <td class="text-truncate border border-left-0 border-top-0" style="max-width: 100px!important; width: 180px!important">{{gara.nombre}}</td>
-                        
                         <td width="10%" class="border-0">
 
                             {{gara.asesor}}
@@ -153,7 +145,6 @@
                             <span *ngIf="gara.estado === 'TERMINADO'" class="label label-success">Terminado</span>
                             
                             <span *ngIf="gara.estado === 'CANCELADO'" class="label label-danger">Cancelado</span>
-
 
                         </td>
 
@@ -219,7 +210,6 @@
 
 </div>
 
-
 <div id="add-garantia" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="add-garantia" aria-hidden="true">
 
     <div class="modal-dialog modal-lg mw-100" style="width: 95%!important;">
@@ -242,7 +232,7 @@
 
                 <form ngNativeValidate class="form-row" #f="ngForm" (ngSubmit)="agregarGarantia(f)">
 
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-12">
 
                         <label for="">Folio de Garantía Nueva</label>
 
@@ -250,7 +240,7 @@
 
                     </div>
 
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-12">
 
                         <label for="">Fecha del Folio</label>
 
@@ -258,31 +248,240 @@
 
                     </div>
 
-                    <div class="form-group col-md-8">
+                    <div class="form-group col-md-12">
+
+                        <div class="form-check form-check-inline">
+
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="truper" value="truper" (click)="catalogo('TRUPER')">
+
+                            <label class="form-check-label" for="truper">TRUPER</label>
+
+                            <input [(ngModel)]="foliofmo" type="number" name="foliofmo" id="foliofmo" class="form-control" style="display: none;">
+
+                         </div>
+
+                        <div class="form-check form-check-inline">
+
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="fmo" value="fmo" (click)="catalogo('FMO')">
+
+                            <label class="form-check-label" for="fmo">FMO</label>
+
+                        </div>
 
                     </div>
 
-                    <div class="col-md-12">
+                    <div class="form-group col-md-12">
 
-                            <h3>¿El producto sigue vigente en catálogo?</h3>
-    
-                                <div class="form-check form-check-inline">
-    
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="descontinuado" value="descontinuado" (click)="existencia('NO')">
-    
-                                        <label class="form-check-label" for="descontinuado">NO</label>
-    
-                                 </div>
-    
-                                      <div class="form-check form-check-inline">
-    
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="vigente" value="vigente" (click)="existencia('SI')">
-    
-                                        <label class="form-check-label" for="vigente">SI</label>
-    
-                                </div>
-                                      
+                        <h3>¿El producto está descontinuado?</h3>
+
+                        <div class="form-check form-check-inline">
+
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="descontinuado" value="descontinuado" (click)="existencia('SI')">
+
+                            <label class="form-check-label" for="descontinuado">SI</label>
+
                         </div>
+
+                        <div class="form-check form-check-inline">
+
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="vigente" value="vigente" (click)="existencia('NO')">
+
+                            <label class="form-check-label" for="vigente">NO</label>
+
+                        </div>
+                                          
+                    </div>
+
+                    <div class="form-group col-md-12">
+
+                        <h3>¿Tiene factura?</h3>
+
+                        <div class="form-check form-check-inline">
+
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions3" id="sifactura" value="sifactura" (click)="facturas('SI')">
+
+                            <label class="form-check-label" for="sifactura">SI</label>
+
+                        </div>
+
+                        <div class="form-check form-check-inline">
+
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions3" id="nofactura" value="nofactura" (click)="facturas('NO')">
+
+                            <label class="form-check-label" for="nofactura">NO</label>
+
+                        </div>
+                                          
+                    </div>
+
+                    <div *ngIf="tieneFactura === 'SI'" class="form-group col-md-12">
+
+                        <label for="">Factura/Remisión</label>
+
+                        <input ngModel type="number" name="factura" id="factura" class="form-control" placeholder="Folio Factura" autocomplete="off" (change)="buscarFactura(f)" required>
+
+                        <input [(ngModel)]="perid" type="number" name="perid" id="perid" class="form-control" style="display: none;">
+
+                        <label for="">No. de Cliente de la Garantía</label>
+                        
+                        <input [(ngModel)]="numcli" type="number" name="numcli" id="numcli" class="form-control" placeholder="Número de Cliente" autocomplete="off" required readonly>
+                        
+                        <label for="">Cliente de la Garantía</label>
+                        
+                        <input  [(ngModel)]="nomcli" type="text" name="nomcli" id="nomcli" class="form-control" placeholder="Nombre del Cliente" autocomplete="off" required readonly>
+
+                        <label for="">Asesor de ventas</label>
+                        
+                        <input [(ngModel)]="asesor" type="text" name="asesor" id="asesor" class="form-control" placeholder="Nombre del Asesor" autocomplete="off" required readonly>
+
+                        <label *ngIf="asesor !== ''" for="">Selecciona el producto a garantía</label>
+
+                        <select *ngIf="asesor !== ''" [(ngModel)]="pro" class="form-control" name="productos" id="productos" (change)="obtenerPro(f)" required>
+                            
+                            <option value="0">Selecciona un producto</option>
+                            
+                            <option  *ngFor="let p of productosFactura" [ngValue]="p">{{p.DESCRIPCIO}}</option>
+                                
+                        </select>
+
+                        <table *ngIf="pro !== '0'" class="table table-striped">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>CLAVE</th>
+
+                                    <th>CODIGO</th>
+
+                                    <th>PRECIO</th>
+
+                                    <th>DESCRIPCION</th>
+
+                                    <th>CANTIDAD</th>
+
+                                    <th>FALLA</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td>{{clave}}</td>
+
+                                    <td>{{clvprov}}</td>
+
+                                    <td>{{costo}}</td>
+
+                                    <td>{{descr}}</td>
+
+                                    <td><input  ngModel type="number" name="cantidad" id="cantidad" class="form-control" placeholder="Cantidad"  required></td>
+
+                                    <td><input  ngModel type="text" name="falla" id="falla" class="form-control" placeholder="Descripción Falla" required></td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <div *ngIf="tieneFactura === 'NO'" class="form-group col-md-12">
+
+                        <h3>¿Es cliente FMO?</h3>
+
+                        <div class="form-check form-check-inline">
+
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="siescliente" value="siescliente" (click)="escliente('SI')">
+
+                            <label class="form-check-label" for="siescliente">SI</label>
+
+                        </div>
+
+                        <div class="form-check form-check-inline">
+
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="noescliente" value="noescliente" (click)="escliente('NO')">
+
+                            <label class="form-check-label" for="noescliente">NO</label>
+
+                        </div>
+
+                        <div>
+
+                            <label for="">No. de Cliente de la Garantía</label>
+
+                            <input ngModel type="number" name="numcli" id="numcli" class="form-control" placeholder="Número de Cliente" autocomplete="off" (change)="buscarCli(f)" required>
+    
+                            <label for="">Cliente de la Garantía</label>
+    
+                            <input *ngIf="numcli !== 0" [(ngModel)]="nomcli" type="text" name="nomcli" id="nomcli" class="form-control" placeholder="Nombre del Cliente" autocomplete="off" readonly>
+                            
+                            <input *ngIf="numcli === 0" [(ngModel)]="nomcli" type="text" name="nomcli" id="nomcli" class="form-control" placeholder="Nombre del Cliente" autocomplete="off" required>
+
+                            <label for="">Códio de producto</label>
+
+                            <input ngModel type="number" name="codigo" id="codigo" class="form-control" placeholder="Código" autocomplete="off" (change)="buscarCodigo(f)" required>    
+
+                            <table *ngIf="codigo > 0 " class="table table-striped">
+
+                                <thead>
+    
+                                    <tr>
+    
+                                        <th>CLAVE</th>
+    
+                                        <th>CODIGO</th>
+    
+                                        <th>PRECIO</th>
+    
+                                        <th>DESCRIPCION</th>
+    
+                                        <th>CANTIDAD</th>
+    
+                                        <th>FALLA</th>
+    
+                                    </tr>
+    
+                                </thead>
+    
+                                <tbody>
+    
+                                    <tr>
+    
+                                        <td>{{clave}}</td>
+    
+                                        <td>{{clvprov}}</td>
+    
+                                        <td>{{costo}}</td>
+    
+                                        <td>{{descr}}</td>
+    
+                                        <td><input  ngModel type="number" name="cantidad" id="cantidad" class="form-control" placeholder="Cantidad"  required></td>
+    
+                                        <td><input  ngModel type="text" name="falla" id="falla" class="form-control" placeholder="Descripción Falla" required></td>
+    
+                                    </tr>
+    
+                                </tbody>
+    
+                            </table>
+
+                        </div>
+
+                     </div>
+
+                     <div class="col-md-12">
+
+                        <button type="submit" class="btn btn-danger"><i class="mdi mdi-content-save"></i>Guardar</button>
+
+                        <button style="margin-left: 4px;" type="button" class="btn btn-info" (click)="reset(f)"><i class="mdi mdi-delete-variant"></i>Limpiar</button>
+                        
+                    </div>
+                    <!-- 
 
                     <div class="form-group col-md-2">
 
@@ -292,7 +491,6 @@
 
                     </div>
                     
-
                     <div class="form-group col-md-10">
 
                         <label for="">Cliente de la Garantía</label>
@@ -309,17 +507,17 @@
 
                         <div class="form-check form-check-inline">
 
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="siescliente" value="siescliente" (click)="escliente('SI')">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="siescliente" value="siescliente" (click)="escliente('SI')">
 
-                                <label class="form-check-label" for="siescliente">SI</label>
+                            <label class="form-check-label" for="siescliente">SI</label>
 
                          </div>
 
-                              <div class="form-check form-check-inline">
+                        <div class="form-check form-check-inline">
 
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="noescliente" value="noescliente" (click)="escliente('NO')">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="noescliente" value="noescliente" (click)="escliente('NO')">
 
-                                <label class="form-check-label" for="noescliente">NO</label>
+                            <label class="form-check-label" for="noescliente">NO</label>
 
                         </div>
 
@@ -327,76 +525,76 @@
                         
                     <div *ngIf="numcliFol > 0 && existe === 'SI'" class="form-group col-md-4">
 
-                            <label for="">Factura/Remisión</label>
-    
-                            <input ngModel type="number" name="factura" id="factura" class="form-control" placeholder="Folio Factura" autocomplete="off" (change)="buscarFactura(f)" required>
+                        <label for="">Factura/Remisión</label>
+
+                        <input ngModel type="number" name="factura" id="factura" class="form-control" placeholder="Folio Factura" autocomplete="off" (change)="buscarFactura(f)" required>
     
                     </div>
                           
                     <div *ngIf="numcliFol > 0 && existe === 'SI'" class="form-group col-md-4">
     
+                        <label for="">Asesor</label>
+
+                        <input [(ngModel)]="perid" type="number" name="perid" id="perid" class="form-control" style="display: none;">
+
+                        <input [(ngModel)]="numcli" type="number" name="numcli" id="numcli" class="form-control" style="display: none;">
+                        
+                        <input [(ngModel)]="nomcli" type="text" name="nomcli" id="nomcli" class="form-control" style="display: none;">
+                        
+                        <input [(ngModel)]="asesor" type="text" name="asesor" id="asesor" class="form-control" placeholder="Nombre del Asesor" autocomplete="off" required readonly>
+                            
+                    </div>
+
+                    <div *ngIf="existe === 'SI'" class="form-group col-md-4 centrar">
+
+                        <h1 class="display-6 badge badge-info" *ngIf="numcli === numcliFol && numcli !== 0">MISMO CLIENTE</h1>
+
+                        <h1 class="display-6 badge badge-danger" *ngIf="numcli !== numcliFol && numcli !== 0 ">DIFERENTE CLIENTE</h1>
+
+                        <input [(ngModel)]="mismocliente" type="text" name="mismocliente" id="mismocliente" class="form-control" style="display: none;">
+
+                        <input [(ngModel)]="numFacturaO" type="text" name="numFacturaO" id="numFacturaO" class="form-control" style="display: none;">
+                            
+                    </div>
+
+        
+                    <div *ngIf="numcli === numcliFol && numcli !== 0 && saldo === 0 && existe === 'SI'" class="col-12">
+                        
+                        <div class="col-12 alert alert-danger" role="alert">Esta factura esta pagada. Selecciona otra</div>
+                        
+                        <div class="form-group col-md-4">
+
+                            <label for="">Factura/Remisión</label>
+    
+                            <input ngModel type="text" name="facturaDos" id="facturaDos" class="form-control" placeholder="Folio Factura" autocomplete="off" (change)="buscarFacturaOtro(f)">
+    
+                        </div>
+        
+                        <div class="form-group col-md-4">
+
                             <label for="">Asesor</label>
-    
-                            <input [(ngModel)]="perid" type="number" name="perid" id="perid" class="form-control" style="display: none;">
-    
-                            <input [(ngModel)]="numcli" type="number" name="numcli" id="numcli" class="form-control" style="display: none;">
-                            
-                            <input [(ngModel)]="nomcli" type="text" name="nomcli" id="nomcli" class="form-control" style="display: none;">
-                            
-                            <input [(ngModel)]="asesor" type="text" name="asesor" id="asesor" class="form-control" placeholder="Nombre del Asesor" autocomplete="off" required readonly>
-                            
+
+                            <input [(ngModel)]="numcliO" type="number" name="numcliO" id="numcliO" class="form-control" style="display: none;">
+
+                            <input [(ngModel)]="numcliFolO" type="text" name="numcliFolO" id="numcliFolO" class="form-control" style="display: none;">
+
+                            <input [(ngModel)]="peridO" type="number" name="peridO" id="peridO" class="form-control" style="display: none;">
+
+                            <input [(ngModel)]="asesorO" type="text" name="asesorO" id="asesorO" class="form-control" placeholder="Nombre del Asesor" autocomplete="off" (change)="obtenerPro(f)" readonly>
+                                
+                        </div>
+        
+                        <div class="form-group col-md-4 centrar">
+                        
+                            <h1 class="display-6 badge badge-info" *ngIf="numcli === numcliO && numFacturaO !== 0">MISMO CLIENTE</h1>
+
+                            <h1 class="display-6 badge badge-danger" *ngIf="numcli !== numcliO && numFacturaO !== 0">DIFERENTE CLIENTE</h1>
+
                         </div>
 
-                        <div *ngIf="existe === 'SI'" class="form-group col-md-4 centrar">
+                        <div *ngIf="saldoO === 0 && numFacturaO > 0" class="col-12 alert alert-danger" role="alert">Esta factura esta pagada. Selecciona otra</div>
 
-                                <h1 class="display-6 badge badge-info" *ngIf="numcli === numcliFol && numcli !== 0">MISMO CLIENTE</h1>
-        
-                                <h1 class="display-6 badge badge-danger" *ngIf="numcli !== numcliFol && numcli !== 0 ">DIFERENTE CLIENTE</h1>
-        
-                                <input [(ngModel)]="mismocliente" type="text" name="mismocliente" id="mismocliente" class="form-control" style="display: none;">
-        
-                                <input [(ngModel)]="numFacturaO" type="text" name="numFacturaO" id="numFacturaO" class="form-control" style="display: none;">
-                                
-                            </div>
-
-        
-                            <div *ngIf="numcli === numcliFol && numcli !== 0 && saldo === 0 && existe === 'SI'" class="col-12">
-                                
-                                <div class="col-12 alert alert-danger" role="alert">Esta factura esta pagada. Selecciona otra</div>
-                                
-                                <div class="form-group col-md-4">
-        
-                                    <label for="">Factura/Remisión</label>
-            
-                                    <input ngModel type="text" name="facturaDos" id="facturaDos" class="form-control" placeholder="Folio Factura" autocomplete="off" (change)="buscarFacturaOtro(f)">
-            
-                                </div>
-        
-                                <div class="form-group col-md-4">
-        
-                                        <label for="">Asesor</label>
-        
-                                        <input [(ngModel)]="numcliO" type="number" name="numcliO" id="numcliO" class="form-control" style="display: none;">
-        
-                                        <input [(ngModel)]="numcliFolO" type="text" name="numcliFolO" id="numcliFolO" class="form-control" style="display: none;">
-        
-                                        <input [(ngModel)]="peridO" type="number" name="peridO" id="peridO" class="form-control" style="display: none;">
-        
-                                        <input [(ngModel)]="asesorO" type="text" name="asesorO" id="asesorO" class="form-control" placeholder="Nombre del Asesor" autocomplete="off" (change)="obtenerPro(f)" readonly>
-                                        
-                                </div>
-        
-                                <div class="form-group col-md-4 centrar">
-                               
-                                    <h1 class="display-6 badge badge-info" *ngIf="numcli === numcliO && numFacturaO !== 0">MISMO CLIENTE</h1>
-
-                                    <h1 class="display-6 badge badge-danger" *ngIf="numcli !== numcliO && numFacturaO !== 0">DIFERENTE CLIENTE</h1>
-
-                                </div>
-
-                                <div *ngIf="saldoO === 0 && numFacturaO > 0" class="col-12 alert alert-danger" role="alert">Esta factura esta pagada. Selecciona otra</div>
-        
-                            </div> 
+                    </div> 
 
                     <div class="col-md-12" *ngIf="saldo > 0 || saldoO > 0">
 
@@ -412,7 +610,7 @@
 
                         <input ngModel type="number" name="codigo" id="codigo" class="form-control" placeholder="Código" autocomplete="off" (change)="buscarCodigo(f)" required>
 
-                    </div>
+                    </div> -->
 
                     <!-- <div class="col-md-4" *ngIf="saldo !== 0 || saldoO !==0">
                         
@@ -426,7 +624,7 @@
                         
                     </div> -->
                         
-                    <div class="col-12" *ngIf="codigo !== 0">
+                    <!-- <div class="col-12" *ngIf="codigo !== 0">
 
                         <table class="table table-striped">
 
@@ -454,20 +652,13 @@
 
                                 <tr>
 
-                                    <td>{{clave}}
-                                    </td>
+                                    <td>{{clave}}</td>
 
-                                    <td>{{clvprov}}
+                                    <td>{{clvprov}}</td>
 
-                                    </td>
+                                    <td>{{costo}}</td>
 
-                                    <td>{{costo}}
-
-                                    </td>
-
-                                    <td>{{descr}}
-
-                                    </td>
+                                    <td>{{descr}}</td>
 
                                     <td><input  ngModel type="number" name="cantidad" id="cantidad" class="form-control" placeholder="Cantidad"  required></td>
 
@@ -488,7 +679,7 @@
                         <button style="margin-left: 4px;" type="button" class="btn btn-info" (click)="reset(f)"><i class="mdi mdi-delete-variant"></i>Limpiar</button>
                     
                     </div>
-
+ -->
                 </form>
 
                 <!-- <form ngNativeValidate class="form-row" #f="ngForm" (ngSubmit)="agregarGarantia(f)">
@@ -646,17 +837,15 @@
 
                     <div class="col-md-6">
 
-                        <div  style="height: 200px!important;" class="alert alert-primary form-group" role="alert">
+                        <div style="height: 200px!important;" class="alert alert-primary form-group" role="alert">
 
-                            <h3><strong>Garantia</strong></h3>
+                            <h3><strong>Garantia {{marca}}</strong></h3>
 
                             <h5>Folio: {{folio}}</h5>
 
-                            <h5 *ngIf="numeroFol > 0">Solicitó: {{clienteFol}}</h5>
+                            <h5>Solicitó: {{cliente}}</h5>
                             
-                            <h5 *ngIf="numeroFol === 0" >Solicitó: {{nomcliFol}}</h5>
-
-                            <h5># Cliente: {{numeroFol}}</h5><h6 *ngIf="numeroFol === 0" class="badge badge-info">No es Cliente</h6>
+                            <h5 *ngIf="numero > 0"># Cliente: {{numero}}</h5><h6 *ngIf="numero === 0" class="badge badge-info">No es Cliente</h6>
 
                             <h5>Fecha de solicitud: {{fecreg}}</h5>
 
@@ -672,15 +861,15 @@
 
                             <h5>Factura: {{factura}}</h5>
 
-                            <h6 *ngIf="factura === 'NINGUNA'" class="badge badge-info">Producto Descontinuado</h6>
+                            <!-- <h6 *ngIf="factura === 'NINGUNA'" class="badge badge-info">Producto Descontinuado</h6> -->
 
-                            <h5 *ngIf="factura !== 'NINGUNA'">Cliente: {{cliente}}</h5>
+                            <h5 *ngIf="factura !== 'SIN FACTURA'">Cliente: {{cliente}}</h5>
 
-                            <h5 *ngIf="factura !== 'NINGUNA'"># Cliente: {{numero}}</h5>
+                            <h5 *ngIf="factura !== 'SIN FACTURA'"># Cliente: {{numero}}</h5>
 
-                            <h6 *ngIf="observa !== ''" class="badge badge-success">Factura Pagada</h6>
+                            <!-- <h6 *ngIf="observa !== ''" class="badge badge-success">Factura Pagada</h6>
                             
-                            <h5 *ngIf="observa !== ''">Factura por sustitución de factura pagada: {{observa}} </h5>   
+                            <h5 *ngIf="observa !== ''">Factura por sustitución de factura pagada: {{observa}} </h5>    -->
 
                         </div>
 
@@ -697,6 +886,7 @@
                                 <thead>
         
                                      <tr>
+
                                         <th>CLAVE</th>
         
                                         <th>CODIGO</th>
@@ -739,7 +929,6 @@
 
                     </div>
 
-
                     <input [(ngModel)]="idgar" type="number" name="idgar" id="idgar" class="form-control" style="display: none;">
 
                     <input [ngModel]="folterm" type="text" name="folterm" id="folterm" class="form-control" style="display: none;">
@@ -750,7 +939,9 @@
                                 
                             <h3><strong>Orden de trabajo</strong></h3>
 
-                            <h5>Folio Truper/Autorizo: {{foltru}}</h5>
+                            <h5 *ngIf="marca === 'TRUPER'">Folio Truper: {{foltru}}</h5>
+                            
+                            <h5 *ngIf="marca === 'FMO'">Folio Fmo: {{foliofmo}}</h5>
                             
                             <h5>Fecha de orden: {{fecregtru}}</h5>
                                 
@@ -762,7 +953,7 @@
 
                             <h5>Chofer/Paquetería: {{chofer}}</h5>
                             
-                            <h5>Placas:{{placas}} </h5>
+                            <h5>Placas/Guia:{{placas}} </h5>
                                 
                         </div>
 
@@ -772,7 +963,7 @@
 
                        <div *ngIf="estado === 'ENTREGAR' && folnc === '' || estado === 'TERMINADO' && folnc === '' || estado === 'ENTREGANDO' && folnc === ''" class="alert alert-info form-group" role="alert">
                         
-                            <h3 class="centrar"><strong> GARANTIA AUTORIZADA POR TRUPER </strong><i style="color: orange; font-size: 35px;" class="mdi mdi-check-all"></i></h3>
+                            <h3 class="centrar"><strong> GARANTIA AUTORIZADA POR {{marca}} </strong><i style="color: orange; font-size: 35px;" class="mdi mdi-check-all"></i></h3>
                       
                        </div>
                     
@@ -824,7 +1015,7 @@
             
                                     <tbody>
             
-                                        <tr *ngFor="let res of foliosGuia, let i = index" [ngClass]="{'table-danger': i === 0, 'text-white': i === 0}">
+                                        <tr *ngFor="let res of foliosGuia, let i = index" [ngClass]="{'table-striped': i === 0}">
             
                                             <td class="text-center">{{res.usuario.nombre}}</td>
                                             
@@ -850,13 +1041,16 @@
 
                     </div>
 
-                    <h3 *ngIf="estado === 'NUEVO'" class="py-4">Orden de trabajo</h3>
-
+                    
                     <div *ngIf="estado === 'NUEVO'" class="form-group col-md-12">
+                        <h3><strong>Orden de trabajo</strong></h3>
                         
-                        <label for="">Folio Truper/Asesor</label>
+                        <label *ngIf="marca === 'TRUPER'"for="">Folio Truper/Fmo</label>
                         
-                        <input  ngModel type="text" name="foltru" id="foltru" class="form-control" placeholder="Folio truper o Asesor que autoriza" autocomplete="off" required>
+                        <input *ngIf="marca === 'TRUPER'" ngModel type="text" name="foltru" id="foltru" class="form-control" placeholder="Folio truper" autocomplete="off" required>
+                        
+                        <h2 *ngIf="marca === 'FMO'"><span class="badge badge-warning">Folio FMO: {{foliofmo}}</span></h2>
+
                         
                     </div>
 
@@ -953,13 +1147,17 @@
 
                     <div class="col-md-12">
 
-                        <button *ngIf="estado === 'NUEVO' || estado === 'PROCESO' || estado === 'ENVIANDO' || estado === 'AUTORIZACION' && enviar !== 'NO'" type="submit" class="btn btn-info">Guardar</button>
+                        <button *ngIf="estado === 'NUEVO'" type="submit" class="btn btn-info">Procesar</button>
+                        
+                        <button *ngIf="estado === 'PROCESO'" type="submit" class="btn btn-info">Enviado</button>
+                        
+                        <button *ngIf="estado === 'ENVIANDO'  || estado === 'AUTORIZACION' && enviar !== 'NO'" type="submit" (click)="descargar(g)" class="btn btn-info">Entregar</button>
 
                         <button *ngIf="estado === 'ENTREGANDO' && estado !== 'TERMINADO'" type="submit" class="btn btn-info">Terminar</button>
                         
-                        <button *ngIf="estado === 'ENTREGAR' && guia !== 'GUIA NO ENCONTRADA'" type="submit" (click)="descargar(g)" class="btn btn-info">Entregando</button>
+                        <button *ngIf="estado === 'ENTREGAR' && guia !== 'GUIA NO ENCONTRADA'" type="submit"  class="btn btn-info">Entregando</button>
                         
-                        <button *ngIf="estado !== 'TERMINADO' && guia !== 'GUIA NO ENCONTRADA'" (click)="cancelar()" class="btn btn-info" >Cancelar Garantía</button>
+                        <button *ngIf="estado !== 'TERMINADO'" (click)="cancelar()" class="btn btn-info" >Cancelar Garantía</button>
                         
                         <button *ngIf="estado === 'ENTREGANDO'" (click)="devolucion()" class="btn btn-info">Devolucion</button>
 

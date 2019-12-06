@@ -299,7 +299,7 @@ export class DashBoardSupComponent implements OnInit {
       } else if ((cli.venta === '' && cli.cobro === '') && cli.visita && cli.hora !== '') {
         imagen = 'assets/images/asesores/3-inicio.png';
       } else if ((cli.venta === '' && cli.cobro === '') && !cli.visita && cli.hora !== '') {
-        imagen = 'assets/images/asesores/211-inicio.png';
+        imagen = 'assets/images/asesores/2-inicio.png';
       } else {
         imagen = 'assets/images/asesores/8-inicio.png';
       }
@@ -311,7 +311,7 @@ export class DashBoardSupComponent implements OnInit {
       } else if ((cli.venta === '' && cli.cobro === '') && cli.visita && cli.hora !== '') {
         imagen = 'assets/images/asesores/3.png';
       } else if ((cli.venta === '' && cli.cobro === '') && !cli.visita && cli.hora !== '') {
-        imagen = 'assets/images/asesores/211.png';
+        imagen = 'assets/images/asesores/2.png';
       } else {
         imagen = 'assets/images/asesores/8.png';
       }

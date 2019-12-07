@@ -35,4 +35,9 @@ export class EntregasComponent implements OnInit {
     });
   }
 
+  limpiar() {
+    this.numero.nativeElement.value = '';
+    this.entregas = [];
+  }
+
 }

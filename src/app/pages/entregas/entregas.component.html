@@ -1,0 +1,98 @@
+<div class="row">
+
+  <div class="col-md-3 col-lg-3">
+
+    <div class="form-group">
+
+      <input #numero type="text" name="numero" id="numero" class="form-control" placeholder="Ingrese número de cliente">
+
+    </div>
+
+    <button type="button" class="btn btn-info" (click)="buscarEntregas()">Buscar</button>
+
+  </div>
+
+  <div class="col-md-9 col-lg-9">
+
+    <h3 *ngIf="entregas.length === 0">Buscar entregas</h3>
+
+    <div class="table-responsive" *ngIf="entregas.length > 0">
+
+        <table class="table">
+
+            <thead>
+
+                <tr>
+
+                    <th colspan="2"></th>
+
+                    <th colspan="2" class="text-center border border-bottom-0">Fecha</th>
+
+                    <th colspan="6"></th>
+                </tr>
+
+                <tr>
+
+                    <th class="text-center">#</th>
+
+                    <th class="text-center">Realizó</th>
+
+                    <th class="text-center border border-bottom-0 border-top-0 border-right-0">FecCre</th>
+
+                    <th class="text-center border border-bottom-0 border-top-0 border-left-0">FecAsig</th>
+
+                    <th class="text-center">Hora</th>
+
+                    <th class="text-center">Chofer</th>
+
+                    <th class="text-center">Verificó</th>
+
+                    <th class="text-center">Remisiones</th>
+
+                    <th class="text-center">Importe</th>
+
+                    <!-- <th class="text-center">Ver</th> -->
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr *ngFor="let fol of entregas, let i = index" [ngClass]="{'bg-info text-white': i === 0}">
+
+                    <td>{{ (i + 1) }}</td>
+
+                    <td class="text-uppercase">{{ fol.usuario !== null ? fol.usuario.nombre : 'Baja' }}</td>
+
+                    <td>{{ fol.fecha | date: 'dd-MM-yyyy' }}</td>
+
+                    <td>{{ fol.fechaAsig | date: 'dd-MM-yyyy' }}</td>
+
+                    <td>{{ fol.hora }}</td>
+
+                    <td class="text-uppercase">{{ fol.chofer !== null ? fol.chofer.nombre : 'Baja' }}</td>
+
+                    <td class="text-uppercase">{{ fol.verifico }}</td>
+
+                    <td>{{ fol.cantidad }}</td>
+
+                    <td>{{ fol.importe | currency }}</td>
+
+                    <!-- <td class="text-center">
+
+                        <a href="#modalVer" class="btn" [ngClass]="{'btn-outline-success': i !== 0, 'btn-outline-light': i === 0}" data-dismiss="modal" data-toggle="modal" (click)="modalVer(fol)">Ver</a>
+
+                    </td> -->
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+  </div>
+
+</div>

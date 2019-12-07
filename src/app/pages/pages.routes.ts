@@ -89,6 +89,7 @@ import { ComisioneschoferesComponent } from './comisioneschoferes/comisioneschof
 import { ChequesdevComponent } from './chequesdev/chequesdev.component';
 import { CostosComponent } from './costos/costos.component';
 import { SeguimientoComponent } from './seguimiento/seguimiento.component';
+import { EntregasComponent } from './entregas/entregas.component';
 
 const pageRoutes: Routes = [
     {
@@ -736,6 +737,16 @@ const pageRoutes: Routes = [
         data:
                 {
                     titulo: 'Frecuencias',
+                    name: 'description'
+                }
+    },
+    {
+        path: 'entregas',
+        component: EntregasComponent,
+        canActivate: [ SuperGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Entregas',
                     name: 'description'
                 }
     },

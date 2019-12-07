@@ -125,6 +125,14 @@ export class GuiasService {
     return this.http.get( this.url );
   }
 
+  buscarEntregasCliente(numero: any) {
+    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/guias/ultimas/5/' + numero;
+
+    this.url += '?token=' + this.token;
+
+    return this.http.get( this.url );
+  }
+
   buscarGuiaPrin(folio: any) {
     // if (URL_SERVICIO_GENERAL === URL_PETICION) {
     //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/guias/obtener/' + folio;

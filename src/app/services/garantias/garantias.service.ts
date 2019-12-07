@@ -108,10 +108,10 @@ export class GarantiasService {
     return this.http.post(url, {data: garantia, marca: marca}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
   }
 
-  nuevaGarantiaNofact(garantia: any, clvprov: any, clave: any, descr: any, costo: any, marca: any, clienteFmo: any) {
+  nuevaGarantiaNofact(idFerrum: any, garantia: any, clvprov: any, clave: any, descr: any, costo: any, marca: any, clienteFmo: any) {
     const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=21';
 
-    return this.http.post(url, {data: garantia, clvprov: clvprov, clave: clave, descr: descr, costo: costo, marca: marca, clienteFmo: clienteFmo}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
+    return this.http.post(url, {id: idFerrum, data: garantia, clvprov: clvprov, clave: clave, descr: descr, costo: costo, marca: marca, clienteFmo: clienteFmo}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
   }
 
 

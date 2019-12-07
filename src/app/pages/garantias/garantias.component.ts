@@ -323,8 +323,10 @@ export class GarantiasComponent implements OnInit {
     this.claveprod = '';
     this.costoprod = 0;
     this.existe = '';
+    this.marca = '';
     this.clienteFmo = '';
     this.codigo = 0;
+    this.tieneFactura = '';
   }
 
   reset(garantia: any) {
@@ -442,8 +444,7 @@ export class GarantiasComponent implements OnInit {
       });
 
     } else if (this.tieneFactura === 'NO') {
-
-      this._garantiaService.nuevaGarantiaNofact(garantia.value, this.clvprov, this.clave, this.descr, this.costo, this.marca, this.clienteFmo).subscribe((resp: any) => {
+      this._garantiaService.nuevaGarantiaNofact(this.usuario.idFerrum, garantia.value, this.clvprov, this.clave, this.descr, this.costo, this.marca, this.clienteFmo).subscribe((resp: any) => {
         if (resp) {
           swal('Nueva Garantia', 'Los datos de la garantia se han guardado correctamente.', 'success');
           garantia.resetForm();
@@ -458,6 +459,8 @@ export class GarantiasComponent implements OnInit {
               };
               this._webSocket.acciones('nueva-garantia', payload);
             }, 100);
+        } else {
+          swal('Error', 'Error ' + resp, 'error');
         }
       });
 

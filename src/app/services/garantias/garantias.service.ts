@@ -26,8 +26,8 @@ export class GarantiasService {
     return this.http.get(url);
   }
 
-  obtenerGarantiasDesdeFmo(desde: number = 0) {
-    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=25&desde=' + desde;
+  obtenerGarantiasDesdeFmo() {
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=25';
 
     return this.http.get(url);
   }

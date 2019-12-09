@@ -175,12 +175,8 @@ export class GarantiasComponent implements OnInit {
   catalogo(catalogo: any) {
     this.marca = catalogo;
     if (this.marca === 'FMO') {
-      this._garantiaService.obtenerGarantiasDesdeFmo(this.desde).subscribe((gar: any) => {
-        if (gar.length > 0) {
-         this.ultmimofol = gar.length - 1;
-        this.foliofmo = gar[this.ultmimofol].numeroFol
-         this.foliofmo = this.foliofmo + 1;
-        }
+      this._garantiaService.obtenerGarantiasDesdeFmo().subscribe((gar: any) => {
+         this.foliofmo = gar[0].maximo;
       });
     } else if (this.marca === 'TRUPER') {
       this.foliofmo = 0;
@@ -424,11 +420,8 @@ export class GarantiasComponent implements OnInit {
   }
 
   agregarGarantia(garantia: NgForm) {
-    console.log(garantia.value);
-    console.log(this.marca);
     if (this.tieneFactura === 'SI') {
       this._garantiaService.nuevaGarantia(garantia.value, this.marca).subscribe((resp: any) => {
-        console.log(resp);
         if (resp) {
           swal('Nueva Garantia', 'Los datos de la garantia se han guardado correctamente.', 'success');
           garantia.resetForm();
@@ -685,7 +678,6 @@ export class GarantiasComponent implements OnInit {
         setTimeout(() => {
           this.pdf = 'https://ferremayoristas.com.mx/api/garantias/' + file;
 
-          console.log(this.pdf);
           const link = document.createElement('a');
           link.setAttribute('href', this.pdf);
           link.setAttribute('target', '_blank');

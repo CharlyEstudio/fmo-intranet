@@ -424,8 +424,11 @@ export class GarantiasComponent implements OnInit {
   }
 
   agregarGarantia(garantia: NgForm) {
+    console.log(garantia.value);
+    console.log(this.marca);
     if (this.tieneFactura === 'SI') {
       this._garantiaService.nuevaGarantia(garantia.value, this.marca).subscribe((resp: any) => {
+        console.log(resp);
         if (resp) {
           swal('Nueva Garantia', 'Los datos de la garantia se han guardado correctamente.', 'success');
           garantia.resetForm();
@@ -505,6 +508,9 @@ export class GarantiasComponent implements OnInit {
             const cerrar = <HTMLElement>(document.getElementById('editar'));
             cerrar.click();
             this.obtenerTodasGarantias();
+            // this._garantiaService.enviarEmail(this.estado).subscribe((enviar: any) => {
+            //   swal('Se envío un email a tu correo', 'Email enviado', 'success');
+            // });
             setTimeout(() => {
               this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
             }, 100);

@@ -102,6 +102,12 @@ export class GarantiasService {
     return this.http.get(url);
   }
 
+  enviarEmail(estado: any) {
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=26&estado=' + estado;
+
+    return this.http.get(url);
+  }
+
   nuevaGarantia(garantia: any, marca: any) {
     const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=3';
 
@@ -145,7 +151,7 @@ export class GarantiasService {
     return this.http.get(url);
   }
 
-  cancelarGarantia(idgar: number){
+  cancelarGarantia(idgar: number) {
     const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=18&idgar=' + idgar;
 
     return this.http.get(url);
@@ -172,7 +178,7 @@ export class GarantiasService {
   }
 
 
-  hacerPDF(file: string, folioPdf: number, numfolpdf: number, cantidadPdf: number, clvprovPdf: number, clavePdf: any , 
+  hacerPDF(file: string, folioPdf: number, numfolpdf: number, cantidadPdf: number, clvprovPdf: number, clavePdf: any ,
     nombrePdf: any, descrPdf: any, diavisPdf: any, diaentrega: any, vendedorPdf: any, direccion: any, numerodir: any, interior: any, colonia: any, ciudad: any) {
     let url;
 

@@ -1,24 +1,26 @@
 <div class="row">
 
-  <div class="col-md-3 col-lg-3">
+  <div class="col-md-2 col-lg-2">
 
     <div class="form-group">
 
-      <input #numero type="text" name="numero" id="numero" class="form-control" placeholder="Ingrese número de cliente">
+      <input #numero type="text" name="numero" id="numero" class="form-control" placeholder="Cliente: Ejm. 3804">
 
     </div>
 
     <button type="button" class="btn btn-info" (click)="buscarEntregas()">Buscar</button>
 
+    <button type="button" class="btn btn-secondary" (click)="limpiar()">Limpiar</button>
+
   </div>
 
-  <div class="col-md-9 col-lg-9">
+  <div class="col-md-10 col-lg-10">
 
     <h3 *ngIf="entregas.length === 0">Buscar entregas</h3>
 
     <div class="table-responsive" *ngIf="entregas.length > 0">
 
-        <table class="table">
+        <table class="table table-sm">
 
             <thead>
 
@@ -35,7 +37,7 @@
 
                     <th class="text-center">#</th>
 
-                    <th class="text-center">Realizó</th>
+                    <th>Realizó</th>
 
                     <th class="text-center border border-bottom-0 border-top-0 border-right-0">FecCre</th>
 
@@ -43,13 +45,9 @@
 
                     <th class="text-center">Hora</th>
 
-                    <th class="text-center">Chofer</th>
+                    <th>Chofer</th>
 
-                    <th class="text-center">Verificó</th>
-
-                    <th class="text-center">Remisiones</th>
-
-                    <th class="text-center">Importe</th>
+                    <th>Verificó</th>
 
                     <!-- <th class="text-center">Ver</th> -->
 
@@ -61,23 +59,19 @@
 
                 <tr *ngFor="let fol of entregas, let i = index" [ngClass]="{'bg-info text-white': i === 0}">
 
-                    <td>{{ (i + 1) }}</td>
+                    <td class="text-center">{{ (i + 1) }}</td>
 
                     <td class="text-uppercase">{{ fol.usuario !== null ? fol.usuario.nombre : 'Baja' }}</td>
 
-                    <td>{{ fol.fecha | date: 'dd-MM-yyyy' }}</td>
+                    <td class="text-center">{{ fol.fecha | date: 'dd-MM-yyyy' }}</td>
 
-                    <td>{{ fol.fechaAsig | date: 'dd-MM-yyyy' }}</td>
+                    <td class="text-center">{{ fol.fechaAsig | date: 'dd-MM-yyyy' }}</td>
 
-                    <td>{{ fol.hora }}</td>
+                    <td class="text-center">{{ fol.hora }}</td>
 
                     <td class="text-uppercase">{{ fol.chofer !== null ? fol.chofer.nombre : 'Baja' }}</td>
 
                     <td class="text-uppercase">{{ fol.verifico }}</td>
-
-                    <td>{{ fol.cantidad }}</td>
-
-                    <td>{{ fol.importe | currency }}</td>
 
                     <!-- <td class="text-center">
 

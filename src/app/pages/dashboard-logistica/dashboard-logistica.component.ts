@@ -872,9 +872,6 @@ export class DashboardLogisticaComponent implements OnInit {
       // this._guiasServices.enviarPDFguia(
       //   this.pedidos, guiaGuardarPDF, this.especiales, this.chf, this.carro, razon
       // ).subscribe((resp: any) => {}, err => {});
-
-      // Iniciamos la guía de cero
-      // this.cancelarGuia();
     })
     .catch(err => {
       if (err) {

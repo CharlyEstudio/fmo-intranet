@@ -5,6 +5,7 @@ export class Ruta {
         public lng: number,
         public numero: string,
         public nombre: string,
+        public colonia: string,
         public domicilio: string,
         public poblacion: string,
         public vendedor: number,

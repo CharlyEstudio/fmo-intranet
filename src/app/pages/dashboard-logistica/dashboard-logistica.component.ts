@@ -672,7 +672,8 @@ export class DashboardLogisticaComponent implements OnInit {
           factura: this.folios[i].folio,
           cliente: this.folios[i].numero,
           nombre: this.folios[i].nombre,
-          domicilio: this.folios[i].direccion + ', ' + this.folios[i].colonia,
+          domicilio: this.folios[i].direccion,
+          colonia: this.folios[i].colonia,
           poblacion: this.folios[i].ciudad + ', ' + this.folios[i].estado,
           vendedor: this.folios[i].vendedor,
           importe: this.folios[i].total,
@@ -699,6 +700,7 @@ export class DashboardLogisticaComponent implements OnInit {
       let numeroGF;
       let nombreGF;
       let domicilioGF;
+      let coloniaGF;
       let poblacionGF;
       let vendedorGF;
       let diavisGF;
@@ -724,6 +726,7 @@ export class DashboardLogisticaComponent implements OnInit {
           nombreGF = this.folios[i].nombre;
           domicilioGF = domicilio;
           poblacionGF = this.folios[i].ciudad;
+          coloniaGF = this.folios[i].colonia;
           vendedorGF = this.folios[i].perid;
           diavisGF = this.folios[i].diavis;
           envio = {
@@ -733,6 +736,7 @@ export class DashboardLogisticaComponent implements OnInit {
             numero: numeroGF,
             nombre: nombreGF,
             domicilio: domicilioGF,
+            colonia: coloniaGF,
             poblacion: poblacionGF,
             vendedor: vendedorGF,
             diavis: diavisGF,
@@ -845,9 +849,28 @@ export class DashboardLogisticaComponent implements OnInit {
         }
       });
 
-      // Genera el PDF para la guía del chofer
+      // const guiaGuardarPDF = {
+      //   folio: '8349759837434', // Aquí va el folio generado cuando se guarda la guia
+      //   facturas: this.pedidos,
+      //   especiales: this.especiales,
+      //   verifico: this.verifica.nombre,
+      //   cantidad: this.folios.length,
+      //   importe: this.importe,
+      //   cajas: cajas,
+      //   fecha: fecha,
+      //   fechaAsig: fechaAsig,
+      //   hora: hora,
+      //   pdf: pdf,
+      //   clientes: this.clientes,
+      //   unidad: this.carro._id
+      // };
+      // const razon = {
+      //   nombre: 'Leobardo Olvera Lafuente',
+      //   rfc: 'OELL 900511 LQ6',
+      // };
+      // // Genera el PDF para la guía del chofer
       // this._guiasServices.enviarPDFguia(
-      //   this.pedidos, this.guiaGuardar, this.especiales, this.chf, this.carro
+      //   this.pedidos, guiaGuardarPDF, this.especiales, this.chf, this.carro, razon
       // ).subscribe((resp: any) => {}, err => {});
 
       // Iniciamos la guía de cero

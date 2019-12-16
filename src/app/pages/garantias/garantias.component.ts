@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 
 // Importante para que funcione el sweet alert
 import * as _swal from 'sweetalert';
-import { SweetAlert } from 'sweetalert/typings/core'; 
+import { SweetAlert } from 'sweetalert/typings/core';
 const swal: SweetAlert = _swal as any;
 
 // Modelos

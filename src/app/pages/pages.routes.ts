@@ -819,7 +819,7 @@ const pageRoutes: Routes = [
     {
         path: 'chequesdev',
         component: ChequesdevComponent,
-        canActivate: [ AuditoriaGuard, VerificaTokenGuard ],
+        canActivate: [ ContaGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Cheques Devueltos',

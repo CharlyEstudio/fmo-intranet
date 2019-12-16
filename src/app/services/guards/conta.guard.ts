@@ -17,6 +17,8 @@ export class ContaGuard implements CanActivate {
     if ( this._usuarioService.usuario.rol === 'ADMIN_ROLE'
           || this._usuarioService.usuario.rol === 'DIR_ROLE'
           || this._usuarioService.usuario.rol === 'GER_ROLE'
+          || this._usuarioService.usuario.rol === 'SUP_ROLE'
+          || this._usuarioService.usuario.rol === 'AUD_ROLE'
           || this._usuarioService.usuario.rol === 'CONTA_ROLE' ) {
       return true;
     } else {

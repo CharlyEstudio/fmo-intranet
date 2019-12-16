@@ -245,7 +245,8 @@
                                             <span class="badge badge-success" *ngIf="(cli.vendio !== '' || cli.cobro !== '') && cli.visitado && cli.horaReporte !== ''">CORRECTO</span>
                                             <span class="badge badge-warning" *ngIf="(cli.vendio === '' && cli.cobro === '') && cli.visitado && cli.horaReporte !== ''">ADVERTENCIA</span>
                                             <span class="badge badge-danger" *ngIf="(cli.vendio === '' && cli.cobro === '') && !cli.visitado && cli.horaReporte !== ''">ENGAÑO</span>
-                                            <span class="badge badge-dark" *ngIf="(cli.vendio === '' || cli.cobro === '') && !cli.visitado && cli.horaReporte === ''">PENDIENTE</span>
+                                            <span class="badge badge-dark" *ngIf="!cli.visitado && cli.horaReporte === ''">PENDIENTE</span>
+                                            
                                         </td>
                                         
                                         <td>{{cli.distancia}} {{cli.medida}}</td>

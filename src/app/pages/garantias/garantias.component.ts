@@ -165,6 +165,7 @@ export class GarantiasComponent implements OnInit {
 
   obtenerTodasGarantias() {
     this.garantias = [];
+    console.log(this.desde);
     this._garantiaService.obtenerGarantiasDesde(this.desde).subscribe((gar: any) => {
       if (gar.length > 0) {
         this.garantias = gar;

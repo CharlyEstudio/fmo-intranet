@@ -28,19 +28,19 @@ export class DashborarDirComponent implements OnInit, OnDestroy {
     private ws: WebsocketService,
     private chequesDevService: ChequesdevService
   ) {
-    this.mensajeService.mensajes.subscribe((mensaje: any) => {
-      this.mensajes = mensaje.status;
-    });
+    // this.mensajeService.mensajes.subscribe((mensaje: any) => {
+    //   this.mensajes = mensaje.status;
+    // });
 
     this.obtenemosChquesDev();
 
-    this.store.obtenerMensajesContacto().subscribe((mensajes: any) => {
-      if (mensajes.length > 0) {
-        this.mensajes = true;
-      } else {
-        this.mensajes = false;
-      }
-    });
+    // this.store.obtenerMensajesContacto().subscribe((mensajes: any) => {
+    //   if (mensajes.length > 0) {
+    //     this.mensajes = true;
+    //   } else {
+    //     this.mensajes = false;
+    //   }
+    // });
 
     this.ws.escuchar('nuevo-cheque-devuelto').subscribe((nuevo: any) => {
       this.obtenemosChquesDev();

@@ -100,7 +100,7 @@
 
       <button type="button" class="btn btn-primary btn-block" (click)="guardar(numero, direccion, saldo, linea, dias, asesor, precio)">Guardar</button>
 
-      <button type="button" class="btn btn-info btn-block" *ngIf="productos.length > 0" (click)="enviarEmail(numero, nombre, direccion, saldo, linea, dias, asesor, precio, productos, subtotal, iva, total, correoCli)">Enviar</button>
+      <!-- <button type="button" class="btn btn-info btn-block" *ngIf="productos.length > 0" (click)="enviarEmail(numero, nombre, direccion, saldo, linea, dias, asesor, precio, productos, subtotal, iva, total, correoCli)">Enviar</button> -->
 
       <button type="button" class="btn btn-success btn-block" *ngIf="rfc !== ''" (click)="hacerPedido()">Hacer Pedido</button>
 

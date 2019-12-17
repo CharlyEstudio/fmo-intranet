@@ -324,19 +324,19 @@ export class GarantiasComponent implements OnInit {
     this.codigo = 0;
     this.tieneFactura = '';
 
-    const radioMarca = document.getElementsByName('marcaElegir');
+    const radioMarca = Array.from(document.getElementsByName('marcaElegir'));
     radioMarca.forEach((value: any, key: number) => {
       value.checked = false;
     });
-    const radioExisteProd = document.getElementsByName('existeProd');
+    const radioExisteProd = Array.from(document.getElementsByName('existeProd'));
     radioExisteProd.forEach((value: any, key: number) => {
       value.checked = false;
     });
-    const radioExisteFac = document.getElementsByName('facturaExis');
+    const radioExisteFac = Array.from(document.getElementsByName('facturaExis'));
     radioExisteFac.forEach((value: any, key: number) => {
       value.checked = false;
     });
-    const radioEsCliente = document.getElementsByName('esCliente');
+    const radioEsCliente = Array.from(document.getElementsByName('esCliente'));
     radioEsCliente.forEach((value: any, key: number) => {
       value.checked = false;
     });
@@ -348,7 +348,6 @@ export class GarantiasComponent implements OnInit {
   }
 
   verInfo(garantia: any) {
-
     this.fechaproceso = garantia.fechaproceso;
     this.fechaenviando = garantia.fechaenviando;
     this.fechaautoriza = garantia.fechaautoriza;
@@ -367,7 +366,11 @@ export class GarantiasComponent implements OnInit {
     this.fecha = garantia.fecha;
     this.fecreg = garantia.fecreg;
     this.folio = garantia.folio;
-    this.foltru = garantia.foltru;
+    if (garantia.marca === 'TRUPER') {
+      this.foltru = garantia.foltru;
+    } else {
+      this.foltru = garantia.numeroFol;
+    }
     this.fecregtru = garantia.fecregtru;
     this.factura = garantia.facafec;
     this.idgar = garantia.idgar;

@@ -511,7 +511,7 @@ export class DashboardLogisticaComponent implements OnInit {
                         numero: numero,
                         perid: cli[0].VENDEDORID,
                         total: Number(importe),
-                        vendedor: 'Victor Leal'
+                        vendedor: cli[0].ASESOR
                       };
                       let esCliente = (cliente) => {
                         return cliente.numero === ingresarFolio.numero;

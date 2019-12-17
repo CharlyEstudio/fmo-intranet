@@ -256,7 +256,7 @@
 
                         <div class="form-check form-check-inline">
 
-                            <input [checked]="marca !== '' ? true : false" class="form-check-input" type="radio" name="inlineRadioOptions2" id="truper" value="truper" (click)="catalogo('TRUPER')">
+                            <input class="form-check-input" type="radio" name="marcaElegir" id="truper" (click)="catalogo('TRUPER')">
 
                             <label class="form-check-label" for="truper">TRUPER</label>
 
@@ -266,7 +266,7 @@
 
                         <div class="form-check form-check-inline">
 
-                            <input [checked]="marca !== '' ? true : false" class="form-check-input" type="radio" name="inlineRadioOptions2" id="fmo" value="fmo" (click)="catalogo('FMO')">
+                            <input class="form-check-input" type="radio" name="marcaElegir" id="fmo" (click)="catalogo('FMO')">
 
                             <label class="form-check-label" for="fmo">FMO</label>
 
@@ -280,7 +280,7 @@
 
                         <div class="form-check form-check-inline">
 
-                            <input [checked]="existe !== '' ? true : false" class="form-check-input" type="radio" name="inlineRadioOptions" id="descontinuado" value="descontinuado" (click)="existencia('SI')">
+                            <input class="form-check-input" type="radio" name="existeProd" id="descontinuado" (click)="existencia('SI')">
 
                             <label class="form-check-label" for="descontinuado">SI</label>
 
@@ -288,7 +288,7 @@
 
                         <div class="form-check form-check-inline">
 
-                            <input [checked]="existe !== '' ? true : false" class="form-check-input" type="radio" name="inlineRadioOptions" id="vigente" value="vigente" (click)="existencia('NO')">
+                            <input class="form-check-input" type="radio" name="existeProd" id="vigente" (click)="existencia('NO')">
 
                             <label class="form-check-label" for="vigente">NO</label>
 
@@ -302,7 +302,7 @@
 
                         <div class="form-check form-check-inline">
 
-                            <input [checked]="tieneFactura !== '' ? true : false" class="form-check-input" type="radio" name="inlineRadioOptions3" id="sifactura" value="sifactura" (click)="facturas('SI')">
+                            <input class="form-check-input" type="radio" name="facturaExis" id="sifactura" (click)="facturas('SI')">
 
                             <label class="form-check-label" for="sifactura">SI</label>
 
@@ -310,7 +310,7 @@
 
                         <div class="form-check form-check-inline">
 
-                            <input [checked]="tieneFactura !== '' ? true : false" class="form-check-input" type="radio" name="inlineRadioOptions3" id="nofactura" value="nofactura" (click)="facturas('NO')">
+                            <input class="form-check-input" type="radio" name="facturaExis" id="nofactura" (click)="facturas('NO')">
 
                             <label class="form-check-label" for="nofactura">NO</label>
 
@@ -400,7 +400,7 @@
 
                         <div class="form-check form-check-inline">
 
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="siescliente" value="siescliente" (click)="escliente('SI')">
+                            <input class="form-check-input" type="radio" name="esCliente" id="siescliente" (click)="escliente('SI')">
 
                             <label class="form-check-label" for="siescliente">SI</label>
 
@@ -408,7 +408,7 @@
 
                         <div class="form-check form-check-inline">
 
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="noescliente" value="noescliente" (click)="escliente('NO')">
+                            <input class="form-check-input" type="radio" name="esCliente" id="noescliente" (click)="escliente('NO')">
 
                             <label class="form-check-label" for="noescliente">NO</label>
 
@@ -485,313 +485,8 @@
                         <button style="margin-left: 4px;" type="button" class="btn btn-info" (click)="reset(f)"><i class="mdi mdi-delete-variant"></i>Limpiar</button>
                         
                     </div>
-                    <!-- 
 
-                    <div class="form-group col-md-2">
-
-                        <label for="">No. de Cliente de la Garantía</label>
-
-                        <input ngModel type="number" name="numcliFol" id="numcliFol" class="form-control" placeholder="Número de Cliente" autocomplete="off" (change)="buscarCli(f)" required>
-
-                    </div>
-                    
-                    <div class="form-group col-md-10">
-
-                        <label for="">Cliente de la Garantía</label>
-
-                        <input *ngIf="numcliFol !== 0" [(ngModel)]="nomcliFol" type="text" name="nomcliFol" id="nomcliFol" class="form-control" placeholder="Nombre del Cliente" autocomplete="off" readonly>
-                        
-                        <input *ngIf="numcliFol === 0" ngModel  type="text" name="nomcliFol" id="nomcliFol" class="form-control" placeholder="Nombre del Cliente" autocomplete="off">
-
-                    </div>
-
-                    <div *ngIf="existe === 'NO'" class="col-md-12">
-
-                        <h3>¿Es cliente FMO?</h3>
-
-                        <div class="form-check form-check-inline">
-
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="siescliente" value="siescliente" (click)="escliente('SI')">
-
-                            <label class="form-check-label" for="siescliente">SI</label>
-
-                         </div>
-
-                        <div class="form-check form-check-inline">
-
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="noescliente" value="noescliente" (click)="escliente('NO')">
-
-                            <label class="form-check-label" for="noescliente">NO</label>
-
-                        </div>
-
-                    </div>
-                        
-                    <div *ngIf="numcliFol > 0 && existe === 'SI'" class="form-group col-md-4">
-
-                        <label for="">Factura/Remisión</label>
-
-                        <input ngModel type="number" name="factura" id="factura" class="form-control" placeholder="Folio Factura" autocomplete="off" (change)="buscarFactura(f)" required>
-    
-                    </div>
-                          
-                    <div *ngIf="numcliFol > 0 && existe === 'SI'" class="form-group col-md-4">
-    
-                        <label for="">Asesor</label>
-
-                        <input [(ngModel)]="perid" type="number" name="perid" id="perid" class="form-control" style="display: none;">
-
-                        <input [(ngModel)]="numcli" type="number" name="numcli" id="numcli" class="form-control" style="display: none;">
-                        
-                        <input [(ngModel)]="nomcli" type="text" name="nomcli" id="nomcli" class="form-control" style="display: none;">
-                        
-                        <input [(ngModel)]="asesor" type="text" name="asesor" id="asesor" class="form-control" placeholder="Nombre del Asesor" autocomplete="off" required readonly>
-                            
-                    </div>
-
-                    <div *ngIf="existe === 'SI'" class="form-group col-md-4 centrar">
-
-                        <h1 class="display-6 badge badge-info" *ngIf="numcli === numcliFol && numcli !== 0">MISMO CLIENTE</h1>
-
-                        <h1 class="display-6 badge badge-danger" *ngIf="numcli !== numcliFol && numcli !== 0 ">DIFERENTE CLIENTE</h1>
-
-                        <input [(ngModel)]="mismocliente" type="text" name="mismocliente" id="mismocliente" class="form-control" style="display: none;">
-
-                        <input [(ngModel)]="numFacturaO" type="text" name="numFacturaO" id="numFacturaO" class="form-control" style="display: none;">
-                            
-                    </div>
-
-        
-                    <div *ngIf="numcli === numcliFol && numcli !== 0 && saldo === 0 && existe === 'SI'" class="col-12">
-                        
-                        <div class="col-12 alert alert-danger" role="alert">Esta factura esta pagada. Selecciona otra</div>
-                        
-                        <div class="form-group col-md-4">
-
-                            <label for="">Factura/Remisión</label>
-    
-                            <input ngModel type="text" name="facturaDos" id="facturaDos" class="form-control" placeholder="Folio Factura" autocomplete="off" (change)="buscarFacturaOtro(f)">
-    
-                        </div>
-        
-                        <div class="form-group col-md-4">
-
-                            <label for="">Asesor</label>
-
-                            <input [(ngModel)]="numcliO" type="number" name="numcliO" id="numcliO" class="form-control" style="display: none;">
-
-                            <input [(ngModel)]="numcliFolO" type="text" name="numcliFolO" id="numcliFolO" class="form-control" style="display: none;">
-
-                            <input [(ngModel)]="peridO" type="number" name="peridO" id="peridO" class="form-control" style="display: none;">
-
-                            <input [(ngModel)]="asesorO" type="text" name="asesorO" id="asesorO" class="form-control" placeholder="Nombre del Asesor" autocomplete="off" (change)="obtenerPro(f)" readonly>
-                                
-                        </div>
-        
-                        <div class="form-group col-md-4 centrar">
-                        
-                            <h1 class="display-6 badge badge-info" *ngIf="numcli === numcliO && numFacturaO !== 0">MISMO CLIENTE</h1>
-
-                            <h1 class="display-6 badge badge-danger" *ngIf="numcli !== numcliO && numFacturaO !== 0">DIFERENTE CLIENTE</h1>
-
-                        </div>
-
-                        <div *ngIf="saldoO === 0 && numFacturaO > 0" class="col-12 alert alert-danger" role="alert">Esta factura esta pagada. Selecciona otra</div>
-
-                    </div> 
-
-                    <div class="col-md-12" *ngIf="saldo > 0 || saldoO > 0">
-
-                        <label for="">Códio de producto</label>
-
-                        <input ngModel type="number" name="codigo" id="codigo" class="form-control" placeholder="Código" autocomplete="off" (change)="buscarCodigo(f)" required>
-
-                    </div>
-
-                    <div class="col-md-12" *ngIf="existe === 'NO'">
-
-                        <label for="">Códio de producto</label>
-
-                        <input ngModel type="number" name="codigo" id="codigo" class="form-control" placeholder="Código" autocomplete="off" (change)="buscarCodigo(f)" required>
-
-                    </div> -->
-
-                    <!-- <div class="col-md-4" *ngIf="saldo !== 0 || saldoO !==0">
-                        
-                        <select [(ngModel)]="pro" class="form-control" name="productos" id="productos" (change)="obtenerPro(f)" required>
-                            
-                            <option value="0">Selecciona un producto</option>
-                            
-                            <option  *ngFor="let p of productosFactura" [ngValue]="p">{{p.DESCRIPCIO}}</option>
-                            
-                        </select>
-                        
-                    </div> -->
-                        
-                    <!-- <div class="col-12" *ngIf="codigo !== 0">
-
-                        <table class="table table-striped">
-
-                            <thead>
-
-                                <tr>
-
-                                    <th>CLAVE</th>
-
-                                    <th>CODIGO</th>
-
-                                    <th>PRECIO</th>
-
-                                    <th>DESCRIPCION</th>
-
-                                    <th>CANTIDAD</th>
-
-                                    <th>FALLA</th>
-
-                                </tr>
-
-                            </thead>
-
-                            <tbody>
-
-                                <tr>
-
-                                    <td>{{clave}}</td>
-
-                                    <td>{{clvprov}}</td>
-
-                                    <td>{{costo}}</td>
-
-                                    <td>{{descr}}</td>
-
-                                    <td><input  ngModel type="number" name="cantidad" id="cantidad" class="form-control" placeholder="Cantidad"  required></td>
-
-                                    <td><input  ngModel type="text" name="falla" id="falla" class="form-control" placeholder="Descripción Falla" required></td>
-
-                                </tr>
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                    <div class="col-md-12">
-
-                        <button type="submit" class="btn btn-danger"><i class="mdi mdi-content-save"></i> Guardar</button>
-
-                        <button style="margin-left: 4px;" type="button" class="btn btn-info" (click)="reset(f)"><i class="mdi mdi-delete-variant"></i>Limpiar</button>
-                    
-                    </div>
- -->
                 </form>
-
-                <!-- <form ngNativeValidate class="form-row" #f="ngForm" (ngSubmit)="agregarGarantia(f)">
-
-                    <div class="form-group col-md-4 centrar">
-
-                        <h1 class="display-6 badge badge-info" *ngIf="numcli === numcliFol && numcli !== 0">MISMO CLIENTE</h1>
-
-                        <h1 class="display-6 badge badge-danger" *ngIf="numcli !== numcliFol && numcli !== 0">DIFERENTE CLIENTE</h1>
-
-                        <input [(ngModel)]="mecompro" type="text" name="mecompro" id="mecompro" class="form-control" style="display: none;">
-
-                    </div>
-
-                    <div class="form-group col-md-2">
-
-                        <label for="">No. de Cliente</label>
-
-                        <input [(ngModel)]="numcli" type="text" name="numcli" id="numcli" class="form-control" placeholder="Número de Cliente" autocomplete="off" readonly>
-
-                    </div>
-                    
-                    <div class="form-group col-md-10">
-
-                        <label for="">Cliente</label>
-
-                        <input [(ngModel)]="nomcli" type="text" name="nomcli" id="nomcli" class="form-control" placeholder="Nombre del Cliente" autocomplete="off" readonly>
-
-                    </div>
-
-                    <div class="form-group col-md-12">
-
-                        <table class="table table-bordered">
-
-                            <thead class="thead-dark">
-
-                                <tr class="bg-secondary text-white">
-
-                                    <th class="text-center" scope="col">CODIGO</th>
-                                    
-                                    <th class="text-center" scope="col">CLAVE</th>
-        
-                                    <th class="text-center" scope="col">CANT</th>
-        
-                                    <th class="text-center" scope="col">DESCRIPCION</th>
-        
-                                    <th class="text-center" scope="col">TIPO DE FALLA O PROBLEMA QUE PRESENTA</th>
-
-                                </tr>
-
-                            </thead>
-
-                            <tbody>
-
-                                <tr>
-
-                                    <td width="10%" style="padding: 0px!important;">
-
-                                        <select [(ngModel)]="products" class="form-control" name="productos" id="productos" (change)="activarProducto(f)">
-
-                                            <option value="0">Seleccione un producto</option>
-
-                                            <option *ngFor="let prod of productosFactura" [ngValue]="prod">{{prod.DESCRIPCIO}}</option>
-
-                                        </select>
-
-                                        <input [(ngModel)]="clvprov" type="text" name="clvprov" id="clvprov" class="form-control" style="display: none;">
-
-                                    </td>
-                                    
-                                    <td width="10%" style="padding: 0px!important;">
-
-                                        <input [(ngModel)]="clave" type="text" name="clave" id="clave" class="form-control" placeholder="Clave" autocomplete="off" readonly>
-                                        <input [(ngModel)]="costo" type="text" name="costo" id="costo" class="form-control" placeholder="Costo" autocomplete="off" style="display: none;">
-                                        
-                                    </td>
-
-                                    <td width="10%" style="padding: 0px!important;">
-
-                                        <input ngModel type="number" name="cantidad" id="cantidad" class="form-control" placeholder="Cantidad" autocomplete="off" required>
-
-                                    </td>
-
-                                    <td width="25%" style="padding: 0px!important;">
-
-                                        <input [(ngModel)]="descr" type="text" name="descripcion" id="descripcion" class="form-control" placeholder="Descripción" autocomplete="off" readonly>
-
-                                    </td>
-
-                                    <td width="45%" style="padding: 0px!important;">
-
-                                        <textarea ngModel type="text" name="tipoFalla" id="tipoFalla" class="form-control" placeholder="Tipo de Falla" autocomplete="off" required></textarea>
-
-                                    </td>
-
-                                </tr>
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                    <button type="submit" class="btn btn-success">Agregar</button>
-
-                    <button class="btn btn-info ml-3" type="button"data-dismiss="modal" aria-label="Close">Cerrar</button>
-
-                </form> -->
 
             </div>
 
@@ -839,11 +534,17 @@
 
                 <form ngNativeValidate class="form-row" #g="ngForm" (ngSubmit)="actualizarGarantia(g)"> 
 
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-lg-6">
 
                         <div style="height: 200px!important;" class="alert alert-primary form-group" role="alert">
 
                             <h3><strong>Garantia {{marca}}</strong></h3>
+
+                            <h6 class="" *ngIf="estado === 'ENTREGAR' && folnc === '' || estado === 'TERMINADO' && folnc === '' || estado === 'ENTREGANDO' && folnc === ''"><strong>GARANTIA AUTORIZADA</strong></h6>
+
+                            <h6 class="" *ngIf="estado === 'ENTREGAR' && folnc > 0 || estado === 'TERMINADO' && folnc > 0 || estado === 'ENTREGANDO' && folnc > 0"><strong>GARANTIA AUTORIZADA POR EL CLIENTE</strong></h6>
+
+                            <h6 class="" *ngIf="estado === 'ENTREGAR' && folnc > 0 || estado === 'TERMINADO' && folnc > 0 || estado === 'ENTREGANDO' && folnc > 0">Folio Nota de Credito: {{folnc}}</h6>
 
                             <h5>Folio: {{folio}}</h5>
 
@@ -857,7 +558,7 @@
 
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-lg-6">
 
                         <div style="height: 200px!important;" class="alert alert-primary form-group" role="alert">
 
@@ -865,21 +566,15 @@
 
                             <h5>Factura: {{factura}}</h5>
 
-                            <!-- <h6 *ngIf="factura === 'NINGUNA'" class="badge badge-info">Producto Descontinuado</h6> -->
-
                             <h5 *ngIf="factura !== 'SIN FACTURA'">Cliente: {{cliente}}</h5>
 
                             <h5 *ngIf="factura !== 'SIN FACTURA'"># Cliente: {{numero}}</h5>
-
-                            <!-- <h6 *ngIf="observa !== ''" class="badge badge-success">Factura Pagada</h6>
-                            
-                            <h5 *ngIf="observa !== ''">Factura por sustitución de factura pagada: {{observa}} </h5>    -->
 
                         </div>
 
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-lg-6">
 
                         <div style="height: 250px!important;" class="alert alert-warning form-group" role="alert">
 
@@ -937,7 +632,7 @@
 
                     <input [ngModel]="folterm" type="text" name="folterm" id="folterm" class="form-control" style="display: none;">
 
-                    <div style="height: 100px!important;" class="col-md-6">
+                    <div style="height: 100px!important;" class="col-md-6 col-lg-6">
 
                         <div *ngIf="estado !== 'NUEVO'" class="alert alert-warning form-group" role="alert">
                                 
@@ -963,7 +658,7 @@
 
                     </div>
 
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
 
                        <div *ngIf="estado === 'ENTREGAR' && folnc === '' || estado === 'TERMINADO' && folnc === '' || estado === 'ENTREGANDO' && folnc === ''" class="alert alert-info form-group" role="alert">
                         
@@ -979,9 +674,9 @@
                         
                         </div>
 
-                    </div>
+                    </div> -->
 
-                    <div class="col-md-6">
+                    <div class="col-md-12 col-lg-12">
 
                         <div *ngIf="estado === 'ENTREGAR' && guia === 'GUIA NO ENCONTRADA'"  class="alert alert-info form-group" role="alert">
                             
@@ -1047,6 +742,7 @@
 
                     
                     <div *ngIf="estado === 'NUEVO'" class="form-group col-md-12">
+
                         <h3><strong>Orden de trabajo</strong></h3>
                         
                         <label *ngIf="marca === 'TRUPER'"for="">Folio Truper/Fmo</label>
@@ -1176,559 +872,3 @@
     </div>
     
 </div>
-
-<!-- <div id="editar" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="editar" aria-hidden="true">
-
-    <div class="modal-dialog modal-lg mw-100" style="width: 95%!important;">
-
-        <div class="modal-content">
-
-            <div class="modal-header">
-
-                <h3 class="p-b-10 p-t-10">Detalles de la Garantía</h3>
-
-                <h1 *ngIf="estado === 'NUEVO'" class="font-20 badge badge-warning">Nuevo</h1>
-                    
-                <h1 *ngIf="estado === 'PROCESO'" class="font-20 badge badge-info">Proceso</h1>
-
-                <h1 *ngIf="estado === 'ENVIANDO'" class="font-20 badge badge-pill">Enviando</h1>
-
-                <h1 *ngIf="estado === 'AUTORIZACION'" class="font-20 badge badge-primary">Autorización</h1>
-
-                <h1 *ngIf="estado === 'ENTREGAR'" class="font-20 badge badge-light">Entregar</h1>
-                
-                <h1 *ngIf="estado === 'TERMINADO'" class="font-20 badge badge-success">Terminado</h1>
-                
-                <h1 *ngIf="estado === 'CANCELADO'" class="font-20 badge badge-danger">Cancelado</h1>
-
-                <button type="button" class="close" data-dismiss="modal" id="cerrarModalGar" aria-label="Close">
-        
-                    <span aria-hidden="true">&times;</span>
-        
-                </button>
-
-            </div>
-
-            <div class="modal-body">
-
-                <div class="row">
-
-                    <div class="col-12">
-    
-                        <input width="100%!important" class="p-b-10 p-t-10" type="text" name="" id="" placeholder="factura" readonly>
-    
-                    </div>
-    
-                    <div class="form-group col-md-3">
-    
-                        <h6>Folio: {{folio}}</h6>
-    
-                    </div>
-    
-                    <div class="form-group col-md-3">
-    
-                        <h6>Numero De Cliente: {{numeroFol}}</h6>
-    
-                    </div>
-                    <div class="form-group col-md-3">
-    
-                        <h6>Solicito: {{clienteFol}}</h6>
-    
-                    </div>
-    
-                    <div class="form-group col-md-3">
-    
-                        <h6>Fecha de solicitud: {{fecreg}}</h6>
-    
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div> -->
-
-
-
-        <!-- <div class="modal-content" *ngIf="estado !== 'TERMINADO'">
-
-            <div class="modal-header">
-
-                <h3 class="p-b-10 p-t-10">Detalles de la Garantía</h3>
-
-                <h1 *ngIf="estado === 'NUEVO'" class="font-20 badge badge-warning">Nuevo</h1>
-                    
-                <h1 *ngIf="estado === 'PROCESO'" class="font-20 badge badge-info">Proceso</h1>
-
-                <h1 *ngIf="estado === 'ENVIANDO'" class="font-20 badge badge-pill">Enviando</h1>
-
-                <h1 *ngIf="estado === 'AUTORIZACION'" class="font-20 badge badge-primary">Autorización</h1>
-
-                <h1 *ngIf="estado === 'ENTREGAR'" class="font-20 badge badge-light">Entregar</h1>
-                
-                <h1 *ngIf="estado === 'TERMINADO'" class="font-20 badge badge-success">Terminado</h1>
-                
-                <h1 *ngIf="estado === 'CANCELADO'" class="font-20 badge badge-danger">Cancelado</h1>
-
-                <button type="button" class="close" data-dismiss="modal" id="cerrarModalGar" aria-label="Close">
-        
-                    <span aria-hidden="true">&times;</span>
-        
-                </button>
-
-            </div>
-
-            <div class="modal-body">
-
-                <form class="form-row">
-
-                    <div class="form-group col-md-2">
-
-                        <h4 class="border border-danger"><span class="text-uppercase bg-danger text-white px-3">Folio</span> <span class="font-weight-bold">{{folio}}</span></h4>
-
-                    </div>
-
-                    <div class="form-group col-md-10"></div>
-
-                    <div class="form-group col-md-4">
-
-                        <label for="">Fecha</label>
-
-                        <input [ngModel]="fecha" type="text" name="verFecha" id="verFecha" class="form-control" readonly>
-
-                    </div>
-
-
-                    <div class="form-group col-md-4">
-
-
-                        <label for="">No. Factura</label>
-
-                        <input [ngModel]="factura" type="text" name="verFectura" id="verFectura" class="form-control" readonly>
-
-                    </div>
-
-                    <div class="form-group col-md-4">
-
-                        <label for="">Orden de Trabjo Truper</label>
-
-                        <input [ngModel]="foltru" type="text" name="verOrden" id="verOrden" class="form-control" readonly>
-
-                    </div>
-
-                    <div class="form-group col-md-2">
-
-                        <label for="">No. de Cliente</label>
-
-                        <input [ngModel]="numero" type="text" name="verNumero" id="verNumero" class="form-control" readonly>
-
-                    </div>
-
-                    <div class="form-group col-md-4">
-
-                        <label for="">Cliente</label>
-
-                        <input [ngModel]="nomcli" type="text" name="verCliente" id="verCliente" class="form-control" readonly>
-
-                    </div>
-
-                    <div class="form-group col-md-6"></div>
-
-                    <div class="form-group col-md-6">
-
-                        <table class="table">
-
-                            <thead>
-
-                                <tr class="bg-secondary text-white">
-
-                                    <th class="text-center" scope="col">CODIGO</th>
-                                    
-                                    <th class="text-center" scope="col">CLAVE</th>
-        
-                                    <th class="text-center" scope="col">CANT</th>
-        
-                                    <th class="text-center" scope="col">DESCRIPCION</th>
-        
-                                    <th class="text-center" scope="col">TIPO DE FALLA</th>
-
-                                </tr>
-
-                            </thead>
-
-                            <tbody>
-
-                                <tr>
-
-                                    <td class="text-center font-weight-bold" width="10%" style="padding: 0px!important;">
-
-                                        {{clvprov}}
-
-                                    </td>
-                                    
-                                    <td class="text-center font-weight-bold" width="10%" style="padding: 0px!important;">
-
-                                        {{claveprod}}
-
-                                    </td>
-
-                                    <td class="text-center font-weight-bold" width="10%" style="padding: 0px!important;">
-
-                                        {{cantidad}}
-
-                                    </td>
-
-                                    <td class="font-weight-bold" width="25%" style="padding: 0px!important;">
-
-                                        {{descr}}
-
-                                    </td>
-
-                                    <td class="font-weight-bold" width="45%" style="padding: 0px!important;">
-
-                                        {{tipoFalla}}
-
-                                    </td>
-
-                                </tr>
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                    <div class="form-group col-md-6">
-
-                        <div class="card">
-
-                            <div class="card-body">
-
-                                <h3>Datos Registro Truper</h3>
-
-                                <form ngNativeValidate class="form-row" #g="ngForm" (ngSubmit)="actualizarGarantia(g)">
-
-                                    <div class="form-group col-md-6">
-
-                                        <span class="font-weight-bold" *ngIf="estado !== 'NUEVO'">Fecha de Registro: {{fecregtru | date: 'dd-MM-yy'}}</span>
-
-                                        <label *ngIf="estado === 'NUEVO'" for="">Fecha</label>
-                
-                                        <input *ngIf="estado === 'NUEVO'" ngModel type="date" name="fechaTrup" id="fechaTrup" class="form-control" [required]="requerido" [disabled]="truperHabilitado">
-                                        <input [ngModel]="idgar" type="number" name="idgar" id="idgar" class="form-control" style="display: none;">
-
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-
-                                        <span class="font-weight-bold" *ngIf="estado !== 'NUEVO'">Folio: {{foltru}}</span>
-
-                                        <label *ngIf="estado === 'NUEVO'" for="">Folio</label>
-                
-                                        <input *ngIf="estado === 'NUEVO'" ngModel type="number" name="folioTrup" id="folioTrup" placeholder="Folio Truper" class="form-control" [required]="requerido" [disabled]="truperHabilitado">
-
-                                    </div>
-
-                                    <div class="form-group col-md-12" *ngIf="estado === 'PROCESO'">
-
-                                        <label for="">Reportar que el producto se está enviando</label>
-
-                                        <div class="form-check">
-
-                                            <input ngModel class="form-check-input" type="radio" name="enviando" id="enviando" value="ENVIANDO">
-
-                                            <label class="form-check-label" for="enviando">
-
-                                                ENVIANDO
-
-                                            </label>
-
-                                        </div>
-
-                                    </div>
-
-                                    <div class="form-group col-md-6" *ngIf="estado === 'ENVIANDO'">
-
-                                        <label for="">AUTORIZACION</label>
-
-                                        <div class="form-check">
-
-                                            <input ngModel class="form-check-input" type="radio" name="autorizar_garantia" id="autorizar_no" value="NO" (click)="autorizacion('NO')">
-
-                                            <label class="form-check-label" for="autorizar_no">
-
-                                                NO
-
-                                            </label>
-
-                                        </div>
-
-                                        <div class="form-check">
-
-                                            <input ngModel class="form-check-input" type="radio" name="autorizar_garantia" id="autorizar_si" value="SI" (click)="autorizacion('SI')">
-
-                                            <label class="form-check-label" for="autorizar_si">
-
-                                                SI
-
-                                            </label>
-
-                                        </div>
-
-                                    </div>
-
-                                    <div class="form-group col-md-6" *ngIf="estado === 'ENVIANDO' && autorizado"></div>
-
-                                    <div class="form-group col-md-6" *ngIf="estado === 'ENVIANDO' && !autorizado">
-
-                                        <h3>Favor de guardar el estado y esperar que solución tendrá la garantía.</h3>
-
-                                    </div>
-
-                                    <div class="form-group col-md-12" *ngIf="estado === 'AUTORIZACION'">
-
-                                        <h3>Tipo de Documento</h3>
-
-                                    </div>
-
-                                    <div class="form-group col-md-6" *ngIf="estado === 'AUTORIZACION'">
-
-                                        <label for="">Folio del Documento</label>
-
-                                        <input class="form-control" type="number" ngModel name="folioDoc" id="folioDoc" placeholder="Folio del documento" autocomplete="off" required>
-
-                                    </div>
-
-                                    <div class="form-group col-md-6" *ngIf="estado === 'AUTORIZACION'">
-
-                                        <label for="">Documento</label>
-
-                                        <input class="form-control" type="text" ngModel name="observaDoc" id="observaDoc" placeholder="Tipo de documento" autocomplete="off" required>
-                                        
-                                    </div>
-
-                                    <div class="form-group col-md-6" *ngIf="estado === 'ENTREGAR' || estado === 'TERMINADO'">
-
-                                        <h3>Folio del Documento</h3>
-
-                                        <h2 class="font-weight-bold">{{folnc}}</h2>
-
-                                    </div>
-
-                                    <div class="form-group col-md-6" *ngIf="estado === 'ENTREGAR' || estado === 'TERMINADO'">
-
-                                        <h3>Documento</h3>
-
-                                        <h2 class="font-weight-bold">{{observa}}</h2>
-
-                                    </div>
-
-                                    <div class="form-group col-md-12" *ngIf="estado === 'ENTREGAR' || estado === 'TERMINADO'">
-
-                                        <label for="">ENTREGAR</label>
-
-                                        <div class="form-check">
-
-                                            <input ngModel class="form-check-input" type="radio" name="entregar" id="entregar_si" value="SI">
-
-                                            <label class="form-check-label" for="entregar_si">
-
-                                                SI
-
-                                            </label>
-
-                                        </div>
-
-                                    </div>
-
-                                    <button type="submit" class="btn btn-info" *ngIf="estado !== 'ENTREGAR' && estado !== 'TERMINADO'">Actualizar</button>
-
-                                    <button type="submit" class="btn btn-danger" *ngIf="estado === 'ENTREGAR' && estado !== 'TERMINADO'">Terminar</button>
-
-
-                                </form>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </form>
-
-            </div>
-
-        </div> -->
-
-        <!-- <div class="modal-content" *ngIf="estado === 'TERMINADO'">
-
-            <div class="modal-header">
-
-                <h3 class="p-b-10 p-t-10">Información Final</h3>
-                
-                <h1 class="font-20 badge badge-success">Terminado</h1>
-                
-                <button type="button" class="close" data-dismiss="modal" id="cerrarModalGar" aria-label="Close">
-        
-                    <span aria-hidden="true">&times;</span>
-        
-                </button>
-
-            </div>
-
-            <div class="modal-body">
-
-                <form class="form-row">
-
-                    <div class="form-group col-md-2">
-    
-                        <h4 class="border border-danger"><span class="text-uppercase bg-danger text-white px-3">Folio</span> <span class="font-weight-bold">{{folio}}</span></h4>
-    
-                    </div>
-
-                    <div class="form-group col-md-10"></div>
-
-                    <div class="form-group col-md-6">
-
-                        <h3>Fecha Registrado: <span class="font-weight-bold">{{fecreg}}</span></h3>
-
-                        <h3>Fecha Folio: <span class="font-weight-bold">{{fecha}}</span></h3>
-
-                        <h4>Producto a Garantía</h4>
-
-                        <table class="table table-sm">
-
-                            <thead>
-
-                                <tr class="bg-dark text-white">
-
-                                    <th width="5%" class="text-center">CODIGO</th>
-
-                                    <th width="10%" class="text-center">CLAVE</th>
-
-                                    <th width="30%" class="text-center">DESCRIPCION</th>
-                                    
-                                    <th width="5%" class="text-center">CANT</th>
-
-                                    <th width="50%" class="text-center">FALLA</th>
-
-                                </tr>
-
-                            </thead>
-
-                            <tbody>
-
-                                <td class="text-center">{{clvprov}}</td>
-
-                                <td class="text-center">{{claveprod}}</td>
-
-                                <td>{{descr}}</td>
-                                
-                                <td class="text-center">{{cantidad}}</td>
-
-                                <td>{{tipoFalla}}</td>
-
-                            </tbody>
-
-                        </table>
-                        
-                    </div>
-
-                    <div class="form-group col-md-6">
-
-                        <h2>Datos del Cliente</h2>
-
-                        <h4>Cliente me compro: <span class="font-weight-bold badge" [ngClass]="{'badge-danger': mecompro === 'NO', 'badge-success': mecompro === 'SI'}">{{mecompro}}</span></h4>
-
-                        <h4>Cliente del Folio: <span class="font-weight-bold">#{{numeroFol}} {{clienteFol}}</span></h4>
-
-                        <h4>Cliente de la Factura: <span class="font-weight-bold">#{{numero}} {{cliente}}</span> Factura: <span class="font-weight-bold">{{factura}}</span></h4>
-
-                    </div>
-
-                    <div class="form-group col-md-12">
-
-                        <h4>Movimientos</h4>
-
-                        <table class="table">
-
-                            <thead>
-
-                                <tr class="bg-dark text-white">
-
-                                    <th>Movimiento</th>
-
-                                    <th>Fecha</th>
-
-                                    <th>Acción</th>
-
-                                </tr>
-
-                            </thead>
-
-                            <tbody>
-
-                                <tr>
-
-                                    <td width="10%" class="font-weight-bold">Proceso</td>
-                                    
-                                    <td width="10%">{{fechaproceso | date: 'dd-MM-yy'}}</td>
-
-                                    <td width="80%">
-
-                                        <h4 *ngIf="foltru === 0">Redireccionado a: <span class="font-weight-bold">{{'Perla Perez'}}</span></h4>
-
-                                        <h4 *ngIf="foltru !== 0">Folio Truper: <span class="font-weight-bold">{{foltru}}</span></h4>
-
-                                    </td>
-
-                                </tr>
-                                <tr>
-
-                                    <td width="10%" class="font-weight-bold">Enviado a Truper</td>
-
-                                    <td width="10%">{{fechaenviando | date: 'dd-MM-yy'}}</td>
-                                    
-                                    <td width="80%">Chofer: <span class="font-weight-bold">{{'ALFREDO MOLINA TREJO'}}</span> No. Transporte: <span class="font-weight-bold">{{1149309}}</span></td>
-
-                                </tr>
-                                <tr>
-
-                                    <td width="10%" class="font-weight-bold">Autorización</td>
-                                    
-                                    <td width="10%">{{fechaautoriza | date: 'dd-MM-yy'}}</td>
-
-                                    <td width="80%" *ngIf="folnc !== 0">Nota de Crédito: <span>{{folnc}}</span></td>
-                                    <td width="80%" *ngIf="folnc === 0">{{'Garantía autorizada ó es código 8'}}</td>
-
-                                </tr>
-                                <tr>
-
-                                    <td width="10%" class="font-weight-bold">Entregado</td>
-
-                                    <td width="10%">{{fechaentrega | date: 'dd-MM-yy'}}</td>
-
-                                    <td width="80%">{{'acciones'}}</td>
-
-                                </tr>
-                                <tr>
-
-                                    <td width="10%" class="font-weight-bold">Terminó</td>
-
-                                    <td width="10%">{{fecenvio | date: 'dd-MM-yy'}}</td>
-
-                                    <td width="80%">{{'acciones'}}</td>
-
-                                </tr>
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                </form>
-
-            </div>
-
-        </div> -->

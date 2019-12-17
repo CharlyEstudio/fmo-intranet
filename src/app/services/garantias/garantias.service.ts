@@ -178,7 +178,7 @@ export class GarantiasService {
   }
 
 
-  hacerPDF(file: string, folioPdf: number, numfolpdf: number, cantidadPdf: number, clvprovPdf: number, clavePdf: any ,
+  hacerPDF(folioGenerado: number, file: string, folioPdf: number, numfolpdf: number, cantidadPdf: number, clvprovPdf: number, clavePdf: any ,
     nombrePdf: any, descrPdf: any, diavisPdf: any, diaentrega: any, vendedorPdf: any, direccion: any, numerodir: any, interior: any, colonia: any, ciudad: any) {
     let url;
 
@@ -190,6 +190,7 @@ export class GarantiasService {
       url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=23';
     }
     return this.http.post(url, {
+      folGen: folioGenerado,
       file: file,
       folioPdf: folioPdf,
       numfolpdf: numfolpdf,

@@ -165,7 +165,6 @@ export class GarantiasComponent implements OnInit {
 
   obtenerTodasGarantias() {
     this.garantias = [];
-    console.log(this.desde);
     this._garantiaService.obtenerGarantiasDesde(this.desde).subscribe((gar: any) => {
       if (gar.length > 0) {
         this.garantias = gar;
@@ -324,6 +323,23 @@ export class GarantiasComponent implements OnInit {
     this.clienteFmo = '';
     this.codigo = 0;
     this.tieneFactura = '';
+
+    const radioMarca = document.getElementsByName('marcaElegir');
+    radioMarca.forEach((value: any, key: number) => {
+      value.checked = false;
+    });
+    const radioExisteProd = document.getElementsByName('existeProd');
+    radioExisteProd.forEach((value: any, key: number) => {
+      value.checked = false;
+    });
+    const radioExisteFac = document.getElementsByName('facturaExis');
+    radioExisteFac.forEach((value: any, key: number) => {
+      value.checked = false;
+    });
+    const radioEsCliente = document.getElementsByName('esCliente');
+    radioEsCliente.forEach((value: any, key: number) => {
+      value.checked = false;
+    });
   }
 
   reset(garantia: any) {
@@ -346,12 +362,6 @@ export class GarantiasComponent implements OnInit {
     this.descr = garantia.observa;
     this.folnc = garantia.folnc;
     this.claveprod = garantia.clave;
-
-    // this._productoService.obtenerProducto(this.clvprov).subscribe((product: any) => {
-    //   if (product.status) {
-    //     this.claveprod = product.respuesta[0].clave;
-    //   }
-    // });
 
     this.costoprod = garantia.costo;
     this.fecha = garantia.fecha;
@@ -439,7 +449,6 @@ export class GarantiasComponent implements OnInit {
             }, 100);
         }
       });
-
     } else if (this.tieneFactura === 'NO') {
       this._garantiaService.nuevaGarantiaNofact(this.usuario.idFerrum, garantia.value, this.clvprov, this.clave, this.descr, this.costo, this.marca, this.clienteFmo).subscribe((resp: any) => {
         if (resp) {
@@ -460,27 +469,7 @@ export class GarantiasComponent implements OnInit {
           swal('Error', 'Error ' + resp, 'error');
         }
       });
-
     }
-    // } else if (this.existe === 'NO') {
-    //   this._garantiaService.nuevaGarantiaDesc(garantia.value, this.clvprov, this.costo, this.clienteFmo, this.nomcliFol).subscribe((resp: any) => {
-    //     if (resp) {
-    //       swal('Nueva Garantia', 'Los datos de la garantia se han guardado correctamente.', 'success');
-    //       garantia.resetForm();
-    //       this.limpiando();
-    //       this.obtenerTodasGarantias();
-    //       const cerrar = <HTMLElement>(document.getElementById('cerrarModalGar'));
-    //       cerrar.click();
-    //         setTimeout(() => {
-    //           const payload = {
-    //             datos: garantia.value,
-    //             usuario: this.usuario
-    //           };
-    //           this._webSocket.acciones('nueva-garantia', payload);
-    //         }, 100);
-    //     }
-    //   });
-    // }
   }
 
   autorizacion(valor: any) {
@@ -671,7 +660,7 @@ export class GarantiasComponent implements OnInit {
 
       const file = `${this.id}-${Date.now()}.pdf`;
 
-      this._garantiaService.hacerPDF(file, this.folioPdf, this.numfolpdf,  this.cantidadPdf , this.clvprovPdf, this.clavePdf, this.nombrePdf,
+      this._garantiaService.hacerPDF(this.foltru, file, this.folioPdf, this.numfolpdf,  this.cantidadPdf , this.clvprovPdf, this.clavePdf, this.nombrePdf,
       this.descrPdf, this.diavisPdf, this.diaentrega, this.vendedorPdf, this.direccion, this.numerodir, this.interior, this.colonia, this.ciudad).subscribe((pdf: any) => {
 
         if (pdf) {
@@ -684,12 +673,12 @@ export class GarantiasComponent implements OnInit {
           link.setAttribute('target', '_blank');
           link.click();
         }, 1000);
-      } else {
-      this.pdf = '';
-        swal('ERROR', 'Revisar con el administrador.', 'error');
-      }
+        } else {
+        this.pdf = '';
+          swal('ERROR', 'Revisar con el administrador.', 'error');
+        }
 
-     });
+      });
 
      });
 
@@ -709,30 +698,32 @@ export class GarantiasComponent implements OnInit {
     this._webSocket.acciones('seguimiento-garantia', payload);
   }
 
+  // TODO
   obtenerFolio(garantia: any) {
-    this.guia = '';
-    this.foliosGuia = [];
+    if (garantia.estado === 'ENTREGAR') {
+      this.guia = '';
+      this.foliosGuia = [];
 
-    if (garantia.marca === 'TRUPER') {
-
-      this.fol = garantia.foltru;
-    } else {
-
-      this.fol = garantia.numeroFol;
-    }
-
-
-    this._garantiaService.buscarFolioHistorial(this.fol).subscribe((resp: any) => {
-      if (resp.ok) {
-        if (resp.folios.length > 0) {
-          this.foliosGuia = resp.folios;
-          let reversed = this.foliosGuia.reverse();
-          this.guia = 'DATOS DE GUIA';
-        } else {
-          this.guia = 'GUIA NO ENCONTRADA';
-        }
+      if (garantia.marca === 'TRUPER') {
+        this.fol = garantia.foltru;
+      } else {
+        this.fol = garantia.numeroFol;
       }
-    });
+
+      this._garantiaService.buscarFolioHistorial(this.fol).subscribe((resp: any) => {
+        if (resp.ok) {
+          if (resp.folios.length > 0) {
+            this.foliosGuia = resp.folios;
+            let reversed = this.foliosGuia.reverse();
+            this.guia = 'DATOS DE GUIA';
+          } else {
+            this.guia = 'GUIA NO ENCONTRADA';
+          }
+        }
+      });
+    } else {
+      return;
+    }
   }
 
   devolucion() {

@@ -172,15 +172,12 @@ export class GarantiasComponent implements OnInit {
     });
   }
 
+  // TODO
   catalogo(catalogo: any) {
     this.marca = catalogo;
-    if (this.marca === 'FMO') {
-      this._garantiaService.obtenerGarantiasDesdeFmo().subscribe((gar: any) => {
-         this.foliofmo = gar[0].maximo;
-      });
-    } else if (this.marca === 'TRUPER') {
-      this.foliofmo = 0;
-    }
+    // if (this.marca === 'FMO') {
+    //   // this.foliofmo = foilio;
+    // }
   }
 
   cambiarDesde( valor: number ) {
@@ -236,11 +233,6 @@ export class GarantiasComponent implements OnInit {
         this.saldo = fac[0].SALDO;
         this.lista = fac[0].LISTA;
         this.folioFact = fac[0].DOCID;
-        // if (this.numcli === this.numcliFol) {
-        //   this.mismocliente = 'SI';
-        // } else {
-        //   this.mismocliente = 'NO';
-        // }
         this._garantiaService.obtenerProductosFacturas(this.folioFact).subscribe((prod: any) => {
           if (prod.length > 0) {
             this.productosFactura = prod;
@@ -369,7 +361,7 @@ export class GarantiasComponent implements OnInit {
     if (garantia.marca === 'TRUPER') {
       this.foltru = garantia.foltru;
     } else {
-      this.foltru = garantia.numeroFol;
+      this.foltru = garantia.folio;
     }
     this.fecregtru = garantia.fecregtru;
     this.factura = garantia.facafec;
@@ -485,26 +477,23 @@ export class GarantiasComponent implements OnInit {
 
   actualizarGarantia(garantia: NgForm) {
     if (this.estado === 'NUEVO') {
-      if (garantia.value.fechaTrup < this.fecha) {
-        swal('Fecha Incorrecta', 'No se puede colocar una fecha menor a la de registro.', 'error');
-      } else {
-        this.estado = 'PROCESO';
-        this._garantiaService.actualizarGarantia(garantia.value, this.estado).subscribe((actualizado: any) => {
-          if (actualizado) {
-            const cerrar = <HTMLElement>(document.getElementById('editar'));
-            cerrar.click();
-            this.obtenerTodasGarantias();
-            // this._garantiaService.enviarEmail(this.estado).subscribe((enviar: any) => {
-            //   swal('Se envío un email a tu correo', 'Email enviado', 'success');
-            // });
-            setTimeout(() => {
-              this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
-            }, 100);
-          } else {
-            swal('Cliente No Actualizado', 'Error al actualizar', 'error');
-          }
-        });
-      }
+      this.estado = 'PROCESO';
+      this._garantiaService.actualizarGarantia(garantia.value, this.estado, this.marca, this.folio).subscribe((actualizado: any) => {
+        if (actualizado) {
+          const cerrar = <HTMLElement>(document.getElementById('editar'));
+          cerrar.click();
+          this.obtenerTodasGarantias();
+          // TODO enviar email al cliente
+          // this._garantiaService.enviarEmail(this.estado).subscribe((enviar: any) => {
+          //   swal('Se envío un email a tu correo', 'Email enviado', 'success');
+          // });
+          setTimeout(() => {
+            this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
+          }, 100);
+        } else {
+          swal('Cliente No Actualizado', 'Error al actualizar', 'error');
+        }
+      });
     } else if (this.estado === 'PROCESO') {
       if (garantia.value.enviando !== '') {
         this.estado = 'ENVIANDO';

@@ -32,6 +32,8 @@
 
                         <th class="text-center">Fecha</th>
 
+                        <th class="text-center"></th>
+
                         <th colspan="1" class="border border-bottom-0 text-center">FACTURA</th>
                         
                         <th colspan="1"></th>
@@ -56,7 +58,9 @@
 
                         <th class="text-center">Folio</th>
 
-                        <th class="text-center border border-bottom-0 border-right-0 border-top-0">#Factura</th>
+                        <th class="text-center">Código</th>
+
+                        <th class="text-center border border-bottom-0 border-top-0">#Factura</th>
 
                         <th class="">Asesor</th>
 
@@ -96,7 +100,9 @@
                         
                         <td class="text-center border-0">{{gara.fecha | date: 'dd-MM-yy'}}</td>
 
-                        <td class="text-center border border-right-0 border-top-0">{{gara.facafec}}</td>
+                        <td class="text-center border border-left-0 border-right-0 border-top-0">{{gara.clvprov}}</td>
+
+                        <td class="text-center border border-top-0">{{gara.facafec}}</td>
 
                         <td width="10%" class="border-0">
 
@@ -749,7 +755,8 @@
                         
                         <input *ngIf="marca === 'TRUPER'" ngModel type="text" name="foltru" id="foltru" class="form-control" placeholder="Folio truper" autocomplete="off" required>
                         
-                        <h2 *ngIf="marca === 'FMO'"><span class="badge badge-warning">Folio FMO: {{foliofmo}}</span></h2>
+                        <!-- <h2 *ngIf="marca === 'FMO'"><span class="badge badge-warning">Folio FMO: {{foliofmo}}</span></h2> -->
+                        <h2 *ngIf="marca === 'FMO'"><span class="badge badge-warning">Folio FMO: {{foltru}}</span></h2>
 
                         
                     </div>
@@ -758,7 +765,7 @@
                         
                         <label for="">Chofer/Paquetería</label>
 
-                        <input  ngModel type="text" name="chofer" id="placas" class="form-control" placeholder="Chofer/ Paquetería por la que se envía" autocomplete="off" required>
+                        <input  ngModel type="text" name="chofer" id="chofer" class="form-control" placeholder="Chofer/ Paquetería por la que se envía" autocomplete="off" required>
 
                         <label for="">Placas</label>
 

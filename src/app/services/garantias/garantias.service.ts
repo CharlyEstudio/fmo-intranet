@@ -121,10 +121,10 @@ export class GarantiasService {
   }
 
 
-  actualizarGarantia(garantia: any, estado: any) {
+  actualizarGarantia(garantia: any, estado: any,  marca: string, folio: number) {
     const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=5';
 
-    return this.http.post(url, {data: garantia, estate: estado}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
+    return this.http.post(url, {data: garantia, estate: estado, marca: marca, folio: folio}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
   }
 
   anexarNCGarantia(garantia: any, estado: any) {

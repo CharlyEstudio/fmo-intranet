@@ -915,7 +915,8 @@ export class DashboardLogisticaComponent implements OnInit {
     this.verGuias();
   }
 
-  modalPDF(dato: any) {
+  async modalPDF(dato: any) {
+    this.ruta = '';
     this.chofer = '';
     this.fol = '';
     this.hora = '';
@@ -934,8 +935,11 @@ export class DashboardLogisticaComponent implements OnInit {
     this.fec = dato.fecha;
     const pdf = dato.pdf
 
-    this.ruta = this.sanitizer.bypassSecurityTrustResourceUrl(
-      'https://ferremayoristas.com.mx/api/pdf/' + pdf);
+    // this.ruta = this.sanitizer.bypassSecurityTrustResourceUrl(
+    //   'https://ferremayoristas.com.mx/api/pdf/' + pdf);
+
+    this.ruta = pdf;
+
   }
 
 

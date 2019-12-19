@@ -499,7 +499,13 @@
 
                                 <td class="text-center">
 
-                                    <a href="#modalPDF" data-dismiss="modal" data-toggle="modal" (click)="modalPDF(g)">
+                                    <!-- <a href="#modalPDF" data-dismiss="modal" data-toggle="modal" (click)="modalPDF(g)">
+
+                                        <img src="assets/images/icon/pdf.png" class="img-fluid" width="20">
+
+                                    </a> -->
+
+                                    <a [href]="'https://ferremayoristas.com.mx/api/pdf/' + g.pdf" target="_blank">
 
                                         <img src="assets/images/icon/pdf.png" class="img-fluid" width="20">
 
@@ -617,7 +623,12 @@
 
                                 <td class="text-center">
 
-                                    <a href="#modalPDF" data-dismiss="modal" data-toggle="modal" (click)="modalPDF(g)">
+                                    <!-- <a href="#modalPDF" data-dismiss="modal" data-toggle="modal" (click)="modalPDF(g)">
+
+                                        <img src="assets/images/icon/pdf.png" class="img-fluid" width="20">
+
+                                    </a> -->
+                                    <a [href]="'https://ferremayoristas.com.mx/api/pdf/' + g.pdf" target="_blank">
 
                                         <img src="assets/images/icon/pdf.png" class="img-fluid" width="20">
 
@@ -652,6 +663,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12">
 
                 <h2>Historial de la Factura {{ noFac }}</h2>
+                
             </div>
 
             <div class="col-lg-12 col-md-12 col-sm-12">
@@ -765,7 +777,7 @@
 
 </div>
 
-<div id="modalPDF" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalPDF" aria-hidden="true">
+<!-- <div id="modalPDF" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalPDF" aria-hidden="true">
 
     <div class="modal-dialog modal-lg tablas-modales">
 
@@ -811,7 +823,7 @@
 
     </div>
 
-</div>
+</div> -->
 
 <div id="modalVer" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="modalVer" aria-hidden="true">
 

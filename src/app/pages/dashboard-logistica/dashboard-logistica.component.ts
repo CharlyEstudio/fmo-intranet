@@ -396,6 +396,7 @@ export class DashboardLogisticaComponent implements OnInit {
                   this.inputFolio.nativeElement.focus();
                 }, 200);
               }
+              console.log(this.especiales);
             });
 
             for (let i = 0; i < partidas.length; i++) {
@@ -554,6 +555,38 @@ export class DashboardLogisticaComponent implements OnInit {
   }
 
   eliminarFolio(folio: any, index: any) {
+    console.log(folio);
+    this._guiasServices.buscarEspeciales(folio.folio).subscribe( ( especiales: any ) => {
+      if (especiales.length > 0) {
+        for (let i = 0; i < especiales.length; i++) {
+          let esEspecial = (pedido) => {
+            return pedido.clvprov === especiales[i].clvprov;
+          }
+
+          if (this.especiales.find(esEspecial)) {
+            const idx = this.especiales.indexOf(this.especiales.find(esEspecial));
+            this.especiales.find(esEspecial).desentregado -= especiales[i].desentregado;
+            if (this.especiales.find(esEspecial).desentregado === 0) {
+              this.especiales.splice(idx, 1);
+            }
+          }
+          this.especiales.sort((a, b) => {
+            if (a.clvprov > b.clvprov) {
+              return 1;
+            }
+
+            if (a.clvprov < b.clvprov) {
+              return -1;
+            }
+
+            return 0;
+          });
+        }
+        localStorage.removeItem('especiales');
+        localStorage.setItem('especiales', JSON.stringify(this.especiales));
+      }
+      console.log(this.especiales);
+    });
     this.folios.splice(index, 1);
 
     if (this.folios.length === 0) {

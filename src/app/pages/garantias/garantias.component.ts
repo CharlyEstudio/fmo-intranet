@@ -692,7 +692,7 @@ export class GarantiasComponent implements OnInit {
 
   // TODO
   obtenerFolio(garantia: any) {
-    if (garantia.estado === 'ENTREGAR') {
+    if (garantia.estado === 'ENTREGAR' || garantia.estado === 'TERMINADO') {
       this.guia = '';
       this.foliosGuia = [];
 

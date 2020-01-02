@@ -1226,8 +1226,8 @@ export class DashboardLogisticaComponent implements OnInit {
         };
 
         const razon = {
-          nombre: 'Ferremayoristas Olvera S.A. de C.V.',
-          rfc: 'FOL 160621 K23',
+          nombre: 'Grupo Ferremayoristas del Bajío S.A. de C.V.',
+          rfc: 'GFB 191105 SS3',
         };
 
         this._guiasServices.enviarPDFguia(

@@ -738,5 +738,4 @@ export class GarantiasComponent implements OnInit {
     });
   }
 
-
 }

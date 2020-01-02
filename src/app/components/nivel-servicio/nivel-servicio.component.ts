@@ -361,7 +361,6 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
     // Nivel de Servicio por Familia
     this._phpService.nsFamilia()
       .subscribe((data: any) => {
-
         if (data.length > 0) {
           this.dataTruCot = 0;
           this.dataTruFac = 0;

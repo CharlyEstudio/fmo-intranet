@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PhpService } from '../../services/services.index';
+import { PhpService, HerramientasService } from '../../services/services.index';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
@@ -51,10 +51,11 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
   espe: number = 0;
 
   constructor(
-    private _phpService: PhpService
+    private _phpService: PhpService,
+    private _herramientas: HerramientasService
   ) {
 
-    this.mesAnt = this.fec.getFullYear() + '-' + (this.fec.getMonth() + 1) + '-' + this.fec.getDate();
+    this.mesAnt = this._herramientas.fechaAnterior();
 
     // Subscripción Total
     this.general = this.regresar()

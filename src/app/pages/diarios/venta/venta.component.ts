@@ -208,40 +208,47 @@ export class VentaComponent implements OnInit {
 
         this._diariosService.ventas(this.inicio, this.final, this.asesor)
           .subscribe( ( resp: any ) => {
-            console.log(resp);
 
-            this._asesorService.asesor(this.asesor)
-              .subscribe( ( ase: any ) => {
-                // this.vendedor = ase.usuarios[0];
-                this.nombreAse = ase.usuarios[0].nombre;
-                this.imagen = ase.usuarios[0].img;
-                this.email = ase.usuarios[0].email;
-                this.tel = ase.usuarios[0].tel;
-                this.rol = ase.usuarios[0].rol;
-              });
-
-            if (resp.length !== 0) {
-              this.nombre = resp[0].NOMBRE;
-              this.id = resp[0].PERID;
-              this.catalogo = resp[0].CATALOGO;
-              this.serie = resp[0].SERIE;
-              this.caja = resp[0].CAJA;
-              this.zona = resp[0].ZONA;
-              this.subtotal = resp[0].SUBTOTAL;
-              this.total = resp[0].TOTAL;
-
-              this._diariosService.ventasAsesor(this.inicio, this.final, this.asesor)
-                .subscribe( ( ventAse: any ) => {
-                  this.pedidosAse = ventAse;
-                  this.totPedidosAse = ventAse.length;
+            if (resp !== 0) {
+              this._asesorService.asesor(this.asesor)
+                .subscribe( ( ase: any ) => {
+                  // this.vendedor = ase.usuarios[0];
+                  this.nombreAse = ase.usuarios[0].nombre;
+                  this.imagen = ase.usuarios[0].img;
+                  this.email = ase.usuarios[0].email;
+                  this.tel = ase.usuarios[0].tel;
+                  this.rol = ase.usuarios[0].rol;
                 });
 
-              this.respuesta = false;
-              this.esperar = false;
-              this.respuestaIndividual = true;
-              this.respuestaGeneral = false;
-              this.ventas = false;
+              if (resp.length !== 0) {
+                this.nombre = resp[0].NOMBRE;
+                this.id = resp[0].PERID;
+                this.catalogo = resp[0].CATALOGO;
+                this.serie = resp[0].SERIE;
+                this.caja = resp[0].CAJA;
+                this.zona = resp[0].ZONA;
+                this.subtotal = resp[0].SUBTOTAL;
+                this.total = resp[0].TOTAL;
 
+                this._diariosService.ventasAsesor(this.inicio, this.final, this.asesor)
+                  .subscribe( ( ventAse: any ) => {
+                    this.pedidosAse = ventAse;
+                    this.totPedidosAse = ventAse.length;
+                  });
+
+                this.respuesta = false;
+                this.esperar = false;
+                this.respuestaIndividual = true;
+                this.respuestaGeneral = false;
+                this.ventas = false;
+
+              } else {
+                this.ventas = true;
+                this.esperar = false;
+                this.respuesta = false;
+                this.respuestaIndividual = false;
+                this.respuestaGeneral = false;
+              }
             } else {
               this.ventas = true;
               this.esperar = false;

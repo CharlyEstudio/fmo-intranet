@@ -1,5 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
+
+/* Lenguaje en fecha */
+import { registerLocaleData } from '@angular/common';
+import localeEsMx from '@angular/common/locales/es-MX';
+registerLocaleData(localeEsMx, 'es-Mx');
 
 // Servicios
 import { ServiceModule } from './services/service.module';
@@ -58,7 +63,7 @@ import { TablachdevService } from './components/tablachdev/tablachdev.service';
     SharedModule,
     SocketIoModule.forRoot(config)
   ],
-  providers: [PushNotificationService, TablachdevService],
+  providers: [PushNotificationService, TablachdevService, { provide: LOCALE_ID, useValue: 'es-Mx' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

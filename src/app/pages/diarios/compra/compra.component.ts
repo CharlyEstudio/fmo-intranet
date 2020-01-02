@@ -82,7 +82,7 @@ export class CompraComponent implements OnInit {
     if ( Number(forma.value.proveedor) !== 0 ) {
       this._diariosService.compras(this.inicio, this.final, this.proveedor)
         .subscribe( ( resp: any ) => {
-          if (resp.length !== 0) {
+          if (resp !== 0) {
             this.nombre = resp[0].nombre;
             this.id = resp[0].cid;
             this.numero = resp[0].numero;

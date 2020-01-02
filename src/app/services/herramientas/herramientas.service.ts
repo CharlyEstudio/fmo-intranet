@@ -78,4 +78,10 @@ export class HerramientasService {
     return fecha;
   }
 
+  fechaAnterior() {
+    let h = new Date();
+    const anterior = new Date(h.getFullYear(), h.getMonth() - 1, h.getDate());
+    return anterior;
+  }
+
 }

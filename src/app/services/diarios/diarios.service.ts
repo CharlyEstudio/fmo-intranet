@@ -157,24 +157,8 @@ export class DiariosService {
   }
 
   compras(fechaIn: any, fechaOut: any, proveedor: any = 0) {
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL +
+    this.url = URL_LOCAL +
       '/api/diarios.php?opcion=5&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&proveedor=' + proveedor;
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS +
-      '/api/diarios.php?opcion=5&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&proveedor=' + proveedor;
-    } else {
-      this.url = URL_SERVICIO_GENERAL +
-      ':' + PUERTO_SERVER + '/api/diarios.php?opcion=5&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&proveedor=' + proveedor;
-    }
-
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/diarios/compras/' + proveedor + '/' + fechaIn + '/' + fechaOut;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/diarios/compras/' + proveedor + '/' + fechaIn + '/' + fechaOut;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/diarios/compras/' + proveedor + '/' + fechaIn + '/' + fechaOut;
-    // }
 
     return this.http.get( this.url ).map((compras: any) => {
       if (compras.length > 0) {

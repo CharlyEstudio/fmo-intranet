@@ -8,7 +8,7 @@
 
         <h3 class="card-title m-b-5"><span class="lstick"></span>Store </h3>
         
-        <h6 class="card-subtitle">{{ fecha | date:'MMMM yyyy'}}</h6>
+        <h6 class="card-subtitle">{{ fecha | date:'MMMM yyyy' | uppercase}}</h6>
       
       </div>
 
@@ -31,6 +31,30 @@
                   </div>
 
               </div>
+
+          </li>
+
+          <li>
+
+            <div class="d-flex">
+
+              <i class="fa fa-circle font-10 m-r-10 text-info m-t-10"></i>
+
+              <div>
+
+                <h2 class="m-b-0">{{rescatados}}</h2>
+
+                <h6 class="text-muted">
+                  
+                  <a (click)="verRescatados()" *ngIf="rescatados > 0">Rescatados</a>
+
+                  <span *ngIf="rescatados === 0">Rescatados</span>
+
+                </h6>
+                
+              </div>
+
+            </div>
 
           </li>
 

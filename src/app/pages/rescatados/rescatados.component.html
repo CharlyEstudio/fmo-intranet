@@ -1,0 +1,73 @@
+<div class="card">
+
+  <div class="body-card">
+
+    <div class="table-responsive">
+
+      <table class="table">
+
+        <thead>
+
+          <tr>
+
+            <th>Fecha</th>
+
+            <th>Hora</th>
+
+            <th>Numero</th>
+
+            <th>Cliente</th>
+
+            <th>Error</th>
+
+            <th>Pedido</th>
+
+            <th>Surtido</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let rescate of rescatados; let i = index">
+
+            <td>{{rescate.fecha}}</td>
+
+            <td>{{rescate.hora}}</td>
+
+            <td>{{rescate.usuario.numero}}</td>
+
+            <td>{{rescate.usuario.nombre}}</td>
+
+            <td>{{rescate.log.sqlMessage !== null ? rescate.log.sqlMessage : rescate.log.code}}</td>
+
+            <td>
+
+              <tbody>
+
+                <tr *ngFor="let ped of rescate.pedido">
+
+                  <td>{{ped.producto.codigo}}</td>
+
+                  <td>{{ped.cantidad}}</td>
+
+                </tr>
+
+              </tbody>
+
+            </td>
+
+            <td>{{rescate.surtido}}</td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>

@@ -90,6 +90,7 @@ import { ChequesdevComponent } from './chequesdev/chequesdev.component';
 import { CostosComponent } from './costos/costos.component';
 import { SeguimientoComponent } from './seguimiento/seguimiento.component';
 import { EntregasComponent } from './entregas/entregas.component';
+import { RescatadosComponent } from './rescatados/rescatados.component';
 
 const pageRoutes: Routes = [
     {
@@ -385,6 +386,18 @@ const pageRoutes: Routes = [
                 }
     },
     // Hasta aquí Comentarios
+    // Inicia La Tienda
+    {
+        path: 'pedidosRescatados',
+        component: RescatadosComponent,
+        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        data:
+                {
+                    titulo: 'Pedidos Rescatados de la Tienda',
+                    name: 'description'
+                }
+    },
+    // Hasta aqui la tienda
     {
         path: 'direccionCuentas',
         component: BitacoraComponent,

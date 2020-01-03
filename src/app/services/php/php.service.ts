@@ -474,78 +474,74 @@ export class PhpService {
     });
   }
 
-  financiado() {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=1';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=1';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=1';
-    // }
-
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/morosidad/financiado';
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/morosidad/financiado';
-    } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/morosidad/financiado';
-    }
+  financiado2019() {
+    this.url = URL_LOCAL + '/api/vencido.php?opcion=1';
 
     return this.http.get( this.url ).map((financiado: any) => {
-      if (financiado.status) {
-        return financiado.respuesta;
+      if (financiado.length > 0) {
+        return financiado;
       } else {
         return 0;
       }
     });
   }
 
-  saldo(fecha: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=2';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=2';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=2';
-    // }
+  financiado2020() {
+    this.url = URL_LOCAL + '/api/vencido.php?opcion=2';
 
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/morosidad/saldo/' + fecha;
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/morosidad/saldo/' + fecha;
-    } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/morosidad/saldo/' + fecha;
-    }
+    return this.http.get( this.url ).map((financiado: any) => {
+      if (financiado.length > 0) {
+        return financiado;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  saldo2019(fecha: any) {
+    this.url = URL_LOCAL + '/api/vencido.php?opcion=3';
 
     return this.http.get( this.url ).map((saldo: any) => {
-      if (saldo.status) {
-        return saldo.respuesta;
+      if (saldo.length > 0) {
+        return saldo;
       } else {
         return 0;
       }
     });
   }
 
-  vencido(fecha: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + '/api/morosidad.php?opcion=3';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + '/api/morosidad.php?opcion=3';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=3';
-    // }
+  saldo2020(fecha: any) {
+    this.url = URL_LOCAL + '/api/vencido.php?opcion=4';
 
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/morosidad/vencido/' + fecha;
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/morosidad/vencido/' + fecha;
-    } else {
-      this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/morosidad/vencido/' + fecha;
-    }
+    return this.http.get( this.url ).map((saldo: any) => {
+      if (saldo.length > 0) {
+        return saldo;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  vencido2019(fecha: any) {
+    // this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/morosidad/vencido/' + fecha;
+    this.url = URL_LOCAL + '/api/vencido.php?opcion=5';
 
     return this.http.get( this.url ).map((vencido: any) => {
-      if (vencido.status) {
-        return vencido.respuesta;
+      if (vencido.length > 0) {
+        return vencido;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  vencido2020(fecha: any) {
+    // this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/morosidad/vencido/' + fecha;
+    this.url = URL_LOCAL + '/api/vencido.php?opcion=6';
+
+    return this.http.get( this.url ).map((vencido: any) => {
+      if (vencido.length > 0) {
+        return vencido;
       } else {
         return 0;
       }

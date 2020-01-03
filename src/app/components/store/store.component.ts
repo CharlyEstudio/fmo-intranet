@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
 
 // Servicios
-import { ClientesService, TiendaService, WebsocketService, HerramientasService } from '../../services/services.index';
+import { ClientesService, TiendaService, WebsocketService, HerramientasService, PedidosrescatadosService } from '../../services/services.index';
 
 @Component({
   selector: 'app-store',
@@ -19,6 +19,7 @@ export class StoreComponent implements OnInit, OnDestroy {
 
   monitor: number = 0;
   mensajes: number = 0;
+  rescatados: number = 0;
   bajar: number = 0;
   bajarImpo: number = 0;
 
@@ -30,6 +31,7 @@ export class StoreComponent implements OnInit, OnDestroy {
   constructor(
     private _clienteService: ClientesService,
     private store: TiendaService,
+    private _rescatados: PedidosrescatadosService,
     private herramientas: HerramientasService,
     private ws: WebsocketService
   ) {
@@ -52,11 +54,19 @@ export class StoreComponent implements OnInit, OnDestroy {
       () => console.log('El observador termino!')
     );
 
+    // Error al levantar pedido
+    this.ws.escuchar('aviso-error-envio').subscribe((error: any) => {
+      this.obtenerRescatados();
+    });
+
     // Mensajes de Contacto
     this.obtenerMensajesContacto();
     this.ws.escuchar('registro-watch').subscribe(() => {
       this.obtenerMensajesContacto();
     });
+
+    // Obtener rescatados
+    this.obtenerRescatados();
   }
 
   obtenerMensajesContacto() {
@@ -134,6 +144,18 @@ export class StoreComponent implements OnInit, OnDestroy {
       this.bajar = porBajar[0].cantidad;
       this.bajarImpo = porBajar[0].importe;
     });
+  }
+
+  obtenerRescatados() {
+    this._rescatados.obtenerRescatado().subscribe((resc: any) => {
+      if (resc.status) {
+        this.rescatados = resc.pedidos.length;
+      }
+    });
+  }
+
+  verRescatados() {
+    console.log('dirigirme a rescatados');
   }
 
 }

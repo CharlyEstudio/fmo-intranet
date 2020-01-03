@@ -44,6 +44,11 @@ export class AppComponent implements OnInit {
       && localStorage.getItem('rol') !== 'MESA_ROLE'
       && localStorage.getItem('rol') !== 'CONTA_ROLE'
       && localStorage.getItem('rol') !== 'CLI_ROLE') {
+      // Error al levantar pedido
+      this._wsService.escuchar('aviso-error-envio').subscribe((error: any) => {
+        this.pushNot('Error de Pedido a las', error.hora, 'Pedido de la tienda rescatado', 'Tienda On-Line', error.cliente, true);
+      });
+
       // Nueva garantía realizada
       this._wsService.escuchar('nuevo-cheque-devuelto').subscribe((chd: any) => {
         const remitente = 'Cheque Devuelto';

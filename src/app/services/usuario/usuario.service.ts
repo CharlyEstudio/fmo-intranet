@@ -39,14 +39,6 @@ export class UsuarioService {
   renuevaToken() {
     let url;
 
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/login/renuevatoken';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/login/renuevatoken';
-    // } else {
-    //   url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/login/renuevatoken';
-    // }
-
     url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/login/renuevatoken';
 
     url += '?token=' + this.token;
@@ -123,14 +115,6 @@ export class UsuarioService {
     }
 
     let url;
-
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/login';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/login';
-    // } else {
-    //   url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/login';
-    // }
     url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/login';
 
     return this.http.post( url, usuario )
@@ -151,25 +135,10 @@ export class UsuarioService {
           return resp;
         }
       });
-      /*.catch( ( err ) => {
-        console.log(err);
-        // swal('Error en el login', err.error.errors.message, 'error');
-        // alert('Error en el login ' + err.error.errors.message);
-        // return Observable.throw( err );
-        // return Observable.throw( err.error.ok );
-      });*/
   }
 
   crearUsuario(usuario: Usuario) {
     let url;
-
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/usuario';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/usuario';
-    // } else {
-    //   url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/usuario';
-    // }
     url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/usuario';
 
     return this.http.post( url, usuario )
@@ -180,21 +149,12 @@ export class UsuarioService {
       })
       .catch( err => {
         swal(err.error.mensaje , err.error.errors.message, 'error');
-        // alert(err.error.mensaje + err.error.errors.message);
         return Observable.throw( err );
       });
   }
 
   actualizarUsusario( usuario: Usuario ) {
     let url;
-
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/usuario/' + usuario._id;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/usuario/' + usuario._id;
-    // } else {
-    //   url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/usuario/' + usuario._id;
-    // }
     url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/usuario/' + usuario._id;
 
     url += '?token=' + this.token;
@@ -207,13 +167,11 @@ export class UsuarioService {
         }
 
         swal('Usuario Actualizado!', usuario.nombre, 'success');
-        // alert('Usuario Actualizado! ' + usuario.nombre);
 
         return true;
       })
       .catch( err => {
         swal(err.error.mensaje , err.error.errors.message, 'error');
-        // alert(err.error.mensaje + err.error.errors.message);
         return Observable.throw( err );
       });
   }
@@ -224,7 +182,6 @@ export class UsuarioService {
         this.usuario.img = resp.usuario.img;
 
         swal('Imagen Actualizada', this.usuario.nombre, 'success');
-        // alert('Imagen Actualizada ' + this.usuario.nombre);
 
         this.guardarStorage( id, this.token, this.usuario, this.menu, resp.usuario.rol );
       })
@@ -233,14 +190,6 @@ export class UsuarioService {
 
   cargarUsuarios( desde: number = 0 ) {
     let url;
-
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/usuario?desde=' + desde;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/usuario?desde=' + desde;
-    // } else {
-    //   url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/usuario?desde=' + desde;
-    // }
     url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/usuario?desde=' + desde;
 
     return this.http.get( url );
@@ -248,14 +197,6 @@ export class UsuarioService {
 
   cargarUsuariosAll() {
     let url;
-
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/usuario?desde=' + desde;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/usuario?desde=' + desde;
-    // } else {
-    //   url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/usuario?desde=' + desde;
-    // }
     url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/usuario/all';
 
     return this.http.get( url );
@@ -263,14 +204,6 @@ export class UsuarioService {
 
   buscarUsuarios( termino: string ) {
     let url;
-
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/coleccion/usuarios/' + termino;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/coleccion/usuarios/' + termino;
-    // } else {
-    //   url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/coleccion/usuarios/' + termino;
-    // }
     url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/busqueda/coleccion/usuarios/' + termino;
 
     return this.http.get( url )
@@ -279,14 +212,6 @@ export class UsuarioService {
 
   borrarUsuario ( id: string ) {
     let url;
-
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/usuario/' + id;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/usuario/' + id;
-    // } else {
-    //   url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/usuario/' + id;
-    // }
     url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/usuario/' + id;
 
     url += '?token=' + this.token;
@@ -301,14 +226,6 @@ export class UsuarioService {
 
   buscarAsesorComision( id: any, mes: any, anio: any ) {
     let url;
-
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id + '/' + mes + '/' + anio;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id + '/' + mes + '/' + anio;
-    // } else {
-    //   url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id + '/' + mes + '/' + anio;
-    // }
     url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id + '/' + mes + '/' + anio;
 
     return this.http.get( url )
@@ -322,16 +239,7 @@ export class UsuarioService {
   }
 
   guardarComision(comision: Comision) {
-
     let url;
-
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/comisiones';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/comisiones';
-    // } else {
-    //   url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones';
-    // }
     url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/comisiones';
 
     url += '?token=' + this.token;
@@ -349,16 +257,7 @@ export class UsuarioService {
   }
 
   actualizarComisionUsusario( comision: Comision, id: any ) {
-
     let url;
-
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/comisiones/' + id;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/comisiones/' + id;
-    // } else {
-    //   url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones/' + id;
-    // }
     url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/comisiones/' + id;
 
     url += '?token=' + this.token;
@@ -381,14 +280,6 @@ export class UsuarioService {
   enviarPassword( usuario: Usuario ) {
     let url;
     let user = JSON.stringify(usuario);
-
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/url = URL_PETICION + ':' + PUERTO_SERVER + '/usuarios.php?opcion=1&usuario' + user;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   url = URL_PETICION + ':' + PUERTO_SERVER + '/usuarios.php?opcion=1&usuario' + user;
-    // } else {
-    //   url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/usuarios.php?opcion=1&usuario' + user;
-    // }
     url = URL_EXTERNO +  ':' + PUERTO_SERVER + '/usuarios.php?opcion=1&usuario' + user;
 
     return this.http.get( url );
@@ -412,14 +303,6 @@ export class UsuarioService {
 
   buscarUsuarioEsp (idFerrum: any) {
     let url;
-
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/usuario/buscar/especifico/' + idFerrum;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/usuario/buscar/especifico/' + idFerrum;
-    // } else {
-    //   url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/usuario/buscar/especifico/' + idFerrum;
-    // }
     url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/usuario/buscar/especifico/' + idFerrum;
 
     return this.http.get( url );
@@ -427,8 +310,6 @@ export class UsuarioService {
 
   enviarEmailCambioPass(usuario: Usuario, token: any, email: any) {
     const url = URL_EXTERNO + '/api/cambiarpass.php';
-    // const url = 'http://urologochiapas.com/api/cambiarpass.php';
-    // const url = 'http://157.245.170.96/api/cambiarpass.php';
     return this.http.post(url, {usuario: usuario, token: token, email: email, tipo: 'intranet'}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } })
       .map((resp: any) => {
         // console.log(resp[0]);

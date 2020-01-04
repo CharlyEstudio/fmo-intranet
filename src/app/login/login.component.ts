@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
-import { UsuarioService, WebsocketService } from '../services/services.index';
+import { UsuarioService, WebsocketService, ServidorService } from '../services/services.index';
 import { Usuario } from '../models/usuario.model';
 
 declare function init_plugins();
@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
   constructor(
     public router: Router,
     public _usuarioService: UsuarioService,
+    private _servidor: ServidorService,
     public wsService: WebsocketService
   ) { }
 

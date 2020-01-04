@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PhpService } from '../../../services/services.index';
+import { PhpService, ServidorService } from '../../../services/services.index';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
@@ -22,7 +22,8 @@ export class Vencido3160Component implements OnInit, OnDestroy {
   intMor: any;
 
   constructor(
-    private _phpService: PhpService
+    private _phpService: PhpService,
+    private _servidor: ServidorService
   ) {
 
     let h = new Date();
@@ -48,14 +49,10 @@ export class Vencido3160Component implements OnInit, OnDestroy {
     this.dia = anio + '-' + mes + '-' + dia;
 
     // Morosidad
-    this._phpService.mor(this.dia, '3160')
-      .subscribe((data) => {
-        if ( data[0].importe !== 0 ) {
-          this.mor = data[0].importe;
-        } else {
-          this.mor = 0;
-        }
-      });
+    this.iniciar();
+    this._servidor.notificacion.subscribe((aviso: any) => {
+      this.iniciar();
+    });
 
     // Subscrión a Morosidad
     this.morosidad =  this.regresaMorosidad().subscribe(
@@ -66,6 +63,18 @@ export class Vencido3160Component implements OnInit, OnDestroy {
       () => console.log('El observador termino!')
     );
 
+  }
+
+  iniciar() {
+    // Morosidad
+    this._phpService.mor(this.dia, '3160')
+      .subscribe((data) => {
+        if ( data[0].importe !== 0 ) {
+          this.mor = data[0].importe;
+        } else {
+          this.mor = 0;
+        }
+      });
   }
 
   ngOnInit() {}

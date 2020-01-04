@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 // config
 import { URL_SERVICIO_GENERAL, PUERTO_SERVER, URL_PETICION, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, URL_EXTERNO } from '../../config/config';
+import { ServidorService } from '../db/servidor.service';
 
 @Injectable()
 export class GarantiasService {
@@ -11,7 +12,8 @@ export class GarantiasService {
   token: string;
 
   constructor(
-    public http: HttpClient
+    public http: HttpClient,
+    private _servidor: ServidorService
   ) { }
 
   totalregistros() {
@@ -21,7 +23,7 @@ export class GarantiasService {
   }
 
   obtenerGarantiasDesde(desde: number = 0) {
-    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=1&desde=' + desde;
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=1&desde=' + desde + '&servidor=' + this._servidor.db;
 
     return this.http.get(url);
   }
@@ -33,49 +35,49 @@ export class GarantiasService {
   }
 
   obtenerGarantias() {
-    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=17';
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=17&servidor=' + this._servidor.db;
 
     return this.http.get(url);
   }
 
   obtenerGarantiasNuevos() {
-    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=11';
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=11&servidor=' + this._servidor.db;
 
     return this.http.get(url);
   }
 
   obtenerGarantiasProceso() {
-    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=12';
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=12&servidor=' + this._servidor.db;
 
     return this.http.get(url);
   }
 
   obtenerGarantiasEnviando() {
-    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=13';
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=13&servidor=' + this._servidor.db;
 
     return this.http.get(url);
   }
 
   obtenerGarantiasAutorizacion() {
-    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=14';
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=14&servidor=' + this._servidor.db;
 
     return this.http.get(url);
   }
 
   obtenerGarantiasEntregar() {
-    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=15';
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=15&servidor=' + this._servidor.db;
 
     return this.http.get(url);
   }
 
   obtenerGarantiasTerminado() {
-    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=16';
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=16&servidor=' + this._servidor.db;
 
     return this.http.get(url);
   }
 
   buscarGara(text: any) {
-    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=2&texto=' + text;
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=2&texto=' + text + '&servidor=' + this._servidor.db;
 
     return this.http.get(url);
   }
@@ -87,17 +89,17 @@ export class GarantiasService {
   }
 
   obtenerFactura(folio: number) {
-    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=9&folio=' + folio;
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=9&folio=' + folio + '&servidor=' + this._servidor.db;
 
     return this.http.get(url);
   }
   buscarCodigo(codigo: number) {
-    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=20&codigo=' + codigo;
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=20&codigo=' + codigo + '&servidor=' + this._servidor.db;
 
     return this.http.get(url);
   }
   obtenerProductosFacturas(docid: number) {
-    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=10&docid=' + docid;
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=10&docid=' + docid + '&servidor=' + this._servidor.db;
 
     return this.http.get(url);
   }
@@ -166,13 +168,13 @@ export class GarantiasService {
   }
 
   buscarDatos(idgar: number) {
-    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=22&idgar=' + idgar;
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=22&idgar=' + idgar + '&servidor=' + this._servidor.db;
 
     return this.http.get(url);
   }
 
   buscarDomicilio(domid: number) {
-    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=24&domid=' + domid;
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=24&domid=' + domid + '&servidor=' + this._servidor.db;
 
     return this.http.get(url);
   }
@@ -181,14 +183,7 @@ export class GarantiasService {
   hacerPDF(folioGenerado: number, file: string, folioPdf: number, numfolpdf: number, cantidadPdf: number, clvprovPdf: number, clavePdf: any ,
     nombrePdf: any, descrPdf: any, diavisPdf: any, diaentrega: any, vendedorPdf: any, direccion: any, numerodir: any, interior: any, colonia: any, ciudad: any) {
     let url;
-
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=23';
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = URL_PRUEBAS + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=23';
-    } else {
-      url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=23';
-    }
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=23';
     return this.http.post(url, {
       folGen: folioGenerado,
       file: file,

@@ -23,14 +23,7 @@ export class ClienteService {
 
   cargarUsuarios( desde: number = 0 ) {
     let url;
-
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes?desde=' + desde;
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/clientes?desde=' + desde;
-    } else {
-      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes?desde=' + desde;
-    }
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes?desde=' + desde;
 
     url += '&token=' + this.token;
 
@@ -39,14 +32,7 @@ export class ClienteService {
 
   cargarUsuariosActivos( desde: number = 0 ) {
     let url;
-
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/activos?desde=' + desde;
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/clientes/activos?desde=' + desde;
-    } else {
-      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/activos?desde=' + desde;
-    }
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/activos?desde=' + desde;
 
     url += '&token=' + this.token;
 
@@ -55,14 +41,7 @@ export class ClienteService {
 
   cargarUsuariosPendientes( desde: number = 0 ) {
     let url;
-
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/pendientes?desde=' + desde;
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/clientes/pendientes?desde=' + desde;
-    } else {
-      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/pendientes?desde=' + desde;
-    }
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/pendientes?desde=' + desde;
 
     url += '&token=' + this.token;
 
@@ -71,14 +50,7 @@ export class ClienteService {
 
   actualizarUsusario( cliente: Cliente ) {
     let url;
-
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/actualizar/' + cliente._id;
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/clientes/actualizar/' + cliente._id;
-    } else {
-      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/actualizar/' + cliente._id;
-    }
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/actualizar/' + cliente._id;
 
     url += '?token=' + this.token;
 
@@ -97,14 +69,7 @@ export class ClienteService {
 
   borrarUsuario ( id: string ) {
     let url;
-
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/url = URL_LOCAL + ':' + PUERTO_INTERNO + '/clientes/' + id;
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/clientes/' + id;
-    } else {
-      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/' + id;
-    }
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/' + id;
 
     url += '?token=' + this.token;
 

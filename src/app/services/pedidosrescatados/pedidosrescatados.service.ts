@@ -13,4 +13,9 @@ export class PedidosrescatadosService {
     return this.http.get(url);
   }
 
+  surtido(id: any) {
+    const url = 'https://ferremayoristas.com.mx:3001/ferrum/permanencia/pedidos/surtir/' + id;
+    return this.http.put(url, {});
+  }
+
 }

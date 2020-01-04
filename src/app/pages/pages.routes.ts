@@ -390,7 +390,7 @@ const pageRoutes: Routes = [
     {
         path: 'pedidosRescatados',
         component: RescatadosComponent,
-        canActivate: [ AdminGuard, VerificaTokenGuard ],
+        canActivate: [ AuditoriaGuard, VerificaTokenGuard ],
         data:
                 {
                     titulo: 'Pedidos Rescatados de la Tienda',

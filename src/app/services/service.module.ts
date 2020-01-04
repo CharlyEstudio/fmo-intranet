@@ -59,7 +59,8 @@ import {
   ProveedoresService,
   ContaGuard,
   SeguimientoService,
-  PedidosrescatadosService
+  PedidosrescatadosService,
+  ServidorService
   // NotificationService
 } from "./services.index";
 
@@ -127,6 +128,7 @@ import {
     ProveedoresService,
     SeguimientoService,
     PedidosrescatadosService,
+    ServidorService,
     // Notificaciones
     // NotificationService
     // Magnitracking

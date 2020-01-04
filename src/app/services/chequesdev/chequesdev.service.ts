@@ -1,39 +1,41 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ServidorService } from '../db/servidor.service';
 
 @Injectable()
 export class ChequesdevService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private _servidor: ServidorService
   ) { }
 
   obtenemosCHFerrum() {
-    const url = `https://ferremayoristas.com.mx/api/chequesdev.php?opcion=0`;
+    const url = `https://ferremayoristas.com.mx/api/chequesdev.php?opcion=0&servidor=${this._servidor.db}`;
 
     return this.http.get(url);
   }
 
   obtenemosChquesDev() {
-    const url = `https://ferremayoristas.com.mx/api/chequesdev.php?opcion=1`;
+    const url = `https://ferremayoristas.com.mx/api/chequesdev.php?opcion=1&servidor=${this._servidor.db}`;
 
     return this.http.get(url);
   }
 
   obtenerPendientes() {
-    const url = `https://ferremayoristas.com.mx/api/chequesdev.php?opcion=4`;
+    const url = `https://ferremayoristas.com.mx/api/chequesdev.php?opcion=4&servidor=${this._servidor.db}`;
 
     return this.http.get(url);
   }
 
   obtenerCobrados() {
-    const url = `https://ferremayoristas.com.mx/api/chequesdev.php?opcion=8`;
+    const url = `https://ferremayoristas.com.mx/api/chequesdev.php?opcion=8&servidor=${this._servidor.db}`;
 
     return this.http.get(url);
   }
 
   obtenerTerninados() {
-    const url = `https://ferremayoristas.com.mx/api/chequesdev.php?opcion=9`;
+    const url = `https://ferremayoristas.com.mx/api/chequesdev.php?opcion=9&servidor=${this._servidor.db}`;
 
     return this.http.get(url);
   }
@@ -75,7 +77,7 @@ export class ChequesdevService {
   }
 
   obtenemosFolioFerrum(folio: number) {
-    const url = `https://ferremayoristas.com.mx/api/chequesdev.php?opcion=11&folio=${folio}`;
+    const url = `https://ferremayoristas.com.mx/api/chequesdev.php?opcion=11&folio=${folio}&servidor=${this._servidor.db}`;
 
     return this.http.get(url);
   }

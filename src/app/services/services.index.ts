@@ -53,6 +53,7 @@ export { ChequesdevService } from './chequesdev/chequesdev.service';
 export { ProveedoresService } from "./proveedores/proveedores.service";
 export { SeguimientoService } from "./seguimiento/seguimiento.service";
 export { PedidosrescatadosService } from "./pedidosrescatados/pedidosrescatados.service";
+export { ServidorService } from "./db/servidor.service";
 
 // Servicios de Google
 export { GoogleService } from "./googleconsole/google.service";

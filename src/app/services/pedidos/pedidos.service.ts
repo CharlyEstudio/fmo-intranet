@@ -17,51 +17,24 @@ export class PedidosService {
   ) { }
 
   obtenerCotizaciones() {
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/cotizacion';
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/cotizacion';
-    } else {
-      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cotizacion';
-    }
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cotizacion';
 
     return this.http.get(this.url);
   }
 
   obtenerOrdenCompra() {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/cotizacion/orden';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/cotizacion/orden';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cotizacion/orden';
-    // }
     this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/cotizacion/orden';
 
     return this.http.get(this.url);
   }
 
   obtenerProducto(codigo: any, precio: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/productos/buscar/codigo/' + codigo + '/' + precio;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/productos/buscar/codigo/' + codigo + '/' + precio;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/productos/buscar/codigo/' + codigo + '/' + precio;
-    // }
     this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/productos/buscar/codigo/' + codigo + '/' + precio;
 
     return this.http.get(this.url);
   }
 
   guardarCotizacion(cotizacion: Cotizacion) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/cotizacion';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/cotizacion';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cotizacion';
-    // }
     this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/cotizacion';
 
     return this.http.post(this.url, cotizacion);
@@ -225,13 +198,7 @@ export class PedidosService {
   }
 
   enviarEmail(data: any) {
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=38';
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PETICION + '/api/pedidos.php?opcion=38';
-    } else {
-      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=38';
-    }
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=38';
 
     return this.http.post(
       this.url,
@@ -245,38 +212,18 @@ export class PedidosService {
   }
 
   guardarOrden(orden: any) {
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/cotizacion/orden';
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/cotizacion/orden';
-    } else {
-      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cotizacion/orden';
-    }
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cotizacion/orden';
 
     return this.http.post(this.url, orden);
   }
 
   buscarLote(codigo: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/productos/lote/codigo/' + codigo;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/productos/lote/codigo/' + codigo;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/productos/lote/codigo/' + codigo;
-    // }
     this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/productos/lote/codigo/' + codigo;
 
     return this.http.get(this.url);
   }
 
   enviarPedido(xml: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/ferrum/subir/pedido/7854956231457643';
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/ferrum/subir/pedido/7854956231457643';
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/ferrum/subir/pedido/7854956231457643';
-    // }
     this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/ferrum/subir/pedido/7854956231457643';
 
     return this.http.post(this.url, xml);

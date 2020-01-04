@@ -6,6 +6,7 @@ import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_SERVER, PUERTO_INT
 
 // Modelos
 import { MonitorFactura } from '../../models/monitorfactura.model';
+import { ServidorService } from '../db/servidor.service';
 
 @Injectable()
 export class OficinaService {
@@ -13,70 +14,36 @@ export class OficinaService {
   url: string;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private _servidor: ServidorService
   ) { }
 
   todasFacturas(fecha: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/oficina/facturas/' + fecha;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/oficina/facturas/' + fecha;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/oficina/facturas/' + fecha;
-    // }
-    this.url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/oficina/facturas/' + fecha;
+    this.url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/oficina/facturas/' + fecha + '/' + this._servidor.db;
 
     return this.http.get(this.url);
   }
 
   facturasNoImpresas(fecha: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/oficina/facturas/noimpresas/' + fecha;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/oficina/facturas/noimpresas/' + fecha;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/oficina/facturas/noimpresas/' + fecha;
-    // }
-    this.url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/oficina/facturas/noimpresas/' + fecha;
+    this.url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/oficina/facturas/noimpresas/' + fecha + '/' + this._servidor.db;
 
     return this.http.get(this.url);
   }
 
   facturasNoEnviadas(fecha: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/oficina/facturas/noenviadas/' + fecha;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/oficina/facturas/noenviadas/' + fecha;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/oficina/facturas/noenviadas/' + fecha;
-    // }
-    this.url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/oficina/facturas/noenviadas/' + fecha;
+    this.url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/oficina/facturas/noenviadas/' + fecha + '/' + this._servidor.db;
 
     return this.http.get(this.url);
   }
 
   errorFacturar(fecha: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/oficina/facturas/error/facturar/' + fecha;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/oficina/facturas/error/facturar/' + fecha;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/oficina/facturas/error/facturar/' + fecha;
-    // }
-    this.url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/oficina/facturas/error/facturar/' + fecha;
+    this.url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/oficina/facturas/error/facturar/' + fecha + '/' + this._servidor.db;
 
     return this.http.get(this.url);
   }
 
   errorTimbrar(fecha: any) {
-    // if (URL_SERVICIO_GENERAL === URL_PETICION) {
-    //   /*LOCAL*/this.url = URL_LOCAL + ':' + PUERTO_INTERNO + '/oficina/facturas/error/timbrar/' + fecha;
-    // } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-    //   this.url = URL_PRUEBAS + ':' + PUERTO_INTERNO + '/oficina/facturas/error/timbrar/' + fecha;
-    // } else {
-    //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/oficina/facturas/error/timbrar/' + fecha;
-    // }
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/oficina/facturas/error/timbrar/' + fecha;
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/oficina/facturas/error/timbrar/' + fecha + '/' + this._servidor.db;
 
     return this.http.get(this.url);
   }
@@ -94,7 +61,7 @@ export class OficinaService {
   }
 
   verFacturasDia(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/oficina.php?opcion=1&fecha=' + fecha;
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/oficina.php?opcion=1&fecha=' + fecha + '&servidor=' + this._servidor.db;
 
     return this.http.get(this.url);
   }

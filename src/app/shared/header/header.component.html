@@ -75,15 +75,21 @@
                 <!-- ============================================================== -->
                 <!-- Search -->
                 <!-- ============================================================== -->
-                <!-- <li class="nav-item hidden-xs-down search-box"> <a class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
+                <li class="nav-item hidden-xs-down search-box"> <a class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i class="ti-settings"></i></a>
 
                     <div class="app-search">
 
-                        <input #input (keyup.enter)="buscar( input.value )" type="text" class="div-control" placeholder="Buscar y enter..."> <a class="srh-btn"><i class="ti-close"></i></a>
+                        <!-- <input #input (keyup.enter)="buscar( input.value )" type="text" class="div-control" placeholder="Buscar y enter..."> <a class="srh-btn"><i class="ti-close"></i></a> -->
+                        <a id="cerrarSelectEmp" class="srh-btn"><i class="ti-close"></i></a>
+                        <select #selectEmpr name="selectEmpresa" id="selectEmpresa" class="form-group" style="width: 100%; height: 70px;" (change)="cambiarServidor(selectEmpr.value)">
+                            <option value="0">{{servidor !== '' ? servidor : 'Seleccione una empresa'}}</option>
+                            <option value="1">Grupo Ferremayoristas del Bajío</option>
+                            <option value="2">Ferremayoristas Olvera</option>
+                        </select>
 
                     </div>
 
-                </li> -->
+                </li>
 
                 <!-- ============================================================== -->
                 <!-- Diferencias -->
@@ -100,7 +106,7 @@
                 <!-- ============================================================== -->
                 <!-- Aviso de Nuevo Cliente en la Tienda OnLine -->
                 <!-- ============================================================== -->
-                <li class="nav-item dropdown">
+                <!-- <li class="nav-item dropdown">
 
                     <a class="nav-link dropdown-toggle waves-effect waves-dark">
 
@@ -108,11 +114,11 @@
 
                     </a>
 
-                </li>
+                </li> -->
                 <!-- ============================================================== -->
                 <!-- Messages -->
                 <!-- ============================================================== -->
-                <!--<li class="nav-item dropdown">
+                <!-- <li class="nav-item dropdown">
 
 
                     <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -173,7 +179,7 @@
 
                     </div>
 
-                </li>-->
+                </li> -->
                 <!-- ============================================================== -->
                 <!-- End Messages -->
                 <!-- ============================================================== -->
@@ -181,9 +187,11 @@
                 <!-- ============================================================== -->
                 <!-- Language -->
                 <!-- ============================================================== -->
-                <!-- <li class="nav-item dropdown">
+                <li class="nav-item dropdown">
+                    
+                    <a class="nav-link">Servidor: {{servidor}}</a>
 
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flag-icon flag-icon-us"></i></a>
+                    <!-- <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flag-icon flag-icon-us"></i></a>
                     
                     <div class="dropdown-menu dropdown-menu-right animated bounceInDown">
 
@@ -211,9 +219,9 @@
 
                         </a>
 
-                    </div>
+                    </div> -->
 
-                </li> -->
+                </li>
 
                 <!-- ============================================================== -->
                 <!-- Profile -->

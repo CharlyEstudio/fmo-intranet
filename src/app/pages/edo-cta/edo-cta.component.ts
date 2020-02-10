@@ -95,12 +95,6 @@ export class EdoCtaComponent implements OnInit {
     let anio = h.getFullYear();
 
     this.fecha = anio + '-' + mes + '-' + dia;
-
-    // this.clienteMongo = [
-    //   {
-    //     "email": "contacto@ferremayoristas.com.mx"
-    //   }
-    // ];
   }
 
   ngOnInit() {
@@ -253,16 +247,16 @@ export class EdoCtaComponent implements OnInit {
           this.telAsesor = tel.slice(1, 11);
 
           this._creditoService.clienteSaldo(this.numero, this.fecha).subscribe((edocta: any) => {
-            if (edocta.status) {
-              for (let i = 0; i < edocta.respuesta.length; i++) {
-                this.abonos += edocta.respuesta[i].ABONO;
+            if (edocta.length > 0) {
+              for (let i = 0; i < edocta.length; i++) {
+                this.abonos += edocta[i].ABONO;
 
-                if (edocta.respuesta[i].SALDOFINAL !== 0) {
-                  this.saldos += edocta.respuesta[i].SALDOFINAL;
+                if (edocta[i].SALDOFINAL !== 0) {
+                  this.saldos += edocta[i].SALDOFINAL;
                 }
 
                 let esFolio = (factura) => {
-                  return factura.FOLIO === edocta.respuesta[i].FOLIO;
+                  return factura.FOLIO === edocta[i].FOLIO;
                 };
 
                 let saldo;
@@ -274,36 +268,36 @@ export class EdoCtaComponent implements OnInit {
                   cargo = this.datos[index].SALDO;
                   car = 0;
                 } else {
-                  cargo = edocta.respuesta[i].CARGO;
-                  car = edocta.respuesta[i].CARGO;
+                  cargo = edocta[i].CARGO;
+                  car = edocta[i].CARGO;
                 }
 
-                if (edocta.respuesta[i].ABONO === 0) {
-                  saldo = edocta.respuesta[i].SALDOFINAL;
+                if (edocta[i].ABONO === 0) {
+                  saldo = edocta[i].SALDOFINAL;
                 } else {
-                  saldo = cargo - edocta.respuesta[i].ABONO;
+                  saldo = cargo - edocta[i].ABONO;
                 }
 
                 this.cargos += car;
                 let nuevo = [
                   {
-                    "DOCID": edocta.respuesta[i].DOCID,
-                    "FECHA": edocta.respuesta[i].FECHA,
-                    "FECHAPAG": edocta.respuesta[i].FECHAPAG,
-                    "VENCE": edocta.respuesta[i].VENCE,
-                    "DIASPAGO": edocta.respuesta[i].DIASPAGO,
-                    "FOLIO": edocta.respuesta[i].FOLIO,
+                    "DOCID": edocta[i].DOCID,
+                    "FECHA": edocta[i].FECHA,
+                    "FECHAPAG": edocta[i].FECHAPAG,
+                    "VENCE": edocta[i].VENCE,
+                    "DIASPAGO": edocta[i].DIASPAGO,
+                    "FOLIO": edocta[i].FOLIO,
                     "SALDO": saldo,
                     "CARGO": cargo,
-                    "ABONO": edocta.respuesta[i].ABONO,
-                    "RECIBO": edocta.respuesta[i].RECIBO,
-                    "TIPO": edocta.respuesta[i].TIPO,
-                    "FP": edocta.respuesta[i].FP,
-                    "NOTA": edocta.respuesta[i].NOTA,
-                    "TOTAL": edocta.respuesta[i].TOTAL,
-                    "TOTALPAGADO": edocta.respuesta[i].TOTALPAGADO,
-                    "SALDOFINAL": edocta.respuesta[i].SALDOFINAL,
-                    "RESTAN": edocta.respuesta[i].RESTAN
+                    "ABONO": edocta[i].ABONO,
+                    "RECIBO": edocta[i].RECIBO,
+                    "TIPO": edocta[i].TIPO,
+                    "FP": edocta[i].FP,
+                    "NOTA": edocta[i].NOTA,
+                    "TOTAL": edocta[i].TOTAL,
+                    "TOTALPAGADO": edocta[i].TOTALPAGADO,
+                    "SALDOFINAL": edocta[i].SALDOFINAL,
+                    "RESTAN": edocta[i].RESTAN
                   }
                 ];
                 this.datos.push(nuevo[0]);
@@ -427,11 +421,6 @@ export class EdoCtaComponent implements OnInit {
     }
   }
 
-  // public exportarPDF(numero: any, nombre: any) {
-  //   let filename = numero + '-' + nombre;
-  //   return xepOnline.Formatter.Format('edoCta', {render: 'download', filename: filename, pageWidth: '297mm', pageHeight: '216mm'});
-  // }
-
   public exportarPDF(datos: any, cliente: any, asesor: any, tel: any, cargos: any, abonos: any, saldo: any) {
     let filename = cliente.NUMERO + '-' + cliente.NOMBRE + '.pdf';
     this.filename = cliente.NUMERO + '-' + cliente.NOMBRE + '.pdf';
@@ -479,10 +468,5 @@ export class EdoCtaComponent implements OnInit {
       }
     });
   }
-
-  // descargarPDF(pdf: any) {
-  //   console.log(pdf);
-  //   document.execCommand('SaveAs', true, pdf);
-  // }
 
 }

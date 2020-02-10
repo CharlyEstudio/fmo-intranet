@@ -201,56 +201,32 @@ export class NotascreditoComponent implements OnInit {
     this.cargando = true;
     this.nc = [];
     this._ncService.buscarNCFecha(f, f2).subscribe((resp: any) => {
-      if (resp.status) {
-        this.pendientes = resp.respuesta.length;
-        for (let i = 0; i < resp.respuesta.length; i ++) {
-          this._ncService.buscarNCtrabajado(resp.respuesta[i].nc, resp.respuesta[i].serie).subscribe((ncFec: any) => {
-            // if (resp.respuesta[i].nc === 3321) {
-            //   console.log(resp.respuesta[i].nc, resp.respuesta[i].serie, ncFec);
-            // }
+      if (resp.length > 0) {
+        this.pendientes = resp.length;
+        for (let i = 0; i < resp.length; i ++) {
+          this._ncService.buscarNCtrabajado(resp[i].nc, resp[i].serie).subscribe((ncFec: any) => {
             if (ncFec.status) {
-              resp.respuesta[i].trabajado = true;
+              resp[i].trabajado = true;
               this.trabajadas++;
               this.pendientes--;
-              // if (resp.respuesta[i].serie !== 'NA') {
+              // if (resp[i].serie !== 'NA') {
               //   subtotal ++;
               // }
-            } else if (resp.respuesta[i].serie === 'NA') {
+            } else if (resp[i].serie === 'NA') {
               this.trabajadas++;
-              resp.respuesta[i].trabajado = true;
+              resp[i].trabajado = true;
             } else {
-              resp.respuesta[i].trabajado = false;
+              resp[i].trabajado = false;
             }
           });
         }
-        this.nc = resp.respuesta;
+        this.nc = resp;
         this.total = this.nc.length;
-        // this.trabajadas = this.trabajadas >= this.total ? this.total : this.trabajadas;
-        // this.pendientes = this.total - this.trabajadas;
-        // console.log(this.total, this.trabajadas, this.pendientes);
-        // this._ncService.buscarNCTrabFecha(f, f2).subscribe((trab: any) => {
-        //   if (trab.status) {
-        //     for (let i = 0; i < trab.respuesta.length; i++) {
-        //       let esNC = (fac: any) => {
-        //         return fac.nc === trab.respuesta[i].nc && fac.serie === trab.respuesta[i].serie;
-        //       }
-        //       if (this.nc.find(esNC)) {
-        //         this.trabajadas++;
-        //       }
-        //     }
-        //   }
-        //   this.total = subtotal;
-        //   console.log(this.nc);
-        //   console.log(this.nc.length, this.trabajadas);
-        //   this.total = this.nc.length;
-        //   this.trabajadas = this.trabajadas >= this.total ? this.total : this.trabajadas;
-        //   this.pendientes = this.trabajadas >= this.total ? 0 : this.total - this.trabajadas;
-        // });
         this.cargando = false;
       } else {
         this.cargando = false;
         this.nc = info;
-        swal('Sin Registro', resp.msg, 'error');
+        swal('Sin Registro', 'Error, favor de contactar al administrador.', 'error');
       }
     });
   }

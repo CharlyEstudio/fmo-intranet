@@ -15,7 +15,7 @@ import { Usuario } from '../../models/usuario.model';
 
 import { Comision } from '../../models/comision.model';
 
-import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_INTERNO, PUERTO_SERVER, URL_PETICION, URL_EXTERNO } from '../../config/config';
+import { URL_SERVICIO_GENERAL, PUERTO_INTERNO, PUERTO_SERVER } from '../../config/config';
 
 import { SubirArchivoService } from '../subirArchivo/subir-archivo.service';
 import { WebsocketService } from '../sockets/websocket.service';
@@ -39,7 +39,7 @@ export class UsuarioService {
   renuevaToken() {
     let url;
 
-    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/login/renuevatoken';
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/login/renuevatoken';
 
     url += '?token=' + this.token;
 
@@ -68,10 +68,12 @@ export class UsuarioService {
       this.token = localStorage.getItem('token');
       this.usuario = JSON.parse(localStorage.getItem('usuario'));
       this.menu = JSON.parse(localStorage.getItem('menu'));
+      this.rol = localStorage.getItem('rol');
     } else {
       this.token = '';
       this.usuario = null;
       this.menu = [];
+      this.rol = '';
     }
   }
 
@@ -115,7 +117,7 @@ export class UsuarioService {
     }
 
     let url;
-    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/login';
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/login';
 
     return this.http.post( url, usuario )
       .map( ( resp: any ) => {
@@ -139,7 +141,7 @@ export class UsuarioService {
 
   crearUsuario(usuario: Usuario) {
     let url;
-    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/usuario';
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/usuario';
 
     return this.http.post( url, usuario )
       .map( (resp: any) => {
@@ -155,7 +157,7 @@ export class UsuarioService {
 
   actualizarUsusario( usuario: Usuario ) {
     let url;
-    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/usuario/' + usuario._id;
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/usuario/' + usuario._id;
 
     url += '?token=' + this.token;
 
@@ -190,21 +192,24 @@ export class UsuarioService {
 
   cargarUsuarios( desde: number = 0 ) {
     let url;
-    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/usuario?desde=' + desde;
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/usuario?desde=' + desde;
 
     return this.http.get( url );
   }
 
   cargarUsuariosAll() {
     let url;
-    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/usuario/all';
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/usuario/all/users';
+    url += '?token=' + this.token;
 
     return this.http.get( url );
   }
 
   buscarUsuarios( termino: string ) {
     let url;
-    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/busqueda/coleccion/usuarios/' + termino;
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/usuario/buscar/termino/' + termino;
+
+    url += '?token=' + this.token;
 
     return this.http.get( url )
       .map( ( resp: any ) => resp.usuarios );
@@ -212,7 +217,7 @@ export class UsuarioService {
 
   borrarUsuario ( id: string ) {
     let url;
-    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/usuario/' + id;
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/usuario/' + id;
 
     url += '?token=' + this.token;
 
@@ -226,7 +231,7 @@ export class UsuarioService {
 
   buscarAsesorComision( id: any, mes: any, anio: any ) {
     let url;
-    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id + '/' + mes + '/' + anio;
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id + '/' + mes + '/' + anio;
 
     return this.http.get( url )
       .map( (resp: any) => {
@@ -240,7 +245,7 @@ export class UsuarioService {
 
   guardarComision(comision: Comision) {
     let url;
-    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/comisiones';
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones';
 
     url += '?token=' + this.token;
 
@@ -258,7 +263,7 @@ export class UsuarioService {
 
   actualizarComisionUsusario( comision: Comision, id: any ) {
     let url;
-    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/comisiones/' + id;
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones/' + id;
 
     url += '?token=' + this.token;
 
@@ -280,7 +285,7 @@ export class UsuarioService {
   enviarPassword( usuario: Usuario ) {
     let url;
     let user = JSON.stringify(usuario);
-    url = URL_EXTERNO +  ':' + PUERTO_SERVER + '/usuarios.php?opcion=1&usuario' + user;
+    url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/usuarios.php?opcion=1&usuario' + user;
 
     return this.http.get( url );
   }
@@ -303,13 +308,15 @@ export class UsuarioService {
 
   buscarUsuarioEsp (idFerrum: any) {
     let url;
-    url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/usuario/buscar/especifico/' + idFerrum;
+    url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/usuario/especifico/' + idFerrum;
+
+    url += '?token=' + this.token;
 
     return this.http.get( url );
   }
 
   enviarEmailCambioPass(usuario: Usuario, token: any, email: any) {
-    const url = URL_EXTERNO + '/api/cambiarpass.php';
+    const url = URL_SERVICIO_GENERAL + '/api/cambiarpass.php';
     return this.http.post(url, {usuario: usuario, token: token, email: email, tipo: 'intranet'}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } })
       .map((resp: any) => {
         // console.log(resp[0]);
@@ -322,12 +329,12 @@ export class UsuarioService {
   }
 
   validarToken(token: any) {
-    const url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/cambio/verificar/activotoken?token=' + token;
+    const url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cambio/verificar/activotoken?token=' + token;
     return this.http.get(url);
   }
 
   realizarCambioPass(token: any, pass: any) {
-    const url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/cambio?token=' + token + '&pass=' + pass;
+    const url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cambio?token=' + token + '&pass=' + pass;
     return this.http.put(url, {});
   }
 

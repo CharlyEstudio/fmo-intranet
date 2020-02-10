@@ -34,7 +34,7 @@
           
           <div class="form-group" style="margin-bottom: 0px!important;">
 
-            <h3>Buscar por rnago de fecha</h3>
+            <h3>Buscar por rango de fecha</h3>
   
             <hr class="m-t-0 m-b-40">
 
@@ -160,7 +160,7 @@
 
                 <td>{{ n.fecha | date: 'dd-MM-yyyy' }}</td>
     
-                <td>
+                <td style="width: 12%;">
                   
                   <span class="badge badge-inverse text-danger" *ngIf="n.serie === 'NA'">{{ n.tiponc }}</span>
                   <span class="badge badge-danger" *ngIf="n.serie === 'C'">{{ n.tiponc }}</span>
@@ -172,7 +172,7 @@
                 
                 </td>
     
-                <td>{{ n.nc }}</td>
+                <td style="width: 10%;">{{ n.nc }}</td>
     
                 <td>{{ n.factura }}</td>
     

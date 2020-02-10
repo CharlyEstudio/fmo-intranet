@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 
-import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, URL_PETICION } from '../../config/config';
+import { URL_SERVICIO_GENERAL, PUERTO_INTERNO } from '../../config/config';
 import { Cliente } from '../../models/clientes.model';
 
 import * as _swal from 'sweetalert';

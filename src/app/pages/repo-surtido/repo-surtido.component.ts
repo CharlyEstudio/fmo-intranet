@@ -71,27 +71,32 @@ export class RepoSurtidoComponent implements OnInit {
     }
 
     this._almacenService.obtenerReporte( this.area, forma.value.inicio, forma.value.fin ).subscribe( ( personal: any ) => {
-      this.personal = personal;
+      if (personal.length > 0) {
+        this.personal = personal;
 
-      this.personal.sort((a, b) => {
-        if (a.partidas < b.partidas) {
-          return 1;
+        this.personal.sort((a, b) => {
+          if (a.partidas < b.partidas) {
+            return 1;
+          }
+
+          if (a.partidas > b.partidas) {
+            return -1;
+          }
+
+          return 0;
+        });
+
+        this.mostrar = true;
+        this.esperar = false;
+
+        for (let i = 0; i < personal.length; i++) {
+          this.totalPar += personal[i].partidas;
+          this.totalPed += personal[i].pedidos;
+          this.total += (this.totalPar * personal[i].comision);
         }
-
-        if (a.partidas > b.partidas) {
-          return -1;
-        }
-
-        return 0;
-      });
-
-      this.mostrar = true;
-      this.esperar = false;
-
-      for (let i = 0; i < personal.length; i++) {
-        this.totalPar += personal[i].partidas;
-        this.totalPed += personal[i].pedidos;
-        this.total += (this.totalPar * personal[i].comision);
+      } else {
+        this.mostrar = false;
+        this.esperar = false;
       }
 
     });

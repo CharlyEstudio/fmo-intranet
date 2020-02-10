@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 // Config URL
-import { URL_SERVICIO_GENERAL, URL_PETICION, URL_LOCAL, PUERTO_INTERNO_DOS, PUERTO_SERVER, URL_PRUEBAS, PUERTO_INTERNO } from '../../config/config';
+import { URL_SERVICIO_GENERAL, PUERTO_INTERNO_DOS, PUERTO_SERVER, PUERTO_INTERNO } from '../../config/config';
 
 // Servicios
 import { UsuarioService } from '../usuario/usuario.service';
@@ -58,6 +58,12 @@ export class VisitasClientesService {
     const url = `https://ferremayoristas.com.mx:3001/visitas/asesor/${perid}/${fecha}?token=${this.token}`;
 
     return this.http.get(url);
+  }
+
+  cambiarVisitaAsesorFecha(clienteid: any, perid: any, fecha: any, destino: any, origen: any) {
+    const url = `https://ferremayoristas.com.mx:3001/visitas/asesor?token=${this.token}`;
+
+    return this.http.put(url, {clienteid, perid, fecha, destino, origen});
   }
 
 }

@@ -149,11 +149,11 @@ export class GarantiasComponent implements OnInit {
       this.totalResgitro = all;
     });
 
-    this._usuarioService.buscarUsuarios('ASE_ROLE').subscribe((asesores: any) => {
-      if (asesores.length > 0) {
-        this.asesores = asesores;
-      }
-    });
+    // this._usuarioService.buscarUsuarios('ASE_ROLE').subscribe((asesores: any) => {
+    //   if (asesores.length > 0) {
+    //     this.asesores = asesores;
+    //   }
+    // });
 
     this.fechaHoy = this.herramienta.fechaActual();
 
@@ -175,9 +175,6 @@ export class GarantiasComponent implements OnInit {
   // TODO
   catalogo(catalogo: any) {
     this.marca = catalogo;
-    // if (this.marca === 'FMO') {
-    //   // this.foliofmo = foilio;
-    // }
   }
 
   cambiarDesde( valor: number ) {
@@ -375,11 +372,11 @@ export class GarantiasComponent implements OnInit {
     this.mismocliente = garantia.mismocliente;
     this.placas = garantia.placas;
     this.chofer = garantia.chofer;
-      this._clientesService.infoClienteCot(this.numero).subscribe((cli: any) => {
-        if (cli.length > 0) {
-          this.nomcli = cli[0].NOMBRE;
-        }
-      });
+    this._clientesService.infoClienteCot(this.numero).subscribe((cli: any) => {
+      if (cli.length > 0) {
+        this.nomcli = cli[0].NOMBRE;
+      }
+    });
   }
 
   search(texto: any) {
@@ -476,120 +473,120 @@ export class GarantiasComponent implements OnInit {
   }
 
   actualizarGarantia(garantia: NgForm) {
-    if (this.estado === 'NUEVO') {
-      this.estado = 'PROCESO';
-      this._garantiaService.actualizarGarantia(garantia.value, this.estado, this.marca, this.folio).subscribe((actualizado: any) => {
-        if (actualizado) {
-          const cerrar = <HTMLElement>(document.getElementById('editar'));
-          cerrar.click();
-          this.obtenerTodasGarantias();
-          // TODO enviar email al cliente
-          // this._garantiaService.enviarEmail(this.estado).subscribe((enviar: any) => {
-          //   swal('Se envío un email a tu correo', 'Email enviado', 'success');
-          // });
-          setTimeout(() => {
-            this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
-          }, 100);
-        } else {
-          swal('Cliente No Actualizado', 'Error al actualizar', 'error');
-        }
-      });
-    } else if (this.estado === 'PROCESO') {
-      if (garantia.value.enviando !== '') {
-        this.estado = 'ENVIANDO';
-        this._garantiaService.cambiarEstado(garantia.value, this.estado).subscribe((actualizado: any) => {
-          if (actualizado) {
-            const cerrar = <HTMLElement>(document.getElementById('editar'));
-            cerrar.click();
-            this.obtenerTodasGarantias();
-            setTimeout(() => {
-              this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
-            }, 100);
-          } else {
-            swal('Cliente No Actualizado', 'Error al actualizar', 'error');
-          }
-        });
-      } else {
-        swal('Sin registro', 'No ha seleccionada nada.', 'error');
-      }
-    } else if (this.estado === 'ENVIANDO') {
-      if (this.autorizado === true) {
-        this.estado = 'ENTREGAR';
-        this._garantiaService.cambiarEstado(garantia.value, this.estado).subscribe((actualizado: any) => {
-          if (actualizado) {
-            swal('Cliente Actualizado', 'actualizado', 'success');
-            const cerrar = <HTMLElement>(document.getElementById('editar'));
-            cerrar.click();
-            this.obtenerTodasGarantias();
-            setTimeout(() => {
-              this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
-            }, 100);
-          } else {
-            swal('Cliente No Actualizado', 'Error al actualizar', 'error');
-          }
-        });
-      } else {
-        this.estado = 'AUTORIZACION';
-        this._garantiaService.cambiarEstado(garantia.value, this.estado).subscribe((actualizado: any) => {
-          if (actualizado) {
-            const cerrar = <HTMLElement>(document.getElementById('editar'));
-            cerrar.click();
-            this.obtenerTodasGarantias();
-            setTimeout(() => {
-              this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
-            }, 100);
-          } else {
-            swal('Cliente No Actualizado', 'Error al actualizar', 'error');
-          }
-        });
-      }
-    } else if (this.estado === 'AUTORIZACION') {
-      this.estado = 'ENTREGAR';
-      this._garantiaService.anexarNCGarantia(garantia.value, this.estado).subscribe((actualizado: any) => {
-        if (actualizado) {
-          const cerrar = <HTMLElement>(document.getElementById('editar'));
-          cerrar.click();
-          this.obtenerTodasGarantias();
-          setTimeout(() => {
-            this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
-          }, 100);
-        } else {
-          swal('Cliente No Actualizado', 'Error al actualizar', 'error');
-        }
-      });
-    } else if (this.estado === 'ENTREGAR') {
-      this.estado = 'ENTREGANDO';
-      this._garantiaService.cambiarEstado(garantia.value, this.estado).subscribe((actualizado: any) => {
-        if (actualizado) {
-          const cerrar = <HTMLElement>(document.getElementById('editar'));
-          cerrar.click();
-          this.obtenerTodasGarantias();
-          setTimeout(() => {
-            this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
-          }, 100);
-        } else {
-          swal('Cliente No Actualizado', 'Error al actualizar', 'error');
-        }
-      });
-    } else if (this.estado === 'ENTREGANDO') {
-      if (garantia.value !== '') {
-        this.estado = 'TERMINADO';
-        this._garantiaService.terminarGarantia(garantia.value, this.estado).subscribe((actualizado: any) => {
-          if (actualizado) {
-            const cerrar = <HTMLElement>(document.getElementById('editar'));
-            cerrar.click();
-            this.obtenerTodasGarantias();
-            setTimeout(() => {
-              this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
-            }, 100);
-          } else {
-            swal('Cliente No Actualizado', 'Error al actualizar', 'error');
-          }
-        });
-      } else {
-        swal('Sin Selección', 'No ah selecionado nada.', 'error');
-      }
-    }
+    // if (this.estado === 'NUEVO') {
+    //   this.estado = 'PROCESO';
+    //   this._garantiaService.actualizarGarantia(garantia.value, this.estado, this.marca, this.folio).subscribe((actualizado: any) => {
+    //     if (actualizado) {
+    //       const cerrar = <HTMLElement>(document.getElementById('editar'));
+    //       cerrar.click();
+    //       this.obtenerTodasGarantias();
+    //       // TODO enviar email al cliente
+    //       // this._garantiaService.enviarEmail(this.estado).subscribe((enviar: any) => {
+    //       //   swal('Se envío un email a tu correo', 'Email enviado', 'success');
+    //       // });
+    //       setTimeout(() => {
+    //         this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
+    //       }, 100);
+    //     } else {
+    //       swal('Cliente No Actualizado', 'Error al actualizar', 'error');
+    //     }
+    //   });
+    // } else if (this.estado === 'PROCESO') {
+    //   if (garantia.value.enviando !== '') {
+    //     this.estado = 'ENVIANDO';
+    //     this._garantiaService.cambiarEstado(garantia.value, this.estado).subscribe((actualizado: any) => {
+    //       if (actualizado) {
+    //         const cerrar = <HTMLElement>(document.getElementById('editar'));
+    //         cerrar.click();
+    //         this.obtenerTodasGarantias();
+    //         setTimeout(() => {
+    //           this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
+    //         }, 100);
+    //       } else {
+    //         swal('Cliente No Actualizado', 'Error al actualizar', 'error');
+    //       }
+    //     });
+    //   } else {
+    //     swal('Sin registro', 'No ha seleccionada nada.', 'error');
+    //   }
+    // } else if (this.estado === 'ENVIANDO') {
+    //   if (this.autorizado === true) {
+    //     this.estado = 'ENTREGAR';
+    //     this._garantiaService.cambiarEstado(garantia.value, this.estado).subscribe((actualizado: any) => {
+    //       if (actualizado) {
+    //         swal('Cliente Actualizado', 'actualizado', 'success');
+    //         const cerrar = <HTMLElement>(document.getElementById('editar'));
+    //         cerrar.click();
+    //         this.obtenerTodasGarantias();
+    //         setTimeout(() => {
+    //           this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
+    //         }, 100);
+    //       } else {
+    //         swal('Cliente No Actualizado', 'Error al actualizar', 'error');
+    //       }
+    //     });
+    //   } else {
+    //     this.estado = 'AUTORIZACION';
+    //     this._garantiaService.cambiarEstado(garantia.value, this.estado).subscribe((actualizado: any) => {
+    //       if (actualizado) {
+    //         const cerrar = <HTMLElement>(document.getElementById('editar'));
+    //         cerrar.click();
+    //         this.obtenerTodasGarantias();
+    //         setTimeout(() => {
+    //           this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
+    //         }, 100);
+    //       } else {
+    //         swal('Cliente No Actualizado', 'Error al actualizar', 'error');
+    //       }
+    //     });
+    //   }
+    // } else if (this.estado === 'AUTORIZACION') {
+    //   this.estado = 'ENTREGAR';
+    //   this._garantiaService.anexarNCGarantia(garantia.value, this.estado).subscribe((actualizado: any) => {
+    //     if (actualizado) {
+    //       const cerrar = <HTMLElement>(document.getElementById('editar'));
+    //       cerrar.click();
+    //       this.obtenerTodasGarantias();
+    //       setTimeout(() => {
+    //         this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
+    //       }, 100);
+    //     } else {
+    //       swal('Cliente No Actualizado', 'Error al actualizar', 'error');
+    //     }
+    //   });
+    // } else if (this.estado === 'ENTREGAR') {
+    //   this.estado = 'ENTREGANDO';
+    //   this._garantiaService.cambiarEstado(garantia.value, this.estado).subscribe((actualizado: any) => {
+    //     if (actualizado) {
+    //       const cerrar = <HTMLElement>(document.getElementById('editar'));
+    //       cerrar.click();
+    //       this.obtenerTodasGarantias();
+    //       setTimeout(() => {
+    //         this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
+    //       }, 100);
+    //     } else {
+    //       swal('Cliente No Actualizado', 'Error al actualizar', 'error');
+    //     }
+    //   });
+    // } else if (this.estado === 'ENTREGANDO') {
+    //   if (garantia.value !== '') {
+    //     this.estado = 'TERMINADO';
+    //     this._garantiaService.terminarGarantia(garantia.value, this.estado).subscribe((actualizado: any) => {
+    //       if (actualizado) {
+    //         const cerrar = <HTMLElement>(document.getElementById('editar'));
+    //         cerrar.click();
+    //         this.obtenerTodasGarantias();
+    //         setTimeout(() => {
+    //           this.seguimiento(garantia.value, this.usuario, this.estado, this.folio, this.numero, this.nomcli);
+    //         }, 100);
+    //       } else {
+    //         swal('Cliente No Actualizado', 'Error al actualizar', 'error');
+    //       }
+    //     });
+    //   } else {
+    //     swal('Sin Selección', 'No ah selecionado nada.', 'error');
+    //   }
+    // }
   }
 
   descargar(garantia: any) {
@@ -654,21 +651,22 @@ export class GarantiasComponent implements OnInit {
 
       this._garantiaService.hacerPDF(this.foltru, file, this.folioPdf, this.numfolpdf,  this.cantidadPdf , this.clvprovPdf, this.clavePdf, this.nombrePdf,
       this.descrPdf, this.diavisPdf, this.diaentrega, this.vendedorPdf, this.direccion, this.numerodir, this.interior, this.colonia, this.ciudad).subscribe((pdf: any) => {
+        console.log(pdf);
 
-        if (pdf) {
-        swal('CREADO', 'Archivo PDF creado.', 'success');
-        setTimeout(() => {
-          this.pdf = 'https://ferremayoristas.com.mx/api/garantias/' + file;
+        // if (pdf) {
+        //   swal('CREADO', 'Archivo PDF creado.', 'success');
+        //   setTimeout(() => {
+        //     this.pdf = 'https://ferremayoristas.com.mx/api/garantias/' + file;
 
-          const link = document.createElement('a');
-          link.setAttribute('href', this.pdf);
-          link.setAttribute('target', '_blank');
-          link.click();
-        }, 1000);
-        } else {
-        this.pdf = '';
-          swal('ERROR', 'Revisar con el administrador.', 'error');
-        }
+        //     const link = document.createElement('a');
+        //     link.setAttribute('href', this.pdf);
+        //     link.setAttribute('target', '_blank');
+        //     link.click();
+        //   }, 1000);
+        // } else {
+        //   this.pdf = '';
+        //   swal('ERROR', 'Revisar con el administrador.', 'error');
+        // }
 
       });
 
@@ -690,9 +688,8 @@ export class GarantiasComponent implements OnInit {
     this._webSocket.acciones('seguimiento-garantia', payload);
   }
 
-  // TODO
   obtenerFolio(garantia: any) {
-    if (garantia.estado === 'ENTREGAR' || garantia.estado === 'TERMINADO') {
+    if (garantia.estado === 'ENTREGANDO' || garantia.estado === 'ENTREGAR' || garantia.estado === 'TERMINADO') {
       this.guia = '';
       this.foliosGuia = [];
 

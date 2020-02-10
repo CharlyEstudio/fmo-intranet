@@ -1,26 +1,33 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_INTERNO, PUERTO_SERVER, URL_PETICION, URL_EXTERNO } from '../../config/config';
+import { URL_SERVICIO_GENERAL, PUERTO_INTERNO, PUERTO_SERVER } from '../../config/config';
 import { ServidorService } from '../db/servidor.service';
+import { UsuarioService } from '../usuario/usuario.service';
 
 @Injectable()
 export class AsesoresService {
 
   url: string;
+  token: string = '';
 
   constructor(
     private http: HttpClient,
-    private _servidor: ServidorService
-  ) { }
+    private _servidor: ServidorService,
+    private _usuarioS: UsuarioService
+  ) {
+    this.token = this._usuarioS.token;
+  }
 
   asesor( id: any ) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/busqueda/especifico/usuario/' + id;
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/usuario/especifico/' + id;
+
+    this.url += '?token=' + this.token;
 
     return this.http.get( this.url );
   }
 
   zonaAsesor( id: any ) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=0&perid=' + id;
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/asesores.php?opcion=0&perid=' + id;
 
     return this.http.get( this.url );
   }

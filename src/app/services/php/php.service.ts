@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_SERVER, PUERTO_INTERNO, URL_PETICION } from '../../config/config';
+import { URL_SERVICIO_GENERAL, PUERTO_SERVER, PUERTO_INTERNO } from '../../config/config';
 import { ServidorService } from '../db/servidor.service';
 
 @Injectable()
@@ -136,11 +136,11 @@ export class PhpService {
   }
 
   canceladoZona( zona: any, fecha: any ) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/cancelados/zona/' + fecha + '/' + zona;
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/direccion.php?opcion=1&fecha=' + fecha + '&zona=' + zona;
 
     return this.http.get( this.url ).map((canZon: any) => {
-      if (canZon.status) {
-        return canZon.respuesta;
+      if (canZon.length > 0) {
+        return canZon;
       } else {
         return 0;
       }
@@ -148,11 +148,11 @@ export class PhpService {
   }
 
   canceladoEspecial(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/direccion/cancelados/especiales/' + fecha;
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/direccion.php?opcion=2&fecha=' + fecha;
 
     return this.http.get( this.url ).map((canEsp: any) => {
-      if (canEsp.status) {
-        return canEsp.respuesta;
+      if (canEsp.length > 0) {
+        return canEsp;
       } else {
         return 0;
       }
@@ -226,7 +226,7 @@ export class PhpService {
   }
 
   financiado() {
-    this.url = URL_LOCAL + '/api/vencido.php?opcion=1&servidor=' + this._servidor.db;
+    this.url = URL_SERVICIO_GENERAL + '/api/vencido.php?opcion=1&servidor=' + this._servidor.db;
 
     return this.http.get( this.url ).map((financiado: any) => {
       if (financiado.length > 0) {
@@ -238,7 +238,7 @@ export class PhpService {
   }
 
   saldo(fecha: any) {
-    this.url = URL_LOCAL + '/api/vencido.php?opcion=2&servidor=' + this._servidor.db;
+    this.url = URL_SERVICIO_GENERAL + '/api/vencido.php?opcion=2&servidor=' + this._servidor.db;
 
     return this.http.get( this.url ).map((saldo: any) => {
       if (saldo.length > 0) {
@@ -250,7 +250,7 @@ export class PhpService {
   }
 
   vencido(fecha: any) {
-    this.url = URL_LOCAL + '/api/vencido.php?opcion=3&servidor=' + this._servidor.db;
+    this.url = URL_SERVICIO_GENERAL + '/api/vencido.php?opcion=3&servidor=' + this._servidor.db;
 
     return this.http.get( this.url ).map((vencido: any) => {
       if (vencido.length > 0) {
@@ -268,11 +268,11 @@ export class PhpService {
   }
 
   mor(fecha: any, dias: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/morosidad/mor/dias/' + fecha + '/' + dias + '/' + this._servidor.db;
+    this.url = URL_SERVICIO_GENERAL + '/api/morosidad.php?opcion=30&fecha=' + fecha + '&dias=' + dias + '&servidor=' + this._servidor.db;
 
     return this.http.get( this.url ).map((vencido: any) => {
-      if (vencido.status) {
-        return vencido.respuesta;
+      if (vencido.length > 0) {
+        return vencido;
       } else {
         return 0;
       }

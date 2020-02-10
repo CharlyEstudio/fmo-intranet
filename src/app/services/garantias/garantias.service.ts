@@ -2,19 +2,23 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 // config
-import { URL_SERVICIO_GENERAL, PUERTO_SERVER, URL_PETICION, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, URL_EXTERNO } from '../../config/config';
+import { URL_SERVICIO_GENERAL, PUERTO_SERVER, PUERTO_INTERNO } from '../../config/config';
 import { ServidorService } from '../db/servidor.service';
+import { UsuarioService } from '../usuario/usuario.service';
 
 @Injectable()
 export class GarantiasService {
 
   url: string;
-  token: string;
+  token: string = '';
 
   constructor(
     public http: HttpClient,
-    private _servidor: ServidorService
-  ) { }
+    private _servidor: ServidorService,
+    private _usuarioS: UsuarioService
+  ) {
+    this.token = this._usuarioS.token;
+  }
 
   totalregistros() {
     const url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/garantias.php?opcion=0';
@@ -160,7 +164,7 @@ export class GarantiasService {
   }
 
   buscarFolioHistorial(folio: any) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/guias/buscar/historial/' + folio;
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guia/buscar/historial/' + folio;
 
     this.url += '?token=' + this.token;
 

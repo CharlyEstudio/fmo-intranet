@@ -1,15 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIO_GENERAL, PUERTO_INTERNO, URL_LOCAL, URL_PRUEBAS, URL_PETICION, PUERTO_SERVER } from '../../config/config';
+import { URL_SERVICIO_GENERAL, PUERTO_INTERNO, PUERTO_SERVER } from '../../config/config';
+
+// Servicios
+import { UsuarioService } from '../usuario/usuario.service';
 
 @Injectable()
 export class TiendaService {
 
   url: string;
+  token: string = '';
 
   constructor(
-    private http: HttpClient
-  ) { }
+    private http: HttpClient,
+    private _usuarioService: UsuarioService
+  ) {
+    this.token = this._usuarioService.token;
+  }
 
   obtenerPedidosWeb(id: any, fecha: any) {
     this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/bigdata/pedidos/web/asesor/' + id + '/' + fecha;
@@ -31,6 +38,7 @@ export class TiendaService {
 
   obtenerMejoresTen() {
     this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/bigdata/mejores';
+    this.url += '?token=' + this.token;
 
     return this.http.get(this.url);
   }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 
 // Rutas
-import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_SERVER, PUERTO_INTERNO, URL_PETICION, URL_EXTERNO } from '../../config/config';
+import { URL_SERVICIO_GENERAL, PUERTO_SERVER, PUERTO_INTERNO } from '../../config/config';
 
 // Modelo
 import { GuiasPartidas } from '../../models/guias.model';
@@ -33,7 +33,7 @@ export class GuiasService {
   }
 
   obtenerGuias() {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/guias/todo';
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/todo';
 
     this.url += '?token=' + this.token;
 
@@ -44,7 +44,7 @@ export class GuiasService {
   }
 
   obtenerGuiasDia(fecha: any) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/guias/dia/' + fecha;
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/dia/' + fecha;
 
     return this.http.get( this.url )
       .map( (resp: any) => {
@@ -53,7 +53,7 @@ export class GuiasService {
   }
 
   buscarFolioGuia(folio: any) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/guias/buscar/' + folio;
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/' + folio;
 
     this.url += '?token=' + this.token;
 
@@ -61,7 +61,7 @@ export class GuiasService {
   }
 
   buscarFolioGuiaGnl(folio: any) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/guias/buscar/gnal/' + folio;
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/gnal/' + folio;
 
     this.url += '?token=' + this.token;
 
@@ -69,7 +69,7 @@ export class GuiasService {
   }
 
   buscarFolioHistorial(folio: any) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/guias/buscar/historial/' + folio;
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/historial/' + folio;
 
     this.url += '?token=' + this.token;
 
@@ -77,7 +77,7 @@ export class GuiasService {
   }
 
   buscarEntregasCliente(numero: any) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/guias/ultimas/5/' + numero;
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/ultimas/5/' + numero;
 
     this.url += '?token=' + this.token;
 
@@ -85,7 +85,7 @@ export class GuiasService {
   }
 
   buscarGuiaPrin(folio: any) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/guias/obtener/' + folio;
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/obtener/' + folio;
 
     this.url += '?token=' + this.token;
 
@@ -93,7 +93,7 @@ export class GuiasService {
   }
 
   buscarGuiaPrinId(guia: any) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/guias/obtener/factura';
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/obtener/factura';
 
     this.url += '?token=' + this.token;
 
@@ -101,7 +101,7 @@ export class GuiasService {
   }
 
   procesarGuia(guia: GuiasPartidas) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/guias';
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias';
 
     this.url += '?token=' + this.token;
 
@@ -112,7 +112,7 @@ export class GuiasService {
   }
 
   guardarGuia(guia: Guia, chofer: Chofer) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/guias/guia';
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/guia';
 
     this.url += '?token=' + this.token;
 
@@ -124,7 +124,7 @@ export class GuiasService {
 
   // Esto ver mas a delante si lo quito
   guardarRuta(ruta: any, chofer: Chofer) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/guias/ruta';
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/ruta';
 
     this.url += '?token=' + this.token;
 
@@ -135,7 +135,7 @@ export class GuiasService {
   }
 
   guardarRutaGuia(ruta: any, chofer: Chofer) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/rutas';
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/rutas';
 
     this.url += '?token=' + this.token;
 
@@ -146,7 +146,7 @@ export class GuiasService {
   }
 
   buscarPartidasFolio(folio: any) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/guias/buscar/partidas/' + folio;
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/partidas/' + folio;
 
     this.url += '?token=' + this.token;
 
@@ -174,7 +174,7 @@ export class GuiasService {
   }
 
   reasignarFolio(folio: any) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/guias/buscar/reasignar/' + folio._id;
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/reasignar/' + folio._id;
 
     return this.http.put(this.url, folio);
   }
@@ -187,7 +187,7 @@ export class GuiasService {
   }
 
   obtenerFacturasFolio(folio: any) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/guias/buscar/partidas/' + folio;
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/partidas/' + folio;
 
     return this.http.get( this.url )
       .map( (resp: any) => {
@@ -205,7 +205,7 @@ export class GuiasService {
   }
 
   coordenadasCliente(numero: any) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/coordenadas/numero/' + numero;
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/coordenadas/numero/' + numero;
 
     this.url += '?token=' + this.token;
 
@@ -236,13 +236,13 @@ export class GuiasService {
   }
 
   actualizarGuiaPri(id: any, chofer: Chofer) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/guias/actualizar/principal/' + id;
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/actualizar/principal/' + id;
 
     return this.http.put( this.url, chofer );
   }
 
   obtenerUnidades() {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/unidades';
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/unidades';
 
     return this.http.get(this.url);
   }
@@ -251,6 +251,16 @@ export class GuiasService {
     this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/guias.php?opcion=5';
 
     return this.http.get(this.url);
+  }
+
+  generarReporteGuiasDia(data: any) {
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/guias.php?opcion=6';
+
+    return this.http.post(
+      this.url,
+      {data},
+      { headers: { 'content-Type': 'application/x-www-form-urlencoded' } }
+    );
   }
 
 }

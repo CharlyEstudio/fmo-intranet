@@ -26,9 +26,9 @@ declare var $: any;
 export class DashboardLogisticaComponent implements OnInit {
 
   @ViewChild('folioIn') inputFolio: ElementRef;
-  // @ViewChild('fecBusqueda') inputFecBusqueda: ElementRef;
 
   fecha: any;
+  pdf: any = '';
 
   // Si es viernes, se puede elegir la fecha para asignar la guía.
   diaSemana = new Date().getDay();
@@ -119,6 +119,7 @@ export class DashboardLogisticaComponent implements OnInit {
     private _herramientas: HerramientasService,
     public sanitizer: DomSanitizer
   ) {
+    this.usuario = this._usuarioService.usuario;
     this.idUsuario = this._usuarioService.usuario._id;
     this.fecha = this._herramientas.fechaActual();
 
@@ -805,12 +806,11 @@ export class DashboardLogisticaComponent implements OnInit {
       }
       // Este si
       // Guarda por cliente la ruta del chofer
-      // Esto pasará a guardarse como se hacen en las Guias, de forma completa.
-      // Cuando se tenga por completo terminado el servicio nuevo, se dejará de usar este.
+      // Se deja este guardado par hacer bigdata
       // ### IMPORTANT ###
-      // for (let i = 0; i < this.rutaEnviar.length; i++) {
-      //   this._guiasServices.guardarRuta(this.rutaEnviar[i], this.chf).subscribe(() => {});
-      // }
+      for (let i = 0; i < this.rutaEnviar.length; i++) {
+        this._guiasServices.guardarRuta(this.rutaEnviar[i], this.chf).subscribe(() => {});
+      }
 
       // Con esto guardamos de forma completa
       const subirRuta = {
@@ -1250,6 +1250,21 @@ export class DashboardLogisticaComponent implements OnInit {
         });
       }
     });
+  }
+
+  obtenerReporte(guias: any) {
+    this._guiasServices.generarReporteGuiasDia(guias).subscribe((resp: any) => {
+      if (resp.length > 10) {
+        this.pdf = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/' + resp);
+        swal('Creado', 'Se creo el reporte correctamente', 'success');
+      } else {
+        swal('Error', 'No se creo el documento', 'danger');
+      }
+    });
+  }
+
+  limpiarReporte() {
+    this.pdf = '';
   }
 
 }

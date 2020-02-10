@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 // Config
-import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, PUERTO_SERVER, URL_PETICION, URL_EXTERNO } from '../../config/config';
+import { URL_SERVICIO_GENERAL, PUERTO_INTERNO, PUERTO_SERVER } from '../../config/config';
 
 // Modelo
 import { Cotizacion } from '../../models/cotizacion.model';
@@ -23,32 +23,26 @@ export class PedidosService {
   }
 
   obtenerOrdenCompra() {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/cotizacion/orden';
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cotizacion/orden';
 
     return this.http.get(this.url);
   }
 
   obtenerProducto(codigo: any, precio: any) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/productos/buscar/codigo/' + codigo + '/' + precio;
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/productos/buscar/codigo/' + codigo + '/' + precio;
 
     return this.http.get(this.url);
   }
 
   guardarCotizacion(cotizacion: Cotizacion) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/cotizacion';
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cotizacion';
 
     return this.http.post(this.url, cotizacion);
   }
 
   guardarPdf(data: any, pdf: any, operacion: any, info: any = '', usuario: string, idUser: number, emailUser: string) {
     if (operacion === '1') {
-      if (URL_SERVICIO_GENERAL === URL_PETICION) {
-        /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=37';
-      } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-        this.url = URL_PETICION + '/api/pedidos.php?opcion=37';
-      } else {
-        this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=37';
-      }
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=37';
 
       const date = new Date(Number(info.fecha));
 
@@ -97,13 +91,7 @@ export class PedidosService {
         { headers: { 'content-Type': 'application/x-www-form-urlencoded' } }
       );
     } else if (operacion === '2') {
-      if (URL_SERVICIO_GENERAL === URL_PETICION) {
-        /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=39';
-      } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-        this.url = URL_PETICION + '/api/pedidos.php?opcion=39';
-      } else {
-        this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=39';
-      }
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=39';
 
       const date = new Date(Number(info.fecha));
 
@@ -147,13 +135,7 @@ export class PedidosService {
   }
 
   enviarEmailOrden(data: any) {
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=40';
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PETICION + '/api/pedidos.php?opcion=40';
-    } else {
-      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=40';
-    }
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=40';
 
     return this.http.post(
       this.url,
@@ -167,13 +149,7 @@ export class PedidosService {
   }
 
   email(data: any) {
-    if (URL_SERVICIO_GENERAL === URL_PETICION) {
-      /*LOCAL*/this.url = URL_PETICION + '/api/pedidos.php?opcion=36';
-    } else if (URL_SERVICIO_GENERAL === 'http://localhost') {
-      this.url = URL_PETICION + '/api/pedidos.php?opcion=36';
-    } else {
-      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=36';
-    }
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=36';
 
     return this.http.post(
       this.url,
@@ -218,13 +194,13 @@ export class PedidosService {
   }
 
   buscarLote(codigo: any) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/productos/lote/codigo/' + codigo;
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/productos/lote/codigo/' + codigo;
 
     return this.http.get(this.url);
   }
 
   enviarPedido(xml: any) {
-    this.url = URL_EXTERNO +  ':' + PUERTO_INTERNO + '/ferrum/subir/pedido/7854956231457643';
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/ferrum/subir/pedido/7854956231457643';
 
     return this.http.post(this.url, xml);
   }

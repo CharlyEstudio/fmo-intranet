@@ -42,16 +42,26 @@ export class ComisioneschoferesComponent implements OnInit {
     this.fecOut = forma.value.fechaOut;
 
     this.choferService.obtenerGuias(forma.value.fechaIn, forma.value.fechaOut).subscribe((guias: any) => {
+      // console.log(guias);
       if (guias.status) {
         this.data = [];
-        for (const guia of guias.guias) {
+        // for (const guia of guias.guias) {
+        for (const guia of guias.encontrados) {
+          // const info = {
+          //   _id: guia.chofer !== null ? guia.chofer._id : 0,
+          //   chofer: guia.chofer !== null ? guia.chofer.nombre : 'Sin Chófer',
+          //   pedidos: guia.cantidad,
+          //   clientes: guia.clientes,
+          //   comision: (guia.clientes * 2.5)
+          // };
+          // this.data.push(info);
           const esChofer = (g: any) => {
             return g._id === guia.chofer._id;
           };
           if (!this.data.find(esChofer)) {
             const info = {
-              _id: guia.chofer._id,
-              chofer: guia.chofer.nombre,
+              _id: guia.chofer !== null ? guia.chofer._id : 0,
+            chofer: guia.chofer !== null ? guia.chofer.nombre : 'Sin Chófer',
               pedidos: guia.cantidad,
               clientes: guia.clientes,
               comision: (guia.clientes * 2.5)

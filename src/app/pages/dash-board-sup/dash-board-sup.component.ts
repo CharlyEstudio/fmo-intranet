@@ -80,7 +80,7 @@ export class DashBoardSupComponent implements OnInit {
 
     this.datos = JSON.parse(localStorage.getItem('usuario'));
 
-    this.rol = this.datos["rol"];
+    this.rol = this._usuarioService.rol;
 
     this.inicio();
   }
@@ -116,7 +116,7 @@ export class DashBoardSupComponent implements OnInit {
             .subscribe( ( data: any ) => {
               this.asesores.push(
                 {
-                  idFerrum: resp[i].idFerrum,
+                  idFerrum: parseInt(resp[i].idFerrum),
                   nombre: resp[i].nombre,
                   email: resp[i].email,
                   rol: resp[i].rol,
@@ -177,9 +177,9 @@ export class DashBoardSupComponent implements OnInit {
     this.preliminar[0].path = [];
     this._usuarioService.buscarUsuarioEsp(idFerrum).subscribe((user: any) => {
       if (user.ok) {
-        this.lat = user.usuario.lat;
-        this.lng = user.usuario.lng;
-        this.ultimaPosicion = user.usuario.horaUbicacion;
+        this.lat = user.usuarios.lat;
+        this.lng = user.usuarios.lng;
+        this.ultimaPosicion = user.usuarios.horaUbicacion;
       } else {
         this.lat = 0;
         this.lng = 0;
@@ -437,6 +437,22 @@ export class DashBoardSupComponent implements OnInit {
     this.lngPre = 0;
     this.preliminar[0].path = [];
     this.zoom = 11;
+  }
+
+  cambiarEstado(cli: any) {
+    const esCliente = (data: any) => {
+      return data.clienteid === cli.clienteid;
+    };
+
+    if (this.ruta.find(esCliente)) {
+      const destino = `${this.ruta.find(esCliente).lat},${this.ruta.find(esCliente).lng}`;
+      this._visitasService.cambiarVisitaAsesorFecha(cli.clienteid, cli.asesor, cli.fecha, destino, cli.ubicacion).subscribe((resp: any) => {
+        if (resp.status) {
+          cli.distancia = "22";
+          cli.visitado = false;
+        }
+      });
+    }
   }
 
 }

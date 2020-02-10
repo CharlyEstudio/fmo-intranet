@@ -2,60 +2,69 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 // COnfiguración
-import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_SERVER, PUERTO_INTERNO, URL_PETICION, URL_EXTERNO } from '../../config/config';
+import { URL_SERVICIO_GENERAL, PUERTO_SERVER, PUERTO_INTERNO } from '../../config/config';
 
 // Modelos
 import { MonitorFactura } from '../../models/monitorfactura.model';
 import { ServidorService } from '../db/servidor.service';
+import { UsuarioService } from '../usuario/usuario.service';
 
 @Injectable()
 export class OficinaService {
 
+  token: string = '';
   url: string;
 
   constructor(
     private http: HttpClient,
-    private _servidor: ServidorService
-  ) { }
+    private _servidor: ServidorService,
+    private _usuarioS: UsuarioService
+  ) {
+    this.token = this._usuarioS.token;
+  }
 
   todasFacturas(fecha: any) {
-    this.url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/oficina/facturas/' + fecha + '/' + this._servidor.db;
+    this.url = URL_SERVICIO_GENERAL + '/api/facturas.php?opcion=1&fecha=' + fecha + '&servidor=' + this._servidor.db;
 
     return this.http.get(this.url);
   }
 
   facturasNoImpresas(fecha: any) {
-    this.url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/oficina/facturas/noimpresas/' + fecha + '/' + this._servidor.db;
+    this.url = URL_SERVICIO_GENERAL + '/api/facturas.php?opcion=2&fecha=' + fecha + '&servidor=' + this._servidor.db;
 
     return this.http.get(this.url);
   }
 
   facturasNoEnviadas(fecha: any) {
-    this.url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/oficina/facturas/noenviadas/' + fecha + '/' + this._servidor.db;
+    this.url = URL_SERVICIO_GENERAL + '/api/facturas.php?opcion=3&fecha=' + fecha + '&servidor=' + this._servidor.db;
 
     return this.http.get(this.url);
   }
 
   errorFacturar(fecha: any) {
-    this.url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/oficina/facturas/error/facturar/' + fecha + '/' + this._servidor.db;
+    this.url = URL_SERVICIO_GENERAL + '/api/facturas.php?opcion=4&fecha=' + fecha + '&servidor=' + this._servidor.db;
 
     return this.http.get(this.url);
   }
 
   errorTimbrar(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/oficina/facturas/error/timbrar/' + fecha + '/' + this._servidor.db;
+    this.url = URL_SERVICIO_GENERAL + '/api/facturas.php?opcion=5&fecha=' + fecha + '&servidor=' + this._servidor.db;
 
     return this.http.get(this.url);
   }
 
   verfacturasTrab(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/monitorfactura/fecha/' + fecha;
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/monitor/monitorfactura/fecha/' + fecha;
+
+    this.url += '?token=' + this.token;
 
     return this.http.get(this.url);
   }
 
   verfacturasTrabEspe(factura: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/monitorfactura/' + factura;
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/monitor/monitorfactura/' + factura;
+
+    this.url += '?token=' + this.token;
 
     return this.http.get(this.url);
   }
@@ -80,7 +89,9 @@ export class OficinaService {
       datos.DIACREDITO,
       id
     );
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/monitorfactura';
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/monitor/monitorfactura';
+
+    this.url += '?token=' + this.token;
 
     return this.http.post(this.url, factura);
   }

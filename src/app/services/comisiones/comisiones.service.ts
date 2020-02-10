@@ -16,7 +16,7 @@ import * as _swal from 'sweetalert';
 import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
 const swal: SweetAlert = _swal as any;
 
-import { URL_SERVICIO_GENERAL, URL_LOCAL, URL_PRUEBAS, PUERTO_INTERNO, URL_PETICION, URL_EXTERNO } from '../../config/config';
+import { URL_SERVICIO_GENERAL, PUERTO_INTERNO } from '../../config/config';
 
 @Injectable()
 export class ComisionesService {
@@ -33,7 +33,7 @@ export class ComisionesService {
 
   cargarComisiones() {
     let url;
-    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/comisiones/';
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones/';
 
     url += '?token=' + this.token;
 
@@ -49,7 +49,7 @@ export class ComisionesService {
 
   buscarAsesorComision( id: any ) {
     let url;
-    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id;
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id;
 
     return this.http.get( url )
       .map( (resp: any) => {
@@ -63,7 +63,7 @@ export class ComisionesService {
 
   buscarMesComision( mes: any, anio: any ) {
     let url;
-    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/comisiones/buscar/' + mes + "/" + anio;
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones/buscar/' + mes + "/" + anio;
 
     return this.http.get( url );
   }
@@ -71,7 +71,7 @@ export class ComisionesService {
   guardarComision(comision: Comision) {
 
     let url;
-    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/comisiones';
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones';
 
     url += '?token=' + this.token;
 
@@ -89,7 +89,7 @@ export class ComisionesService {
 
   actualizarComisionUsusario( comision: Comision, id: any ) {
     let url;
-    url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/comisiones/' + id;
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones/' + id;
 
     url += '?token=' + this.token;
 

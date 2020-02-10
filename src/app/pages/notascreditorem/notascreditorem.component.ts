@@ -236,23 +236,19 @@ export class NotascreditoremComponent implements OnInit {
     this.cargando = true;
     this.nc = [];
     this._ncService.buscarNCRFecha(f, f2).subscribe((resp: any) => {
-      if (resp.status) {
-        // console.log(resp.respuesta);
-        for (let i = 0; i < resp.respuesta.length; i ++) {
-          this._ncService.buscarNCRtrabajado(resp.respuesta[i].nc, resp.respuesta[i].factura).subscribe((ncFec: any) => {
+      if (resp.length > 0) {
+        for (let i = 0; i < resp.length; i ++) {
+          this._ncService.buscarNCRtrabajado(resp[i].nc, resp[i].factura).subscribe((ncFec: any) => {
             if (ncFec.status) {
-              resp.respuesta[i].trabajado = true;
-            } else if (resp.respuesta[i].serie === 'NA') {
-              resp.respuesta[i].trabajado = true;
+              resp[i].trabajado = true;
+            } else if (resp[i].serie === 'NA') {
+              resp[i].trabajado = true;
             } else {
-              resp.respuesta[i].trabajado = false;
+              resp[i].trabajado = false;
             }
-            // if (resp.respuesta[i].serie !== 'NA') {
-            //   subtotal ++;
-            // }
           });
         }
-        this.nc = resp.respuesta;
+        this.nc = resp;
         this._ncService.buscarNCTrabFecha(f, f2).subscribe((trab: any) => {
           if (trab.status) {
             for (let i = 0; i < trab.respuesta.length; i++) {
@@ -273,7 +269,7 @@ export class NotascreditoremComponent implements OnInit {
       } else {
         this.cargando = false;
         this.nc = info;
-        swal('Sin Registro', resp.msg, 'error');
+        swal('Sin Registro', 'Error, contacte al administrador', 'error');
       }
     });
   }

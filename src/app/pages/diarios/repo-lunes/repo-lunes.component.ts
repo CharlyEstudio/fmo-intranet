@@ -93,7 +93,6 @@ export class RepoLunesComponent implements OnInit {
   obtenerPedidos(data: any) {
     this.actual = [];
     this.nombre = '';
-    console.log(data.id);
 
     if (data.id !== 80000 && data.id !== 843 && data.id !== 80001) {
       let h = new Date();
@@ -133,7 +132,6 @@ export class RepoLunesComponent implements OnInit {
       // Obtener Victor Especiales
       this._diariosService.pedidosDiaLunesEspecials()
         .subscribe( ( resp: any ) => {
-          console.log(resp);
           this.nombre = data.asesor;
           this.actual = resp;
         });

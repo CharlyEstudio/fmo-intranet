@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 // Configuración
-import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, URL_PETICION } from '../../config/config';
+import { URL_SERVICIO_GENERAL, PUERTO_INTERNO } from '../../config/config';
 
 // Modelo
 import { Chofer } from '../../models/chofer.model';

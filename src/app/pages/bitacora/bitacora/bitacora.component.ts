@@ -297,12 +297,17 @@ export class BitacoraComponent implements OnInit, OnDestroy {
     this.charla = [];
     this._clienteService.infoCliente(termino, '', this.rol).subscribe((cliente: any) => {
       if (cliente.length > 0) {
-        this.sinsaldo = false;
         this._creditoService.obtenerComentarios(cliente[0].CLIENTEID).subscribe((comentarios: any) => {
           if (comentarios.ok) {
+            if (comentarios.charla.length === 0) {
+              this.sinsaldo = true;
+            } else {
+              this.sinsaldo = false;
+            }
             this.charla = comentarios.charla;
             this.charlaBol = true;
           } else {
+            this.sinsaldo = false;
             this.charlaBol = false;
             this.charla = [];
           }
@@ -311,17 +316,6 @@ export class BitacoraComponent implements OnInit, OnDestroy {
         this.sinsaldo = true;
       }
     });
-    // this._creditoService.morosidadRelacionCliente(termino).subscribe((cuentas: any) => {
-    //   if (cuentas.length > 0) {
-    //     this.busqueda = cuentas;
-    //     this.buscarBol = false;
-    //   } else {
-    //     this.buscarBol = false;
-    //     this.sinsaldo = true;
-    //   }
-    // }, err => {
-    //   console.log(err);
-    // });
   }
 
   irInfo( data: any ) {

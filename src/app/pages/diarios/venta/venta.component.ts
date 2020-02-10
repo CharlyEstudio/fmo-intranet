@@ -212,12 +212,11 @@ export class VentaComponent implements OnInit {
             if (resp !== 0) {
               this._asesorService.asesor(this.asesor)
                 .subscribe( ( ase: any ) => {
-                  // this.vendedor = ase.usuarios[0];
-                  this.nombreAse = ase.usuarios[0].nombre;
-                  this.imagen = ase.usuarios[0].img;
-                  this.email = ase.usuarios[0].email;
-                  this.tel = ase.usuarios[0].tel;
-                  this.rol = ase.usuarios[0].rol;
+                  this.nombreAse = ase.usuarios.nombre;
+                  this.imagen = ase.usuarios.img;
+                  this.email = ase.usuarios.email;
+                  this.tel = ase.usuarios.tel;
+                  this.rol = ase.usuarios.rol;
                 });
 
               if (resp.length !== 0) {

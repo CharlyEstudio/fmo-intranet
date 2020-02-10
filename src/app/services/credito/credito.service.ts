@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIO_GENERAL, URL_LOCAL, PUERTO_INTERNO, URL_PRUEBAS, PUERTO_SERVER, URL_PETICION, URL_EXTERNO } from '../../config/config';
+import { URL_SERVICIO_GENERAL, PUERTO_INTERNO, PUERTO_SERVER } from '../../config/config';
 
 import { VencidoHistorial } from '../../models/vencidoHistorial.model';
 import { ServidorService } from '../db/servidor.service';
@@ -98,15 +98,13 @@ export class CreditoService {
   }
 
   clienteSaldo( numero: any, fecha: any ) {
-    this.url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/clientes/obtener/saldo/' + numero + '/' + fecha + '/' + this._servidor.db;
-
-    this.url += '?token=' + this.token;
+    this.url = URL_SERVICIO_GENERAL + '/api/clientes.php?opcion=22&numero=' + numero + '&fecha=' + fecha + '&servidor=' + this._servidor.db;
 
     return this.http.get( this.url );
   }
 
   guardarComentario( comentario: VencidoHistorial ) {
-    this.url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/clientes/vencido/historial';
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/vencido/historial';
 
     this.url += '?token=' + this.token;
 
@@ -117,13 +115,17 @@ export class CreditoService {
   }
 
   obtenerComentarios( clienteId: any ) {
-    this.url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/' + clienteId;
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/cobranza/clientes/vencido/historial/' + clienteId;
+
+    this.url += '?token=' + this.token;
 
     return this.http.get( this.url );
   }
 
   obtenerComentariosDia( fecha: any ) {
-    this.url = URL_EXTERNO + ':' + PUERTO_INTERNO + '/busqueda/clientes/vencido/historial/fecha/' + fecha;
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/cobranza/clientes/vencido/historial/fecha/' + fecha;
+
+    this.url += '?token=' + this.token;
 
     return this.http.get( this.url );
   }

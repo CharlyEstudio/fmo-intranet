@@ -28,7 +28,7 @@
 
                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#cambiar" role="tab">Cambiar fecha</a> </li>
 
-                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#buscar" role="tab">Buscar</a> </li>
+                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#buscarCli" role="tab">Buscar</a> </li>
 
                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#revisar" role="tab">Revisar Comentarios</a> </li>
 
@@ -126,7 +126,7 @@
 
                     </div>
 
-                    <div class="tab-pane" id="buscar" role="tabpanel">
+                    <div class="tab-pane" id="buscarCli" role="tabpanel">
 
                         <div class="card-body">
 
@@ -134,7 +134,7 @@
 
                                 <div class="form-group">
 
-                                    <input #input (keyup.enter)="buscar(input.value)" type="text" name="buscar" id="buscar" class="form-control" placeholder="Buscar Cliente">
+                                    <input #inputCliId (keyup.enter)="buscar(inputCliId.value)" type="text" name="buscar" id="buscar" class="form-control" placeholder="Buscar Cliente">
 
                                 </div>
 
@@ -206,7 +206,7 @@
 
                             </form>
 
-                            <div class="alert alert-info" *ngIf="charlaBol && charla.length === 0">
+                            <div class="alert alert-info" *ngIf="!sinsaldo && charlaBol && charla.length === 0">
 
                                 Buscando cliente.
 

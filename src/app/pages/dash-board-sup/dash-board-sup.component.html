@@ -1,4 +1,4 @@
-<div class="row el-element-overlay">
+<div class="row">
 
     <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
 
@@ -6,131 +6,107 @@
 
     </div>
 
-    <div class="col-lg-3 col-md-6" *ngFor="let asesor of asesores">
+    <div class="col-lg-12 col-md-12 col-sm-12">
 
-        <div class="card">
+        <div class="table-responsive">
 
-            <div class="el-card-item">
+            <table class="table">
 
-                <div class="el-card-avatar el-overlay-1">
+                <thead>
+
+                    <tr>
+
+                        <th class="text-center">#</th>
+
+                        <th>Asesor</th>
+
+                        <th class="text-center">Por Bajar</th>
+
+                        <th class="text-center">Por Surtir</th>
+
+                        <th class="text-center">Facturados</th>
+
+                        <th class="text-center">Cancelados</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
                     
-                    <img [src]="asesor.img | imagen" alt="user">
+                    <tr *ngFor="let asesor of asesores; let i = index">
 
-                    <div class="el-overlay">
+                        <th class="text-center">{{(i + 1)}}</th>
 
-                        <ul class="el-info">
+                        <th width="30%">
 
-                            <li>
+                            <div class="row">
 
-                                <a class="btn default btn-outline image-popup-vertical-fit" data-toggle="tooltip" title="Actividad" (click)="revisar(asesor.idFerrum, asesor.nombre)">
+                                <div class="col-2">
 
-                                    <i class="mdi mdi-link-variant"></i>
+                                    <img [src]="asesor.img | imagen" class="img-fluid rounded-circle">
 
-                                </a>
+                                </div>
 
-                            </li>
+                                <div class="col-10">
 
-                            <li>
+                                    <div class="row">
 
-                                <a class="btn default btn-outline image-popup-vertical-fit" data-toggle="tooltip" title="Cobranza" (click)="cobrado(asesor.idFerrum, asesor.nombre)">
+                                        <div class="col-12">
 
-                                    <i class="mdi mdi-wallet"></i>
+                                            {{asesor.nombre}}
 
-                                </a>
+                                        </div>
 
-                            </li>
+                                        <div class="col-12">
 
-                            <li>
+                                            <a class="btn default btn-outline image-popup-vertical-fit" data-toggle="tooltip" title="Actividad" (click)="revisar(asesor.idFerrum, asesor.nombre)">
 
-                                <a class="btn default btn-outline" data-toggle="tooltip" title="Pedidos" (click)="pedidos(asesor.idFerrum, asesor.nombre)">
+                                                <i class="mdi mdi-link-variant"></i>
+            
+                                            </a>
 
-                                    <i class="mdi mdi-dropbox"></i>
+                                            <a class="btn default btn-outline image-popup-vertical-fit" data-toggle="tooltip" title="Cobranza" (click)="cobrado(asesor.idFerrum, asesor.nombre)">
 
-                                </a>
+                                                <i class="mdi mdi-wallet"></i>
+            
+                                            </a>
 
-                            </li>
+                                            <a class="btn default btn-outline" data-toggle="tooltip" title="Pedidos" (click)="pedidos(asesor.idFerrum, asesor.nombre)">
 
-                            <li *ngIf="rol == 'ADMIN_ROLE' || rol == 'DIR_ROLE' || rol == 'GER_ROLE'">
+                                                <i class="mdi mdi-dropbox"></i>
+            
+                                            </a>
 
-                                <a class="btn default btn-outline" data-toggle="tooltip" title="Pre-Comisión" (click)="precomision(asesor.idFerrum, asesor.nombre, asesor.img)">
+                                            <a [id]="'reporte'+asesor.idFerrum" class="btn default btn-outline" href="#modalReporte" data-dismiss="modal" data-toggle="modal" (click)="reporte(asesor.idFerrum, asesor.nombre, asesor.img, asesor.lat, asesor.lng, asesor.horaUbicacion)">
 
-                                    <i class="mdi mdi-chart-gantt"></i>
+                                                <i class="mdi mdi-projector"></i>
+            
+                                            </a>
 
-                                </a>
+                                        </div>
 
-                            </li>
+                                    </div>
 
-                            <li>
+                                </div>
 
-                                <a class="btn default btn-outline" href="#modalReporte" data-dismiss="modal" data-toggle="modal" (click)="reporte(asesor.idFerrum, asesor.nombre, asesor.img, asesor.lat, asesor.lng, asesor.horaUbicacion)">
+                            </div>
 
-                                    <i class="mdi mdi-projector"></i>
+                        </th>
 
-                                </a>
+                        <th class="text-center">{{asesor.porBajarCantidad}} | {{asesor.porBajarImporte | currency}}</th>
 
-                            </li>
+                        <th class="text-center">{{asesor.porSurtirCantidad}} | {{asesor.porSurtirImporte | currency}}</th>
 
-                        </ul>
+                        <th class="text-center">{{asesor.facturadoCantidad}} | {{asesor.facturadoImporte | currency}}</th>
 
-                    </div>
+                        <th class="text-center">{{asesor.canceladoCantidad}} | {{asesor.canceladoImporte | currency}}</th>
 
-                </div>
+                    </tr>
 
-                <div class="el-card-content">
+                </tbody>
 
-                    <h3 class="box-title">{{ asesor.nombre }}</h3>
-
-                    <small>{{ asesor.email }}</small>
-
-                    <div class="row">
-
-                        <div class="col-6">
-
-                            <h6>{{ asesor.porBajarCantidad | number }}</h6>
-
-                            <h6>{{ asesor.porBajarImporte | currency }}</h6>
-
-                            <h6>Por Bajar</h6>
-
-                        </div>
-
-                        <div class="col-6">
-
-                            <h6>{{ asesor.porSurtirCantidad | number }}</h6>
-
-                            <h6>{{ asesor.porSurtirImporte | currency }}</h6>
-
-                            <h6>Por Surtir</h6>
-
-                        </div>
-
-                        <div class="col-6">
-
-                            <h6>{{ asesor.facturadoCantidad | number }}</h6>
-
-                            <h6>{{ asesor.facturadoImporte | currency }}</h6>
-
-                            <h6>Facturados</h6>
-
-                        </div>
-
-                        <div class="col-6">
-
-                            <h6>{{ asesor.canceladoCantidad | number }}</h6>
-
-                            <h6>{{ asesor.canceladoImporte | currency }}</h6>
-
-                            <h6>Cacenaldos</h6>
-
-                        </div>
-
-                    </div>
-
-                    <br>
-
-                </div>
-
-            </div>
+            </table>
 
         </div>
 
@@ -221,6 +197,8 @@
 
                                         <th>Distancia</th>
 
+                                        <th *ngIf="rol === 'ADMIN_ROLE'"></th>
+
                                     </tr>
 
                                 </thead>
@@ -250,6 +228,16 @@
                                         </td>
                                         
                                         <td>{{cli.distancia}} {{cli.medida}}</td>
+
+                                        <td *ngIf="rol === 'ADMIN_ROLE'">
+
+                                            <button class="btn btn-danger btn-sm" (click)="cambiarEstado(cli)">
+
+                                                <i class="mdi mdi-delete"></i>
+
+                                            </button>
+
+                                        </td>
 
                                     </tr>
 

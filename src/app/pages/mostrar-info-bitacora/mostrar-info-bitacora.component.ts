@@ -43,9 +43,7 @@ export class MostrarInfoBitacoraComponent implements OnInit {
     private _creditoService: CreditoService,
     private _sockets: WebsocketService,
     private _usuariosServices: UsuarioService,
-    // private _pushNotificationService: PushNotificationService,
   ) {
-    // this._pushNotificationService.requestPermission();
     this.id = this._usuariosServices.usuario._id;
     this.rol = this._usuariosServices.usuario.rol;
     this.tipo = this.get.snapshot.paramMap.get("data");
@@ -53,7 +51,6 @@ export class MostrarInfoBitacoraComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this._pushNotificationService.requestPermission();
     this._sockets.escuchar('mensaje-folio').subscribe( ( ( escuchando: any ) => {
       if (escuchando.comentario !== '') {
         swal(
@@ -64,7 +61,6 @@ export class MostrarInfoBitacoraComponent implements OnInit {
             escuchando.comentario,
           'success'
         );
-        // this.pushNot(escuchando.numero, escuchando.nombre, escuchando.comentario, escuchando.remitente);
         this._creditoService.obtenerComentarios(escuchando.clienteId).subscribe( ( resp: any ) => {
           this.charla = resp.charla.reverse();
           this.charlaBol = true;
@@ -212,6 +208,7 @@ export class MostrarInfoBitacoraComponent implements OnInit {
       img: this._usuariosServices.usuario.img
     };
 
+
     this._creditoService.guardarComentario(venHist).subscribe( ( resp: any ) => {
       if (resp.ok) {
         this.charlaBol = true;
@@ -224,33 +221,5 @@ export class MostrarInfoBitacoraComponent implements OnInit {
       }
     });
   }
-
-  /*pushNot( numero: any, nombre: any, comentario: any, remitente: any ) {
-    const title = 'Mensaje de ' + remitente;
-    const options = new PushNotificationOptions();
-    options.body = numero + ' ' + nombre +
-    ', comentario: ' +
-    comentario;
-    options.icon = 'assets/images/users/fmo.png';
-
-    this._pushNotificationService.create(title, options).subscribe((notif) => {
-      if (notif.event.type === 'show') {
-        console.log('onshow');
-        setTimeout(() => {
-          notif.notification.close();
-        }, 10000);
-      }
-      if (notif.event.type === 'click') {
-        console.log('click');
-        notif.notification.close();
-      }
-      if (notif.event.type === 'close') {
-        console.log('close');
-      }
-    },
-    (err) => {
-         console.log(err);
-    });
-  }*/
 
 }

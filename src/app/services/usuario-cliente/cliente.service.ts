@@ -22,8 +22,7 @@ export class ClienteService {
   }
 
   cargarUsuarios( desde: number = 0 ) {
-    let url;
-    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes?desde=' + desde;
+    let url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes?desde=' + desde;
 
     url += '&token=' + this.token;
 
@@ -31,8 +30,7 @@ export class ClienteService {
   }
 
   cargarUsuariosActivos( desde: number = 0 ) {
-    let url;
-    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/activos?desde=' + desde;
+    let url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/activos?desde=' + desde;
 
     url += '&token=' + this.token;
 
@@ -40,17 +38,15 @@ export class ClienteService {
   }
 
   cargarUsuariosPendientes( desde: number = 0 ) {
-    let url;
-    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/pendientes?desde=' + desde;
+    let url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/pendientes';
 
-    url += '&token=' + this.token;
+    url += '?token=' + this.token;
 
     return this.http.get( url );
   }
 
   actualizarUsusario( cliente: Cliente ) {
-    let url;
-    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/actualizar/' + cliente._id;
+    let url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/actualizar/' + cliente._id;
 
     url += '?token=' + this.token;
 
@@ -68,8 +64,7 @@ export class ClienteService {
   }
 
   borrarUsuario ( id: string ) {
-    let url;
-    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/' + id;
+    let url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/' + id;
 
     url += '?token=' + this.token;
 

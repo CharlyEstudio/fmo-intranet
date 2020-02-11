@@ -78,24 +78,24 @@ export class VerMapaComponent implements OnInit, OnDestroy {
 
     return new Observable((observer: Subscriber<any>) => {
       this.intGPS = setInterval(() => {
-        this._guiaService.gpsMagnitracking('359857081441099').subscribe((location: any) => {
-          this._guiaService.gpsMagUserId('359857081441099').subscribe((userUnidad: any) => {
-            let data = [];
-            for (const key in location) {
-              const loc = {
-                nombre: userUnidad[0].name,
-                placas: userUnidad[0].plate_number,
-                ip: userUnidad[0].ip,
-                label: userUnidad[0].name,
-                lat: Number(location[key].lat),
-                lng: Number(location[key].lng),
-                speed: location[key].speed
-              }
-              data.push(loc);
-            }
-            observer.next(data);
-          });
-        });
+        // this._guiaService.gpsMagnitracking('359857081441099').subscribe((location: any) => {
+        //   this._guiaService.gpsMagUserId('359857081441099').subscribe((userUnidad: any) => {
+        //     let data = [];
+        //     for (const key in location) {
+        //       const loc = {
+        //         nombre: userUnidad[0].name,
+        //         placas: userUnidad[0].plate_number,
+        //         ip: userUnidad[0].ip,
+        //         label: userUnidad[0].name,
+        //         lat: Number(location[key].lat),
+        //         lng: Number(location[key].lng),
+        //         speed: location[key].speed
+        //       }
+        //       data.push(loc);
+        //     }
+        //     observer.next(data);
+        //   });
+        // });
       }, 5000);
     })
     .map(data => {
@@ -105,24 +105,24 @@ export class VerMapaComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._guiaService.gpsMagnitracking('359857081441099').subscribe((location: any) => {
-      this._guiaService.gpsMagUserId('359857081441099').subscribe((userUnidad: any) => {
-        let data = [];
-        for (const key in location) {
-          const loc = {
-            nombre: userUnidad[0].name,
-            placas: userUnidad[0].plate_number,
-            ip: userUnidad[0].ip,
-            label: userUnidad[0].name,
-            lat: Number(location[key].lat),
-            lng: Number(location[key].lng),
-            speed: location[key].speed
-          }
-          data.push(loc);
-        }
-        this.ubicacionesGPS = data;
-      });
-    });
+    // this._guiaService.gpsMagnitracking('359857081441099').subscribe((location: any) => {
+    //   this._guiaService.gpsMagUserId('359857081441099').subscribe((userUnidad: any) => {
+    //     let data = [];
+    //     for (const key in location) {
+    //       const loc = {
+    //         nombre: userUnidad[0].name,
+    //         placas: userUnidad[0].plate_number,
+    //         ip: userUnidad[0].ip,
+    //         label: userUnidad[0].name,
+    //         lat: Number(location[key].lat),
+    //         lng: Number(location[key].lng),
+    //         speed: location[key].speed
+    //       }
+    //       data.push(loc);
+    //     }
+    //     this.ubicacionesGPS = data;
+    //   });
+    // });
   }
 
   clicMarker(origin: any) {
@@ -141,73 +141,73 @@ export class VerMapaComponent implements OnInit, OnDestroy {
     this.verDestino = false;
     this.coordenadas = [];
     this.coordenadasCopy = [];
-    this._guiaService.buscarPartidasFolio(this.guia.folio).subscribe((facturas: any) => {
-      if (facturas.ok) {
-        const cont = facturas.facturas.length;
-        this._guiaService.coordenadasCliente(facturas.facturas[0].cliente).subscribe((coords: any) => {
-            this.lat = coords.coords.lat;
-            this.lng = coords.coords.lng;
-        });
+    // this._guiaService.buscarPartidasFolio(this.guia.folio).subscribe((facturas: any) => {
+    //   if (facturas.ok) {
+    //     const cont = facturas.facturas.length;
+    //     this._guiaService.coordenadasCliente(facturas.facturas[0].cliente).subscribe((coords: any) => {
+    //         this.lat = coords.coords.lat;
+    //         this.lng = coords.coords.lng;
+    //     });
 
-        for (let i = 0; i < cont; i++) {
-          let esCliente = (cli: any) => {
-            return cli.cliente === facturas.facturas[i].cliente;
-          }
+    //     for (let i = 0; i < cont; i++) {
+    //       let esCliente = (cli: any) => {
+    //         return cli.cliente === facturas.facturas[i].cliente;
+    //       }
 
-          if (!this.clientes.find(esCliente)) {
-            this.clientes.push(facturas.facturas[i]);
-          }
-        }
+    //       if (!this.clientes.find(esCliente)) {
+    //         this.clientes.push(facturas.facturas[i]);
+    //       }
+    //     }
 
-        for (let i = 0; i < this.clientes.length; i++) {
-          this._guiaService.coordenadasCliente(this.clientes[i].cliente).subscribe((coords: any) => {
-            if (coords.ok) {
-              let latCor;
-              let lngCor;
+    //     for (let i = 0; i < this.clientes.length; i++) {
+    //       this._guiaService.coordenadasCliente(this.clientes[i].cliente).subscribe((coords: any) => {
+    //         if (coords.ok) {
+    //           let latCor;
+    //           let lngCor;
 
-              const enviar = {
-                id: (i + 1),
-                label: String(this.clientes[i].cliente),
-                factura: this.clientes[i].factura,
-                origin: {
-                  lat: coords.coords.lat,
-                  lng: coords.coords.lng
-                },
-                datos: {
-                  cliente: this.clientes[i].cliente,
-                  nombre: this.clientes[i].nombre,
-                  domicilio: this.clientes[i].domicilio,
-                  poblacion: this.clientes[i].poblacion,
-                  vendedor: this.clientes[i].vendedor,
-                  realizo: this.clientes[i].usuario.nombre,
-                  imagen: 'cliente.jpg'
-                }
-              }
-              this.coordenadas.push(enviar);
-              this.coordenadas.sort(function (a, b) {
-                if (a.id > b.id) {
-                  return 1;
-                }
-                if (a.id < b.id) {
-                  return -1;
-                }
-                return 0;
-              });
-              this.coordenadasCopy.push(enviar);
-              this.coordenadasCopy.sort(function (a, b) {
-                if (a.id > b.id) {
-                  return 1;
-                }
-                if (a.id < b.id) {
-                  return -1;
-                }
-                return 0;
-              });
-            }
-          }, err => console.log(err.error.mensaje));
-        }
-      }
-    });
+    //           const enviar = {
+    //             id: (i + 1),
+    //             label: String(this.clientes[i].cliente),
+    //             factura: this.clientes[i].factura,
+    //             origin: {
+    //               lat: coords.coords.lat,
+    //               lng: coords.coords.lng
+    //             },
+    //             datos: {
+    //               cliente: this.clientes[i].cliente,
+    //               nombre: this.clientes[i].nombre,
+    //               domicilio: this.clientes[i].domicilio,
+    //               poblacion: this.clientes[i].poblacion,
+    //               vendedor: this.clientes[i].vendedor,
+    //               realizo: this.clientes[i].usuario.nombre,
+    //               imagen: 'cliente.jpg'
+    //             }
+    //           }
+    //           this.coordenadas.push(enviar);
+    //           this.coordenadas.sort(function (a, b) {
+    //             if (a.id > b.id) {
+    //               return 1;
+    //             }
+    //             if (a.id < b.id) {
+    //               return -1;
+    //             }
+    //             return 0;
+    //           });
+    //           this.coordenadasCopy.push(enviar);
+    //           this.coordenadasCopy.sort(function (a, b) {
+    //             if (a.id > b.id) {
+    //               return 1;
+    //             }
+    //             if (a.id < b.id) {
+    //               return -1;
+    //             }
+    //             return 0;
+    //           });
+    //         }
+    //       }, err => console.log(err.error.mensaje));
+    //     }
+    //   }
+    // });
   }
 
   ngOnDestroy() {

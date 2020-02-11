@@ -2,9 +2,9 @@
 
     <div class="col-12" *ngIf="usuario.rol === 'ADMIN_ROLE' || usuario.rol === 'DIR_ROLE' || usuario.rol === 'GER_ROLE' || usuario.rol === 'AUD_ROLE'">
 
-        <button class="btn btn-info" (click)="obtenerReporte(guiasEnc)">Generar Reporte</button>
+        <button class="btn btn-info" (click)="obtenerReporte(guiasEnc)" *ngIf="guiasEnc.length > 0">Generar Reporte</button>
 
-        <button class="btn btn-danger" (click)="limpiarReporte()">Limpiar Reporte</button>
+        <button class="btn btn-danger" (click)="limpiarReporte()" *ngIf="guiasEnc.length > 0">Limpiar Reporte</button>
 
         <div class="mt-2" *ngIf="pdf !== ''">
 
@@ -458,9 +458,11 @@
 
                                 <th class="text-center">PDF</th>
 
-                                <th class="text-center">Enviar</th>
+                                <th class="text-center" *ngIf="usuario.rol === 'ADMIN_ROLE'">Enviar</th>
 
-                                <th class="text-center">Editar</th>
+                                <th class="text-center" *ngIf="usuario.rol === 'ADMIN_ROLE'">Editar</th>
+
+                                <th class="text-center" *ngIf="usuario.rol === 'ADMIN_ROLE'">Eliminar</th>
 
                             </tr>
 
@@ -513,12 +515,6 @@
 
                                 <td class="text-center">
 
-                                    <!-- <a href="#modalPDF" data-dismiss="modal" data-toggle="modal" (click)="modalPDF(g)">
-
-                                        <img src="assets/images/icon/pdf.png" class="img-fluid" width="20">
-
-                                    </a> -->
-
                                     <a [href]="'https://ferremayoristas.com.mx/api/pdf/' + g.pdf" target="_blank">
 
                                         <img src="assets/images/icon/pdf.png" class="img-fluid" width="20">
@@ -545,7 +541,17 @@
 
                                     </button>
 
-                                    <button [id]="'confirm' + g.chofer._id" class="btn btn-outline-success" (click)="enviarEditar(g)" style="display: none">
+                                    <button [id]="'confirm' + g.chofer._id" class="btn btn-outline-success" (click)="enviarEditar(g)" *ngIf="usuario.rol === 'ADMIN_ROLE'" style="display: none">
+
+                                        <i class="mdi mdi-tooltip-outline-plus"></i>
+
+                                    </button>
+
+                                </td>
+
+                                <td class="text-center">
+
+                                    <button class="btn btn-outline-danger" (click)="eliminarGuia(g, i)" *ngIf="usuario.rol === 'ADMIN_ROLE'">
 
                                         <i class="mdi mdi-tooltip-outline-plus"></i>
 

@@ -7,17 +7,26 @@ import { URL_SERVICIO_GENERAL, PUERTO_INTERNO, PUERTO_SERVER } from '../../confi
 // Modelo
 import { Cotizacion } from '../../models/cotizacion.model';
 
+// Servicios
+import { UsuarioService } from '../usuario/usuario.service';
+
 @Injectable()
 export class PedidosService {
 
+  token: string = '';
   url: string;
 
   constructor(
-    private http: HttpClient
-  ) { }
+    private http: HttpClient,
+    private _usuarioS: UsuarioService
+  ) {
+    this.token = this._usuarioS.token;
+  }
 
   obtenerCotizaciones() {
     this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cotizacion';
+
+    this.url += '?token=' + this.token;
 
     return this.http.get(this.url);
   }
@@ -25,17 +34,21 @@ export class PedidosService {
   obtenerOrdenCompra() {
     this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cotizacion/orden';
 
+    this.url += '?token=' + this.token;
+
     return this.http.get(this.url);
   }
 
   obtenerProducto(codigo: any, precio: any) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/productos/buscar/codigo/' + codigo + '/' + precio;
+    this.url = URL_SERVICIO_GENERAL + '/api/productos.php?opcion=3&codigo=' + codigo + '&precio=' + precio;
 
     return this.http.get(this.url);
   }
 
   guardarCotizacion(cotizacion: Cotizacion) {
     this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cotizacion';
+
+    this.url += '?token=' + this.token;
 
     return this.http.post(this.url, cotizacion);
   }
@@ -190,11 +203,13 @@ export class PedidosService {
   guardarOrden(orden: any) {
     this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cotizacion/orden';
 
+    this.url += '?token=' + this.token;
+
     return this.http.post(this.url, orden);
   }
 
   buscarLote(codigo: any) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/productos/lote/codigo/' + codigo;
+    this.url = URL_SERVICIO_GENERAL + '/api/productos.php?opcion=2&codigo=' + codigo;
 
     return this.http.get(this.url);
   }

@@ -20,7 +20,7 @@ export class ImagenPipe implements PipeTransform {
     let url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/img';
 
     if ( !img ) {
-      return url + '/usuarios/xxx';
+      return url + '/usuarios/xxx' + '?token=' + this.token;
     }
 
     if ( img.indexOf('http') >= 0 ) {

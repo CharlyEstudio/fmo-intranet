@@ -3,6 +3,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 import { NgForm } from '@angular/forms';
 
+import { URL_SERVICIO_GENERAL } from '../../config/config';
+
 // Servicios
 import { GuiasService, UsuarioService, WebsocketService, ChoferesService, HerramientasService, ClientesService } from '../../services/services.index';
 
@@ -556,7 +558,6 @@ export class DashboardLogisticaComponent implements OnInit {
   }
 
   eliminarFolio(folio: any, index: any) {
-    console.log(folio);
     this._guiasServices.buscarEspeciales(folio.folio).subscribe( ( especiales: any ) => {
       if (especiales.length > 0) {
         for (let i = 0; i < especiales.length; i++) {
@@ -586,7 +587,6 @@ export class DashboardLogisticaComponent implements OnInit {
         localStorage.removeItem('especiales');
         localStorage.setItem('especiales', JSON.stringify(this.especiales));
       }
-      console.log(this.especiales);
     });
     this.folios.splice(index, 1);
 
@@ -1086,7 +1086,6 @@ export class DashboardLogisticaComponent implements OnInit {
     const fol = Number(folio);
     this._guiasServices.buscarFolioHistorial(fol).subscribe((factura: any) => {
       if (factura.ok) {
-        console.log(factura);
         if (factura.folios.length > 0) {
           this.facturaEncontrada = true;
           this.noFac = fol;
@@ -1128,7 +1127,6 @@ export class DashboardLogisticaComponent implements OnInit {
   }
 
   editar(folio: any) {
-    console.log(folio);
     const editar = <HTMLElement>(document.getElementById('edit' + folio.chofer._id));
     editar.style.display = "none";
     const chofer = <HTMLElement>(document.getElementById('chofer' + folio.chofer._id));
@@ -1144,7 +1142,7 @@ export class DashboardLogisticaComponent implements OnInit {
     document.getElementById('chofer' + folio.chofer._id).style.display = "inline";
     document.getElementById('confirm' + folio.chofer._id).style.display = "none";
     document.getElementById('choferSel' + folio.chofer._id).style.display = "none";
-    this._guiasServices.actualizarGuiaPri(folio.chofer._id, this.chf).subscribe((resp: any) => {
+    this._guiasServices.actualizarGuiaPri(folio, this.chf).subscribe((resp: any) => {
       if (resp.ok) {
         this.verGuias();
         this._webSocket.acciones('centinela-chofer', resp.guia);
@@ -1255,16 +1253,28 @@ export class DashboardLogisticaComponent implements OnInit {
   obtenerReporte(guias: any) {
     this._guiasServices.generarReporteGuiasDia(guias).subscribe((resp: any) => {
       if (resp.length > 10) {
-        this.pdf = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/' + resp);
+        this.pdf = this.sanitizer.bypassSecurityTrustResourceUrl(URL_SERVICIO_GENERAL + '/api/' + resp);
         swal('Creado', 'Se creo el reporte correctamente', 'success');
       } else {
         swal('Error', 'No se creo el documento', 'danger');
       }
-    });
+    }, e => swal('Error', 'No se creo el documento', 'danger'));
   }
 
   limpiarReporte() {
     this.pdf = '';
+  }
+
+  eliminarGuia(guia: any, indice: number) {
+    this._guiasServices.borrarGuia(guia._id).subscribe((resp: any) => {
+      this.guiasEnc.splice(indice, 1);
+      // this.folios = this.guiasEnc;
+      // if (this.folios.length === 0) {
+      //   this.guias = false;
+      //   this.tuberias = false;
+      // }
+      this.verGuias();
+    });
   }
 
 }

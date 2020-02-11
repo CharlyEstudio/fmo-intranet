@@ -22,14 +22,12 @@ export class EntregasComponent implements OnInit {
   }
 
   buscarEntregas() {
-    console.log(this.numero);
     if (this.numero.nativeElement.value === '') {
       return;
     }
 
     this.guiasService.buscarEntregasCliente(this.numero.nativeElement.value).subscribe((entregas: any) => {
       if (entregas.ok) {
-        console.log(entregas.guia);
         this.entregas = entregas.guia;
       }
     });

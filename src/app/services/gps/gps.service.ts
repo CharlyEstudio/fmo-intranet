@@ -3,8 +3,13 @@ import { HttpClient } from '@angular/common/http';
 
 // Config
 import { URL_SERVICIO_GENERAL, PUERTO_INTERNO, PUERTO_SERVER, PUERTO_INTERNO_DOS } from '../../config/config';
+
+// Modelo
 import { Visor } from '../../models/visor.model';
+
+// Servicios
 import { ServidorService } from '../db/servidor.service';
+import { UsuarioService } from '../usuario/usuario.service';
 
 @Injectable()
 export class GpsService {
@@ -15,9 +20,10 @@ export class GpsService {
 
   constructor(
     public http: HttpClient,
-    private _servidor: ServidorService
+    private _servidor: ServidorService,
+    private _usuarioS: UsuarioService
   ) {
-    this.token = localStorage.getItem('token');
+    this.token = this._usuarioS.token;
   }
 
   obtenerUbicaciones() {
@@ -51,7 +57,9 @@ export class GpsService {
   }
 
   obtenerIMEIAsesorAll(desde: number = 0) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO_DOS + '/gps/desde?desde=' + desde;
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/gps/desde?desde=' + desde;
+
+    this.url += '&token=' + this.token;
 
     return this.http.get(this.url);
   }

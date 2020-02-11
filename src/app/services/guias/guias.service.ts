@@ -9,7 +9,7 @@ import { GuiasPartidas } from '../../models/guias.model';
 import { Guia } from '../../models/guia.model';
 import { Chofer } from '../../models/chofer.model';
 import { Unidades } from '../../models/unidades.model';
-import { Ruta } from '../../models/ruta.model';
+// import { Ruta } from '../../models/ruta.model';
 import { UsuarioService } from '../usuario/usuario.service';
 
 @Injectable()
@@ -22,7 +22,6 @@ export class GuiasService {
     private http: HttpClient,
     private _usuario: UsuarioService
   ) {
-    // this.token = localStorage.getItem('token');
     this.token = this._usuario.token;
   }
 
@@ -33,18 +32,20 @@ export class GuiasService {
   }
 
   obtenerGuias() {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/todo';
+    // this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/todo';
 
-    this.url += '?token=' + this.token;
+    // this.url += '?token=' + this.token;
 
-    return this.http.get( this.url )
-      .map( (resp: any) => {
-        return resp;
-      });
+    // return this.http.get( this.url )
+    //   .map( (resp: any) => {
+    //     return resp;
+    //   });
   }
 
   obtenerGuiasDia(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/dia/' + fecha;
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guia/dia/' + fecha;
+
+    this.url += '?token=' + this.token;
 
     return this.http.get( this.url )
       .map( (resp: any) => {
@@ -53,15 +54,15 @@ export class GuiasService {
   }
 
   buscarFolioGuia(folio: any) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/' + folio;
+    // this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/' + folio;
 
-    this.url += '?token=' + this.token;
+    // this.url += '?token=' + this.token;
 
-    return this.http.get( this.url );
+    // return this.http.get( this.url );
   }
 
   buscarFolioGuiaGnl(folio: any) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/gnal/' + folio;
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guia/buscar/gnal/' + folio;
 
     this.url += '?token=' + this.token;
 
@@ -69,7 +70,7 @@ export class GuiasService {
   }
 
   buscarFolioHistorial(folio: any) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/historial/' + folio;
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guia/buscar/historial/' + folio;
 
     this.url += '?token=' + this.token;
 
@@ -77,7 +78,7 @@ export class GuiasService {
   }
 
   buscarEntregasCliente(numero: any) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/ultimas/5/' + numero;
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guia/ultimas/5/' + numero;
 
     this.url += '?token=' + this.token;
 
@@ -85,7 +86,7 @@ export class GuiasService {
   }
 
   buscarGuiaPrin(folio: any) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/obtener/' + folio;
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guia/obtener/' + folio;
 
     this.url += '?token=' + this.token;
 
@@ -93,7 +94,7 @@ export class GuiasService {
   }
 
   buscarGuiaPrinId(guia: any) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/obtener/factura';
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guia/obtener/factura';
 
     this.url += '?token=' + this.token;
 
@@ -101,18 +102,18 @@ export class GuiasService {
   }
 
   procesarGuia(guia: GuiasPartidas) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias';
+    // this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias';
 
-    this.url += '?token=' + this.token;
+    // this.url += '?token=' + this.token;
 
-    return this.http.post( this.url, guia )
-      .map( (resp: any) => {
-        return resp;
-      });
+    // return this.http.post( this.url, guia )
+    //   .map( (resp: any) => {
+    //     return resp;
+    //   });
   }
 
   guardarGuia(guia: Guia, chofer: Chofer) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/guia';
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guia/guia';
 
     this.url += '?token=' + this.token;
 
@@ -124,7 +125,7 @@ export class GuiasService {
 
   // Esto ver mas a delante si lo quito
   guardarRuta(ruta: any, chofer: Chofer) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/ruta';
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guia/ruta';
 
     this.url += '?token=' + this.token;
 
@@ -135,7 +136,7 @@ export class GuiasService {
   }
 
   guardarRutaGuia(ruta: any, chofer: Chofer) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/rutas';
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guia/rutas';
 
     this.url += '?token=' + this.token;
 
@@ -146,14 +147,14 @@ export class GuiasService {
   }
 
   buscarPartidasFolio(folio: any) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/partidas/' + folio;
+    // this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/partidas/' + folio;
 
-    this.url += '?token=' + this.token;
+    // this.url += '?token=' + this.token;
 
-    return this.http.get( this.url )
-      .map( (resp: any) => {
-        return resp;
-      });
+    // return this.http.get( this.url )
+    //   .map( (resp: any) => {
+    //     return resp;
+    //   });
   }
 
   buscarEspeciales(folio: any) {
@@ -174,9 +175,9 @@ export class GuiasService {
   }
 
   reasignarFolio(folio: any) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/reasignar/' + folio._id;
+    // this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/reasignar/' + folio._id;
 
-    return this.http.put(this.url, folio);
+    // return this.http.put(this.url, folio);
   }
 
   enviarEmail(folio: any) {
@@ -187,7 +188,18 @@ export class GuiasService {
   }
 
   obtenerFacturasFolio(folio: any) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/partidas/' + folio;
+    // this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/partidas/' + folio;
+
+    // return this.http.get( this.url )
+    //   .map( (resp: any) => {
+    //     return resp;
+    //   });
+  }
+
+  buscarGuiasRango(inicial: any, final: any) {
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guia/buscar/rango/' + inicial + '/' + final;
+
+    this.url += '?token=' + this.token;
 
     return this.http.get( this.url )
       .map( (resp: any) => {
@@ -195,10 +207,12 @@ export class GuiasService {
       });
   }
 
-  buscarGuiasRango(inicial: any, final: any) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/buscar/rango/' + inicial + '/' + final;
+  borrarGuia(id: any) {
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guia/' + id;
 
-    return this.http.get( this.url )
+    this.url += '?token=' + this.token;
+
+    return this.http.delete( this.url )
       .map( (resp: any) => {
         return resp;
       });
@@ -217,32 +231,18 @@ export class GuiasService {
     + '&destination=' + destiny.lat + ',' + destiny.lng + '&departure_time=now&key=AIzaSyDLxUFj_KCshQNqoUG2i7WZFbkR0nigdhs');
   }
 
-  gpsMagnitracking(id: any) {
-    return this.http.get(
-      'https://www.magnitracking.net/api/api.php?api=user&ver=1.0&key=3825AD92B3D1A5BA03B725D02E90EB1A&cmd=OBJECT_GET_LOCATIONS,' + id
-    );
-  }
+  actualizarGuiaPri(data: any, chofer: Chofer) {
+    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guia/actualizar/principal/';
 
-  gpsMagUser() {
-    return this.http.get(
-      'https://www.magnitracking.net/api/api.php?api=user&ver=1.0&key=3825AD92B3D1A5BA03B725D02E90EB1A&cmd=USER_GET_OBJECTS'
-    );
-  }
+    this.url += '?token=' + this.token;
 
-  gpsMagUserId(id: any) {
-    return this.http.get(
-      'https://www.magnitracking.net/api/api.php?api=user&ver=1.0&key=3825AD92B3D1A5BA03B725D02E90EB1A&cmd=USER_GET_OBJECTS,' + id
-    );
-  }
-
-  actualizarGuiaPri(id: any, chofer: Chofer) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/guias/actualizar/principal/' + id;
-
-    return this.http.put( this.url, chofer );
+    return this.http.put( this.url, {guia: data, chofer} );
   }
 
   obtenerUnidades() {
     this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/unidades';
+
+    this.url += '?token=' + this.token;
 
     return this.http.get(this.url);
   }

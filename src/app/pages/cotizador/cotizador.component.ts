@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
+import { URL_SERVICIO_GENERAL } from '../../config/config';
+
 // Servicios
 import { UsuarioService, ClientesService, DiariosService, PedidosService } from '../../services/services.index';
 
@@ -18,8 +20,6 @@ const swal: SweetAlert = _swal as any;
   styles: []
 })
 export class CotizadorComponent implements OnInit {
-
-  // @ViewChild('cantidad') cantidadInput: ElementRef;
 
   fecha: any = '';
   hora: any = '';
@@ -171,7 +171,7 @@ export class CotizadorComponent implements OnInit {
       this.enviarBool = false;
       if (localStorage.getItem('ordenGuardada') !== null) {
         this.ordenGuardada = JSON.parse(localStorage.getItem('ordenGuardada'));
-        this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/cotizaciones/' + this.ordenGuardada.pdf);
+        this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl(URL_SERVICIO_GENERAL + '/api/cotizaciones/' + this.ordenGuardada.pdf);
       }
       if (localStorage.getItem('guardado') === 'true') {
         this.guardado = true;
@@ -242,7 +242,7 @@ export class CotizadorComponent implements OnInit {
       this.nameBol = false;
       if (localStorage.getItem('ordenGuardada') !== null) {
         this.ordenGuardada = JSON.parse(localStorage.getItem('ordenGuardada'));
-        this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/ordenes/' + this.ordenGuardada.pdf);
+        this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl(URL_SERVICIO_GENERAL + '/api/ordenes/' + this.ordenGuardada.pdf);
       }
       if (localStorage.getItem('pedidoDistIntranet') !== null) {
         this.file = localStorage.getItem('filePDF');
@@ -380,7 +380,7 @@ export class CotizadorComponent implements OnInit {
   }
 
   accionOrds() {
-    this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/ordenes/' + this.ods.pdf);
+    this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl(URL_SERVICIO_GENERAL + '/api/ordenes/' + this.ods.pdf);
   }
 
   buscarCliente() {
@@ -403,7 +403,6 @@ export class CotizadorComponent implements OnInit {
           this.correoCli = data[0].CORREO;
           this.nivelPrecio = data[0].LISTA;
           this.rfc = data[0].RFC;
-          // this.file = this.nombre.replace(/ /gi, '-') + '-' + this.seg + '.pdf';
           const h = new Date();
           this.file = this.numero + String(h.getMonth()) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds()) + '.pdf';
           this.folio = 'C' + this.numero + String(h.getMonth() + 1) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds());
@@ -458,7 +457,6 @@ export class CotizadorComponent implements OnInit {
     this.rfc = '';
     if (this.usoNombre.length > 0) {
       this.nombre = this.usoNombre;
-      // this.file = this.nombre.replace(/ /gi, '-') + '-' + this.seg + '.pdf';
       const h = new Date();
       this.file = String(h.getMonth()) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds()) + '.pdf';
       this.folio = 'C' + String(h.getMonth() + 1) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds());
@@ -486,7 +484,6 @@ export class CotizadorComponent implements OnInit {
     this.idFerrum = this.prove.clienteid;
     this.nombre = this.prove.nombre;
     this.direccion = this.prove.direccion + ' ' + this.prove.casa + ' ' + this.prove.interior + ' ' + this.prove.colonia + ' ' + this.prove.ciudad + ', ' + this.prove.estado + ', ' + this.prove.cp;
-    // this.file = this.nombre.replace(/ /gi, '-') + '-' + this.seg + '.pdf';
     const h = new Date();
     this.file = this.numero + String(h.getMonth() + 1) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds()) + '.pdf';
     this.folio = 'C' + this.numero + String(h.getMonth()) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds());
@@ -508,10 +505,10 @@ export class CotizadorComponent implements OnInit {
   siguiente() {
     if (this.codigo !== '') {
       this._pedidoService.buscarLote(this.codigo).subscribe((lote: any) => {
-        if (lote.status) {
+        if (lote.length > 0) {
           const elem = <HTMLInputElement>(document.getElementById('cantidad'));
-          elem.value = lote.respuesta[0].lote;
-          this.cantidadStep = lote.respuesta[0].lote;
+          elem.value = lote[0].lote;
+          this.cantidadStep = lote[0].lote;
           elem.readOnly = false;
           elem.focus();
         } else {
@@ -536,6 +533,8 @@ export class CotizadorComponent implements OnInit {
 
     const division = inputCantidad % this.cantidadStep;
 
+    this.cantidad = inputCantidad;
+
     if (division === 0 && inputCantidad !== '0') {
       if (this.proveedor.length === 0) {
         if (this.codigo !== '') {
@@ -543,50 +542,48 @@ export class CotizadorComponent implements OnInit {
             this.nivelPrecio = 3;
           }
           this._pedidoService.obtenerProducto(this.codigo, this.nivelPrecio).subscribe((producto: any) => {
-            if (producto.status) {
-              if (producto.respuesta) {
-                this.subtotal += (producto.respuesta[0].precioneto * inputCantidad);
-                this.total += (producto.respuesta[0].precio * inputCantidad);
-                if (producto.respuesta[0].iva > 0) {
-                  this.iva += (producto.respuesta[0].precioneto * inputCantidad) * producto.respuesta[0].iva;
-                }
-                const agregar = {
-                  producto: producto.respuesta[0],
-                  precioFinal: (producto.respuesta[0].precioneto * inputCantidad),
-                  precioDesc: producto.respuesta[0].precioneto,
-                  precioTot: producto.respuesta[0].precio,
-                  cantidad: inputCantidad,
-                  claveUnidad: producto.respuesta[0].claveUnidad,
-                  claveProdServ: producto.respuesta[0].claveProdServ
-                };
-                this.prod.push(producto.respuesta[0]);
-                this.productos.push(agregar);
-                if (localStorage.getItem('pedidoDistIntranet') !== null) {
-                  localStorage.removeItem('prodDistIntranet');
-                  localStorage.removeItem('pedidoDistIntranet');
-                  localStorage.removeItem('subtotalPedIntranet');
-                  localStorage.removeItem('ivaPedIntranet');
-                  localStorage.removeItem('totalPedIntranet');
-                  localStorage.setItem('prodDistIntranet', JSON.stringify(this.prod));
-                  localStorage.setItem('pedidoDistIntranet', JSON.stringify(this.productos));
-                  localStorage.setItem('subtotalPedIntranet', String(this.subtotal));
-                  localStorage.setItem('ivaPedIntranet', String(this.iva));
-                  localStorage.setItem('totalPedIntranet', String(this.total));
-                } else {
-                  localStorage.setItem('prodDistIntranet', JSON.stringify(this.prod));
-                  localStorage.setItem('pedidoDistIntranet', JSON.stringify(this.productos));
-                  localStorage.setItem('subtotalPedIntranet', String(this.subtotal));
-                  localStorage.setItem('ivaPedIntranet', String(this.iva));
-                  localStorage.setItem('totalPedIntranet', String(this.total));
-                }
-                this.codigo = '';
-                this.cantidad = '';
-                const elem1 = <HTMLInputElement>(document.getElementById('cantidad'));
-                const elem2 = <HTMLInputElement>(document.getElementById('codigo'));
-                elem2.focus();
-                elem1.value = '';
-                elem1.readOnly = true;
+            if (producto.length > 0) {
+              this.subtotal += (producto[0].precioneto * inputCantidad);
+              this.total += (producto[0].precio * inputCantidad);
+              if (producto[0].iva > 0) {
+                this.iva += (producto[0].precioneto * inputCantidad) * producto[0].iva;
               }
+              const agregar = {
+                producto: producto[0],
+                precioFinal: (producto[0].precioneto * inputCantidad),
+                precioDesc: producto[0].precioneto,
+                precioTot: producto[0].precio,
+                cantidad: inputCantidad,
+                claveUnidad: producto[0].claveUnidad,
+                claveProdServ: producto[0].claveProdServ
+              };
+              this.prod.push(producto[0]);
+              this.productos.push(agregar);
+              if (localStorage.getItem('pedidoDistIntranet') !== null) {
+                localStorage.removeItem('prodDistIntranet');
+                localStorage.removeItem('pedidoDistIntranet');
+                localStorage.removeItem('subtotalPedIntranet');
+                localStorage.removeItem('ivaPedIntranet');
+                localStorage.removeItem('totalPedIntranet');
+                localStorage.setItem('prodDistIntranet', JSON.stringify(this.prod));
+                localStorage.setItem('pedidoDistIntranet', JSON.stringify(this.productos));
+                localStorage.setItem('subtotalPedIntranet', String(this.subtotal));
+                localStorage.setItem('ivaPedIntranet', String(this.iva));
+                localStorage.setItem('totalPedIntranet', String(this.total));
+              } else {
+                localStorage.setItem('prodDistIntranet', JSON.stringify(this.prod));
+                localStorage.setItem('pedidoDistIntranet', JSON.stringify(this.productos));
+                localStorage.setItem('subtotalPedIntranet', String(this.subtotal));
+                localStorage.setItem('ivaPedIntranet', String(this.iva));
+                localStorage.setItem('totalPedIntranet', String(this.total));
+              }
+              this.codigo = '';
+              this.cantidad = '';
+              const elem1 = <HTMLInputElement>(document.getElementById('cantidad'));
+              const elem2 = <HTMLInputElement>(document.getElementById('codigo'));
+              elem2.focus();
+              elem1.value = '';
+              elem1.readOnly = true;
             }
           });
         } else {
@@ -598,22 +595,22 @@ export class CotizadorComponent implements OnInit {
         }
       } else {
         this._pedidoService.obtenerProducto(this.codigo, this.nivelPrecio).subscribe((producto: any) => {
-          if (producto.status) {
-            this.subtotal += (producto.respuesta[0].precioneto * this.cantidad);
-            this.total += (producto.respuesta[0].precio * this.cantidad);
-            if (producto.respuesta[0].iva > 0) {
-              this.iva += (producto.respuesta[0].precioneto * this.cantidad) * producto.respuesta[0].iva;
+          if (producto.length > 0) {
+            this.subtotal += (producto[0].precioneto * this.cantidad);
+            this.total += (producto[0].precio * this.cantidad);
+            if (producto[0].iva > 0) {
+              this.iva += (producto[0].precioneto * this.cantidad) * producto[0].iva;
             }
             const agregar = {
-              producto: producto.respuesta[0],
-              precioFinal: (producto.respuesta[0].precioneto * this.cantidad),
-              precioDesc: producto.respuesta[0].precioneto,
-              precioTot: producto.respuesta[0].precio,
+              producto: producto[0],
+              precioFinal: (producto[0].precioneto * this.cantidad),
+              precioDesc: producto[0].precioneto,
+              precioTot: producto[0].precio,
               cantidad: this.cantidad,
-              claveUnidad: producto.respuesta[0].claveUnidad,
-              claveProdServ: producto.respuesta[0].claveProdServ
+              claveUnidad: producto[0].claveUnidad,
+              claveProdServ: producto[0].claveProdServ
             };
-            this.prod.push(producto.respuesta[0]);
+            this.prod.push(producto[0]);
             this.productos.push(agregar);
             if (localStorage.getItem('pedidoDistIntranet') !== null) {
               localStorage.removeItem('prodDistIntranet');
@@ -805,9 +802,9 @@ export class CotizadorComponent implements OnInit {
         })
         .then((value) => {
           if (operacion === '2') {
-            this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/ordenes/' + info.pdf);
+            this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl(URL_SERVICIO_GENERAL + '/api/ordenes/' + info.pdf);
           } else if (operacion === '1') {
-            this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/cotizaciones/' + info.pdf);
+            this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl(URL_SERVICIO_GENERAL + '/api/cotizaciones/' + info.pdf);
           }
         });
       } else {
@@ -987,7 +984,7 @@ export class CotizadorComponent implements OnInit {
         this.correoCli = correo[0].CORREO;
       }
     });
-    this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/cotizaciones/' + this.cts.pdf);
+    this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl(URL_SERVICIO_GENERAL + '/api/cotizaciones/' + this.cts.pdf);
   }
 
   cotizarNuevo() {

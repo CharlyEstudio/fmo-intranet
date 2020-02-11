@@ -27,6 +27,8 @@ export class ChoferesService {
   obtenerChoferes(desde: number = 0) {
     this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/chofer?desde=' + desde;
 
+    this.url += '&token=' + this.token;
+
     return this.http.get(this.url);
   }
 
@@ -39,24 +41,30 @@ export class ChoferesService {
   obtenerChoferesAll() {
     this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/chofer/all';
 
+    this.url += '?token=' + this.token;
+
     return this.http.get(this.url);
   }
 
   obtenerVerificadores() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/usuario/verificadores';
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/usuario/all/verificadores';
+
+    this.url += '?token=' + this.token;
 
     return this.http.get(this.url);
   }
 
   crearChofer(chofer: Chofer, usuario: Usuario) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/chofer/new';
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/chofer';
+
+    this.url += '?token=' + this.token;
 
     return this.http.post(this.url, {chofer: chofer, usuario: usuario});
   }
 
   borrarUsuario ( id: string ) {
     let url;
-    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/chofer/delete/' + id;
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/chofer/' + id;
 
     url += '?token=' + this.token;
 
@@ -65,7 +73,7 @@ export class ChoferesService {
 
   actualizarUsusario( chofer: Chofer ) {
     let url;
-    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/chofer/update/' + chofer._id;
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/chofer/' + chofer._id;
 
     url += '?token=' + this.token;
 

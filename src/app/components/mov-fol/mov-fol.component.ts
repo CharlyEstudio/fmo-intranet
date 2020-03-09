@@ -35,51 +35,51 @@ export class MovFolComponent implements OnInit {
     this.fol = folio;
 
     this._clientesService.obtenerMovimientoNumero(this.fol).subscribe( ( mov: any ) => {
-      if (mov.length > 0) {
+      if (mov.status) {
 
-        this._clientesService.obtenerMovimiento(mov[0].DOCID).subscribe( ( pagos: any ) => {
+        this._clientesService.obtenerMovimiento(mov.resp[0].DOCID).subscribe( ( pagos: any ) => {
 
-          this.folios = mov;
-          this.nombre = mov[0].NOMBRE;
-          this.num = mov[0].NUMERO;
+          this.folios = mov.resp;
+          this.nombre = mov.resp[0].NOMBRE;
+          this.num = mov.resp[0].NUMERO;
 
-          if (pagos.length > 0) {
+          if (pagos.status) {
 
             this.cargando = false;
 
             this.localizado = true;
 
-            for (let i = 0; i < pagos.length; i++) {
+            for (let i = 0; i < pagos.resp.length; i++) {
               let nuevo;
               if (pagos[i].FORMAPAGO !== 'NC' || pagos[i].PAGADO > 0) {
                 nuevo = [
                   {
-                    "CLIENTEID": mov[0].CLIENTEID,
-                    "DOCID": pagos[i].DOCID,
-                    "FECHAAPLICADA": pagos[i].FECHAAPLICADA,
-                    "FORMAPAGO": pagos[i].FORMAPAGO,
-                    "FP": pagos[i].FP,
+                    "CLIENTEID": mov.resp[0].CLIENTEID,
+                    "DOCID": pagos.resp[i].DOCID,
+                    "FECHAAPLICADA": pagos.resp[i].FECHAAPLICADA,
+                    "FORMAPAGO": pagos.resp[i].FORMAPAGO,
+                    "FP": pagos.resp[i].FP,
                     "NOMBRE": "",
                     "NUMERO": "",
-                    "ABONO": pagos[i].PAGADO,
+                    "ABONO": pagos.resp[i].PAGADO,
                     "CARGO": "",
-                    "PAGREF": pagos[i].NOTA,
-                    "RECIBO": pagos[i].RECIBO
+                    "PAGREF": pagos.resp[i].NOTA,
+                    "RECIBO": pagos.resp[i].RECIBO
                   }
                 ];
               } else {
                 nuevo = {
-                    "CLIENTEID": mov[0].CLIENTEID,
-                    "DOCID": pagos[i].DOCID,
-                    "FECHAAPLICADA": pagos[i].FECHAAPLICADA,
-                    "FORMAPAGO": pagos[i].FORMAPAGO,
-                    "FP": pagos[i].FP,
+                    "CLIENTEID": mov.resp[0].CLIENTEID,
+                    "DOCID": pagos.resp[i].DOCID,
+                    "FECHAAPLICADA": pagos.resp[i].FECHAAPLICADA,
+                    "FORMAPAGO": pagos.resp[i].FORMAPAGO,
+                    "FP": pagos.resp[i].FP,
                     "NOMBRE": "",
                     "NUMERO": "",
                     "ABONO": "",
-                    "CARGO": pagos[i].PAGADO,
-                    "PAGREF": pagos[i].NOTA,
-                    "RECIBO": pagos[i].RECIBO
+                    "CARGO": pagos.resp[i].PAGADO,
+                    "PAGREF": pagos.resp[i].NOTA,
+                    "RECIBO": pagos.resp[i].RECIBO
                 };
               }
 

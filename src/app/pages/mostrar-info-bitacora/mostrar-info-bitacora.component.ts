@@ -51,7 +51,7 @@ export class MostrarInfoBitacoraComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._sockets.escuchar('mensaje-folio').subscribe( ( ( escuchando: any ) => {
+    this._sockets.escuchar('mensaje-folio-send').subscribe( ( ( escuchando: any ) => {
       if (escuchando.comentario !== '') {
         swal(
           'Mensaje de ' + escuchando.remitente,

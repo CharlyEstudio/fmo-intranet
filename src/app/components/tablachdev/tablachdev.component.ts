@@ -89,9 +89,9 @@ export class TablachdevComponent implements OnInit {
     }
 
     this.chequesDevService.obtenemosFolioFerrum(folio).subscribe((datos: any) => {
-      if (datos.length > 0) {
-        this.documento = datos[0];
-        const nombre = datos[0].nombre;
+      if (datos.resp !== false) {
+        this.documento = datos.resp;
+        const nombre = datos.resp.nombre;
         this.msgFol = nombre;
       } else {
         this.msgFol = 'No existe este folio';

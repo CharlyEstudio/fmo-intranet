@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIO_GENERAL, PUERTO_SERVER, PUERTO_INTERNO } from '../../config/config';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { URL_SERVICIO_GENERAL, PUERTO_SERVER, PARAM_KEY, KEY } from '../../config/config';
 import { ServidorService } from '../db/servidor.service';
 
 @Injectable()
 export class PhpService {
+
+  head = new HttpHeaders();
+  headers = this.head.append(PARAM_KEY, KEY);
 
   url: string;
 
@@ -16,11 +19,11 @@ export class PhpService {
   // Si se cambia a PHP las consultas se debe de cambiar el URL de LOCAL a PETICIO =>>> OJO
 
   porBajar(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=1&fecha=' + fecha;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/porbajar/${fecha}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((bajar: any) => {
-      if (bajar.length > 0) {
-        return bajar[0];
+    return this.http.get( this.url, { headers: this.headers } ).map((bajar: any) => {
+      if (bajar.resp !== false) {
+        return bajar.resp;
       } else {
         return 0;
       }
@@ -28,11 +31,11 @@ export class PhpService {
   }
 
   porBajarZona( zona: any, fecha: any ) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=12&zona=' + zona;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/porbajar/zona/${zona}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((bajarZona: any) => {
-      if (bajarZona.length > 0) {
-        return bajarZona[0];
+    return this.http.get( this.url, { headers: this.headers } ).map((bajarZona: any) => {
+      if (bajarZona.resp !== false) {
+        return bajarZona.resp;
       } else {
         return 0;
       }
@@ -40,11 +43,11 @@ export class PhpService {
   }
 
   porBajarEspecial(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=14';
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/bajar/especial/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((bajarEspecial: any) => {
-      if (bajarEspecial.length > 0) {
-        return bajarEspecial[0];
+    return this.http.get( this.url, { headers: this.headers } ).map((bajarEspecial: any) => {
+      if (bajarEspecial.resp !== false) {
+        return bajarEspecial.resp;
       } else {
         return 0;
       }
@@ -52,11 +55,11 @@ export class PhpService {
   }
 
   porSurtir(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=2&fecha=' + fecha;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/porsurtir/${fecha}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((surtir: any) => {
-      if (surtir.length > 0) {
-        return surtir[0];
+    return this.http.get( this.url, { headers: this.headers } ).map((surtir: any) => {
+      if (surtir.resp !== false) {
+        return surtir.resp;
       } else {
         return 0;
       }
@@ -64,11 +67,11 @@ export class PhpService {
   }
 
   porSurtirZona( zona: any, fecha: any ) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=13&zona=' + zona;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/porsurtir/zona/${zona}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((surtir: any) => {
-      if (surtir.length > 0) {
-        return surtir[0];
+    return this.http.get( this.url, { headers: this.headers } ).map((surtir: any) => {
+      if (surtir.resp !== false) {
+        return surtir.resp;
       } else {
         return 0;
       }
@@ -76,11 +79,11 @@ export class PhpService {
   }
 
   porSurtirEspecial(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=15';
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/surtir/especial/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((bajarEspecial: any) => {
-      if (bajarEspecial.length > 0) {
-        return bajarEspecial[0];
+    return this.http.get( this.url, { headers: this.headers } ).map((bajarEspecial: any) => {
+      if (bajarEspecial.resp !== false) {
+        return bajarEspecial.resp;
       } else {
         return 0;
       }
@@ -88,11 +91,11 @@ export class PhpService {
   }
 
   facturados(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=3&fecha=' + fecha;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/facturado/${fecha}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((facturado: any) => {
-      if (facturado.length > 0) {
-        return facturado[0];
+    return this.http.get( this.url, { headers: this.headers } ).map((facturado: any) => {
+      if (facturado.resp !== false) {
+        return facturado.resp;
       } else {
         return 0;
       }
@@ -100,11 +103,11 @@ export class PhpService {
   }
 
   facturadoZona( zona: any, fecha: any ) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=16&zona=' + zona;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/facturado/zona/${zona}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((facZona: any) => {
-      if (facZona.length > 0) {
-        return facZona[0];
+    return this.http.get( this.url, { headers: this.headers } ).map((facZona: any) => {
+      if (facZona.resp !== false) {
+        return facZona.resp;
       } else {
         return 0;
       }
@@ -112,11 +115,11 @@ export class PhpService {
   }
 
   facturadoEspecial(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=17';
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/fac/especial/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((facEsp: any) => {
-      if (facEsp.length > 0) {
-        return facEsp[0];
+    return this.http.get( this.url, { headers: this.headers } ).map((facEsp: any) => {
+      if (facEsp.resp !== false) {
+        return facEsp.resp;
       } else {
         return 0;
       }
@@ -124,11 +127,11 @@ export class PhpService {
   }
 
   cancelados(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=4&fecha=' + fecha;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/cancelados/${fecha}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((cancelados: any) => {
-      if (cancelados.length > 0) {
-        return cancelados;
+    return this.http.get( this.url, { headers: this.headers } ).map((cancelados: any) => {
+      if (cancelados.resp !== false) {
+        return cancelados.resp;
       } else {
         return 0;
       }
@@ -136,11 +139,11 @@ export class PhpService {
   }
 
   canceladoZona( zona: any, fecha: any ) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/direccion.php?opcion=1&fecha=' + fecha + '&zona=' + zona;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/cancelados/zona/${zona}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((canZon: any) => {
-      if (canZon.length > 0) {
-        return canZon;
+    return this.http.get( this.url, { headers: this.headers } ).map((canZon: any) => {
+      if (canZon.resp !== false) {
+        return canZon.resp;
       } else {
         return 0;
       }
@@ -148,11 +151,11 @@ export class PhpService {
   }
 
   canceladoEspecial(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/direccion.php?opcion=2&fecha=' + fecha;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/cance/especial/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((canEsp: any) => {
-      if (canEsp.length > 0) {
-        return canEsp;
+    return this.http.get( this.url, { headers: this.headers } ).map((canEsp: any) => {
+      if (canEsp.resp !== false) {
+        return canEsp.resp;
       } else {
         return 0;
       }
@@ -160,11 +163,11 @@ export class PhpService {
   }
 
   totalPedidos(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=5&fecha=' + fecha;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/total/${fecha}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((totPed: any) => {
-      if (totPed.length > 0) {
-        return totPed;
+    return this.http.get( this.url, { headers: this.headers } ).map((totPed: any) => {
+      if (totPed.resp !== false) {
+        return totPed.resp;
       } else {
         return 0;
       }
@@ -172,23 +175,23 @@ export class PhpService {
   }
 
   nivelServicio() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=47';
+    this.url = `${URL_SERVICIO_GENERAL}/services/nivelservicio/${this._servidor.db}`;
 
-    return this.http.get( this.url );
+    return this.http.get( this.url, { headers: this.headers } );
   }
 
   nsFamilia() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=46';
+    this.url = `${URL_SERVICIO_GENERAL}/services/nivelservicio/bo/${this._servidor.db}`;
 
-    return this.http.get( this.url );
+    return this.http.get( this.url, { headers: this.headers } );
   }
 
   ventaActual(inicio: any, final: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/ventas.php?opcion=1';
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/ventaactual/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((totPed: any) => {
-      if (totPed.length > 0) {
-        return totPed[0];
+    return this.http.get( this.url, { headers: this.headers } ).map((totPed: any) => {
+      if (totPed.resp !== false) {
+        return totPed.resp;
       } else {
         return 0;
       }
@@ -196,17 +199,17 @@ export class PhpService {
   }
 
   ventaAnterior() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/ventas.php?opcion=2';
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/ventaanterior/${this._servidor.db}`;
 
-    return this.http.get( this.url );
+    return this.http.get( this.url, { headers: this.headers } );
   }
 
   zona(inicio: any, final: any, zona: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/ventas.php?opcion=3&zona=' + zona;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/ventaactual/zona/${zona}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((zonas: any) => {
-      if (zonas.length > 0) {
-        return zonas[0];
+    return this.http.get( this.url, { headers: this.headers } ).map((zonas: any) => {
+      if (zonas.resp !== false) {
+        return zonas.resp;
       } else {
         return 0;
       }
@@ -214,11 +217,11 @@ export class PhpService {
   }
 
   especial(inicio: any, final: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/ventas.php?opcion=4';
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/ventaactual/especiales/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((especiales: any) => {
-      if (especiales.length > 0) {
-        return especiales[0];
+    return this.http.get( this.url, { headers: this.headers } ).map((especiales: any) => {
+      if (especiales.resp !== false) {
+        return especiales.resp;
       } else {
         return 0;
       }
@@ -226,11 +229,11 @@ export class PhpService {
   }
 
   financiado() {
-    this.url = URL_SERVICIO_GENERAL + '/api/vencido.php?opcion=1&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/cartera/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((financiado: any) => {
-      if (financiado.length > 0) {
-        return financiado;
+    return this.http.get( this.url, { headers: this.headers } ).map((financiado: any) => {
+      if (financiado.resp !== false) {
+        return financiado.resp;
       } else {
         return 0;
       }
@@ -238,11 +241,11 @@ export class PhpService {
   }
 
   saldo(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + '/api/vencido.php?opcion=2&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/cartera/sana/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((saldo: any) => {
-      if (saldo.length > 0) {
-        return saldo;
+    return this.http.get( this.url, { headers: this.headers } ).map((saldo: any) => {
+      if (saldo.resp !== false) {
+        return saldo.resp;
       } else {
         return 0;
       }
@@ -250,29 +253,30 @@ export class PhpService {
   }
 
   vencido(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + '/api/vencido.php?opcion=3&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/cartera/vencido/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((vencido: any) => {
-      if (vencido.length > 0) {
-        return vencido;
+    return this.http.get( this.url, { headers: this.headers } ).map((vencido: any) => {
+      if (vencido.resp !== false) {
+        return vencido.resp;
       } else {
         return 0;
       }
     });
   }
 
-  mor18(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=4&servidor=' + this._servidor.db;
+  // mor18(fecha: any) {
+  //   this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=4&servidor=' + this._servidor.db;
+  //   this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/cartera/morosidad/18/${this._servidor.db}`;
 
-    return this.http.get( this.url );
-  }
+  //   return this.http.get( this.url, { headers: this.headers } );
+  // }
 
   mor(fecha: any, dias: any) {
-    this.url = URL_SERVICIO_GENERAL + '/api/morosidad.php?opcion=30&fecha=' + fecha + '&dias=' + dias + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/cartera/morosidad/${fecha}/${dias}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((vencido: any) => {
-      if (vencido.length > 0) {
-        return vencido;
+    return this.http.get( this.url, { headers: this.headers } ).map((vencido: any) => {
+      if (vencido.resp !== false) {
+        return vencido.resp;
       } else {
         return 0;
       }
@@ -280,18 +284,17 @@ export class PhpService {
   }
 
   listaMorosidad( id: any, inicio: any, fin: any ) {
-    this.url = URL_SERVICIO_GENERAL + ':' +
-    PUERTO_SERVER + '/api/morosidad.php?opcion=29&perid=' + id + '&inicio=' + inicio + '&fin=' + fin + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/cartera/lista/morosos/${id}/${inicio}/${fin}/${this._servidor.db}`;
 
-    return this.http.get( this.url );
+    return this.http.get( this.url, { headers: this.headers } );
   }
 
   diferencias() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/ventas.php?opcion=5&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/diferencias/saldo/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((diferencias: any) => {
-      if (diferencias.length > 0) {
-        return diferencias;
+    return this.http.get( this.url, { headers: this.headers } ).map((diferencias: any) => {
+      if (diferencias.resp !== null) {
+        return diferencias.resp;
       } else {
         return 0;
       }
@@ -299,11 +302,11 @@ export class PhpService {
   }
 
   nuevosNC() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/ventas.php?opcion=6&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/notascredito/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((ncs: any) => {
-      if (ncs.length > 0) {
-        return ncs;
+    return this.http.get( this.url, { headers: this.headers } ).map((ncs: any) => {
+      if (ncs.resp.length > 0) {
+        return ncs.resp;
       } else {
         return 0;
       }

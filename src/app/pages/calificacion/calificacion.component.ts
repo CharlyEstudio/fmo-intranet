@@ -39,9 +39,10 @@ export class CalificacionComponent implements OnInit {
 
   actualizar() {
     // Obtenemos la venta mínima diaria
-    this.panelAsesores.obtenerImporteVtaMinDiaria().subscribe((impoMin: any) => {
-      if (impoMin.length > 0) {
-        this.vtaMin = impoMin[0].data;
+    this.panelAsesores.obtenerImporteVtaDiaria().subscribe((impoMin: any) => {
+      console.log(impoMin);
+      if (impoMin.resp !== false) {
+        this.vtaMin = impoMin.resp.data;
       }
     });
     this.obtenerAsesores1(this.herramientas.fechaActual(), false);
@@ -50,23 +51,28 @@ export class CalificacionComponent implements OnInit {
 
   obtenerAsesores1(fecha: any, rango: boolean) {
     this.panelAsesores.obtenerAsesores(1).subscribe((aseZ1: any) => {
-      if (aseZ1.length > 0) {
+      if (aseZ1.resp !== false) {
         this.cantidadZona1 = 0;
-        this.cantidadZona1 = aseZ1.length;
+        this.cantidadZona1 = aseZ1.resp.length;
         this.trabajandoZona1 = 0;
         this.zona1 = [];
         const zonaPush = [];
-        for (const ase of aseZ1) {
+        for (const ase of aseZ1.resp) {
           this.panelAsesores.obtenerCalificacion(ase.perid, fecha, this.vtaMin, this.cliMin, rango).subscribe((calificacion: any) => {
-            if (calificacion.length > 0) {
+            if (calificacion.resp !== false) {
+              calificacion.resp.TRABAJADO_CLI = parseFloat(calificacion.resp.TRABAJADO_CLI);
+              calificacion.resp.TRABAJADO_VEN = parseFloat(calificacion.resp.TRABAJADO_VEN);
+              calificacion.resp.TRABAJADO_COB = parseFloat(calificacion.resp.TRABAJADO_COB);
+              calificacion.resp.SINVISITA = parseFloat(calificacion.resp.SINVISITA);
+              calificacion.resp.TIMEOUT = parseFloat(calificacion.resp.TIMEOUT);
               this.panelAsesores.pedidosOutTime(ase.perid, fecha).subscribe((pedout: any) => {
                 this.panelAsesores.visitasFalsas(ase.perid, fecha).subscribe((visfal: any) => {
-                  calificacion[0].SINVISITA = visfal.status ? (visfal.visitados.length * 0.1) : 0;
-                  calificacion[0].TIMEOUT = pedout.length > 0 ? (pedout[0].cantidad * 0.1) : 0;
-                  zonaPush.push(calificacion[0]);
+                  calificacion.resp.SINVISITA = visfal.status ? (visfal.visitados.length * 0.1) : 0;
+                  calificacion.resp.TIMEOUT = pedout.resp !== false ? (pedout.resp.cantidad * 0.1) : 0;
+                  zonaPush.push(calificacion.resp);
                   zonaPush.sort((a, b) => {
-                    const datoA = (a.TRABAJADO_CLI + a.TRABAJADO_VEN + a.TRABAJADO_COB);
-                    const datoB = (b.TRABAJADO_CLI + b.TRABAJADO_VEN + b.TRABAJADO_COB);
+                    const datoA = (parseFloat(a.TRABAJADO_CLI) + parseFloat(a.TRABAJADO_VEN) + parseFloat(a.TRABAJADO_COB));
+                    const datoB = (parseFloat(b.TRABAJADO_CLI) + parseFloat(b.TRABAJADO_VEN) + parseFloat(b.TRABAJADO_COB));
                     if (datoA > datoB) {
                       return 1;
                     }
@@ -90,23 +96,28 @@ export class CalificacionComponent implements OnInit {
 
   obtenerAsesores2(fecha: any, rango: boolean = false) {
     this.panelAsesores.obtenerAsesores(2).subscribe((aseZ2: any) => {
-      if (aseZ2.length > 0) {
+      if (aseZ2.resp !== false) {
         this.cantidadZona2 = 0;
-        this.cantidadZona2 = aseZ2.length;
+        this.cantidadZona2 = aseZ2.resp.length;
         this.trabajandoZona2 = 0;
         this.zona2 = [];
         const zonaPush = [];
-        for (const ase of aseZ2) {
+        for (const ase of aseZ2.resp) {
           this.panelAsesores.obtenerCalificacion(ase.perid, fecha, this.vtaMin, this.cliMin, rango).subscribe((calificacion: any) => {
-            if (calificacion.length > 0) {
+            if (calificacion.resp !== false) {
+              calificacion.resp.TRABAJADO_CLI = parseFloat(calificacion.resp.TRABAJADO_CLI);
+              calificacion.resp.TRABAJADO_VEN = parseFloat(calificacion.resp.TRABAJADO_VEN);
+              calificacion.resp.TRABAJADO_COB = parseFloat(calificacion.resp.TRABAJADO_COB);
+              calificacion.resp.SINVISITA = parseFloat(calificacion.resp.SINVISITA);
+              calificacion.resp.TIMEOUT = parseFloat(calificacion.resp.TIMEOUT);
               this.panelAsesores.pedidosOutTime(ase.perid, fecha).subscribe((pedout: any) => {
                 this.panelAsesores.visitasFalsas(ase.perid, fecha).subscribe((visfal: any) => {
-                  calificacion[0].SINVISITA = visfal.status ? (visfal.visitados.length * 0.1) : 0;
-                  calificacion[0].TIMEOUT = pedout.length > 0 ? (pedout[0].cantidad * 0.1) : 0;
-                  zonaPush.push(calificacion[0]);
+                  calificacion.resp.SINVISITA = visfal.status ? (visfal.visitados.length * 0.1) : 0;
+                  calificacion.resp.TIMEOUT = pedout.resp !== false ? (pedout.resp.cantidad * 0.1) : 0;
+                  zonaPush.push(calificacion.resp);
                   zonaPush.sort((a, b) => {
-                    const datoA = (a.TRABAJADO_CLI + a.TRABAJADO_VEN + a.TRABAJADO_COB);
-                    const datoB = (b.TRABAJADO_CLI + b.TRABAJADO_VEN + b.TRABAJADO_COB);
+                    const datoA = (parseFloat(a.TRABAJADO_CLI) + parseFloat(a.TRABAJADO_VEN) + parseFloat(a.TRABAJADO_COB));
+                    const datoB = (parseFloat(b.TRABAJADO_CLI) + parseFloat(b.TRABAJADO_VEN) + parseFloat(b.TRABAJADO_COB));
                     if (datoA > datoB) {
                       return 1;
                     }

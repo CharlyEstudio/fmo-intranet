@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIO_GENERAL, PUERTO_INTERNO } from '../../config/config';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { URL_SERVICIO_GENERAL, PARAM_KEY, KEY } from '../../config/config';
 import { ServidorService } from '../db/servidor.service';
 
 @Injectable()
 export class BackorderService {
+
+  head = new HttpHeaders();
+  headers = this.head.append(PARAM_KEY, KEY);
 
   url: string;
 
@@ -14,9 +17,9 @@ export class BackorderService {
   ) { }
 
   backorder(perid: any, numero: any, inicio: any, final: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/backorder/' + perid + '/' + numero + '/' + inicio + '/' + final + '/' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/backorder/asesor/cliente/numero/${perid}/${numero}/${inicio}/${final}/${this._servidor.db}`;
 
-    return this.http.get(this.url);
+    return this.http.get(this.url, { headers: this.headers } );
   }
 
 }

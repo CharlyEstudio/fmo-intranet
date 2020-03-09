@@ -50,7 +50,7 @@ export class AppComponent implements OnInit {
       });
 
       // Nueva garantía realizada
-      this._wsService.escuchar('nuevo-cheque-devuelto').subscribe((chd: any) => {
+      this._wsService.escuchar('nuevo-cheque-devuelto-send').subscribe((chd: any) => {
         const remitente = 'Cheque Devuelto';
         let comentario: any;
         switch (chd.opcion) {
@@ -71,27 +71,27 @@ export class AppComponent implements OnInit {
       });
 
       // Nueva garantía realizada
-      this._wsService.escuchar('nueva-garantia').subscribe((garantia: any) => {
+      this._wsService.escuchar('nueva-garantia-send').subscribe((garantia: any) => {
         const remitente = 'Nueva Garantia';
         const comentario = 'Se realizó una nueva garantía.';
         this.pushNotGarantia(garantia.datos.numcli, garantia.datos.nomcli, comentario, remitente, garantia.usuario.img);
       });
 
       // Seguimientos de garantías realizada
-      this._wsService.escuchar('seguimiento-garantia').subscribe((garantia: any) => {
+      this._wsService.escuchar('seguimiento-garantia-send').subscribe((garantia: any) => {
         const remitente = 'Seguimiento de Garantia';
         const comentario = 'cambio de estado a ==' + garantia.estado + '== en la garantía ' + garantia.folio;
         this.pushNotGarantia(garantia.numeroCli, garantia.nombreCli, comentario, remitente, garantia.usuario.img);
       });
 
       // Nuevo Comentario del Asesor
-      this._wsService.escuchar('comentario-asesor').subscribe((comentar: any) => {
+      this._wsService.escuchar('comentario-asesor-send').subscribe((comentar: any) => {
         const comentario = 'Estuvo con el cliente ' + comentar.respuesta.numero + ' y su acción fue ' + comentar.respuesta.accion;
         this.pushNot(comentar.respuesta.hora, comentar.asesor.nombre, comentario, 'Visitas Asesor', comentar.asesor.img);
       });
 
       // Aviso de Ir con el Cliente por el chófer
-      this._wsService.escuchar('aviso-ir-cliente').subscribe((ir: any) => {
+      this._wsService.escuchar('aviso-ir-cliente-send').subscribe((ir: any) => {
         if (ir.status) {
           let numero;
           if (ir.respuesta.guia.facturas.length > 0) {
@@ -107,12 +107,12 @@ export class AppComponent implements OnInit {
       });
 
       // Se genera nueva guía
-      this._wsService.escuchar('centinela-chofer').subscribe((chofer: any) => {
+      this._wsService.escuchar('centinela-chofer-send').subscribe((chofer: any) => {
         this.pushNot('Chofer', chofer.nombre, 'Nueva Guía', 'Guías', chofer.img, false, 'choferes');
       });
 
       // Pedido entregado por el chófer
-      this._wsService.escuchar('pedido-entregado').subscribe((chofer: any) => {
+      this._wsService.escuchar('pedido-entregado-send').subscribe((chofer: any) => {
         this._choferService.obtenerChofer(chofer.respuesta.chofer).subscribe((chof: any) => {
           const mesage = `Entrega pedido a ${chofer.respuesta.nomcli}`;
           this.pushNot('Chofer', chofer.respuesta.nomchofer, mesage, 'Guías', chof.chofer.img, false, 'choferes');
@@ -120,12 +120,12 @@ export class AppComponent implements OnInit {
       });
 
       // Se genera un nuevo pedido en la tienda
-      this._wsService.escuchar('aviso-asesor').subscribe((pedido: any) => {
+      this._wsService.escuchar('aviso-asesor-send').subscribe((pedido: any) => {
         this.pushNot('Pedido de', pedido.cliente.nombre, 'Nuevo pedido de la tienda', 'Tienda On-Line', pedido.cliente.numero, true);
       });
 
       // Nuevo Cliente registrado en la tienda
-      this._wsService.escuchar('registro-watch').subscribe((registro: any) => {
+      this._wsService.escuchar('registro-watch-send').subscribe((registro: any) => {
         if (registro.nombre) {
           let numero;
           if (registro.numero) {
@@ -140,13 +140,13 @@ export class AppComponent implements OnInit {
       });
 
       // Nuevo mensaje de la bitacora
-      this._wsService.escuchar('mensaje-folio').subscribe( ( escuchando: any ) => {
+      this._wsService.escuchar('mensaje-folio-send').subscribe( ( escuchando: any ) => {
         this.pushNot(escuchando.numero, escuchando.nombre, escuchando.comentario, escuchando.remitente, escuchando.img);
       });
 
       // Actividad realizada
       // TODO
-      this._wsService.escuchar('actividad-realizada').subscribe((ok: any) => {
+      this._wsService.escuchar('actividad-realizada-send').subscribe((ok: any) => {
         console.log(ok);
         this.pushNot(ok.nombre, ok.actividad, ok.comentario, 'Actividades Diarias');
       });
@@ -170,48 +170,48 @@ export class AppComponent implements OnInit {
       );
     } else if (localStorage.getItem('rol') === 'OF_ROLE') {
       // Nueva garantía realizada
-      this._wsService.escuchar('nueva-garantia').subscribe((garantia: any) => {
+      this._wsService.escuchar('nueva-garantia-send').subscribe((garantia: any) => {
         const remitente = 'Nueva Garantia';
         const comentario = 'Se realizó una nueva garantía.';
         this.pushNotGarantia(garantia.datos.numcli, garantia.datos.nomcli, comentario, remitente, garantia.usuario.img);
       });
 
       // Seguimientos de garantías realizada
-      this._wsService.escuchar('seguimiento-garantia').subscribe((garantia: any) => {
+      this._wsService.escuchar('seguimiento-garantia-send').subscribe((garantia: any) => {
         const remitente = 'Seguimiento de Garantia';
         const comentario = 'cambio de estado a ==' + garantia.estado + '== en la garantía ' + garantia.folio;
         this.pushNotGarantia(garantia.numeroCli, garantia.nombreCli, comentario, remitente, garantia.usuario.img);
       });
     }
 
-    if (localStorage.getItem('rol') === 'ADMIN_ROLE') {
-      // Subscripción a Diferencias
-      this.observar =  this.regresa().subscribe(
-        numero => {
-          if ( numero.length > 0 ) {
-            this.pushNot('Saldos', 'Diferentes', 'Se encontraron saldos diferentes en clientes, favor de revisar.', 'Diferencia de Saldos');
-          }
-        },
-        error => console.error('Error en el obs', error),
-        () => console.log('El observador termino!')
-      );
-    }
+    // if (localStorage.getItem('rol') === 'ADMIN_ROLE') {
+    //   // Subscripción a Diferencias
+    //   this.observar =  this.regresa().subscribe(
+    //     numero => {
+    //       if ( numero.length > 0 ) {
+    //         this.pushNot('Saldos', 'Diferentes', 'Se encontraron saldos diferentes en clientes, favor de revisar.', 'Diferencia de Saldos');
+    //       }
+    //     },
+    //     error => console.error('Error en el obs', error),
+    //     () => console.log('El observador termino!')
+    //   );
+    // }
   }
 
-  regresa(): Observable<any> {
-    return new Observable((observer: Subscriber<any>) => {
-      setInterval(() => {
-        this._phpService.diferencias()
-          .subscribe( ( resp: any ) => {
-            observer.next(resp);
-          });
-      }, 10000);
-    })
-    // .retry()
-    .map((resp) => {
-      return resp;
-    });
-  }
+  // regresa(): Observable<any> {
+  //   return new Observable((observer: Subscriber<any>) => {
+  //     setInterval(() => {
+  //       this._phpService.diferencias()
+  //         .subscribe( ( resp: any ) => {
+  //           observer.next(resp);
+  //         });
+  //     }, 10000);
+  //   })
+  //   // .retry()
+  //   .map((resp) => {
+  //     return resp;
+  //   });
+  // }
 
   regresaNC(): Observable<any> {
     return new Observable((observer: Subscriber<any>) => {

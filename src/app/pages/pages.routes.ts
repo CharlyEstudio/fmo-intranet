@@ -672,26 +672,26 @@ const pageRoutes: Routes = [
                     name: 'description'
                 }
     },
-    {
-        path: 'actividades',
-        component: ActividadesComponent,
-        canActivate: [ MesaGuard, VerificaTokenGuard ],
-        data:
-                {
-                    titulo: 'Actividades del día oficina',
-                    name: 'description'
-                }
-    },
-    {
-        path: 'asignaciones-act',
-        component: AsignacionActividadesComponent,
-        canActivate: [ MesaGuard, VerificaTokenGuard ],
-        data:
-                {
-                    titulo: 'Asignación de actividades',
-                    name: 'description'
-                }
-    },
+    // {
+    //     path: 'actividades',
+    //     component: ActividadesComponent,
+    //     canActivate: [ MesaGuard, VerificaTokenGuard ],
+    //     data:
+    //             {
+    //                 titulo: 'Actividades del día oficina',
+    //                 name: 'description'
+    //             }
+    // },
+    // {
+    //     path: 'asignaciones-act',
+    //     component: AsignacionActividadesComponent,
+    //     canActivate: [ MesaGuard, VerificaTokenGuard ],
+    //     data:
+    //             {
+    //                 titulo: 'Asignación de actividades',
+    //                 name: 'description'
+    //             }
+    // },
     {
         path: 'almacenistas',
         component: AlmacenistasComponent,

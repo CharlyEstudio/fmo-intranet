@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 
 // Servicios
-import { GpsService, UsuarioService, WebsocketService, MagnitrackingService } from '../../services/services.index';
+import { GpsService, UsuarioService, WebsocketService } from '../../services/services.index';
 
 @Component({
   selector: 'app-mapa',
@@ -58,17 +58,16 @@ export class MapaComponent implements OnInit, OnDestroy {
 
   constructor(
     private _gps: GpsService,
-    private _gpsMagni: MagnitrackingService,
     private _wsService: WebsocketService,
     private _usuariosServices: UsuarioService
   ) {
-    if (JSON.parse(localStorage.getItem('todoGps'))) {
+    if (localStorage.getItem('todoGps') !== 'undefined') {
       this.usuarios = JSON.parse(localStorage.getItem('todoGps'));
     } else {
       this._gps.obtenerClientesTotal().subscribe((todo: any) => {
-        if (todo.status) {
-          this.usuarios = todo.respuesta;
-          localStorage.setItem('todoGps', JSON.stringify(todo.respuesta));
+        if (todo.resp.length > 0) {
+          this.usuarios = todo.resp;
+          localStorage.setItem('todoGps', JSON.stringify(todo.resp));
         }
       });
     }
@@ -76,14 +75,9 @@ export class MapaComponent implements OnInit, OnDestroy {
 
   regresa(): Observable<any> {
     return new Observable((observer) => {
-      this._wsService.escuchar('gps-watch').subscribe((coords) => {
+      this._wsService.escuchar('gps-watch-send').subscribe((coords) => {
         observer.next(coords);
       });
-      // this.intervalo = setInterval(() => {
-      //   this._gps.obtenerUbicaciones().subscribe((coords: any) => {
-      //     observer.next(coords);
-      //   });
-      // }, 20000);
     });
   }
 
@@ -116,32 +110,33 @@ export class MapaComponent implements OnInit, OnDestroy {
     }
 
     if (valor === 1) {
-      this._gpsMagni.gpsMapUser().subscribe((coords: any) => {
-        let users: any[] = [];
-        this.usuarios = [];
-        console.log(coords);
-        // for (let i = 0; i < coords.usuarios.length; i++) {
-        //   if (coords.usuarios[i].lat > 0 || coords.usuarios[i].lng > 0) {
-        //     let newUsuario = {
-        //       CLIENTEID: coords.usuarios[i].id,
-        //       DIAVIS: 'Personal',
-        //       EMAIL: coords.usuarios[i].email,
-        //       IMAGEN: coords.usuarios[i].img,
-        //       LAT: coords.usuarios[i].lat,
-        //       LNG: coords.usuarios[i].lng,
-        //       NUMERO: 'Personal',
-        //       PERID: Number(coords.usuarios[i].idFerrum),
-        //       TEL: '000 000 0000',
-        //       ZONA: 'Sin Zona',
-        //       _id: coords.usuarios[i].id
-        //     };
-        //     users.push(newUsuario);
-        //   }
-        // }
-        // this.usuarios = users;
-      });
+      console.log('Opción 2');
+      // this._gpsMagni.gpsMapUser().subscribe((coords: any) => {
+      //   let users: any[] = [];
+      //   this.usuarios = [];
+      //   console.log(coords);
+      //   for (let i = 0; i < coords.usuarios.length; i++) {
+      //     if (coords.usuarios[i].lat > 0 || coords.usuarios[i].lng > 0) {
+      //       let newUsuario = {
+      //         CLIENTEID: coords.usuarios[i].id,
+      //         DIAVIS: 'Personal',
+      //         EMAIL: coords.usuarios[i].email,
+      //         IMAGEN: coords.usuarios[i].img,
+      //         LAT: coords.usuarios[i].lat,
+      //         LNG: coords.usuarios[i].lng,
+      //         NUMERO: 'Personal',
+      //         PERID: Number(coords.usuarios[i].idFerrum),
+      //         TEL: '000 000 0000',
+      //         ZONA: 'Sin Zona',
+      //         _id: coords.usuarios[i].id
+      //       };
+      //       users.push(newUsuario);
+      //     }
+      //   }
+      //   this.usuarios = users;
+      // });
 
-      // Subscripción
+      // // Subscripción
       // this.observar = this.regresa().subscribe(
       //   coords => {
       //     let localizado = (usuario: any) => {

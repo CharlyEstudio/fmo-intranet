@@ -70,8 +70,8 @@ export class PedCanceladosComponent implements OnInit, OnDestroy {
     this._phpService.cancelados(fecha)
       .subscribe((data) => {
         if ( data !== 0 ) {
-          this.cance = data[0].cantidad;
-          this.canceImpo = data[0].importe;
+          this.cance = data.cantidad;
+          this.canceImpo = data.importe;
         } else {
           this.cance = 0;
           this.canceImpo = 0;
@@ -81,22 +81,22 @@ export class PedCanceladosComponent implements OnInit, OnDestroy {
     // Cancelados Zona 1
     this._phpService.canceladoZona('2', fecha)
       .subscribe( ( data ) => {
-        this.zona1 = data[0].cantidad;
-        this.zona1Impo = data[0].importe;
+        this.zona1 = data.cantidad;
+        this.zona1Impo = data.importe;
       });
 
     // Cancelados Zona 2
     this._phpService.canceladoZona('1', fecha)
       .subscribe( ( data ) => {
-        this.zona2 = data[0].cantidad;
-        this.zona2Impo = data[0].importe;
+        this.zona2 = data.cantidad;
+        this.zona2Impo = data.importe;
       });
 
     // Cancelados Especiales
     this._phpService.canceladoEspecial(fecha)
       .subscribe( ( data ) => {
-        this.especiales = data[0].cantidad;
-        this.especialesImpo = data[0].importe;
+        this.especiales = data.cantidad;
+        this.especialesImpo = data.importe;
       });
   }
 
@@ -139,8 +139,8 @@ export class PedCanceladosComponent implements OnInit, OnDestroy {
 
             if (data !== 0) {
               const cancelados = {
-                cantidad: data[0].cantidad,
-                importe: data[0].importe
+                cantidad: data.cantidad,
+                importe: data.importe
               };
 
               observer.next(cancelados);
@@ -158,22 +158,22 @@ export class PedCanceladosComponent implements OnInit, OnDestroy {
         // Cancelados Zona 1
         this._phpService.canceladoZona('2', fecha)
         .subscribe( ( data ) => {
-          this.zona1 = data[0].cantidad;
-          this.zona1Impo = data[0].importe;
+          this.zona1 = data.cantidad;
+          this.zona1Impo = data.importe;
         });
 
         // Cancelados Zona 2
         this._phpService.canceladoZona('1', fecha)
           .subscribe( ( data ) => {
-            this.zona2 = data[0].cantidad;
-            this.zona2Impo = data[0].importe;
+            this.zona2 = data.cantidad;
+            this.zona2Impo = data.importe;
           });
 
         // Cancelados Especiales
         this._phpService.canceladoEspecial(fecha)
           .subscribe( ( data ) => {
-            this.especiales = data[0].cantidad;
-            this.especialesImpo = data[0].importe;
+            this.especiales = data.cantidad;
+            this.especialesImpo = data.importe;
           });
 
       }, 3000);

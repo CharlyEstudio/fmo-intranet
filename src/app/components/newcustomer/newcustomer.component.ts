@@ -15,7 +15,7 @@ export class NewcustomerComponent implements OnInit {
   constructor(
     private _webSocket: WebsocketService
   ) {
-    this._webSocket.escuchar('registro-watch').subscribe((registro: any) => {
+    this._webSocket.escuchar('registro-watch-send').subscribe((registro: any) => {
       if (registro.activo === 'NOT') {
         this.usuarioRegistrado = true;
       } else {

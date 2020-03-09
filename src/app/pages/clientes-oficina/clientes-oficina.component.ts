@@ -37,23 +37,24 @@ export class ClientesOficinaComponent implements OnInit {
 
   obtenerVisitas() {
     this.visitasClientes.obtenerVisitas().subscribe((visitas: any) => {
-      if (visitas.length > 0) {
-        this.visitas = visitas;
+      if (visitas.resp.length > 0) {
+        this.visitas = visitas.resp;
       }
     });
   }
 
   obtenerVisitasDia(fecha: any) {
     this.visitasClientes.obtenerVisitasDia(fecha).subscribe((visitasDia: any) => {
-      this.visitasDia = visitasDia; 
+      this.visitasDia = visitasDia.resp;
     });
   }
+
   obtenerInfofolio(folio: number, fecha: string, cliente: number) {
     this.visitasClientes.asegurarFolio(folio, fecha, cliente).subscribe((seguro: any) => {
-      if (seguro.length === 0) {
+      if (!seguro.resp) {
         this.visitasClientes.obtenerInfoFolio(folio, fecha, cliente).subscribe((info: any) => {
-          if (info.length > 0) {
-            this.info = info[0];
+          if (info.resp !== false) {
+            this.info = info.resp;
           }
         });
       } else {
@@ -64,8 +65,8 @@ export class ClientesOficinaComponent implements OnInit {
       }
     });
   }
-  
-  
+
+
   exportarVisitas(visitasexport: any, fecha) {
     const name = 'visitas-' + fecha;
     this.excel.exportAsExcelFile(visitasexport, name);

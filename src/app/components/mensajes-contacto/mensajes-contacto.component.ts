@@ -17,42 +17,42 @@ export class MensajesContactoComponent implements OnInit {
     private mensajeService: MensajesContactoService,
     private ws: WebsocketService
   ) {
-    this.obtenerMensajesContacto();
-    this.ws.escuchar('registro-watch').subscribe(() => {
-      this.obtenerMensajesContacto();
-    });
+    // this.obtenerMensajesContacto();
+    // this.ws.escuchar('registro-watch-send').subscribe(() => {
+    //   this.obtenerMensajesContacto();
+    // });
   }
 
   ngOnInit() {
   }
 
-  obtenerMensajesContacto() {
-    this.store.obtenerMensajesContacto().subscribe((mensajes: any) => {
-      if (mensajes.length > 0) {
-        this.mensajes = mensajes;
-        const enviar = {
-          cantidad: mensajes.length,
-          mensajes: mensajes,
-          status: true
-        };
-        this.mensajeService.mensajes.emit(enviar);
-      } else {
-        const enviar = {
-          cantidad: 0,
-          mensajes: [],
-          status: false
-        };
-        this.mensajeService.mensajes.emit(enviar);
-      }
-    });
-  }
+  // obtenerMensajesContacto() {
+  //   this.store.obtenerMensajesContacto().subscribe((mensajes: any) => {
+  //     if (mensajes.length > 0) {
+  //       this.mensajes = mensajes;
+  //       const enviar = {
+  //         cantidad: mensajes.length,
+  //         mensajes: mensajes,
+  //         status: true
+  //       };
+  //       this.mensajeService.mensajes.emit(enviar);
+  //     } else {
+  //       const enviar = {
+  //         cantidad: 0,
+  //         mensajes: [],
+  //         status: false
+  //       };
+  //       this.mensajeService.mensajes.emit(enviar);
+  //     }
+  //   });
+  // }
 
-  confirmarVisto(id: any) {
-    this.store.confirmarVisto(id).subscribe((modificado: any) => {
-      if (modificado.length === 0) {
-        this.obtenerMensajesContacto();
-      }
-    });
-  }
+  // confirmarVisto(id: any) {
+  //   this.store.confirmarVisto(id).subscribe((modificado: any) => {
+  //     if (modificado.length === 0) {
+  //       this.obtenerMensajesContacto();
+  //     }
+  //   });
+  // }
 
 }

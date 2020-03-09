@@ -161,7 +161,7 @@ export class BitacoraComponent implements OnInit, OnDestroy {
 
   regresar(): Observable<any> {
     return new Observable( ( observer: Subscriber<any> ) => {
-      this._webSocket.escuchar('mensaje-folio').subscribe( ( escuchando ) => {
+      this._webSocket.escuchar('mensaje-folio-send').subscribe( ( escuchando ) => {
         observer.next(escuchando);
       });
     });
@@ -295,9 +295,9 @@ export class BitacoraComponent implements OnInit, OnDestroy {
     this.charlaBol = true;
     this.sinsaldo = false;
     this.charla = [];
-    this._clienteService.infoCliente(termino, '', this.rol).subscribe((cliente: any) => {
-      if (cliente.length > 0) {
-        this._creditoService.obtenerComentarios(cliente[0].CLIENTEID).subscribe((comentarios: any) => {
+    this._clienteService.infoCliente(termino, 'ADMIN_ROLE', this.rol).subscribe((cliente: any) => {
+      if (cliente.status) {
+        this._creditoService.obtenerComentarios(cliente.resp.CLIENTEID).subscribe((comentarios: any) => {
           if (comentarios.ok) {
             if (comentarios.charla.length === 0) {
               this.sinsaldo = true;

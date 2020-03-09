@@ -65,14 +65,14 @@ export class RepoSurtidoComponent implements OnInit {
     }
 
     if (forma.value.filtro === 'vacio') {
-      this.area = '0';
+      this.area = 'null';
     } else {
       this.area = forma.value.filtro;
     }
 
     this._almacenService.obtenerReporte( this.area, forma.value.inicio, forma.value.fin ).subscribe( ( personal: any ) => {
-      if (personal.length > 0) {
-        this.personal = personal;
+      if (personal !== 0) {
+        this.personal = personal.resp;
 
         this.personal.sort((a, b) => {
           if (a.partidas < b.partidas) {

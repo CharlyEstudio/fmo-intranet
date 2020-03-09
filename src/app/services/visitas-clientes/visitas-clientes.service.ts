@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 // Config URL
-import { URL_SERVICIO_GENERAL, PUERTO_INTERNO_DOS, PUERTO_SERVER, PUERTO_INTERNO } from '../../config/config';
+import { URL_SERVICIO_GENERAL, PUERTO_SERVER, PUERTO_INTERNO, PARAM_KEY, KEY } from '../../config/config';
 
 // Servicios
 import { UsuarioService } from '../usuario/usuario.service';
 
 @Injectable()
 export class VisitasClientesService {
+
+  head = new HttpHeaders();
+  headers = this.head.append(PARAM_KEY, KEY);
 
   token: any;
 
@@ -20,27 +23,24 @@ export class VisitasClientesService {
   }
 
   obtenerVisitas() {
-    let url;
-    url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/visitas.php?opcion=30';
+    const url = `${URL_SERVICIO_GENERAL}/services/visitas/clientes/sistemas`;
 
-    return this.http.get( url );
+    return this.http.get( url, { headers: this.headers } );
   }
 
   obtenerVisitasDia(fecha: any) {
-    let url;
-    url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/visitas.php?opcion=52&fecha=' + fecha;
+    const url = `${URL_SERVICIO_GENERAL}/services/visitas/clientes/fecha/${fecha}/sistemas`;
 
-    return this.http.get( url );
+    return this.http.get( url, { headers: this.headers } );
   }
 
   asegurarFolio(folio: number, fecha: string, cliente: number) {
-    let url;
-    url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/visitas.php?opcion=33&folio=' + folio + '&fecha=' + fecha + '&numero=' + cliente;
+    const url = `${URL_SERVICIO_GENERAL}/services/visitas/validar/folio/${folio}/${fecha}/${cliente}/sistemas`;
 
-    return this.http.get( url );
+    return this.http.get( url, { headers: this.headers } );
   }
 
-  guardarVisita(data: any) {
+  guardarVisita(data: any) { // <= TODO guardar visita
     let url;
     url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/visitas.php?opcion=31';
 
@@ -48,20 +48,19 @@ export class VisitasClientesService {
   }
 
   obtenerInfoFolio(folio: number, fecha: string, cliente: number) {
-    let url;
-    url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/visitas.php?opcion=32&folio=' + folio + '&fecha=' + fecha + '&numero=' + cliente;
+    const url = `${URL_SERVICIO_GENERAL}/services/visitas/folio/${folio}/${fecha}/${cliente}/sistemas`;
 
-    return this.http.get( url );
+    return this.http.get( url, { headers: this.headers } );
   }
 
   resumenVisitaAsesorFecha(perid: any, fecha: any) {
-    const url = `https://ferremayoristas.com.mx:3001/visitas/asesor/${perid}/${fecha}?token=${this.token}`;
+    const url = `${URL_SERVICIO_GENERAL}:${PUERTO_INTERNO}/visitas/asesor/${perid}/${fecha}?token=${this.token}`;
 
     return this.http.get(url);
   }
 
   cambiarVisitaAsesorFecha(clienteid: any, perid: any, fecha: any, destino: any, origen: any) {
-    const url = `https://ferremayoristas.com.mx:3001/visitas/asesor?token=${this.token}`;
+    const url = `${URL_SERVICIO_GENERAL}:${PUERTO_INTERNO}/visitas/asesor?token=${this.token}`;
 
     return this.http.put(url, {clienteid, perid, fecha, destino, origen});
   }

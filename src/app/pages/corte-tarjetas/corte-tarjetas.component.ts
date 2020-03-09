@@ -37,8 +37,8 @@ export class CorteTarjetasComponent implements OnInit {
     private cobrador: CobradorService
   ) {
     this.cobrador.obtenerCobradores().subscribe((cobradores: any) => {
-      if (cobradores.length > 0) {
-        this.cobradores = cobradores;
+      if (cobradores.resp.length > 0) {
+        this.cobradores = cobradores.resp;
       }
     });
   }
@@ -68,17 +68,17 @@ export class CorteTarjetasComponent implements OnInit {
     }
 
     this.cobrador.obtenerCobros(Number(this.cob.nativeElement.value), this.fini.nativeElement.value, this.ffin.nativeElement.value).subscribe((cobrado: any) => {
-      if (cobrado.length > 0) {
+      if (cobrado.resp.length > 0) {
         this.total = 0;
         this.pagado = 0;
         this.comision = 0;
         this.impocom = 0;
-        this.cobrado = cobrado;
+        this.cobrado = cobrado.resp;
         for (const cob of this.cobrado) {
-          this.total += cob.TOTAL;
-          this.pagado += cob.PAGADO;
-          this.comision += cob.COMISION;
-          this.impocom += cob.IMPOCOM;
+          this.total += parseFloat(cob.TOTAL);
+          this.pagado += parseFloat(cob.PAGADO);
+          this.comision += parseFloat(cob.COMISION);
+          this.impocom += parseFloat(cob.IMPOCOM);
         }
       } else {
         this.cobrado = [];

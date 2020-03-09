@@ -35,23 +35,23 @@ export class CobroVistaComponent implements OnInit {
     // Otebtener Pagos
     this._asesorService.cobranza(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.cobranza = resp;
+        this.cobranza = resp.resp;
 
         for (let i = 0; i < this.cobranza.length; i++) {
 
           if (this.cobranza[i].formapago === 'C') {
-            this.cheques += this.cobranza[i].pagado;
+            this.cheques += parseFloat(this.cobranza[i].pagado);
           }
 
           if (this.cobranza[i].formapago === 'E') {
-            this.efectivo += this.cobranza[i].pagado;
+            this.efectivo += parseFloat(this.cobranza[i].pagado);
           }
 
           if (this.cobranza[i].formapago === 'R') {
-            this.transferencia += this.cobranza[i].pagado;
+            this.transferencia += parseFloat(this.cobranza[i].pagado);
           }
 
-          this.total += this.cobranza[i].pagado;
+          this.total += parseFloat(this.cobranza[i].pagado);
 
         }
 

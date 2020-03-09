@@ -1,23 +1,29 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { URL_SERVICIO_GENERAL, PARAM_KEY, KEY } from '../../config/config';
+import { ServidorService } from '../db/servidor.service';
 
 @Injectable()
 export class SeguimientoService {
 
+  head = new HttpHeaders();
+  headers = this.head.append(PARAM_KEY, KEY);
+
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private _servidorS: ServidorService
   ) { }
 
   obtenerFechaDias(diaSel: any) {
-    const url = `https://ferremayoristas.com.mx/api/seguimiento.php?opcion=3&diaSel=${diaSel}`;
+    const url = `${URL_SERVICIO_GENERAL}/services/seguimiento/versemanas/${diaSel}`;
 
-    return this.http.get(url);
+    return this.http.get( url, { headers: this.headers } );
   }
 
   obtenerSeguimiento(fecha: any, idFerrum: number) {
-    const url = `https://ferremayoristas.com.mx/api/seguimiento.php?opcion=4&fecha=${fecha}&perid=${idFerrum}`;
+    const url = `${URL_SERVICIO_GENERAL}/services/seguimiento/asesores/dia/${idFerrum}/${fecha}/${this._servidorS.db}`;
 
-    return this.http.get(url);
+    return this.http.get( url, { headers: this.headers } );
   }
 
 }

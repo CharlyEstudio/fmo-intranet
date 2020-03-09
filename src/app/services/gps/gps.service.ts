@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 // Config
-import { URL_SERVICIO_GENERAL, PUERTO_INTERNO, PUERTO_SERVER, PUERTO_INTERNO_DOS } from '../../config/config';
+import { URL_SERVICIO_GENERAL, PUERTO_INTERNO, PUERTO_INTERNO_DOS, PARAM_KEY, KEY } from '../../config/config';
 
 // Modelo
 import { Visor } from '../../models/visor.model';
@@ -14,8 +14,10 @@ import { UsuarioService } from '../usuario/usuario.service';
 @Injectable()
 export class GpsService {
 
-  token: string;
+  head = new HttpHeaders();
+  headers = this.head.append(PARAM_KEY, KEY);
 
+  token: string;
   url: string;
 
   constructor(
@@ -27,7 +29,7 @@ export class GpsService {
   }
 
   obtenerUbicaciones() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/usuario/gps';
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/usuario/gps/ultima/ubicacion';
 
     this.url += '?token=' + this.token;
 
@@ -35,23 +37,23 @@ export class GpsService {
   }
 
   obtenerClientesTotal() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/obtenerCliente/' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/clientes/obtener/cliente/${this._servidor.db}`;
 
-    this.url += '?token=' + this.token;
-
-    return this.http.get(this.url);
+    return this.http.get( this.url, { headers: this.headers } );
   }
 
   obtenerClientes(diavis: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/obtenerCliente/mostrar/' + diavis;
+    // this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/clientes/obtenerCliente/mostrar/' + diavis;
 
-    this.url += '?token=' + this.token;
+    // this.url += '?token=' + this.token;
 
-    return this.http.get(this.url);
+    // return this.http.get(this.url);
   }
 
   obtenerAsesorEspefico(id: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/usuario/' + id;
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/usuario/especifico/' + id;
+
+    this.url += '?token=' + this.token;
 
     return this.http.get(this.url);
   }
@@ -65,25 +67,33 @@ export class GpsService {
   }
 
   obtenerIMEIAsesorAllDonwload() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO_DOS + '/gps';
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/gps';
+
+    this.url += '&token=' + this.token;
 
     return this.http.get(this.url);
   }
 
   actualizarUsusarioImei( usuario: Visor ) {
-    this. url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO_DOS + '/gps/' + usuario._id;
+    this. url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/gps/' + usuario._id;
+
+    this.url += '&token=' + this.token;
 
     return this.http.put( this.url, usuario );
   }
 
   borrarUsuarioImei( id: string ) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO_DOS + '/gps/' + id;
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/gps/' + id;
+
+    this.url += '&token=' + this.token;
 
     return this.http.delete( this.url );
   }
 
   nuevoUsuarioIMEI(visor: Visor) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO_DOS + '/gps';
+    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/gps';
+
+    this.url += '&token=' + this.token;
 
     return this.http.post( this.url, visor );
   }

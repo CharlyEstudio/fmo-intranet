@@ -42,9 +42,7 @@ export class RecuperarComponent implements OnInit {
 
     this._usuarioService.cambiarPassEmail(forma.value.email).subscribe((resp: any) => {
       if (resp.ok) {
-        console.log(`https://ferremayoristas.com.mx/intranet/#/campass/${resp.token}`);
         this._usuarioService.enviarEmailCambioPass(resp.usuarios, resp.token, resp.email).subscribe((envio: any) => {
-          // console.log(`${envio}`);
           if (envio) {
             this.router.navigate(['/login']);
           } else {

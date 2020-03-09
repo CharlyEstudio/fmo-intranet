@@ -22,7 +22,7 @@ export class RutasGuiasComponent implements OnInit {
     private _guiaService: GuiasService,
     private _socketService: WebsocketService
   ) {
-    this._socketService.escuchar('guias-watch').subscribe((socket: any) => {
+    this._socketService.escuchar('guias-watch-send').subscribe((socket: any) => {
       this.obtenerGuias();
     });
   }

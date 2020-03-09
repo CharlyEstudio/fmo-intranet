@@ -45,10 +45,10 @@ export class ListaMorosidadComponent implements OnInit {
   solicitarLista( id: any, inicio: any, fin: any ) {
     this._phpService.listaMorosidad(id, inicio, fin)
       .subscribe( ( resp: any ) => {
-        this.datos = resp;
+        this.datos = resp.resp;
 
-        for ( let i = 0; i < resp.length; i++) {
-          this.total += resp[i].total;
+        for ( let i = 0; i < resp.resp.length; i++) {
+          this.total += parseFloat(resp.resp[i].total);
         }
       });
   }

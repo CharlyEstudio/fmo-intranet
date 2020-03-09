@@ -20,6 +20,7 @@ import { TablachdevService } from '../../components/tablachdev/tablachdev.servic
 export class ChequesdevComponent implements OnInit {
 
   usuario: Usuario;
+  fecha = new Date();
 
   chequesDev: any[] = [];
 
@@ -108,7 +109,7 @@ export class ChequesdevComponent implements OnInit {
     }
 
     this.chequesDevService.guardarNuevoCheque(forma.value.fecha, forma.value.importe).subscribe((resp: any) => {
-      if (resp.length === 0) {
+      if (!resp) {
         this.obtenemosChquesDev();
         const enviosock = {
           msg: 'Nuevo registro de Cheque Devuelto',
@@ -124,26 +125,27 @@ export class ChequesdevComponent implements OnInit {
   }
 
   chequeDevFerrum() {
+    this.limpiar();
     this.chequesDevService.obtenemosCHFerrum().subscribe((ch: any) => {
-      if (ch.length > 0) {
+      if (ch.resp.length > 0) {
         this.chequesDevService.obtenemosChquesDev().subscribe((cheques: any) => {
-          for (const c of ch) {
+          for (const c of ch.resp) {
             const esFolio = (folio: any) => {
               return folio.folio === c.NUMERO;
             };
-            if (cheques.find(esFolio)) {
+            if (cheques.resp.find(esFolio)) {
               if ((c.TOTAL - c.TOTALPAGADO) > 0) {
                 const enviar = {
-                  id: cheques.find(esFolio).id,
+                  id: cheques.resp.find(esFolio).id,
                   fechacheque: c.FECHA,
-                  importe: cheques.find(esFolio).importe,
+                  importe: cheques.resp.find(esFolio).importe,
                   saldo: (c.TOTAL - c.TOTALPAGADO),
                   fechaaplica: c.CAMBIADO,
-                  folio: cheques.find(esFolio).folio,
+                  folio: cheques.resp.find(esFolio).folio,
                   facturas: c.NOTA,
-                  banco: cheques.find(esFolio).banco,
-                  nocheque: cheques.find(esFolio).nocheque,
-                  clienteid: cheques.find(esFolio).clienteid,
+                  banco: cheques.resp.find(esFolio).banco,
+                  nocheque: cheques.resp.find(esFolio).nocheque,
+                  clienteid: cheques.resp.find(esFolio).clienteid,
                   cobrado: ((c.TOTAL - c.TOTALPAGADO) > 0) ? 0 : 1,
                   terminado: ((c.TOTAL - c.TOTALPAGADO) > 0) ? 0 : 1
                 };
@@ -174,32 +176,27 @@ export class ChequesdevComponent implements OnInit {
 
   obtenemosChquesDev() {
     this.chequesDevService.obtenemosChquesDev().subscribe((cheques: any) => {
-      if (cheques.length > 0) {
-        this.todos = cheques.length;
-        this.chequesDev = cheques;
-        // for (const ch of cheques) {
-        //   if (!ch.cobrado) {
-        //     console.log(ch);
-        //   }
-        // }
+      if (cheques.resp.length > 0) {
+        this.todos = cheques.resp.length;
+        this.chequesDev = cheques.resp;
       }
     });
 
     this.chequesDevService.obtenerPendientes().subscribe((pend: any) => {
-      if (pend.length > 0) {
-        this.pendientes = pend.length;
+      if (pend.resp.length > 0) {
+        this.pendientes = pend.resp.length;
       }
     });
 
     this.chequesDevService.obtenerCobrados().subscribe((cob: any) => {
-      if (cob.length > 0) {
-        this.cobrados = cob.length;
+      if (cob.resp.length > 0) {
+        this.cobrados = cob.resp.length;
       }
     });
 
     this.chequesDevService.obtenerTerninados().subscribe((term: any) => {
-      if (term.length > 0) {
-        this.terminados = term.length;
+      if (term.resp.length > 0) {
+        this.terminados = term.resp.length;
       }
     });
   }
@@ -207,7 +204,7 @@ export class ChequesdevComponent implements OnInit {
   recibe(datos: any) {
     if (datos.guardar) {
       this.chequesDevService.actualizarDato(datos.enviar).subscribe((resp: any) => {
-        if (resp.length === 0) {
+        if (!resp.resp) {
           this.obtenemosChquesDev();
           const envio = {
             msg: 'Cheque Actualizado',
@@ -221,7 +218,7 @@ export class ChequesdevComponent implements OnInit {
       });
     } else {
       this.chequesDevService.actualizarDato(datos).subscribe((resp: any) => {
-        if (resp.length === 0) {
+        if (!resp.resp) {
           this.obtenemosChquesDev();
         }
       });
@@ -231,14 +228,14 @@ export class ChequesdevComponent implements OnInit {
   cerrarCheque(datos: any) {
     if (datos.guardar) {
       this.chequesDevService.terminar(datos.enviar.id).subscribe((resp: any) => {
-        if (resp.length === 0) {
+        if (!resp) {
           this.obtenemosChquesDev();
           const envio = {
             msg: 'Cheque Terminado',
             opcion: 2,
-            folio: datos.folio,
-            cliente: datos.nombre,
-            importe: datos.importe
+            folio: datos.enviar.folio,
+            cliente: datos.enviar.nombre,
+            importe: datos.enviar.importe
           };
           this.ws.acciones('nuevo-cheque-devuelto', envio);
         }
@@ -257,19 +254,28 @@ export class ChequesdevComponent implements OnInit {
   // }
 
   recuperarCheque(datos: any) {
-    this.chequesDevService.recuperar(datos.id).subscribe((resp: any) => {
-      if (resp.length === 0) {
-        this.obtenemosChquesDev();
+    this.chequesDevService.recuperar(datos.enviar.id).subscribe((resp: any) => {
+      if (!resp) {
+        this.chequeDevFerrum();
+        setTimeout(() => this.obtenemosChquesDev(), 500);
         const enviosock = {
           msg: 'Retornando Cheque Devuelto',
           opcion: 3,
-          folio: datos.folio,
-          cliente: datos.nombre,
-          importe: datos.importe
+          folio: datos.enviar.folio,
+          cliente: datos.enviar.nombre,
+          importe: datos.enviar.importe
         }
+        datos.enviar.terminado = '0';
         this.ws.acciones('nuevo-cheque-devuelto', enviosock);
       }
     });
+  }
+
+  limpiar() {
+    this.todos = 0;
+    this.pendientes = 0;
+    this.cobrados = 0;
+    this.terminados = 0;
   }
 
 }

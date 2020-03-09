@@ -32,17 +32,23 @@ export class ScrumService {
   enviarSprint(sprint: any) {
     this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/scrum';
 
+    this.url += '?token=' + this.token;
+
     return this.http.post(this.url, {data: sprint});
   }
 
   actualizarSprint(sprint: any) {
     this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/scrum/actualiza';
 
+    this.url += '?token=' + this.token;
+
     return this.http.put(this.url, {data: sprint});
   }
 
   completarSprint(id: any) {
     this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/scrum';
+
+    this.url += '?token=' + this.token;
 
     return this.http.put(this.url, {data: id});
   }
@@ -52,11 +58,15 @@ export class ScrumService {
 
     this.url += '?token=' + this.token;
 
-    return this.http.get(this.url);
+    return this.http.get(this.url).map((resp: any) => {
+      return resp;
+    });
   }
 
   deleteSprint(id: any) {
     this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/scrum/' + id;
+
+    this.url += '?token=' + this.token;
 
     return this.http.delete(this.url);
   }

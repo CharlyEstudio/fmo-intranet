@@ -86,20 +86,6 @@
 
               {{ch.facturas}}
 
-              <!-- <table class="table table-borderless">
-
-                <tbody>
-
-                  <tr *ngFor="let ft of ch.facturas">
-
-                    <td class="text-center border border-0">{{ft.numero}}</td>
-
-                  </tr>
-
-                </tbody>
-
-              </table> -->
-
             </td>
 
             <td class="text-center">{{ch.fechaaplica | date:'dd-MM-yy'}}</td>
@@ -112,27 +98,17 @@
 
             <td class="text-center">{{ch.nocheque}}</td>
 
-            <td class="text-center"><span [ngClass]="{'badge badge-success': ch.cobrado}">{{(ch.cobrado) ? 'Cobrado' : ''}}</span></td>
+            <td class="text-center"><span [ngClass]="{'badge badge-success': ch.cobrado}">{{(ch.cobrado === "1") ? 'Cobrado' : ''}}</span></td>
 
-            <!-- <td class="text-center" *ngIf="!ch.cobrado && rol === 'AUD_ROLE'">
+            <td class="text-center" *ngIf="ch.clienteid !== '' && (rol === 'DIR_ROLE' || rol === 'ADMIN_ROLE')">
 
-              <button class="btn btn-info btn-sm" (click)="cobro(ch)">
-
-                <i class="mdi mdi-close-octagon"></i>
-
-              </button>
-
-            </td> -->
-
-            <td class="text-center" *ngIf="ch.clienteid !== '' && rol === 'DIR_ROLE'">
-
-              <button class="btn btn-info btn-sm" *ngIf="!ch.terminado" (click)="terminar(ch)">
+              <button class="btn btn-info btn-sm" *ngIf="ch.terminado === '0'" (click)="terminar(ch)">
 
                 <i class="mdi mdi-check-circle-outline"></i>
 
               </button>
 
-              <button class="btn btn-danger btn-sm" *ngIf="ch.terminado" (click)="recuperar(ch)">
+              <button class="btn btn-danger btn-sm" *ngIf="ch.terminado === '1'" (click)="recuperar(ch)">
 
                 <i class="mdi mdi-close-circle-outline"></i>
 
@@ -156,7 +132,9 @@
 
             <td class="text-center" *ngIf="rol === 'GER_ROLE' || rol === 'ADMIN_ROLE'">
 
-              <button class="btn btn-dark btn-sm" data-toggle="modal" data-target="#modalInfo" (click)="abrirModal(ch)" *ngIf="ch.clienteid === ''">RECOPILAR</button>
+              {{ch.clienteid}}
+
+              <button class="btn btn-dark btn-sm" data-toggle="modal" data-target="#modalInfo" (click)="abrirModal(ch)" *ngIf="ch.clienteid === null">RECOPILAR</button>
 
             </td>
 
@@ -200,22 +178,6 @@
 
           </div>
 
-          <!-- <div class="form-group">
-
-            <input type="number" #inputFact name="factura" id="factura" autocomplete="off" placeholder="Ingrese Factura" class="form-control" (keyup.enter)="agregarfactura(inputFact.value)" required>
-
-            <select name="facturas" id="facturas" class="form-control" multiple>
-
-              <option [value]="fac.numero" *ngFor="let fac of folios">{{fac.numero}}</option>
-
-            </select>
-
-            <small id="passwordHelpBlock" class="form-text text-danger" *ngIf="msg !== ''">
-              {{msg}}
-            </small>
-
-          </div> -->
-
           <div class="form-group">
 
             <input ngModel type="text" name="banco" id="banco" placeholder="Banco" class="form-control" autocomplete="off" required>
@@ -231,18 +193,6 @@
             </small>
 
           </div>
-
-          <!-- <div class="form-group">
-
-            <input #inputNumero type="number" name="numero" id="numero" placeholder="Número de Cliente" class="form-control" autocomplete="off" required (keyup.enter)="buscarCliente(inputNumero.value)">
-
-            <input [(ngModel)]="cliente" type="text" name="cliente" id="cliente" placeholder="Cliente" class="form-control" readonly>
-
-            <small id="passwordHelpBlock" class="form-text text-danger" *ngIf="msgCli !== ''">
-              {{msgCli}}
-            </small>
-
-          </div> -->
 
           <button type="button" (click)="guardar(f)" class="btn btn-info btn-block">GUARDAR</button>
 

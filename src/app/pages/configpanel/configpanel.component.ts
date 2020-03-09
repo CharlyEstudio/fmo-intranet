@@ -36,9 +36,9 @@ export class ConfigpanelComponent implements OnInit {
 
   obtenerImporteDiaria() {
     this.panelService.obtenerImporteVtaDiaria().subscribe((impor: any) => {
-      if (impor.length > 0) {
-        this.imporVtaDia = impor[0].data;
-        this.emisor = impor[0].nombre;
+      if (impor.resp !== false) {
+        this.imporVtaDia = impor.resp.data;
+        this.emisor = impor.resp.nombre;
       }
     });
   }
@@ -49,7 +49,7 @@ export class ConfigpanelComponent implements OnInit {
       return;
     }
     this.panelService.cambiarImporteVtaDiaria(importe, this.usuario).subscribe((guardado: any) => {
-      if (guardado.length === 0) {
+      if (!guardado) {
         this.obtenerImporteDiaria();
         this.socketService.acciones('cambiar-importe-venta-diaria', importe);
       }

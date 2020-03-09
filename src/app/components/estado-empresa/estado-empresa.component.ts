@@ -70,14 +70,15 @@ export class EstadoEmpresaComponent implements OnInit, OnDestroy {
 
     // Venta Anterior
     this._phpService.ventaAnterior()
-      .subscribe((data) => {
-        if ( data[0].anterior !== 0 ) {
-          this.ant = data[0].anterior;
+      .subscribe((data: any) => {
+        console.log(data);
+        if ( data.resp !== false ) {
+          this.ant = data.resp.anterior;
         } else {
           this.ant = 0;
         }
 
-        this.obtenerAnterior(data[0].anterior);
+        this.obtenerAnterior(data.resp.anterior);
       });
 
     // Venta Actual
@@ -123,36 +124,6 @@ export class EstadoEmpresaComponent implements OnInit, OnDestroy {
     } else if ( promAct > promAnt ) {
       this.heart = 3;
     }
-
-    // let obtenerEstado = (this.actData / this.antData) * 100;
-
-    // if ( obtenerEstado === Infinity ) {
-
-    //   this.heart = 0;
-
-    // } else if ( obtenerEstado < 50 ) {
-
-    //   if ( day <= 10 ) {
-
-    //     this.heart = 2;
-
-    //   }
-
-    //   if ( day >= 7) {
-
-    //     this.heart = 1;
-
-    //   }
-
-    // } else if ( obtenerEstado < 70 ) {
-
-    //   this.heart = 2;
-
-    // } else {
-
-    //   this.heart = 3;
-
-    // }
 
   }
 
@@ -217,7 +188,7 @@ export class EstadoEmpresaComponent implements OnInit, OnDestroy {
 
           });
 
-      }, 10000);
+      }, 1000);
 
     })
     .retry()

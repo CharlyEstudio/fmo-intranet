@@ -34,7 +34,7 @@ export class UsuariosClientesComponent implements OnInit {
     public _modalUpLoadService: ModalUploadService,
     private _webSocket: WebsocketService
   ) {
-    this._webSocket.escuchar('registro-watch').subscribe(() => {
+    this._webSocket.escuchar('registro-watch-send').subscribe(() => {
       this.cargarUsuarios();
       this.cargarUsuariosPendientes();
     });

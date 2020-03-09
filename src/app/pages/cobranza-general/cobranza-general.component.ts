@@ -56,26 +56,26 @@ export class CobranzaGeneralComponent implements OnInit, OnDestroy {
         for (let i = 0; i < this.cobranza.length; i++) {
 
           if (this.cobranza[i].formapago === 'C') {
-            this.cheques += this.cobranza[i].pagado;
+            this.cheques += parseFloat(this.cobranza[i].pagado);
           }
 
           if (this.cobranza[i].formapago === 'E') {
-            this.efectivo += this.cobranza[i].pagado;
+            this.efectivo += parseFloat(this.cobranza[i].pagado);
           }
 
           if (this.cobranza[i].formapago === 'R') {
-            this.transferencia += this.cobranza[i].pagado;
+            this.transferencia += parseFloat(this.cobranza[i].pagado);
           }
 
           if (this.cobranza[i].formapago === 'S') {
-            this.notas += this.cobranza[i].pagado;
+            this.notas += parseFloat(this.cobranza[i].pagado);
           }
 
           if (this.cobranza[i].formapago === 'T') {
-            this.tarjeta += this.cobranza[i].pagado;
+            this.tarjeta += parseFloat(this.cobranza[i].pagado);
           }
 
-          // this.total += this.cobranza[i].pagado;
+          // this.total += parseFloat(this.cobranza[i].pagado);
 
         }
 
@@ -112,28 +112,28 @@ export class CobranzaGeneralComponent implements OnInit, OnDestroy {
     // Otebtener Pagos
     this._asesorService.cobranza()
       .subscribe( ( resp: any ) => {
-        this.cobranza = resp;
+        this.cobranza = resp.resp;
 
         for (let i = 0; i < this.cobranza.length; i++) {
 
           if (this.cobranza[i].formapago === 'C') {
-            this.cheques += this.cobranza[i].pagado;
+            this.cheques += parseFloat(this.cobranza[i].pagado);
           }
 
           if (this.cobranza[i].formapago === 'E') {
-            this.efectivo += this.cobranza[i].pagado;
+            this.efectivo += parseFloat(this.cobranza[i].pagado);
           }
 
           if (this.cobranza[i].formapago === 'R') {
-            this.transferencia += this.cobranza[i].pagado;
+            this.transferencia += parseFloat(this.cobranza[i].pagado);
           }
 
           if (this.cobranza[i].formapago === 'S') {
-            this.notas += this.cobranza[i].pagado;
+            this.notas += parseFloat(this.cobranza[i].pagado);
           }
 
           if (this.cobranza[i].formapago === 'T') {
-            this.tarjeta += this.cobranza[i].pagado;
+            this.tarjeta += parseFloat(this.cobranza[i].pagado);
           }
 
         }
@@ -145,9 +145,9 @@ export class CobranzaGeneralComponent implements OnInit, OnDestroy {
     // Obtener pagos de TPV
     this._asesorService.cobranzaTPV()
       .subscribe( ( resp: any ) => {
-        this.tpv = resp;
-        for (let i = 0; i < resp.length; i ++) {
-          this.impTPV += resp[i].imporInicial;
+        this.tpv = resp.resp;
+        for (let i = 0; i < resp.resp.length; i ++) {
+          this.impTPV += parseFloat(resp.resp[i].imporInicial);
         }
       });
 
@@ -158,7 +158,7 @@ export class CobranzaGeneralComponent implements OnInit, OnDestroy {
       this.intervalo1 = setInterval(() => {
         this._asesorService.cobranza()
           .subscribe( ( resp: any ) => {
-            observer.next(resp);
+            observer.next(resp.resp);
           });
       }, 1000);
     })
@@ -173,7 +173,7 @@ export class CobranzaGeneralComponent implements OnInit, OnDestroy {
       this.intervalo2 = setInterval(() => {
         this._asesorService.cobranzaTPV()
           .subscribe( ( resp: any ) => {
-            observer.next(resp);
+            observer.next(resp.resp);
           });
       }, 1000);
     })

@@ -127,62 +127,60 @@ export class EdoCtaComponent implements OnInit {
     this._clientesService.infoCliente(this.numero, this.asesor, this.rol)
       .subscribe( ( data: any ) => {
 
-        if (data.length > 0) {
+        if (data.status) {
 
-          this.clienteFerrum = data[0];
-          this.nombre = data[0].NOMBRE;
-          this.number = data[0].NUMERO;
-          this.forcre = data[0].FORCRE;
-          this.saldoAct = data[0].SALDO;
-          this.limite = data[0].LIMITE;
-          this.nomAsesor = data[0].ASESOR;
-          const tel = String(data[0].TEL);
+          this.clienteFerrum = data.resp;
+          this.nombre = data.resp.NOMBRE;
+          this.number = data.resp.NUMERO;
+          this.forcre = data.resp.FORCRE;
+          this.saldoAct = data.resp.SALDO;
+          this.limite = data.resp.LIMITE;
+          this.nomAsesor = data.resp.ASESOR;
+          const tel = String(data.resp.TEL);
           this.telAsesor = tel.slice(1, 11);
 
-          this._clientesService.obtenerFacturas(data[0].CLIENTEID, forma.value.inicio, this.fecha).subscribe((edocta: any) => {
-            for (let i = 0; i < edocta.length; i++) {
-              this.abonos += edocta[i].ABONO;
+          this._clientesService.obtenerFacturas(data.resp.CLIENTEID, forma.value.inicio, this.fecha).subscribe((edocta: any) => {
+            for (let i = 0; i < edocta.resp.length; i++) {
+              this.abonos += parseFloat(edocta.resp[i].ABONO);
 
               let esFolio = (factura) => {
-                return factura.FOLIO === edocta[i].FOLIO;
+                return factura.FOLIO === edocta.resp[i].FOLIO;
               };
 
               let saldo;
               let cargo;
-              // let index;
 
               if (this.datos.find(esFolio)) {
-                // const index = i - 1;
                 let index = i - 1;
-                cargo = this.datos[index].SALDO;
+                cargo = parseFloat(this.datos[index].SALDO);
               } else {
-                cargo = edocta[i].CARGO;
+                cargo = parseFloat(edocta.resp[i].CARGO);
               }
 
               this.cargos += cargo;
 
-              saldo = cargo - edocta[i].ABONO;
+              saldo = cargo - parseFloat(edocta.resp[i].ABONO);
               this.saldos += saldo;
 
               let nuevo = [
                 {
-                  "DOCID": edocta[i].DOCID,
-                  "FECHA": edocta[i].FECHA,
-                  "FECHAPAG": edocta[i].FECHAPAG,
-                  "VENCE": edocta[i].VENCE,
-                  "DIASPAGO": edocta[i].DIASPAGO,
-                  "FOLIO": edocta[i].FOLIO,
+                  "DOCID": edocta.resp[i].DOCID,
+                  "FECHA": edocta.resp[i].FECHA,
+                  "FECHAPAG": edocta.resp[i].FECHAPAG,
+                  "VENCE": edocta.resp[i].VENCE,
+                  "DIASPAGO": edocta.resp[i].DIASPAGO,
+                  "FOLIO": edocta.resp[i].FOLIO,
                   "SALDO": saldo,
                   "CARGO": cargo,
-                  "ABONO": edocta[i].ABONO,
-                  "RECIBO": edocta[i].RECIBO,
-                  "TIPO": edocta[i].TIPO,
-                  "FP": edocta[i].FP,
-                  "NOTA": edocta[i].NOTA,
-                  "TOTAL": edocta[i].TOTAL,
-                  "TOTALPAGADO": edocta[i].TOTALPAGADO,
-                  "SALDOFINAL": edocta[i].SALDOFINAL,
-                  "RESTAN": edocta[i].RESTAN
+                  "ABONO": parseFloat(edocta.resp[i].ABONO),
+                  "RECIBO": edocta.resp[i].RECIBO,
+                  "TIPO": edocta.resp[i].TIPO,
+                  "FP": edocta.resp[i].FP,
+                  "NOTA": edocta.resp[i].NOTA,
+                  "TOTAL": edocta.resp[i].TOTAL,
+                  "TOTALPAGADO": parseFloat(edocta.resp[i].TOTALPAGADO),
+                  "SALDOFINAL": parseFloat(edocta.resp[i].SALDOFINAL),
+                  "RESTAN": parseFloat(edocta.resp[i].RESTAN)
                 }
               ];
               this.datos.push(nuevo[0]);
@@ -234,16 +232,16 @@ export class EdoCtaComponent implements OnInit {
 
     this._clientesService.infoCliente(this.numero, this.asesor, this.rol)
       .subscribe( ( data: any ) => {
-        if (data.length > 0) {
+        if (data.status) {
 
-          this.clienteFerrum = data[0];
-          this.nombre = data[0].NOMBRE;
-          this.number = data[0].NUMERO;
-          this.forcre = data[0].FORCRE;
-          this.saldoAct = data[0].SALDO;
-          this.limite = data[0].LIMITE;
-          this.nomAsesor = data[0].ASESOR;
-          const tel = String(data[0].TEL);
+          this.clienteFerrum = data.resp;
+          this.nombre = data.resp.NOMBRE;
+          this.number = data.resp.NUMERO;
+          this.forcre = data.resp.FORCRE;
+          this.saldoAct = data.resp.SALDO;
+          this.limite = data.resp.LIMITE;
+          this.nomAsesor = data.resp.ASESOR;
+          const tel = String(data.resp.TEL);
           this.telAsesor = tel.slice(1, 11);
 
           this._creditoService.clienteSaldo(this.numero, this.fecha).subscribe((edocta: any) => {

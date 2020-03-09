@@ -65,126 +65,126 @@ export class AsesorVistaComponent implements OnInit {
     // Datos Asesor
     this._asesoresServices.asesor(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.asesor = resp.usuarios[0].nombre;
+        this.asesor = resp.usuarios.nombre;
       });
 
     // Zona Asesor
     this._asesoresServices.zonaAsesor(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.zona = resp[0].zona;
+        this.zona = resp.resp.zona;
       });
 
     // Pedidos
     this._asesoresServices.porBajar(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.porBajar = resp[0].importe;
-        this.porBajarNumero = resp[0].cantidad;
+        this.porBajar = resp.resp.importe;
+        this.porBajarNumero = resp.resp.cantidad;
       });
 
     this._asesoresServices.porSurtir(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.porSurtir = resp[0].importe;
-        this.porSurtirNumero = resp[0].cantidad;
+        this.porSurtir = resp.resp.importe;
+        this.porSurtirNumero = resp.resp.cantidad;
       });
 
     this._asesoresServices.facturado(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.facturado = resp[0].importe;
-        this.facturadoNumero = resp[0].cantidad;
+        this.facturado = resp.resp.importe;
+        this.facturadoNumero = resp.resp.cantidad;
       });
 
     this._asesoresServices.cancelados(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.cancelados = resp[0].importe;
-        this.canceladosNumero = resp[0].cantidad;
+        this.cancelados = resp.resp.importe;
+        this.canceladosNumero = resp.resp.cantidad;
       });
 
     this._asesoresServices.pedidosTotales(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.total = resp[0].importe;
-        this.totalNumero = resp[0].cantidad;
+        this.total = resp.resp.importe;
+        this.totalNumero = resp.resp.cantidad;
       });
 
     // Datos
     this._asesoresServices.diaVisita(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.diaVisita = resp[0].cantidad;
+        this.diaVisita = resp.resp.cantidad;
       });
 
     this._asesoresServices.ventaMensual(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.ventaMensual = resp[0].subtotal;
+        this.ventaMensual = resp.resp.subtotal;
       });
 
     this._asesoresServices.carteraTotal(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.carteraTotal = resp[0].saldo;
+        this.carteraTotal = resp.resp.saldo;
       });
 
     this._asesoresServices.carteraVencida(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.carteraVencida = resp[0].importe;
+        this.carteraVencida = resp.resp.importe;
       });
 
-    this._asesoresServices.carteraVencidaSana(this.idFerrum)
+    this._asesoresServices.carteraSanaDia(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.carteraVencidaSana = resp[0].importe;
+        this.carteraVencidaSana = resp.resp.importe;
       });
 
-    this._asesoresServices.carteraDia(this.idFerrum)
+    this._asesoresServices.carteraVencDia(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.carteraDia = resp[0].importe;
+        this.carteraDia = resp.resp.importe;
       });
 
     this._asesoresServices.cobroDia(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.cobroDia = resp[0].importe;
+        this.cobroDia = resp.resp.importe;
       });
 
     this._asesoresServices.pedidosDiaDiferente(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.clientesPedidosDeferenteDia = resp.length;
+        this.clientesPedidosDeferenteDia = resp.resp.length;
       });
 
     this._asesoresServices.pedidosDia(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.clientesPedidosDia = resp.length;
+        this.clientesPedidosDia = resp.resp.length;
       });
 
     this._asesoresServices.ventaMesAnterior(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.ventaMnesualAnterior = resp[0].importe;
+        this.ventaMnesualAnterior = resp.resp.subtotal;
       });
 
     // Morosidad
     this._asesoresServices.morosidad130(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.mor130 = resp[0].importe;
+        this.mor130 = resp.resp.importe;
       });
 
     this._asesoresServices.morosidad3145(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.mor3145 = resp[0].importe;
+        this.mor3145 = resp.resp.importe;
       });
 
     this._asesoresServices.morosidad4660(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.mor4660 = resp[0].importe;
+        this.mor4660 = resp.resp.importe;
       });
 
     this._asesoresServices.morosidad6190(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.mor6190 = resp[0].importe;
+        this.mor6190 = resp.resp.importe;
       });
 
     this._asesoresServices.morosidad91120(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.mor91120 = resp[0].importe;
+        this.mor91120 = resp.resp.importe;
       });
 
     this._asesoresServices.morosidad121(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.mor121 = resp[0].importe;
+        this.mor121 = resp.resp.importe;
       });
 
   }

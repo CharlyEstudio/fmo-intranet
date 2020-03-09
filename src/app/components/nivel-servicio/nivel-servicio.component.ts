@@ -16,6 +16,8 @@ import { PhpService, PedFacturadosService, DiariosService } from '../../services
 })
 export class NivelServicioComponent implements OnInit, OnDestroy {
 
+  fecha = Date.now();
+
   // Obtener el importe facturado
   importeFacturado: number = 0;
 
@@ -76,7 +78,7 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
   ) {
 
     this._emitirFacturado.importe.subscribe((impor: any) => {
-      this.importeFacturado = impor;
+      this.importeFacturado = parseFloat(impor);
     });
 
     // Subscrión a Nivel de Servicio General
@@ -95,10 +97,9 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
         this._phpService.nivelServicio()
           .subscribe( ( data: any ) => {
 
-            if (data.length > 0) {
+            if (data.resp !== false) {
               this.dataGenFac = this.importeFacturado;
-              // this.dataBoCot = (this.importeFacturado + data[0].IMPORTE);
-              this.dataGenCot = (this.importeFacturado + data[0].IMPORTE);
+              this.dataGenCot = (this.importeFacturado + parseFloat(data.resp.IMPORTE));
               this.porcentGen = (this.dataGenFac / this.dataGenCot);
             } else {
               this.dataGenCot = 0;
@@ -174,7 +175,7 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
         // Por Familia
         this._phpService.nsFamilia()
           .subscribe((data: any) => {
-            if (data.length > 0) {
+            if (data.resp !== false) {
               this.dataTruCot = 0;
               this.dataTruFac = 0;
               this.porcentTru = 0;
@@ -186,52 +187,52 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
 
               // Desglozamos todo
               // FMO
-              for (const familia of data) {
+              for (const familia of data.resp) {
                 if (familia.FAMILIA === 'FMO-BO') {
-                  this.dataFMOCot += familia.IMPORTE;
+                  this.dataFMOCot += parseFloat(familia.IMPORTE);
                 } else {
                   this.dataFMOCot += 0;
                 }
               }
 
-              for (const familia of data) {
+              for (const familia of data.resp) {
                 if (familia.FAMILIA === 'FMO-FAC') {
-                  this.dataFMOCot += familia.IMPORTE;
-                  this.dataFMOFac = familia.IMPORTE;
+                  this.dataFMOCot += parseFloat(familia.IMPORTE);
+                  this.dataFMOFac = parseFloat(familia.IMPORTE);
                 } else {
                   this.dataFMOFac += 0;
                 }
               }
 
-              for (const familia of data) {
+              for (const familia of data.resp) {
                 if (familia.FAMILIA === 'FMO-CAN') {
-                  this.dataFMOCan += familia.IMPORTE;
+                  this.dataFMOCan += parseFloat(familia.IMPORTE);
                 } else {
                   this.dataFMOCan += 0;
                 }
               }
 
               // TRUPER
-              for (const familia of data) {
+              for (const familia of data.resp) {
                 if (familia.FAMILIA === 'TRUPER-BO') {
-                  this.dataTruCot += familia.IMPORTE;
+                  this.dataTruCot += parseFloat(familia.IMPORTE);
                 } else {
                   this.dataTruCot += 0;
                 }
               }
 
-              for (const familia of data) {
+              for (const familia of data.resp) {
                 if (familia.FAMILIA === 'TRUPER-FAC') {
-                  this.dataTruCot += familia.IMPORTE;
-                  this.dataTruFac = familia.IMPORTE;
+                  this.dataTruCot += parseFloat(familia.IMPORTE);
+                  this.dataTruFac = parseFloat(familia.IMPORTE);
                 } else {
                   this.dataTruFac += 0;
                 }
               }
 
-              for (const familia of data) {
+              for (const familia of data.resp) {
                 if (familia.FAMILIA === 'TRUPER-CAN') {
-                  this.dataTruCan += familia.IMPORTE;
+                  this.dataTruCan += parseFloat(familia.IMPORTE);
                 } else {
                   this.dataTruCan += 0;
                 }
@@ -280,10 +281,9 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
     this._phpService.nivelServicio()
       .subscribe((data: any) => {
 
-        if (data.length > 0) {
+        if (data.resp !== false) {
           this.dataGenFac = this.importeFacturado;
-          // this.dataBoCot = (this.importeFacturado + data[0].IMPORTE);
-          this.dataGenCot = (this.importeFacturado + data[0].IMPORTE);
+          this.dataGenCot = (this.importeFacturado + parseFloat(data.resp.IMPORTE));
           this.porcentGen = (this.dataGenFac / this.dataGenCot);
         } else {
           this.dataGenCot = 0;
@@ -361,7 +361,7 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
     // Nivel de Servicio por Familia
     this._phpService.nsFamilia()
       .subscribe((data: any) => {
-        if (data.length > 0) {
+        if (data.resp !== false) {
           this.dataTruCot = 0;
           this.dataTruFac = 0;
           this.porcentTru = 0;
@@ -373,52 +373,52 @@ export class NivelServicioComponent implements OnInit, OnDestroy {
 
           // Desglozamos todo
           // FMO
-          for (const familia of data) {
+          for (const familia of data.resp) {
             if (familia.FAMILIA === 'FMO-BO') {
-              this.dataFMOCot += familia.IMPORTE;
+              this.dataFMOCot += parseFloat(familia.IMPORTE);
             } else {
               this.dataFMOCot += 0;
             }
           }
 
-          for (const familia of data) {
+          for (const familia of data.resp) {
             if (familia.FAMILIA === 'FMO-FAC') {
-              this.dataFMOCot += familia.IMPORTE;
-              this.dataFMOFac = familia.IMPORTE;
+              this.dataFMOCot += parseFloat(familia.IMPORTE);
+              this.dataFMOFac = parseFloat(familia.IMPORTE);
             } else {
               this.dataFMOCot += 0;
             }
           }
 
-          for (const familia of data) {
+          for (const familia of data.resp) {
             if (familia.FAMILIA === 'FMO-CAN') {
-              this.dataFMOCan += familia.IMPORTE;
+              this.dataFMOCan += parseFloat(familia.IMPORTE);
             } else {
               this.dataFMOCan += 0;
             }
           }
 
           // TRUPER
-          for (const familia of data) {
+          for (const familia of data.resp) {
             if (familia.FAMILIA === 'TRUPER-BO') {
-              this.dataTruCot += familia.IMPORTE;
+              this.dataTruCot += parseFloat(familia.IMPORTE);
             } else {
               this.dataTruCot += 0;
             }
           }
 
-          for (const familia of data) {
+          for (const familia of data.resp) {
             if (familia.FAMILIA === 'TRUPER-FAC') {
-              this.dataTruCot += familia.IMPORTE;
-              this.dataTruFac = familia.IMPORTE;
+              this.dataTruCot += parseFloat(familia.IMPORTE);
+              this.dataTruFac = parseFloat(familia.IMPORTE);
             } else {
               this.dataTruCot += 0;
             }
           }
 
-          for (const familia of data) {
+          for (const familia of data.resp) {
             if (familia.FAMILIA === 'TRUPER-CAN') {
-              this.dataTruCan += familia.IMPORTE;
+              this.dataTruCan += parseFloat(familia.IMPORTE);
             } else {
               this.dataTruCan += 0;
             }

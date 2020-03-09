@@ -54,7 +54,6 @@ export class UsuarioService {
       .catch( err => {
         this.router.navigate(['/login']);
         swal('No se pudo renovar token', 'No fue posible renovar token', 'error');
-        // alert('No se pudo renovar token - No fue posible renovar token');
         return Observable.throw( err );
       });
   }
@@ -130,6 +129,7 @@ export class UsuarioService {
           localStorage.removeItem('usuario');
           localStorage.removeItem('menu');
           localStorage.removeItem('id');
+          localStorage.removeItem('rol');
           localStorage.removeItem('socketUsuario');
           this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu, resp.usuario.rol);
           return resp;
@@ -146,7 +146,6 @@ export class UsuarioService {
     return this.http.post( url, usuario )
       .map( (resp: any) => {
         swal ('Usuario creado', usuario.email + '. El administrador activará su cuenta.', 'success');
-        // alert('Usuario creado ' + usuario.email);
         return resp.usuario;
       })
       .catch( err => {
@@ -225,57 +224,7 @@ export class UsuarioService {
     return this.http.delete( url )
       .map( resp => {
         swal('¡Usuario Borrado!', 'El usuario ha sido eliminado correctamente', 'success');
-        // alert('¡Usuario Borrado!' + 'El usuario ha sido eliminado correctamente');
         return true;
-      });
-  }
-
-  buscarAsesorComision( id: any, mes: any, anio: any ) {
-    let url;
-    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/busqueda/especifico/comision/' + id + '/' + mes + '/' + anio;
-
-    return this.http.get( url )
-      .map( (resp: any) => {
-        return resp;
-      })
-      .catch( err => {
-        swal(err.error.mensaje , err.error.errors.message, 'error');
-        return Observable.throw( err );
-      });
-  }
-
-  guardarComision(comision: Comision) {
-    let url;
-    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones';
-
-    url += '?token=' + this.token;
-
-    return this.http.post( url, comision )
-      .map( (resp: any) => {
-        swal ('¡Guardado Correcto!', 'Reporte de comisión guardada.', 'success');
-        return resp.usuario;
-      })
-      .catch( err => {
-        swal('Erro' , err.error.error, 'error');
-        return Observable.throw( err );
-      });
-
-  }
-
-  actualizarComisionUsusario( comision: Comision, id: any ) {
-    let url;
-    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/comisiones/' + id;
-
-    url += '?token=' + this.token;
-
-    return this.http.put( url, comision )
-      .map( (resp: any) => {
-        swal('Comision Actualizado!', 'Realizado correctamente', 'success');
-        return true;
-      })
-      .catch( err => {
-        swal(err.error.mensaje , err.error.errors.message, 'error');
-        return Observable.throw( err );
       });
   }
 
@@ -283,18 +232,17 @@ export class UsuarioService {
     return this.wsService.escuchar('usuarios-lista');
   }
 
-  enviarPassword( usuario: Usuario ) {
-    let url;
-    let user = JSON.stringify(usuario);
-    url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/usuarios.php?opcion=1&usuario' + user;
+  // enviarPassword( usuario: Usuario ) {
+  //   let url;
+  //   let user = JSON.stringify(usuario);
+  //   url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/usuarios.php?opcion=1&usuario' + user;
 
-    return this.http.get( url );
-  }
+  //   return this.http.get( url );
+  // }
 
   // Cambiar Password por Email
   cambiarPassEmail( email: any ) {
-    let url;
-    url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cambio/cambiar/' + email + '/intranet';
+    const url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/login/cambiar/' + email + '/intranet';
 
     return this.http.get( url );
   }
@@ -302,7 +250,9 @@ export class UsuarioService {
   // Cambiar Password por ID
   cambiarPassId( usuario: Usuario ) {
     let url;
-    url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cambio/cambiar/id/' + usuario._id + '/intranet/' + usuario.email;
+    url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/login/cambiar/id/' + usuario._id + '/intranet/' + usuario.email;
+
+    url += '?token=' + this.token;
 
     return this.http.get( url );
   }
@@ -317,11 +267,15 @@ export class UsuarioService {
   }
 
   enviarEmailCambioPass(usuario: Usuario, token: any, email: any) {
-    const url = URL_SERVICIO_GENERAL + '/api/cambiarpass.php';
-    return this.http.post(url, {usuario: usuario, token: token, email: email, tipo: 'intranet'}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } })
+    const enviar = {
+      usuario: usuario.nombre,
+      token,
+      email
+    };
+    const url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/mail/cambiar/intranet?token=' + token;
+    return this.http.post(url, enviar)
       .map((resp: any) => {
-        // console.log(resp[0]);
-        if (resp[0].resp === 'ok') {
+        if (resp.resp === 'ok') {
           return true;
         } else {
           return false;
@@ -330,12 +284,12 @@ export class UsuarioService {
   }
 
   validarToken(token: any) {
-    const url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cambio/verificar/activotoken?token=' + token;
+    const url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/login/verificar/activotoken?token=' + token;
     return this.http.get(url);
   }
 
   realizarCambioPass(token: any, pass: any) {
-    const url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/cambio?token=' + token + '&pass=' + pass;
+    const url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/login?token=' + token + '&pass=' + pass;
     return this.http.put(url, {});
   }
 

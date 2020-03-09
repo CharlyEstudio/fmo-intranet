@@ -42,7 +42,7 @@ export class DashborarDirComponent implements OnInit, OnDestroy {
     //   }
     // });
 
-    this.ws.escuchar('nuevo-cheque-devuelto').subscribe((nuevo: any) => {
+    this.ws.escuchar('nuevo-cheque-devuelto-send').subscribe((nuevo: any) => {
       this.obtenemosChquesDev();
     });
 

@@ -124,14 +124,14 @@ export class DashBoardSupComponent implements OnInit {
                   lat: resp[i].lat,
                   lng: resp[i].lng,
                   horaUbicacion: resp[i].horaUbicacion,
-                  porBajarCantidad: data[0].cantidad,
-                  porBajarImporte: data[0].importe,
-                  porSurtirCantidad: data[1].cantidad,
-                  porSurtirImporte: data[1].importe,
-                  facturadoCantidad: data[2].cantidad,
-                  facturadoImporte: data[2].importe,
-                  canceladoCantidad: data[3].cantidad,
-                  canceladoImporte: data[3].importe
+                  porBajarCantidad: data.resp[0].cantidad,
+                  porBajarImporte: data.resp[0].importe,
+                  porSurtirCantidad: data.resp[1].cantidad,
+                  porSurtirImporte: data.resp[1].importe,
+                  facturadoCantidad: data.resp[2].cantidad,
+                  facturadoImporte: data.resp[2].importe,
+                  canceladoCantidad: data.resp[3].cantidad,
+                  canceladoImporte: data.resp[3].importe
                 }
               );
 
@@ -190,17 +190,17 @@ export class DashBoardSupComponent implements OnInit {
     this.comentario = 'Comentario';
     this.cliente = 'Número de Cliente';
     this._supervisoresServices.getComentarios(idFerrum).subscribe((datos: any) => {
-      if (datos.length > 0) {
+      if (datos.resp.length > 0) {
         this.img = img;
         this.asesor = nombre;
-        this.ruta = datos;
+        this.ruta = datos.resp;
         this.ubicacionVisita = [];
         this.ubicacionVisitaOrigen = [];
         this.sigueCLi[0].path = [];
         this.visitasRep[0].path = [];
         this._visitasService.resumenVisitaAsesorFecha(idFerrum, this._herramientas.fechaActual()).subscribe((visitas: any) => {
           if (visitas.status) {
-            for (const dat of datos ) {
+            for (const dat of datos.resp ) {
               const esCli = (cli: any) => {
                 return cli.cliente === dat.clienteid;
               };
@@ -279,7 +279,7 @@ export class DashBoardSupComponent implements OnInit {
       } else {
         this.img = img;
         this.asesor = nombre;
-        this.ruta = datos;
+        this.ruta = datos.resp;
         this.ubicacionVisita = [];
         this.ubicacionVisitaOrigen = [];
         this.sigueCLi[0].path = [];

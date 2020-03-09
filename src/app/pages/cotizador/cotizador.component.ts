@@ -396,35 +396,35 @@ export class CotizadorComponent implements OnInit {
     this.rfc = '';
     if (this.usoNumero.length > 0) {
       this._clienteService.infoClienteCot(this.usoNumero).subscribe((data: any) => {
-        if (data.length > 0) {
-          this.idFerrum = data[0].CLIENTEID;
+        if (data.status) {
+          this.idFerrum = data.resp.CLIENTEID;
           this.numero = this.usoNumero;
-          this.nombre = data[0].NOMBRE;
-          this.correoCli = data[0].CORREO;
-          this.nivelPrecio = data[0].LISTA;
-          this.rfc = data[0].RFC;
+          this.nombre = data.resp.NOMBRE;
+          this.correoCli = data.resp.CORREO;
+          this.nivelPrecio = data.resp.LISTA;
+          this.rfc = data.resp.RFC;
           const h = new Date();
           this.file = this.numero + String(h.getMonth()) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds()) + '.pdf';
           this.folio = 'C' + this.numero + String(h.getMonth() + 1) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds());
           localStorage.setItem('folio', this.folio);
-          this.direccion = data[0].DIRECCION + ' ' + data[0].CASA + ' ' + data[0].INTERIOR + ' ' + data[0].COLONIA + ' ' + data[0].CIUDAD + ', ' + data[0].ESTADO + ', ' + data[0].CP;
-          if (data[0].ASESOR !== '') {
-            this.asesor = data[0].ASESOR;
+          this.direccion = data.resp.DIRECCION + ' ' + data.resp.CASA + ' ' + data.resp.INTERIOR + ' ' + data.resp.COLONIA + ' ' + data.resp.CIUDAD + ', ' + data.resp.ESTADO + ', ' + data.resp.CP;
+          if (data.resp.ASESOR !== '') {
+            this.asesor = data.resp.ASESOR;
           } else {
             this.asesor = 'Sin Asesor';
           }
 
-          if (data[0].LISTA === 1) {
+          if (data.resp.LISTA === 1) {
             this.precio = 'DISTRIBUIDOR';
-          } else if (data[0].LISTA === 2) {
+          } else if (data.resp.LISTA === 2) {
             this.precio = 'SUBDISTRIBUIDOR';
-          } else if (data[0].LISTA === 3) {
+          } else if (data.resp.LISTA === 3) {
             this.precio = 'MAYORISTA';
           }
 
-          this.saldo = data[0].SALDO;
-          this.linea = data[0].LIMITE;
-          this.dias = data[0].DIACREDITO;
+          this.saldo = data.resp.SALDO;
+          this.linea = data.resp.LIMITE;
+          this.dias = data.resp.DIACREDITO;
 
           localStorage.setItem('rfcCli', this.rfc);
           localStorage.setItem('filePDF', this.file);
@@ -980,8 +980,8 @@ export class CotizadorComponent implements OnInit {
   accionCots() {
     this.correoCli = '';
     this._clienteService.clienteCorreo(this.cts.idFerrum).subscribe((correo: any) => {
-      if (correo.length > 0) {
-        this.correoCli = correo[0].CORREO;
+      if (correo.status) {
+        this.correoCli = correo.resp.CORREO;
       }
     });
     this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl(URL_SERVICIO_GENERAL + '/api/cotizaciones/' + this.cts.pdf);
@@ -1024,32 +1024,32 @@ export class CotizadorComponent implements OnInit {
       localStorage.removeItem('lineaCli');
       localStorage.removeItem('diasCli');
       this._clienteService.infoClienteCot(this.numero).subscribe((data: any) => {
-        this.nombre = data[0].NOMBRE;
-        this.correoCli = data[0].CORREO;
-        this.nivelPrecio = data[0].LISTA;
-        this.rfc = data[0].RFC;
+        this.nombre = data.resp.NOMBRE;
+        this.correoCli = data.resp.CORREO;
+        this.nivelPrecio = data.resp.LISTA;
+        this.rfc = data.resp.RFC;
         const h = new Date();
         this.file = this.numero + String(h.getMonth()) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds()) + '.pdf';
         this.folio = 'C' + this.numero + String(h.getMonth() + 1) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds());
         localStorage.setItem('folio', this.folio);
-        this.direccion = data[0].DIRECCION + ' ' + data[0].CASA + ' ' + data[0].INTERIOR + ' ' + data[0].COLONIA + ' ' + data[0].CIUDAD + ', ' + data[0].ESTADO + ', ' + data[0].CP;
-        if (data[0].ASESOR !== '') {
-          this.asesor = data[0].ASESOR;
+        this.direccion = data.resp.DIRECCION + ' ' + data.resp.CASA + ' ' + data.resp.INTERIOR + ' ' + data.resp.COLONIA + ' ' + data.resp.CIUDAD + ', ' + data.resp.ESTADO + ', ' + data.resp.CP;
+        if (data.resp.ASESOR !== '') {
+          this.asesor = data.resp.ASESOR;
         } else {
           this.asesor = 'Sin Asesor';
         }
 
-        if (data[0].LISTA === 1) {
+        if (data.resp.LISTA === 1) {
           this.precio = 'DISTRIBUIDOR';
-        } else if (data[0].LISTA === 2) {
+        } else if (data.resp.LISTA === 2) {
           this.precio = 'SUBDISTRIBUIDOR';
-        } else if (data[0].LISTA === 3) {
+        } else if (data.resp.LISTA === 3) {
           this.precio = 'MAYORISTA';
         }
 
-        this.saldo = data[0].SALDO;
-        this.linea = data[0].LIMITE;
-        this.dias = data[0].DIACREDITO;
+        this.saldo = data.resp.SALDO;
+        this.linea = data.resp.LIMITE;
+        this.dias = data.resp.DIACREDITO;
 
         localStorage.setItem('rfcCli', this.rfc);
         localStorage.setItem('filePDF', this.file);

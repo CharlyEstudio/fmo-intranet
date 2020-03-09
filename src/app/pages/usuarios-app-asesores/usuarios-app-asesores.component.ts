@@ -39,7 +39,7 @@ export class UsuariosAppAsesoresComponent implements OnInit {
     this.visores = null;
     this.totalResgitro = 0;
     this.gps.obtenerIMEIAsesorAll(this.desde).subscribe((visores: any) => {
-      if (visores.ok) {
+      if (visores.status) {
         this.visores = visores.usuarios;
         this.totalResgitro = visores.total;
         this.cargando = false;
@@ -49,7 +49,7 @@ export class UsuariosAppAsesoresComponent implements OnInit {
 
   actualizarVisor( visor: Visor ) {
     this.gps.actualizarUsusarioImei(visor).subscribe((actualizado: any) => {
-      if (actualizado.ok) {
+      if (actualizado.status) {
         swal('Usuario Actualizado', `El Usuario ${visor.nombre} se actualizo correctamente.`, 'success');
       } else {
         swal('Error de Actualización', `El Usuario ${actualizado.mensaje} no se actualizo correctamente.`, 'error');
@@ -59,7 +59,7 @@ export class UsuariosAppAsesoresComponent implements OnInit {
 
   borrarVisor( visor: Visor ) {
     this.gps.borrarUsuarioImei(visor._id).subscribe((eliminado: any) => {
-      if (eliminado.ok) {
+      if (eliminado.status) {
         swal('Usuario Eliminado', `Se elimino correctamente el usuario ${visor.nombre}.`, 'success');
       } else {
         swal('Error al Eliminar', eliminado.mensaje, 'error');

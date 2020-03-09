@@ -62,7 +62,7 @@ export class FacturasmonitorComponent implements OnInit {
     this.oficinaService.verFacturasDia(this.herramientasService.fechaActual()).subscribe((facturas: any) => {
       this.facturas = [];
       this.pendientes = 0;
-      for (const fac of facturas) {
+      for (const fac of facturas.resp) {
         this.oficinaService.verfacturasTrabEspe(fac.NUMERO).subscribe((trab: any) => {
           if (!trab.status) {
             this.pendientes++;

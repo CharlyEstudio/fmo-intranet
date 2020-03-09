@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 // COnfiguración
-import { URL_SERVICIO_GENERAL, PUERTO_SERVER, PUERTO_INTERNO } from '../../config/config';
+import { URL_SERVICIO_GENERAL, PUERTO_SERVER, PUERTO_INTERNO, PARAM_KEY, KEY } from '../../config/config';
 
 // Modelos
 import { MonitorFactura } from '../../models/monitorfactura.model';
@@ -11,6 +11,9 @@ import { UsuarioService } from '../usuario/usuario.service';
 
 @Injectable()
 export class OficinaService {
+
+  head = new HttpHeaders();
+  headers = this.head.append(PARAM_KEY, KEY);
 
   token: string = '';
   url: string;
@@ -24,33 +27,33 @@ export class OficinaService {
   }
 
   todasFacturas(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + '/api/facturas.php?opcion=1&fecha=' + fecha + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/facturas/estados/${fecha}/${this._servidor.db}`;
 
-    return this.http.get(this.url);
+    return this.http.get(this.url, { headers: this.headers });
   }
 
   facturasNoImpresas(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + '/api/facturas.php?opcion=2&fecha=' + fecha + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/facturas/sinimpresion/${fecha}/${this._servidor.db}`;
 
-    return this.http.get(this.url);
+    return this.http.get(this.url, { headers: this.headers });
   }
 
   facturasNoEnviadas(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + '/api/facturas.php?opcion=3&fecha=' + fecha + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/facturas/noenviadas/${fecha}/${this._servidor.db}`;
 
-    return this.http.get(this.url);
+    return this.http.get(this.url, { headers: this.headers });
   }
 
   errorFacturar(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + '/api/facturas.php?opcion=4&fecha=' + fecha + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/facturas/errorfacturar/${fecha}/${this._servidor.db}`;
 
-    return this.http.get(this.url);
+    return this.http.get(this.url, { headers: this.headers });
   }
 
   errorTimbrar(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + '/api/facturas.php?opcion=5&fecha=' + fecha + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/facturas/errortimbrar/${fecha}/${this._servidor.db}`;
 
-    return this.http.get(this.url);
+    return this.http.get(this.url, { headers: this.headers });
   }
 
   verfacturasTrab(fecha: any) {
@@ -70,9 +73,9 @@ export class OficinaService {
   }
 
   verFacturasDia(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/oficina.php?opcion=1&fecha=' + fecha + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/facturas/${fecha}/${this._servidor.db}`;
 
-    return this.http.get(this.url);
+    return this.http.get(this.url, { headers: this.headers });
   }
 
   guardarFacturaTrab(datos: any, fechaTrab: any, horaTrab: any, id: any) {

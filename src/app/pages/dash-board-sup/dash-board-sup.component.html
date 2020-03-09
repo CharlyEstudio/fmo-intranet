@@ -197,6 +197,8 @@
 
                                         <th>Distancia</th>
 
+                                        <th>Emitio</th>
+
                                         <th *ngIf="rol === 'ADMIN_ROLE'"></th>
 
                                     </tr>
@@ -228,6 +230,8 @@
                                         </td>
                                         
                                         <td>{{cli.distancia}} {{cli.medida}}</td>
+
+                                        <td><small>{{cli.emitio}}</small></td>
 
                                         <td *ngIf="rol === 'ADMIN_ROLE'">
 

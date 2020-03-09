@@ -493,7 +493,7 @@ export class DashboardLogisticaComponent implements OnInit {
                     };
 
                     this._clienteService.infoClienteGarantia(numero).subscribe((cli: any) => {
-                      if (cli.length === 0) {
+                      if (!cli.status) {
                         this.sinDatos = true;
                         swal('Sin Cliente', 'Este número de cliente no existe.', 'error');
                         this.inputFolio.nativeElement.value = '';
@@ -501,21 +501,21 @@ export class DashboardLogisticaComponent implements OnInit {
                       }
                       const ingresarFolio = {
                         cerrado: 0,
-                        ciudad: cli[0].CIUDAD,
-                        clienteid: cli[0].CLIENTEID,
-                        colonia: cli[0].COLONIA,
-                        diavis: cli[0].DIAVIS,
-                        direccion: cli[0].DIRECCION,
+                        ciudad: cli.resp.CIUDAD,
+                        clienteid: cli.resp.CLIENTEID,
+                        colonia: cli.resp.COLONIA,
+                        diavis: cli.resp.DIAVIS,
+                        direccion: cli.resp.DIRECCION,
                         entregado: 0,
-                        estado: cli[0].ESTADO,
+                        estado: cli.resp.ESTADO,
                         folio: folio,
-                        lat: cli[0].LAT,
-                        lng: cli[0].LNG,
-                        nombre: cli[0].NOMBRE,
+                        lat: cli.resp.LAT,
+                        lng: cli.resp.LNG,
+                        nombre: cli.resp.NOMBRE,
                         numero: numero,
-                        perid: cli[0].VENDEDORID,
+                        perid: cli.resp.VENDEDORID,
                         total: Number(importe),
-                        vendedor: cli[0].ASESOR
+                        vendedor: cli.resp.ASESOR
                       };
                       let esCliente = (cliente) => {
                         return cliente.numero === ingresarFolio.numero;
@@ -713,7 +713,7 @@ export class DashboardLogisticaComponent implements OnInit {
           importe: this.folios[i].total,
           fecha: fecha,
           hora: hora,
-          reasignar: false
+          reasignar: true
         };
 
         this.pedidos.push(ped);

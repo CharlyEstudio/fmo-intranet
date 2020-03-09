@@ -5,7 +5,7 @@ import { URL_SERVICIO_GENERAL, PUERTO_INTERNO } from '../../config/config';
 @Injectable()
 export class SubirArchivoService {
 
-  constructor() { }
+  constructor() {}
 
   subirArchivo( archivo: File, tipo: string, id: string ) {
     return new Promise( (resolve, reject) => {
@@ -26,12 +26,12 @@ export class SubirArchivoService {
         }
       };
 
-      let url;
-      url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/upload/' + tipo + '/' + id;
+      const url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/upload/' + tipo + '/' + id;
 
-      xhr.open('PUT' , url, true);
+      xhr.open('PUT', url, true);
 
       xhr.send( formData );
+
     });
   }
 }

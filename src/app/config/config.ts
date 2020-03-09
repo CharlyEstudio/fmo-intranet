@@ -4,3 +4,6 @@ export const PUERTO_INTERNO = 3276;
 // export const PUERTO_INTERNO = 3001;
 export const PUERTO_INTERNO_DOS = 4111;
 export const PUERTO_SERVER = 80;
+
+export const PARAM_KEY = 'auth';
+export const KEY = 'api-php-2020';

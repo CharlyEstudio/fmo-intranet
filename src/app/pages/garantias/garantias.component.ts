@@ -205,11 +205,12 @@ export class GarantiasComponent implements OnInit {
     if (garantia.value.numcliFol === '') {
       swal('Sin Cliente', 'Es necesario ingresar un número de cliente para continuar.', 'error');
     }
+
     this.numcli = garantia.value.numcli;
     if (this.numcli !== 0) {
       this._clientesService.infoClienteCot(this.numcli).subscribe((cli: any) => {
-        if (cli.length > 0) {
-          this.nomcli = cli[0].NOMBRE;
+        if (cli.status) {
+          this.nomcli = cli.resp.NOMBRE;
         }
       });
     }
@@ -373,8 +374,8 @@ export class GarantiasComponent implements OnInit {
     this.placas = garantia.placas;
     this.chofer = garantia.chofer;
     this._clientesService.infoClienteCot(this.numero).subscribe((cli: any) => {
-      if (cli.length > 0) {
-        this.nomcli = cli[0].NOMBRE;
+      if (cli.status) {
+        this.nomcli = cli.resp.NOMBRE;
       }
     });
   }

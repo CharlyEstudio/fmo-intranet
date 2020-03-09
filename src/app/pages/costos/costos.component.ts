@@ -80,9 +80,9 @@ export class CostosComponent implements OnInit {
     this.productos = [];
     this.productosTemp = [];
     for (const prove of this.proveedores) {
-      this.proveedoresService.obtenerProductos(prove.item_id).subscribe((prods: any) => {
-        if (prods.length > 0) {
-          for (const prod of prods) {
+      this.proveedoresService.obtenerProductosProveedor(prove.item_id).subscribe((prods: any) => {
+        if (prods.resp.length > 0) {
+          for (const prod of prods.resp) {
             this.productos.push(prod);
             this.productosTemp.push(prod);
           }
@@ -119,9 +119,9 @@ export class CostosComponent implements OnInit {
       swal('Sin Productos', 'No se puede descargar nada, por que no hay productos.', 'warning');
       return;
     }
-    this.proveedoresService.descargarPDF(this.productos).subscribe((resp: any) => {
-      if (resp.ok) {
-        this.pdf = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/' + resp.file);
+    this.proveedoresService.descargarPDF(this.productos, this.herramientasService.fechaActual(), this.herramientasService.horaActual()).subscribe((resp: any) => {
+      if (resp.status) {
+        this.pdf = resp.file;
       }
     });
   }

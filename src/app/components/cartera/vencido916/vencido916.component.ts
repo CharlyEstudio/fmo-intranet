@@ -68,8 +68,8 @@ export class Vencido916Component implements OnInit, OnDestroy {
     // Morosidad
     this._phpService.mor(this.dia, '916')
       .subscribe((data) => {
-        if ( data[0].importe !== 0 ) {
-          this.mor = data[0].importe;
+        if ( data.importe !== 0 ) {
+          this.mor = data.importe;
         } else {
           this.mor = 0;
         }
@@ -96,10 +96,10 @@ export class Vencido916Component implements OnInit, OnDestroy {
         this._phpService.mor(this.dia, '916')
           .subscribe( ( data ) => {
 
-            if (data[0].importe !== 0) {
+            if (data.importe !== 0) {
 
               const morosidad = {
-                importe: data[0].importe
+                importe: data.importe
               };
 
               observer.next(morosidad);

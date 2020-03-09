@@ -452,7 +452,8 @@
 
   <div class="col-12" *ngIf="verPDF !== ''">
 
-    <embed [src]="verPDF" type="application/pdf" width="100%" height="600">
+    <!-- <embed [src]="verPDF" type="application/pdf" width="100%" height="600"> -->
+    <embed [src]="verPDF | pdf:'diasvtas'" type="application/pdf" width="100%" height="600">
 
   </div>
 

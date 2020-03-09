@@ -53,9 +53,9 @@ export class ProcesofacturasComponent implements OnInit, OnDestroy {
     private _herramientas: HerramientasService
   ) {
     this._oficina.todasFacturas(this._herramientas.fechaActual()).subscribe((resp: any) => {
-      if (resp.length > 0) {
-        this.factTot = resp;
-        this.facturas = resp.length;
+      if (resp.resp.length > 0) {
+        this.factTot = resp.resp;
+        this.facturas = resp.resp.length;
       } else {
         this.factTot = [];
         this.facturas = 0;
@@ -63,9 +63,9 @@ export class ProcesofacturasComponent implements OnInit, OnDestroy {
     });
 
     this._oficina.facturasNoImpresas(this._herramientas.fechaActual()).subscribe((resp: any) => {
-      if (resp.length > 0) {
-        this.noimpresas = resp;
-        this.sinImpresion = resp.length;
+      if (resp.resp.length > 0) {
+        this.noimpresas = resp.resp;
+        this.sinImpresion = resp.resp.length;
       } else {
         this.noimpresas = [];
         this.sinImpresion = 0;
@@ -73,9 +73,9 @@ export class ProcesofacturasComponent implements OnInit, OnDestroy {
     });
 
     this._oficina.facturasNoEnviadas(this._herramientas.fechaActual()).subscribe((resp: any) => {
-      if (resp.length > 0) {
-        this.noEnviadas = resp;
-        this.sinEnviar = resp.length;
+      if (resp.resp.length > 0) {
+        this.noEnviadas = resp.resp;
+        this.sinEnviar = resp.resp.length;
       } else {
         this.noEnviadas = [];
         this.sinEnviar = 0;
@@ -83,9 +83,9 @@ export class ProcesofacturasComponent implements OnInit, OnDestroy {
     });
 
     this._oficina.errorFacturar(this._herramientas.fechaActual()).subscribe((resp: any) => {
-      if (resp.length > 0) {
-        this.falloFacturar = resp;
-        this.failFacturar = resp.length;
+      if (resp.resp.length > 0) {
+        this.falloFacturar = resp.resp;
+        this.failFacturar = resp.resp.length;
       } else {
         this.falloFacturar = [];
         this.failFacturar = 0;
@@ -93,9 +93,9 @@ export class ProcesofacturasComponent implements OnInit, OnDestroy {
     });
 
     this._oficina.errorTimbrar(this._herramientas.fechaActual()).subscribe((resp: any) => {
-      if (resp.length > 0) {
-        this.falloTimbrar = resp;
-        this.failTimbrar = resp.length;
+      if (resp.resp.length > 0) {
+        this.falloTimbrar = resp.resp;
+        this.failTimbrar = resp.resp.length;
       } else {
         this.falloTimbrar = [];
         this.failTimbrar = 0;
@@ -169,7 +169,7 @@ export class ProcesofacturasComponent implements OnInit, OnDestroy {
     return new Observable( ( observer: Subscriber<any> ) => {
       this.intFact = setInterval(() => {
         this._oficina.todasFacturas(this._herramientas.fechaActual()).subscribe((resp: any) => {
-          observer.next(resp);
+          observer.next(resp.resp);
         });
       }, 10000);
     });
@@ -179,7 +179,7 @@ export class ProcesofacturasComponent implements OnInit, OnDestroy {
     return new Observable( ( observer: Subscriber<any> ) => {
       this.intSinImp = setInterval(() => {
         this._oficina.facturasNoImpresas(this._herramientas.fechaActual()).subscribe((resp: any) => {
-          observer.next(resp);
+          observer.next(resp.resp);
         });
       }, 10000);
     });
@@ -189,7 +189,7 @@ export class ProcesofacturasComponent implements OnInit, OnDestroy {
     return new Observable( ( observer: Subscriber<any> ) => {
       this.intSinEnv = setInterval(() => {
         this._oficina.facturasNoEnviadas(this._herramientas.fechaActual()).subscribe((resp: any) => {
-          observer.next(resp);
+          observer.next(resp.resp);
         });
       }, 10000);
     });
@@ -199,7 +199,7 @@ export class ProcesofacturasComponent implements OnInit, OnDestroy {
     return new Observable( ( observer: Subscriber<any> ) => {
       this.intErrFac = setInterval(() => {
         this._oficina.errorFacturar(this._herramientas.fechaActual()).subscribe((resp: any) => {
-          observer.next(resp);
+          observer.next(resp.resp);
         });
       }, 10000);
     });
@@ -209,7 +209,7 @@ export class ProcesofacturasComponent implements OnInit, OnDestroy {
     return new Observable( ( observer: Subscriber<any> ) => {
       this.intErrTim = setInterval(() => {
         this._oficina.errorTimbrar(this._herramientas.fechaActual()).subscribe((resp: any) => {
-          observer.next(resp);
+          observer.next(resp.resp);
         });
       }, 10000);
     });

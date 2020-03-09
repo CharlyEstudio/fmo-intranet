@@ -38,7 +38,7 @@ export class StoreComponent implements OnInit, OnDestroy {
     // Subscrión a Monitor
     this.monitorOb =  this.regresaMon().subscribe(
       (numero: any) => {
-        this.monitor = numero.length;
+        this.monitor = numero.resp.length;
       },
       error => console.error('Error en el obs', error),
       () => console.log('El observador termino!')
@@ -47,8 +47,13 @@ export class StoreComponent implements OnInit, OnDestroy {
     // Subscrión a Monitor
     this.bajarOb =  this.regresaBajar().subscribe(
       (numero: any) => {
-        this.bajar = numero[0].cantidad;
-        this.bajarImpo = numero[0].importe;
+        if (numero.status) {
+          this.bajar = numero.resp.cantidad;
+          this.bajarImpo = numero.resp.importe;
+        } else {
+          this.bajar = 0;
+          this.bajarImpo = 0;
+        }
       },
       error => console.error('Error en el obs', error),
       () => console.log('El observador termino!')
@@ -60,22 +65,22 @@ export class StoreComponent implements OnInit, OnDestroy {
     });
 
     // Mensajes de Contacto
-    this.obtenerMensajesContacto();
-    this.ws.escuchar('registro-watch').subscribe(() => {
-      this.obtenerMensajesContacto();
-    });
+    // this.obtenerMensajesContacto();
+    // this.ws.escuchar('registro-watch-send').subscribe(() => {
+    //   this.obtenerMensajesContacto();
+    // });
 
     // Obtener rescatados
     this.obtenerRescatados();
   }
 
-  obtenerMensajesContacto() {
-    this.store.obtenerMensajesContacto().subscribe((mensajes: any) => {
-      if (mensajes.length > 0) {
-        this.mensajes = mensajes.length;
-      }
-    });
-  }
+  // obtenerMensajesContacto() {
+  //   this.store.obtenerMensajesContacto().subscribe((mensajes: any) => {
+  //     if (mensajes.length > 0) {
+  //       this.mensajes = mensajes.length;
+  //     }
+  //   });
+  // }
 
   // Observable de Pedidos en Monitor
   regresaMon(): Observable<any> {
@@ -134,15 +139,20 @@ export class StoreComponent implements OnInit, OnDestroy {
 
   obtenerPedidosMonitor() {
     this._clienteService.obtenerPedidosMonitor().subscribe((pedidos: any) => {
-      this.mtrPed = pedidos;
-      this.monitor = pedidos.length;
+      this.mtrPed = pedidos.resp;
+      this.monitor = pedidos.resp.length;
     });
   }
 
   obtenerPorBajarWeb() {
     this._clienteService.pedidosPorBajarWeb(this.herramientas.fechaActual()).subscribe((porBajar: any) => {
-      this.bajar = porBajar[0].cantidad;
-      this.bajarImpo = porBajar[0].importe;
+      if (porBajar.status) {
+        this.bajar = porBajar.resp.cantidad;
+        this.bajarImpo = porBajar.resp.importe;
+      } else {
+        this.bajar = 0;
+        this.bajarImpo = 0;
+      }
     });
   }
 

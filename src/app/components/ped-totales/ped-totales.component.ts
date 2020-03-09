@@ -35,20 +35,20 @@ export class PedTotalesComponent implements OnInit, OnDestroy {
         // this.impuesto = numero.impuesto;
         // this.tot = numero.total;
         if (numero[2] !== undefined) {
-          this.cantTot = numero[0].cantidad + numero[1].cantidad + numero[2].cantidad;
-          this.sub = numero[0].subtotal + numero[1].subtotal + numero[2].subtotal;
-          this.impuesto = numero[0].impuesto + numero[1].impuesto + numero[2].impuesto;
-          this.tot = numero[0].total + numero[1].total + numero[2].total;
+          this.cantTot = parseFloat(numero[0].cantidad) + parseFloat(numero[1].cantidad) + parseFloat(numero[2].cantidad);
+          this.sub = parseFloat(numero[0].subtotal) + parseFloat(numero[1].subtotal) + parseFloat(numero[2].subtotal);
+          this.impuesto = parseFloat(numero[0].impuesto) + parseFloat(numero[1].impuesto) + parseFloat(numero[2].impuesto);
+          this.tot = parseFloat(numero[0].total) + parseFloat(numero[1].total) + parseFloat(numero[2].total);
         } else if (numero[1] !== undefined) {
-          this.cantTot = numero[0].cantidad + numero[1].cantidad;
-          this.sub = numero[0].subtotal + numero[1].subtotal;
-          this.impuesto = numero[0].impuesto + numero[1].impuesto;
-          this.tot = numero[0].total + numero[1].total;
+          this.cantTot = parseFloat(numero[0].cantidad) + parseFloat(numero[1].cantidad);
+          this.sub = parseFloat(numero[0].subtotal) + parseFloat(numero[1].subtotal);
+          this.impuesto = parseFloat(numero[0].impuesto) + parseFloat(numero[1].impuesto);
+          this.tot = parseFloat(numero[0].total) + parseFloat(numero[1].total);
         } else {
-          this.cantTot = numero[0].cantidad;
-          this.sub = numero[0].subtotal;
-          this.impuesto = numero[0].impuesto;
-          this.tot = numero[0].total;
+          this.cantTot = parseFloat(numero[0].cantidad);
+          this.sub = parseFloat(numero[0].subtotal);
+          this.impuesto = parseFloat(numero[0].impuesto);
+          this.tot = parseFloat(numero[0].total);
         }
       },
       error => console.error('Error en el obs', error),
@@ -87,20 +87,20 @@ export class PedTotalesComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         if ( data.length > 0 ) {
           if (data[2] !== undefined) {
-            this.cantTot = data[0].cantidad + data[1].cantidad + data[2].cantidad;
-            this.sub = data[0].subtotal + data[1].subtotal + data[2].subtotal;
-            this.impuesto = data[0].impuesto + data[1].impuesto + data[2].impuesto;
-            this.tot = data[0].total + data[1].total + data[2].total;
+            this.cantTot = parseFloat(data[0].cantidad) + parseFloat(data[1].cantidad) + parseFloat(data[2].cantidad);
+            this.sub = parseFloat(data[0].subtotal) + parseFloat(data[1].subtotal) + parseFloat(data[2].subtotal);
+            this.impuesto = parseFloat(data[0].impuesto) + parseFloat(data[1].impuesto) + parseFloat(data[2].impuesto);
+            this.tot = parseFloat(data[0].total) + parseFloat(data[1].total) + parseFloat(data[2].total);
           } else if (data[1] !== undefined) {
-            this.cantTot = data[0].cantidad + data[1].cantidad;
-            this.sub = data[0].subtotal + data[1].subtotal;
-            this.impuesto = data[0].impuesto + data[1].impuesto;
-            this.tot = data[0].total + data[1].total;
+            this.cantTot = parseFloat(data[0].cantidad) + parseFloat(data[1].cantidad);
+            this.sub = parseFloat(data[0].subtotal) + parseFloat(data[1].subtotal);
+            this.impuesto = parseFloat(data[0].impuesto) + parseFloat(data[1].impuesto);
+            this.tot = parseFloat(data[0].total) + parseFloat(data[1].total);
           } else {
-            this.cantTot = data[0].cantidad;
-            this.sub = data[0].subtotal;
-            this.impuesto = data[0].impuesto;
-            this.tot = data[0].total;
+            this.cantTot = parseFloat(data[0].cantidad);
+            this.sub = parseFloat(data[0].subtotal);
+            this.impuesto = parseFloat(data[0].impuesto);
+            this.tot = parseFloat(data[0].total);
           }
         } else {
           this.cantTot = 0,

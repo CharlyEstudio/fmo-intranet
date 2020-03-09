@@ -104,11 +104,11 @@ export class DiasvtasComponent implements OnInit {
     for (let dia of dias) {
       if (dia.activo) {
         this.diasVtasService.obtenerFechaDias(this.fechaIn.nativeElement.value, this.fechaOut.nativeElement.value, dia.dia).subscribe((rangos: any) => {
-          if (rangos.length > 0) {
-            for (const fecha of rangos) {
+          if (rangos.resp.length > 0) {
+            for (const fecha of rangos.resp) {
               this.diasVtasService.obtenerVentasDia(fecha.date, this.asesor.PERID).subscribe((vtas: any) => {
-                if (vtas[0].d === Number(dia.dia)) {
-                  for (const cli of vtas) {
+                if (Number(vtas.resp[0].d) === Number(dia.dia)) {
+                  for (const cli of vtas.resp) {
                     const esCliente = (cl: any) => {
                       return cl.cliente === cli.numero;
                     };
@@ -246,7 +246,7 @@ export class DiasvtasComponent implements OnInit {
     );
     const reporte = [];
     this.diasVtasService.obtenerClientesSinMov(this.fechaIn.nativeElement.value, this.fechaOut.nativeElement.value, this.asesor.PERID).subscribe((sinmov: any) => {
-      this.vendedor = sinmov[0].asesor;
+      this.vendedor = sinmov.resp[0].asesor;
       for (const dia of dias) {
         reporte.push(
           {
@@ -256,9 +256,9 @@ export class DiasvtasComponent implements OnInit {
           }
         );
       }
-      for (const cli of sinmov) {
+      for (const cli of sinmov.resp) {
         const esDia = (data: any) => {
-          return data.d === cli.d;
+          return data.d === Number(cli.d);
         };
         if (reporte.find(esDia)) {
           reporte.find(esDia).clientes.push(cli);
@@ -271,8 +271,8 @@ export class DiasvtasComponent implements OnInit {
   descargar(dato: any, tipo: any, asesor: any) {
     this.verPDF = '';
     this.diasVtasService.crearPdf(dato, tipo, asesor).subscribe((resp: any) => {
-      if (resp !== '') {
-        this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl('https://ferremayoristas.com.mx/api/' + resp);
+      if (resp.status) {
+        this.verPDF = resp.file;
       }
     });
   }

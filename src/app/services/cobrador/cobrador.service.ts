@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIO_GENERAL, PUERTO_INTERNO, PUERTO_SERVER } from '../../config/config';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { URL_SERVICIO_GENERAL, PUERTO_SERVER, PARAM_KEY, KEY } from '../../config/config';
 import { ServidorService } from '../db/servidor.service';
 
 @Injectable()
 export class CobradorService {
+
+  head = new HttpHeaders();
+  headers = this.head.append(PARAM_KEY, KEY);
 
   constructor(
     private http: HttpClient,
@@ -12,19 +15,18 @@ export class CobradorService {
   ) { }
 
   obtenerCobradores() {
-    let url;
-    url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/cobrador.php?opcion=1' + '&servidor=' + this._servidor.db;
+    const url = `${URL_SERVICIO_GENERAL}/services/cobranza/${this._servidor.db}`;
 
-    return this.http.get(url);
+    return this.http.get( url, { headers: this.headers } );
   }
 
   obtenerCobros(perid: number, fechaIni: string, fechaFin: string) {
-    let url;
-    url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/cobrador.php?opcion=2&perid=' + perid + '&fechaIni=' + fechaIni + '&fechaFin=' + fechaFin + '&servidor=' + this._servidor.db;
+    const url = `${URL_SERVICIO_GENERAL}/services/cobranza/asesor/${perid}/${fechaIni}/${fechaFin}/${this._servidor.db}`;
 
-    return this.http.get(url);
+    return this.http.get( url, { headers: this.headers } );
   }
 
+  // Ver en donde se hace el PDF
   hacerPDF(file: string, tabla: any, total: any, pagado: any, comision: any, impocom: any, fecIni: string, fecFin: string) {
     let url;
 

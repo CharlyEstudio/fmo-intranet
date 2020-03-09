@@ -21,13 +21,13 @@ export class ClienteService {
     this.token = localStorage.getItem('token');
   }
 
-  cargarUsuarios( desde: number = 0 ) {
-    let url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes?desde=' + desde;
+  // cargarUsuarios( desde: number = 0 ) {
+  //   let url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes?desde=' + desde;
 
-    url += '&token=' + this.token;
+  //   url += '&token=' + this.token;
 
-    return this.http.get( url );
-  }
+  //   return this.http.get( url );
+  // }
 
   cargarUsuariosActivos( desde: number = 0 ) {
     let url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/clientes/activos?desde=' + desde;

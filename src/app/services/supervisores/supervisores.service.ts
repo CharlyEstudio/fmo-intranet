@@ -1,28 +1,33 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIO_GENERAL, PUERTO_SERVER, PUERTO_INTERNO } from '../../config/config';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { URL_SERVICIO_GENERAL, PARAM_KEY, KEY } from '../../config/config';
+import { ServidorService } from '../db/servidor.service';
 
 @Injectable()
 export class SupervisoresService {
 
+  head = new HttpHeaders();
+  headers = this.head.append(PARAM_KEY, KEY);
+
   url: string;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private _servidorS: ServidorService
   ) { }
 
   pedidosGeneral( fecha: any, id: any ) {
-    this.url = URL_SERVICIO_GENERAL + '/api/pedidos.php?opcion=53&perid=' + id + '&fecha=' + fecha;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/estados/${id}/${fecha}/${this._servidorS.db}`;
 
-    return this.http.get( this.url ).map((asesores: any) => {
+    return this.http.get( this.url, { headers: this.headers } ).map((asesores: any) => {
       return asesores;
     });
   }
 
   getComentarios(perid: any) {
-    this.url = URL_SERVICIO_GENERAL + '/api/visitas.php?opcion=5&perid=' + perid;
+    this.url = `${URL_SERVICIO_GENERAL}/services/visitas/comentario/asesor/${perid}/${this._servidorS.db}`;
 
-    return this.http.get(this.url);
+    return this.http.get(this.url, { headers: this.headers });
   }
 
 }

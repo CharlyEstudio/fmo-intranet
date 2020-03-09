@@ -37,7 +37,7 @@ export class BackorderAsesorComponent implements OnInit {
     const final = this._herramientas.fechaActual();
     this._bo.backorder(this._usuario.usuario.idFerrum, numero, inicio, final).subscribe((resp: any) => {
       if (resp.status) {
-        this.backorder = resp.respuesta;
+        this.backorder = resp.resp;
         this.cargando = false;
       } else {
         this.msg = resp.msg;

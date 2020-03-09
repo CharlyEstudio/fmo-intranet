@@ -21,6 +21,8 @@ import { URL_SERVICIO_GENERAL, PUERTO_INTERNO } from '../../config/config';
 @Injectable()
 export class ComisionesService {
 
+  // Hay que quitarlo
+
   datos: any[] = [];
   token: any;
 

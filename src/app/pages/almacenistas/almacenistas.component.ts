@@ -34,8 +34,6 @@ export class AlmacenistasComponent implements OnInit {
   accionBtn: boolean = false;
   accionbtn: number = 0;
   actividad: string;
-  
-
 
   constructor(
     private pedidoService: PedidoService,
@@ -48,13 +46,13 @@ export class AlmacenistasComponent implements OnInit {
   ngOnInit() {
   }
 
-  almacenistas(){
+  almacenistas() {
     this.pedidoService.personalAlmacen().subscribe((dat: any) => {
-     this.lista = dat;
+      this.lista = dat.resp;
     });
   }
 
-  desactivar(id: any){
+  desactivar(id: any) {
     this.actividad = 'Desactivado';
     swal({
       title: "¿Deseas eliminar este registro?",
@@ -72,7 +70,7 @@ export class AlmacenistasComponent implements OnInit {
           'Tu registro ha sido eliminado.',
           'success'
           )
-            this.pedidoService.eliminarPersonal(id, this.idFerrum, this.actividad).subscribe((data: any)=>{
+            this.pedidoService.eliminarPersonal(id).subscribe((data: any) => {
               data.activo = 0;
               this.almacenistas();
             });
@@ -81,35 +79,56 @@ export class AlmacenistasComponent implements OnInit {
   }
 
   buscador(texto: any) {
-    this.almacenista = [];
-    this.pedidoService.nuevoPersonal(texto).subscribe((data: any) => {
-      this.lista = data;
-      this.accionbtn = 1;
-    });
+    if (texto.length > 0) {
+      this.almacenista = [];
+      this.pedidoService.buscarAlmacenista(texto).subscribe((data: any) => {
+        this.lista = data.resp;
+        this.accionbtn = 1;
+      });
+    } else {
+      this.almacenistas();
+    }
   }
 
   nuevoRegistro() {
     this.actividad = 'Registro';
-    this.pedidoService.guardarRegistro(this.nombre, this.user, this.activo, this.tiempo, this.rotacion, this.marquesina,
-      this.capacitacion, this.area, this.seccion, this.idFerrum, this.actividad).subscribe((guarda: any) => {
+    const enviar = {
+      nombre: this.nombre,
+      usuario: this.user,
+      activo: this.activo,
+      tiempo: this.tiempo,
+      rotacion: this.rotacion,
+      marquesina: this.marquesina,
+      capacitacion: this.capacitacion,
+      area: this.area,
+      seccion: this.seccion,
+      idFerrum: Number(this.idFerrum),
+      actividad: this.actividad
+    };
+    this.pedidoService.guardarRegistro(enviar).subscribe((guarda: any) => {
+      if (!guarda) {
         swal('Guardado!', `Tu registro se ha guardado correctamente!`, 'success');
         this.almacenistas();
-      });
-      this.nombre = '';
-      this.img = '';
-      this.tiempo = '';
-      this.user = '';
-      this.activo = '';
-      this.rotacion = '';
-      this.marquesina = '';
-      this.capacitacion = '';
-      this.area = '';
-      this.seccion = '';
-      this.idFerrum = '';
-      this.actividad = '';
+      } else {
+        swal('Error!', `Tu registro no se ha guardado correctamente!`, 'error');
+      }
+    });
+
+    this.nombre = '';
+    this.img = '';
+    this.tiempo = '';
+    this.user = '';
+    this.activo = '';
+    this.rotacion = '';
+    this.marquesina = '';
+    this.capacitacion = '';
+    this.area = '';
+    this.seccion = '';
+    this.idFerrum = '';
+    this.actividad = '';
   }
 
-  accion(){
+  accion() {
     this.img = 'newuser2.jpg';
     this.accionBtn = true;
     this.nombre = '';
@@ -123,34 +142,51 @@ export class AlmacenistasComponent implements OnInit {
     this.seccion = '';
     this.id = -1;
   }
-  
-  verAlm(id: any){
+
+  verAlm(id: any) {
     this.img = '';
     this.id = -1;
     this.pedidoService.verPersonal(id).subscribe((ver: any) => {
-      this.id = ver[0].id_almacenista;
-      this.nombre = ver[0].nombre;
-      this.tiempo = ver[0].tiempo;
-      this.user = ver[0].usuario;
-      this.activo = ver[0].activo;
-      this.rotacion = ver[0].rotacion;
-      this.marquesina = ver[0].marquesina;
-      this.capacitacion = ver[0].capacitacion;
-      this.area = ver[0].area;
-      this.seccion = ver[0].seccion;
-      this.img = ver[0].img;
+      this.id = ver.resp.id_almacenista;
+      this.nombre = ver.resp.nombre;
+      this.tiempo = ver.resp.tiempo;
+      this.user = ver.resp.usuario;
+      this.activo = ver.resp.activo;
+      this.rotacion = ver.resp.rotacion;
+      this.marquesina = ver.resp.marquesina;
+      this.capacitacion = ver.resp.capacitacion;
+      this.area = ver.resp.area;
+      this.seccion = ver.resp.seccion;
+      this.img = ver.resp.img;
 
     });
   }
 
-  editarAlm(){
+  editarAlm() {
     this.actividad = 'Editar';
-    this.pedidoService.editarPersonal(this.id, this.nombre, this.user, this.activo, this.tiempo, this.rotacion, this.marquesina,
-    this.capacitacion, this.area, this.seccion,this.idFerrum,this.actividad ).subscribe((ver: any) => {
-      
-      swal('Modificado!', `Tu registro guardó las modificaciones`, 'success');
-
+    const enviar = {
+      id: Number(this.id),
+      nombre: this.nombre,
+      usuario: this.user,
+      activo: this.activo,
+      tiempo: this.tiempo,
+      rotacion: this.rotacion,
+      marquesina: this.marquesina,
+      capacitacion: this.capacitacion,
+      area: this.area,
+      seccion: this.seccion,
+      idFerrum: Number(this.idFerrum),
+      actividad: this.actividad
+    };
+    this.pedidoService.editarPersonal(enviar).subscribe((ver: any) => {
+      if (!ver) {
+        this.almacenistas();
+        swal('Modificado!', `Tu registro guardó las modificaciones`, 'success');
+      } else {
+        swal('Error!', `Tu registro no se actualizo`, 'error');
+      }
     });
+
     this.id = -1;
     this.nombre = '';
     this.img = '';
@@ -165,7 +201,8 @@ export class AlmacenistasComponent implements OnInit {
     this.idFerrum = '';
     this.actividad = '';
   }
-  cancelar(){
+
+  cancelar() {
     this.accionbtn = 0;
     this.id = -1;
     this.nombre = '';

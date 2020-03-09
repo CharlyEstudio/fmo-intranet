@@ -38,49 +38,43 @@ export class NotascreditoremComponent implements OnInit {
   ) {
     this.id = this._usuarioService.usuario._id;
     this.cargando = false;
-
-    // this.obtenerTrabajados();
   }
 
   ngOnInit() { }
 
   trabajado(nc: any) {
-    console.log(nc);
-    this._ncService.validarNCtrabajado(nc.nc, nc.serie).subscribe((encontrado: any) => {
-      if (!encontrado.status) {
-        const nota = {
-          fecha: nc.fecha.substr(0, 10),
-          tiponc: nc.tiponc,
-          serie: nc.serie,
-          nc: nc.nc,
-          factura: nc.factura,
-          nombre: nc.nombre,
-          subtotal: nc.subtotal,
-          iva: nc.iva,
-          total: nc.total,
-          saldo: nc.saldo,
-          perid: nc.perid,
-          vendedor: nc.vendedor,
-          usuario: this.id
-        };
-        this._ncService.guardarNCtrabajado(nota).subscribe((resp: any) => {
-          if (resp.status) {
-            const elem = <HTMLElement>(document.getElementById("linea" + nc.nc + nc.factura));
-            elem.classList.add("bg-primary");
-            nc.trabajado = true;
-            const ncAnt = this.nc;
-            this.nc = [];
-            this.nc = ncAnt;
-            // this.obtenerTrabajados();
-          }
-        });
-      } else {
-        swal('Nota de Crédito Encontrado', 'Esta nota de crédito ya fue trabajado, si hay un error favor de reportar con el administrador.', 'error');
-      }
-    });
-    // if (this.fechaNC !== '') {
-    //   this.buscarFecNC.nativeElement.click();
-    // }
+    // this._ncService.validarNCtrabajado(nc.nc, nc.serie).subscribe((encontrado: any) => {
+    //   if (!encontrado.status) {
+    //     const nota = {
+    //       fecha: nc.fecha.substr(0, 10),
+    //       tiponc: nc.tiponc,
+    //       serie: nc.serie,
+    //       nc: nc.nc,
+    //       factura: nc.factura,
+    //       nombre: nc.nombre,
+    //       subtotal: nc.subtotal,
+    //       iva: nc.iva,
+    //       total: nc.total,
+    //       saldo: nc.saldo,
+    //       perid: nc.perid,
+    //       vendedor: nc.vendedor,
+    //       usuario: this.id
+    //     };
+    //     this._ncService.guardarNCtrabajado(nota).subscribe((resp: any) => {
+    //       if (resp.status) {
+    //         const elem = <HTMLElement>(document.getElementById("linea" + nc.nc + nc.factura));
+    //         elem.classList.add("bg-primary");
+    //         nc.trabajado = true;
+    //         const ncAnt = this.nc;
+    //         this.nc = [];
+    //         this.nc = ncAnt;
+    //         // this.obtenerTrabajados();
+    //       }
+    //     });
+    //   } else {
+    //     swal('Nota de Crédito Encontrado', 'Esta nota de crédito ya fue trabajado, si hay un error favor de reportar con el administrador.', 'error');
+    //   }
+    // });
   }
 
   quitar(nc: any) {
@@ -89,10 +83,6 @@ export class NotascreditoremComponent implements OnInit {
         const elem = <HTMLElement>(document.getElementById("linea" + nc.nc + nc.factura));
         elem.classList.remove("bg-primary");
         nc.trabajado = false;
-        // this.obtenerTrabajados();
-        // if (this.fechaNC !== '') {
-        //   this.buscarFecNC.nativeElement.click();
-        // }
       }
     });
   }
@@ -106,10 +96,6 @@ export class NotascreditoremComponent implements OnInit {
     this.nc = [];
     this.work = [];
     this.inNC = '';
-
-    // if (this.work.length === 0) {
-    //   this.obtenerTrabajados();
-    // }
   }
 
   obtenerTodosNC() {
@@ -117,62 +103,62 @@ export class NotascreditoremComponent implements OnInit {
     this.trabajadas = 0;
     this.pendientes = 0;
     this.fechaNC = '';
-    this._ncService.obtenerNC().subscribe((notas: any) => {
-      if (notas.status) {
-        let nt;
-        this.nc = [];
-        for (let i = 0; i < notas.respuesta.length; i ++) {
-          this._ncService.buscarNCtrabajado(notas.respuesta[i].nc, notas.respuesta[i].serie).subscribe((resp: any) => {
-            if (resp.status) {
-              nt = {
-                fecha: notas.respuesta[i].fecha,
-                tiponc: notas.respuesta[i].tiponc,
-                serie: notas.respuesta[i].serie,
-                nc: notas.respuesta[i].nc,
-                factura: notas.respuesta[i].factura,
-                nombre: notas.respuesta[i].nombre,
-                subtotal: notas.respuesta[i].subtotal,
-                iva: notas.respuesta[i].iva,
-                total: notas.respuesta[i].total,
-                saldo: notas.respuesta[i].saldo,
-                perid: notas.respuesta[i].perid,
-                vendedor: notas.respuesta[i].vendedor,
-                trabajado: true
-              };
-            } else {
-              nt = {
-                fecha: notas.respuesta[i].fecha,
-                tiponc: notas.respuesta[i].tiponc,
-                serie: notas.respuesta[i].serie,
-                nc: notas.respuesta[i].nc,
-                factura: notas.respuesta[i].factura,
-                nombre: notas.respuesta[i].nombre,
-                subtotal: notas.respuesta[i].subtotal,
-                iva: notas.respuesta[i].iva,
-                total: notas.respuesta[i].total,
-                saldo: notas.respuesta[i].saldo,
-                perid: notas.respuesta[i].perid,
-                vendedor: notas.respuesta[i].vendedor,
-                trabajado: false
-              };
-            }
-            this.nc.push(nt);
-            this.nc.sort((a, b) => {
-              if (a.serie > b.serie) {
-                return 1;
-              }
+    // this._ncService.obtenerNC().subscribe((notas: any) => {
+    //   if (notas.status) {
+    //     let nt;
+    //     this.nc = [];
+    //     for (let i = 0; i < notas.respuesta.length; i ++) {
+    //       this._ncService.buscarNCtrabajado(notas.respuesta[i].nc, notas.respuesta[i].serie).subscribe((resp: any) => {
+    //         if (resp.status) {
+    //           nt = {
+    //             fecha: notas.respuesta[i].fecha,
+    //             tiponc: notas.respuesta[i].tiponc,
+    //             serie: notas.respuesta[i].serie,
+    //             nc: notas.respuesta[i].nc,
+    //             factura: notas.respuesta[i].factura,
+    //             nombre: notas.respuesta[i].nombre,
+    //             subtotal: notas.respuesta[i].subtotal,
+    //             iva: notas.respuesta[i].iva,
+    //             total: notas.respuesta[i].total,
+    //             saldo: notas.respuesta[i].saldo,
+    //             perid: notas.respuesta[i].perid,
+    //             vendedor: notas.respuesta[i].vendedor,
+    //             trabajado: true
+    //           };
+    //         } else {
+    //           nt = {
+    //             fecha: notas.respuesta[i].fecha,
+    //             tiponc: notas.respuesta[i].tiponc,
+    //             serie: notas.respuesta[i].serie,
+    //             nc: notas.respuesta[i].nc,
+    //             factura: notas.respuesta[i].factura,
+    //             nombre: notas.respuesta[i].nombre,
+    //             subtotal: notas.respuesta[i].subtotal,
+    //             iva: notas.respuesta[i].iva,
+    //             total: notas.respuesta[i].total,
+    //             saldo: notas.respuesta[i].saldo,
+    //             perid: notas.respuesta[i].perid,
+    //             vendedor: notas.respuesta[i].vendedor,
+    //             trabajado: false
+    //           };
+    //         }
+    //         this.nc.push(nt);
+    //         this.nc.sort((a, b) => {
+    //           if (a.serie > b.serie) {
+    //             return 1;
+    //           }
 
-              if (a.serie < b.serie) {
-                return -1;
-              }
+    //           if (a.serie < b.serie) {
+    //             return -1;
+    //           }
 
-              return 0;
-            });
-          });
-        }
-        this.cargando = false;
-      }
-    });
+    //           return 0;
+    //         });
+    //       });
+    //     }
+    //     this.cargando = false;
+    //   }
+    // });
   }
 
   obtenerTrabajados() {
@@ -236,19 +222,19 @@ export class NotascreditoremComponent implements OnInit {
     this.cargando = true;
     this.nc = [];
     this._ncService.buscarNCRFecha(f, f2).subscribe((resp: any) => {
-      if (resp.length > 0) {
-        for (let i = 0; i < resp.length; i ++) {
-          this._ncService.buscarNCRtrabajado(resp[i].nc, resp[i].factura).subscribe((ncFec: any) => {
+      if (resp.resp.length > 0) {
+        for (let i = 0; i < resp.resp.length; i ++) {
+          this._ncService.buscarNCRtrabajado(resp.resp[i].nc, resp.resp[i].factura).subscribe((ncFec: any) => {
             if (ncFec.status) {
-              resp[i].trabajado = true;
-            } else if (resp[i].serie === 'NA') {
-              resp[i].trabajado = true;
+              resp.resp[i].trabajado = true;
+            } else if (resp.resp[i].serie === 'NA') {
+              resp.resp[i].trabajado = true;
             } else {
-              resp[i].trabajado = false;
+              resp.resp[i].trabajado = false;
             }
           });
         }
-        this.nc = resp;
+        this.nc = resp.resp;
         this._ncService.buscarNCTrabFecha(f, f2).subscribe((trab: any) => {
           if (trab.status) {
             for (let i = 0; i < trab.respuesta.length; i++) {
@@ -261,7 +247,7 @@ export class NotascreditoremComponent implements OnInit {
               }
             }
           }
-          this.total = resp.respuesta.length;
+          this.total = resp.resp.length;
           this.trabajadas = this.trabajadas >= this.total ? this.total : this.trabajadas;
           this.pendientes = this.trabajadas >= this.total ? 0 : this.total - this.trabajadas;
         });

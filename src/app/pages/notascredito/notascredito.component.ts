@@ -96,68 +96,69 @@ export class NotascreditoComponent implements OnInit {
     this.inNC = '';
   }
 
-  obtenerTodosNC() {
-    this.total = 0;
-    this.trabajadas = 0;
-    this.pendientes = 0;
-    this.fechaNC = '';
-    this._ncService.obtenerNC().subscribe((notas: any) => {
-      if (notas.status) {
-        let nt;
-        this.nc = [];
-        for (let i = 0; i < notas.respuesta.length; i ++) {
-          this._ncService.buscarNCtrabajado(notas.respuesta[i].nc, notas.respuesta[i].serie).subscribe((resp: any) => {
-            if (resp.status) {
-              nt = {
-                fecha: notas.respuesta[i].fecha,
-                tiponc: notas.respuesta[i].tiponc,
-                serie: notas.respuesta[i].serie,
-                nc: notas.respuesta[i].nc,
-                factura: notas.respuesta[i].factura,
-                nombre: notas.respuesta[i].nombre,
-                subtotal: notas.respuesta[i].subtotal,
-                iva: notas.respuesta[i].iva,
-                total: notas.respuesta[i].total,
-                saldo: notas.respuesta[i].saldo,
-                perid: notas.respuesta[i].perid,
-                vendedor: notas.respuesta[i].vendedor,
-                trabajado: true
-              };
-            } else {
-              nt = {
-                fecha: notas.respuesta[i].fecha,
-                tiponc: notas.respuesta[i].tiponc,
-                serie: notas.respuesta[i].serie,
-                nc: notas.respuesta[i].nc,
-                factura: notas.respuesta[i].factura,
-                nombre: notas.respuesta[i].nombre,
-                subtotal: notas.respuesta[i].subtotal,
-                iva: notas.respuesta[i].iva,
-                total: notas.respuesta[i].total,
-                saldo: notas.respuesta[i].saldo,
-                perid: notas.respuesta[i].perid,
-                vendedor: notas.respuesta[i].vendedor,
-                trabajado: false
-              };
-            }
-            this.nc.push(nt);
-            this.nc.sort((a, b) => {
-              if (a.serie > b.serie) {
-                return 1;
-              }
+  // obtenerTodosNC() {
+  //   this.total = 0;
+  //   this.trabajadas = 0;
+  //   this.pendientes = 0;
+  //   this.fechaNC = '';
+  //   this._ncService.obtenerNC().subscribe((notas: any) => {
+  //     console.log(notas);
+  //     if (notas.status) {
+  //       let nt;
+  //       this.nc = [];
+  //       for (let i = 0; i < notas.respuesta.length; i ++) {
+  //         this._ncService.buscarNCtrabajado(notas.respuesta[i].nc, notas.respuesta[i].serie).subscribe((resp: any) => {
+  //           if (resp.status) {
+  //             nt = {
+  //               fecha: notas.respuesta[i].fecha,
+  //               tiponc: notas.respuesta[i].tiponc,
+  //               serie: notas.respuesta[i].serie,
+  //               nc: notas.respuesta[i].nc,
+  //               factura: notas.respuesta[i].factura,
+  //               nombre: notas.respuesta[i].nombre,
+  //               subtotal: notas.respuesta[i].subtotal,
+  //               iva: notas.respuesta[i].iva,
+  //               total: notas.respuesta[i].total,
+  //               saldo: notas.respuesta[i].saldo,
+  //               perid: notas.respuesta[i].perid,
+  //               vendedor: notas.respuesta[i].vendedor,
+  //               trabajado: true
+  //             };
+  //           } else {
+  //             nt = {
+  //               fecha: notas.respuesta[i].fecha,
+  //               tiponc: notas.respuesta[i].tiponc,
+  //               serie: notas.respuesta[i].serie,
+  //               nc: notas.respuesta[i].nc,
+  //               factura: notas.respuesta[i].factura,
+  //               nombre: notas.respuesta[i].nombre,
+  //               subtotal: notas.respuesta[i].subtotal,
+  //               iva: notas.respuesta[i].iva,
+  //               total: notas.respuesta[i].total,
+  //               saldo: notas.respuesta[i].saldo,
+  //               perid: notas.respuesta[i].perid,
+  //               vendedor: notas.respuesta[i].vendedor,
+  //               trabajado: false
+  //             };
+  //           }
+  //           this.nc.push(nt);
+  //           this.nc.sort((a, b) => {
+  //             if (a.serie > b.serie) {
+  //               return 1;
+  //             }
 
-              if (a.serie < b.serie) {
-                return -1;
-              }
+  //             if (a.serie < b.serie) {
+  //               return -1;
+  //             }
 
-              return 0;
-            });
-          });
-        }
-        this.cargando = false;
-      }
-    });
-  }
+  //             return 0;
+  //           });
+  //         });
+  //       }
+  //       this.cargando = false;
+  //     }
+  //   });
+  // }
 
   buscarNC() {
     let nt;
@@ -201,10 +202,10 @@ export class NotascreditoComponent implements OnInit {
     this.cargando = true;
     this.nc = [];
     this._ncService.buscarNCFecha(f, f2).subscribe((resp: any) => {
-      if (resp.length > 0) {
-        this.pendientes = resp.length;
-        for (let i = 0; i < resp.length; i ++) {
-          this._ncService.buscarNCtrabajado(resp[i].nc, resp[i].serie).subscribe((ncFec: any) => {
+      if (resp.resp.length > 0) {
+        this.pendientes = resp.resp.length;
+        for (let i = 0; i < resp.resp.length; i ++) {
+          this._ncService.buscarNCtrabajado(resp.resp[i].nc, resp.resp[i].serie).subscribe((ncFec: any) => {
             if (ncFec.status) {
               resp[i].trabajado = true;
               this.trabajadas++;
@@ -212,15 +213,15 @@ export class NotascreditoComponent implements OnInit {
               // if (resp[i].serie !== 'NA') {
               //   subtotal ++;
               // }
-            } else if (resp[i].serie === 'NA') {
+            } else if (resp.resp[i].serie === 'NA') {
               this.trabajadas++;
-              resp[i].trabajado = true;
+              resp.resp[i].trabajado = true;
             } else {
-              resp[i].trabajado = false;
+              resp.resp[i].trabajado = false;
             }
           });
         }
-        this.nc = resp;
+        this.nc = resp.resp;
         this.total = this.nc.length;
         this.cargando = false;
       } else {

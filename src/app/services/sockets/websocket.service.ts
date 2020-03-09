@@ -23,15 +23,11 @@ export class WebsocketService {
       console.log('Conectado al Servidor');
       this.socketStatus = true;
       this.cargarStorage();
-      // swal('Servidor Conectado', '', 'success');
     });
 
     this.socket.on('disconnect', () => {
       console.log('Desconectado del Servidor');
       this.socketStatus = false;
-      // localStorage.removeItem('socketUsuario');
-      // this.router.navigateByUrl('/login');
-      // swal('Servidor Desconectado', 'No actualice y/o guarde alguna información. Revise en login si ya está OnLine.', 'warning');
     });
   }
 

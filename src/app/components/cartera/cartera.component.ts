@@ -80,8 +80,8 @@ export class CarteraComponent implements OnInit, OnDestroy {
         // Total Financiado
         this._phpService.financiado()
         .subscribe((data) => {
-          if ( data[0].importe !== 0 ) {
-            this.tot = data[0].importe;
+          if ( data.importe !== 0 ) {
+            this.tot = data.importe;
           } else {
             this.tot = 0;
           }
@@ -90,8 +90,8 @@ export class CarteraComponent implements OnInit, OnDestroy {
         // Total Saldo al día
         this._phpService.saldo(this.dia)
         .subscribe((data) => {
-          if ( data[0].importe !== 0 ) {
-            this.sal = data[0].importe;
+          if ( data.importe !== 0 ) {
+            this.sal = data.importe;
           } else {
             this.sal = 0;
           }
@@ -100,8 +100,8 @@ export class CarteraComponent implements OnInit, OnDestroy {
         // Total Saldo Vencido
         this._phpService.vencido(this.dia)
         .subscribe((data) => {
-          if ( data[0].importe !== 0 ) {
-            this.ven = data[0].importe;
+          if ( data.importe !== 0 ) {
+            this.ven = data.importe;
           } else {
             this.ven = 0;
           }
@@ -117,8 +117,8 @@ export class CarteraComponent implements OnInit, OnDestroy {
     // Total Financiado
     this._phpService.financiado()
       .subscribe((data) => {
-        if ( data[0].importe !== 0 ) {
-          this.tot = data[0].importe;
+        if ( data.importe !== 0 ) {
+          this.tot = data.importe;
         } else {
           this.tot = 0;
         }
@@ -127,8 +127,8 @@ export class CarteraComponent implements OnInit, OnDestroy {
     // Total Saldo al día
     this._phpService.saldo(this.dia)
     .subscribe((data) => {
-      if ( data[0].importe !== 0 ) {
-        this.sal = data[0].importe;
+      if ( data.importe !== 0 ) {
+        this.sal = data.importe;
       } else {
         this.sal = 0;
       }
@@ -137,8 +137,8 @@ export class CarteraComponent implements OnInit, OnDestroy {
     // Total Saldo Vencido
     this._phpService.vencido(this.dia)
     .subscribe((data) => {
-      if ( data[0].importe !== 0 ) {
-        this.ven = data[0].importe;
+      if ( data.importe !== 0 ) {
+        this.ven = data.importe;
       } else {
         this.ven = 0;
       }

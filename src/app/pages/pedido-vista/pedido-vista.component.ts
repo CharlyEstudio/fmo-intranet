@@ -24,7 +24,7 @@ export class PedidoVistaComponent implements OnInit {
     // Pedidos del Día
     this._asesoresService.relacionPedidos(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.pedidos = resp;
+        this.pedidos = resp.resp;
       });
   }
 

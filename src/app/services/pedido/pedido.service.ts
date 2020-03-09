@@ -1,104 +1,69 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 // CONFIGURACION
-import { URL_SERVICIO_GENERAL, PUERTO_SERVER } from '../../config/config';
+import { URL_SERVICIO_GENERAL, PUERTO_SERVER, PARAM_KEY, KEY } from '../../config/config';
+
+// Servicios
+import { ServidorService } from '../db/servidor.service';
 
 @Injectable()
 export class PedidoService {
 
+  head = new HttpHeaders();
+  headers = this.head.append(PARAM_KEY, KEY);
+
   url: string;
 
   constructor(
-    private http: HttpClient
-  ) {
-
-  }
-
-  pedidosHora(hora: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=4&hora=' + hora;
-    return this.http.get(this.url);
-  }
-
-  partidasHora(hora: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=5&hora=' + hora;
-    return this.http.get(this.url);
-  }
-
-  partidasTotal(hora: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=7&hora=' + hora;
-    return this.http.get(this.url);
-  }
-
-  pedidosTotal(hora: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=8&hora=' + hora;
-    return this.http.get(this.url);
-  }
-
-  totalAlmacenistas() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=9';
-    return this.http.get(this.url);
-  }
-
-  pedidosGlobal() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=6';
-    return this.http.get(this.url);
-  }
-
-  buscarFolio(pedido: any, serie: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=10&pedido=' + pedido + '&serie=' + serie;
-    return this.http.get(this.url);
-  }
-
-  buscarIdGrafica(id: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=11&id=' + id;
-    return this.http.get(this.url);
-  }
-
-  obtenerPartidasPedido(folio: any, serie: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=12&folio=' + folio + '&serie=' + serie;
-    return this.http.get(this.url);
-  }
-
-  obtenerInfoId(id: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=13&id=' + id;
-    return this.http.get(this.url);
-  }
-
-  obtenerPedidosId(id: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=14&id=' + id;
-    return this.http.get(this.url);
-  }
+    private http: HttpClient,
+    private _servidor: ServidorService
+  ) {  }
 
   personalAlmacen() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=2';
-    return this.http.get(this.url);
-  }
-  nuevoPersonal(texto: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=16&texto=' + texto;
-    return this.http.get(this.url);
+    this.url = `${URL_SERVICIO_GENERAL}/services/almacen/all/personal/sistemas`;
+
+    return this.http.get( this.url, { headers: this.headers } );
   }
 
-  eliminarPersonal(id: any, idFerrum: any, actividad: any ) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=17&id=' + id + '&idFerrum=' + idFerrum + '&actividad=' + actividad;
-    return this.http.get(this.url);
+  buscarAlmacenista(texto: any) {
+    this.url = `${URL_SERVICIO_GENERAL}/services/almacen/especifico/personal/nombre/${texto}/sistemas`;
+
+    return this.http.get(this.url, { headers: this.headers });
+  }
+
+  eliminarPersonal(id: any) {
+    this.url = `${URL_SERVICIO_GENERAL}/services/almacen/inactivo/personal/${id}/sistemas`;
+
+    return this.http.delete(this.url, { headers: this.headers }).map((resp: any) => {
+      return resp;
+    });
   }
 
   verPersonal(id: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=19&id=' + id;
-    return this.http.get(this.url);
+    this.url = `${URL_SERVICIO_GENERAL}/services/almacen/especifico/personal/id/${id}/sistemas`;
+
+    return this.http.get(this.url, { headers: this.headers });
   }
 
- editarPersonal(id: any, nombre: any, usuario: any, activo: any, tiempo: any, rotacion: any, marquesina: any, capacitacion: any, area: any, seccion: any, idFerrum: any, actividad: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=20&id=' + id + '&nombre=' + nombre + '&usuario=' + usuario + '&activo=' + activo + '&tiempo=' + tiempo
-    + '&rotacion=' + rotacion + '&marquesina=' + marquesina + '&capacitacion=' + capacitacion + '&area=' + area + '&seccion=' + seccion + '&idFerrum=' + idFerrum + '&actividad=' + actividad;
-    return this.http.get(this.url);
+  editarPersonal(enviar: any) {
+    this.url = `${URL_SERVICIO_GENERAL}/services/almacen/editar/personal/sistemas`;
+
+    this.headers.append('content-Type', 'application/x-www-form-urlencoded');
+
+    return this.http.put(this.url, {data: enviar}, { headers: this.headers }).map((resp: any) => {
+      return resp.resp;
+    });
   }
 
-  guardarRegistro(nombre: any, usuario: any, activo: any, tiempo: any, rotacion: any, marquesina: any, capacitacion: any, area: any, seccion: any, idFerrum: any, actividad: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/almacen.php?opcion=18&nombre=' + nombre + '&usuario=' + usuario + '&activo=' + activo + '&tiempo=' + tiempo
-    + '&rotacion=' + rotacion + '&marquesina=' + marquesina + '&capacitacion=' + capacitacion + '&area=' + area + '&seccion=' + seccion + '&idFerrum=' + idFerrum + '&actividad=' + actividad;
-    return this.http.get(this.url);
+  guardarRegistro(enviar: any) {
+    this.url = `${URL_SERVICIO_GENERAL}/services/almacen/guardar/personal/sistemas`;
+
+    this.headers.append('content-Type', 'application/x-www-form-urlencoded');
+
+    return this.http.post(this.url, {data: enviar}, { headers: this.headers }).map((resp: any) => {
+      return resp.resp;
+    });
   }
 
 }

@@ -43,13 +43,13 @@ export class SeguimientoComponent implements OnInit {
       {dia: 6, nombre: 'Viernes'}
     );
     this.panelAsesoresService.obtenerAsesores(1).subscribe((asesores: any) => {
-      if (asesores.length > 0) {
-        for (const ase of asesores) {
+      if (asesores.resp !== false) {
+        for (const ase of asesores.resp) {
           for (const dia of dias) {
             this.seguimientoService.obtenerFechaDias(dia.dia).subscribe((rangos: any) => {
-              if (rangos.length > 0) {
-                for (const day of rangos) {
-                  this.seguimientoService.obtenerSeguimiento(rangos[0].date, ase.perid).subscribe((datos: any) => {
+              if (rangos.resp.length > 0) {
+                for (const day of rangos.resp) {
+                  this.seguimientoService.obtenerSeguimiento(rangos.resp[0].date, ase.perid).subscribe((datos: any) => {
                     const esAsesor = (asesor: any) => {
                       return asesor.idFerrum === ase.perid;
                     };
@@ -62,19 +62,19 @@ export class SeguimientoComponent implements OnInit {
                           {
                             id: day.d,
                             dia: dia.nombre,
-                            fecha: rangos[0].date,
-                            datos: datos.length > 0
+                            fecha: rangos.resp[0].date,
+                            datos: datos.resp.id !== undefined
                                   ? {
-                                    calificacion: (datos[0].trabajado_cli + datos[0].trabajado_ven + datos[0].trabajado_cob),
+                                    calificacion: (parseFloat(datos.resp.trabajado_cli) + parseFloat(datos.resp.trabajado_ven) + parseFloat(datos.resp.trabajado_cob)),
                                     clientesObj: 20,
-                                    clientes: datos[0].clientes,
+                                    clientes: datos.resp.clientes,
                                     ventasObj: 40000,
-                                    ventas: datos[0].ventas,
-                                    cobranza: datos[0].cobrado,
-                                    cobranzaObj: datos[0].obj_cob,
-                                    sinvisita: datos[0].sinvisita,
-                                    outtime: datos[0].outtime,
-                                    penalizacion: datos[0].penalizacion
+                                    ventas: parseFloat(datos.resp.ventas),
+                                    cobranza: parseFloat(datos.resp.cobrado),
+                                    cobranzaObj: parseFloat(datos.resp.obj_cob),
+                                    sinvisita: parseFloat(datos.resp.sinvisita),
+                                    outtime: parseFloat(datos.resp.outtime),
+                                    penalizacion: parseFloat(datos.resp.penalizacion)
                                   }
                                   : false
                           }
@@ -84,19 +84,19 @@ export class SeguimientoComponent implements OnInit {
                       this.asesores1.find(esAsesor).semana.push({
                         id: day.d,
                         dia: dia.nombre,
-                        fecha: rangos[0].date,
-                        datos: datos.length > 0
+                        fecha: rangos.resp[0].date,
+                        datos: datos.resp.id !== undefined
                               ? {
-                                calificacion: (datos[0].trabajado_cli + datos[0].trabajado_ven + datos[0].trabajado_cob),
+                                calificacion: (parseFloat(datos.resp.trabajado_cli) + parseFloat(datos.resp.trabajado_ven) + parseFloat(datos.resp.trabajado_cob)),
                                 clientesObj: 20,
-                                clientes: datos[0].clientes,
+                                clientes: datos.resp.clientes,
                                 ventasObj: 40000,
-                                ventas: datos[0].ventas,
-                                cobranza: datos[0].cobrado,
-                                cobranzaObj: datos[0].obj_cob,
-                                sinvisita: datos[0].sinvisita,
-                                outtime: datos[0].outtime,
-                                penalizacion: datos[0].penalizacion
+                                ventas: parseFloat(datos.resp.ventas),
+                                cobranza: parseFloat(datos.resp.cobrado),
+                                cobranzaObj: parseFloat(datos.resp.obj_cob),
+                                sinvisita: parseFloat(datos.resp.sinvisita),
+                                outtime: parseFloat(datos.resp.outtime),
+                                penalizacion: parseFloat(datos.resp.penalizacion)
                               }
                               : false
                       });
@@ -140,13 +140,13 @@ export class SeguimientoComponent implements OnInit {
       {dia: 6, nombre: 'Viernes'}
     );
     this.panelAsesoresService.obtenerAsesores(2).subscribe((asesores: any) => {
-      if (asesores.length > 0) {
-        for (const ase of asesores) {
+      if (asesores.resp !== false) {
+        for (const ase of asesores.resp) {
           for (const dia of dias) {
             this.seguimientoService.obtenerFechaDias(dia.dia).subscribe((rangos: any) => {
-              if (rangos.length > 0) {
-                for (const day of rangos) {
-                  this.seguimientoService.obtenerSeguimiento(rangos[0].date, ase.perid).subscribe((datos: any) => {
+              if (rangos.resp.length > 0) {
+                for (const day of rangos.resp) {
+                  this.seguimientoService.obtenerSeguimiento(rangos.resp[0].date, ase.perid).subscribe((datos: any) => {
                     const esAsesor = (asesor: any) => {
                       return asesor.idFerrum === ase.perid;
                     };
@@ -159,19 +159,19 @@ export class SeguimientoComponent implements OnInit {
                           {
                             id: day.d,
                             dia: dia.nombre,
-                            fecha: rangos[0].date,
-                            datos: datos.length > 0
+                            fecha: rangos.resp[0].date,
+                            datos: datos.resp.id !== undefined
                                   ? {
-                                    calificacion: (datos[0].trabajado_cli + datos[0].trabajado_ven + datos[0].trabajado_cob),
+                                    calificacion: (parseFloat(datos.resp.trabajado_cli) + parseFloat(datos.resp.trabajado_ven) + parseFloat(datos.resp.trabajado_cob)),
                                     clientesObj: 20,
-                                    clientes: datos[0].clientes,
+                                    clientes: datos.resp.clientes,
                                     ventasObj: 40000,
-                                    ventas: datos[0].ventas,
-                                    cobranza: datos[0].cobrado,
-                                    cobranzaObj: datos[0].obj_cob,
-                                    sinvisita: datos[0].sinvisita,
-                                    outtime: datos[0].outtime,
-                                    penalizacion: datos[0].penalizacion
+                                    ventas: parseFloat(datos.resp.ventas),
+                                    cobranza: parseFloat(datos.resp.cobrado),
+                                    cobranzaObj: parseFloat(datos.resp.obj_cob),
+                                    sinvisita: parseFloat(datos.resp.sinvisita),
+                                    outtime: parseFloat(datos.resp.outtime),
+                                    penalizacion: parseFloat(datos.resp.penalizacion)
                                   }
                                   : false
                           }
@@ -181,19 +181,19 @@ export class SeguimientoComponent implements OnInit {
                       this.asesores2.find(esAsesor).semana.push({
                         id: day.d,
                         dia: dia.nombre,
-                        fecha: rangos[0].date,
-                        datos: datos.length > 0
+                        fecha: rangos.resp[0].date,
+                        datos: datos.resp.id !== undefined
                               ? {
-                                calificacion: (datos[0].trabajado_cli + datos[0].trabajado_ven + datos[0].trabajado_cob),
+                                calificacion: (parseFloat(datos.resp.trabajado_cli) + parseFloat(datos.resp.trabajado_ven) + parseFloat(datos.resp.trabajado_cob)),
                                 clientesObj: 20,
-                                clientes: datos[0].clientes,
+                                clientes: datos.resp.clientes,
                                 ventasObj: 40000,
-                                ventas: datos[0].ventas,
-                                cobranza: datos[0].cobrado,
-                                cobranzaObj: datos[0].obj_cob,
-                                sinvisita: datos[0].sinvisita,
-                                outtime: datos[0].outtime,
-                                penalizacion: datos[0].penalizacion
+                                ventas: parseFloat(datos.resp.ventas),
+                                    cobranza: parseFloat(datos.resp.cobrado),
+                                    cobranzaObj: parseFloat(datos.resp.obj_cob),
+                                    sinvisita: parseFloat(datos.resp.sinvisita),
+                                    outtime: parseFloat(datos.resp.outtime),
+                                    penalizacion: parseFloat(datos.resp.penalizacion)
                               }
                               : false
                       });

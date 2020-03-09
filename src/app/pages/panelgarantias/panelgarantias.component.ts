@@ -30,8 +30,8 @@ export class PanelgarantiasComponent implements OnInit {
     private _webSocket: WebsocketService
   ) {
     this.obtenerTodasGarantias();
-    this._webSocket.escuchar('nueva-garantia').subscribe(acciones => this.obtenerTodasGarantias());
-    this._webSocket.escuchar('seguimiento-garantia').subscribe(acciones => this.obtenerTodasGarantias());
+    this._webSocket.escuchar('nueva-garantia-send').subscribe(acciones => this.obtenerTodasGarantias());
+    this._webSocket.escuchar('seguimiento-garantia-send').subscribe(acciones => this.obtenerTodasGarantias());
   }
 
   ngOnInit() {

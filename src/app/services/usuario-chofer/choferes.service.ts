@@ -35,6 +35,8 @@ export class ChoferesService {
   obtenerChofer(id: string) {
     this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/chofer/id/' + id;
 
+    this.url += '&token=' + this.token;
+
     return this.http.get(this.url);
   }
 
@@ -82,7 +84,7 @@ export class ChoferesService {
 
   mostrarGuias( id: any ) {
     let url;
-    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/guias/pordia/chofer/' + id;
+    url = URL_SERVICIO_GENERAL + ':' + PUERTO_INTERNO + '/guia/pordia/chofer/' + id;
 
     url += '?token=' + this.token;
 

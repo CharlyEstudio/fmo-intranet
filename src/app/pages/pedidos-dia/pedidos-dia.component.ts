@@ -36,16 +36,16 @@ export class PedidosDiaComponent implements OnInit {
     // Pedidos del Día
     this._asesoresService.relacionPedidos(this.idFerrum)
       .subscribe( ( resp: any ) => {
-        this.pedidos = resp;
+        this.pedidos = resp.resp;
       });
 
   }
 
   verPedido(pedido: any) {
     this.msg = '';
-    this._asesoresService.partidas(pedido.folio).subscribe((partidas: any) => {
-      if (partidas.length > 0) {
-        this.partidas = partidas;
+    this._asesoresService.partidas(pedido.folio, this.idFerrum).subscribe((partidas: any) => {
+      if (partidas.resp.length > 0) {
+        this.partidas = partidas.resp;
       } else {
         this.msg = 'No hay partidas de este pedido.';
       }

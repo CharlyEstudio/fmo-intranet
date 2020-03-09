@@ -1,3 +1,4 @@
 [0129/162003.651:ERROR:process_info.cc(359)] UncheckedAllocate
 [0129/162007.950:ERROR:http_transport_win.cc(276)] WinHttpSendRequest: La operación se completó correctamente. (0x0)
 [0129/162010.269:ERROR:process_info.cc(359)] UncheckedAllocate
+[0309/100810.357:ERROR:crash_report_database_win.cc(428)] unexpected header

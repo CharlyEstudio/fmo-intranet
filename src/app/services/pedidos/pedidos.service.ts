@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 // Config
-import { URL_SERVICIO_GENERAL, PUERTO_INTERNO, PUERTO_SERVER } from '../../config/config';
+import { URL_SERVICIO_GENERAL, PUERTO_INTERNO, PUERTO_SERVER, PARAM_KEY, KEY } from '../../config/config';
 
 // Modelo
 import { Cotizacion } from '../../models/cotizacion.model';
 
 // Servicios
 import { UsuarioService } from '../usuario/usuario.service';
+import { ServidorService } from '../db/servidor.service';
+import { HerramientasService } from '../herramientas/herramientas.service';
 
 @Injectable()
 export class PedidosService {
@@ -16,9 +18,14 @@ export class PedidosService {
   token: string = '';
   url: string;
 
+  head = new HttpHeaders();
+  headers = this.head.append(PARAM_KEY, KEY);
+
   constructor(
     private http: HttpClient,
-    private _usuarioS: UsuarioService
+    private _usuarioS: UsuarioService,
+    private _servidorS: ServidorService,
+    private _herramientasS: HerramientasService
   ) {
     this.token = this._usuarioS.token;
   }
@@ -40,9 +47,9 @@ export class PedidosService {
   }
 
   obtenerProducto(codigo: any, precio: any) {
-    this.url = URL_SERVICIO_GENERAL + '/api/productos.php?opcion=3&codigo=' + codigo + '&precio=' + precio;
+    this.url = `${URL_SERVICIO_GENERAL}/services/almacen/producto/codigo/${codigo}/${precio}/${this._servidorS.db}`;
 
-    return this.http.get(this.url);
+    return this.http.get(this.url, { headers: this.headers });
   }
 
   guardarCotizacion(cotizacion: Cotizacion) {
@@ -55,149 +62,113 @@ export class PedidosService {
 
   guardarPdf(data: any, pdf: any, operacion: any, info: any = '', usuario: string, idUser: number, emailUser: string) {
     if (operacion === '1') {
-      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=37';
+      // Si es Cotizacion
+      this.url = `${URL_SERVICIO_GENERAL}:${PUERTO_INTERNO}/resumen/cotizacion?token=${this.token}`;
 
-      const date = new Date(Number(info.fecha));
-
-      let dia;
-
-      if (date.getDate() < 10) {
-        dia = '0' + date.getDate();
-      } else {
-        dia = date.getDate();
-      }
-
-      let mes;
-
-      if (date.getMonth() < 10) {
-        mes = '0' + (date.getMonth() + 1);
-      } else {
-        mes = (date.getMonth() + 1);
-      }
-
-      let anio = date.getFullYear();
-
-      const d = anio + '-' + mes + '-' + dia;
-
-      return this.http.post(
-        this.url,
-        {
-          id: idUser,
-          emailUser: emailUser,
-          usuario: usuario,
-          nombre: data.nombre,
-          numero: pdf.numero,
-          direccion: pdf.direccion,
-          saldo: pdf.saldo,
-          linea: pdf.linea,
-          dias: pdf.dias,
-          asesor: pdf.asesor,
-          precio: pdf.precio,
-          productos: pdf.p,
-          subtotal: data.subtotal,
-          iva: data.iva,
-          total: data.total,
-          file: data.pdf,
-          folio: data.folio,
-          fecha: d
-        },
-        { headers: { 'content-Type': 'application/x-www-form-urlencoded' } }
-      );
+      return this.http.post(this.url, {
+        id: idUser,
+        emailUser: emailUser,
+        usuario: usuario,
+        nombre: data.nombre,
+        numero: pdf.numero,
+        direccion: pdf.direccion,
+        saldo: pdf.saldo,
+        linea: pdf.linea,
+        dias: pdf.dias,
+        asesor: pdf.asesor,
+        precio: pdf.precio,
+        productos: pdf.p,
+        subtotal: data.subtotal,
+        iva: data.iva,
+        total: data.total,
+        file: data.pdf,
+        folio: data.folio,
+        fecha: info.fecha
+      });
     } else if (operacion === '2') {
-      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=39';
+      // Si es Orden de Compra
+      this.url = `${URL_SERVICIO_GENERAL}:${PUERTO_INTERNO}/resumen/orden?token=${this.token}`;
 
-      const date = new Date(Number(info.fecha));
-
-      let dia;
-
-      if (date.getDate() < 10) {
-        dia = '0' + date.getDate();
-      } else {
-        dia = date.getDate();
-      }
-
-      let mes;
-
-      if (date.getMonth() < 10) {
-        mes = '0' + (date.getMonth() + 1);
-      } else {
-        mes = (date.getMonth() + 1);
-      }
-
-      let anio = date.getFullYear();
-
-      const d = anio + '-' + mes + '-' + dia;
-
-      return this.http.post(
-        this.url,
-        {
-          nombre: data.nombre,
-          numero: data.numero,
-          direccion: data.direccion,
-          productos: pdf.productos,
-          subtotal: pdf.subtotal,
-          iva: pdf.iva,
-          total: pdf.total,
-          file: data.file,
-          folio: data.folio,
-          fecha: d
-        },
-        { headers: { 'content-Type': 'application/x-www-form-urlencoded' } }
-      );
+      return this.http.post(this.url, {
+        id: idUser,
+        emailUser: emailUser,
+        usuario: usuario,
+        nombre: data.nombre,
+        numero: pdf.numero,
+        direccion: pdf.direccion,
+        saldo: pdf.saldo,
+        linea: pdf.linea,
+        dias: pdf.dias,
+        asesor: pdf.asesor,
+        precio: pdf.precio,
+        productos: pdf.p,
+        subtotal: data.subtotal,
+        iva: data.iva,
+        total: data.total,
+        file: data.pdf,
+        folio: data.folio,
+        fecha: info.fecha
+      });
     }
   }
 
   enviarEmailOrden(data: any) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=40';
+    this.url = `${URL_SERVICIO_GENERAL}:${PUERTO_INTERNO}/mail/orden?token=${this.token}`;
 
-    return this.http.post(
-      this.url,
-      {
-        nombre: data.nombre,
-        email: data.email,
-        file: data.file
-       },
-      { headers: { 'content-Type': 'application/x-www-form-urlencoded' } }
-    );
+    return this.http.post(this.url, {
+      tipo: data.tipo,
+      nombre: data.nombre,
+      email: data.email,
+      direccion: data.direccion,
+      folio: data.f.split('.')[0],
+      file: data.f,
+      productos: data.productos,
+      subtotal: data.subtotal,
+      iva: data.iva,
+      total: data.total
+    });
   }
 
   email(data: any) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=36';
+    // this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=36';
 
-    return this.http.post(
-      this.url,
-      {
-        nombre: data.nombre,
-        numero: data.numero,
-        direccion: data.direccion,
-        saldo: data.saldo,
-        linea: data.linea,
-        dias: data.dias,
-        asesor: data.asesor,
-        precio: data.precio,
-        productos: data.productos,
-        subtotal: data.subtotal,
-        iva: data.iva,
-        total: data.total,
-        email: data.email,
-        file: data.f
-       },
-      { headers: { 'content-Type': 'application/x-www-form-urlencoded' } }
-    );
+    // return this.http.post(
+    //   this.url,
+    //   {
+    //     nombre: data.nombre,
+    //     numero: data.numero,
+    //     direccion: data.direccion,
+    //     saldo: data.saldo,
+    //     linea: data.linea,
+    //     dias: data.dias,
+    //     asesor: data.asesor,
+    //     precio: data.precio,
+    //     productos: data.productos,
+    //     subtotal: data.subtotal,
+    //     iva: data.iva,
+    //     total: data.total,
+    //     email: data.email,
+    //     file: data.f
+    //    },
+    //   { headers: { 'content-Type': 'application/x-www-form-urlencoded' } }
+    // );
   }
 
-  enviarEmail(data: any) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=38';
+  enviarEmailCotizacion(data: any) {
+    this.url = `${URL_SERVICIO_GENERAL}:${PUERTO_INTERNO}/mail/cotizador?token=${this.token}`;
 
-    return this.http.post(
-      this.url,
-      {
-        nombre: data.nombre,
-        email: data.email,
-        file: data.f
-       },
-      { headers: { 'content-Type': 'application/x-www-form-urlencoded' } }
-    );
+    return this.http.post(this.url, {
+      tipo: data.tipo,
+      nombre: data.nombre,
+      email: data.email,
+      direccion: data.direccion,
+      folio: data.f.split('.')[0],
+      file: data.f,
+      productos: data.productos,
+      subtotal: data.subtotal,
+      iva: data.iva,
+      total: data.total
+    });
   }
 
   guardarOrden(orden: any) {
@@ -209,15 +180,17 @@ export class PedidosService {
   }
 
   buscarLote(codigo: any) {
-    this.url = URL_SERVICIO_GENERAL + '/api/productos.php?opcion=2&codigo=' + codigo;
+    this.url = `${URL_SERVICIO_GENERAL}/services/almacen/producto/codigo/lote/${codigo}/${this._servidorS.db}`;
 
-    return this.http.get(this.url);
+    return this.http.get(this.url, { headers: this.headers });
   }
 
   enviarPedido(xml: any) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_INTERNO + '/ferrum/subir/pedido/7854956231457643';
+    // No porcesa el pedido por que el usuario tiendaweb con el ip 251 no tiene acceso.
+    // Ver permisos
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/agregar/pedido`;
 
-    return this.http.post(this.url, xml);
+    return this.http.post(this.url, {data: xml}, { headers: this.headers });
   }
 
 }

@@ -45,6 +45,21 @@ export class PdfPipe implements PipeTransform {
 
         file = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         break;
+      case 'guia':
+        url += '/guia/pdf/' + pdf + '?token=' + this.token;
+
+        file = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        break;
+      case 'cotizacion':
+        url += '/cotizacion/pdf/' + pdf + '?token=' + this.token;
+
+        file = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        break;
+      case 'orden':
+        url += '/orden/pdf/' + pdf + '?token=' + this.token;
+
+        file = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        break;
       default:
         console.log('Tipo de formato no existe');
         return url += '/pdf/xxx';

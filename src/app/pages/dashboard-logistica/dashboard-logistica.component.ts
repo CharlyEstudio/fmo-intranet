@@ -1,9 +1,7 @@
-import { Component, OnInit, ɵConsole, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { NgForm } from '@angular/forms';
-
-import { URL_SERVICIO_GENERAL } from '../../config/config';
 
 // Servicios
 import { GuiasService, UsuarioService, WebsocketService, ChoferesService, HerramientasService, ClientesService } from '../../services/services.index';
@@ -79,6 +77,7 @@ export class DashboardLogisticaComponent implements OnInit {
   facturaEncontrada: boolean = false;
   editarFolio: boolean = false;
   terminoEspecial: boolean = true;
+  reporte: boolean = true;
 
   importe: number = 0;
   total: number = 0;
@@ -235,6 +234,7 @@ export class DashboardLogisticaComponent implements OnInit {
 
   verGuias() {
     this.ultimasGuias = [];
+    this.guiasEnc = [];
     this.choferes = [];
     this.verificadores = [];
     this.facturas = [];
@@ -355,68 +355,64 @@ export class DashboardLogisticaComponent implements OnInit {
         this.inputFolio.nativeElement.value = '';
       } else {
 
-        this._guiasServices.obtenerFolio(folio).subscribe( ( partidas: any ) => {
-          if (partidas.length > 0) {
+        this._guiasServices.obtenerFolio(folio).subscribe( async ( factura: any ) => {
+          if (factura.resp !== false) {
             this.terminoEspecial = false;
-            this._guiasServices.buscarEspeciales(folio).subscribe( ( especiales: any ) => {
-              if (especiales.length > 0) {
-                for (let i = 0; i < especiales.length; i++) {
-                  let esEspecial = (pedido) => {
-                    return pedido.clvprov === especiales[i].clvprov;
-                  }
-
-                  if (this.especiales.find(esEspecial)) {
-                    this.especiales.find(esEspecial).desentregado += especiales[i].desentregado;
-                  } else {
-                    this.especiales.push(especiales[i]);
-                  }
-                  if ((i + 1) === especiales.length) {
-                    this.terminoEspecial = true;
-                    setTimeout(() => {
-                      this.inputFolio.nativeElement.value = '';
-                      this.inputFolio.nativeElement.focus();
-                    }, 200);
-                  } else {
-                    this.terminoEspecial = false;
-                  }
-                  this.especiales.sort((a, b) => {
-                    if (a.clvprov > b.clvprov) {
-                      return 1;
-                    }
-
-                    if (a.clvprov < b.clvprov) {
-                      return -1;
-                    }
-
-                    return 0;
-                  });
+            const sp: any = await this._guiasServices.buscarEspeciales(folio);
+            if (sp.resp.length > 0) {
+              for (let i = 0; i < sp.resp.length; i++) {
+                let esEspecial = (pedido) => {
+                  return pedido.clvprov === sp.resp[i].clvprov;
                 }
-                localStorage.setItem('especiales', JSON.stringify(this.especiales));
-              } else {
-                this.terminoEspecial = true;
-                setTimeout(() => {
-                  this.inputFolio.nativeElement.value = '';
-                  this.inputFolio.nativeElement.focus();
-                }, 200);
-              }
-              console.log(this.especiales);
-            });
 
-            for (let i = 0; i < partidas.length; i++) {
-              let esCliente = (cliente) => {
-                return cliente.numero === partidas[i].numero;
-              }
-
-              if (!this.folios.find(esCliente)) {
-                if (this.clientes === 0) {
-                  this.clientes = 1;
+                if (this.especiales.find(esEspecial)) {
+                  this.especiales.find(esEspecial).desentregado += Number(sp.resp[i].desentregado);
                 } else {
-                  this.clientes += 1;
+                  this.especiales.push(sp.resp[i]);
                 }
+                if ((i + 1) === sp.resp.length) {
+                  this.terminoEspecial = true;
+                  setTimeout(() => {
+                    this.inputFolio.nativeElement.value = '';
+                    this.inputFolio.nativeElement.focus();
+                  }, 200);
+                } else {
+                  this.terminoEspecial = false;
+                }
+                this.especiales.sort((a, b) => {
+                  if (a.clvprov > b.clvprov) {
+                    return 1;
+                  }
+
+                  if (a.clvprov < b.clvprov) {
+                    return -1;
+                  }
+
+                  return 0;
+                });
               }
-              localStorage.setItem('NumCli', String(this.clientes));
-              this.folios.push(partidas[i]);
+              localStorage.setItem('especiales', JSON.stringify(this.especiales));
+            } else {
+              this.terminoEspecial = true;
+              setTimeout(() => {
+                this.inputFolio.nativeElement.value = '';
+                this.inputFolio.nativeElement.focus();
+              }, 200);
             }
+
+            let esCliente = (cliente) => {
+              return cliente.numero === factura.numero;
+            }
+
+            if (!this.folios.find(esCliente)) {
+              if (this.clientes === 0) {
+                this.clientes = 1;
+              } else {
+                this.clientes += 1;
+              }
+            }
+            localStorage.setItem('NumCli', String(this.clientes));
+            this.folios.push(factura.resp);
 
             localStorage.setItem('guia', JSON.stringify(this.folios));
 
@@ -424,7 +420,9 @@ export class DashboardLogisticaComponent implements OnInit {
             this.generar = true;
             this.sinDatos = false;
 
-            this.inputFolio.nativeElement.value = '';
+            setTimeout(() => this.inputFolio.nativeElement.value = '', 200);
+
+            // this.inputFolio.nativeElement.value = '';
           } else {
             // Aquí va la pregunta si es garantia
             swal({
@@ -557,37 +555,36 @@ export class DashboardLogisticaComponent implements OnInit {
 
   }
 
-  eliminarFolio(folio: any, index: any) {
-    this._guiasServices.buscarEspeciales(folio.folio).subscribe( ( especiales: any ) => {
-      if (especiales.length > 0) {
-        for (let i = 0; i < especiales.length; i++) {
-          let esEspecial = (pedido) => {
-            return pedido.clvprov === especiales[i].clvprov;
-          }
-
-          if (this.especiales.find(esEspecial)) {
-            const idx = this.especiales.indexOf(this.especiales.find(esEspecial));
-            this.especiales.find(esEspecial).desentregado -= especiales[i].desentregado;
-            if (this.especiales.find(esEspecial).desentregado === 0) {
-              this.especiales.splice(idx, 1);
-            }
-          }
-          this.especiales.sort((a, b) => {
-            if (a.clvprov > b.clvprov) {
-              return 1;
-            }
-
-            if (a.clvprov < b.clvprov) {
-              return -1;
-            }
-
-            return 0;
-          });
+  async eliminarFolio(folio: any, index: any) {
+    const sp: any = await this._guiasServices.buscarEspeciales(folio.folio);
+    if (sp.resp.length > 0) {
+      for (let i = 0; i < sp.resp.length; i++) {
+        let esEspecial = (pedido) => {
+          return pedido.clvprov === sp.resp[i].clvprov;
         }
-        localStorage.removeItem('especiales');
-        localStorage.setItem('especiales', JSON.stringify(this.especiales));
+
+        if (this.especiales.find(esEspecial)) {
+          const idx = this.especiales.indexOf(this.especiales.find(esEspecial));
+          this.especiales.find(esEspecial).desentregado -= Number(sp.resp[i].desentregado);
+          if (this.especiales.find(esEspecial).desentregado === 0) {
+            this.especiales.splice(idx, 1);
+          }
+        }
+        this.especiales.sort((a, b) => {
+          if (a.clvprov > b.clvprov) {
+            return 1;
+          }
+
+          if (a.clvprov < b.clvprov) {
+            return -1;
+          }
+
+          return 0;
+        });
       }
-    });
+      localStorage.removeItem('especiales');
+      localStorage.setItem('especiales', JSON.stringify(this.especiales));
+    }
     this.folios.splice(index, 1);
 
     if (this.folios.length === 0) {
@@ -869,6 +866,7 @@ export class DashboardLogisticaComponent implements OnInit {
             rfc: 'OELL 900511 LQ6',
           };
           // Genera el PDF para la guía del chofer
+          // TODO Generar GUIA normal
           this._guiasServices.enviarPDFguia(
             this.pedidos, guiaGuardarPDF, this.especiales, this.chf, this.carro, razon
           ).subscribe((resp: any) => {}, err => {});
@@ -948,7 +946,8 @@ export class DashboardLogisticaComponent implements OnInit {
     this.verGuias();
   }
 
-  async modalPDF(dato: any) {
+  modalPDF(dato: any) {
+    this.reporte = false;
     this.ruta = '';
     this.chofer = '';
     this.fol = '';
@@ -966,13 +965,9 @@ export class DashboardLogisticaComponent implements OnInit {
     this.cantidad = dato.cantidad;
     this.cajas = dato.cajas;
     this.fec = dato.fecha;
-    const pdf = dato.pdf
+    this.pdf = dato.pdf;
 
-    // this.ruta = this.sanitizer.bypassSecurityTrustResourceUrl(
-    //   'https://ferremayoristas.com.mx/api/pdf/' + pdf);
-
-    this.ruta = pdf;
-
+    this.ruta = dato.pdf;
   }
 
 
@@ -1152,39 +1147,40 @@ export class DashboardLogisticaComponent implements OnInit {
 
   procesarGuiaTX() {
     // Obtener todas las facturas de Zona 1
+    this.pdf = '';
     $('#modalPDFInicio').modal('show');
-    this._guiasServices.obtenerTodasFacturasTx().subscribe((all: any) => {
-      if (all.length > 0) {
+    this._guiasServices.obtenerTodasFacturasTx().subscribe(async (all: any) => {
+      if (all.resp.length > 0) {
         let impor = 0;
         const espec = [];
-        for (const fac of all) {
-          impor += fac.total;
-          this._guiasServices.buscarEspeciales(fac.factura).subscribe( ( especiales: any ) => {
-            if (especiales.length > 0) {
-              for (let i = 0; i < especiales.length; i++) {
-                let esEspecial = (pedido) => {
-                  return pedido.clvprov === especiales[i].clvprov;
-                }
-
-                if (espec.find(esEspecial)) {
-                  espec.find(esEspecial).desentregado += especiales[i].desentregado;
-                } else {
-                  espec.push(especiales[i]);
-                }
-                espec.sort((a, b) => {
-                  if (a.clvprov > b.clvprov) {
-                    return 1;
-                  }
-
-                  if (a.clvprov < b.clvprov) {
-                    return -1;
-                  }
-
-                  return 0;
-                });
+        for (const fac of all.resp) {
+          impor += parseFloat(fac.importe);
+          const sp: any = await this._guiasServices.buscarEspeciales(fac.factura);
+          if (sp.resp.length > 0) {
+            for (let i = 0; i < sp.resp.length; i++) {
+              let esEspecial = (pedido) => {
+                return pedido.clvprov === sp.resp[i].clvprov;
               }
+
+              if (espec.find(esEspecial)) {
+                espec.find(esEspecial).desentregado += Number(sp.resp[i].desentregado);
+              } else {
+                sp.resp[i].desentregado = Number(sp.resp[i].desentregado)
+                espec.push(sp.resp[i]);
+              }
+              espec.sort((a, b) => {
+                if (a.clvprov > b.clvprov) {
+                  return 1;
+                }
+
+                if (a.clvprov < b.clvprov) {
+                  return -1;
+                }
+
+                return 0;
+              });
             }
-          });
+          }
         }
 
         let cho: any;
@@ -1205,16 +1201,16 @@ export class DashboardLogisticaComponent implements OnInit {
           }
         };
 
-        const pdfTx = cho.nombre.toUpperCase() + '-' + all.length + '-' + this._herramientas.fechaActual() + '.pdf';
+        const pdfTx = cho.nombre.toUpperCase() + '-' + all.resp.length + '-' + this._herramientas.fechaActual() + '.pdf';
 
         const ggPDF = {
           folio: 'TX-' + veh.PLACAS,
-          facturas: all,
+          facturas: all.resp,
           especiales: espec,
           verifico: 'Ruta de Salida',
-          cantidad: all.length,
+          cantidad: all.resp.length,
           importe: impor,
-          cajas: '',
+          cajas: 'Varias',
           fecha: this._herramientas.fechaActual(),
           fechaAsig: this._herramientas.fechaActual(),
           hora: this._herramientas.horaActual(),
@@ -1229,19 +1225,20 @@ export class DashboardLogisticaComponent implements OnInit {
         };
 
         this._guiasServices.enviarPDFguia(
-          all, ggPDF, espec, cho, veh, razon
+          all.resp, ggPDF, espec, cho, veh, razon
         ).subscribe((resp: any) => {
-          if (resp === null) {
+          if (resp.status) {
             this.chofer = cho.nombre;
             this.impo = impor;
-            this.cantidad = all.length;
+            this.cantidad = all.resp.length;
             this.fec = this._herramientas.fechaActual();
             this.hora = this._herramientas.horaActual();
             this.veri = 'Ruta de Salida';
-            this.ruta = this.sanitizer.bypassSecurityTrustResourceUrl(
-              'https://ferremayoristas.com.mx/api/pdf/' + pdfTx);
+            // this.ruta = resp.file;
+            this.pdf = resp.file;
             $('#modalPDFInicio').modal('hide');
-            $('#modalPDF').modal('show');
+            this.reporte = true;
+            // $('#modalPDF').modal('show');
           }
         }, err => {
           console.log(err);
@@ -1251,18 +1248,22 @@ export class DashboardLogisticaComponent implements OnInit {
   }
 
   obtenerReporte(guias: any) {
+    // Esto es para Adriana
+    this.pdf = '';
+    this.reporte = true;
     this._guiasServices.generarReporteGuiasDia(guias).subscribe((resp: any) => {
-      if (resp.length > 10) {
-        this.pdf = this.sanitizer.bypassSecurityTrustResourceUrl(URL_SERVICIO_GENERAL + '/api/' + resp);
+      if (resp.status) {
+        this.pdf = resp.file;
         swal('Creado', 'Se creo el reporte correctamente', 'success');
       } else {
-        swal('Error', 'No se creo el documento', 'danger');
+        swal('Error', 'No se creo el documento', 'error');
       }
-    }, e => swal('Error', 'No se creo el documento', 'danger'));
+    }, e => swal('Error', 'No se creo el documento', 'error'));
   }
 
   limpiarReporte() {
     this.pdf = '';
+    this.reporte = false;
   }
 
   eliminarGuia(guia: any, indice: number) {

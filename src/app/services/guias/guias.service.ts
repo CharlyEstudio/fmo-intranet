@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 // Rutas
-import { URL_SERVICIO_GENERAL, PUERTO_SERVER, PUERTO_INTERNO } from '../../config/config';
+import { URL_SERVICIO_GENERAL, PUERTO_SERVER, PUERTO_INTERNO, PARAM_KEY, KEY } from '../../config/config';
 
 // Modelo
 import { GuiasPartidas } from '../../models/guias.model';
 import { Guia } from '../../models/guia.model';
 import { Chofer } from '../../models/chofer.model';
 import { Unidades } from '../../models/unidades.model';
-// import { Ruta } from '../../models/ruta.model';
 import { UsuarioService } from '../usuario/usuario.service';
+import { ServidorService } from '../db/servidor.service';
 
 @Injectable()
 export class GuiasService {
@@ -18,17 +18,21 @@ export class GuiasService {
   url: string;
   token: string;
 
+  head = new HttpHeaders();
+  headers = this.head.append(PARAM_KEY, KEY);
+
   constructor(
     private http: HttpClient,
-    private _usuario: UsuarioService
+    private _usuario: UsuarioService,
+    private _servidor: ServidorService
   ) {
     this.token = this._usuario.token;
   }
 
   obtenerFolio( folio: any ) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/guias.php?opcion=1&folio=' + folio;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/info/factura/${folio}/${this._servidor.db}`;
 
-    return this.http.get( this.url );
+    return this.http.get( this.url, { headers: this.headers } );
   }
 
   obtenerGuias() {
@@ -158,20 +162,24 @@ export class GuiasService {
   }
 
   buscarEspeciales(folio: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/guias.php?opcion=2&folio=' + folio;
+    return new Promise(resolved => {
+      this.url = `${URL_SERVICIO_GENERAL}/services/almacen/especiales/guia/factura/${folio}/${this._servidor.db}`;
 
-    return this.http.get( this.url );
+      return this.http.get( this.url, { headers: this.headers } ).subscribe((resp: any) => {
+        resolved(resp);
+      });
+    });
+    // this.url = `${URL_SERVICIO_GENERAL}/services/almacen/especiales/guia/factura/${folio}/${this._servidor.db}`;
+
+    // return this.http.get( this.url, { headers: this.headers } );
   }
 
   enviarPDFguia(guiaPar: any, guia: any, especiales: any, chofer: Chofer, carro: Unidades, razon: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' +
-                PUERTO_SERVER + '/api/guias.php?opcion=4';
+    const url = `${URL_SERVICIO_GENERAL}:${PUERTO_INTERNO}/resumen/guia?token=${this.token}`;
 
-    return this.http.post(
-      this.url,
-      { guiaPar: guiaPar, guia: guia, especiales: especiales, chofer: chofer, unidad: carro, razon: razon },
-      { headers: { 'content-Type': 'application/x-www-form-urlencoded' } }
-    );
+    return this.http.post( url, {guiaPar, guia, especiales: guia.especiales, chofer, carro, razon} ).map((resp: any) => {
+      return resp;
+    });
   }
 
   reasignarFolio(folio: any) {
@@ -180,7 +188,7 @@ export class GuiasService {
     // return this.http.put(this.url, folio);
   }
 
-  enviarEmail(folio: any) {
+  enviarEmail(folio: any) { // TODO Email
     this.url = URL_SERVICIO_GENERAL + ':' +
                 PUERTO_SERVER + '/api/email.php?folio=' + JSON.stringify(folio);
 
@@ -248,19 +256,17 @@ export class GuiasService {
   }
 
   obtenerTodasFacturasTx() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/guias.php?opcion=5';
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/facturas/tx/${this._servidor.db}`;
 
-    return this.http.get(this.url);
+    return this.http.get( this.url, { headers: this.headers } );
   }
 
   generarReporteGuiasDia(data: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/guias.php?opcion=6';
+    const url = `${URL_SERVICIO_GENERAL}:${PUERTO_INTERNO}/resumen/guia/reporte?token=${this.token}`;
 
-    return this.http.post(
-      this.url,
-      {data},
-      { headers: { 'content-Type': 'application/x-www-form-urlencoded' } }
-    );
+    return this.http.post( url, {data} ).map((resp: any) => {
+      return resp;
+    });
   }
 
 }

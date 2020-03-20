@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { URL_SERVICIO_GENERAL } from '../../config/config';
 
 // Servicios
-import { UsuarioService, ClientesService, DiariosService, PedidosService } from '../../services/services.index';
+import { UsuarioService, ClientesService, DiariosService, PedidosService, HerramientasService } from '../../services/services.index';
 
 // Modelo
 import { Cotizacion } from '../../models/cotizacion.model';
@@ -38,8 +38,8 @@ export class CotizadorComponent implements OnInit {
   email: any = null;
   id: any = null;
   nombreUser: string = '';
-  nivelPrecio: number = 0;
-  tp: any = '0';
+  nivelPrecio: number = 1000;
+  tp: any = '1000';
 
   usoNombre: any = '';
   usoNumero: any = '';
@@ -91,13 +91,16 @@ export class CotizadorComponent implements OnInit {
 
   // Ver Cotización Guardada
   verPDF: any = 'vacio';
+  verCotizacion: any = '';
+  verOrden: any = '';
 
   constructor(
     public sanitizer: DomSanitizer,
     private _usuarioService: UsuarioService,
     private _clienteService: ClientesService,
     private _diariosServoce: DiariosService,
-    private _pedidoService: PedidosService
+    private _pedidoService: PedidosService,
+    private _herramientaS: HerramientasService
   ) {
     this.rol = this._usuarioService.usuario.rol;
     this.id = this._usuarioService.usuario._id;
@@ -110,55 +113,9 @@ export class CotizadorComponent implements OnInit {
   }
 
   precarga() {
-    let h = new Date();
+    this.hora = this._herramientaS.horaActual();
 
-    let hor;
-
-    if (h.getHours() < 10) {
-      hor = '0' + h.getHours();
-    } else {
-      hor = h.getHours();
-    }
-
-    let min;
-
-    if (h.getMinutes() < 10) {
-      min = '0' + h.getMinutes();
-    } else {
-      min = h.getMinutes();
-    }
-
-    let sec;
-
-    if (h.getSeconds() < 10) {
-      sec = '0' + h.getSeconds();
-      this.seg = sec;
-    } else {
-      sec = h.getSeconds();
-      this.seg = sec;
-    }
-
-    let dia;
-
-    if (h.getDate() < 10) {
-      dia = '0' + h.getDate();
-    } else {
-      dia = h.getDate();
-    }
-
-    let mes;
-
-    if (h.getMonth() < 10) {
-      mes = '0' + (h.getMonth() + 1);
-    } else {
-      mes = (h.getMonth() + 1);
-    }
-
-    let anio = h.getFullYear();
-
-    this.hora = hor + ':' + min + ':' + sec;
-
-    this.fecha = anio + '-' + mes + '-' + dia;
+    this.fecha = this._herramientaS.fechaActual();
 
     if (localStorage.getItem('tipoOperacion') === '1') {
       this.usoNumero = '';
@@ -171,7 +128,8 @@ export class CotizadorComponent implements OnInit {
       this.enviarBool = false;
       if (localStorage.getItem('ordenGuardada') !== null) {
         this.ordenGuardada = JSON.parse(localStorage.getItem('ordenGuardada'));
-        this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl(URL_SERVICIO_GENERAL + '/api/cotizaciones/' + this.ordenGuardada.pdf);
+        console.log(this.ordenGuardada);
+        // this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl(URL_SERVICIO_GENERAL + '/api/cotizaciones/' + this.ordenGuardada.pdf);
       }
       if (localStorage.getItem('guardado') === 'true') {
         this.guardado = true;
@@ -218,8 +176,8 @@ export class CotizadorComponent implements OnInit {
         this.tp = localStorage.getItem('cambiarPrecio');
         this.nivelPrecio = Number(this.tp);
       } else {
-        this.tp = '0';
-        this.nivelPrecio = 0;
+        this.tp = '1000';
+        this.nivelPrecio = 1000;
       }
       if (localStorage.getItem('pedidoDistIntranet') !== null) {
         this.file = localStorage.getItem('filePDF');
@@ -242,7 +200,8 @@ export class CotizadorComponent implements OnInit {
       this.nameBol = false;
       if (localStorage.getItem('ordenGuardada') !== null) {
         this.ordenGuardada = JSON.parse(localStorage.getItem('ordenGuardada'));
-        this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl(URL_SERVICIO_GENERAL + '/api/ordenes/' + this.ordenGuardada.pdf);
+        console.log(this.ordenGuardada);
+        // this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl(URL_SERVICIO_GENERAL + '/api/ordenes/' + this.ordenGuardada.pdf);
       }
       if (localStorage.getItem('pedidoDistIntranet') !== null) {
         this.file = localStorage.getItem('filePDF');
@@ -317,6 +276,7 @@ export class CotizadorComponent implements OnInit {
       this.direccion = '';
       this.prove = '0';
       this.enviarBool = false;
+      this.nivelPrecio = 1000;
       this.nameBol = false;
       this.verForm = false;
       this._diariosServoce.proveedores().subscribe((prov: any) => {
@@ -380,7 +340,8 @@ export class CotizadorComponent implements OnInit {
   }
 
   accionOrds() {
-    this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl(URL_SERVICIO_GENERAL + '/api/ordenes/' + this.ods.pdf);
+    console.log('accion Ords');
+    // this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl(URL_SERVICIO_GENERAL + '/api/ordenes/' + this.ods.pdf);
   }
 
   buscarCliente() {
@@ -401,7 +362,7 @@ export class CotizadorComponent implements OnInit {
           this.numero = this.usoNumero;
           this.nombre = data.resp.NOMBRE;
           this.correoCli = data.resp.CORREO;
-          this.nivelPrecio = data.resp.LISTA;
+          this.nivelPrecio = Number(data.resp.LISTA);
           this.rfc = data.resp.RFC;
           const h = new Date();
           this.file = this.numero + String(h.getMonth()) + String(h.getHours()) + String(h.getMinutes()) + String(h.getSeconds()) + '.pdf';
@@ -414,11 +375,11 @@ export class CotizadorComponent implements OnInit {
             this.asesor = 'Sin Asesor';
           }
 
-          if (data.resp.LISTA === 1) {
+          if (Number(data.resp.LISTA) === 1) {
             this.precio = 'DISTRIBUIDOR';
-          } else if (data.resp.LISTA === 2) {
+          } else if (Number(data.resp.LISTA) === 2) {
             this.precio = 'SUBDISTRIBUIDOR';
-          } else if (data.resp.LISTA === 3) {
+          } else if (Number(data.resp.LISTA) === 3) {
             this.precio = 'MAYORISTA';
           }
 
@@ -435,6 +396,7 @@ export class CotizadorComponent implements OnInit {
           localStorage.setItem('direccionCli', this.direccion);
           localStorage.setItem('asesorCli', this.asesor);
           localStorage.setItem('precioCli', this.precio);
+          localStorage.setItem('cambiarPrecio', data.resp.LISTA);
           localStorage.setItem('saldoCli', String(this.saldo));
           localStorage.setItem('lineaCli', String(this.linea));
           localStorage.setItem('diasCli', String(this.dias));
@@ -505,10 +467,10 @@ export class CotizadorComponent implements OnInit {
   siguiente() {
     if (this.codigo !== '') {
       this._pedidoService.buscarLote(this.codigo).subscribe((lote: any) => {
-        if (lote.length > 0) {
+        if (lote.resp !== false) {
           const elem = <HTMLInputElement>(document.getElementById('cantidad'));
-          elem.value = lote[0].lote;
-          this.cantidadStep = lote[0].lote;
+          elem.value = lote.resp.lote;
+          this.cantidadStep = Number(lote.resp.lote);
           elem.readOnly = false;
           elem.focus();
         } else {
@@ -542,22 +504,22 @@ export class CotizadorComponent implements OnInit {
             this.nivelPrecio = 3;
           }
           this._pedidoService.obtenerProducto(this.codigo, this.nivelPrecio).subscribe((producto: any) => {
-            if (producto.length > 0) {
-              this.subtotal += (producto[0].precioneto * inputCantidad);
-              this.total += (producto[0].precio * inputCantidad);
-              if (producto[0].iva > 0) {
-                this.iva += (producto[0].precioneto * inputCantidad) * producto[0].iva;
+            if (producto.resp !== false) {
+              this.subtotal += (parseFloat(producto.resp.precioneto) * inputCantidad);
+              this.total += (parseFloat(producto.resp.precio) * inputCantidad);
+              if (producto.resp.iva > 0) {
+                this.iva += (parseFloat(producto.resp.precioneto) * inputCantidad) * producto.resp.iva;
               }
               const agregar = {
-                producto: producto[0],
-                precioFinal: (producto[0].precioneto * inputCantidad),
-                precioDesc: producto[0].precioneto,
-                precioTot: producto[0].precio,
+                producto: producto.resp,
+                precioFinal: (parseFloat(producto.resp.precioneto) * inputCantidad),
+                precioDesc: parseFloat(producto.resp.precioneto),
+                precioTot: parseFloat(producto.resp.precio),
                 cantidad: inputCantidad,
-                claveUnidad: producto[0].claveUnidad,
-                claveProdServ: producto[0].claveProdServ
+                claveUnidad: producto.resp.claveUnidad,
+                claveProdServ: producto.resp.claveProdServ
               };
-              this.prod.push(producto[0]);
+              this.prod.push(producto.resp);
               this.productos.push(agregar);
               if (localStorage.getItem('pedidoDistIntranet') !== null) {
                 localStorage.removeItem('prodDistIntranet');
@@ -595,22 +557,22 @@ export class CotizadorComponent implements OnInit {
         }
       } else {
         this._pedidoService.obtenerProducto(this.codigo, this.nivelPrecio).subscribe((producto: any) => {
-          if (producto.length > 0) {
-            this.subtotal += (producto[0].precioneto * this.cantidad);
-            this.total += (producto[0].precio * this.cantidad);
-            if (producto[0].iva > 0) {
-              this.iva += (producto[0].precioneto * this.cantidad) * producto[0].iva;
+          if (producto.resp !== false) {
+            this.subtotal += (parseFloat(producto.resp.precioneto) * this.cantidad);
+            this.total += (parseFloat(producto.resp.precio) * this.cantidad);
+            if (producto.resp.iva > 0) {
+              this.iva += (parseFloat(producto.resp.precioneto) * this.cantidad) * producto.resp.iva;
             }
             const agregar = {
-              producto: producto[0],
-              precioFinal: (producto[0].precioneto * this.cantidad),
-              precioDesc: producto[0].precioneto,
-              precioTot: producto[0].precio,
+              producto: producto.resp,
+              precioFinal: (parseFloat(producto.resp.precioneto) * this.cantidad),
+              precioDesc: parseFloat(producto.resp.precioneto),
+              precioTot: parseFloat(producto.resp.precio),
               cantidad: this.cantidad,
-              claveUnidad: producto[0].claveUnidad,
-              claveProdServ: producto[0].claveProdServ
+              claveUnidad: producto.resp.claveUnidad,
+              claveProdServ: producto.resp.claveProdServ
             };
-            this.prod.push(producto[0]);
+            this.prod.push(producto.resp);
             this.productos.push(agregar);
             if (localStorage.getItem('pedidoDistIntranet') !== null) {
               localStorage.removeItem('prodDistIntranet');
@@ -781,6 +743,33 @@ export class CotizadorComponent implements OnInit {
     }
   }
 
+  generarPDF() {
+    this.verPDF = 'vacio';
+    this.verCotizacion = '';
+    this.verOrden = '';
+    const datOrder = {
+      idFerrum: this.idFerrum,
+      numero: this.numero,
+      nombre: this.nombre,
+      file: this.file,
+      productos: this.productos,
+      folio: this.folio,
+      subtotal: this.subtotal,
+      iva: this.iva,
+      total: this.total
+    };
+
+    const dataPDF = {
+      direccion: this.direccion,
+      p: this.productos
+    };
+
+    const info = {
+      fecha : this._herramientaS.fechaActual()
+    };
+    this.guardarPDF(datOrder, dataPDF, info);
+  }
+
   guardarPDF(cotizacion: any, datPDF: any, info: any = '') {
     let operacion;
     if (localStorage.getItem('tipoOperacion') !== null) {
@@ -789,66 +778,55 @@ export class CotizadorComponent implements OnInit {
       operacion = '1';
     }
     this._pedidoService.guardarPdf(cotizacion, datPDF, operacion, info, this.nombreUser, this.id, this.email).subscribe((resp: any) => {
-      if (resp[0].status.ok) {
+      if (resp.status) {
         this.guardado = true;
-        localStorage.setItem('guardado', String(this.guardado));
-        swal('PDF Creado', resp[0].status.msg, {
-          buttons: {
-            catch: {
-              text: "Ok",
-              value: "catch",
-            }
-          },
-        })
-        .then((value) => {
-          if (operacion === '2') {
-            this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl(URL_SERVICIO_GENERAL + '/api/ordenes/' + info.pdf);
-          } else if (operacion === '1') {
-            this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl(URL_SERVICIO_GENERAL + '/api/cotizaciones/' + info.pdf);
-          }
-        });
+        if (operacion === '1') {
+          this.verCotizacion = resp.file;
+        } else {
+          this.verOrden = resp.file;
+        }
       } else {
-        swal('Error', resp[0].status.msg, 'error');
+        swal('Error', 'Archivo no creado', 'error');
       }
     });
   }
 
   enviarOrden(email: any) {
-    swal({
-      title: "Listo para Enviar!",
-      text: "Coloca el email a donde quieres enviar esta cotización.",
-      icon: "warning",
-      buttons: {
-        cancel: true,
-        confirm: true
-      },
-      content: {
-        element: "input",
-        attributes: {
-            placeholder: "Email",
-            type: "text",
-        },
-      },
-    })
-    .then((correo) => {
-      if (correo === null) {
-        return;
-      }
+    // swal({
+    //   title: "Listo para Enviar!",
+    //   text: "Coloca el email a donde quieres enviar esta cotización.",
+    //   icon: "warning",
+    //   buttons: {
+    //     cancel: true,
+    //     confirm: true
+    //   },
+    //   content: {
+    //     element: "input",
+    //     attributes: {
+    //         placeholder: "Email",
+    //         type: "text",
+    //     },
+    //   },
+    // })
+    // .then((correo) => {
+    //   if (correo === null) {
+    //     return;
+    //   }
 
-      const dataOrder = {
-        nombre: this.nombre,
-        email: correo,
-        file: this.ordenGuardada.pdf
-      };
+    //   const dataOrder = {
+    //     nombre: this.nombre,
+    //     email: correo,
+    //     file: this.ordenGuardada.pdf
+    //   };
 
-      this._pedidoService.enviarEmailOrden(dataOrder).subscribe((resp: any) => {
-        if (resp[0].status.ok) {
-          swal('Cotización Enviado', resp[0].status.msg, 'success');
-        } else {
-          swal('Error', resp[0].status.msg, 'error');
-        }
-      });
-    });
+    //   this._pedidoService.enviarEmailOrden(dataOrder).subscribe((resp: any) => {
+    //     if (resp[0].status.ok) {
+    //       swal('Cotización Enviado', resp[0].status.msg, 'success');
+    //     } else {
+    //       swal('Error', resp[0].status.msg, 'error');
+    //     }
+    //   });
+    // });
   }
 
   enviarCotPDF() {
@@ -895,17 +873,17 @@ export class CotizadorComponent implements OnInit {
         f: this.cts.pdf
       };
 
-      this._pedidoService.enviarEmail(dataOrder).subscribe((resp: any) => {
-        if (resp[0].status.ok) {
-          swal('Cotización Enviado', resp[0].status.msg, 'success');
-        } else {
-          swal('Error', resp[0].status.msg, 'error');
-        }
-      });
+      // this._pedidoService.enviarEmail(dataOrder).subscribe((resp: any) => {
+      //   if (resp[0].status.ok) {
+      //     swal('Cotización Enviado', resp[0].status.msg, 'success');
+      //   } else {
+      //     swal('Error', resp[0].status.msg, 'error');
+      //   }
+      // });
     });
   }
 
-  enviarEmail(numero: any, nombre: any, direccion: any, saldo: any, linea: any, dias: any, asesor: any, precio: any, productos: any, subtotal: any, iva: any, total: any, correo: any) {
+  enviarEmail(tipo: any, numero: any, nombre: any, direccion: any, saldo: any, linea: any, dias: any, asesor: any, precio: any, productos: any, subtotal: any, iva: any, total: any, correo: any) {
     let mensaje;
     if (correo === '') {
       mensaje = "Coloca el email a donde quieres enviar esta cotización."
@@ -961,19 +939,24 @@ export class CotizadorComponent implements OnInit {
         f
       };
 
-      if (this.guardado) {
-        this._pedidoService.enviarEmail(dataEmail).subscribe((resp: any) => {
-          if (resp[0].status.ok) {
-            swal('Cotización Enviado', resp[0].status.msg, 'success');
+      if (tipo === 'cotizacion') {
+        this._pedidoService.enviarEmailCotizacion(dataEmail).subscribe((resp: any) => {
+          if (resp.ok) {
+            swal('Cotización Enviado', 'Se envío el correo', 'success');
+          } else {
+            swal('Cotización Enviado', resp.err.reason, 'error');
           }
         });
       } else {
-        this._pedidoService.email(dataEmail).subscribe((resp: any) => {
-          if (resp[0].status.ok) {
-            swal('Cotización Enviado', resp[0].status.msg, 'success');
+        this._pedidoService.enviarEmailOrden(dataEmail).subscribe((resp: any) => {
+          if (resp.ok) {
+            swal('Cotización Enviado', 'Se envío el correo', 'success');
+          } else {
+            swal('Cotización Enviado', resp.err.reason, 'error');
           }
         });
       }
+
     });
   }
 
@@ -984,7 +967,8 @@ export class CotizadorComponent implements OnInit {
         this.correoCli = correo.resp.CORREO;
       }
     });
-    this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl(URL_SERVICIO_GENERAL + '/api/cotizaciones/' + this.cts.pdf);
+    console.log('accion Cots');
+    // this.verPDF = this.sanitizer.bypassSecurityTrustResourceUrl(URL_SERVICIO_GENERAL + '/api/cotizaciones/' + this.cts.pdf);
   }
 
   cotizarNuevo() {
@@ -1141,10 +1125,11 @@ export class CotizadorComponent implements OnInit {
         };
 
         this._pedidoService.enviarPedido(enviarXml).subscribe((info: any) => {
-          if (info.status) {
+          console.log(info);
+          if (info.resp !== false) {
             swal('Pedido Enviado', 'El pedido ha ingresado correctamente.', 'success');
           } else {
-            swal('Error Pedido', 'El pedido no se ingresó correctamente.', 'success');
+            swal('Error Pedido', 'El pedido no se ingresó correctamente.', 'error');
           }
         });
       });

@@ -31,7 +31,7 @@ export class PhpService {
   }
 
   porBajarZona( zona: any, fecha: any ) {
-    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/porbajar/zona/${zona}/${this._servidor.db}`;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/porbajar/zona/${zona}/${fecha}/${this._servidor.db}`;
 
     return this.http.get( this.url, { headers: this.headers } ).map((bajarZona: any) => {
       if (bajarZona.resp !== false) {
@@ -67,7 +67,7 @@ export class PhpService {
   }
 
   porSurtirZona( zona: any, fecha: any ) {
-    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/porsurtir/zona/${zona}/${this._servidor.db}`;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/porsurtir/zona/${zona}/${fecha}/${this._servidor.db}`;
 
     return this.http.get( this.url, { headers: this.headers } ).map((surtir: any) => {
       if (surtir.resp !== false) {
@@ -103,7 +103,7 @@ export class PhpService {
   }
 
   facturadoZona( zona: any, fecha: any ) {
-    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/facturado/zona/${zona}/${this._servidor.db}`;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/facturado/zona/${zona}/${fecha}/${this._servidor.db}`;
 
     return this.http.get( this.url, { headers: this.headers } ).map((facZona: any) => {
       if (facZona.resp !== false) {

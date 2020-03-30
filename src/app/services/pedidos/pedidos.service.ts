@@ -65,6 +65,8 @@ export class PedidosService {
       // Si es Cotizacion
       this.url = `${URL_SERVICIO_GENERAL}:${PUERTO_INTERNO}/resumen/cotizacion?token=${this.token}`;
 
+      this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=37';
+
       return this.http.post(this.url, {
         id: idUser,
         emailUser: emailUser,
@@ -84,10 +86,12 @@ export class PedidosService {
         file: data.pdf,
         folio: data.folio,
         fecha: info.fecha
-      });
+      },
+      { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
     } else if (operacion === '2') {
       // Si es Orden de Compra
       this.url = `${URL_SERVICIO_GENERAL}:${PUERTO_INTERNO}/resumen/orden?token=${this.token}`;
+      // this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/pedidos.php?opcion=39';
 
       return this.http.post(this.url, {
         id: idUser,
@@ -109,6 +113,7 @@ export class PedidosService {
         folio: data.folio,
         fecha: info.fecha
       });
+      // { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
     }
   }
 
@@ -180,7 +185,7 @@ export class PedidosService {
   }
 
   buscarLote(codigo: any) {
-    this.url = `${URL_SERVICIO_GENERAL}/services/almacen/producto/codigo/lote/${codigo}/${this._servidorS.db}`;
+    this.url = `${URL_SERVICIO_GENERAL}/services/almacen/producto/codigo/para/lote/${codigo}/${this._servidorS.db}`;
 
     return this.http.get(this.url, { headers: this.headers });
   }

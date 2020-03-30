@@ -83,6 +83,7 @@ export class CotizadorComponent implements OnInit {
   guardado: boolean = false;
   enviarBool: boolean = false;
   verForm: boolean = false;
+  carga: boolean = false;
 
   // Importes del Pedido/Orden de Compra
   subtotal: number = 0;
@@ -280,7 +281,8 @@ export class CotizadorComponent implements OnInit {
       this.nameBol = false;
       this.verForm = false;
       this._diariosServoce.proveedores().subscribe((prov: any) => {
-        if (prov.length > 0) {
+        if (prov !== 0) {
+          console.log(prov);
           this.proveedor = prov;
           this.cotizar = false;
           this.orden = true;
@@ -772,6 +774,7 @@ export class CotizadorComponent implements OnInit {
 
   guardarPDF(cotizacion: any, datPDF: any, info: any = '') {
     let operacion;
+    this.carga = true;
     if (localStorage.getItem('tipoOperacion') !== null) {
       operacion = localStorage.getItem('tipoOperacion');
     } else {
@@ -785,7 +788,9 @@ export class CotizadorComponent implements OnInit {
         } else {
           this.verOrden = resp.file;
         }
+        this.carga = false;
       } else {
+        this.carga = false;
         swal('Error', 'Archivo no creado', 'error');
       }
     });
@@ -1165,6 +1170,8 @@ export class CotizadorComponent implements OnInit {
     this.ordenGuardada = '';
     this.correoCli = '';
     this.codigo = '';
+    this.verCotizacion = '';
+    this.verOrden = '';
     this.cantidad = 0;
     localStorage.removeItem('rfcCli');
     localStorage.removeItem('correoCli');
@@ -1216,6 +1223,8 @@ export class CotizadorComponent implements OnInit {
     this.ordenGuardada = '';
     this.correoCli = '';
     this.codigo = '';
+    this.verCotizacion = '';
+    this.verOrden = '';
     this.cantidad = 0;
     const elem = <HTMLInputElement>(document.getElementById('cantidad'));
     elem.readOnly = true;

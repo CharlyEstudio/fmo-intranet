@@ -110,11 +110,11 @@ export class VentaComponent implements OnInit {
 
               this._asesorService.asesor(this.asesor)
                 .subscribe( ( ase: any ) => {
-                  this.nombreAse = ase.usuarios[0].nombre;
-                  this.imagen = ase.usuarios[0].img;
-                  this.email = ase.usuarios[0].email;
-                  this.tel = ase.usuarios[0].tel;
-                  this.rol = ase.usuarios[0].rol;
+                  this.nombreAse = ase.usuarios.nombre;
+                  this.imagen = ase.usuarios.img;
+                  this.email = ase.usuarios.email;
+                  this.tel = ase.usuarios.tel;
+                  this.rol = ase.usuarios.rol;
                 });
 
               if (resp.length !== 0) {
@@ -130,7 +130,6 @@ export class VentaComponent implements OnInit {
                 // Cambiar este servicio
                 this._diariosService.ventasAsesor(this.inicio, this.final, this.asesor)
                   .subscribe( ( ventAse: any ) => {
-                    console.log(ventAse);
                     this.pedidosAse = ventAse;
                     this.totPedidosAse = ventAse.length;
                   });
@@ -164,9 +163,9 @@ export class VentaComponent implements OnInit {
                 this.pedidosGen = resp;
 
                 for (let i = 0; i < this.pedidosGen.length; i++) {
-                  this.totalGeneral += this.pedidosGen[i].TOTAL;
-                  this.totalIva += this.pedidosGen[i].IVA;
-                  this.totalSubtotal += this.pedidosGen[i].SUBTOTAL;
+                  this.totalGeneral += parseFloat(this.pedidosGen[i].TOTAL);
+                  this.totalIva += parseFloat(this.pedidosGen[i].IVA);
+                  this.totalSubtotal += parseFloat(this.pedidosGen[i].SUBTOTAL);
                 }
 
                 this.respuesta = false;
@@ -219,35 +218,26 @@ export class VentaComponent implements OnInit {
                   this.rol = ase.usuarios.rol;
                 });
 
-              if (resp.length !== 0) {
-                this.nombre = resp[0].NOMBRE;
-                this.id = resp[0].PERID;
-                this.catalogo = resp[0].CATALOGO;
-                this.serie = resp[0].SERIE;
-                this.caja = resp[0].CAJA;
-                this.zona = resp[0].ZONA;
-                this.subtotal = resp[0].SUBTOTAL;
-                this.total = resp[0].TOTAL;
+              this.nombre = resp[0].NOMBRE;
+              this.id = resp[0].PERID;
+              this.catalogo = resp[0].CATALOGO;
+              this.serie = resp[0].SERIE;
+              this.caja = resp[0].CAJA;
+              this.zona = resp[0].ZONA;
+              this.subtotal = resp[0].SUBTOTAL;
+              this.total = resp[0].TOTAL;
 
-                this._diariosService.ventasAsesor(this.inicio, this.final, this.asesor)
-                  .subscribe( ( ventAse: any ) => {
-                    this.pedidosAse = ventAse;
-                    this.totPedidosAse = ventAse.length;
-                  });
+              this._diariosService.ventasAsesor(this.inicio, this.final, this.asesor)
+                .subscribe( ( ventAse: any ) => {
+                  this.pedidosAse = ventAse;
+                  this.totPedidosAse = ventAse.length;
+                });
 
-                this.respuesta = false;
-                this.esperar = false;
-                this.respuestaIndividual = true;
-                this.respuestaGeneral = false;
-                this.ventas = false;
-
-              } else {
-                this.ventas = true;
-                this.esperar = false;
-                this.respuesta = false;
-                this.respuestaIndividual = false;
-                this.respuestaGeneral = false;
-              }
+              this.respuesta = false;
+              this.esperar = false;
+              this.respuestaIndividual = true;
+              this.respuestaGeneral = false;
+              this.ventas = false;
             } else {
               this.ventas = true;
               this.esperar = false;
@@ -267,13 +257,13 @@ export class VentaComponent implements OnInit {
         this._diariosService.ventas(this.inicio, this.final)
           .subscribe( ( resp: any ) => {
 
-            if (resp.length !== 0) {
+            if (resp !== 0) {
               this.pedidosGen = resp;
 
               for (let i = 0; i < this.pedidosGen.length; i++) {
-                this.totalGeneral += this.pedidosGen[i].TOTAL;
-                this.totalIva += this.pedidosGen[i].IVA;
-                this.totalSubtotal += this.pedidosGen[i].SUBTOTAL;
+                this.totalGeneral += parseFloat(this.pedidosGen[i].TOTAL);
+                this.totalIva += parseFloat(this.pedidosGen[i].IVA);
+                this.totalSubtotal += parseFloat(this.pedidosGen[i].SUBTOTAL);
               }
 
               this.respuesta = false;

@@ -130,6 +130,10 @@
 
       <button type="button" class="btn btn-googleplus btn-block" (click)="generarPDF()">PDF</button>
 
+      <div class="alert alert-warning" role="alert" *ngIf="carga">
+        Creando PDF...
+      </div>
+
       <button type="button" class="btn btn-info btn-block" (click)="enviarEmail('orden', numero, nombre, direccion, saldo, linea, dias, asesor, precio, productos, subtotal, iva, total, correoCli)">Enviar</button>
       
       <button type="button" class="btn btn-danger btn-block" (click)="limpiar()">Iniciar</button>

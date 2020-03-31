@@ -383,8 +383,8 @@ export class EdoCtaComponent implements OnInit {
             email = name;
         }
 
-        this._clientesService.enviarEdoCtaPDFEmail(email, cliente, ases, telases, this.tipoS).subscribe( ( resp: any ) => {
-          if (resp[0].status) {
+        this._clientesService.enviarEdoCtaPDFEmail(email, cliente, ases, telases, this.tipoS, this.datos).subscribe( ( resp: any ) => {
+          if (resp.ok) {
             swal('Enviado', 'Correo enviado', 'success');
           } else {
             swal('Error', 'Correo no enviado', 'error');

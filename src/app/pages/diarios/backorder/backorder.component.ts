@@ -85,8 +85,8 @@ export class BackorderComponent implements OnInit {
 
           for (let i = 0; i < this.backorder.length; i++) {
             this.cantidad += Number(this.backorder[i].cantidad);
-            this.costo += Number(this.backorder[i].costo);
-            this.venta += Number(this.backorder[i].venta);
+            this.costo += parseFloat(this.backorder[i].costo);
+            this.venta += parseFloat(this.backorder[i].venta);
           }
           this.datosBackOrder();
 
@@ -133,15 +133,15 @@ export class BackorderComponent implements OnInit {
           this.descargar = porTipo;
           for (const tp of porTipo) {
             if (tp.nivel === 'R') {
-              this.bajan += tp.venta;
+              this.bajan += parseFloat(tp.venta);
             }
 
             if (tp.nivel === 'F') {
-              this.mesas += tp.venta;
+              this.mesas += parseFloat(tp.venta);
             }
 
             if (tp.nivel === 'C') {
-              this.cancel += tp.venta;
+              this.cancel += parseFloat(tp.venta);
             }
           }
         }

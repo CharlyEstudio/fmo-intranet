@@ -24,7 +24,7 @@
                 <label>Proveedores</label>
                 <select class="form-control" [ngModel]="proveedor" name="proveedor">
               <option [value]='0'>Selecciona un proveedor...</option>
-              <option *ngFor="let proveedor of proveedores" [value]="proveedor.item_id">{{ proveedor.item_num }} - {{ proveedor.item_text }}</option>
+              <option *ngFor="let proveedor of proveedores" [value]="proveedor.item_id">{{ proveedor.item_text }} - {{ proveedor.item_num }}</option>
           </select>
             </div>
 

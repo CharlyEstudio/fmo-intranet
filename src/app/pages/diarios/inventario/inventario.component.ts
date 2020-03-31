@@ -46,9 +46,9 @@ export class InventarioComponent implements OnInit {
           this.inventario = resp;
 
           for (let i = 0; i < this.inventario.length; i++) {
-            this.subtotal += this.inventario[i].subtotal;
-            this.iva += this.inventario[i].iva;
-            this.total += this.inventario[i].total;
+            this.subtotal += parseFloat(this.inventario[i].subtotal);
+            this.iva += parseFloat(this.inventario[i].iva);
+            this.total += parseFloat(this.inventario[i].total);
           }
 
           this.respuesta = false;

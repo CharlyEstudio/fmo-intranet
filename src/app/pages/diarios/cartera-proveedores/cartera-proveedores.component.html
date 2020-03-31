@@ -114,21 +114,21 @@
 
                             <tr role="row" class="odd" *ngFor="let act of actual">
 
-                                <td class="text-center" *ngIf="act.vencido === 2">
+                                <td class="text-center" *ngIf="act.vencido === '2'">
 
                                     <span class="text-danger"><i class="fa fa-exclamation-triangle"></i></span> {{ act.fecha | date:'dd-MM-yyyy' }}
 
                                 </td>
 
-                                <td class="text-center" *ngIf="act.vencido === 1">
+                                <td class="text-center" *ngIf="act.vencido === '1'">
 
-                                    <span class="text-warning"><i class="fa fa-exclamation-circle"></i></span> {{ act.fecha }}
+                                    <span class="text-warning"><i class="fa fa-exclamation-circle"></i></span> {{ act.fecha | date:'dd-MM-yyyy' }}
 
                                 </td>
 
-                                <td class="text-center" *ngIf="act.vencido === 0">
+                                <td class="text-center" *ngIf="act.vencido === '0'">
 
-                                    {{ act.fecha }}
+                                    {{ act.fecha | date:'dd-MM-yyyy' }}
 
                                 </td>
 

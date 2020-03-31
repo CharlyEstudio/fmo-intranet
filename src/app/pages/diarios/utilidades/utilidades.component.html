@@ -22,7 +22,7 @@
 
       <button type="button" class="btn btn-success btn-block waves-effect waves-light m-r-10" (click)="solicitar( f )">Solicitar</button>
 
-      <button type="button" class="btn btn-danger btn-block waves-effect waves-light m-r-10" (click)="descargar( f )">Descargar</button>
+      <button type="button" class="btn btn-danger btn-block waves-effect waves-light m-r-10" (click)="descargar( f )" [disabled]="utilidades?.length === 0">Descargar</button>
 
     </form>
 

@@ -44,7 +44,7 @@ export class CarteraClientesComponent implements OnInit {
           this.cartera = resp;
 
           for (let i = 0; i < this.cartera.length; i++) {
-            this.saldo += this.cartera[i].saldo;
+            this.saldo += parseFloat(this.cartera[i].saldo);
           }
 
           this.respuesta = false;

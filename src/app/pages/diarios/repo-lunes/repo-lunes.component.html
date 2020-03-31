@@ -108,8 +108,8 @@
 
                 <h3 class="display-5 p-b-10 p-t-10">Reporte de {{nombre}}</h3>
 
-                <!-- <button class="btn btn-success" type="button" (click)="descargar(actual)"><i class="mdi mdi-file-excel"></i>XLS</button> -->
-                
+                <span *ngIf="creandoPDF">{{aviso}}</span>
+
                 <button class="btn btn-danger" type="button" (click)="descargarPDF(actual, nombre)"><i class="mdi mdi-file-excel"></i>PDF</button>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -168,19 +168,19 @@
 
                                 <td class="text-center">{{(i + 1)}}</td>
 
-                                <td class="text-center" *ngIf="act.opcion === 2">
+                                <td class="text-center" *ngIf="act.opcion === '2'">
 
                                     <span class="text-danger"><i class="fa fa-exclamation-triangle"></i></span> {{ act.numero }}
 
                                 </td>
 
-                                <td class="text-center" *ngIf="act.opcion === 1">
+                                <td class="text-center" *ngIf="act.opcion === '1'">
 
                                     <span class="text-warning"><i class="fa fa-exclamation-circle"></i></span> {{ act.numero }}
 
                                 </td>
 
-                                <td class="text-center" *ngIf="act.opcion === 0">
+                                <td class="text-center" *ngIf="act.opcion === '0'">
 
                                     {{ act.numero }}
 

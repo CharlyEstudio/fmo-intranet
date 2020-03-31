@@ -170,13 +170,12 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
     // Venta Anterior
     this._phpService.ventaAnterior()
       .subscribe((data: any) => {
-        if ( data.resp !== false ) {
-          this.ant = data.resp.anterior;
+        if ( data !== 0 ) {
+          this.ant = data.anterior;
+          this.obtenerAnterior(data.anterior);
         } else {
           this.ant = 0;
         }
-
-        this.obtenerAnterior(data.resp.anterior);
       });
 
     // Venta Actual

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { URL_SERVICIO_GENERAL, PUERTO_SERVER, PARAM_KEY, KEY } from '../../config/config';
 import { ServidorService } from '../db/servidor.service';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class PhpService {
@@ -201,7 +202,15 @@ export class PhpService {
   ventaAnterior() {
     this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/ventaanterior/${this._servidor.db}`;
 
-    return this.http.get( this.url, { headers: this.headers } );
+    return this.http.get( this.url, { headers: this.headers } ).pipe(
+      map((resp: any) => {
+        if (resp.resp !== false) {
+          return resp.resp;
+        } else {
+          return 0;
+        }
+      })
+    );
   }
 
   zona(inicio: any, final: any, zona: any) {

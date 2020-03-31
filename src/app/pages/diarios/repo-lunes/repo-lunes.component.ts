@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
-import { DiariosService, ExcelService } from '../../../services/services.index';
+import { DiariosService, ExcelService, UsuarioService } from '../../../services/services.index';
 
 import * as _swal from 'sweetalert';
 import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
+import { URL_SERVICIO_GENERAL, PUERTO_INTERNO } from '../../../config/config';
+import { DomSanitizer } from '@angular/platform-browser';
 const swal: SweetAlert = _swal as any;
 
 @Component({
@@ -16,6 +18,8 @@ export class RepoLunesComponent implements OnInit {
   respuestaGeneral: boolean = false;
   ventas: boolean = false;
   esperar: boolean = true;
+  creandoPDF: boolean = false;
+  aviso: string = '';
 
   diasLunes: any;
   saldo: number = 0;
@@ -27,6 +31,8 @@ export class RepoLunesComponent implements OnInit {
 
   constructor(
     private _diariosService: DiariosService,
+    private usuarioS: UsuarioService,
+    public sanitizer: DomSanitizer,
     private _excel: ExcelService
   ) { }
 
@@ -68,9 +74,9 @@ export class RepoLunesComponent implements OnInit {
           this.diasLunes = resp;
 
           for (let i = 0; i < this.diasLunes.length; i++) {
-            this.saldo += this.diasLunes[i].saldo;
-            this.cantidad += this.diasLunes[i].cantidad;
-            this.clientes += this.diasLunes[i].clientes;
+            this.saldo += parseFloat(this.diasLunes[i].saldo);
+            this.cantidad += parseFloat(this.diasLunes[i].cantidad);
+            this.clientes += parseFloat(this.diasLunes[i].clientes);
           }
 
           this.esperar = false;
@@ -94,7 +100,7 @@ export class RepoLunesComponent implements OnInit {
     this.actual = [];
     this.nombre = '';
 
-    if (data.id !== 80000 && data.id !== 843 && data.id !== 80001) {
+    if (Number(data.id) !== 80000 && Number(data.id) !== 843 && Number(data.id) !== 80001) {
       let h = new Date();
 
       let dia;
@@ -121,14 +127,14 @@ export class RepoLunesComponent implements OnInit {
           this.nombre = data.asesor;
           this.actual = resp;
         });
-    } else if (data.id === 80000) {
+    } else if (Number(data.id) === 80000) {
       // Obtener Cheques devueltos
       this._diariosService.pedidosDiaLunesCH()
         .subscribe( ( resp: any ) => {
           this.nombre = data.asesor;
           this.actual = resp;
         });
-    } else if (data.id === 80001) {
+    } else if (Number(data.id) === 80001) {
       // Obtener Victor Especiales
       this._diariosService.pedidosDiaLunesEspecials()
         .subscribe( ( resp: any ) => {
@@ -136,7 +142,7 @@ export class RepoLunesComponent implements OnInit {
           this.actual = resp;
         });
     } else {
-      // Obtener Cheques devueltos
+      // documentos incobrables
       this._diariosService.pedidosDiaLunesDocInc()
         .subscribe( ( resp: any ) => {
           this.nombre = data.asesor;
@@ -151,17 +157,21 @@ export class RepoLunesComponent implements OnInit {
   }
 
   descargarPDF(data: any, seccion: string = 'Nombredeseccion') {
+    this.creandoPDF = true;
+    this.aviso = 'Creando PDF';
     const f = seccion.split(' ');
     let file: any = '';
     for (const d of f) {
       file += d;
     }
     this._diariosService.enviarPDF(data, file).subscribe((msg: any) => {
-      if (msg.length > 0) {
-        const a = document.createElement('a');
-        a.setAttribute('href', `https://ferremayoristas.com.mx/api/${msg[0].status}`);
-        a.setAttribute('target', '_blank');
-        setTimeout(() => a.click(), 100);
+      if (msg.status) {
+        this.aviso = 'Cargando PDF';
+        const url = `${URL_SERVICIO_GENERAL}:${PUERTO_INTERNO}/resumen/dias/lunes/pdf/${msg.file}?token=${this.usuarioS.token}`;
+        this.aviso = 'PDF Creado';
+        window.open(url);
+        this.creandoPDF = false;
+        this.aviso = '';
       }
     });
   }

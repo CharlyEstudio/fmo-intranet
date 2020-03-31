@@ -28,7 +28,7 @@ export class UtilidadesComponent implements OnInit {
   descarga: boolean = false;
 
   // Totales
-  utilidades: any;
+  utilidades: any[] = [];
   venta: number = 0;
   costo: number = 0;
   utilidad: number = 0;
@@ -66,13 +66,12 @@ export class UtilidadesComponent implements OnInit {
     this._diariosService.utilidades(this.inicio, this.final)
       .subscribe( ( resp: any ) => {
         if (resp !== '') {
-          console.log(resp);
           this.utilidades = resp;
 
           for (let i = 0; i < this.utilidades.length; i++) {
-            this.venta += this.utilidades[i].venta;
-            this.costo += this.utilidades[i].costo;
-            this.utilidad += this.utilidades[i].utilidad;
+            this.venta += parseFloat(this.utilidades[i].venta);
+            this.costo += parseFloat(this.utilidades[i].costo);
+            this.utilidad += parseFloat(this.utilidades[i].utilidad);
           }
 
           this.respuesta = false;

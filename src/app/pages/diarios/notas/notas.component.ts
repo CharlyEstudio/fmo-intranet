@@ -71,9 +71,9 @@ export class NotasComponent implements OnInit {
           this.notas = resp;
 
           for (let i = 0; i < this.notas.length; i++) {
-            this.subtotal += this.notas[i].subtotal;
-            this.iva += this.notas[i].iva;
-            this.total += this.notas[i].total;
+            this.subtotal += parseFloat(this.notas[i].subtotal);
+            this.iva += parseFloat(this.notas[i].iva);
+            this.total += parseFloat(this.notas[i].total);
           }
 
           this.respuesta = false;

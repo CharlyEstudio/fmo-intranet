@@ -168,7 +168,7 @@ export class EstadoEmpresaComponent implements OnInit, OnDestroy {
         this._phpService.ventaActual(inicio, final)
           .subscribe( ( data ) => {
 
-            if (data[0].actual !== 0) {
+            if (data !== 0) {
 
               const actual = {
                 actual: data[0].actual

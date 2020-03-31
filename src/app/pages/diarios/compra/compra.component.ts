@@ -123,9 +123,9 @@ export class CompraComponent implements OnInit {
             this.pedidosGen = resp;
 
             for (let i = 0; i < this.pedidosGen.length; i++) {
-              this.totalGeneral += this.pedidosGen[i].total;
-              this.totalIva += this.pedidosGen[i].iva;
-              this.totalSubtotal += this.pedidosGen[i].subtotal;
+              this.totalGeneral += parseFloat(this.pedidosGen[i].total);
+              this.totalIva += parseFloat(this.pedidosGen[i].iva);
+              this.totalSubtotal += parseFloat(this.pedidosGen[i].subtotal);
             }
 
             this.respuesta = false;

@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { URL_SERVICIO_GENERAL, PUERTO_SERVER, PARAM_KEY, KEY } from '../../config/config';
+import { URL_SERVICIO_GENERAL, PUERTO_SERVER, PARAM_KEY, KEY, PUERTO_INTERNO } from '../../config/config';
 import { ServidorService } from '../db/servidor.service';
+import { UsuarioService } from '../usuario/usuario.service';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class ClientesService {
@@ -13,7 +15,8 @@ export class ClientesService {
 
   constructor(
     private http: HttpClient,
-    private _servidor: ServidorService
+    private _servidor: ServidorService,
+    private usuarioS: UsuarioService
   ) { }
 
   infoCliente( cliente: any, perid: any = '', rol: any ) {
@@ -67,20 +70,23 @@ export class ClientesService {
   }
 
   enviarEdoCtaEmail( email: any, info: any, cliente: any, asesor: any, telAsesor: any ) {
-    let data = JSON.stringify(info);
-    let cli = JSON.stringify(cliente);
+    // let data = JSON.stringify(info);
+    // let cli = JSON.stringify(cliente);
 
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=4&email=' + email + '&info=' + data + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor;
+    // this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=4&email=' + email + '&info=' + data + '&cliente=' + cli + '&asesor=' + asesor + '&telAsesor=' + telAsesor;
 
-    return this.http.get( this.url );
+    // return this.http.get( this.url );
   }
 
-  enviarEdoCtaPDFEmail( email: any, cliente: any, asesor: any, telAsesor: any, tipo: any ) {
-    let cli = JSON.stringify(cliente);
+  // Crea todo el correo pero no envía por cuestiones de certificados SSL en el correo.
+  enviarEdoCtaPDFEmail( email: any, cliente: any, asesor: any, telAsesor: any, tipo: any, datos: any[] ) {
+    this.url = `${URL_SERVICIO_GENERAL}:${PUERTO_INTERNO}/mail/estado/cuenta?token=${this.usuarioS.token}`;
 
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/clientes.php?opcion=11';
-
-    return this.http.post( this.url, {email, cliente, asesor, telAsesor, tipo}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
+    return this.http.post( this.url, {email, cliente, asesor, telAsesor, tipo, datos}).pipe(
+      map((resp: any) => {
+        return resp;
+      })
+    );
   }
 
   obtenerPedidosMonitor() {

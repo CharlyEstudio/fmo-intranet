@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { URL_SERVICIO_GENERAL, PUERTO_SERVER, PUERTO_INTERNO, PARAM_KEY, KEY } from '../../config/config';
 import { ServidorService } from '../db/servidor.service';
+import { map } from 'rxjs/operators';
+import { UsuarioService } from '../usuario/usuario.service';
 
 @Injectable()
 export class DiariosService {
@@ -13,7 +15,8 @@ export class DiariosService {
 
   constructor(
     private http: HttpClient,
-    private _servidor: ServidorService
+    private _servidor: ServidorService,
+    private usuarioS: UsuarioService
   ) { }
 
   asesores() {
@@ -76,7 +79,7 @@ export class DiariosService {
     });
   }
 
-  compras(fechaIn: any, fechaOut: any, proveedor: any = 10000000) { // Hasta aqui me quede
+  compras(fechaIn: any, fechaOut: any, proveedor: any = 10000000) {
     this.url = `${URL_SERVICIO_GENERAL}/services/proveedores/compras/${proveedor}/${fechaIn}/${fechaOut}/${this._servidor.db}`;
 
     return this.http.get( this.url, { headers: this.headers } ).map((compras: any) => {
@@ -89,12 +92,11 @@ export class DiariosService {
   }
 
   comprasProveedor(fechaIn: any, fechaOut: any, proveedor: any) {
-    this.url = URL_SERVICIO_GENERAL +
-    ':' + PUERTO_SERVER + '/api/diarios.php?opcion=6&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&proveedor=' + proveedor + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/almacen/compras/proveedor/${proveedor}/${fechaIn}/${fechaOut}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((compras: any) => {
-      if (compras.length > 0) {
-        return compras;
+    return this.http.get( this.url, { headers: this.headers } ).map((compras: any) => {
+      if (compras.resp.length > 0) {
+        return compras.resp;
       } else {
         return 0;
       }
@@ -102,11 +104,11 @@ export class DiariosService {
   }
 
   utilidades(fechaIn: any, fechaOut: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=7&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/utilidades/${fechaIn}/${fechaOut}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((utilidades: any) => {
-      if (utilidades.length > 0) {
-        return utilidades;
+    return this.http.get( this.url, { headers: this.headers } ).map((utilidades: any) => {
+      if (utilidades.resp.length > 0) {
+        return utilidades.resp;
       } else {
         return 0;
       }
@@ -114,11 +116,11 @@ export class DiariosService {
   }
 
   utilidadesDesgloce(fechaIn: any, fechaOut: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=35&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/desgloce/utilidades/${fechaIn}/${fechaOut}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((utilidades: any) => {
-      if (utilidades.length > 0) {
-        return utilidades;
+    return this.http.get( this.url, { headers: this.headers } ).map((utilidades: any) => {
+      if (utilidades.resp.length > 0) {
+        return utilidades.resp;
       } else {
         return 0;
       }
@@ -126,12 +128,11 @@ export class DiariosService {
   }
 
   notasCredito(fechaIn: any, fechaOut: any, tipo: any = '1') {
-    this.url = URL_SERVICIO_GENERAL +
-    ':' + PUERTO_SERVER + '/api/diarios.php?opcion=8&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&tipo=' + tipo + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/diario/notas/credito/${tipo}/${fechaIn}/${fechaOut}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((notas: any) => {
-      if (notas.length > 0) {
-        return notas;
+    return this.http.get( this.url, { headers: this.headers } ).map((notas: any) => {
+      if (notas.resp.length > 0) {
+        return notas.resp;
       } else {
         return 0;
       }
@@ -139,11 +140,11 @@ export class DiariosService {
   }
 
   inventario() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=9&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/almacen/inventario/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((inventario: any) => {
-      if (inventario.length > 0) {
-        return inventario;
+    return this.http.get( this.url, { headers: this.headers } ).map((inventario: any) => {
+      if (inventario.resp.length > 0) {
+        return inventario.resp;
       } else {
         return 0;
       }
@@ -151,11 +152,11 @@ export class DiariosService {
   }
 
   entradaSalida(fechaIn: any, fechaOut: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=11&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/almacen/entrada/salidas/${fechaIn}/${fechaOut}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((entsal: any) => {
-      if (entsal.length > 0) {
-        return entsal;
+    return this.http.get( this.url, { headers: this.headers } ).map((entsal: any) => {
+      if (entsal.resp.length > 0) {
+        return entsal.resp;
       } else {
         return 0;
       }
@@ -163,11 +164,11 @@ export class DiariosService {
   }
 
   consumoInterno(fechaIn: any, fechaOut: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=15&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/almacen/consumo/interno/${fechaIn}/${fechaOut}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((consumo: any) => {
-      if (consumo.length > 0) {
-        return consumo;
+    return this.http.get( this.url, { headers: this.headers } ).map((consumo: any) => {
+      if (consumo.resp.length > 0) {
+        return consumo.resp;
       } else {
         return 0;
       }
@@ -175,11 +176,11 @@ export class DiariosService {
   }
 
   carteraClientes() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=14&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/diario/cartera/clientes/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((carcli: any) => {
-      if (carcli.length > 0) {
-        return carcli;
+    return this.http.get( this.url, { headers: this.headers } ).map((carcli: any) => {
+      if (carcli.resp.length > 0) {
+        return carcli.resp;
       } else {
         return 0;
       }
@@ -187,11 +188,11 @@ export class DiariosService {
   }
 
   carteraProveedores() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=16&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/diario/cartera/proveedores/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((proveedores: any) => {
-      if (proveedores.length > 0) {
-        return proveedores;
+    return this.http.get( this.url, { headers: this.headers } ).map((proveedores: any) => {
+      if (proveedores.resp.length > 0) {
+        return proveedores.resp;
       } else {
         return 0;
       }
@@ -199,11 +200,11 @@ export class DiariosService {
   }
 
   saldoProveedores( fecha: any, id: any ) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=17&id=' + id + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/pedidos/saldo/proveedores/${id}/${fecha}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((proveedoresSaldo: any) => {
-      if (proveedoresSaldo.length > 0) {
-        return proveedoresSaldo;
+    return this.http.get( this.url, { headers: this.headers } ).map((proveedoresSaldo: any) => {
+      if (proveedoresSaldo.resp.length > 0) {
+        return proveedoresSaldo.resp;
       } else {
         return 0;
       }
@@ -211,11 +212,11 @@ export class DiariosService {
   }
 
   diasLunes(fecha: any) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=18&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/pedidos/saldo/especialeslunes/${fecha}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((lunes: any) => {
-      if (lunes.length > 0) {
-        return lunes;
+    return this.http.get( this.url, { headers: this.headers } ).map((lunes: any) => {
+      if (lunes.resp.length > 0) {
+        return lunes.resp;
       } else {
         return 0;
       }
@@ -223,11 +224,11 @@ export class DiariosService {
   }
 
   diasLunesDocInc() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=29&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/pedidos/incobrables/especialeslunes/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((lunes: any) => {
-      if (lunes.length > 0) {
-        return lunes;
+    return this.http.get( this.url, { headers: this.headers } ).map((lunes: any) => {
+      if (lunes.resp.length > 0) {
+        return lunes.resp;
       } else {
         return 0;
       }
@@ -235,23 +236,23 @@ export class DiariosService {
   }
 
   pedidosDiaLunes( fecha: any, id: any ) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=19&id=' + id + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/clientes/dialunes/${id}/${fecha}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((lunesId: any) => {
-      if (lunesId.length > 0) {
-        return lunesId;
+    return this.http.get( this.url, { headers: this.headers } ).map((lunesId: any) => {
+      if (lunesId.resp.length > 0) {
+        return lunesId.resp;
       } else {
         return 0;
       }
     });
   }
 
-  pedidosDiaLunesCH( ) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=28&servidor=' + this._servidor.db;
+  pedidosDiaLunesCH() {
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/clientes/dialunes/chequesdev/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((lunesId: any) => {
-      if (lunesId.length > 0) {
-        return lunesId;
+    return this.http.get( this.url, { headers: this.headers } ).map((lunesId: any) => {
+      if (lunesId.resp.length > 0) {
+        return lunesId.resp;
       } else {
         return 0;
       }
@@ -259,23 +260,23 @@ export class DiariosService {
   }
 
   pedidosDiaLunesEspecials( ) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=31&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/clientes/dialunes/especiales/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((lunesId: any) => {
-      if (lunesId.length > 0) {
-        return lunesId;
+    return this.http.get( this.url, { headers: this.headers } ).map((lunesId: any) => {
+      if (lunesId.resp.length > 0) {
+        return lunesId.resp;
       } else {
         return 0;
       }
     });
   }
 
-  pedidosDiaLunesDocInc( ) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=30&servidor=' + this._servidor.db;
+  pedidosDiaLunesDocInc() {
+    this.url = `${URL_SERVICIO_GENERAL}/services/pedidos/clientes/dialunes/especiales/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((lunesId: any) => {
-      if (lunesId.length > 0) {
-        return lunesId;
+    return this.http.get( this.url, { headers: this.headers } ).map((lunesId: any) => {
+      if (lunesId.resp.length > 0) {
+        return lunesId.resp;
       } else {
         return 0;
       }
@@ -283,11 +284,11 @@ export class DiariosService {
   }
 
   backOrder( fechaIn: any, fechaOut: any ) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/diarios.php?opcion=25&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/almacen/back/order/${fechaIn}/${fechaOut}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((back: any) => {
-      if (back.length > 0) {
-        return back;
+    return this.http.get( this.url, { headers: this.headers } ).map((back: any) => {
+      if (back.resp.length > 0) {
+        return back.resp;
       } else {
         return 0;
       }
@@ -295,13 +296,11 @@ export class DiariosService {
   }
 
   obtenerBackOrder( tipo: any, fechaIn: any, fechaOut: any, orden: any ) {
-    this.url = URL_SERVICIO_GENERAL +
-    ':' + PUERTO_SERVER +
-    '/api/diarios.php?opcion=26&tipo=' + tipo + '&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&orden=' + orden + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/almacen/desgloce/back/order/${tipo}/${orden}/${fechaIn}/${fechaOut}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((obtbc: any) => {
-      if (obtbc.length > 0) {
-        return obtbc;
+    return this.http.get( this.url, { headers: this.headers } ).map((obtbc: any) => {
+      if (obtbc.resp.length > 0) {
+        return obtbc.resp;
       } else {
         return 0;
       }
@@ -309,13 +308,11 @@ export class DiariosService {
   }
 
   obtenerBackOrderTipo( tipo: any, fechaIn: any, fechaOut: any ) {
-    this.url = URL_SERVICIO_GENERAL +
-    ':' + PUERTO_SERVER +
-    '/api/diarios.php?opcion=33&tipo=' + tipo + '&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/almacen/desgloce/area/back/${tipo}/${fechaIn}/${fechaOut}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((obtbc: any) => {
-      if (obtbc.length > 0) {
-        return obtbc;
+    return this.http.get( this.url, { headers: this.headers } ).map((obtbc: any) => {
+      if (obtbc.resp.length > 0) {
+        return obtbc.resp;
       } else {
         return 0;
       }
@@ -323,13 +320,11 @@ export class DiariosService {
   }
 
   obtenerBackOrderTipoTotales( fechaIn: any, fechaOut: any ) {
-    this.url = URL_SERVICIO_GENERAL +
-    ':' + PUERTO_SERVER +
-    '/api/diarios.php?opcion=34&fechaIn=' + fechaIn + '&fechaOut=' + fechaOut + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/almacen/totales/back/${fechaIn}/${fechaOut}/${this._servidor.db}`;
 
-    return this.http.get( this.url ).map((obtbc: any) => {
-      if (obtbc.length > 0) {
-        return obtbc;
+    return this.http.get( this.url, { headers: this.headers } ).map((obtbc: any) => {
+      if (obtbc.resp.length > 0) {
+        return obtbc.resp;
       } else {
         return 0;
       }
@@ -337,9 +332,14 @@ export class DiariosService {
   }
 
   enviarPDF(datos: any, archivo: string) {
-    const url = `${URL_SERVICIO_GENERAL}/api/diarios.php?opcion=32`;
+    const url = `${URL_SERVICIO_GENERAL}:${PUERTO_INTERNO}/resumen/diaslunes?token=${this.usuarioS.token}`;
 
-    return this.http.post(url, {data: datos, file: archivo}, { headers: { 'content-Type': 'application/x-www-form-urlencoded' } });
+    return this.http.post(url, {data: datos, file: archivo}).pipe(
+      map((resp: any) => {
+        console.log(resp);
+        return resp;
+      })
+    );
   }
 
 }

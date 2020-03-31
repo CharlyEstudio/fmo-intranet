@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { DiariosService } from '../../../services/services.index';
+import { DiariosService, HerramientasService } from '../../../services/services.index';
 
 import * as _swal from 'sweetalert';
 import { SweetAlert } from 'sweetalert/typings/core'; // Importante para que funcione el sweet alert
@@ -23,7 +23,8 @@ export class CarteraProveedoresComponent implements OnInit {
   nombre: string;
 
   constructor(
-    private _diariosService: DiariosService
+    private _diariosService: DiariosService,
+    private herramientaS: HerramientasService
   ) { }
 
   ngOnInit() {
@@ -40,7 +41,7 @@ export class CarteraProveedoresComponent implements OnInit {
           this.cartera = resp;
 
           for (let i = 0; i < this.cartera.length; i++) {
-            this.saldo += this.cartera[i].saldo;
+            this.saldo += parseFloat(this.cartera[i].saldo);
           }
 
           this.esperar = false;
@@ -55,29 +56,8 @@ export class CarteraProveedoresComponent implements OnInit {
 
   }
 
-  obtenerCartera(e) {
-    let h = new Date();
-
-    let dia;
-
-    if (h.getDate() < 10) {
-      dia = '0' + h.getDate();
-    } else {
-      dia = h.getDate();
-    }
-
-    let mes;
-
-    if (h.getMonth() < 10) {
-      mes = '0' + (h.getMonth() + 1);
-    } else {
-      mes = (h.getMonth() + 1);
-    }
-
-    let anio = h.getFullYear();
-
-    let fecha = anio + '-' + mes + '-' + dia;
-    this._diariosService.saldoProveedores(fecha, e.target.id)
+  obtenerCartera(e: any) {
+    this._diariosService.saldoProveedores(this.herramientaS.fechaActual(), e.target.id)
       .subscribe( ( resp: any ) => {
         this.nombre = resp[0].nombre;
         this.actual = resp;

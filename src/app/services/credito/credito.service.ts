@@ -155,7 +155,8 @@ export class CreditoService {
   }
 
   exportarPDFphp(data: any, file: any, cliente: any, asesor: any, tel: any, tipo: any, cargos: any, abonos: any, saldo: any) {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/credito.php?opcion=2';
+    // this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/credito.php?opcion=2';
+    this.url = 'https://ferremayoristas.com.mx' +  ':' + PUERTO_SERVER + '/api/credito.php?opcion=2';
 
     return this.http.post(
       this.url,

@@ -98,6 +98,7 @@ export class VentasMensualesComponent implements OnInit, OnDestroy {
         // Venta Actual
         this._phpService.ventaActual(inicio, final)
           .subscribe( ( data ) => {
+            console.log(data);
             if (data !== 0) {
               this.act = data.actual;
               this.obtenerActual(data.actual);

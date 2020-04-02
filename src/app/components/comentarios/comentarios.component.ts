@@ -37,21 +37,24 @@ export class ComentariosComponent implements OnInit {
     this.inicio = this.router.snapshot.paramMap.get('inicio');
     this.fin = this.router.snapshot.paramMap.get('fin');
 
-    this._creditoService.obtenerComentarios(this.clienteid).subscribe((comentarios: any) => {
-      if (comentarios.ok) {
-        if (comentarios.charla.length > 0) {
-          this.charlaBol = true;
-          this.charla = comentarios.charla;
-        } else {
-          this.charlaBol = false;
-        }
-      } else {
-        this.error = true;
-      }
-    });
+    this.obtenerComentarios();
   }
 
   ngOnInit() {
+  }
+
+  async obtenerComentarios() {
+    const charla: any = await this._creditoService.obtenerComentarios(this.clienteid);
+    if (charla.ok) {
+      if (charla.charla.length > 0) {
+        this.charlaBol = true;
+        this.charla = charla.charla;
+      } else {
+        this.charlaBol = false;
+      }
+    } else {
+      this.error = true;
+    }
   }
 
   regresar() {

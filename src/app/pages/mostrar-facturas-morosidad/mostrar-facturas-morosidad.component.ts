@@ -151,7 +151,7 @@ export class MostrarFacturasMorosidadComponent implements OnInit {
   obtenerTotal( clienteid: any ) {
 
     this._creditoService.clienteMorosoTotal(clienteid).subscribe( ( total: any ) => {
-      this.total = total[0].importe;
+      this.total = total.importe;
     });
 
   }

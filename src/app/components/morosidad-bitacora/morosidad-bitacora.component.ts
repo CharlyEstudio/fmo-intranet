@@ -28,27 +28,27 @@ export class MorosidadBitacoraComponent implements OnInit {
 
   ngOnInit() {
     this._creditoService.mor1a30().subscribe( ( resp: any ) => {
-      this.mor1a30 = resp[0].importe;
+      this.mor1a30 = resp.resp.importe;
     });
 
     this._creditoService.mor31a45().subscribe( ( resp: any ) => {
-      this.mor31a45 = resp[0].importe;
+      this.mor31a45 = resp.resp.importe;
     });
 
     this._creditoService.mor46a60().subscribe( ( resp: any ) => {
-      this.mor46a60 = resp[0].importe;
+      this.mor46a60 = resp.resp.importe;
     });
 
     this._creditoService.mor61a90().subscribe( ( resp: any ) => {
-      this.mor61a90 = resp[0].importe;
+      this.mor61a90 = resp.resp.importe;
     });
 
     this._creditoService.mor91a120().subscribe( ( resp: any ) => {
-      this.mor91a120 = resp[0].importe;
+      this.mor91a120 = resp.resp.importe;
     });
 
     this._creditoService.mor120().subscribe( ( resp: any ) => {
-      this.mor120 = resp[0].importe;
+      this.mor120 = resp.resp.importe;
     });
 
     this.esperar = false;

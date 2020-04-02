@@ -51,7 +51,7 @@ export class MostrarInfoBitacoraComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._sockets.escuchar('mensaje-folio-send').subscribe( ( ( escuchando: any ) => {
+    this._sockets.escuchar('mensaje-folio-send').subscribe( async ( escuchando: any ) => {
       if (escuchando.comentario !== '') {
         swal(
           'Mensaje de ' + escuchando.remitente,
@@ -61,53 +61,37 @@ export class MostrarInfoBitacoraComponent implements OnInit {
             escuchando.comentario,
           'success'
         );
-        this._creditoService.obtenerComentarios(escuchando.clienteId).subscribe( ( resp: any ) => {
-          this.charla = resp.charla.reverse();
-          this.charlaBol = true;
-        });
+        const charla: any = await this._creditoService.obtenerComentarios(escuchando.clienteid);
+        this.charla = charla.charla.reverse();
+        this.charlaBol = true;
       }
-    }));
+    });
   }
 
   obtener( morosidad: any ) {
 
     this._creditoService.morosidadRelacion(morosidad).subscribe( ( relacion: any ) => {
-      for (let i = 0; i < relacion.length; i++) {
-        this._creditoService.pagosMes( relacion[i].clienteid ).subscribe( ( pagosMes: any ) => {
-          this._creditoService.obtenerComentarios(relacion[i].clienteid).subscribe( ( comentarios: any ) => {
-            let mor = {
-              clienteid: relacion[i].clienteid,
-              nombre: relacion[i].nombre,
-              numero: relacion[i].numero,
-              td: relacion[i].td,
-              asesor: relacion[i].asesor,
-              saldo: relacion[i].saldo,
-              pagosMes: pagosMes[0].cantidad,
-              mensajes: comentarios.charla.length
-            };
+      relacion.map(async (cliente: any) => {
+        cliente.pagosMes = await this._creditoService.pagosMes( cliente.clienteid );
+        const charla: any = await this._creditoService.obtenerComentarios(cliente.clienteid);
+        cliente.mensajes = charla.charla.length;
+        this.morosidad.push(cliente);
+        this.morosidad.sort((a, b) => {
+          if (a.saldo < b.saldo) {
+            return 1;
+          }
 
-            this.morosidad.push(mor);
+          if (a.saldo > b.saldo) {
+            return -1;
+          }
 
-            this.morosidad.sort((a, b) => {
-              if (a.saldo < b.saldo) {
-                return 1;
-              }
-
-              if (a.saldo > b.saldo) {
-                return -1;
-              }
-
-              return 0;
-            });
-
-          });
+          return 0;
         });
-      }
-
+      });
     });
 
     this._creditoService.morosidadRelacionVirtual(morosidad).subscribe( ( totalMor: any ) => {
-      this.total = totalMor[0].saldo;
+      this.total = totalMor.resp.saldo;
     });
 
   }
@@ -126,7 +110,7 @@ export class MostrarInfoBitacoraComponent implements OnInit {
     });
   }
 
-  openModal( data: any ) {
+  async openModal( data: any ) {
     this.charla = [];
     this.charlaBol = false;
     this.clienteId = data.clienteid;
@@ -134,12 +118,11 @@ export class MostrarInfoBitacoraComponent implements OnInit {
     this.numero = data.numero;
     this.saldo = data.saldo;
 
-    this._creditoService.obtenerComentarios(this.clienteId).subscribe( ( resp: any ) => {
-      if (resp.charla.length !== 0) {
-        this.charla = resp.charla.reverse();
-        this.charlaBol = true;
-      }
-    });
+    const charla: any = await this._creditoService.obtenerComentarios(this.clienteId);
+    if (charla.charla.length > 0) {
+      this.charla = charla.charla.reverse();
+      this.charlaBol = true;
+    }
   }
 
   enviarComentario( forma: NgForm ) {

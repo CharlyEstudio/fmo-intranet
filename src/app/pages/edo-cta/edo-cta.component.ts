@@ -247,10 +247,10 @@ export class EdoCtaComponent implements OnInit {
           this._creditoService.clienteSaldo(this.numero, this.fecha).subscribe((edocta: any) => {
             if (edocta.length > 0) {
               for (let i = 0; i < edocta.length; i++) {
-                this.abonos += edocta[i].ABONO;
+                this.abonos += parseFloat(edocta[i].ABONO);
 
                 if (edocta[i].SALDOFINAL !== 0) {
-                  this.saldos += edocta[i].SALDOFINAL;
+                  this.saldos += parseFloat(edocta[i].SALDOFINAL);
                 }
 
                 let esFolio = (factura) => {
@@ -263,17 +263,17 @@ export class EdoCtaComponent implements OnInit {
 
                 if (this.datos.find(esFolio)) {
                   let index = i - 1;
-                  cargo = this.datos[index].SALDO;
+                  cargo = parseFloat(this.datos[index].SALDO);
                   car = 0;
                 } else {
-                  cargo = edocta[i].CARGO;
-                  car = edocta[i].CARGO;
+                  cargo = parseFloat(edocta[i].CARGO);
+                  car = parseFloat(edocta[i].CARGO);
                 }
 
                 if (edocta[i].ABONO === 0) {
                   saldo = edocta[i].SALDOFINAL;
                 } else {
-                  saldo = cargo - edocta[i].ABONO;
+                  saldo = cargo - parseFloat(edocta[i].ABONO);
                 }
 
                 this.cargos += car;
@@ -300,7 +300,6 @@ export class EdoCtaComponent implements OnInit {
                 ];
                 this.datos.push(nuevo[0]);
               }
-              // this.cargos = this.saldos + this.abonos;
               this.localizado = true;
 
               this.cargando = false;

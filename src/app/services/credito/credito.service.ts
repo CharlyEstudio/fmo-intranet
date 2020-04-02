@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIO_GENERAL, PUERTO_INTERNO, PUERTO_SERVER } from '../../config/config';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { URL_SERVICIO_GENERAL, PUERTO_INTERNO, PUERTO_SERVER, PARAM_KEY, KEY } from '../../config/config';
 
 import { VencidoHistorial } from '../../models/vencidoHistorial.model';
 import { ServidorService } from '../db/servidor.service';
+import { UsuarioService } from '../usuario/usuario.service';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class CreditoService {
+
+  head = new HttpHeaders();
+  headers = this.head.append(PARAM_KEY, KEY);
 
   token: string;
 
@@ -14,93 +19,118 @@ export class CreditoService {
 
   constructor(
     private http: HttpClient,
-    private _servidor: ServidorService
+    private _servidor: ServidorService,
+    private usuarioS: UsuarioService
   ) {
-    this.token = localStorage.getItem('token');
+    this.token = this.usuarioS.token;
   }
 
   obtenerCarteraVencida() {
-    this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=12&servidor=' + this._servidor.db;
+    // this.url = URL_SERVICIO_GENERAL +  ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=12&servidor=' + this._servidor.db;
 
-    return this.http.get( this.url );
+    // return this.http.get( this.url );
   }
 
   mor1a30() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=13&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/morosidad/130/dias/${this._servidor.db}`;
 
-    return this.http.get( this.url );
+    return this.http.get(this.url, { headers: this.headers });
   }
 
   mor31a45() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=14&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/morosidad/3145/dias/${this._servidor.db}`;
 
-    return this.http.get( this.url );
+    return this.http.get( this.url, { headers: this.headers } );
   }
 
   mor46a60() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=15&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/morosidad/4660/dias/${this._servidor.db}`;
 
-    return this.http.get( this.url );
+    return this.http.get( this.url, { headers: this.headers } );
   }
 
   mor61a90() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=18&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/morosidad/6190/dias/${this._servidor.db}`;
 
-    return this.http.get( this.url );
+    return this.http.get( this.url, { headers: this.headers } );
   }
 
   mor91a120() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=27&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/morosidad/91120/dias/${this._servidor.db}`;
 
-    return this.http.get( this.url );
+    return this.http.get( this.url, { headers: this.headers } );
   }
 
   mor120() {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=28&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/morosidad/120/dias/${this._servidor.db}`;
 
-    return this.http.get( this.url );
+    return this.http.get( this.url, { headers: this.headers } );
   }
 
   morosidadRelacion( tipo: string ) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=16&tipo=' + tipo + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/morosidad/buscar/relacion/${tipo}/${this._servidor.db}`;
 
-    return this.http.get( this.url );
+    return this.http.get( this.url, { headers: this.headers } ).pipe(
+      map((resp: any) => {
+        return resp.resp;
+      })
+    );
   }
 
   morosidadRelacionAsesor( perid: string ) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=25&perid=' + perid + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/facturas/vencidas/asesor/${perid}/${this._servidor.db}`;
 
-    return this.http.get( this.url );
+    return this.http.get( this.url, { headers: this.headers } ).pipe(
+      map((resp: any) => {
+        return resp.resp;
+      })
+    );
   }
 
-  morosidadRelacionCliente( numero: string, perid: any = '' ) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=26&numero=' + numero + '&perid=' + perid + '&servidor=' + this._servidor.db;
+  morosidadRelacionCliente( numero: string, perid: any = 1000000 ) {
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/facturas/vencidas/cliente/${perid}/${numero}/${this._servidor.db}`;
 
-    return this.http.get( this.url );
+    return this.http.get( this.url, { headers: this.headers } ).pipe(
+      map((resp: any) => {
+        return resp.resp;
+      })
+    );
   }
 
   morosidadRelacionVirtual( tipo: string ) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=22&tipo=' + tipo + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/virtual/tipo/${tipo}/${this._servidor.db}`;
 
-    return this.http.get( this.url );
+    return this.http.get( this.url, { headers: this.headers } );
   }
 
   clienteMoroso( clienteid: any, tipo: any ) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=17&tipo=' + tipo + '&clienteid=' + clienteid + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/morosidad/cliente/${clienteid}/${tipo}/${this._servidor.db}`;
 
-    return this.http.get( this.url );
+    return this.http.get( this.url, { headers: this.headers } ).pipe(
+      map((resp: any) => {
+        return resp.resp;
+      })
+    );
   }
 
   clienteMorosoTotal( clienteid: any ) {
-    this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=19&clienteid=' + clienteid + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/importe/total/cliente/${clienteid}/${this._servidor.db}`;
 
-    return this.http.get( this.url );
+    return this.http.get( this.url, { headers: this.headers } ).pipe(
+      map((resp: any) => {
+        return resp.resp;
+      })
+    );
   }
 
   clienteSaldo( numero: any, fecha: any ) {
-    this.url = URL_SERVICIO_GENERAL + '/api/clientes.php?opcion=22&numero=' + numero + '&fecha=' + fecha + '&servidor=' + this._servidor.db;
+    this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/saldos/edocta/cliente/${numero}/${fecha}/${this._servidor.db}`;
 
-    return this.http.get( this.url );
+    return this.http.get( this.url, { headers: this.headers } ).pipe(
+      map((resp: any) => {
+        return resp.resp;
+      })
+    );
   }
 
   guardarComentario( comentario: VencidoHistorial ) {
@@ -119,7 +149,13 @@ export class CreditoService {
 
     this.url += '?token=' + this.token;
 
-    return this.http.get( this.url );
+    return new Promise(resolve => {
+      this.http.get( this.url ).subscribe((resp: any) => {
+        resolve(resp);
+      });
+    });
+
+    // return this.http.get( this.url );
   }
 
   obtenerComentariosDia( fecha: any ) {
@@ -144,8 +180,13 @@ export class CreditoService {
 
   pagosMes( clienteid: any ) {
     this.url = URL_SERVICIO_GENERAL + ':' + PUERTO_SERVER + '/api/morosidad.php?opcion=21&clienteid=' + clienteid + '&servidor=' + this._servidor.db;
+    return new Promise(resolve => {
+      this.http.get( this.url ).subscribe((resp: any) => {
+        resolve(resp[0]);
+      });
+    });
 
-    return this.http.get( this.url );
+    // return this.http.get( this.url );
   }
 
   chequesDevueltos() {

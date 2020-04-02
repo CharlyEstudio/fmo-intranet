@@ -100,15 +100,16 @@ export class BitacoraComponent implements OnInit, OnDestroy {
     });
 
     this.observar = this.regresar().subscribe(
-      comentarios => {
+      async (comentarios) => {
         if (comentarios.clienteId !== 0) {
           this._creditoService.obtenerComentariosDia(this.fecha).subscribe( ( nuevoComentario: any ) => {
             this.comentarios = nuevoComentario.charla.reverse();
           });
-          this._creditoService.obtenerComentarios(comentarios.clienteId).subscribe( ( resp: any ) => {
-            this.charla = resp.charla.reverse();
+          const charla: any = await this._creditoService.obtenerComentarios(comentarios.clienteId);
+          if (charla.ok && charla.charla.length > 0) {
+            this.charla = charla.charla.reverse();
             this.charlaBol = true;
-          });
+          }
         }
       },
       error => console.error(error),
@@ -167,7 +168,7 @@ export class BitacoraComponent implements OnInit, OnDestroy {
     });
   }
 
-  openModal( data: any, tipo: any = '' ) {
+  async openModal( data: any, tipo: any = '' ) {
     this.comentario = '';
     this.data = [];
     this.data.push(data);
@@ -178,22 +179,11 @@ export class BitacoraComponent implements OnInit, OnDestroy {
     this.clienteId = data.clienteId;
     this.rango = data.rango;
 
-    if (tipo !== '') {
-
-      this._creditoService.clienteMorosoTotal(data.clienteId).subscribe( ( total: any ) => {
-        this.saldo = total[0].importe;
-      });
-
-    } else {
-      this.saldo = data.saldo;
+    const charla: any = await this._creditoService.obtenerComentarios(data.clienteId);
+    if (charla.ok && charla.charla.length > 0) {
+      this.charla = charla.charla.reverse();
+      this.charlaBol = true;
     }
-
-    this._creditoService.obtenerComentarios(data.clienteId).subscribe( ( resp: any ) => {
-      if (resp.ok && resp.charla.length > 0) {
-        this.charla = resp.charla.reverse();
-        this.charlaBol = true;
-      }
-    });
   }
 
   enviarComentario( forma: NgForm, id: any ) {
@@ -295,23 +285,22 @@ export class BitacoraComponent implements OnInit, OnDestroy {
     this.charlaBol = true;
     this.sinsaldo = false;
     this.charla = [];
-    this._clienteService.infoCliente(termino, 'ADMIN_ROLE', this.rol).subscribe((cliente: any) => {
+    this._clienteService.infoCliente(termino, 'ADMIN_ROLE', this.rol).subscribe(async (cliente: any) => {
       if (cliente.status) {
-        this._creditoService.obtenerComentarios(cliente.resp.CLIENTEID).subscribe((comentarios: any) => {
-          if (comentarios.ok) {
-            if (comentarios.charla.length === 0) {
-              this.sinsaldo = true;
-            } else {
-              this.sinsaldo = false;
-            }
-            this.charla = comentarios.charla;
-            this.charlaBol = true;
+        const charla: any = await this._creditoService.obtenerComentarios(cliente.resp.CLIENTEID);
+        if (charla.ok) {
+          if (charla.charla.length === 0) {
+            this.sinsaldo = true;
           } else {
             this.sinsaldo = false;
-            this.charlaBol = false;
-            this.charla = [];
           }
-        });
+          this.charla = charla.charla;
+          this.charlaBol = true;
+        } else {
+          this.sinsaldo = false;
+          this.charlaBol = false;
+          this.charla = [];
+        }
       } else {
         this.sinsaldo = true;
       }

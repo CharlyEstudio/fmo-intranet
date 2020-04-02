@@ -123,7 +123,7 @@ export class CreditoService {
     );
   }
 
-  clienteSaldo( numero: any, fecha: any ) {
+  clienteSaldo( numero: any, fecha: any ) { // Hasta aqui llegue
     this.url = `${URL_SERVICIO_GENERAL}/services/cobranza/saldos/edocta/cliente/${numero}/${fecha}/${this._servidor.db}`;
 
     return this.http.get( this.url, { headers: this.headers } ).pipe(
